@@ -24,17 +24,17 @@ namespace WinPaletter
         {
 
             if (ExplorerPatcher.IsAllowed())
-                My.Env.EP = new ExplorerPatcher();
+                Program.EP = new ExplorerPatcher();
 
             switch (Style)
             {
                 case WindowStyle.W11:
                     {
                         #region Win11
-                        lbl6.Text = My.Env.Lang.TM_11_SomePressedButtons;
-                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win11);
-                        lbl8.Text = My.Env.Lang.TM_Undefined;
-                        lbl9.Text = My.Env.Lang.TM_Undefined;
+                        lbl6.Text = Program.Lang.TM_11_SomePressedButtons;
+                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win11);
+                        lbl8.Text = Program.Lang.TM_Undefined;
+                        lbl9.Text = Program.Lang.TM_Undefined;
                         pic5.Image = Properties.Resources.Mini_Settings_Icons;
                         pic6.Image = Properties.Resources.Mini_PressedButton;
                         pic7.Image = Properties.Resources.Mini_UWPDlg;
@@ -45,11 +45,11 @@ namespace WinPaletter
                         {
                             case true:   // '''''''''DarkMode
                                 {
-                                    lbl1.Text = My.Env.Lang.TM_11_StartMenu_Taskbar_AC;
-                                    lbl2.Text = My.Env.Lang.TM_11_ACHover_Links;
-                                    lbl3.Text = My.Env.Lang.TM_11_Lines_Toggles_Buttons;
-                                    lbl4.Text = My.Env.Lang.TM_11_OverflowTray;
-                                    lbl5.Text = My.Env.Lang.TM_11_Settings;
+                                    lbl1.Text = Program.Lang.TM_11_StartMenu_Taskbar_AC;
+                                    lbl2.Text = Program.Lang.TM_11_ACHover_Links;
+                                    lbl3.Text = Program.Lang.TM_11_Lines_Toggles_Buttons;
+                                    lbl4.Text = Program.Lang.TM_11_OverflowTray;
+                                    lbl5.Text = Program.Lang.TM_11_Settings;
 
                                     pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                     pic2.Image = Properties.Resources.Mini_ACHover_Links;
@@ -59,11 +59,11 @@ namespace WinPaletter
                                 }
                             case false:   // '''''''''Light
                                 {
-                                    lbl1.Text = My.Env.Lang.TM_11_Taskbar_ACHover_Links;
-                                    lbl2.Text = My.Env.Lang.TM_11_StartMenu_AC;
-                                    lbl3.Text = My.Env.Lang.TM_11_UnreadBadge;
-                                    lbl4.Text = My.Env.Lang.TM_11_Lines_Toggles_Buttons_Overflow;
-                                    lbl5.Text = My.Env.Lang.TM_11_SettingsAndTaskbarAppUnderline;
+                                    lbl1.Text = Program.Lang.TM_11_Taskbar_ACHover_Links;
+                                    lbl2.Text = Program.Lang.TM_11_StartMenu_AC;
+                                    lbl3.Text = Program.Lang.TM_11_UnreadBadge;
+                                    lbl4.Text = Program.Lang.TM_11_Lines_Toggles_Buttons_Overflow;
+                                    lbl5.Text = Program.Lang.TM_11_SettingsAndTaskbarAppUnderline;
 
                                     pic1.Image = Properties.Resources.Mini_Taskbar;
                                     pic2.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -80,32 +80,32 @@ namespace WinPaletter
                                 case true: // '''''''''DarkMode
                                     {
 
-                                        if (My.Env.EP.UseTaskbar10)
+                                        if (Program.EP.UseTaskbar10)
                                         {
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
 
-                                            if (My.Env.EP.UseStart10)
+                                            if (Program.EP.UseStart10)
                                             {
-                                                lbl1.Text = My.Env.Lang.TM_10_Taskbar;
+                                                lbl1.Text = Program.Lang.TM_10_Taskbar;
                                                 pic1.Image = Properties.Resources.Mini_Taskbar;
                                             }
                                             else
                                             {
-                                                lbl1.Text = My.Env.Lang.TM_11_StartMenu_Taskbar_AC;
+                                                lbl1.Text = Program.Lang.TM_11_StartMenu_Taskbar_AC;
                                                 pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                             }
 
-                                            lbl3.Text = My.Env.Lang.TM_EP_ACButton_TaskbarAppLine;
-                                            lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
+                                            lbl3.Text = Program.Lang.TM_EP_ACButton_TaskbarAppLine;
+                                            lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Properties.Resources.Mini_AC;
                                             pic5.Image = Properties.Resources.Mini_Settings_Icons;
                                             pic6.Image = Properties.Resources.Native11;
                                         }
 
-                                        if (My.Env.EP.UseStart10)
+                                        if (Program.EP.UseStart10)
                                         {
-                                            lbl4.Text = My.Env.Lang.TM_EP_StartMenu_OverflowMenus;
+                                            lbl4.Text = Program.Lang.TM_EP_StartMenu_OverflowMenus;
                                             pic4.Image = Properties.Resources.Mini_StartMenu;
                                         }
 
@@ -115,21 +115,21 @@ namespace WinPaletter
                                 case false: // '''''''''Light
                                     {
 
-                                        if (My.Env.EP.UseTaskbar10)
+                                        if (Program.EP.UseTaskbar10)
                                         {
-                                            lbl3.Text = My.Env.Lang.TM_EP_Taskbar_AppUnderline;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
+                                            lbl3.Text = Program.Lang.TM_EP_Taskbar_AppUnderline;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
                                             pic5.Image = Properties.Resources.Mini_Settings_Icons;
                                             pic6.Image = Properties.Resources.Native11;
                                         }
 
-                                        if (My.Env.EP.UseStart10)
+                                        if (Program.EP.UseStart10)
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_EP_ActionCenterBackground;
-                                            lbl4.Text = My.Env.Lang.TM_EP_StartMenu_ActionCenterButtons;
+                                            lbl2.Text = Program.Lang.TM_EP_ActionCenterBackground;
+                                            lbl4.Text = Program.Lang.TM_EP_StartMenu_ActionCenterButtons;
                                             pic2.Image = Properties.Resources.Mini_AC;
                                             pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                         }
@@ -147,17 +147,17 @@ namespace WinPaletter
                 case WindowStyle.W10:
                     {
                         #region Win10
-                        lbl9.Text = My.Env.Lang.TM_Undefined;
+                        lbl9.Text = Program.Lang.TM_Undefined;
 
                         switch (!TM.Windows10.WinMode_Light)
                         {
                             case true: // '''''''''DarkMode
                                 {
-                                    lbl2.Text = My.Env.Lang.TM_10_ACLinks;
-                                    lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
-                                    lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                    lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
-                                    lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
+                                    lbl2.Text = Program.Lang.TM_10_ACLinks;
+                                    lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
+                                    lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                    lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
+                                    lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
 
                                     pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                     pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -167,9 +167,9 @@ namespace WinPaletter
 
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = My.Env.Lang.TM_10_Hamburger;
-                                        lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
-                                        lbl8.Text = My.Env.Lang.TM_10_Taskbar_StartContextMenu;
+                                        lbl1.Text = Program.Lang.TM_10_Hamburger;
+                                        lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
+                                        lbl8.Text = Program.Lang.TM_10_Taskbar_StartContextMenu;
 
                                         pic1.Image = Properties.Resources.Mini_Hamburger;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -177,26 +177,26 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_Taskbar_SomeBtns;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_Taskbar_SomeBtns;
                                         }
                                     }
 
                                     else
                                     {
-                                        lbl1.Text = My.Env.Lang.TM_10_Taskbar;
+                                        lbl1.Text = Program.Lang.TM_10_Taskbar;
                                         pic1.Image = Properties.Resources.Mini_Taskbar;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
                                         }
                                         else
                                         {
-                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
+                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
                                         }
 
-                                        lbl8.Text = My.Env.Lang.TM_10_StartContextMenu;
+                                        lbl8.Text = Program.Lang.TM_10_StartContextMenu;
                                         pic8.Image = Properties.Resources.Mini_StartContextMenu;
 
                                     }
@@ -208,10 +208,10 @@ namespace WinPaletter
                                 {
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = My.Env.Lang.TM_10_Hamburger;
-                                        lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
-                                        lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
+                                        lbl1.Text = Program.Lang.TM_10_Hamburger;
+                                        lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
+                                        lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
 
                                         pic1.Image = Properties.Resources.Mini_Hamburger;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -222,10 +222,10 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_Undefined;
-                                            lbl3.Text = My.Env.Lang.TM_Undefined;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_Undefined;
+                                            lbl3.Text = Program.Lang.TM_Undefined;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_Undefined;
@@ -233,10 +233,10 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_Undefined;
-                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_Undefined;
+                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -244,10 +244,10 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_10_ACLinks;
-                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_10_ACLinks;
+                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_Taskbar_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -256,9 +256,9 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        lbl1.Text = My.Env.Lang.TM_10_Taskbar;
-                                        lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
+                                        lbl1.Text = Program.Lang.TM_10_Taskbar;
+                                        lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
 
                                         pic1.Image = Properties.Resources.Mini_Taskbar;
                                         pic6.Image = Properties.Resources.Native10;
@@ -266,11 +266,11 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_Undefined;
-                                            lbl3.Text = My.Env.Lang.TM_Undefined;
-                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_Undefined;
+                                            lbl3.Text = Program.Lang.TM_Undefined;
+                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_Undefined;
@@ -281,11 +281,11 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_Undefined;
-                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl4.Text = My.Env.Lang.TM_10_TaskbarFocusedApp_StartButtonHover;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_Undefined;
+                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = Program.Lang.TM_10_TaskbarFocusedApp_StartButtonHover;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -296,11 +296,11 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = My.Env.Lang.TM_10_ACLinks;
-                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
-                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.TM_10_StartContextMenu;
+                                            lbl2.Text = Program.Lang.TM_10_ACLinks;
+                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.TM_10_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -324,9 +324,9 @@ namespace WinPaletter
         {
 
             if (ExplorerPatcher.IsAllowed())
-                My.Env.EP = new ExplorerPatcher();
+                Program.EP = new ExplorerPatcher();
 
-            My.Env.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -359,7 +359,7 @@ namespace WinPaletter
 
                                     if (ExplorerPatcher.IsAllowed())
                                     {
-                                        if (My.Env.EP.UseStart10)
+                                        if (Program.EP.UseStart10)
                                         {
                                             S_Alpha = 185;
                                         }
@@ -368,7 +368,7 @@ namespace WinPaletter
                                             S_Alpha = 90;
                                         }
 
-                                        if (My.Env.EP.UseTaskbar10)
+                                        if (Program.EP.UseTaskbar10)
                                         {
                                             TB_Alpha = 185;
                                             TB_Blur = 8;
@@ -408,7 +408,7 @@ namespace WinPaletter
                                             {
                                                 TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
 
-                                                if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseStart10)
+                                                if (ExplorerPatcher.IsAllowed() & Program.EP.UseStart10)
                                                 {
                                                     S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index4);
                                                 }
@@ -438,7 +438,7 @@ namespace WinPaletter
 
                                     if (ExplorerPatcher.IsAllowed())
                                     {
-                                        if (My.Env.EP.UseStart10)
+                                        if (Program.EP.UseStart10)
                                         {
                                             S_Alpha = 210;
                                         }
@@ -447,7 +447,7 @@ namespace WinPaletter
                                             S_Alpha = 180;
                                         }
 
-                                        if (My.Env.EP.UseTaskbar10)
+                                        if (Program.EP.UseTaskbar10)
                                         {
                                             TB_Alpha = 210;
                                             TB_Blur = 8;
@@ -487,7 +487,7 @@ namespace WinPaletter
                                             {
                                                 TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
 
-                                                if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseStart10)
+                                                if (ExplorerPatcher.IsAllowed() & Program.EP.UseStart10)
                                                 {
                                                     S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index4);
                                                 }
@@ -506,7 +506,7 @@ namespace WinPaletter
                                     AC_Hover = TM.Windows11.Color_Index5;
                                     AC_Pressed = TM.Windows11.Color_Index2;
 
-                                    if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseTaskbar10)
+                                    if (ExplorerPatcher.IsAllowed() & Program.EP.UseTaskbar10)
                                     {
                                         TB_UL_Color = TM.Windows11.Color_Index1;
                                     }
@@ -1039,7 +1039,7 @@ namespace WinPaletter
         }
         public static void ApplyWinElementsStyle(Theme.Manager TM, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
         {
-            My.Env.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -1068,7 +1068,7 @@ namespace WinPaletter
                         if (ExplorerPatcher.IsAllowed())
                         {
                             {
-                                ref ExplorerPatcher EP = ref My.Env.EP;
+                                ref ExplorerPatcher EP = ref Program.EP;
                                 if (!EP.UseStart10)
                                 {
                                     Start_Style = UI.Simulation.WinElement.Styles.Start11;
@@ -1189,25 +1189,25 @@ namespace WinPaletter
                         {
                             case Theme.Structures.WindowsXP.Themes.LunaBlue:
                                 {
-                                    My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    My.Env.resVS = new VisualStylesRes(My.Env.VS);
+                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(Program.VS);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
                                 {
-                                    My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    My.Env.resVS = new VisualStylesRes(My.Env.VS);
+                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(Program.VS);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaSilver:
                                 {
-                                    My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    My.Env.resVS = new VisualStylesRes(My.Env.VS);
+                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(Program.VS);
                                     break;
                                 }
 
@@ -1217,23 +1217,23 @@ namespace WinPaletter
                                     {
                                         if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".theme")
                                         {
-                                            My.Env.VS = TM.WindowsXP.ThemeFile;
+                                            Program.VS = TM.WindowsXP.ThemeFile;
                                         }
                                         else if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".msstyles")
                                         {
-                                            My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                            System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
+                                            Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
+                                            System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
                                         }
                                     }
-                                    My.Env.resVS = new VisualStylesRes(My.Env.VS);
+                                    Program.resVS = new VisualStylesRes(Program.VS);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.Classic:
                                 {
-                                    My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    My.Env.resVS = new VisualStylesRes(My.Env.VS);
+                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(Program.VS);
                                     break;
                                 }
 
@@ -1241,27 +1241,27 @@ namespace WinPaletter
 
                         if (WXP_VS_ReplaceColors & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
+                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
                                 TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
                             }
                         }
 
                         if (WXP_VS_ReplaceMetrics & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
+                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
                                 TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                             }
                         }
 
                         if (WXP_VS_ReplaceFonts & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
+                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
                                 TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                             }
                         }
@@ -1312,13 +1312,13 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        if (My.Env.W11)
-                            My.Env.EP = new ExplorerPatcher();
+                        if (Program.W11)
+                            Program.EP = new ExplorerPatcher();
 
                         if (ExplorerPatcher.IsAllowed())
                         {
                             {
-                                ref ExplorerPatcher EP = ref My.Env.EP;
+                                ref ExplorerPatcher EP = ref Program.EP;
 
                                 if (!EP.UseTaskbar10)
                                 {
@@ -1560,7 +1560,7 @@ namespace WinPaletter
             Window2.Active = false;
 
             if (ExplorerPatcher.IsAllowed())
-                My.Env.EP = new ExplorerPatcher();
+                Program.EP = new ExplorerPatcher();
 
             Window1.SuspendRefresh = true;
             Window2.SuspendRefresh = true;
@@ -1611,7 +1611,7 @@ namespace WinPaletter
                 case WindowStyle.W81:
                     {
                         #region Win8.1
-                        if ((My.Env.W8 | My.Env.W81) & My.Env.Settings.Miscellaneous.Win7LivePreview)
+                        if ((Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -1649,7 +1649,7 @@ namespace WinPaletter
                 case WindowStyle.W7:
                     {
                         #region Win7
-                        if (My.Env.WVista & My.Env.Settings.Miscellaneous.Win7LivePreview)
+                        if (Program.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -1717,7 +1717,7 @@ namespace WinPaletter
                 case WindowStyle.WVista:
                     {
                         #region WinVista
-                        if (My.Env.WVista & My.Env.Settings.Miscellaneous.Win7LivePreview)
+                        if (Program.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -1799,7 +1799,7 @@ namespace WinPaletter
                 bool condition0 = Style == WindowStyle.W7 && TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
                 bool condition1 = Style == WindowStyle.WVista && TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
                 bool condition2 = Style == WindowStyle.WXP && TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
-                WXP_Alert.Visible = Style == WindowStyle.WXP && My.Env.StartedWithClassicTheme;
+                WXP_Alert.Visible = Style == WindowStyle.WXP && Program.StartedWithClassicTheme;
                 tabs_preview.SelectedIndex = condition0 | condition1 | condition2 ? 1 : 0;
             }
         }
@@ -1905,92 +1905,92 @@ namespace WinPaletter
             {
                 case 1:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img1.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img1.Image.Resize(48, 48);
                         break;
                     }
                 case 2:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img2.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img2.Image.Resize(48, 48);
                         break;
                     }
                 case 3:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img3.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img3.Image.Resize(48, 48);
                         break;
                     }
                 case 4:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img4.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img4.Image.Resize(48, 48);
                         break;
                     }
                 case 5:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img5.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img5.Image.Resize(48, 48);
                         break;
                     }
                 case 6:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img6.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img6.Image.Resize(48, 48);
                         break;
                     }
                 case 7:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img7.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img7.Image.Resize(48, 48);
                         break;
                     }
                 case 8:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img8.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img8.Image.Resize(48, 48);
                         break;
                     }
                 case 9:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img9.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img9.Image.Resize(48, 48);
                         break;
                     }
                 case 10:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img10.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img10.Image.Resize(48, 48);
                         break;
                     }
                 case 11:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img11.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img11.Image.Resize(48, 48);
                         break;
                     }
                 case 12:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img12.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img12.Image.Resize(48, 48);
                         break;
                     }
                 case 13:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img13.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img13.Image.Resize(48, 48);
                         break;
                     }
                 case 14:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img14.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img14.Image.Resize(48, 48);
                         break;
                     }
                 case 15:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img15.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img15.Image.Resize(48, 48);
                         break;
                     }
                 case 16:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img16.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img16.Image.Resize(48, 48);
                         break;
                     }
                 case 17:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img17.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img17.Image.Resize(48, 48);
                         break;
                     }
                 case 18:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img18.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img18.Image.Resize(48, 48);
                         break;
                     }
                 case 19:
@@ -2000,13 +2000,13 @@ namespace WinPaletter
                     }
                 case 20:
                     {
-                        W81_start.Image = My.Env.Wallpaper.Resize(48, 48);
+                        W81_start.Image = Program.Wallpaper.Resize(48, 48);
                         break;
                     }
 
                 default:
                     {
-                        W81_start.Image = My.MyProject.Forms.Start8Selector.img1.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start8Selector.img1.Image.Resize(48, 48);
                         break;
                     }
             }
@@ -2180,13 +2180,13 @@ namespace WinPaletter
         {
             if (!System.IO.File.Exists(WT.Image))
             {
-                if (My.Env.WXP)
+                if (Program.WXP)
                 {
-                    WT.Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WT.Image = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WT.Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WT.Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 

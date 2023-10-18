@@ -100,7 +100,7 @@ namespace WinPaletter.UI.Controllers
 
             InitializeDrag = false;
 
-            if (!DesignMode && My.Env.Settings.NerdStats.DotDefaultChangedIndicator)
+            if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
             {
                 HoverOverDefColorDot = CanRaiseEventsForDefColorDot();
                 Refresh();
@@ -111,7 +111,7 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnDragDrop(DragEventArgs e)
         {
-            if (AllowDrop && My.Env.Settings.NerdStats.DragAndDrop)
+            if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
 
                 BeforeDropColor = BackColor;
@@ -201,9 +201,9 @@ namespace WinPaletter.UI.Controllers
 
                 }
 
-                My.MyProject.Application.CopiedColor = BackColor;
+                Program.CopiedColor = BackColor;
 
-                My.MyProject.Forms.ColorInfoDragDrop.Close();
+                Forms.ColorInfoDragDrop.Close();
 
                 base.OnDragDrop(e);
             }
@@ -215,7 +215,7 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnDragEnter(DragEventArgs e)
         {
-            if (AllowDrop && My.Env.Settings.NerdStats.DragAndDrop)
+            if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
                 DragDropMouseHovering = true;
 
@@ -275,31 +275,31 @@ namespace WinPaletter.UI.Controllers
                     {
                         case AfterDropEffects.Invert:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Copy_Invert;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Invert;
                                 break;
                             }
 
                         case AfterDropEffects.Darker:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Copy_Darker;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Darker;
                                 break;
                             }
 
                         case AfterDropEffects.Lighter:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Copy_Lighter;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Lighter;
                                 break;
                             }
 
                         case AfterDropEffects.Mix:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Copy_Mix;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Mix;
                                 break;
                             }
 
                         default:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Copy;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy;
                                 break;
                             }
                     }
@@ -311,25 +311,25 @@ namespace WinPaletter.UI.Controllers
                     {
                         case AfterDropEffects.Invert:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Swap_Invert;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Invert;
                                 break;
                             }
 
                         case AfterDropEffects.Darker:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Swap_Darker;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Darker;
                                 break;
                             }
 
                         case AfterDropEffects.Lighter:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Swap_Lighter;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Lighter;
                                 break;
                             }
 
                         default:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Label1.Text = My.Env.Lang.ColorItem_Swap;
+                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap;
                                 break;
                             }
 
@@ -350,41 +350,41 @@ namespace WinPaletter.UI.Controllers
                 {
                     case AfterDropEffects.Invert:
                         {
-                            My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Invert();
+                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Invert();
                             break;
                         }
 
                     case AfterDropEffects.Darker:
                         {
-                            My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Dark();
+                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Dark();
                             break;
                         }
 
                     case AfterDropEffects.Lighter:
                         {
-                            My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Light();
+                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Light();
                             break;
                         }
 
                     case AfterDropEffects.Mix:
                         {
-                            My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Blend(BackColor, 100d);
+                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Blend(BackColor, 100d);
                             break;
                         }
 
                     default:
                         {
-                            My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor;
+                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor;
                             break;
                         }
 
                 }
 
-                DraggedColor = My.MyProject.Forms.ColorInfoDragDrop.Color_From.BackColor;
+                DraggedColor = Forms.ColorInfoDragDrop.Color_From.BackColor;
 
                 if (!SwapNotCopy)
                 {
-                    My.MyProject.Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
+                    Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
                 }
                 else
                 {
@@ -392,35 +392,35 @@ namespace WinPaletter.UI.Controllers
                     {
                         case AfterDropEffects.Invert:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Invert();
+                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Invert();
                                 break;
                             }
 
                         case AfterDropEffects.Darker:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Dark();
+                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Dark();
                                 break;
                             }
 
                         case AfterDropEffects.Lighter:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Light();
+                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Light();
                                 break;
                             }
 
                         default:
                             {
-                                My.MyProject.Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
+                                Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
                                 break;
                             }
 
                     }
                 }
 
-                if (My.Env.Settings.NerdStats.DragAndDropColorsGuide)
+                if (Program.Settings.NerdStats.DragAndDropColorsGuide)
                 {
-                    My.MyProject.Forms.ColorInfoDragDrop.Location = new Point(e.X + 15, e.Y + 15);
-                    My.MyProject.Forms.ColorInfoDragDrop.Visible = true;
+                    Forms.ColorInfoDragDrop.Location = new Point(e.X + 15, e.Y + 15);
+                    Forms.ColorInfoDragDrop.Visible = true;
                 }
             }
 
@@ -430,7 +430,7 @@ namespace WinPaletter.UI.Controllers
                 Refresh();
 
                 e.Effect = DragDropEffects.None;
-                My.MyProject.Forms.ColorInfoDragDrop.Visible = false;
+                Forms.ColorInfoDragDrop.Visible = false;
             }
 
             base.OnDragEnter(e);
@@ -441,22 +441,22 @@ namespace WinPaletter.UI.Controllers
             base.OnDragLeave(e);
             DragDropMouseHovering = false;
             Refresh();
-            My.MyProject.Forms.ColorInfoDragDrop.Visible = false;
+            Forms.ColorInfoDragDrop.Visible = false;
         }
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (AllowDrop && My.Env.Settings.NerdStats.DragAndDrop)
+            if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
                 DragDropMouseHovering = true;
                 Refresh();
                 base.OnDragOver(e);
-                My.MyProject.Forms.ColorInfoDragDrop.Location = new Point(e.X + 15, e.Y + 15);
+                Forms.ColorInfoDragDrop.Location = new Point(e.X + 15, e.Y + 15);
             }
             else
             {
                 e.Effect = DragDropEffects.None;
-                My.MyProject.Forms.ColorInfoDragDrop.Visible = false;
+                Forms.ColorInfoDragDrop.Visible = false;
             }
 
         }
@@ -483,12 +483,12 @@ namespace WinPaletter.UI.Controllers
 
         public Size GetMiniColorItemSize()
         {
-            return new Size(My.Env.Settings.NerdStats.Enabled ? 80 : 30, 24);
+            return new Size(Program.Settings.NerdStats.Enabled ? 80 : 30, 24);
         }
 
         public bool CanRaiseEventsForDefColorDot()
         {
-            return My.Env.Settings.NerdStats.DotDefaultChangedIndicator && Rect_DefColor.Contains(PointToClient(MousePosition)) && BackColor != DefaultColor;
+            return Program.Settings.NerdStats.DotDefaultChangedIndicator && Rect_DefColor.Contains(PointToClient(MousePosition)) && BackColor != DefaultColor;
         }
 
         #endregion
@@ -503,7 +503,7 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            InitializeDrag = My.Env.Settings.NerdStats.DragAndDrop;
+            InitializeDrag = Program.Settings.NerdStats.DragAndDrop;
             State = MouseState.Down;
             Timer1.Enabled = true;
             Timer1.Start();
@@ -675,7 +675,7 @@ namespace WinPaletter.UI.Controllers
                 }
             }
 
-            if (!DesignMode && MakeAfterDropEffect && My.Env.Settings.NerdStats.DragAndDropRippleEffect)
+            if (!DesignMode && MakeAfterDropEffect && Program.Settings.NerdStats.DragAndDropRippleEffect)
             {
                 // Make ripple effect on dropping a color
 
@@ -720,7 +720,7 @@ namespace WinPaletter.UI.Controllers
                 }
             }
 
-            else if (!DesignMode && DragDropMouseHovering && My.Env.Settings.NerdStats.DragAndDropRippleEffect)
+            else if (!DesignMode && DragDropMouseHovering && Program.Settings.NerdStats.DragAndDropRippleEffect)
             {
                 // Make circle hover effect on dragging over a color
 
@@ -779,7 +779,7 @@ namespace WinPaletter.UI.Controllers
 
             try
             {
-                if (!DesignMode && My.Env.Settings.NerdStats.DotDefaultChangedIndicator)
+                if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
                 {
                     using (var br = new SolidBrush(DefaultColor))
                     {
@@ -807,36 +807,36 @@ namespace WinPaletter.UI.Controllers
 
             if (!DesignMode)
             {
-                if (My.Env.Settings.NerdStats.Enabled & !DontShowInfo)
+                if (Program.Settings.NerdStats.Enabled & !DontShowInfo)
                 {
                     G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
 
-                    var TargetColor = !HoverOverDefColorDot | !My.Env.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultColor;
+                    var TargetColor = !HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultColor;
                     var FC0 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
                     var FC1 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
 
-                    FC0 = Color.FromArgb(My.Env.Settings.NerdStats.MoreLabelTransparency ? 75 : 125, FC0);
+                    FC0 = Color.FromArgb(Program.Settings.NerdStats.MoreLabelTransparency ? 75 : 125, FC0);
                     FC1 = Color.FromArgb(alpha, FC1);
 
                     var RectX = Rect;
                     RectX.Y += 1;
 
                     var CF = ColorsExtensions.ColorFormat.HEX;
-                    if (My.Env.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HEX)
+                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HEX)
                         CF = ColorsExtensions.ColorFormat.HEX;
-                    if (My.Env.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.RGB)
+                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.RGB)
                         CF = ColorsExtensions.ColorFormat.RGB;
-                    if (My.Env.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HSL)
+                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HSL)
                         CF = ColorsExtensions.ColorFormat.HSL;
-                    if (My.Env.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.Dec)
+                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.Dec)
                         CF = ColorsExtensions.ColorFormat.Dec;
 
-                    string S = TargetColor.ReturnFormat(CF, My.Env.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255));
+                    string S = TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255));
                     Font F;
 
-                    if (!My.Env.Settings.NerdStats.UseWindowsMonospacedFont)
+                    if (!Program.Settings.NerdStats.UseWindowsMonospacedFont)
                     {
-                        F = My.MyProject.Application.ConsoleFont;
+                        F = Program.ConsoleFont;
                     }
                     else
                     {

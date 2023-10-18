@@ -19,10 +19,10 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(My.Env.TM);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
 
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
@@ -64,49 +64,49 @@ namespace WinPaletter
 
             RadioImage2.Image = Properties.Resources.NativeXP;
 
-            pnl_preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview_classic.BackgroundImage;
+            pnl_preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            Classic_Preview1.BackgroundImage = Forms.MainFrm.pnl_preview_classic.BackgroundImage;
 
-            SetClassicPanelRaisedRColors(My.Env.TM, PanelRRaised1);
-            SetClassicPanelColors(My.Env.TM, PanelR1);
+            SetClassicPanelRaisedRColors(Program.TM, PanelRRaised1);
+            SetClassicPanelColors(Program.TM, PanelR1);
 
-            Panel1.BackColor = My.Env.TM.Win32.Hilight;
+            Panel1.BackColor = Program.TM.Win32.Hilight;
 
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
                         WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11;
-                        WinElement1.DarkMode = !My.Env.TM.Windows11.WinMode_Light;
+                        WinElement1.DarkMode = !Program.TM.Windows11.WinMode_Light;
                         break;
                     }
 
                 case WindowStyle.W10:
                     {
                         WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10;
-                        WinElement1.DarkMode = !My.Env.TM.Windows10.WinMode_Light;
+                        WinElement1.DarkMode = !Program.TM.Windows10.WinMode_Light;
                         break;
                     }
 
                 case WindowStyle.W81:
                     {
-                        switch (My.Env.TM.Windows81.Theme)
+                        switch (Program.TM.Windows81.Theme)
                         {
                             case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero;
-                                    WinElement1.BackColor = My.Env.TM.Windows81.PersonalColors_Background;
-                                    WinElement1.Background2 = My.Env.TM.Windows81.PersonalColors_Background;
+                                    WinElement1.BackColor = Program.TM.Windows81.PersonalColors_Background;
+                                    WinElement1.Background2 = Program.TM.Windows81.PersonalColors_Background;
                                     break;
                                 }
 
                             case Theme.Structures.Windows7.Themes.AeroLite:
                                 {
                                     WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite;
-                                    WinElement1.BackColor = My.Env.TM.Win32.Window;
-                                    WinElement1.Background2 = My.Env.TM.Win32.Hilight;
-                                    WinElement1.LinkColor = My.Env.TM.Win32.ButtonText;
-                                    WinElement1.ForeColor = My.Env.TM.Win32.WindowText;
+                                    WinElement1.BackColor = Program.TM.Win32.Window;
+                                    WinElement1.Background2 = Program.TM.Win32.Hilight;
+                                    WinElement1.LinkColor = Program.TM.Win32.ButtonText;
+                                    WinElement1.ForeColor = Program.TM.Win32.WindowText;
                                     break;
                                 }
 
@@ -117,7 +117,7 @@ namespace WinPaletter
 
                 case WindowStyle.W7:
                     {
-                        switch (My.Env.TM.Windows7.Theme)
+                        switch (Program.TM.Windows7.Theme)
                         {
                             case Theme.Structures.Windows7.Themes.Aero:
                                 {
@@ -139,22 +139,22 @@ namespace WinPaletter
 
                         }
 
-                        WinElement1.BackColor = My.Env.TM.Windows7.ColorizationColor;
-                        WinElement1.Background2 = My.Env.TM.Windows7.ColorizationAfterglow;
-                        WinElement1.BackColorAlpha = My.Env.TM.Windows7.ColorizationBlurBalance;
-                        WinElement1.Win7ColorBal = My.Env.TM.Windows7.ColorizationColorBalance;
-                        WinElement1.Win7GlowBal = My.Env.TM.Windows7.ColorizationAfterglowBalance;
-                        WinElement1.NoisePower = My.Env.TM.Windows7.ColorizationGlassReflectionIntensity;
-                        WinElement1.Shadow = My.Env.TM.WindowsEffects.WindowShadow;
+                        WinElement1.BackColor = Program.TM.Windows7.ColorizationColor;
+                        WinElement1.Background2 = Program.TM.Windows7.ColorizationAfterglow;
+                        WinElement1.BackColorAlpha = Program.TM.Windows7.ColorizationBlurBalance;
+                        WinElement1.Win7ColorBal = Program.TM.Windows7.ColorizationColorBalance;
+                        WinElement1.Win7GlowBal = Program.TM.Windows7.ColorizationAfterglowBalance;
+                        WinElement1.NoisePower = Program.TM.Windows7.ColorizationGlassReflectionIntensity;
+                        WinElement1.Shadow = Program.TM.WindowsEffects.WindowShadow;
                         break;
                     }
             }
 
             Panel2.BackColor = PanelRRaised1.BackColor;
-            LabelR1.Font = My.Env.TM.MetricsFonts.CaptionFont;
+            LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
             GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 | ExplorerPatcher.IsAllowed();
-            AlertBox1.Visible = My.Env.PreviewStyle == WindowStyle.W7;
+            AlertBox1.Visible = Program.PreviewStyle == WindowStyle.W7;
 
             if (ExplorerPatcher.IsAllowed())
             {
@@ -163,12 +163,12 @@ namespace WinPaletter
                     if (Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0)) == 3)
                     {
                         WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10;
-                        WinElement1.DarkMode = !My.Env.TM.Windows11.WinMode_Light;
+                        WinElement1.DarkMode = !Program.TM.Windows11.WinMode_Light;
                     }
                 }
                 finally
                 {
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
             }
 
@@ -227,7 +227,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -243,7 +243,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             TMx.AltTab.Apply();
             TMx.Dispose();
             Cursor = Cursors.Default;
@@ -251,7 +251,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             Close();
         }
 
@@ -262,7 +262,7 @@ namespace WinPaletter
 
         private void Opacity_btn_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

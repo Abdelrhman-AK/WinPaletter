@@ -11,7 +11,7 @@ namespace WinPaletter
         }
         private void Lang_ReplaceText_Load(object sender, EventArgs e)
         {
-            Icon = My.MyProject.Forms.Lang_JSON_Manage.Icon;
+            Icon = Forms.Lang_JSON_Manage.Icon;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 

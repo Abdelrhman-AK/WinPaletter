@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{53965879-6567-4181-B551-04534B0D0F2B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>WinPaletter.My.MyApplication</StartupObject>
+    <StartupObject>WinPaletter.Program</StartupObject>
     <RootNamespace>WinPaletter</RootNamespace>
     <AssemblyName>WinPaletter</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -250,6 +250,20 @@
     <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
     <Compile Include="Classes\Assemblies\AnimatedCursors\OffsetStream.cs" />
     <Compile Include="Classes\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Classes\Elevator.cs" />
+    <Compile Include="Dialogs\RescueTools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\RescueTools.Designer.cs">
+      <DependentUpon>RescueTools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ThemeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ThemeLog.Designer.cs">
+      <DependentUpon>ThemeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -312,10 +326,10 @@
     <Compile Include="Extras\AltTabEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="bk.Designer.cs">
-      <DependentUpon>bk.cs</DependentUpon>
+    <Compile Include="BK.Designer.cs">
+      <DependentUpon>BK.cs</DependentUpon>
     </Compile>
-    <Compile Include="bk.cs">
+    <Compile Include="BK.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\BugReport.Designer.cs">
@@ -476,9 +490,6 @@
     <Compile Include="Languages\Lang_ReplaceText.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application.Designer.cs" />
-    <Compile Include="My Project\MyNamespace.Dynamic.Designer.cs" />
-    <Compile Include="My Project\MyNamespace.Static.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.cs">
@@ -778,7 +789,7 @@
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
-    <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\WinPaletter.Elevator.exe" />
     <None Include="Resources\Start10_Light.png" />
     <None Include="Resources\Start10_Dark.png" />
     <None Include="Resources\notify_error.png" />
@@ -989,13 +1000,19 @@
       <DependentUpon>Converter_Form.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\RescueTools.resx">
+      <DependentUpon>RescueTools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ThemeLog.resx">
+      <DependentUpon>ThemeLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="bk.resx">
-      <DependentUpon>bk.cs</DependentUpon>
+    <EmbeddedResource Include="BK.resx">
+      <DependentUpon>BK.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>bk1.Designer.cs</LastGenOutput>
+      <LastGenOutput>BK2.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.cs</DependentUpon>

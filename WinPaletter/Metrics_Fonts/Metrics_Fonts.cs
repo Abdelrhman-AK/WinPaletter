@@ -24,51 +24,51 @@ namespace WinPaletter
             MenuStrip1.Renderer = new UI.WP.StripRenderer();  // Removes the inferior white line from menu strip
             MenuStrip2.Renderer = new UI.WP.StripRenderer();
 
-            pnl_preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview2.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview3.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview4.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
+            pnl_preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            pnl_preview2.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            pnl_preview3.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            pnl_preview4.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
 
-            Classic_Preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview3.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview4.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
+            Classic_Preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            Classic_Preview3.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
+            Classic_Preview4.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
 
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            ApplyFromTM(My.Env.TM);
+            ApplyFromTM(Program.TM);
 
-            Window1.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
-            Window2.CopycatFrom(My.MyProject.Forms.MainFrm.Window2, true);
-            Window4.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
-            Window6.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
+            Window1.CopycatFrom(Forms.MainFrm.Window1, true);
+            Window2.CopycatFrom(Forms.MainFrm.Window2, true);
+            Window4.CopycatFrom(Forms.MainFrm.Window1, true);
+            Window6.CopycatFrom(Forms.MainFrm.Window1, true);
 
-            SetClassicWindowColors(My.Env.TM, WindowR1);
-            SetClassicWindowColors(My.Env.TM, WindowR2, false);
-            SetClassicWindowColors(My.Env.TM, WindowR3);
-            SetClassicWindowColors(My.Env.TM, WindowR5);
-            SetClassicPanelColors(My.Env.TM, PanelR1);
-            SetClassicPanelColors(My.Env.TM, PanelR2);
-            SetClassicButtonColors(My.Env.TM, ButtonR1);
-            SetClassicButtonColors(My.Env.TM, ButtonR2);
-            SetClassicButtonColors(My.Env.TM, ButtonR3);
-            SetClassicButtonColors(My.Env.TM, ButtonR10);
-            SetClassicButtonColors(My.Env.TM, ButtonR11);
-            SetClassicButtonColors(My.Env.TM, ButtonR12);
+            SetClassicWindowColors(Program.TM, WindowR1);
+            SetClassicWindowColors(Program.TM, WindowR2, false);
+            SetClassicWindowColors(Program.TM, WindowR3);
+            SetClassicWindowColors(Program.TM, WindowR5);
+            SetClassicPanelColors(Program.TM, PanelR1);
+            SetClassicPanelColors(Program.TM, PanelR2);
+            SetClassicButtonColors(Program.TM, ButtonR1);
+            SetClassicButtonColors(Program.TM, ButtonR2);
+            SetClassicButtonColors(Program.TM, ButtonR3);
+            SetClassicButtonColors(Program.TM, ButtonR10);
+            SetClassicButtonColors(Program.TM, ButtonR11);
+            SetClassicButtonColors(Program.TM, ButtonR12);
 
-            ScrollBarR2.ButtonHilight = My.Env.TM.Win32.ButtonHilight;
-            ScrollBarR2.BackColor = My.Env.TM.Win32.ButtonFace;
-            ScrollBarR1.ButtonHilight = My.Env.TM.Win32.ButtonHilight;
-            ScrollBarR1.BackColor = My.Env.TM.Win32.ButtonFace;
+            ScrollBarR2.ButtonHilight = Program.TM.Win32.ButtonHilight;
+            ScrollBarR2.BackColor = Program.TM.Win32.ButtonFace;
+            ScrollBarR1.ButtonHilight = Program.TM.Win32.ButtonHilight;
+            ScrollBarR1.BackColor = Program.TM.Win32.ButtonFace;
 
-            Label13.ForeColor = My.Env.TM.Win32.ButtonText;
-            Label14.ForeColor = My.Env.TM.Win32.ButtonText;
+            Label13.ForeColor = Program.TM.Win32.ButtonText;
+            Label14.ForeColor = Program.TM.Win32.ButtonText;
             Refresh17BitPreference();
 
             this.DoubleBuffer();
 
-            bool condition0 = My.Env.PreviewStyle == WindowStyle.W7 && My.Env.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
-            bool condition1 = My.Env.PreviewStyle == WindowStyle.WVista && My.Env.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
-            bool condition2 = My.Env.PreviewStyle == WindowStyle.WXP && My.Env.TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
+            bool condition0 = Program.PreviewStyle == WindowStyle.W7 && Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
+            bool condition1 = Program.PreviewStyle == WindowStyle.WVista && Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
+            bool condition2 = Program.PreviewStyle == WindowStyle.WXP && Program.TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
 
             if (condition0 | condition1 | condition2)
             {
@@ -83,11 +83,11 @@ namespace WinPaletter
                 tabs_preview_3.SelectedIndex = 0;
             }
 
-            FakeIcon1.Icon = My.MyProject.Forms.MainFrm.Icon;                  // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+            FakeIcon1.Icon = Forms.MainFrm.Icon;                  // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
             FakeIcon2.Icon = Properties.Resources.fileextension;    // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
             FakeIcon3.Icon = Properties.Resources.ThemesResIcon;    // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
-            if (My.Env.WXP)
+            if (Program.WXP)
             {
                 PictureBox35.Image = SystemIcons.Information.ToBitmap();
                 PictureBox36.Image = SystemIcons.Information.ToBitmap();
@@ -124,11 +124,11 @@ namespace WinPaletter
                 MenuStrip1.ForeColor = Color.Black;
             }
 
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            AlertBox10.Text = My.Env.Lang.TM_MetricsHighDPIAlert;
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            AlertBox10.Text = Program.Lang.TM_MetricsHighDPIAlert;
 
-            AlertBox11.Text = My.MyProject.Forms.MainFrm.WXP_Alert2.Text;
-            AlertBox11.Visible = My.MyProject.Forms.MainFrm.WXP_Alert2.Visible;
+            AlertBox11.Text = Forms.MainFrm.WXP_Alert2.Text;
+            AlertBox11.Visible = Forms.MainFrm.WXP_Alert2.Visible;
             AlertBox11.Size = AlertBox11.Parent.Size - new Size(40, 40);
             AlertBox11.Location = new Point(20, 20);
 
@@ -142,23 +142,23 @@ namespace WinPaletter
             AlertBox13.Size = AlertBox11.Size;
             AlertBox13.Location = AlertBox11.Location;
 
-            My.MyProject.Forms.MainFrm.Visible = false;
+            Forms.MainFrm.Visible = false;
         }
 
         public void Refresh17BitPreference()
         {
 
-            if (My.Env.TM.Win32.EnableTheming)
+            if (Program.TM.Win32.EnableTheming)
             {
-                MenuStrip2.BackColor = My.Env.TM.Win32.MenuBar;
+                MenuStrip2.BackColor = Program.TM.Win32.MenuBar;
             }
             else
             {
-                MenuStrip2.BackColor = My.Env.TM.Win32.Menu;
+                MenuStrip2.BackColor = Program.TM.Win32.Menu;
             }
 
-            ToolStripMenuItem1.ForeColor = My.Env.TM.Win32.MenuText;
-            ToolStripMenuItem4.ForeColor = My.Env.TM.Win32.MenuText;
+            ToolStripMenuItem1.ForeColor = Program.TM.Win32.MenuText;
+            ToolStripMenuItem4.ForeColor = Program.TM.Win32.MenuText;
 
         }
 
@@ -246,7 +246,7 @@ namespace WinPaletter
             WPStyle.CtrlTheme theme;
             Color statusBackColor, StatusForeColor;
 
-            if (My.Env.PreviewStyle == WindowStyle.W11)
+            if (Program.PreviewStyle == WindowStyle.W11)
             {
 
                 if (TM.Windows11.AppMode_Light)
@@ -263,7 +263,7 @@ namespace WinPaletter
                 }
             }
 
-            else if (My.Env.PreviewStyle == WindowStyle.W10)
+            else if (Program.PreviewStyle == WindowStyle.W10)
             {
 
                 if (TM.Windows10.AppMode_Light)
@@ -417,12 +417,12 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             Close();
-            SetModernWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.Window1);
-            SetModernWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2);
+            SetModernWindowMetrics(Program.TM, Forms.MainFrm.Window1);
+            SetModernWindowMetrics(Program.TM, Forms.MainFrm.Window2);
+            SetClassicWindowMetrics(Program.TM, Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowMetrics(Program.TM, Forms.MainFrm.ClassicWindow2);
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -435,11 +435,11 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
-            SetModernWindowMetrics(TMx, My.MyProject.Forms.MainFrm.Window1);
-            SetModernWindowMetrics(TMx, My.MyProject.Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(TMx, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(TMx, My.MyProject.Forms.MainFrm.ClassicWindow2);
+            ApplyToTM(Program.TM);
+            SetModernWindowMetrics(TMx, Forms.MainFrm.Window1);
+            SetModernWindowMetrics(TMx, Forms.MainFrm.Window2);
+            SetClassicWindowMetrics(TMx, Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowMetrics(TMx, Forms.MainFrm.ClassicWindow2);
 
             TMx.MetricsFonts.Apply();
             TMx.Dispose();
@@ -636,7 +636,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -644,98 +644,98 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button13_Click_1(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
             Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar12.Maximum), Trackbar12.Minimum).ToString();
             Trackbar12.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Tw_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar14.Maximum), Trackbar14.Minimum).ToString();
             Trackbar14.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Tw_w_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar13.Maximum), Trackbar13.Minimum).ToString();
             Trackbar13.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_v_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
             Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
             Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_d_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar7.Maximum), Trackbar7.Minimum).ToString();
             Trackbar7.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Mh_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar9.Maximum), Trackbar9.Minimum).ToString();
             Trackbar9.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Mw_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar8.Maximum), Trackbar8.Minimum).ToString();
             Trackbar8.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Sh_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar11.Maximum), Trackbar11.Minimum).ToString();
             Trackbar11.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Sw_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar10.Maximum), Trackbar10.Minimum).ToString();
             Trackbar10.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -758,8 +758,8 @@ namespace WinPaletter
 
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
-            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            My.MyProject.Forms.MainFrm.Visible = true;
+            Program.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Forms.MainFrm.Visible = true;
         }
 
         private void Button14_Click_1(object sender, EventArgs e)
@@ -851,7 +851,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.VS2Metrics.ShowDialog();
+            Forms.VS2Metrics.ShowDialog();
         }
 
         private void MetricsEnabled_CheckedChanged(object sender, EventArgs e)
@@ -866,14 +866,14 @@ namespace WinPaletter
 
         private void I_s_s_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar15.Maximum), Trackbar15.Minimum).ToString();
             Trackbar15.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CheckBox1_CheckedChanged(object sender)
         {
-            My.Env.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Window1.Refresh();
             Window2.Refresh();
             Window4.Refresh();

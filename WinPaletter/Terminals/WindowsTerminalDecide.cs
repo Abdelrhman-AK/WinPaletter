@@ -14,23 +14,23 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.WindowsTerminal.Icon;
+            Icon = Forms.WindowsTerminal.Icon;
             var c = PictureBox1.Image.AverageColor();
-            var c1 = c.CB((float)(My.Env.Style.DarkMode ? -0.35d : 0.35d));
-            var c2 = c.CB((float)(My.Env.Style.DarkMode ? -0.75d : 0.75d));
+            var c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
+            var c2 = c.CB((float)(Program.Style.DarkMode ? -0.75d : 0.75d));
             Panel1.BackColor = c1;
             BackColor = c2;
-            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
-            RadioImage1.Checked = My.MyProject.Forms.WindowsTerminal.SaveState == WinTerminal.Version.Stable;
-            RadioImage2.Checked = My.MyProject.Forms.WindowsTerminal.SaveState == WinTerminal.Version.Preview;
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            RadioImage1.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Stable;
+            RadioImage2.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Preview;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             if (RadioImage1.Checked)
-                My.MyProject.Forms.WindowsTerminal.SaveState = WinTerminal.Version.Stable;
+                Forms.WindowsTerminal.SaveState = WinTerminal.Version.Stable;
             if (RadioImage2.Checked)
-                My.MyProject.Forms.WindowsTerminal.SaveState = WinTerminal.Version.Preview;
+                Forms.WindowsTerminal.SaveState = WinTerminal.Version.Preview;
             DialogResult = DialogResult.OK;
             Close();
         }

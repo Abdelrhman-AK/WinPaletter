@@ -25,7 +25,7 @@ namespace WinPaletter.UI.WP
             DrawMode = DrawMode.OwnerDrawVariable;
             ItemHeight = 20;
 
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
                 BackColor = Color.FromArgb(55, 55, 55);
             else
                 BackColor = Color.FromArgb(225, 225, 225);
@@ -301,7 +301,7 @@ namespace WinPaletter.UI.WP
 
         public void ComboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            BackColor = My.Env.Style.Colors.Back;
+            BackColor = Program.Style.Colors.Back;
             e.DrawBackground();
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -322,7 +322,7 @@ namespace WinPaletter.UI.WP
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                using (var br = new SolidBrush(My.Env.Style.Colors.Border_Checked_Hover))
+                using (var br = new SolidBrush(Program.Style.Colors.Border_Checked_Hover))
                 {
                     e.Graphics.FillRectangle(br, e.Bounds);
                 }
@@ -352,16 +352,16 @@ namespace WinPaletter.UI.WP
             var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
             var TextRect = new Rectangle(5, 0, Width - 1, Height - 1);
 
-            var FadeInColor = Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover);
-            var FadeOutColor = Color.FromArgb(255 - alpha, My.Env.Style.Colors.Border);
+            var FadeInColor = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+            var FadeOutColor = Color.FromArgb(255 - alpha, Program.Style.Colors.Border);
 
             G.Clear(this.GetParentColor());
 
-            using (var br = new SolidBrush(My.Env.Style.Colors.Back))
+            using (var br = new SolidBrush(Program.Style.Colors.Back))
             {
                 G.FillRoundedRect(br, InnerRect);
             }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, My.Env.Style.Colors.Back_Checked)))
+            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Back_Checked)))
             {
                 G.FillRoundedRect(br, OuterRect);
             }
@@ -376,11 +376,11 @@ namespace WinPaletter.UI.WP
                 G.DrawRoundedRect_LikeW11(P, InnerRect);
             }
 
-            using (var br = new SolidBrush(Color.FromArgb(alpha2, My.Env.Style.Colors.Back_Checked)))
+            using (var br = new SolidBrush(Color.FromArgb(alpha2, Program.Style.Colors.Back_Checked)))
             {
                 G.FillRoundedRect(br, OuterRect);
             }
-            using (var P = new Pen(Color.FromArgb(alpha2, My.Env.Style.Colors.Border_Checked_Hover)))
+            using (var P = new Pen(Color.FromArgb(alpha2, Program.Style.Colors.Border_Checked_Hover)))
             {
                 G.DrawRoundedRect_LikeW11(P, OuterRect);
             }

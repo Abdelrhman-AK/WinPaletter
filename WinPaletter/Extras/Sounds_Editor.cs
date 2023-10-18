@@ -30,10 +30,10 @@ namespace WinPaletter
 
             if (TextBox2.Text.ToUpper().Trim() == "CURRENT")
             {
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
 
-                    byte[] SoundBytes = PE.GetResource(My.Env.PATH_imageres, "WAVE", My.Env.WVista ? 5051 : 5080);
+                    byte[] SoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
                     try
                     {
                         using (var ms = new MemoryStream(SoundBytes))
@@ -58,12 +58,12 @@ namespace WinPaletter
 
             else if (TextBox2.Text.ToUpper().Trim() == "DEFAULT")
             {
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
 
                     try
                     {
-                        using (var FS = new FileStream(My.Env.PATH_appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
+                        using (var FS = new FileStream(Program.PATH_appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
                         {
                             SP = new SoundPlayer(FS);
                             SP.Load();
@@ -73,7 +73,7 @@ namespace WinPaletter
                     catch (Exception ex)
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(My.Env.PATH_appData + @"\WindowsStartup_Backup.wav");
+                        NativeMethods.DLLFunc.PlayAudio(Program.PATH_appData + @"\WindowsStartup_Backup.wav");
                     }
 
                 }
@@ -219,9 +219,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(My.Env.TM);
-            CheckBox35_SFC.Checked = My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
+            CheckBox35_SFC.Checked = Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
 
             // Remove handler to avoid doubling/tripling events
             foreach (TabPage page in TabControl1.TabPages)
@@ -504,7 +504,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -512,10 +512,10 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            My.Env.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
+            Program.Settings.Save(WPSettings.Mode.Registry);
 
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             Close();
         }
 
@@ -523,12 +523,12 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            My.Env.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
+            Program.Settings.Save(WPSettings.Mode.Registry);
 
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             TMx.Sounds.Apply();
             TMx.Dispose();
             Cursor = Cursors.Default;
@@ -558,7 +558,7 @@ namespace WinPaletter
         {
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
                 }

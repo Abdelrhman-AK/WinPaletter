@@ -426,11 +426,11 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
             G.Clear(BackColor);
-            bool Dark = My.Env.Style.DarkMode;
+            bool Dark = Program.Style.DarkMode;
             var c_back = Dark ? Color.FromArgb(60, 60, 60) : Color.FromArgb(210, 210, 210);
             var c_btn = Dark ? Color.FromArgb(165, 165, 165) : Color.FromArgb(100, 100, 100);
 
-            var C = My.Env.Style.Colors.Core;
+            var C = Program.Style.Colors.Core;
 
             var middleRect = new Rectangle(0, (int)Math.Round((Height - Height * 0.25d) / 2d), Width - 1, (int)Math.Round(Height * 0.25d));
 
@@ -458,7 +458,7 @@ namespace WinPaletter.UI.WP
                 G.FillRectangle(br, new Rectangle(Width - 4, 0, 4, Height));
             }
 
-            using (var br = new SolidBrush(My.Env.Style.Colors.Border))
+            using (var br = new SolidBrush(Program.Style.Colors.Border))
             {
                 G.FillEllipse(br, Circle);
             }

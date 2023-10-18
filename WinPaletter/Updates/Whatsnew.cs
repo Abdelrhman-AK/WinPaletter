@@ -11,11 +11,11 @@ namespace WinPaletter
         }
         private void Tutorial_Load(object sender, EventArgs e)
         {
-            Label2.Text = string.Format(My.Env.Lang.WhatsNewInVersion, My.Env.AppVersion);
+            Label2.Text = string.Format(Program.Lang.WhatsNewInVersion, Program.AppVersion);
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             TabControl1.SelectedIndex = 0;
-            Button1.Text = My.Env.Lang.Next;
+            Button1.Text = Program.Lang.Next;
         }
 
 
@@ -23,7 +23,7 @@ namespace WinPaletter
         {
             Button2.Enabled = true;
 
-            if (((UI.WP.Button)sender).Text == My.Env.Lang.OK)
+            if (((UI.WP.Button)sender).Text == Program.Lang.OK)
             {
                 Close();
             }
@@ -33,7 +33,7 @@ namespace WinPaletter
                     TabControl1.SelectedIndex += 1;
                 if (TabControl1.SelectedIndex == TabControl1.TabPages.Count - 1)
                 {
-                    Button1.Text = My.Env.Lang.OK;
+                    Button1.Text = Program.Lang.OK;
                 }
             }
 
@@ -41,7 +41,7 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Button1.Text = My.Env.Lang.Next;
+            Button1.Text = Program.Lang.Next;
             if (TabControl1.SelectedIndex > 0)
                 TabControl1.SelectedIndex -= 1;
             if (TabControl1.SelectedIndex == 0)

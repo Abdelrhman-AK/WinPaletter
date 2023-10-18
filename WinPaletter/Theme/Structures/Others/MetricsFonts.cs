@@ -89,7 +89,7 @@ namespace WinPaletter.Theme.Structures
             SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15)) / -15;
             SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15)) / -15;
 
-            if (My.Env.WXP)
+            if (Program.WXP)
             {
                 try
                 {
@@ -134,7 +134,7 @@ namespace WinPaletter.Theme.Structures
 
             bool temp = false;
             Fixer.SystemParametersInfo((int)SPI.Fonts.GETFONTSMOOTHING, default, ref temp, (int)SPIF.None);
-            Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", My.Env.WXP ? 1 : 2)) != 2;
+            Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", Program.WXP ? 1 : 2)) != 2;
         }
 
         private Font AdjustFont(Font Font, bool Reverse)
@@ -193,10 +193,10 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Fonts.SETFONTSMOOTHING.ToString(), !Fonts_SingleBitPP, "null", SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Fonts.SETFONTSMOOTHING.ToString(), !Fonts_SingleBitPP, "null", SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Fonts.SETFONTSMOOTHING, !Fonts_SingleBitPP, default, (int)SPIF.UpdateINIFile);
 
-                if (!My.Env.Settings.ThemeApplyingBehavior.DelayMetrics)
+                if (!Program.Settings.ThemeApplyingBehavior.DelayMetrics)
                 {
                     NONCLIENTMETRICS NCM = new NONCLIENTMETRICS();
                     NCM.cbSize = Marshal.SizeOf(NCM);
@@ -231,11 +231,11 @@ namespace WinPaletter.Theme.Structures
                     }
 
                     if (TreeView is not null)
-                        Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Metrics.SETNONCLIENTMETRICS.ToString(), Marshal.SizeOf(NCM), NCM.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Metrics.SETNONCLIENTMETRICS.ToString(), Marshal.SizeOf(NCM), NCM.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
                     SystemParametersInfo((int)SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.UpdateINIFile);
 
                     if (TreeView is not null)
-                        Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Icons.SETICONMETRICS.ToString(), Marshal.SizeOf(ICO), ICO.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Icons.SETICONMETRICS.ToString(), Marshal.SizeOf(ICO), ICO.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
                     SystemParametersInfo((int)SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.UpdateINIFile);
                 }
 
@@ -258,7 +258,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String);
 
-                if (My.Env.WXP)
+                if (Program.WXP)
                 {
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
@@ -266,7 +266,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
 
-                if (My.Env.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte(), RegistryValueKind.Binary);
                     EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte(), RegistryValueKind.Binary);

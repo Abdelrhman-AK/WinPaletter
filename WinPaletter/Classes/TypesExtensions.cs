@@ -238,7 +238,7 @@ namespace WinPaletter
         /// </summary>
         public static string ReturnFormat(this Color Color, ColorFormat Format, bool HexHash = false, bool Alpha = false)
         {
-            string s = My.Env.Lang.Empty;
+            string s = Program.Lang.Empty;
 
             if (Color != Color.FromArgb(0, 0, 0, 0))
             {
@@ -272,7 +272,7 @@ namespace WinPaletter
             }
             else
             {
-                s = My.Env.Lang.Empty;
+                s = Program.Lang.Empty;
             }
 
             return s;
@@ -516,35 +516,35 @@ namespace WinPaletter
             long GB = MB * 1024L;
             long TB = GB * 1024L;
             double size = length;
-            string suffix = My.Env.Lang.ByteSizeUnit;
+            string suffix = Program.Lang.ByteSizeUnit;
 
             if (length >= TB)
             {
                 size = Math.Round(length / (double)TB, 2);
-                suffix = My.Env.Lang.TBSizeUnit;
+                suffix = Program.Lang.TBSizeUnit;
             }
 
             else if (length >= GB)
             {
                 size = Math.Round(length / (double)GB, 2);
-                suffix = My.Env.Lang.GBSizeUnit;
+                suffix = Program.Lang.GBSizeUnit;
             }
 
             else if (length >= MB)
             {
                 size = Math.Round(length / (double)MB, 2);
-                suffix = My.Env.Lang.MBSizeUnit;
+                suffix = Program.Lang.MBSizeUnit;
             }
 
             else if (length >= KB)
             {
                 size = Math.Round(length / (double)KB, 2);
-                suffix = My.Env.Lang.KBSizeUnit;
+                suffix = Program.Lang.KBSizeUnit;
 
             }
 
             if (ShowSecondUnit)
-                suffix += My.Env.Lang.SecondUnit;
+                suffix += Program.Lang.SecondUnit;
 
             return $"{size} {suffix}";
         }
@@ -694,7 +694,7 @@ namespace WinPaletter
 
         public static string PhrasePath(this string path)
         {
-            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", My.Env.PATH_ProgramFiles + @"\Plus!\Themes"));
+            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", Program.PATH_ProgramFiles + @"\Plus!\Themes"));
         }
 
 
@@ -1742,7 +1742,7 @@ namespace WinPaletter
         {
             try
             {
-                bool Dark = My.Env.Style.DarkMode;
+                bool Dark = Program.Style.DarkMode;
 
                 if (Radius == -1)
                     Radius = 5;

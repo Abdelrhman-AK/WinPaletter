@@ -53,9 +53,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.Store.Icon;
+            Icon = Forms.Store.Icon;
 
-            Label1.Text = string.Format(My.Env.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);
+            Label1.Text = string.Format(Program.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);
             Label2.Text = "";
             Label3.Text = "";
             Label4.Text = "";

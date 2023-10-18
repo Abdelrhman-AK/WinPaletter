@@ -237,51 +237,47 @@ namespace WinPaletter.Theme.Structures
 
                 else if (!(Snd_Imageres_SystemStart.Trim().ToUpper() == "CURRENT"))
                 {
-                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!My.Env.W11).ToInteger());
-                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!My.Env.W11).ToInteger());
+                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!Program.W11).ToInteger());
+                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!Program.W11).ToInteger());
                 }
 
                 else
                 {
                     EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", 1);
                     EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", 1);
-
                 }
 
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
-
                     if (File.Exists(Snd_Imageres_SystemStart) && Path.GetExtension(Snd_Imageres_SystemStart).ToUpper() == ".WAV")
                     {
 
-                        byte[] CurrentSoundBytes = PE.GetResource(My.Env.PATH_imageres, "WAVE", My.Env.WVista ? 5051 : 5080);
+                        byte[] CurrentSoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
                         byte[] TargetSoundBytes = File.ReadAllBytes(Snd_Imageres_SystemStart);
 
                         if (!CurrentSoundBytes.Equals(TargetSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, My.Env.PATH_imageres, "WAVE", My.Env.WVista ? 5051 : 5080, TargetSoundBytes);
+                            PE.ReplaceResource(TreeView, Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
                     }
 
                     else if (Snd_Imageres_SystemStart.Trim().ToUpper() == "DEFAULT")
                     {
-
-                        byte[] CurrentSoundBytes = PE.GetResource(My.Env.PATH_imageres, "WAVE", My.Env.WVista ? 5051 : 5080);
-                        byte[] OriginalSoundBytes = File.ReadAllBytes(My.Env.PATH_appData + @"\WindowsStartup_Backup.wav");
+                        byte[] CurrentSoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
+                        byte[] OriginalSoundBytes = File.ReadAllBytes(Program.PATH_appData + @"\WindowsStartup_Backup.wav");
 
                         if (!CurrentSoundBytes.Equals(OriginalSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, My.Env.PATH_imageres, "WAVE", My.Env.WVista ? 5051 : 5080, OriginalSoundBytes);
+                            PE.ReplaceResource(TreeView, Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080, OriginalSoundBytes);
                         }
 
-                        if (My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound)
-                            SFC(My.Env.PATH_imageres);
-
+                        if (Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound)
+                            SFC(Program.PATH_imageres);
                     }
 
                 }
 
-                if (My.Env.W8 | My.Env.W81 | My.Env.W10 | My.Env.W11 | My.Env.W12)
+                if (Program.W8 | Program.W81 | Program.W10 | Program.W11 | Program.W12)
                 {
                     if (Snd_Win_SystemExit_TaskMgmt && File.Exists(Snd_Win_SystemExit) && Path.GetExtension(Snd_Win_SystemExit).ToUpper() == ".WAV")
                     {

@@ -282,7 +282,7 @@ namespace WinPaletter
 
                             catch (Exception ex)
                             {
-                                My.MyProject.Forms.BugReport.ThrowError(ex);
+                                Forms.BugReport.ThrowError(ex);
                             }
 
                             St.Close();
@@ -424,17 +424,17 @@ namespace WinPaletter
                         {
                             case Version.Stable:
                                 {
-                                    if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = My.Env.PATH_TerminalJSON;
+                                        SettingsFile = Program.PATH_TerminalJSON;
                                     }
-                                    else if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                    else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
-                                        SettingsFile = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                        SettingsFile = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                     }
                                     else
                                     {
-                                        SettingsFile = My.Env.PATH_TerminalJSON;
+                                        SettingsFile = Program.PATH_TerminalJSON;
                                     }
 
                                     break;
@@ -442,17 +442,17 @@ namespace WinPaletter
 
                             case Version.Preview:
                                 {
-                                    if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = My.Env.PATH_TerminalPreviewJSON;
+                                        SettingsFile = Program.PATH_TerminalPreviewJSON;
                                     }
-                                    else if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                    else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
-                                        SettingsFile = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                        SettingsFile = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                     }
                                     else
                                     {
-                                        SettingsFile = My.Env.PATH_TerminalPreviewJSON;
+                                        SettingsFile = Program.PATH_TerminalPreviewJSON;
                                     }
 
                                     break;
@@ -894,7 +894,7 @@ namespace WinPaletter
 
     public class FontsBase : ICloneable
     {
-        public string Face { get; set; } = My.Env.W11 ? "Cascadia Mono" : "Consolas";
+        public string Face { get; set; } = Program.W11 ? "Cascadia Mono" : "Consolas";
         public FontWeight_Enum Weight { get; set; } = FontWeight_Enum.normal;
         public int Size { get; set; } = 12;
 

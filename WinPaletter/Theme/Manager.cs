@@ -73,8 +73,8 @@ namespace WinPaletter.Theme
         #region Properties
         public Info Info = new()
         {
-            AppVersion = My.Env.AppVersion,
-            ThemeName = My.Env.Lang.CurrentMode,
+            AppVersion = Program.AppVersion,
+            ThemeName = Program.Lang.CurrentMode,
             Description = "",
             ExportResThemePack = false,
             License = "",
@@ -98,7 +98,7 @@ namespace WinPaletter.Theme
             BackColor = Color.FromArgb(25, 25, 25),
             AccentColor = Color.FromArgb(0, 81, 210),
             DarkMode = true,
-            RoundCorners = My.Env.WXP | My.Env.WVista | My.Env.W7 | My.Env.W11
+            RoundCorners = Program.WXP | Program.WVista | Program.W7 | Program.W11
         };
 
         public Windows10x Windows11 = new()
@@ -184,7 +184,7 @@ namespace WinPaletter.Theme
         {
             Theme = WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
-            ThemeFile = My.Env.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles"
+            ThemeFile = Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles"
         };
 
         public Theme.Structures.Win32UI Win32 = new()
@@ -257,7 +257,7 @@ namespace WinPaletter.Theme
         public Wallpaper Wallpaper = new()
         {
             Enabled = false,
-            ImageFile = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            ImageFile = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             WallpaperType = Wallpaper.WallpaperTypes.Picture,
             WallpaperStyle = Wallpaper.WallpaperStyles.Fill,
             Wallpaper_Slideshow_Images = new string[] { },
@@ -270,7 +270,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W11 = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -279,7 +279,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W10 = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -288,7 +288,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W81 = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -297,7 +297,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W7 = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -306,7 +306,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_WVista = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -315,7 +315,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_WXP = new()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp",
             H = 0,
             S = 100,
             L = 100
@@ -384,7 +384,7 @@ namespace WinPaletter.Theme
             AWT_Enabled = false,
             AWT_Delay = 0,
             AWT_BringActivatedWindowToTop = false,
-            Win11BootDots = !My.Env.W11,
+            Win11BootDots = !Program.W11,
             Win11ExplorerBar = WinEffects.ExplorerBar.Default,
             DisableNavBar = false,
             AutoHideScrollBars = true,
@@ -405,11 +405,11 @@ namespace WinPaletter.Theme
         public Sounds Sounds = new()
         {
             Enabled = true,
-            Snd_Imageres_SystemStart = My.Env.W11 ? "Default" : "",
-            Snd_Win_SystemExit_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
-            Snd_Win_WindowsLogoff_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
-            Snd_Win_WindowsLogon_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
-            Snd_Win_WindowsUnlock_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
+            Snd_Imageres_SystemStart = Program.W11 ? "Default" : "",
+            Snd_Win_SystemExit_TaskMgmt = !Program.WXP & !Program.WVista & !Program.W7,
+            Snd_Win_WindowsLogoff_TaskMgmt = !Program.WXP & !Program.WVista & !Program.W7,
+            Snd_Win_WindowsLogon_TaskMgmt = !Program.WXP & !Program.WVista & !Program.W7,
+            Snd_Win_WindowsUnlock_TaskMgmt = !Program.WXP & !Program.WVista & !Program.W7,
             Snd_ChargerConnected = ""
         };
 
@@ -1545,7 +1545,7 @@ namespace WinPaletter.Theme
                                     temp.SelectedImageKey = ImageKey;
                                 }
                                 TreeView.SelectedNode = TreeView.Nodes[TreeView.Nodes.Count - 1];
-                                TreeView.Update();
+                                //TreeView.Update();
                             }));
                     }
                     catch
@@ -1566,7 +1566,7 @@ namespace WinPaletter.Theme
                                     temp.SelectedImageKey = ImageKey;
                                 }
                                 TreeView.SelectedNode = TreeView.Nodes[TreeView.Nodes.Count - 1];
-                                TreeView.Update();
+                                //TreeView.Update();
                             }));
                     }
                     catch
@@ -1578,7 +1578,7 @@ namespace WinPaletter.Theme
         }
         private void AddException(string Label, Exception Exception)
         {
-            My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(Label, Exception));
+            Program.Saving_Exceptions.Add(new Tuple<string, Exception>(Label, Exception));
         }
         public void Execute(MethodInvoker Sub, TreeView TreeView = null, string StartStr = "", string ErrorStr = "", string TimeStr = "", Stopwatch overallStopwatch = null, bool Skip = false, string SkipStr = "", bool ExecuteEvenIfSkip = false)
         {
@@ -1618,7 +1618,7 @@ namespace WinPaletter.Theme
                     }
                     else
                     {
-                        My.MyProject.Forms.BugReport.ThrowError(ex);
+                        Forms.BugReport.ThrowError(ex);
                     }
                     sw.Start();
                     overallStopwatch.Start();
@@ -1640,9 +1640,9 @@ namespace WinPaletter.Theme
                 case Source.Registry:
                     {
 
-                        using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+                        using (var _Def = Theme.Default.From(Program.PreviewStyle))
                         {
-                            My.Env.Loading_Exceptions.Clear();
+                            Program.Loading_Exceptions.Clear();
 
                             #region Registry
                             Info.Load();
@@ -1672,31 +1672,31 @@ namespace WinPaletter.Theme
                             Wallpaper.Load(_Def.Wallpaper);
 
                             CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt);
-                            if (Directory.Exists(My.Env.PATH_PS86_app))
+                            if (Directory.Exists(Program.PATH_PS86_app))
                             {
                                 try
                                 {
-                                    Registry.CurrentUser.CreateSubKey(@"Console\" + My.Env.PATH_PS86_reg, true).Close();
+                                    Registry.CurrentUser.CreateSubKey(@"Console\" + Program.PATH_PS86_reg, true).Close();
                                 }
                                 catch
                                 {
                                 }
-                                PowerShellx86.Load(My.Env.PATH_PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86);
+                                PowerShellx86.Load(Program.PATH_PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86);
                             }
                             else
                             {
                                 PowerShellx86 = _Def.PowerShellx86;
                             }
-                            if (Directory.Exists(My.Env.PATH_PS64_app))
+                            if (Directory.Exists(Program.PATH_PS64_app))
                             {
                                 try
                                 {
-                                    Registry.CurrentUser.CreateSubKey(@"Console\" + My.Env.PATH_PS64_reg, true).Close();
+                                    Registry.CurrentUser.CreateSubKey(@"Console\" + Program.PATH_PS64_reg, true).Close();
                                 }
                                 catch
                                 {
                                 }
-                                PowerShellx64.Load(My.Env.PATH_PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64);
+                                PowerShellx64.Load(Program.PATH_PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64);
                             }
                             else
                             {
@@ -1708,34 +1708,34 @@ namespace WinPaletter.Theme
                             Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean();
                             TerminalPreview.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)).ToBoolean();
 
-                            if (My.Env.W10 | My.Env.W11)
+                            if (Program.W10 | Program.W11)
                             {
                                 string TerDir;
                                 string TerPreDir;
 
-                                if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                                if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                 {
-                                    TerDir = My.Env.PATH_TerminalJSON;
-                                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                                    TerDir = Program.PATH_TerminalJSON;
+                                    TerPreDir = Program.PATH_TerminalPreviewJSON;
                                 }
                                 else
                                 {
-                                    if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
-                                        TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                        TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                     }
                                     else
                                     {
-                                        TerDir = My.Env.PATH_TerminalJSON;
+                                        TerDir = Program.PATH_TerminalJSON;
                                     }
 
-                                    if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                                     {
-                                        TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                                        TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                                     }
                                     else
                                     {
-                                        TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                                        TerPreDir = Program.PATH_TerminalPreviewJSON;
                                     }
                                 }
 
@@ -1795,10 +1795,10 @@ namespace WinPaletter.Theme
                             Cursor_Cross.Load("Cross");
                             #endregion
 
-                            if (My.Env.Loading_Exceptions.Count > 0)
+                            if (Program.Loading_Exceptions.Count > 0)
                             {
-                                My.MyProject.Forms.Saving_ex_list.ex_List = My.Env.Loading_Exceptions;
-                                My.MyProject.Forms.Saving_ex_list.ShowDialog();
+                                Forms.Saving_ex_list.ex_List = Program.Loading_Exceptions;
+                                Forms.Saving_ex_list.ShowDialog();
                             }
                             #endregion
                         }
@@ -1834,7 +1834,7 @@ namespace WinPaletter.Theme
                             // Rough method to get theme name to create its proper resources pack folder
                             foreach (var line in Decompress(File))
                             {
-                                if (line.Trim().StartsWith("\"ThemeName\":", My.Env._ignore))
+                                if (line.Trim().StartsWith("\"ThemeName\":", Program._ignore))
                                 {
                                     Info.ThemeName = line.Split(':')[1].ToString().Replace("\"", "").Replace(",", "").Trim();
                                     break;
@@ -1845,7 +1845,7 @@ namespace WinPaletter.Theme
                             txt.Clear();
                             string Pack = new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp";
                             bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && _Converter.FetchFile(File) == Converter_CP.WP_Format.JSON;
-                            string cache = My.Env.PATH_ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", "").Split(Path.GetInvalidFileNameChars()));
+                            string cache = Program.PATH_ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", "").Split(Path.GetInvalidFileNameChars()));
 
                             // Extract theme resources pack
                             try
@@ -1882,7 +1882,7 @@ namespace WinPaletter.Theme
                             catch (Exception ex)
                             {
                                 Pack_IsValid = false;
-                                My.MyProject.Forms.BugReport.ThrowError(ex);
+                                Forms.BugReport.ThrowError(ex);
                             }
 
                             txt = (List<string>)Decompress(File);
@@ -1898,7 +1898,7 @@ namespace WinPaletter.Theme
                                         string[] arr = txt[x].Split(':');
                                         if (arr.Count() == 2 && arr[1].Contains("%WinPaletterAppData%"))
                                         {
-                                            txt[x] = arr[0] + ":" + arr[1].Replace("%WinPaletterAppData%", My.Env.PATH_appData.Replace(@"\", @"\\"));
+                                            txt[x] = arr[0] + ":" + arr[1].Replace("%WinPaletterAppData%", Program.PATH_appData.Replace(@"\", @"\\"));
                                         }
                                     }
                                 }
@@ -1949,15 +1949,15 @@ namespace WinPaletter.Theme
 
                             else if (_Converter.FetchFile(File) == Converter_CP.WP_Format.WPTH)
                             {
-                                if (MsgBox(My.Env.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, My.Env.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Env.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+                                if (MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", Program.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
                                 {
-                                    _Converter.Convert(File, File, My.Env.Settings.FileTypeManagement.CompressThemeFile, false);
+                                    _Converter.Convert(File, File, Program.Settings.FileTypeManagement.CompressThemeFile, false);
                                     goto Start;
                                 }
                             }
                             else
                             {
-                                WPStyle.MsgBox(My.Env.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                WPStyle.MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                         }
@@ -1979,8 +1979,8 @@ namespace WinPaletter.Theme
                     {
 
                         #region Registry
-                        bool ReportProgress = My.Env.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-                        bool ReportProgress_Detailed = ReportProgress && My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+                        bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+                        bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
                         _ErrorHappened = false;
 
@@ -1991,52 +1991,52 @@ namespace WinPaletter.Theme
 
                         if (ReportProgress)
                         {
-                            My.Env.Saving_Exceptions.Clear();
+                            Program.Saving_Exceptions.Clear();
                             TreeView.Visible = false;
                             TreeView.Nodes.Clear();
                             TreeView.Visible = true;
                             string OS;
-                            if (My.Env.W11)
+                            if (Program.W11)
                             {
-                                OS = My.Env.Lang.OS_Win11;
+                                OS = Program.Lang.OS_Win11;
                             }
-                            else if (My.Env.W10)
+                            else if (Program.W10)
                             {
-                                OS = My.Env.Lang.OS_Win10;
+                                OS = Program.Lang.OS_Win10;
                             }
-                            else if (My.Env.W8)
+                            else if (Program.W8)
                             {
-                                OS = My.Env.Lang.OS_Win8;
+                                OS = Program.Lang.OS_Win8;
                             }
-                            else if (My.Env.W81)
+                            else if (Program.W81)
                             {
-                                OS = My.Env.Lang.OS_Win81;
+                                OS = Program.Lang.OS_Win81;
                             }
-                            else if (My.Env.W7)
+                            else if (Program.W7)
                             {
-                                OS = My.Env.Lang.OS_Win7;
+                                OS = Program.Lang.OS_Win7;
                             }
-                            else if (My.Env.WVista)
+                            else if (Program.WVista)
                             {
-                                OS = My.Env.Lang.OS_WinVista;
+                                OS = Program.Lang.OS_WinVista;
                             }
-                            else if (My.Env.WXP)
+                            else if (Program.WXP)
                             {
-                                OS = My.Env.Lang.OS_WinXP;
+                                OS = Program.Lang.OS_WinXP;
                             }
                             else
                             {
-                                OS = My.Env.Lang.OS_WinUndefined;
+                                OS = Program.Lang.OS_WinUndefined;
                             }
 
-                            AddNode(TreeView, string.Format("{0}", string.Format(My.Env.Lang.TM_ApplyFrom, OS)), "info");
+                            AddNode(TreeView, string.Format("{0}", string.Format(Program.Lang.TM_ApplyFrom, OS)), "info");
 
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_Started), "info");
+                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_Started), "info");
 
-                            if (!My.Env.isElevated)
+                            if (!Program.isElevated)
                             {
-                                AddNode(TreeView, string.Format("{0}}", My.Env.Lang.TM_Admin_Msg0), "admin");
-                                AddNode(TreeView, string.Format("{0}", My.Env.Lang.TM_Admin_Msg1), "admin");
+                                AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg0), "admin");
+                                AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg1), "admin");
                             }
 
                         }
@@ -2050,83 +2050,83 @@ namespace WinPaletter.Theme
 
 
 
-                            Execute(() => { using (var def = Theme.Default.Get()) { def.LogonUI10x.NoLockScreen = false; def.LogonUI7.Enabled = false; def.Windows81.NoLockScreen = false; def.LogonUIXP.Enabled = true; if (!My.Env.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP(); def.CommandPrompt.Enabled = true; def.PowerShellx86.Enabled = true; def.PowerShellx64.Enabled = true; def.MetricsFonts.Enabled = true; def.WindowsEffects.Enabled = true; def.AltTab.Enabled = true; def.ScreenSaver.Enabled = true; def.Sounds.Enabled = true; def.AppTheme.Enabled = true; def.Wallpaper.Enabled = false; def.Save(Source.Registry); } }, TreeView, My.Env.Lang.TM_ThemeReset, My.Env.Lang.TM_ThemeReset_Error, My.Env.Lang.TM_Time, sw_all);
+                            Execute(() => { using (var def = Theme.Default.Get()) { def.LogonUI10x.NoLockScreen = false; def.LogonUI7.Enabled = false; def.Windows81.NoLockScreen = false; def.LogonUIXP.Enabled = true; if (!Program.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP(); def.CommandPrompt.Enabled = true; def.PowerShellx86.Enabled = true; def.PowerShellx64.Enabled = true; def.MetricsFonts.Enabled = true; def.WindowsEffects.Enabled = true; def.AltTab.Enabled = true; def.ScreenSaver.Enabled = true; def.Sounds.Enabled = true; def.AppTheme.Enabled = true; def.Wallpaper.Enabled = false; def.Save(Source.Registry); } }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
                         }
 
                         // Theme info
-                        Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.TM_SavingInfo, My.Env.Lang.TM_SavingInfo_Error, My.Env.Lang.TM_Time, sw_all);
+                        Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
 
                         // WinPaletter application theme
-                        Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.TM_Applying_AppTheme, My.Env.Lang.TM_Error_AppTheme, My.Env.Lang.TM_Time, sw_all, !AppTheme.Enabled, My.Env.Lang.TM_Skip_AppTheme, true);
+                        Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_Applying_AppTheme, Program.Lang.TM_Error_AppTheme, Program.Lang.TM_Time, sw_all, !AppTheme.Enabled, Program.Lang.TM_Skip_AppTheme, true);
 
                         // Wallpaper
                         // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
-                        this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Wallpaper, My.Env.Lang.TM_Error_Wallpaper, My.Env.Lang.TM_Time, sw_all, !Wallpaper.Enabled, My.Env.Lang.TM_Skip_Wallpaper);
+                        this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Wallpaper, Program.Lang.TM_Error_Wallpaper, Program.Lang.TM_Time, sw_all, !Wallpaper.Enabled, Program.Lang.TM_Skip_Wallpaper);
 
-                        if (My.Env.W11)
+                        if (Program.W11)
                         {
-                            this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win11, My.Env.Lang.TM_W11_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUI11, My.Env.Lang.TM_LogonUI11_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI11, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
                         }
 
-                        if (My.Env.W10)
+                        if (Program.W10)
                         {
-                            this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win10, My.Env.Lang.TM_W10_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUI10, My.Env.Lang.TM_LogonUI10_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
                         }
 
-                        if (My.Env.W8 | My.Env.W81)
+                        if (Program.W8 | Program.W81)
                         {
                             this.Execute(new MethodInvoker(() =>
                                     {
                                         Windows81.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.TM_Applying_Win81, My.Env.Lang.TM_W81_Error, My.Env.Lang.TM_Time, sw_all);
+                                    }), TreeView, Program.Lang.TM_Applying_Win81, Program.Lang.TM_W81_Error, Program.Lang.TM_Time, sw_all);
 
 
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, My.Env.Lang.TM_Applying_LogonUI8, My.Env.Lang.TM_LogonUI8_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI8, Program.Lang.TM_LogonUI8_Error, Program.Lang.TM_Time, sw_all);
                         }
 
-                        if (My.Env.W7)
+                        if (Program.W7)
                         {
                             this.Execute(new MethodInvoker(() =>
                                     {
                                         Windows7.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.TM_Applying_Win7, My.Env.Lang.TM_W7_Error, My.Env.Lang.TM_Time, sw_all);
+                                    }), TreeView, Program.Lang.TM_Applying_Win7, Program.Lang.TM_W7_Error, Program.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, My.Env.Lang.TM_Applying_LogonUI7, My.Env.Lang.TM_LogonUI7_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI7, Program.Lang.TM_LogonUI7_Error, Program.Lang.TM_Time, sw_all);
                         }
 
-                        if (My.Env.WVista)
+                        if (Program.WVista)
                         {
                             this.Execute(new MethodInvoker(() =>
                                     {
                                         WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.TM_Applying_WinVista, My.Env.Lang.TM_WVista_Error, My.Env.Lang.TM_Time, sw_all);
+                                    }), TreeView, Program.Lang.TM_Applying_WinVista, Program.Lang.TM_WVista_Error, Program.Lang.TM_Time, sw_all);
                         }
 
-                        if (My.Env.WXP)
+                        if (Program.WXP)
                         {
-                            this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_WinXP, My.Env.Lang.TM_WXP_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinXP, Program.Lang.TM_WXP_Error, Program.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUIXP, My.Env.Lang.TM_LogonUIXP_Error, My.Env.Lang.TM_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUIXP, Program.Lang.TM_LogonUIXP_Error, Program.Lang.TM_Time, sw_all);
                         }
 
                         // Win32UI
-                        this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win32UI, My.Env.Lang.TM_WIN32UI_Error, My.Env.Lang.TM_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win32UI, Program.Lang.TM_WIN32UI_Error, Program.Lang.TM_Time, sw_all);
 
                         // WindowsEffects
-                        this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_WinEffects, My.Env.Lang.TM_WinEffects_Error, My.Env.Lang.TM_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinEffects, Program.Lang.TM_WinEffects_Error, Program.Lang.TM_Time, sw_all);
 
                         // Metrics\Fonts
-                        this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Metrics, My.Env.Lang.TM_Error_Metrics, My.Env.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, My.Env.Lang.TM_Skip_Metrics);
+                        this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Metrics, Program.Lang.TM_Error_Metrics, Program.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, Program.Lang.TM_Skip_Metrics);
 
                         // AltTab
-                        this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_AltTab, My.Env.Lang.TM_Error_AltTab, My.Env.Lang.TM_Time, sw_all, !AltTab.Enabled, My.Env.Lang.TM_Skip_AltTab, true);
+                        this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_AltTab, Program.Lang.TM_Error_AltTab, Program.Lang.TM_Time, sw_all, !AltTab.Enabled, Program.Lang.TM_Skip_AltTab, true);
 
                         // WallpaperTone
                         this.Execute(new MethodInvoker(() =>
@@ -2140,21 +2140,21 @@ namespace WinPaletter.Theme
 
                                     if (Wallpaper.Enabled)
                                     {
-                                        if (My.Env.W11 & WallpaperTone_W11.Enabled)
+                                        if (Program.W11 & WallpaperTone_W11.Enabled)
                                             WallpaperTone_W11.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (My.Env.W10 & WallpaperTone_W10.Enabled)
+                                        if (Program.W10 & WallpaperTone_W10.Enabled)
                                             WallpaperTone_W10.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (My.Env.W81 & WallpaperTone_W81.Enabled)
+                                        if (Program.W81 & WallpaperTone_W81.Enabled)
                                             WallpaperTone_W81.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (My.Env.W7 & WallpaperTone_W7.Enabled)
+                                        if (Program.W7 & WallpaperTone_W7.Enabled)
                                             WallpaperTone_W7.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (My.Env.WVista & WallpaperTone_WVista.Enabled)
+                                        if (Program.WVista & WallpaperTone_WVista.Enabled)
                                             WallpaperTone_WVista.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (My.Env.WXP & WallpaperTone_WXP.Enabled)
+                                        if (Program.WXP & WallpaperTone_WXP.Enabled)
                                             WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
                                     }
 
-                                }), TreeView, My.Env.Lang.TM_Applying_WallpaperTone, My.Env.Lang.TM_WallpaperTone_Error, My.Env.Lang.TM_Time, sw_all);
+                                }), TreeView, Program.Lang.TM_Applying_WallpaperTone, Program.Lang.TM_WallpaperTone_Error, Program.Lang.TM_Time, sw_all);
 
                         #region Consoles
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
@@ -2163,42 +2163,42 @@ namespace WinPaletter.Theme
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
-                        this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_CMD, My.Env.Lang.TM_CMD_Error, My.Env.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, My.Env.Lang.TM_Skip_CMD);
+                        this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_CMD, Program.Lang.TM_CMD_Error, Program.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, Program.Lang.TM_Skip_CMD);
 
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_PS32, My.Env.Lang.TM_PS32_Error, My.Env.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, My.Env.Lang.TM_Skip_PS32);
+                        this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS32, Program.Lang.TM_PS32_Error, Program.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, Program.Lang.TM_Skip_PS32);
 
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_PS64, My.Env.Lang.TM_PS64_Error, My.Env.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, My.Env.Lang.TM_Skip_PS64);
+                        this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS64, Program.Lang.TM_PS64_Error, Program.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, Program.Lang.TM_Skip_PS64);
                         #endregion
 
                         #region Windows Terminal
                         var sw = new Stopwatch();
                         sw.Reset();
                         sw.Start();
-                        if (My.Env.W10 | My.Env.W11)
+                        if (Program.W10 | Program.W11)
                         {
 
                             if (ReportProgress)
                             {
                                 if (Terminal.Enabled & TerminalPreview.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_Terminals), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_Terminals), "info");
                                 }
 
                                 else if (Terminal.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_TerminalStable), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalStable), "info");
                                 }
 
                                 else if (TerminalPreview.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_TerminalPreview), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalPreview), "info");
                                 }
 
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_Terminals), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals), "skip");
 
                                 }
 
@@ -2207,29 +2207,29 @@ namespace WinPaletter.Theme
                             string TerDir;
                             string TerPreDir;
 
-                            if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                            if (!Program.Settings.WindowsTerminals.Path_Deflection)
                             {
-                                TerDir = My.Env.PATH_TerminalJSON;
-                                TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                                TerDir = Program.PATH_TerminalJSON;
+                                TerPreDir = Program.PATH_TerminalPreviewJSON;
                             }
                             else
                             {
-                                if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                 {
-                                    TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                    TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                 }
                                 else
                                 {
-                                    TerDir = My.Env.PATH_TerminalJSON;
+                                    TerDir = Program.PATH_TerminalJSON;
                                 }
 
-                                if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                                 {
-                                    TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                                    TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                                 }
                                 else
                                 {
-                                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                                    TerPreDir = Program.PATH_TerminalPreviewJSON;
                                 }
                             }
 
@@ -2240,10 +2240,10 @@ namespace WinPaletter.Theme
 
                                     try
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_TerminalStable), "info");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalStable), "info");
                                         Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                                         if (ReportProgress)
-                                            AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -2252,12 +2252,12 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Error_TerminalStable), "error");
-                                            AddException(My.Env.Lang.TM_Error_TerminalStable, ex);
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalStable), "error");
+                                            AddException(Program.Lang.TM_Error_TerminalStable, ex);
                                         }
                                         else
                                         {
-                                            My.MyProject.Forms.BugReport.ThrowError(ex);
+                                            Forms.BugReport.ThrowError(ex);
                                         }
 
                                         sw.Start();
@@ -2266,13 +2266,13 @@ namespace WinPaletter.Theme
                                 }
 
 
-                                else if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                                else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
 
                                 }
                             }
@@ -2284,10 +2284,10 @@ namespace WinPaletter.Theme
 
                                     try
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_TerminalPreview), "info");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalPreview), "info");
                                         TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                         if (ReportProgress)
-                                            AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -2296,12 +2296,12 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Error_TerminalPreview), "error");
-                                            AddException(My.Env.Lang.TM_Error_TerminalPreview, ex);
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalPreview), "error");
+                                            AddException(Program.Lang.TM_Error_TerminalPreview, ex);
                                         }
                                         else
                                         {
-                                            My.MyProject.Forms.BugReport.ThrowError(ex);
+                                            Forms.BugReport.ThrowError(ex);
                                         }
 
                                         sw.Start();
@@ -2309,35 +2309,35 @@ namespace WinPaletter.Theme
                                     }
                                 }
 
-                                else if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                                else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
                                 }
                             }
                         }
 
                         else
                         {
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_Terminals_NotSupported), "skip");
+                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals_NotSupported), "skip");
                         }
                         sw.Stop();
                         #endregion
 
                         // ScreenSaver
-                        this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_ScreenSaver, My.Env.Lang.TM_Error_ScreenSaver, My.Env.Lang.TM_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_ScreenSaver, Program.Lang.TM_Error_ScreenSaver, Program.Lang.TM_Time, sw_all);
 
                         // Sounds
-                        this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Sounds, My.Env.Lang.TM_Error_Sounds, My.Env.Lang.TM_Time, sw_all, !Sounds.Enabled, My.Env.Lang.TM_Skip_Sounds);
+                        this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Sounds, Program.Lang.TM_Error_Sounds, Program.Lang.TM_Time, sw_all, !Sounds.Enabled, Program.Lang.TM_Skip_Sounds);
 
                         // Cursors
-                        this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", My.Env.Lang.TM_Error_Cursors, My.Env.Lang.TM_Time_Cursors, sw_all);
+                        this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
 
                         // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
-                        if (My.Env.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                         {
 
                             this.Execute(new MethodInvoker(() =>
@@ -2346,10 +2346,10 @@ namespace WinPaletter.Theme
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String);
-                                    }), TreeView, My.Env.Lang.TM_Applying_DesktopAllUsers, My.Env.Lang.TM_Error_SetDesktop, My.Env.Lang.TM_Time);
+                                    }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
                         }
 
-                        else if (My.Env.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+                        else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
                         {
 
                             this.Execute(new MethodInvoker(() =>
@@ -2358,7 +2358,7 @@ namespace WinPaletter.Theme
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String);
-                                    }), TreeView, My.Env.Lang.TM_Applying_DesktopAllUsers, My.Env.Lang.TM_Error_SetDesktop, My.Env.Lang.TM_Time);
+                                    }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
 
                         }
 
@@ -2373,18 +2373,18 @@ namespace WinPaletter.Theme
                         }
 
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(\"Environment\")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll");
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(\"Environment\")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll");
                         User32.SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, (uint)MSG_TIMEOUT, out RESULT);
 
                         if (ReportProgress)
                         {
                             if (!_ErrorHappened)
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
                             }
                             else
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
                             }
                         }
 
@@ -2427,7 +2427,7 @@ namespace WinPaletter.Theme
             var JSON_Overall = new JObject();
             JSON_Overall.RemoveAll();
 
-            Info.AppVersion = My.Env.AppVersion;
+            Info.AppVersion = Program.AppVersion;
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
             {
@@ -2444,7 +2444,7 @@ namespace WinPaletter.Theme
 
             }
 
-            if (My.Env.Settings.FileTypeManagement.CompressThemeFile && !IgnoreCompression)
+            if (Program.Settings.FileTypeManagement.CompressThemeFile && !IgnoreCompression)
             {
                 return JSON_Overall.ToString().Compress();
             }
@@ -2474,7 +2474,7 @@ namespace WinPaletter.Theme
                 if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Modes.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Modes.CustomImage)
                 {
                     x = TM.LogonUI7.ImagePath;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "LogonUI" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2486,7 +2486,7 @@ namespace WinPaletter.Theme
                 if (TM.Terminal.Enabled)
                 {
                     x = TM.Terminal.DefaultProf.BackgroundImage;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "winterminal_defprofile_backimg" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2495,7 +2495,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Terminal.DefaultProf.Icon;
-                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "winterminal_defprofile_icon" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2506,7 +2506,7 @@ namespace WinPaletter.Theme
                     foreach (var i in TM.Terminal.Profiles)
                     {
                         x = i.BackgroundImage;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
@@ -2515,7 +2515,7 @@ namespace WinPaletter.Theme
                         }
 
                         x = i.Icon;
-                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
@@ -2528,7 +2528,7 @@ namespace WinPaletter.Theme
                 if (TM.TerminalPreview.Enabled)
                 {
                     x = TM.TerminalPreview.DefaultProf.BackgroundImage;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "winterminal_preview_defprofile_backimg" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2537,7 +2537,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.TerminalPreview.DefaultProf.Icon;
-                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "winterminal_preview_defprofile_icon" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2548,7 +2548,7 @@ namespace WinPaletter.Theme
                     foreach (var i in TM.TerminalPreview.Profiles)
                     {
                         x = i.BackgroundImage;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
@@ -2557,7 +2557,7 @@ namespace WinPaletter.Theme
                         }
 
                         x = i.Icon;
-                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
@@ -2570,7 +2570,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W11.Enabled)
                 {
                     x = TM.WallpaperTone_W11.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_w11" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2582,7 +2582,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W10.Enabled)
                 {
                     x = TM.WallpaperTone_W10.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_w10" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2594,7 +2594,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W81.Enabled)
                 {
                     x = TM.WallpaperTone_W81.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_w81" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2606,7 +2606,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W7.Enabled)
                 {
                     x = TM.WallpaperTone_W7.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_w7" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2618,7 +2618,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_WVista.Enabled)
                 {
                     x = TM.WallpaperTone_WVista.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_wvista" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2630,7 +2630,7 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_WXP.Enabled)
                 {
                     x = TM.WallpaperTone_WXP.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wt_wxp" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2655,7 +2655,7 @@ namespace WinPaletter.Theme
                 if (TM.Sounds.Enabled)
                 {
                     x = TM.Sounds.Snd_Win_Default;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Default" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2664,7 +2664,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_AppGPFault;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_AppGPFault" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2673,7 +2673,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_CCSelect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_CCSelect" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2682,7 +2682,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_ChangeTheme;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_ChangeTheme" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2691,7 +2691,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Close;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Close" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2700,7 +2700,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_CriticalBatteryAlarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_CriticalBatteryAlarm" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2709,7 +2709,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceConnect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_DeviceConnect" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2718,7 +2718,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceDisconnect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_DeviceDisconnect" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2727,7 +2727,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceFail;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_DeviceFail" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2736,7 +2736,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_FaxBeep;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_FaxBeep" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2745,7 +2745,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_LowBatteryAlarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_LowBatteryAlarm" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2754,7 +2754,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_MailBeep;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_MailBeep" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2763,7 +2763,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Maximize;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Maximize" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2772,7 +2772,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_MenuCommand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_MenuCommand" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2781,7 +2781,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_MenuPopup;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_MenuPopup" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2790,7 +2790,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_MessageNudge;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_MessageNudge" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2799,7 +2799,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Minimize;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Minimize" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2808,7 +2808,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Default;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Default" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2817,7 +2817,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_IM;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_IM" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2826,7 +2826,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2835,7 +2835,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm10;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm10" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2844,7 +2844,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm2;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm2" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2853,7 +2853,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm3;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm3" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2862,7 +2862,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm4;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm4" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2871,7 +2871,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm5;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm5" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2880,7 +2880,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm6;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm6" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2889,7 +2889,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm7;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm7" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2898,7 +2898,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm8;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm8" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2907,7 +2907,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm9;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm9" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2916,7 +2916,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2925,7 +2925,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call10;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call10" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2934,7 +2934,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call2;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call2" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2943,7 +2943,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call3;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call3" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2952,7 +2952,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call4;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call4" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2961,7 +2961,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call5;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call5" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2970,7 +2970,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call6;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call6" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2979,7 +2979,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call7;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call7" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2988,7 +2988,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call8;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call8" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -2997,7 +2997,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call9;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Looping_Call9" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3006,7 +3006,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Mail;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Mail" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3015,7 +3015,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Proximity;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Proximity" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3024,7 +3024,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Reminder;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_Reminder" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3033,7 +3033,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_SMS;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Notification_SMS" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3042,7 +3042,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_Open;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_Open" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3051,7 +3051,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_PrintComplete;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_PrintComplete" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3060,7 +3060,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_ProximityConnection;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_ProximityConnection" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3069,7 +3069,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreDown;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_RestoreDown" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3078,7 +3078,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreUp;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_RestoreUp" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3087,7 +3087,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_ShowBand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_ShowBand" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3096,7 +3096,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemAsterisk;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemAsterisk" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3105,7 +3105,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExclamation;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemExclamation" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3114,7 +3114,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExit;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemExit" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3123,7 +3123,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemStart;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemStart" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3141,7 +3141,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemHand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemHand" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3150,7 +3150,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemNotification;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemNotification" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3159,7 +3159,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_SystemQuestion;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_SystemQuestion" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3168,7 +3168,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogoff;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_WindowsLogoff" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3177,7 +3177,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogon;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_WindowsLogon" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3186,7 +3186,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUAC;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_WindowsUAC" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3195,7 +3195,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUnlock;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Win_WindowsUnlock" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3204,7 +3204,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_ActivatingDocument;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_ActivatingDocument" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3213,7 +3213,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_BlockedPopup;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_BlockedPopup" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3222,7 +3222,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_EmptyRecycleBin;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_EmptyRecycleBin" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3231,7 +3231,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_FeedDiscovered;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_FeedDiscovered" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3240,7 +3240,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_MoveMenuItem;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_MoveMenuItem" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3249,7 +3249,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_Navigating;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_Navigating" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3258,7 +3258,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_SecurityBand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_SecurityBand" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3267,7 +3267,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_SearchProviderDiscovered;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_SearchProviderDiscovered" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3276,7 +3276,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxError;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_FaxError" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3285,7 +3285,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxLineRings;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_FaxLineRings" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3294,7 +3294,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxNew;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_FaxNew" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3303,7 +3303,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxSent;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_Explorer_FaxSent" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3312,7 +3312,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonJoins;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_NetMeeting_PersonJoins" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3321,7 +3321,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonLeaves;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_NetMeeting_PersonLeaves" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3330,7 +3330,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveCall;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_NetMeeting_ReceiveCall" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3339,7 +3339,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveRequestToJoin;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_NetMeeting_ReceiveRequestToJoin" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3348,7 +3348,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_DisNumbersSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_DisNumbersSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3357,7 +3357,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOffSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_HubOffSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3366,7 +3366,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOnSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_HubOnSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3375,7 +3375,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubSleepSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_HubSleepSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3384,7 +3384,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_MisrecoSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_MisrecoSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3393,7 +3393,7 @@ namespace WinPaletter.Theme
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_PanelSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\media", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\media", Program._ignore))
                     {
                         ZipEntry = cache + "Snd_SpeechRec_PanelSound" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3406,7 +3406,7 @@ namespace WinPaletter.Theme
                 if (TM.Wallpaper.Enabled && TM.Wallpaper.WallpaperType == Wallpaper.WallpaperTypes.Picture)
                 {
                     x = TM.Wallpaper.ImageFile;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                     {
                         ZipEntry = cache + "wallpaper_file" + Path.GetExtension(x);
                         if (System.IO.File.Exists(x))
@@ -3424,7 +3424,7 @@ namespace WinPaletter.Theme
                 if (TM.WindowsXP.Theme == WindowsXP.Themes.Custom)
                 {
                     x = TM.WindowsXP.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Resources\Themes\Luna", My.Env._ignore))
+                    if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith(Program.PATH_Windows + @"\Resources\Themes\Luna", Program._ignore))
                     {
                         ZipEntry = cache + @"WXP_VS\" + Path.GetFileName(x);
                         if (System.IO.File.Exists(x))
@@ -3443,7 +3443,7 @@ namespace WinPaletter.Theme
                     if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
                     {
                         x = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = cache + "wallpapers_slideshow";
 
@@ -3466,14 +3466,14 @@ namespace WinPaletter.Theme
                         string[] arr = TM.Wallpaper.Wallpaper_Slideshow_Images.ToArray();
                         if (arr.Count() > 0)
                         {
-                            if (!arr[0].StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                            if (!arr[0].StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                             {
                                 TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = cache + "WallpapersList";
                                 TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
                                 for (int x0 = 0, loopTo = arr.Count() - 1; x0 <= loopTo; x0++)
                                 {
                                     x = arr[x0];
-                                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                                     {
                                         ZipEntry = cache + @"WallpapersList\wallpaperlist_" + x0 + "_file" + Path.GetExtension(x);
                                         if (System.IO.File.Exists(x))
@@ -3571,8 +3571,8 @@ namespace WinPaletter.Theme
         public static void Apply_LogonUI7(Theme.Structures.LogonUI7 LogonElement, string RegEntryHint = "LogonUI", TreeView TreeView = null)
         {
 
-            bool ReportProgress = My.Env.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             EditReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonElement.Enabled.ToInteger());
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonElement.Enabled.ToInteger());
@@ -3592,11 +3592,11 @@ namespace WinPaletter.Theme
                 IntPtr wow64Value = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
-                string DirX = My.Env.PATH_System32 + @"\oobe\info\backgrounds";
+                string DirX = Program.PATH_System32 + @"\oobe\info\backgrounds";
 
                 Directory.CreateDirectory(DirX);
 
-                foreach (string fileX in My.MyProject.Computer.FileSystem.GetFiles(DirX))
+                foreach (string fileX in Program.Computer.FileSystem.GetFiles(DirX))
                 {
                     try
                     {
@@ -3611,14 +3611,14 @@ namespace WinPaletter.Theme
                 bmpList.Clear();
 
                 if (ReportProgress_Detailed)
-                    AddNode(TreeView, My.Env.Lang.Verbose_GetInstanceLogonUIImg, "info");
+                    AddNode(TreeView, Program.Lang.Verbose_GetInstanceLogonUIImg, "info");
 
                 switch (LogonElement.Mode)
                 {
                     case Theme.Structures.LogonUI7.Modes.Default:
                         {
                             for (int i = 5031; i <= 5043; i += +1)
-                                bmpList.Add(PE_Functions.GetPNGFromDLL(My.Env.PATH_imageres, i, "IMAGE", My.MyProject.Computer.Screen.Bounds.Size.Width, My.MyProject.Computer.Screen.Bounds.Size.Height));
+                                bmpList.Add(PE_Functions.GetPNGFromDLL(Program.PATH_imageres, i, "IMAGE", Program.Computer.Screen.Bounds.Size.Width, Program.Computer.Screen.Bounds.Size.Height));
                             break;
                         }
 
@@ -3626,11 +3626,11 @@ namespace WinPaletter.Theme
                         {
                             if (System.IO.File.Exists(LogonElement.ImagePath))
                             {
-                                bmpList.Add((Bitmap)Bitmap_Mgr.Load(LogonElement.ImagePath).Resize(My.MyProject.Computer.Screen.Bounds.Size));
+                                bmpList.Add((Bitmap)Bitmap_Mgr.Load(LogonElement.ImagePath).Resize(Program.Computer.Screen.Bounds.Size));
                             }
                             else
                             {
-                                bmpList.Add((Bitmap)Color.Black.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size));
+                                bmpList.Add((Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size));
                             }
 
                             break;
@@ -3638,15 +3638,15 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Modes.SolidColor:
                         {
-                            bmpList.Add((Bitmap)LogonElement.Color.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size));
+                            bmpList.Add((Bitmap)LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
                             break;
                         }
 
                     case Theme.Structures.LogonUI7.Modes.Wallpaper:
                         {
-                            using (Bitmap b = new Bitmap(My.MyProject.Application.GetWallpaper()))
+                            using (Bitmap b = new Bitmap(Program.GetWallpaper()))
                             {
-                                bmpList.Add((Bitmap)b.Resize(My.MyProject.Computer.Screen.Bounds.Size).Clone());
+                                bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
                             }
 
                             break;
@@ -3655,17 +3655,17 @@ namespace WinPaletter.Theme
                 }
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format(My.Env.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+                    AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
                     if (ReportProgress)
-                        AddNode(TreeView, string.Format("{3}: " + My.Env.Lang.TM_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
+                        AddNode(TreeView, string.Format("{3}: " + Program.Lang.TM_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
 
                     if (LogonElement.Grayscale)
                     {
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, My.Env.Lang.Verbose_GrayscaleLogonUIImg, "apply");
+                            AddNode(TreeView, Program.Lang.Verbose_GrayscaleLogonUIImg, "apply");
                         bmpList[x] = bmpList[x].Grayscale();
                     }
 
@@ -3673,7 +3673,7 @@ namespace WinPaletter.Theme
                     if (LogonElement.Blur)
                     {
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, My.Env.Lang.Verbose_BlurringLogonUIImg, "apply");
+                            AddNode(TreeView, Program.Lang.Verbose_BlurringLogonUIImg, "apply");
 
                         var imgF = new ImageProcessor.ImageFactory();
                         using (var b = new Bitmap(bmpList[x]))
@@ -3688,7 +3688,7 @@ namespace WinPaletter.Theme
                     if (LogonElement.Noise)
                     {
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, My.Env.Lang.Verbose_NoiseLogonUIImg, "apply");
+                            AddNode(TreeView, Program.Lang.Verbose_NoiseLogonUIImg, "apply");
 
                         bmpList[x] = bmpList[x].Noise(LogonElement.Noise_Mode, (float)(LogonElement.Noise_Intensity / 100d));
                     }
@@ -3696,17 +3696,35 @@ namespace WinPaletter.Theme
 
                 if (bmpList.Count == 1)
                 {
-                    bmpList[0].Save(DirX + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    if (Program.isElevated)
+                    {
+                        bmpList[0].Save(DirX + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                    else
+                    {
+                        bmpList[0].Save(Program.PATH_appData + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File(Program.PATH_appData + @"\backgroundDefault.jpg", DirX + @"\backgroundDefault.jpg");
+                    }
+
                     if (ReportProgress_Detailed)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_LogonUIImgSaved, DirX + @"\backgroundDefault.jpg"), "info");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgSaved, DirX + @"\backgroundDefault.jpg"), "info");
                 }
                 else
                 {
                     for (int x = 0, loopTo1 = bmpList.Count - 1; x <= loopTo1; x++)
                     {
-                        bmpList[x].Save(DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                        if (Program.isElevated)
+                        {
+                            bmpList[x].Save(DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                        }
+                        else
+                        {
+                            bmpList[x].Save(Program.PATH_appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                            Reg_IO.Move_File(Program.PATH_appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height));
+                        }
+
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_LogonUIImgNUMSaved, DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), x + 1), "info");
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgNUMSaved, DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), x + 1), "info");
 
                     }
                 }
@@ -3718,10 +3736,10 @@ namespace WinPaletter.Theme
         public void Apply_LogonUI_8(TreeView TreeView = null)
         {
 
-            bool ReportProgress = My.Env.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-            string lockimg = My.Env.PATH_appData + @"\LockScreen.png";
+            string lockimg = Program.PATH_appData + @"\LockScreen.png";
 
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows81.NoLockScreen.ToInteger());
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String);
@@ -3742,7 +3760,7 @@ namespace WinPaletter.Theme
                 Bitmap bmp;
 
                 if (ReportProgress_Detailed)
-                    AddNode(TreeView, My.Env.Lang.Verbose_GetInstanceLockScreenImg, "info");
+                    AddNode(TreeView, Program.Lang.Verbose_GetInstanceLockScreenImg, "info");
 
                 switch (Windows81.LockScreenType)
                 {
@@ -3750,14 +3768,14 @@ namespace WinPaletter.Theme
                         {
                             string syslock = "";
 
-                            if (System.IO.File.Exists(string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.png", My.Env.TM.Windows81.LockScreenSystemID)))
+                            if (System.IO.File.Exists(string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID)))
                             {
-                                syslock = string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.png", My.Env.TM.Windows81.LockScreenSystemID);
+                                syslock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID);
                             }
 
-                            else if (System.IO.File.Exists(string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.jpg", My.Env.TM.Windows81.LockScreenSystemID)))
+                            else if (System.IO.File.Exists(string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID)))
                             {
-                                syslock = string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.jpg", My.Env.TM.Windows81.LockScreenSystemID);
+                                syslock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID);
 
                             }
 
@@ -3767,7 +3785,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = (Bitmap)Color.Black.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             }
 
                             break;
@@ -3781,7 +3799,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = (Bitmap)Color.Black.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             }
 
                             break;
@@ -3789,13 +3807,13 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Modes.SolidColor:
                         {
-                            bmp = (Bitmap)LogonUI7.Color.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                            bmp = (Bitmap)LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             break;
                         }
 
                     case Theme.Structures.LogonUI7.Modes.Wallpaper:
                         {
-                            using (var b = new Bitmap(My.MyProject.Application.GetWallpaper()))
+                            using (var b = new Bitmap(Program.GetWallpaper()))
                             {
                                 bmp = (Bitmap)b.Clone();
                             }
@@ -3805,29 +3823,29 @@ namespace WinPaletter.Theme
 
                     default:
                         {
-                            bmp = (Bitmap)Color.Black.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                            bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             break;
                         }
 
                 }
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format(My.Env.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+                    AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}:  " + My.Env.Lang.TM_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, string.Format("{0}:  " + Program.Lang.TM_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
 
                 if (LogonUI7.Grayscale)
                 {
                     if (ReportProgress_Detailed)
-                        AddNode(TreeView, My.Env.Lang.Verbose_GrayscaleLockScreenImg, "apply");
+                        AddNode(TreeView, Program.Lang.Verbose_GrayscaleLockScreenImg, "apply");
                     bmp = bmp.Grayscale();
                 }
 
                 if (LogonUI7.Blur)
                 {
                     if (ReportProgress_Detailed)
-                        AddNode(TreeView, My.Env.Lang.Verbose_BlurringLockScreenImg, "apply");
+                        AddNode(TreeView, Program.Lang.Verbose_BlurringLockScreenImg, "apply");
                     var imgF = new ImageProcessor.ImageFactory();
                     using (var b = new Bitmap(bmp))
                     {
@@ -3841,7 +3859,7 @@ namespace WinPaletter.Theme
                 if (LogonUI7.Noise)
                 {
                     if (ReportProgress_Detailed)
-                        AddNode(TreeView, My.Env.Lang.Verbose_NoiseLockScreenImg, "apply");
+                        AddNode(TreeView, Program.Lang.Verbose_NoiseLockScreenImg, "apply");
                     bmp = bmp.Noise(LogonUI7.Noise_Mode, (float)(LogonUI7.Noise_Intensity / 100d));
                 }
 
@@ -3849,7 +3867,8 @@ namespace WinPaletter.Theme
                     FileSystem.Kill(lockimg);
 
                 if (ReportProgress_Detailed)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_LockScreenImgSaved, lockimg), "info");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_LockScreenImgSaved, lockimg), "info");
+
                 bmp.Save(lockimg);
 
             }
@@ -3861,10 +3880,10 @@ namespace WinPaletter.Theme
             if (CommandPrompt.Enabled)
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt, TreeView);
-                if (My.Env.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
+                if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
                     Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
 
-                if (My.Env.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "", CommandPrompt, TreeView);
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
@@ -3877,7 +3896,7 @@ namespace WinPaletter.Theme
             if (PowerShellx86.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
-                if (My.Env.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
                 }
@@ -3889,7 +3908,7 @@ namespace WinPaletter.Theme
             if (PowerShellx64.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
-                if (My.Env.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
                 }
@@ -3898,14 +3917,14 @@ namespace WinPaletter.Theme
 
         public void Apply_Cursors(TreeView TreeView = null)
         {
-            bool ReportProgress = My.Env.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled);
 
             var sw = new Stopwatch();
             if (ReportProgress)
-                AddNode(TreeView, string.Format("{0}: " + My.Env.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
+                AddNode(TreeView, string.Format("{0}: " + Program.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
 
             sw.Reset();
             sw.Start();
@@ -3929,56 +3948,56 @@ namespace WinPaletter.Theme
             Theme.Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, ReportProgress_Detailed ? TreeView : null);
 
             if (ReportProgress)
-                AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
             sw.Stop();
 
             if (Cursor_Enabled)
             {
-                this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, My.Env.Lang.TM_RenderingCursors, My.Env.Lang.TM_RenderingCursors_Error, My.Env.Lang.TM_Time);
+                this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, Program.Lang.TM_RenderingCursors, Program.Lang.TM_RenderingCursors_Error, Program.Lang.TM_Time);
 
-                if (My.Env.Settings.ThemeApplyingBehavior.AutoApplyCursors)
+                if (Program.Settings.ThemeApplyingBehavior.AutoApplyCursors)
                 {
                     this.Execute(new MethodInvoker(() =>
                         {
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORSHADOW.ToString(), 0, Cursor_Shadow, SPIF.UpdateINIFile.ToString()), "dll");
+                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORSHADOW.ToString(), 0, Cursor_Shadow, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo((int)SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, (int)SPIF.UpdateINIFile);
 
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSESONAR.ToString(), 0, Cursor_Sonar, SPIF.UpdateINIFile.ToString()), "dll");
+                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSESONAR.ToString(), 0, Cursor_Sonar, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo((int)SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, (int)SPIF.UpdateINIFile);
 
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSETRAILS.ToString(), 0, Cursor_Trails, SPIF.UpdateINIFile.ToString()), "dll");
+                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSETRAILS.ToString(), 0, Cursor_Trails, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo((int)SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, (int)SPIF.UpdateINIFile);
 
                             ApplyCursorsToReg("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
 
-                            if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
                                 EditReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails);
                                 ApplyCursorsToReg(@"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
                             }
 
-                        }), TreeView, My.Env.Lang.TM_ApplyingCursors, My.Env.Lang.TM_CursorsApplying_Error, My.Env.Lang.TM_Time);
+                        }), TreeView, Program.Lang.TM_ApplyingCursors, Program.Lang.TM_CursorsApplying_Error, Program.Lang.TM_Time);
                 }
                 else if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Restricted_Cursors), "error");
+                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Restricted_Cursors), "error");
             }
 
-            else if (My.Env.Settings.ThemeApplyingBehavior.ResetCursorsToAero)
+            else if (Program.Settings.ThemeApplyingBehavior.ResetCursorsToAero)
             {
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
                     ResetCursorsToAero("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
-                    if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                    if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                         ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                 }
 
                 else
                 {
                     ResetCursorsToNone_XP("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
-                    if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                    if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                         ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                 }
@@ -3991,8 +4010,8 @@ namespace WinPaletter.Theme
         #region Cursors Render
         public void ExportCursors(Manager TM, TreeView TreeView = null)
         {
-            bool ReportProgress = My.Env.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             try { RenderCursor(Paths.CursorType.Arrow, TM, ReportProgress_Detailed ? TreeView : null); }
             catch { }
@@ -4142,14 +4161,14 @@ namespace WinPaletter.Theme
             }
 
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_RenderingCursor, CurName), "pe_patch");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_RenderingCursor, CurName), "pe_patch");
 
             if (!(Type == Paths.CursorType.Busy) & !(Type == Paths.CursorType.AppLoading))
             {
 
-                if (!Directory.Exists(My.Env.PATH_CursorsWP))
-                    Directory.CreateDirectory(My.Env.PATH_CursorsWP);
-                string Path = string.Format(My.Env.PATH_CursorsWP + @"\{0}.cur", CurName);
+                if (!Directory.Exists(Program.PATH_CursorsWP))
+                    Directory.CreateDirectory(Program.PATH_CursorsWP);
+                string Path = string.Format(Program.PATH_CursorsWP + @"\{0}.cur", CurName);
 
                 var fs = new FileStream(Path, FileMode.Create);
                 var EO = new EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor);
@@ -4290,7 +4309,7 @@ namespace WinPaletter.Theme
                 fs.Close();
 
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CursorRenderedInto, Path), "info");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, Path), "info");
             }
 
             else
@@ -4362,9 +4381,9 @@ namespace WinPaletter.Theme
                         seqNums[ixx] = (uint)ixx;
                     }
 
-                    if (!Directory.Exists(My.Env.PATH_CursorsWP))
-                        Directory.CreateDirectory(My.Env.PATH_CursorsWP);
-                    var fs = new FileStream(string.Format(My.Env.PATH_CursorsWP + @"\{0}_{1}x.ani", CurName, i), FileMode.Create);
+                    if (!Directory.Exists(Program.PATH_CursorsWP))
+                        Directory.CreateDirectory(Program.PATH_CursorsWP);
+                    var fs = new FileStream(string.Format(Program.PATH_CursorsWP + @"\{0}_{1}x.ani", CurName, i), FileMode.Create);
 
                     var AN = new EOANIWriter(fs, (uint)Count, (uint)Speed, frameRates, seqNums, null, null, HotPoint);
 
@@ -4372,7 +4391,7 @@ namespace WinPaletter.Theme
                         AN.WriteFrame32(BMPList[ix]);
 
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CursorRenderedInto, string.Format(My.Env.PATH_CursorsWP + @"\{0}_{1}x.ani", CurName, i)), "info");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, string.Format(Program.PATH_CursorsWP + @"\{0}_{1}x.ani", CurName, i)), "info");
 
                     fs.Close();
                 }
@@ -4383,7 +4402,7 @@ namespace WinPaletter.Theme
 
         public void ApplyCursorsToReg(string scopeReg = "HKEY_CURRENT_USER", TreeView TreeView = null)
         {
-            string Path = My.Env.PATH_CursorsWP;
+            string Path = Program.PATH_CursorsWP;
 
             string RegValue;
             RegValue = string.Format(@"{0}\{1}", Path, "Arrow.cur");
@@ -4413,43 +4432,43 @@ namespace WinPaletter.Theme
             EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
 
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
             x = string.Format(@"{0}\{1}", Path, "Arrow.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
             x = string.Format(@"{0}\{1}", Path, "Cross.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
 
             x = string.Format(@"{0}\{1}", Path, "Link.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
 
             x = string.Format(@"{0}\{1}", Path, "Help.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
 
             x = string.Format(@"{0}\{1}", Path, "IBeam.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
             x = string.Format(@"{0}\{1}", Path, "None.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
 
             x = string.Format(@"{0}\{1}", Path, "Pen.cur");
@@ -4467,47 +4486,47 @@ namespace WinPaletter.Theme
             x = string.Format(@"{0}\{1}", Path, "Move.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
             x = string.Format(@"{0}\{1}", Path, "NESW.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
             x = string.Format(@"{0}\{1}", Path, "NS.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
             x = string.Format(@"{0}\{1}", Path, "NWSE.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
             x = string.Format(@"{0}\{1}", Path, "EW.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
             x = string.Format(@"{0}\{1}", Path, "Up.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
 
             x = string.Format(@"{0}\{1}", Path, "Busy_1x.ani");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
             SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
 
             if (TreeView is not null)
-                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
+                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
             SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
         }
 
@@ -4522,7 +4541,7 @@ namespace WinPaletter.Theme
                     if (Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", false) is not null)
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
                         var rx = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", true);
                         rx.DeleteValue("WinPaletter", false);
                         rx.Close();
@@ -4538,7 +4557,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
                 }
 
@@ -4547,7 +4566,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
                 }
 
@@ -4556,7 +4575,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
                 }
 
@@ -4565,7 +4584,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
                 }
 
@@ -4574,7 +4593,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
                 }
 
@@ -4583,7 +4602,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
                 }
 
@@ -4592,7 +4611,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
                 }
 
@@ -4613,7 +4632,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
                 }
 
@@ -4622,7 +4641,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
                 }
 
@@ -4631,7 +4650,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
                 }
 
@@ -4640,7 +4659,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
                 }
 
@@ -4649,7 +4668,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
                 }
 
@@ -4658,7 +4677,7 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
                 }
 
@@ -4667,20 +4686,20 @@ namespace WinPaletter.Theme
                 if (System.IO.File.Exists(x))
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
                     SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
                 }
 
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
             }
 
             catch (Exception ex)
             {
 
-                if (MsgBox(My.Env.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                    Forms.BugReport.ThrowError(ex);
 
             }
 
@@ -4699,7 +4718,7 @@ namespace WinPaletter.Theme
                         if (Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", false) is not null)
                         {
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
+                                AddNode(TreeView, string.Format(Program.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
                             var rx = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", true);
                             rx.DeleteValue("WinPaletter", false);
                             rx.Close();
@@ -4718,84 +4737,84 @@ namespace WinPaletter.Theme
                 string x = "";
                 EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
                 SetSystemCursor(User32.LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
 
                 if (TreeView is not null)
-                    AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
             }
 
             catch (Exception ex)
             {
 
-                if (MsgBox(My.Env.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                    Forms.BugReport.ThrowError(ex);
 
             }
 

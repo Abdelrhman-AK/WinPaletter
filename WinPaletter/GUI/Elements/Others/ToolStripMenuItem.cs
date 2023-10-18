@@ -11,7 +11,7 @@ namespace WinPaletter.UI.WP
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.TextRenderingHint = My.Env.RenderingHint;
+            e.Graphics.TextRenderingHint = Program.RenderingHint;
             e.Graphics.Clear(BackColor);
             using (var br = new SolidBrush(ForeColor))
             {

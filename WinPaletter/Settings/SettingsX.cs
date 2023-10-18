@@ -19,31 +19,29 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
-
-
         public void LoadSettings()
         {
             WPSettings sets;
 
             if (!_External)
-                sets = My.Env.Settings;
+                sets = Program.Settings;
             else
                 sets = new WPSettings(WPSettings.Mode.File, _File);
             Read(sets);
 
             {
-                ref Localizer lang = ref My.Env.Lang;
+                ref Localizer lang = ref Program.Lang;
                 Label11.Text = lang.Name;
                 Label12.Text = lang.TranslationVersion;
-                Label14.Text = lang.AppVer + " " + My.Env.Lang.AndBelow;
+                Label14.Text = lang.AppVer + " " + Program.Lang.AndBelow;
                 Label19.Text = lang.Lang;
                 Label16.Text = lang.LangCode;
-                Label22.Text = !lang.RightToLeft ? My.Env.Lang.Lang_HasLeftToRight : My.Env.Lang.Lang_HasRightToLeft;
+                Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
             }
 
             if (_External)
                 OpenFileDialog1.FileName = _File;
-            TextBox3.Text = My.Env.Settings.Language.File;
+            TextBox3.Text = Program.Settings.Language.File;
         }
         public void Read(WPSettings Sets)
         {
@@ -106,6 +104,7 @@ namespace WinPaletter
             CheckBox3.Checked = Sets.NerdStats.MoreLabelTransparency;
             CheckBox31.Checked = Sets.NerdStats.UseWindowsMonospacedFont;
             CheckBox34.Checked = Sets.NerdStats.DotDefaultChangedIndicator;
+            CheckBox32.Checked = Sets.NerdStats.Classic_Color_Picker;
 
             switch (Sets.ThemeLog.VerboseLevel)
             {
@@ -197,7 +196,9 @@ namespace WinPaletter
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
             CheckBox4.Checked = Sets.Store.ShowTips;
 
-            CheckBox32.Checked = Sets.Miscellaneous.Classic_Color_Picker;
+            checkBox19.Checked = Sets.Miscellaneous.DontUseWPElevatorConsole;
+            checkBox39.Checked = Sets.Miscellaneous.ShowWPElevatorConsole;
+
         }
         public void SaveSettings()
         {
@@ -209,9 +210,10 @@ namespace WinPaletter
             bool ch_lang = false;
             bool ch_appearance = false;
             bool ch_EP = false;
+            //bool ch_WPElevator = false;
 
             {
-                ref WPSettings Settings = ref My.Env.Settings;
+                ref WPSettings Settings = ref Program.Settings;
                 if (Settings.Appearance.DarkMode != RadioButton3.Checked)
                     ch_appearance = true;
                 if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
@@ -256,9 +258,12 @@ namespace WinPaletter
                     ch_EP = true;
                 if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     ch_EP = true;
+
+                //if (Settings.Miscellaneous.DontUseWPElevatorConsole != checkBox19.Checked)
+                //    ch_WPElevator = true;
             }
 
-            Write(My.Env.Settings, WPSettings.Mode.Registry);
+            Write(Program.Settings, WPSettings.Mode.Registry);
 
             if (ch_appearance)
             {
@@ -274,61 +279,61 @@ namespace WinPaletter
 
             if (ch_terminal)
             {
-                if (My.Env.W10 | My.Env.W11)
+                if (Program.W10 | Program.W11)
                 {
                     string TerDir;
                     string TerPreDir;
 
-                    if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
                     {
-                        TerDir = My.Env.PATH_TerminalJSON;
-                        TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                        TerDir = Program.PATH_TerminalJSON;
+                        TerPreDir = Program.PATH_TerminalPreviewJSON;
                     }
                     else
                     {
-                        if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                        if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                         {
-                            TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                            TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                         }
                         else
                         {
-                            TerDir = My.Env.PATH_TerminalJSON;
+                            TerDir = Program.PATH_TerminalJSON;
                         }
 
-                        if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                        if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                         {
-                            TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                            TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                         }
                         else
                         {
-                            TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                            TerPreDir = Program.PATH_TerminalPreviewJSON;
                         }
                     }
 
 
                     if (File.Exists(TerDir))
                     {
-                        My.Env.TM.Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
+                        Program.TM.Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
                     }
                     else
                     {
-                        My.Env.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                        Program.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
                     }
 
                     if (File.Exists(TerPreDir))
                     {
-                        My.Env.TM.TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
                     else
                     {
-                        My.Env.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                     }
                 }
 
                 else
                 {
-                    My.Env.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                    My.Env.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                    Program.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                    Program.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                 }
             }
 
@@ -336,30 +341,34 @@ namespace WinPaletter
             {
                 if (CheckBox8.Checked)
                 {
-                    My.Env.Lang = new Localizer();
-                    My.Env.Lang.LoadLanguageFromJSON(My.Env.Settings.Language.File);
-                    foreach (Form f in My.MyProject.Application.OpenForms)
+                    Program.Lang = new Localizer();
+                    Program.Lang.LoadLanguageFromJSON(Program.Settings.Language.File);
+                    foreach (Form f in Application.OpenForms)
                         f.LoadLanguage();
-                    My.MyProject.Forms.MainFrm.UpdateLegends();
+                    Forms.MainFrm.UpdateLegends();
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.LanguageRestart, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    WPStyle.MsgBox(Program.Lang.LanguageRestart, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
             if (ch_EP)
             {
-                My.Env.EP = new ExplorerPatcher();
-                My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
-                My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
-                My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM, false);
-                PreviewHelpers.ReValidateLivePreview(My.MyProject.Forms.MainFrm.pnl_preview);
+                Program.EP = new ExplorerPatcher();
+                Forms.MainFrm.ApplyColorsToElements(Program.TM);
+                Forms.MainFrm.LoadFromTM(Program.TM);
+                Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
+                PreviewHelpers.ReValidateLivePreview(Forms.MainFrm.pnl_preview);
             }
+
+            //if (ch_WPElevator)
+            //    if (!Program.isElevated && !Program.Settings.Miscellaneous.DontUseWPElevatorConsole)
+            //        MyApplication.CMD_Wrapper.Start();
 
             Cursor = Cursors.Default;
 
-            WPStyle.MsgBox(My.Env.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            WPStyle.MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void Write(WPSettings Sets, WPSettings.Mode Mode, string File = "")
         {
@@ -391,6 +400,7 @@ namespace WinPaletter
             Sets.NerdStats.DragAndDrop = CheckBox35.Checked;
             Sets.NerdStats.DragAndDropColorsGuide = CheckBox37.Checked;
             Sets.NerdStats.DragAndDropRippleEffect = CheckBox38.Checked;
+            Sets.NerdStats.Classic_Color_Picker = CheckBox32.Checked;
 
             Sets.WindowsTerminals.Bypass = CheckBox12.Checked;
             Sets.WindowsTerminals.ListAllFonts = CheckBox13.Checked;
@@ -469,7 +479,8 @@ namespace WinPaletter
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
             Sets.Store.ShowTips = CheckBox4.Checked;
 
-            Sets.Miscellaneous.Classic_Color_Picker = CheckBox32.Checked;
+            Sets.Miscellaneous.DontUseWPElevatorConsole = checkBox19.Checked;
+            Sets.Miscellaneous.ShowWPElevatorConsole = checkBox39.Checked;
 
             Sets.Save(Mode, File);
         }
@@ -480,7 +491,7 @@ namespace WinPaletter
             Changed = false;
 
             {
-                ref WPSettings Settings = ref My.Env.Settings;
+                ref WPSettings Settings = ref Program.Settings;
                 if (Settings.FileTypeManagement.AutoAddExt != CheckBox1.Checked)
                     Changed = true;
                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
@@ -497,7 +508,7 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.Miscellaneous.Win7LivePreview != CheckBox9.Checked)
                     Changed = true;
-                if (Settings.Miscellaneous.Classic_Color_Picker != CheckBox32.Checked)
+                if (Settings.NerdStats.Classic_Color_Picker != CheckBox32.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != CheckBox17.Checked)
                     Changed = true;
@@ -641,11 +652,16 @@ namespace WinPaletter
                 if (Settings.Store.ShowTips != CheckBox4.Checked)
                     Changed = true;
 
+                if (Settings.Miscellaneous.DontUseWPElevatorConsole != checkBox19.Checked)
+                    Changed = true;
+                if (Settings.Miscellaneous.ShowWPElevatorConsole != checkBox39.Checked)
+                    Changed = true;
+
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
             {
-                switch (WPStyle.MsgBox(My.Env.Lang.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (WPStyle.MsgBox(Program.Lang.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Cancel:
                         {
@@ -687,8 +703,8 @@ namespace WinPaletter
         private void SettingsX_Load(object sender, EventArgs e)
         {
             ComboBox2.Items.Clear();
-            ComboBox2.Items.Add(My.Env.Lang.Stable);
-            ComboBox2.Items.Add(My.Env.Lang.Beta);
+            ComboBox2.Items.Add(Program.Lang.Stable);
+            ComboBox2.Items.Add(Program.Lang.Beta);
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             LoadSettings();
@@ -699,7 +715,7 @@ namespace WinPaletter
             EP_Taskbar_11.Image = EP_Start_11.Image;
             EP_Taskbar_10.Image = EP_Start_10.Image;
 
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
             {
                 EP_ORB_11.Image = Properties.Resources.StartBtn_11_EP.Resize(w, w);
                 EP_ORB_10.Image = Properties.Resources.StartBtn_10Dark.Resize(w, w);
@@ -710,28 +726,28 @@ namespace WinPaletter
                 EP_ORB_10.Image = Properties.Resources.StartBtn_10Light.Resize(w, w);
             }
 
-            if (My.Env.WXP)
+            if (Program.WXP)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(My.Env.Lang.UpdatesOSNoTLS12, My.Env.Lang.OS_WinXP);
+                AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP);
             }
 
-            else if (My.Env.WVista)
+            else if (Program.WVista)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(My.Env.Lang.UpdatesOSNoTLS12, My.Env.Lang.OS_WinVista);
+                AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinVista);
             }
 
-            Label38.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label43.Font = My.MyProject.Application.ConsoleFontMedium;
+            Label38.Font = Program.ConsoleFontMedium;
+            Label43.Font = Program.ConsoleFontMedium;
 
         }
 
         public int CalcStoreCache()
         {
-            if (Directory.Exists(My.Env.PATH_StoreCache))
+            if (Directory.Exists(Program.PATH_StoreCache))
             {
-                return (int)Directory.EnumerateFiles(My.Env.PATH_StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(Program.PATH_StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -741,9 +757,9 @@ namespace WinPaletter
 
         public int CalcThemesResCache()
         {
-            if (Directory.Exists(My.Env.PATH_ThemeResPackCache))
+            if (Directory.Exists(Program.PATH_ThemeResPackCache))
             {
-                return (int)Directory.EnumerateFiles(My.Env.PATH_ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(Program.PATH_ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -808,19 +824,19 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (WPStyle.MsgBox(My.Env.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, "", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.RemoveExtMsgNote) == DialogResult.Yes)
+            if (WPStyle.MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
             {
 
                 CheckBox1.Checked = false;
-                My.MyProject.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
-                My.MyProject.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");
-                My.MyProject.Application.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
+                Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
+                Program.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");
+                Program.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
             }
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Uninstall.ShowDialog();
+            Forms.Uninstall.ShowDialog();
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -838,10 +854,10 @@ namespace WinPaletter
 
                     Label11.Text = J["Information"]["name"].ToString();
                     Label12.Text = J["Information"]["translationversion"].ToString();
-                    Label14.Text = J["Information"]["appver"].ToString() + " " + My.Env.Lang.AndBelow;
+                    Label14.Text = J["Information"]["appver"].ToString() + " " + Program.Lang.AndBelow;
                     Label19.Text = J["Information"]["lang"].ToString();
                     Label16.Text = J["Information"]["langcode"].ToString();
-                    Label22.Text = !(bool)J["Information"]["righttoleft"] ? My.Env.Lang.Lang_HasLeftToRight : My.Env.Lang.Lang_HasRightToLeft;
+                    Label22.Text = !(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
                 }
                 catch
                 {
@@ -879,7 +895,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Lang_Dashboard.ShowDialog();
+            Forms.Lang_Dashboard.ShowDialog();
         }
 
         private void Button14_Click(object sender, EventArgs e)
@@ -887,7 +903,7 @@ namespace WinPaletter
             string inputText = "";
             if (ListBox1.SelectedItem is not null)
                 inputText = ListBox1.SelectedItem.ToString();
-            string response = WPStyle.InputBox(My.Env.Lang.InputThemeRepos, inputText, My.Env.Lang.InputThemeRepos_Notice);
+            string response = WPStyle.InputBox(Program.Lang.InputThemeRepos, inputText, Program.Lang.InputThemeRepos_Notice);
             if (!ListBox1.Items.Contains(response))
                 ListBox1.Items.Add(response);
         }
@@ -908,7 +924,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.Store_RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(Program.Lang.Store_RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -917,7 +933,7 @@ namespace WinPaletter
         private void Button18_Click(object sender, EventArgs e)
         {
 
-            if (!My.Env.WXP)
+            if (!Program.WXP)
             {
                 var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -952,7 +968,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(My.Env.PATH_StoreCache, true);
+                Directory.Delete(Program.PATH_StoreCache, true);
             }
             catch
             {
@@ -964,7 +980,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(My.Env.PATH_ThemeResPackCache, true);
+                Directory.Delete(Program.PATH_ThemeResPackCache, true);
             }
             catch
             {

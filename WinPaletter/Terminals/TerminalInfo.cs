@@ -17,7 +17,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.WindowsTerminal.Icon;
+            Icon = Forms.WindowsTerminal.Icon;
         }
 
         public DialogResult OpenDialog(bool IsDefault = false)
@@ -26,7 +26,7 @@ namespace WinPaletter
             TerTabTitle.Text = Profile.TabTitle;
             TerTabIcon.Text = Profile.Icon;
             TerTabColor.BackColor = Profile.TabColor;
-            TerAcrylic.Checked = My.Env.TM.TerminalPreview.UseAcrylicInTabRow;
+            TerAcrylic.Checked = Program.TM.TerminalPreview.UseAcrylicInTabRow;
 
             if (IsDefault)
             {
@@ -50,9 +50,9 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
 
-            if (My.MyProject.Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((My.MyProject.Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? "") == (TerName.Text.ToLower() ?? "")))
+            if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? "") == (TerName.Text.ToLower() ?? "")))
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace WinPaletter
             Profile.TabTitle = TerTabTitle.Text;
             Profile.Icon = TerTabIcon.Text;
             Profile.TabColor = TerTabColor.BackColor;
-            My.Env.TM.TerminalPreview.UseAcrylicInTabRow = TerAcrylic.Checked;
+            Program.TM.TerminalPreview.UseAcrylicInTabRow = TerAcrylic.Checked;
             DialogResult = DialogResult.OK;
         }
 
@@ -81,35 +81,35 @@ namespace WinPaletter
             if (e is DragEventArgs)
             {
                 {
-                    var temp = My.MyProject.Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? My.MyProject.Forms.WindowsTerminal._Terminal.DefaultProf : My.MyProject.Forms.WindowsTerminal._Terminal.Profiles[My.MyProject.Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+                    var temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
                     temp.TabColor = TerTabColor.BackColor;
                 }
 
-                My.MyProject.Forms.WindowsTerminal.ApplyPreview(My.MyProject.Forms.WindowsTerminal._Terminal);
+                Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
                 return;
             }
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var cx = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
+                var cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
 
                 {
-                    var temp1 = My.MyProject.Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? My.MyProject.Forms.WindowsTerminal._Terminal.DefaultProf : My.MyProject.Forms.WindowsTerminal._Terminal.Profiles[My.MyProject.Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+                    var temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
                     temp1.TabColor = cx;
                 }
 
-                My.MyProject.Forms.WindowsTerminal.ApplyPreview(My.MyProject.Forms.WindowsTerminal._Terminal);
+                Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
 
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, My.MyProject.Forms.WindowsTerminal.Terminal1 };
+            var CList = new List<Control>() { (Control)sender, Forms.WindowsTerminal.Terminal1 };
 
             var _Conditions = new Conditions() { Terminal_TabColor = true };
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
-            My.MyProject.Forms.WindowsTerminal.ApplyPreview(My.MyProject.Forms.WindowsTerminal._Terminal);
+            Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();

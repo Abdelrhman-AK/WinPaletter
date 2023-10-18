@@ -244,8 +244,8 @@ namespace WinPaletter
             var CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - bmp.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - bmp.Height) / 2d), bmp.Width, bmp.Height);
 
 
-            var bkC = _Focused ? My.Env.Style.Colors.Back_Checked : My.Env.Style.Colors.Back;
-            var bkCC = Color.FromArgb(alpha, My.Env.Style.Colors.Back_Checked);
+            var bkC = _Focused ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
+            var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
 
             using (var br = new SolidBrush(bkC))
             {
@@ -256,8 +256,8 @@ namespace WinPaletter
                 e.Graphics.FillRoundedRect(br, MainRect);
             }
 
-            var lC = Color.FromArgb(255 - alpha, _Focused ? My.Env.Style.Colors.Border_Checked : My.Env.Style.Colors.Border);
-            var lCC = Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover);
+            var lC = Color.FromArgb(255 - alpha, _Focused ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
+            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
 
             using (var P = new Pen(lC))
             {

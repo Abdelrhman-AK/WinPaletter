@@ -31,40 +31,40 @@ namespace WinPaletter
         public static void ReplaceResource(string SourceFile, string ResourceType, int ID, byte[] NewRes, ushort LangID = 1033, TreeView TreeView = null)
         {
 
-            if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(My.Env.PATH_Windows, My.Env._ignore))
+            if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(Program.PATH_Windows, Program._ignore))
             {
                 // It is a system PE file that needs rights/permissions modification.
 
-                if (My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && My.Env.Settings.ThemeApplyingBehavior.PE_ModifyByDefault || !My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && My.MyProject.Forms.PE_Warning.NotifyAction(SourceFile, ResourceType, ID, LangID) == DialogResult.OK)
+                if (Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Program.Settings.ThemeApplyingBehavior.PE_ModifyByDefault || !Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Forms.PE_Warning.NotifyAction(SourceFile, ResourceType, ID, LangID) == DialogResult.OK)
                 {
 
                     string TempFile = System.IO.Path.GetTempFileName();
 
                     if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
+                        Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
                     PreparePrivileges();                                     // To get authorized access to change PE file access/permissions
 
                     if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                        Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
                     if (CreateBackup(SourceFile))                        // Makes a copy of EP file as a backup file
                     {
 
                         if (TreeView is not null)
-                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                            Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
                         if (BackupPermissions(SourceFile, TempFile))     // Source file rights have been backed up successfully
                         {
 
                             if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
+                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
                             PreparePrivileges();                             // To get authorized access to change resources for PE file
 
                             if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
                             var PE_File = new PortableExecutable(SourceFile);
                             PE_File.SetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
 
                             if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
+                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
                             RestorePermissions(SourceFile, TempFile);        // Restore source file rights
 
                         }

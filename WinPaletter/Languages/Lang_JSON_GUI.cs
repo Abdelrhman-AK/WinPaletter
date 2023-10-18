@@ -64,7 +64,7 @@ namespace WinPaletter
             data.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             data.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-            data.Columns[0].DefaultCellStyle.Font = My.MyProject.Application.ConsoleFontMedium;
+            data.Columns[0].DefaultCellStyle.Font = Program.ConsoleFontMedium;
             data.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             data.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -74,10 +74,10 @@ namespace WinPaletter
 
             JObject JObject = (JObject)JToken.Parse(System.IO.File.ReadAllText(LangFile))["Global Strings"];
 
-            foreach (PropertyInfo property in My.Env.Lang.GetType().GetProperties())
+            foreach (PropertyInfo property in Program.Lang.GetType().GetProperties())
             {
 
-                if (!string.IsNullOrWhiteSpace(property.GetValue(My.Env.Lang).ToString()) & !((property.Name.ToLower() ?? "") == ("Name".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("TranslationVersion".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("Lang".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("LangCode".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("AppVer".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("RightToLeft".ToLower() ?? "")))
+                if (!string.IsNullOrWhiteSpace(property.GetValue(Program.Lang).ToString()) & !((property.Name.ToLower() ?? "") == ("Name".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("TranslationVersion".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("Lang".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("LangCode".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("AppVer".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("RightToLeft".ToLower() ?? "")))
                 {
 
                     var row = new DataGridViewRow();
@@ -86,7 +86,7 @@ namespace WinPaletter
                     row.Cells[0].Value = property.Name.ToLower();
                     row.Cells[0].ReadOnly = true;
 
-                    row.Cells[2].Value = property.GetValue(My.Env.Lang).ToString();
+                    row.Cells[2].Value = property.GetValue(Program.Lang).ToString();
                     row.Cells[2].ReadOnly = true;
 
 
@@ -97,13 +97,13 @@ namespace WinPaletter
 
                         if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? "") == (row.Cells[1].Value.ToString().ToLower().Trim() ?? ""))
                         {
-                            row.Cells[1].Style.BackColor = My.Env.Style.Colors.NotTranslatedColor;
+                            row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
                         }
                     }
 
                     else
                     {
-                        row.Cells[1].Style.BackColor = My.Env.Style.Colors.NotTranslatedColor;
+                        row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
                         row.Cells[1].Value = "";
                         row.Cells[1].ReadOnly = false;
                     }
@@ -170,7 +170,7 @@ namespace WinPaletter
                     }
 
                     i += 1;
-                    Label5.SetText(string.Format(My.Env.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)ITypes.Count() * 100d)));
+                    Label5.SetText(string.Format(Program.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)ITypes.Count() * 100d)));
                 }
             }
 
@@ -186,7 +186,7 @@ namespace WinPaletter
             ProgressBar1.Visible = false;
             ProgressBar1.Value = 0;
 
-            Label5.SetText(My.Env.Lang.Lang_ChooseAForm);
+            Label5.SetText(Program.Lang.Lang_ChooseAForm);
         }
 
         public Form CreateMiniForm(Form Form, Form OriginalForm)
@@ -620,7 +620,7 @@ namespace WinPaletter
                 float left = e.CellBounds.Left + (keyPos <= 0 ? 0f : textMetricSize.Width); // + 2
                 var keyRect = new RectangleF(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
 
-                var fillBrush = new SolidBrush(My.Env.Style.Colors.SearchColor);
+                var fillBrush = new SolidBrush(Program.Style.Colors.SearchColor);
                 e.Graphics.FillRectangle(fillBrush, keyRect);
                 fillBrush.Dispose();
 
@@ -666,12 +666,12 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            TextBox8.Text = My.MyProject.Forms.Lang_ReplaceText.Replace(data, 1, TextBox8.Text);
+            TextBox8.Text = Forms.Lang_ReplaceText.Replace(data, 1, TextBox8.Text);
         }
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            TextBox9.Text = My.MyProject.Forms.Lang_ReplaceText.Replace(_Form, TextBox9.Text);
+            TextBox9.Text = Forms.Lang_ReplaceText.Replace(_Form, TextBox9.Text);
         }
 
         private void TextBox9_TextChanged(object sender, EventArgs e)
@@ -694,7 +694,7 @@ namespace WinPaletter
 
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
-            Icon = My.MyProject.Forms.Lang_JSON_Manage.Icon;
+            Icon = Forms.Lang_JSON_Manage.Icon;
             LangFile = "";
             AlertBox1.Visible = true;
             GroupBox8.Visible = false;
@@ -705,9 +705,9 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            Label4.Font = My.MyProject.Application.ConsoleFontMedium;
+            Label4.Font = Program.ConsoleFontMedium;
             Label9.Font = Label4.Font;
-            Label5.Text = My.Env.Lang.Lang_ChooseAForm;
+            Label5.Text = Program.Lang.Lang_ChooseAForm;
             data.DoubleBuffer();
 
             ControlSelection += Lang_JSON_GUI_ControlSelection;
@@ -793,22 +793,22 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            TextBox7.Text = My.Env.AppVersion;
+            TextBox7.Text = Program.AppVersion;
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            if (My.MyProject.Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
+            if (Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
             {
-                TextBox3.Text = My.MyProject.Forms.Lang_Add_Snippet._Result;
+                TextBox3.Text = Forms.Lang_Add_Snippet._Result;
             }
         }
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            if (My.MyProject.Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
+            if (Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
             {
-                TextBox4.Text = My.MyProject.Forms.Lang_Add_Snippet._Result;
+                TextBox4.Text = Forms.Lang_Add_Snippet._Result;
             }
         }
 
@@ -872,7 +872,7 @@ namespace WinPaletter
 
                 System.IO.File.WriteAllText(LangFile, JObj.ToString());
 
-                WPStyle.MsgBox(My.Env.Lang.LangSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WPStyle.MsgBox(Program.Lang.LangSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -884,7 +884,7 @@ namespace WinPaletter
             }
             else
             {
-                data[1, e.RowIndex].Style.BackColor = My.Env.Style.Colors.NotTranslatedColor;
+                data[1, e.RowIndex].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
             }
         }
 

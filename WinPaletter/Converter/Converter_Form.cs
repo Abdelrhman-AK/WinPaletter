@@ -20,12 +20,12 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            CheckBox1.Checked = My.Env.Settings.FileTypeManagement.CompressThemeFile;
-            Label3.Font = My.MyProject.Application.ConsoleFontMedium;
+            CheckBox1.Checked = Program.Settings.FileTypeManagement.CompressThemeFile;
+            Label3.Font = Program.ConsoleFontMedium;
 
-            if (System.IO.File.Exists(My.MyProject.Forms.MainFrm.OpenFileDialog1.FileName) && !System.IO.File.Exists(TextBox1.Text))
+            if (System.IO.File.Exists(Forms.MainFrm.OpenFileDialog1.FileName) && !System.IO.File.Exists(TextBox1.Text))
             {
-                TextBox1.Text = My.MyProject.Forms.MainFrm.OpenFileDialog1.FileName;
+                TextBox1.Text = Forms.MainFrm.OpenFileDialog1.FileName;
             }
 
         }
@@ -41,7 +41,7 @@ namespace WinPaletter
             {
                 case Converter_CP.WP_Format.JSON:
                     {
-                        Label3.Text = My.Env.Lang.Convert_JSON_To_Old;
+                        Label3.Text = Program.Lang.Convert_JSON_To_Old;
                         CheckBox2.Enabled = true;
                         CheckBox1.Enabled = false;
                         break;
@@ -49,7 +49,7 @@ namespace WinPaletter
 
                 case Converter_CP.WP_Format.WPTH:
                     {
-                        Label3.Text = My.Env.Lang.Convert_Old_To_JSON;
+                        Label3.Text = Program.Lang.Convert_Old_To_JSON;
                         CheckBox2.Enabled = false;
                         CheckBox1.Enabled = true;
                         break;
@@ -57,7 +57,7 @@ namespace WinPaletter
 
                 case Converter_CP.WP_Format.Error:
                     {
-                        Label3.Text = My.Env.Lang.Convert_Error_Phrasing;
+                        Label3.Text = Program.Lang.Convert_Error_Phrasing;
                         CheckBox2.Enabled = false;
                         CheckBox1.Enabled = false;
                         break;
@@ -72,7 +72,7 @@ namespace WinPaletter
                 if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     _Convert.Convert(TextBox1.Text, SaveFileDialog1.FileName, CheckBox1.Checked, CheckBox2.Checked);
-                    WPStyle.MsgBox(My.Env.Lang.Convert_Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    WPStyle.MsgBox(Program.Lang.Convert_Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

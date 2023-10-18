@@ -17,9 +17,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.BugReport.Icon;
+            Icon = Forms.BugReport.Icon;
 
-            TreeView1.ImageList = My.Env.Notifications_IL;
+            TreeView1.ImageList = Program.Notifications_IL;
             TreeView1.Nodes.Clear();
 
             foreach (var x in ex_List)
@@ -36,7 +36,7 @@ namespace WinPaletter
         {
 
             if (TreeView1.SelectedNode is not null)
-                My.MyProject.Forms.BugReport.ThrowError(ex_List[TreeView1.SelectedNode.Index].Item2);
+                Forms.BugReport.ThrowError(ex_List[TreeView1.SelectedNode.Index].Item2);
 
         }
 

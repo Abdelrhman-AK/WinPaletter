@@ -125,9 +125,12 @@ namespace WinPaletter
         public string MonitorIssue { get; set; } = @"Error occurred during loading registry monitor (Used in real-time-detection of wallpaper\dark mode change from registry). Resetting your wallpaper may fix the issue.";
         public string MonitorIssue2 { get; set; } = "Anyway, loading will continue without it.";
         public string LogoffQuestion { get; set; } = "Are you sure you want to log off?";
+        public string RestartQuestion { get; set; } = "Are you sure you want to restart your Windows?";
+        public string ShutdownQuestion { get; set; } = "Are you sure you want to shut down your Windows?";
         public string LogoffAlert1 { get; set; } = "This will close all open files and applications";
         public string LogoffAlert2 { get; set; } = "Logoff equals 'Sign out' in Windows 8.1, 10 & 11";
         public string LogoffNotFound { get; set; } = "Couldn't find logoff process in '{0}' directory. You should logoff your Windows profile manually.";
+        public string ShutdownNotFound { get; set; } = "Couldn't find shutdown.exe in '{0}' directory. You should restart or shutdown your Windows manually.";
         public string WallpaperTone_Notice { get; set; } = "This is for {0}. To change another OS preferences, switch the preview in main form";
         public string KillingExplorer { get; set; } = "Killing Explorer (To be restarted)";
         public string ExplorerRestarted { get; set; } = "Explorer Restarted. It took about {0} seconds to kill explorer";
@@ -139,6 +142,9 @@ namespace WinPaletter
         public string WP_Settings_FileType { get; set; } = "WinPaletter Settings File";
         public string WP_ResourcesPack_FileType { get; set; } = "WinPaletter Theme Resources Pack";
 
+        public string TM_ApplyingTheme { get; set; } = "Applying theme: {0}";
+        public string TM_CloseOnApplying0 { get; set; } = "WinPaletter is still applying the theme. Do you want to close it anyway?";
+        public string TM_CloseOnApplying1 { get; set; } = "If you close it, the theme won't be completely applied and it might be broken.";
         public string TM_11_StartMenu_Taskbar_AC { get; set; } = "Start menu, taskbar && action center";
         public string TM_11_ACHover_Links { get; set; } = "Action center hover && links";
         public string TM_11_Taskbar_ACHover_Links { get; set; } = "Taskbar color, action center hover && links";
@@ -261,8 +267,10 @@ namespace WinPaletter
         public string TM_AppliedWithErrors { get; set; } = "Applying theme done but with error/s. It took {0} seconds";
         public string TM_Applied { get; set; } = "Applying theme done. It took {0} seconds";
         public string TM_AllDone { get; set; } = "All operations are done";
-        public string TM_ErrorHappened { get; set; } = @"Error\s happened. Press on 'Show Errors' for details";
+        public string TM_FatalErrorHappened { get; set; } = @"Fatal error happened and WinPaletter won't be able to continue theme applying. Press on 'Show Errors' for details.";
+        public string TM_ErrorHappened { get; set; } = @"Error\s happened. Press on 'Show Errors' for details.";
         public string TM_LogWillClose { get; set; } = @"This log will close after {0} second\s";
+        public string TM_LogTimerFinished { get; set; } = @"The theme has been applied. You can close the log.";
         public string TM_RestoreCursorsError { get; set; } = "Error occurred during resetting cursors to aero. Anyway, process will continue.";
         public string TM_RestoreCursorsErrorPressOK { get; set; } = "Pressing OK will show details of exception error.";
         public string TM_RestoreCursorsTip { get; set; } = "If you want to restore default cursors, go to Control Panel > Mouse > Pointers";
@@ -433,7 +441,6 @@ namespace WinPaletter
         public string Store_LogoffRecommended { get; set; } = "It is recommended to logoff your Windows and logon to apply all effects of the theme";
         public string Store_Calculating { get; set; } = "Calculating ...";
         public string Store_AuthorURLRedirect { get; set; } = "This will redirect you to author's social media URL. Do you want to continue?";
-
         public string Store_Toggle_AppTheme { get; set; } = "WinPaletter application theme";
         public string Store_Toggle_LogonUI { get; set; } = "LogonUI screen";
         public string Store_Toggle_Cursors { get; set; } = "Cursors";
@@ -661,11 +668,11 @@ namespace WinPaletter
                                 {
                                     if (member.Item3.ToLower() == "text")
                                     {
-                                        if ((member.Item1.ToLower() ?? "") != (My.MyProject.Forms.Whatsnew.Name.ToLower() ?? ""))
+                                        if ((member.Item1.ToLower() ?? "") != (Forms.Whatsnew.Name.ToLower() ?? ""))
                                         {
                                             ctrl.SetText(member.Item4.ToString());
                                         }
-                                        else if (!My.MyProject.Forms.Whatsnew.TabControl1.TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
+                                        else if (!Forms.Whatsnew.TabControl1.TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
                                         {
                                             ctrl.SetText(member.Item4.ToString());
                                         }
@@ -711,7 +718,7 @@ namespace WinPaletter
             j_info.Add("TranslationVersion".ToLower(), newL.TranslationVersion);
             j_info.Add("Lang".ToLower(), newL.Lang);
             j_info.Add("LangCode".ToLower(), newL.LangCode);
-            j_info.Add("AppVer".ToLower(), My.Env.AppVersion);
+            j_info.Add("AppVer".ToLower(), Program.AppVersion);
             j_info.Add("RightToLeft".ToLower(), newL.RightToLeft);
 
             var j_globalstrings = new JObject();
@@ -736,7 +743,7 @@ namespace WinPaletter
                     var ins = new Form();
                     ins = (Form)Activator.CreateInstance(f);
 
-                    if ((ins.Name.ToLower() ?? "") != (My.MyProject.Forms.BK.Name.ToLower() ?? ""))
+                    if ((ins.Name.ToLower() ?? "") != (WinPaletter.Forms.BK.Name.ToLower() ?? ""))
                     {
                         JObject j_ctrl = new JObject(), j_child = new JObject();
                         j_ctrl.RemoveAll();
@@ -750,7 +757,7 @@ namespace WinPaletter
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? "") == (ctrl.Name ?? "")))
                             {
 
-                                if ((ins.Name.ToLower() ?? "") != (My.MyProject.Forms.Whatsnew.Name.ToLower() ?? ""))
+                                if ((ins.Name.ToLower() ?? "") != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? ""))
                                 {
                                     j_child.Add(ctrl.Name + ".Text", ctrl.Text);
                                 }
@@ -799,7 +806,7 @@ namespace WinPaletter
 
                 foreach (var f in Forms)
                 {
-                    if ((f.Name.ToLower() ?? "") != (My.MyProject.Forms.BK.Name.ToLower() ?? ""))
+                    if ((f.Name.ToLower() ?? "") != (WinPaletter.Forms.BK.Name.ToLower() ?? ""))
                     {
                         JObject j_ctrl = new JObject(), j_child = new JObject();
                         j_ctrl.RemoveAll();
@@ -813,7 +820,7 @@ namespace WinPaletter
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? "") == (ctrl.Name ?? "")))
                             {
 
-                                if ((f.Name.ToLower() ?? "") != (My.MyProject.Forms.Whatsnew.Name.ToLower() ?? ""))
+                                if ((f.Name.ToLower() ?? "") != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? ""))
                                 {
                                     j_child.Add(ctrl.Name + ".Text", ctrl.Text);
                                 }
@@ -873,8 +880,8 @@ namespace WinPaletter
         {
             if (Localizer is null)
             {
-                if (My.Env.Settings.Language.Enabled && File.Exists(My.Env.Settings.Language.File))
-                    My.Env.Lang.LoadFromStrings(Form);
+                if (Program.Settings.Language.Enabled && File.Exists(Program.Settings.Language.File))
+                    Program.Lang.LoadFromStrings(Form);
             }
             else
             {

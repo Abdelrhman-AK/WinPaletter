@@ -155,7 +155,7 @@ namespace WinPaletter
                     Desktop_HKU_DEFAULT = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
                     CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
                     AutoApplyCursors = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", true));
-                    ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", My.Env.WXP));
+                    ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", Program.WXP));
                     DelayMetrics = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "DelayMetrics", false));
                     SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
                     Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
@@ -322,8 +322,8 @@ namespace WinPaletter
                     Bypass = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Bypass", false));
                     ListAllFonts = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "ListAllFonts", false));
                     Path_Deflection = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Path_Deflection", false));
-                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", My.Env.PATH_TerminalJSON).ToString();
-                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", My.Env.PATH_TerminalPreviewJSON).ToString();
+                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", Program.PATH_TerminalJSON).ToString();
+                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", Program.PATH_TerminalPreviewJSON).ToString();
                 }
 
                 public void Save()
@@ -409,6 +409,7 @@ namespace WinPaletter
                 public bool DragAndDrop;
                 public bool DragAndDropColorsGuide;
                 public bool DragAndDropRippleEffect;
+                public bool Classic_Color_Picker;
 
                 public enum Formats
                 {
@@ -429,7 +430,7 @@ namespace WinPaletter
                     DragAndDrop = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDrop", true));
                     DragAndDropColorsGuide = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDropColorsGuide", true));
                     DragAndDropRippleEffect = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDropRippleEffect", true));
-
+                    Classic_Color_Picker = Conversions.ToBoolean(GetReg(REG_NerdStats, "Classic_Color_Picker", false));
                 }
 
                 public void Save()
@@ -443,6 +444,7 @@ namespace WinPaletter
                     EditReg(REG_NerdStats, "DragAndDrop", DragAndDrop);
                     EditReg(REG_NerdStats, "DragAndDropColorsGuide", DragAndDropColorsGuide);
                     EditReg(REG_NerdStats, "DragAndDropRippleEffect", DragAndDropRippleEffect);
+                    EditReg(REG_NerdStats, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord);
 
                 }
 
@@ -451,18 +453,21 @@ namespace WinPaletter
             public struct Miscellaneous
             {
                 public bool Win7LivePreview;
-                public bool Classic_Color_Picker;
+                public bool ShowWPElevatorConsole;
+                public bool DontUseWPElevatorConsole;
 
                 public void Load()
                 {
                     Win7LivePreview = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "Win7LivePreview", true));
-                    Classic_Color_Picker = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "Classic_Color_Picker", false));
+                    ShowWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "ShowWPElevatorConsole", false));
+                    DontUseWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "DontUseWPElevatorConsole", false));
                 }
 
                 public void Save()
                 {
                     EditReg(REG_Miscellaneous, "Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord);
-                    EditReg(REG_Miscellaneous, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord);
+                    EditReg(REG_Miscellaneous, "ShowWPElevatorConsole", ShowWPElevatorConsole, RegistryValueKind.DWord);
+                    EditReg(REG_Miscellaneous, "DontUseWPElevatorConsole", DontUseWPElevatorConsole, RegistryValueKind.DWord);
                 }
 
             }
@@ -481,7 +486,7 @@ namespace WinPaletter
         public Structures.Updates Updates = new Structures.Updates()
         {
             AutoCheck = true,
-            Channel = My.Env.IsBeta ? Structures.Updates.Channels.Beta : Structures.Updates.Channels.Stable
+            Channel = Program.IsBeta ? Structures.Updates.Channels.Beta : Structures.Updates.Channels.Stable
         };
 
         public Structures.FileTypeMgr FileTypeManagement = new Structures.FileTypeMgr()
@@ -501,7 +506,7 @@ namespace WinPaletter
             UPM_HKU_DEFAULT = true,
             Metrics_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             AutoApplyCursors = true,
-            ResetCursorsToAero = My.Env.WXP,
+            ResetCursorsToAero = Program.WXP,
             Cursors_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             CMD_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             PS86_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
@@ -554,8 +559,8 @@ namespace WinPaletter
             Bypass = false,
             ListAllFonts = false,
             Path_Deflection = false,
-            Terminal_Stable_Path = My.Env.PATH_TerminalJSON,
-            Terminal_Preview_Path = My.Env.PATH_TerminalPreviewJSON
+            Terminal_Stable_Path = Program.PATH_TerminalJSON,
+            Terminal_Preview_Path = Program.PATH_TerminalPreviewJSON
         };
 
         public Structures.Store Store = new Structures.Store()
@@ -580,13 +585,15 @@ namespace WinPaletter
             DotDefaultChangedIndicator = true,
             DragAndDrop = true,
             DragAndDropColorsGuide = true,
-            DragAndDropRippleEffect = true
+            DragAndDropRippleEffect = true,
+            Classic_Color_Picker = false
         };
 
         public Structures.Miscellaneous Miscellaneous = new Structures.Miscellaneous()
         {
             Win7LivePreview = true,
-            Classic_Color_Picker = false
+            ShowWPElevatorConsole = false,
+            DontUseWPElevatorConsole = false
         };
 
         public enum Mode
@@ -656,19 +663,19 @@ namespace WinPaletter
                                 }
                                 catch (Exception ex)
                                 {
-                                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                                    Forms.BugReport.ThrowError(ex);
 
                                 }
                             }
 
                             else
                             {
-                                My.MyProject.Forms.BugReport.ThrowError(new Exception(My.Env.Lang.SettingsFileNotJSON));
+                                Forms.BugReport.ThrowError(new Exception(Program.Lang.SettingsFileNotJSON));
                             }
                         }
                         else
                         {
-                            My.MyProject.Forms.BugReport.ThrowError(new Exception(My.Env.Lang.SettingsFileNotExist));
+                            Forms.BugReport.ThrowError(new Exception(Program.Lang.SettingsFileNotExist));
                         }
 
                         break;

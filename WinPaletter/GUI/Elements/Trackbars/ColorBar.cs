@@ -79,7 +79,7 @@ namespace WinPaletter.UI.WP
 
         #region Properties
 
-        private Color _AccentColor = My.Env.Style.Colors.Core;
+        private Color _AccentColor = Program.Style.Colors.Core;
         public Color AccentColor
         {
             get
@@ -501,7 +501,7 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
             G.Clear(BackColor);
-            bool Dark = My.Env.Style.DarkMode;
+            bool Dark = Program.Style.DarkMode;
             var c_back = Dark ? Color.FromArgb(60, 60, 60) : Color.FromArgb(210, 210, 210);
             var c_btn = Dark ? Color.FromArgb(165, 165, 165) : Color.FromArgb(100, 100, 100);
             Color C;
@@ -567,7 +567,7 @@ namespace WinPaletter.UI.WP
                 G.FillRectangle(br, new Rectangle(Width - 4, 0, 4, Height));
             }
 
-            using (var br = new SolidBrush(My.Env.Style.Colors.Border))
+            using (var br = new SolidBrush(Program.Style.Colors.Border))
             {
                 G.FillEllipse(br, Circle);
             }

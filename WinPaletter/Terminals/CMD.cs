@@ -35,46 +35,46 @@ namespace WinPaletter
             _Shown = false;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            CheckBox1.Checked = My.Env.Settings.WindowsTerminals.ListAllFonts;
+            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
             RasterList.BringToFront();
 
-            ApplyFromTM(My.Env.TM, _Edition);
+            ApplyFromTM(Program.TM, _Edition);
             ApplyPreview();
 
-            CMD_PopupForegroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            CMD_PopupBackgroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            CMD_AccentForegroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            CMD_AccentBackgroundLbl.Font = My.MyProject.Application.ConsoleFont;
+            CMD_PopupForegroundLbl.Font = Program.ConsoleFont;
+            CMD_PopupBackgroundLbl.Font = Program.ConsoleFont;
+            CMD_AccentForegroundLbl.Font = Program.ConsoleFont;
+            CMD_AccentBackgroundLbl.Font = Program.ConsoleFont;
 
             switch (_Edition)
             {
                 case Edition.CMD:
                     {
-                        Text = My.Env.Lang.CommandPrompt;
+                        Text = Program.Lang.CommandPrompt;
                         Icon = Properties.Resources.icons8_command_line;
-                        Button4.Text = My.Env.Lang.Open_Testing_CMD;
+                        Button4.Text = Program.Lang.Open_Testing_CMD;
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        Text = My.Env.Lang.PowerShellx86;
+                        Text = Program.Lang.PowerShellx86;
                         Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = My.Env.Lang.Open_Testing_PowerShellx86;
+                        Button4.Text = Program.Lang.Open_Testing_PowerShellx86;
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        Text = My.Env.Lang.PowerShellx64;
+                        Text = Program.Lang.PowerShellx64;
                         Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = My.Env.Lang.Open_Testing_PowerShellx64;
+                        Button4.Text = Program.Lang.Open_Testing_PowerShellx64;
                         break;
                     }
 
             }
 
-            Button6.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
+            Button6.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -96,8 +96,8 @@ namespace WinPaletter
         {
             if (_Shown)
             {
-                My.Env.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
-                My.Env.Settings.WindowsTerminals.Save();
+                Program.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
+                Program.Settings.WindowsTerminals.Save();
             }
         }
 
@@ -109,7 +109,7 @@ namespace WinPaletter
                 Cursor = Cursors.WaitCursor;
                 var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
                 ApplyToTM(TMx, _Edition);
-                ApplyToTM(My.Env.TM, _Edition);
+                ApplyToTM(Program.TM, _Edition);
 
                 switch (_Edition)
                 {
@@ -145,13 +145,13 @@ namespace WinPaletter
             }
             else
             {
-                WPStyle.MsgBox(My.Env.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM, _Edition);
+            ApplyToTM(Program.TM, _Edition);
             Close();
         }
         private void Button2_Click(object sender, EventArgs e)
@@ -1204,7 +1204,7 @@ namespace WinPaletter
                             {
                                 FileName = "cmd.exe",
                                 Verb = "runas",
-                                WorkingDirectory = My.Env.PATH_UserProfile
+                                WorkingDirectory = Program.PATH_UserProfile
                             }
                         };
                         prc.Start();
@@ -1219,7 +1219,7 @@ namespace WinPaletter
                             {
                                 FileName = Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0\powershell.exe",
                                 Verb = "runas",
-                                WorkingDirectory = My.Env.PATH_UserProfile
+                                WorkingDirectory = Program.PATH_UserProfile
                             }
                         };
                         prc.Start();
@@ -1234,7 +1234,7 @@ namespace WinPaletter
                             {
                                 FileName = Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0\powershell.exe",
                                 Verb = "runas",
-                                WorkingDirectory = My.Env.PATH_UserProfile
+                                WorkingDirectory = Program.PATH_UserProfile
                             }
                         };
                         prc.Start();
@@ -1322,13 +1322,13 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                CMD_PreviewCUR2.BackColor = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                CMD_PreviewCUR2.BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 return;
             }
 
             var CList = new List<Control>() { (Control)sender, CMD_PreviewCUR2 };
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+            var C = Forms.ColorPickerDlg.Pick(CList);
 
             CMD_PreviewCUR2.BackColor = C;
             ((UI.Controllers.ColorItem)sender).BackColor = C;
@@ -1358,7 +1358,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -1403,7 +1403,7 @@ namespace WinPaletter
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
                 _Conditions.CMD_ColorTable15 = true;
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -1419,7 +1419,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 bool ee = CMDEnabled.Checked;
                 ApplyFromTM(_Def, _Edition);
@@ -1443,7 +1443,7 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            WPStyle.MsgBox(My.Env.Lang.CMD_NotAllWeights, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            WPStyle.MsgBox(Program.Lang.CMD_NotAllWeights, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1458,21 +1458,21 @@ namespace WinPaletter
 
         private void CMD_FontSizeVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum).ToString();
             CMD_FontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CMD_PreviewCUR_Val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum).ToString();
             CMD_CursorSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CMD_OpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum).ToString();
             CMD_OpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1484,7 +1484,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !My.Env.Settings.WindowsTerminals.ListAllFonts;
+            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
             FontDialog1.Font = F_cmd;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {

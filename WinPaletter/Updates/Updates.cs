@@ -60,16 +60,16 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.MainFrm.NotifyUpdates.Visible = false;
+            Forms.MainFrm.NotifyUpdates.Visible = false;
 
             if (url is null)
             {
                 Cursor = Cursors.AppStarting;
 
-                My.Env.Animator.HideSync(AlertBox2, true);
-                My.Env.Animator.HideSync(Button1, true);
-                My.Env.Animator.HideSync(Button3, true);
-                My.Env.Animator.HideSync(Panel1, true);
+                Program.Animator.HideSync(AlertBox2, true);
+                Program.Animator.HideSync(Button1, true);
+                Program.Animator.HideSync(Button3, true);
+                Program.Animator.HideSync(Panel1, true);
                 ProgressBar1.Visible = false;
                 ProgressBar1.Value = 0;
 
@@ -81,7 +81,7 @@ namespace WinPaletter
                 {
                     if (IsNetworkAvailable())
                     {
-                        Label17.SetText(My.Env.Lang.Checking);
+                        Label17.SetText(Program.Lang.Checking);
 
                         ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
 
@@ -96,27 +96,27 @@ namespace WinPaletter
                             }
                         }
 
-                        if (My.Env.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
+                        if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
                             UpdateChannel = StableInt;
-                        if (My.Env.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
+                        if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
                             UpdateChannel = BetaInt;
 
                         ver = ls[UpdateChannel].Split(' ')[1];
 
-                        if (new Version(ver) > new Version(My.Env.AppVersion))
+                        if (new Version(ver) > new Version(Program.AppVersion))
                         {
                             url = ls[UpdateChannel].Split(' ')[4];
                             UpdateSize = Conversions.ToDecimal(ls[UpdateChannel].Split(' ')[2]);
                             ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls[UpdateChannel].Split(' ')[3]));
 
-                            Label7.Text = UpdateSize + " " + My.Env.Lang.MBSizeUnit;
+                            Label7.Text = UpdateSize + " " + Program.Lang.MBSizeUnit;
                             Label9.Text = ReleaseDate.ToLongDateString();
 
                             LinkLabel3.Visible = true;
 
-                            My.Env.Animator.Show(Panel1, true);
-                            Button1.Text = My.Env.Lang.DoAction_Update;
-                            AlertBox2.Text = string.Format("{0}. {1} {2}", My.Env.Lang.NewUpdate, My.Env.Lang.Version, ver);
+                            Program.Animator.Show(Panel1, true);
+                            Button1.Text = Program.Lang.DoAction_Update;
+                            AlertBox2.Text = string.Format("{0}. {1} {2}", Program.Lang.NewUpdate, Program.Lang.Version, ver);
                             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
                         }
                         else
@@ -124,8 +124,8 @@ namespace WinPaletter
                             Label7.Text = "";
                             Label9.Text = "";
                             url = null;
-                            Button1.Text = My.Env.Lang.CheckForUpdates;
-                            AlertBox2.Text = string.Format(My.Env.Lang.NoUpdateAvailable);
+                            Button1.Text = Program.Lang.CheckForUpdates;
+                            AlertBox2.Text = string.Format(Program.Lang.NoUpdateAvailable);
                             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success;
                         }
 
@@ -136,8 +136,8 @@ namespace WinPaletter
                         Label7.Text = "";
                         Label9.Text = "";
                         url = null;
-                        Button1.Text = My.Env.Lang.CheckForUpdates;
-                        AlertBox2.Text = string.Format(My.Env.Lang.NetworkError);
+                        Button1.Text = Program.Lang.CheckForUpdates;
+                        AlertBox2.Text = string.Format(Program.Lang.NetworkError);
                         AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                     }
                 }
@@ -146,15 +146,15 @@ namespace WinPaletter
                     Label7.Text = "";
                     Label9.Text = "";
                     url = null;
-                    Button1.Text = My.Env.Lang.CheckForUpdates;
-                    AlertBox2.Text = string.Format(My.Env.Lang.ServerError);
+                    Button1.Text = Program.Lang.CheckForUpdates;
+                    AlertBox2.Text = string.Format(Program.Lang.ServerError);
                     AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.ThrowError(ex);
                 }
 
-                My.Env.Animator.Show(AlertBox2, true);
-                My.Env.Animator.Show(Button1, true);
-                My.Env.Animator.ShowSync(Button3, true);
+                Program.Animator.Show(AlertBox2, true);
+                Program.Animator.Show(Button1, true);
+                Program.Animator.ShowSync(Button3, true);
 
                 Cursor = Cursors.Default;
             }
@@ -179,7 +179,7 @@ namespace WinPaletter
                     catch
                     {
                     }
-                    My.MyProject.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter.trash");
+                    Program.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter.trash");
                     UC.DownloadFileAsync(new Uri(url), OldName);
                 }
 
@@ -215,9 +215,9 @@ namespace WinPaletter
             WPStyle.ApplyStyle(this);
             UC = new WebClient();
             LinkLabel3.Visible = false;
-            string F = My.Env.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
-            Label3.Text = string.Format(F, My.Env.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable ? My.Env.Lang.Stable : My.Env.Lang.Beta, My.Env.Lang.Channel);
-            CheckBox1.Checked = My.Env.Settings.Updates.AutoCheck;
+            string F = Program.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
+            Label3.Text = string.Format(F, Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable ? Program.Lang.Stable : Program.Lang.Beta, Program.Lang.Channel);
+            CheckBox1.Checked = Program.Settings.Updates.AutoCheck;
             _Shown = false;
             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
             AlertBox2.Visible = false;
@@ -228,8 +228,8 @@ namespace WinPaletter
             Button1.Enabled = true;
             Panel1.Enabled = true;
 
-            Button1.Text = My.Env.Lang.CheckForUpdates;
-            Label2.Text = My.Env.AppVersion;
+            Button1.Text = Program.Lang.CheckForUpdates;
+            Label2.Text = Program.AppVersion;
 
             if (ls.Count > 0)
             {
@@ -248,9 +248,9 @@ namespace WinPaletter
                     }
                 }
 
-                if (My.Env.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
+                if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
                     UpdateChannel = StableInt;
-                if (My.Env.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
+                if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
                     UpdateChannel = BetaInt;
 
                 url = ls[UpdateChannel].Split(' ')[4];
@@ -258,32 +258,32 @@ namespace WinPaletter
                 ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls[UpdateChannel].Split(' ')[3]));
                 ver = ls[UpdateChannel].Split(' ')[1];
 
-                Label7.Text = UpdateSize + " " + My.Env.Lang.MBSizeUnit;
+                Label7.Text = UpdateSize + " " + Program.Lang.MBSizeUnit;
                 Label9.Text = ReleaseDate.ToLongDateString() + " " + ReleaseDate.ToLongTimeString();
 
                 LinkLabel3.Visible = true;
 
-                My.Env.Animator.Show(Panel1, true);
-                Button1.Text = My.Env.Lang.DoAction_Update;
-                AlertBox2.Text = string.Format("{0}. {1} {2}", My.Env.Lang.NewUpdate, My.Env.Lang.Version, ver);
+                Program.Animator.Show(Panel1, true);
+                Button1.Text = Program.Lang.DoAction_Update;
+                AlertBox2.Text = string.Format("{0}. {1} {2}", Program.Lang.NewUpdate, Program.Lang.Version, ver);
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
 
-                My.Env.Animator.Show(AlertBox2, true);
-                My.Env.Animator.ShowSync(Button1, true);
+                Program.Animator.Show(AlertBox2, true);
+                Program.Animator.ShowSync(Button1, true);
             }
 
-            if (My.Env.WXP)
+            if (Program.WXP)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(My.Env.Lang.UpdatesOSNoTLS12, My.Env.Lang.OS_WinXP);
+                AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP);
             }
 
-            else if (My.Env.WVista)
+            else if (Program.WVista)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(My.Env.Lang.UpdatesOSNoTLS12, My.Env.Lang.OS_WinVista);
+                AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinVista);
             }
 
         }
@@ -292,7 +292,7 @@ namespace WinPaletter
         {
             var f = new Updates();
             Close();
-            My.MyProject.Forms.SettingsX.ShowDialog();
+            Forms.SettingsX.ShowDialog();
             f.ShowDialog();
         }
 
@@ -305,8 +305,8 @@ namespace WinPaletter
         {
             if (_Shown)
             {
-                My.Env.Settings.Updates.AutoCheck = CheckBox1.Checked;
-                My.Env.Settings.Updates.Save();
+                Program.Settings.Updates.AutoCheck = CheckBox1.Checked;
+                Program.Settings.Updates.Save();
             }
         }
 
@@ -332,7 +332,7 @@ namespace WinPaletter
             ProgressBar1.Visible = false;
             ProgressBar1.Value = 0;
             if (RadioButton2.Checked)
-                WPStyle.MsgBox(My.Env.Lang.Msgbox_Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WPStyle.MsgBox(Program.Lang.Msgbox_Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);
@@ -376,8 +376,8 @@ namespace WinPaletter
                     catch
                     {
                     }
-                    My.MyProject.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter_2.trash");
-                    My.MyProject.Computer.FileSystem.RenameFile("oldWinpaletter.trash", OldName.Split('\\').Last());
+                    Program.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter_2.trash");
+                    Program.Computer.FileSystem.RenameFile("oldWinpaletter.trash", OldName.Split('\\').Last());
                     try
                     {
                         if (System.IO.File.Exists("oldWinpaletter_2.trash"))

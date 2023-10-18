@@ -48,11 +48,11 @@ namespace WinPaletter.UI.WP
                 Height = TB.Height + 8;
             }
 
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
                 BackColor = Color.FromArgb(55, 55, 55);
             else
                 BackColor = Color.FromArgb(225, 225, 225);
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
                 TB.BackColor = Color.FromArgb(55, 55, 55);
             else
                 TB.BackColor = Color.FromArgb(225, 225, 225);
@@ -618,7 +618,7 @@ namespace WinPaletter.UI.WP
 
             if (!DrawOnGlass)
             {
-                if (My.Env.Style.DarkMode)
+                if (Program.Style.DarkMode)
                 {
                     if (ForeColor != Color.White)
                         ForeColor = Color.White;
@@ -642,19 +642,19 @@ namespace WinPaletter.UI.WP
 
             if (!DrawOnGlass)
             {
-                LineNone = My.Env.Style.DarkMode ? ParentColor.Light(0.3f) : ParentColor.Light(0.05f);
-                LineHovered = My.Env.Style.Colors.Border_Checked_Hover;
+                LineNone = Program.Style.DarkMode ? ParentColor.Light(0.3f) : ParentColor.Light(0.05f);
+                LineHovered = Program.Style.Colors.Border_Checked_Hover;
 
-                BackNone = My.Env.Style.DarkMode ? ParentColor.Light(0.05f) : ParentColor.Light(0.3f);
-                BackHovered = My.Env.Style.Colors.Back_Checked;
+                BackNone = Program.Style.DarkMode ? ParentColor.Light(0.05f) : ParentColor.Light(0.3f);
+                BackHovered = Program.Style.Colors.Back_Checked;
             }
             else
             {
                 LineNone = !ActiveTTLColor.IsDark() ? ParentColor.Light(0.3f) : ParentColor.Light(0.05f);
-                LineHovered = My.Env.Style.Colors.Border_Checked_Hover;
+                LineHovered = Program.Style.Colors.Border_Checked_Hover;
 
                 BackNone = !ActiveTTLColor.IsDark() ? ParentColor.Light(0.05f) : ParentColor.Light(0.3f);
-                BackHovered = My.Env.Style.Colors.Back_Checked;
+                BackHovered = Program.Style.Colors.Back_Checked;
             }
 
             var FadeInColor = Color.FromArgb(alpha, LineHovered);

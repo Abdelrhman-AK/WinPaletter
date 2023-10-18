@@ -327,42 +327,42 @@ namespace WinPaletter.UI.WP
 
             G.Clear(this.GetParentColor());
 
-            using (var br = new SolidBrush(Color.FromArgb(255 - alpha, My.Env.Style.Colors.Back)))
+            using (var br = new SolidBrush(Color.FromArgb(255 - alpha, Program.Style.Colors.Back)))
             {
                 G.FillRoundedRect(br, OuterRect);
             }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, My.Env.Style.Colors.Back_Checked)))
+            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Back_Checked)))
             {
                 G.FillRoundedRect(br, OuterRect);
             }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover)))
+            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover)))
             {
                 G.FillRoundedRect(br, SideRect);
             }
 
-            using (var P = new Pen(Color.FromArgb(255 - alpha, My.Env.Style.Colors.Border)))
+            using (var P = new Pen(Color.FromArgb(255 - alpha, Program.Style.Colors.Border)))
             {
                 G.DrawRoundedRect_LikeW11(P, InnerRect);
             }
-            using (var P = new Pen(Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover)))
+            using (var P = new Pen(Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover)))
             {
                 G.DrawRoundedRect_LikeW11(P, OuterRect);
             }
 
             if (Focused & State == MouseState.None)
             {
-                using (var P = new Pen(Color.FromArgb(255, My.Env.Style.Colors.Border_Checked_Hover)))
+                using (var P = new Pen(Color.FromArgb(255, Program.Style.Colors.Border_Checked_Hover)))
                 {
                     G.DrawRoundedRect(P, InnerRect);
                 }
             }
 
-            using (var TextColor = new SolidBrush(My.Env.Style.DarkMode ? Color.White : Color.Black))
+            using (var TextColor = new SolidBrush(Program.Style.DarkMode ? Color.White : Color.Black))
             {
                 G.DrawString(Value.ToString(), Font, TextColor, new Rectangle(0, 0, Width - 15, Height), ContentAlignment.MiddleCenter.ToStringFormat());
             }
 
-            using (var SignColor = new SolidBrush(My.Env.Style.Colors.Back_Checked))
+            using (var SignColor = new SolidBrush(Program.Style.Colors.Back_Checked))
             using (var SignFont = new Font("Marlett", 11f))
             {
                 G.DrawString("t", SignFont, SignColor, new Point(SideRect.Left - 1, 0));

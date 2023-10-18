@@ -37,10 +37,10 @@ namespace WinPaletter
             if (RadioImage4.Checked)
                 i2 = 0;
 
-            My.Env.Settings.General.ComplexSaveResult = i1 + "." + i2;
-            My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked;
-            My.Env.Settings.General.Save();
-            My.Env.Settings.ThemeApplyingBehavior.Save();
+            Program.Settings.General.ComplexSaveResult = i1 + "." + i2;
+            Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked;
+            Program.Settings.General.Save();
+            Program.Settings.ThemeApplyingBehavior.Save();
         }
 
         private void ComplexSave_Load(object sender, EventArgs e)
@@ -54,38 +54,38 @@ namespace WinPaletter
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = c;
 
-            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
 
-            string[] r = My.Env.Settings.General.ComplexSaveResult.Split('.');
+            string[] r = Program.Settings.General.ComplexSaveResult.Split('.');
             string r1 = r[0];
             string r2 = r[1];
 
-            if (My.Env.W11)
+            if (Program.W11)
             {
                 RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
             }
 
-            else if (My.Env.W10)
+            else if (Program.W10)
             {
                 RadioImage7.Image = Properties.Resources.Native10.Resize(20, 20);
             }
 
-            else if (My.Env.W8 | My.Env.W81)
+            else if (Program.W8 | Program.W81)
             {
                 RadioImage7.Image = Properties.Resources.Native8.Resize(20, 20);
             }
 
-            else if (My.Env.W7)
+            else if (Program.W7)
             {
                 RadioImage7.Image = Properties.Resources.Native7.Resize(20, 20);
             }
 
-            else if (My.Env.WVista)
+            else if (Program.WVista)
             {
                 RadioImage7.Image = Properties.Resources.NativeVista.Resize(20, 20);
             }
 
-            else if (My.Env.WXP)
+            else if (Program.WXP)
             {
                 RadioImage7.Image = Properties.Resources.NativeXP.Resize(20, 20);
             }
@@ -134,15 +134,15 @@ namespace WinPaletter
                 RadioImage6.Checked = true;
             }
 
-            CheckBox2.Checked = My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation;
+            CheckBox2.Checked = Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation;
 
             DialogResult = DialogResult.None;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked;
-            My.Env.Settings.ThemeApplyingBehavior.Save();
+            Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked;
+            Program.Settings.ThemeApplyingBehavior.Save();
             DialogResult = DialogResult.No;
             Close();
         }
@@ -155,7 +155,7 @@ namespace WinPaletter
 
         public bool GetResponse(SaveFileDialog SaveFileDialog, MethodInvoker Apply_Theme_Sub, MethodInvoker Apply_FirstTheme_Sub, MethodInvoker Apply_DefaultWin_Sub)
         {
-            if ((My.Env.TM != My.Env.TM_Original) && My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
+            if ((Program.TM != Program.TM_Original) && Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
             {
                 GroupBox2.Enabled = Apply_Theme_Sub is not null | Apply_FirstTheme_Sub is not null | Apply_DefaultWin_Sub is not null;
 
@@ -164,7 +164,7 @@ namespace WinPaletter
                     case DialogResult.Yes:
                         {
 
-                            string[] r = My.Env.Settings.General.ComplexSaveResult.Split('.');
+                            string[] r = Program.Settings.General.ComplexSaveResult.Split('.');
                             string r1 = r[0];
                             string r2 = r[1];
 
@@ -174,13 +174,13 @@ namespace WinPaletter
                                     {
                                         if (System.IO.File.Exists(SaveFileDialog.FileName))
                                         {
-                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
+                                            Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                                         }
                                         else if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                                         {
-                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
+                                            Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                                         }
                                         else
                                         {
@@ -193,8 +193,8 @@ namespace WinPaletter
                                     {
                                         if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                                         {
-                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
+                                            Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                                         }
                                         else
                                         {

@@ -19,9 +19,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.LogonUI.Icon;
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(My.Env.TM);
+            Icon = Forms.LogonUI.Icon;
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -101,7 +101,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -117,7 +117,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             TMx.LogonUIXP.Apply();
             TMx.Dispose();
             Cursor = Cursors.Default;
@@ -125,7 +125,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             Close();
         }
 
@@ -136,12 +136,12 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 return;
             }
 
             var CList = new List<Control>() { (Control)sender };
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+            var C = Forms.ColorPickerDlg.Pick(CList);
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
             CList.Clear();
 

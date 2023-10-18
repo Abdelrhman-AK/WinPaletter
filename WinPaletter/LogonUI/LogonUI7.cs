@@ -29,24 +29,24 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             _Shown = false;
-            LoadFromTM(My.Env.TM);
+            LoadFromTM(Program.TM);
             ApplyPreview();
-            Icon = My.MyProject.Forms.LogonUI.Icon;
+            Icon = Forms.LogonUI.Icon;
 
-            if (My.Env.PreviewStyle == WindowStyle.W81)
+            if (Program.PreviewStyle == WindowStyle.W81)
             {
                 Button3.Visible = true;
                 PictureBox11.Image = Properties.Resources.LogonUI8;
                 PictureBox4.Image = Properties.Resources.Native8;
             }
-            else if (My.Env.PreviewStyle == WindowStyle.W7)
+            else if (Program.PreviewStyle == WindowStyle.W7)
             {
                 Button3.Visible = false;
                 PictureBox11.Image = Properties.Resources.LogonUI7;
                 PictureBox4.Image = Properties.Resources.Native7;
             }
 
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -72,7 +72,7 @@ namespace WinPaletter
         public void LoadFromTM(Theme.Manager TM)
         {
 
-            if (My.Env.PreviewStyle == WindowStyle.W81)
+            if (Program.PreviewStyle == WindowStyle.W81)
             {
                 Toggle1.Checked = !TM.Windows81.NoLockScreen;
 
@@ -131,7 +131,7 @@ namespace WinPaletter
                 }
             }
 
-            else if (My.Env.PreviewStyle == WindowStyle.W7)
+            else if (Program.PreviewStyle == WindowStyle.W7)
             {
 
                 Toggle1.Checked = TM.LogonUI7.Enabled;
@@ -196,7 +196,7 @@ namespace WinPaletter
         public void LoadToTM(Theme.Manager TM)
         {
 
-            if (My.Env.PreviewStyle == WindowStyle.W81)
+            if (Program.PreviewStyle == WindowStyle.W81)
             {
                 TM.Windows81.NoLockScreen = !Toggle1.Checked;
 
@@ -227,7 +227,7 @@ namespace WinPaletter
                     TM.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero;
             }
 
-            else if (My.Env.PreviewStyle == WindowStyle.W7)
+            else if (Program.PreviewStyle == WindowStyle.W7)
             {
                 TM.LogonUI7.Enabled = Toggle1.Checked;
 
@@ -264,21 +264,21 @@ namespace WinPaletter
 
             if (RadioButton1.Checked)
             {
-                if (My.Env.W7 | My.Env.WVista)
+                if (Program.W7 | Program.WVista)
                 {
-                    bmpX = PE_Functions.GetPNGFromDLL(My.Env.PATH_imageres, 5038);
+                    bmpX = PE_Functions.GetPNGFromDLL(Program.PATH_imageres, 5038);
                 }
 
-                else if (My.Env.W8 | My.Env.W81)
+                else if (Program.W8 | Program.W81)
                 {
                     string SysLock;
                     if (!(ID == 1) & !(ID == 3))
                     {
-                        SysLock = string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.jpg", ID);
+                        SysLock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.jpg", ID);
                     }
                     else
                     {
-                        SysLock = string.Format(My.Env.PATH_Windows + @"\Web\Screen\img10{0}.png", ID);
+                        SysLock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.png", ID);
                     }
 
                     bmpX = Bitmap_Mgr.Load(SysLock);
@@ -287,7 +287,7 @@ namespace WinPaletter
 
             else if (RadioButton2.Checked)
             {
-                using (var b = new Bitmap(My.MyProject.Application.GetWallpaper()))
+                using (var b = new Bitmap(Program.GetWallpaper()))
                 {
                     bmpX = (Bitmap)b.Clone();
                 }
@@ -295,7 +295,7 @@ namespace WinPaletter
 
             else if (RadioButton3.Checked)
             {
-                bmpX = (Bitmap)color_pick.BackColor.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                bmpX = (Bitmap)color_pick.BackColor.ToBitmap(Program.Computer.Screen.Bounds.Size);
             }
 
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
@@ -305,7 +305,7 @@ namespace WinPaletter
 
             else
             {
-                bmpX = (Bitmap)Color.Black.ToBitmap(My.MyProject.Computer.Screen.Bounds.Size);
+                bmpX = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
 
             }
 
@@ -439,7 +439,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            LoadToTM(My.Env.TM);
+            LoadToTM(Program.TM);
             Close();
         }
 
@@ -462,8 +462,8 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Cut | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Paste | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Override)
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
                 {
                     pnl_preview.BackgroundImage = ReturnBK();
                 }
@@ -475,7 +475,7 @@ namespace WinPaletter
             if (RadioButton3.Checked)
                 pnl_preview.BackgroundImage = null;
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+            var C = Forms.ColorPickerDlg.Pick(CList);
 
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
@@ -491,7 +491,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (My.MyProject.Forms.LogonUI8_Pics.ShowDialog() == DialogResult.OK)
+            if (Forms.LogonUI8_Pics.ShowDialog() == DialogResult.OK)
             {
                 ApplyPreview();
             }
@@ -499,14 +499,14 @@ namespace WinPaletter
 
         private void ttl_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -531,7 +531,7 @@ namespace WinPaletter
         private void Button12_Click(object sender, EventArgs e)
         {
             Theme.Manager TMx;
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {

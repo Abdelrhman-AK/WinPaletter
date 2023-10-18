@@ -20,9 +20,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Load_Info(My.Env.TM);
-            TextBox3.Font = My.MyProject.Application.ConsoleFontMedium;
-            TextBox6.Font = My.MyProject.Application.ConsoleFontMedium;
+            Load_Info(Program.TM);
+            TextBox3.Font = Program.ConsoleFontMedium;
+            TextBox6.Font = Program.ConsoleFontMedium;
 
         }
 
@@ -44,7 +44,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             {
-                ref Localizer lang = ref My.Env.Lang;
+                ref Localizer lang = ref Program.Lang;
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
                 {
                     WPStyle.MsgBox(lang.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -71,9 +71,9 @@ namespace WinPaletter
             }
 
 
-            Save_Info(My.Env.TM);
-            My.MyProject.Forms.MainFrm.themename_lbl.Text = string.Format("{0} ({1})", My.Env.TM.Info.ThemeName, My.Env.TM.Info.ThemeVersion);
-            My.MyProject.Forms.MainFrm.author_lbl.Text = string.Format("{0} {1}", My.Env.Lang.By, My.Env.TM.Info.Author);
+            Save_Info(Program.TM);
+            Forms.MainFrm.themename_lbl.Text = string.Format("{0} ({1})", Program.TM.Info.ThemeName, Program.TM.Info.ThemeVersion);
+            Forms.MainFrm.author_lbl.Text = string.Format("{0} {1}", Program.Lang.By, Program.TM.Info.Author);
 
             Close();
         }
@@ -138,14 +138,14 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                ((UI.Controllers.ColorItem)sender).BackColor = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 StoreItem1.TM.Info.Color1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 
             var _conditions = new Conditions() { BackColor1 = true };
             var clist = new List<Control>() { color1, StoreItem1 };
-            var c = My.MyProject.Forms.ColorPickerDlg.Pick(clist, _conditions);
+            var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
 
             StoreItem1.TM.Info.Color1 = c;
             color1.BackColor = c;
@@ -157,14 +157,14 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                ((UI.Controllers.ColorItem)sender).BackColor = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 StoreItem1.TM.Info.Color2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 
             var _conditions = new Conditions() { BackColor2 = true };
             var clist = new List<Control>() { color2, StoreItem1 };
-            var c = My.MyProject.Forms.ColorPickerDlg.Pick(clist, _conditions);
+            var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
 
             StoreItem1.TM.Info.Color2 = c;
             color2.BackColor = c;

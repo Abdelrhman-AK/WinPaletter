@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.CompilerServices;
 using Ookii.Dialogs.WinForms;
 using System;
@@ -43,7 +44,7 @@ namespace WinPaletter
         {
             Colors = new Colors_Structure()
             {
-                BaseColor = My.Env.DefaultAccent,
+                BaseColor = Program.DefaultAccent,
                 Core = Colors.BaseColor.LightLight(),
                 Back = Color.FromArgb(40, 40, 40),
                 Back_Hover = Color.FromArgb(55, 55, 55),
@@ -115,25 +116,25 @@ namespace WinPaletter
         {
             try
             {
-                if (My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors)
+                if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
                 {
-                    return My.Env.Settings.Appearance.RoundedCorners;
+                    return Program.Settings.Appearance.RoundedCorners;
                 }
                 else if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
                 {
                     return false;
                 }
-                else if (My.Env.W11)
+                else if (Program.W11)
                 {
                     return true;
                 }
-                else if (My.Env.W10 | My.Env.W8 | My.Env.W81)
+                else if (Program.W10 | Program.W8 | Program.W81)
                 {
                     return false;
                 }
-                else if (My.Env.W7 || My.Env.WXP || My.Env.WVista)
+                else if (Program.W7 || Program.WXP || Program.WVista)
                 {
-                    return !My.Env.StartedWithClassicTheme;
+                    return !Program.StartedWithClassicTheme;
                 }
                 else
                 {
@@ -150,9 +151,9 @@ namespace WinPaletter
         {
             try
             {
-                if (My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors)
+                if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
                 {
-                    My.Env.Style.DarkMode = My.Env.Settings.Appearance.CustomTheme;
+                    Program.Style.DarkMode = Program.Settings.Appearance.CustomTheme;
                 }
 
                 else
@@ -161,56 +162,56 @@ namespace WinPaletter
 
                     if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
                     {
-                        My.Env.Style.DarkMode = true;
+                        Program.Style.DarkMode = true;
                     }
                     else
                     {
                         try
                         {
-                            if (My.Env.Settings.Appearance.AutoDarkMode)
+                            if (Program.Settings.Appearance.AutoDarkMode)
                             {
-                                if (My.Env.W11 | My.Env.W10)
+                                if (Program.W11 | Program.W10)
                                 {
                                     try
                                     {
-                                        i = Conversions.ToLong(My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0));
-                                        My.Env.Style.DarkMode = !(i == 1L);
+                                        i = Conversions.ToLong(Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0));
+                                        Program.Style.DarkMode = !(i == 1L);
                                     }
                                     catch (Exception ex)
                                     {
                                         try
                                         {
-                                            My.Env.Style.DarkMode = My.Env.Settings.Appearance.DarkMode;
+                                            Program.Style.DarkMode = Program.Settings.Appearance.DarkMode;
                                         }
                                         catch
                                         {
-                                            My.Env.Style.DarkMode = My.Env.W11 | My.Env.W10;
+                                            Program.Style.DarkMode = Program.W11 | Program.W10;
                                         }
                                     }
                                     finally
                                     {
-                                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                                        Program.Computer.Registry.CurrentUser.Close();
                                     }
                                 }
                                 else
                                 {
-                                    My.Env.Style.DarkMode = false;
+                                    Program.Style.DarkMode = false;
                                 }
                             }
                             else
                             {
-                                My.Env.Style.DarkMode = My.Env.Settings.Appearance.DarkMode;
+                                Program.Style.DarkMode = Program.Settings.Appearance.DarkMode;
                             }
                         }
                         catch
                         {
                             try
                             {
-                                My.Env.Style.DarkMode = My.Env.Settings.Appearance.DarkMode;
+                                Program.Style.DarkMode = Program.Settings.Appearance.DarkMode;
                             }
                             catch
                             {
-                                My.Env.Style.DarkMode = My.Env.W11 | My.Env.W10;
+                                Program.Style.DarkMode = Program.W11 | Program.W10;
                             }
                         }
                     }
@@ -218,7 +219,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                My.Env.Style.DarkMode = true;
+                Program.Style.DarkMode = true;
             }
         }
 
@@ -229,22 +230,22 @@ namespace WinPaletter
             Color AccentColor;
             bool CustomR = false;
 
-            if (My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors)
+            if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
             {
-                BackColor = My.Env.Settings.Appearance.BackColor;
-                AccentColor = My.Env.Settings.Appearance.AccentColor;
-                DarkMode = My.Env.Settings.Appearance.CustomTheme;
-                CustomR = My.Env.W11;
+                BackColor = Program.Settings.Appearance.BackColor;
+                AccentColor = Program.Settings.Appearance.AccentColor;
+                DarkMode = Program.Settings.Appearance.CustomTheme;
+                CustomR = Program.W11;
             }
             else
             {
-                DarkMode = My.Env.Style.DarkMode;  // Must be before BackColor
-                BackColor = DarkMode ? My.Env.DefaultBackColorDark : My.Env.DefaultBackColorLight;
-                AccentColor = My.Env.DefaultAccent;
+                DarkMode = Program.Style.DarkMode;  // Must be before BackColor
+                BackColor = DarkMode ? Program.DefaultBackColorDark : Program.DefaultBackColorLight;
+                AccentColor = Program.DefaultAccent;
                 CustomR = false;
             }
 
-            My.Env.Style = new WPStyle(AccentColor, BackColor, DarkMode);
+            Program.Style = new WPStyle(AccentColor, BackColor, DarkMode);
 
             if (Form is null)
             {
@@ -263,12 +264,12 @@ namespace WinPaletter
                             DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode);
                         ApplyStyleToSubControls(OFORM, DarkMode);
 
-                        if (My.Env.W11)
+                        if (Program.W11)
                         {
                             int argpvAttribute = (int)Dwmapi.FormCornersType.Default;
                             Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
                         }
-                        if (CustomR & !My.Env.Settings.Appearance.RoundedCorners)
+                        if (CustomR & !Program.Settings.Appearance.RoundedCorners)
                         {
                             int argpvAttribute1 = (int)Dwmapi.FormCornersType.Rectangular;
                             Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
@@ -295,25 +296,25 @@ namespace WinPaletter
                     DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
                 ApplyStyleToSubControls(Form, DarkMode);
 
-                if (My.Env.W11)
+                if (Program.W11)
                 {
                     int argpvAttribute2 = (int)Dwmapi.FormCornersType.Default;
                     Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
                 }
-                if (CustomR & !My.Env.Settings.Appearance.RoundedCorners)
+                if (CustomR & !Program.Settings.Appearance.RoundedCorners)
                 {
                     int argpvAttribute3 = (int)Dwmapi.FormCornersType.Rectangular;
                     Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
                 }
 
-                if ((Form.Name ?? "") == (My.MyProject.Forms.ExternalTerminal.Name ?? ""))
+                if ((Form.Name ?? "") == (Forms.ExternalTerminal.Name ?? ""))
                 {
-                    My.MyProject.Forms.ExternalTerminal.Label102.ForeColor = DarkMode ? Color.Gold : Color.Gold.Dark(0.1f);
+                    Forms.ExternalTerminal.Label102.ForeColor = DarkMode ? Color.Gold : Color.Gold.Dark(0.1f);
                 }
 
-                if ((Form.Name ?? "") == (My.MyProject.Forms.MainFrm.Name ?? ""))
+                if ((Form.Name ?? "") == (Forms.MainFrm.Name ?? ""))
                 {
-                    My.MyProject.Forms.MainFrm.status_lbl.ForeColor = DarkMode ? Color.White : Color.Black;
+                    Forms.MainFrm.status_lbl.ForeColor = DarkMode ? Color.White : Color.Black;
                 }
 
                 Form.Invalidate();
@@ -323,17 +324,17 @@ namespace WinPaletter
 
         public static void ApplyStyle(IntPtr Handle)
         {
-            var ctrl_theme = My.Env.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
-            bool CustomR = My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors && My.Env.W11;
+            var ctrl_theme = Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
+            bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && Program.W11;
 
-            DLLFunc.DarkTitlebar(Handle, My.Env.Style.DarkMode);
+            DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
 
-            if (My.Env.W11)
+            if (Program.W11)
             {
                 int argpvAttribute = (int)Dwmapi.FormCornersType.Default;
                 Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
             }
-            if (CustomR & !My.Env.Settings.Appearance.RoundedCorners)
+            if (CustomR & !Program.Settings.Appearance.RoundedCorners)
             {
                 int argpvAttribute1 = (int)Dwmapi.FormCornersType.Rectangular;
                 Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
@@ -484,15 +485,15 @@ namespace WinPaletter
                 {
                     case true:
                         {
-                            ColumnBack = My.Env.Style.Colors.Back.Light(0.05f);
-                            CellBack = My.Env.Style.Colors.Back;
+                            ColumnBack = Program.Style.Colors.Back.Light(0.05f);
+                            CellBack = Program.Style.Colors.Back;
                             break;
                         }
 
                     case false:
                         {
-                            ColumnBack = My.Env.Style.Colors.Back.Dark(0.05f);
-                            CellBack = My.Env.Style.Colors.Back;
+                            ColumnBack = Program.Style.Colors.Back.Dark(0.05f);
+                            CellBack = Program.Style.Colors.Back;
                             break;
                         }
 
@@ -641,19 +642,19 @@ namespace WinPaletter
         {
             try
             {
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
                     TD = new TaskDialog()
                     {
                         EnableHyperlinks = true,
-                        RightToLeft = My.Env.Lang.RightToLeft,
+                        RightToLeft = Program.Lang.RightToLeft,
                         ButtonStyle = TaskDialogButtonStyle.Standard,
                         Content = ConvertToLink((SubMessage ?? "").ToString()),
                         FooterIcon = FooterIcon,
                         CenterParent = true
                     };
 
-                    TD.WindowTitle = (DialogTitle ?? My.MyProject.Application.Info.Title).ToString();
+                    TD.WindowTitle = (DialogTitle ?? Application.ProductName).ToString();
                     TD.MainInstruction = (Message ?? "").ToString();
                     TD.CollapsedControlText = (ExpandedText ?? "").ToString();
                     TD.ExpandedControlText = (CollapsedText ?? "").ToString();
@@ -665,12 +666,12 @@ namespace WinPaletter
                     else
                         TD.CustomFooterIcon = FooterCustomIcon;
 
-                    var okButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.OK, ElevationRequired = RequireElevation };
-                    var yesButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.Yes, ElevationRequired = RequireElevation };
-                    var noButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.No };
-                    var cancelButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.Cancel };
-                    var retryButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.Retry, ElevationRequired = RequireElevation };
-                    var closeButton = new TaskDialogButton(ButtonType.Custom) { Text = My.Env.Lang.Close };
+                    var okButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.OK, ElevationRequired = RequireElevation };
+                    var yesButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Yes, ElevationRequired = RequireElevation };
+                    var noButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.No };
+                    var cancelButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Cancel };
+                    var retryButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Retry, ElevationRequired = RequireElevation };
+                    var closeButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Close };
                     var customButton = new TaskDialogButton(ButtonType.Custom);
                     TaskDialogIcon icon;
 
@@ -711,7 +712,7 @@ namespace WinPaletter
                     {
                         try
                         {
-                            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+                            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
                         }
                         catch
                         {
@@ -793,7 +794,7 @@ namespace WinPaletter
             string SM = !string.IsNullOrWhiteSpace((SubMessage ?? "").ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : "";
             string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? "").ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : "";
             string Fo = !string.IsNullOrWhiteSpace((Footer ?? "").ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : "";
-            string T = !string.IsNullOrWhiteSpace((DialogTitle ?? "").ToString()) ? DialogTitle.ToString() : My.MyProject.Application.Info.Title;
+            string T = !string.IsNullOrWhiteSpace((DialogTitle ?? "").ToString()) ? DialogTitle.ToString() : Application.ProductName;
 
             return MessageBox.Show(Message + SM + ED + Fo, T, Buttons, Icon);
         }
@@ -912,14 +913,14 @@ namespace WinPaletter
         {
             try
             {
-                if (!My.Env.WXP)
+                if (!Program.WXP)
                 {
                     var ib = new InputDialog()
                     {
                         MainInstruction = Instruction,
                         Input = Value,
                         Content = Notice,
-                        WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : My.MyProject.Application.Info.Title
+                        WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName
                     };
 
                     if (ib.ShowDialog() == DialogResult.OK)
@@ -951,7 +952,7 @@ namespace WinPaletter
         private static string InputBox_Classic(string Instruction, string Value = "", string Notice = "", string Title = "")
         {
             string N = !string.IsNullOrWhiteSpace(Notice) ? "\r\n" + "\r\n" + Notice : "";
-            string T = !string.IsNullOrWhiteSpace(Title) ? Title : My.MyProject.Application.Info.Title;
+            string T = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName;
 
             return Interaction.InputBox(Instruction + N, T, Value);
         }

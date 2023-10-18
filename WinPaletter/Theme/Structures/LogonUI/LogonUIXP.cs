@@ -21,7 +21,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(LogonUIXP _DefLogonUI)
         {
-            if (My.Env.WXP)
+            if (Program.WXP)
             {
 
                 Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", _DefLogonUI.Enabled));
@@ -68,7 +68,7 @@ namespace WinPaletter.Theme.Structures
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled);
 
-            if (Enabled & My.Env.WXP)
+            if (Enabled & Program.WXP)
             {
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", Mode == Modes.Default ? 1 : 0, RegistryValueKind.DWord);
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToWin32Reg(), RegistryValueKind.String);

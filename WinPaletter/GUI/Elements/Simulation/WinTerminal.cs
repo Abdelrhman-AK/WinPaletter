@@ -325,7 +325,7 @@ namespace WinPaletter.UI.Simulation
 
         public void GetBack()
         {
-            adaptedBack = My.Env.Wallpaper;
+            adaptedBack = Program.Wallpaper;
             adaptedBackBlurred = BitmapExtensions.Blur(new Bitmap(adaptedBack), 13);
         }
 
@@ -434,9 +434,9 @@ namespace WinPaletter.UI.Simulation
             var Rect_Titlebar = new Rectangle(0, 0, Width - 1, 32);
             var Rect_Console = new Rectangle(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
 
-            string s1 = My.Env.Lang.Terminal_ConsoleSample;
-            string s2 = My.Env.Lang.Terminal_ThisIsASelection;
-            string s3 = My.Env.PATH_System32 + ">";
+            string s1 = Program.Lang.Terminal_ConsoleSample;
+            string s2 = Program.Lang.Terminal_ThisIsASelection;
+            string s3 = Program.PATH_System32 + ">";
 
             var s1X = s1.Measure(Font) + new SizeF(5f, 0f);
             var s2X = s2.Measure(Font) + new SizeF(2f, 0f);
@@ -593,7 +593,7 @@ namespace WinPaletter.UI.Simulation
 
             Font fx;
 
-            if (My.Env.W11)
+            if (Program.W11)
             {
                 fx = new Font("Segoe Fluent Icons", 12f);
             }
@@ -620,7 +620,7 @@ namespace WinPaletter.UI.Simulation
             }
 
             TextRenderer.DrawText(G, TabTitle, new Font("Segoe UI", 8f, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
-            TextRenderer.DrawText(G, My.Env.Lang.Terminal_Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
+            TextRenderer.DrawText(G, Program.Lang.Terminal_Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
 
             using (var br = new SolidBrush(FC0))

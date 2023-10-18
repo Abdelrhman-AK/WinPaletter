@@ -16,7 +16,7 @@ namespace WinPaletter
         }
         private void Lang_JSON_Update_Load(object sender, EventArgs e)
         {
-            Icon = My.MyProject.Forms.Lang_JSON_Manage.Icon;
+            Icon = Forms.Lang_JSON_Manage.Icon;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
         }
@@ -143,7 +143,7 @@ namespace WinPaletter
 
                 Cursor = Cursors.Default;
 
-                WPStyle.MsgBox(My.Env.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WPStyle.MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

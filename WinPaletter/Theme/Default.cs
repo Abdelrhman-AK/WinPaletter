@@ -85,7 +85,7 @@ namespace WinPaletter.Theme
         {
             Theme.Manager _Def;
 
-            if (My.Env.W11 | My.Env.W12)
+            if (Program.W11 | Program.W12)
             {
                 using (var X = new Theme.Default())
                 {
@@ -93,7 +93,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            else if (My.Env.W10)
+            else if (Program.W10)
             {
                 using (var X = new Theme.Default())
                 {
@@ -101,7 +101,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            else if (My.Env.W81)
+            else if (Program.W81)
             {
                 using (var X = new Theme.Default())
                 {
@@ -109,7 +109,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            else if (My.Env.W7)
+            else if (Program.W7)
             {
                 using (var X = new Theme.Default())
                 {
@@ -117,7 +117,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            else if (My.Env.WVista)
+            else if (Program.WVista)
             {
                 using (var X = new Theme.Default())
                 {
@@ -125,7 +125,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            else if (My.Env.WXP)
+            else if (Program.WXP)
             {
                 using (var X = new Theme.Default())
                 {
@@ -158,7 +158,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -238,66 +238,66 @@ namespace WinPaletter.Theme
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "Default";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
                 Sounds.Snd_Win_ChangeTheme = "";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows Hardware Fail.wav";
-                Sounds.Snd_Win_FaxBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows Hardware Fail.wav";
+                Sounds.Snd_Win_FaxBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
-                Sounds.Snd_Win_MessageNudge = My.Env.PATH_Windows + @"\media\Windows Message Nudge.wav";
+                Sounds.Snd_Win_MessageNudge = Program.PATH_Windows + @"\media\Windows Message Nudge.wav";
                 Sounds.Snd_Win_Minimize = "";
-                Sounds.Snd_Win_Notification_Default = My.Env.PATH_Windows + @"\media\Windows Notify System Generic.wav";
-                Sounds.Snd_Win_Notification_IM = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm = My.Env.PATH_Windows + @"\media\Alarm01.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm2 = My.Env.PATH_Windows + @"\media\Alarm02.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm3 = My.Env.PATH_Windows + @"\media\Alarm03.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm4 = My.Env.PATH_Windows + @"\media\Alarm04.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm5 = My.Env.PATH_Windows + @"\media\Alarm05.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm6 = My.Env.PATH_Windows + @"\media\Alarm06.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm7 = My.Env.PATH_Windows + @"\media\Alarm07.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm8 = My.Env.PATH_Windows + @"\media\Alarm08.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm9 = My.Env.PATH_Windows + @"\media\Alarm09.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm10 = My.Env.PATH_Windows + @"\media\Alarm10.wav";
-                Sounds.Snd_Win_Notification_Looping_Call = My.Env.PATH_Windows + @"\media\Ring01.wav";
-                Sounds.Snd_Win_Notification_Looping_Call2 = My.Env.PATH_Windows + @"\media\Ring02.wav";
-                Sounds.Snd_Win_Notification_Looping_Call3 = My.Env.PATH_Windows + @"\media\Ring03.wav";
-                Sounds.Snd_Win_Notification_Looping_Call4 = My.Env.PATH_Windows + @"\media\Ring04.wav";
-                Sounds.Snd_Win_Notification_Looping_Call5 = My.Env.PATH_Windows + @"\media\Ring05.wav";
-                Sounds.Snd_Win_Notification_Looping_Call6 = My.Env.PATH_Windows + @"\media\Ring06.wav";
-                Sounds.Snd_Win_Notification_Looping_Call7 = My.Env.PATH_Windows + @"\media\Ring07.wav";
-                Sounds.Snd_Win_Notification_Looping_Call8 = My.Env.PATH_Windows + @"\media\Ring08.wav";
-                Sounds.Snd_Win_Notification_Looping_Call9 = My.Env.PATH_Windows + @"\media\Ring09.wav";
-                Sounds.Snd_Win_Notification_Looping_Call10 = My.Env.PATH_Windows + @"\media\Ring10.wav";
-                Sounds.Snd_Win_Notification_Mail = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_Notification_Proximity = My.Env.PATH_Windows + @"\media\Windows Proximity Notification.wav";
-                Sounds.Snd_Win_Notification_Reminder = My.Env.PATH_Windows + @"\media\Windows Notify Calendar.wav";
-                Sounds.Snd_Win_Notification_SMS = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Default = Program.PATH_Windows + @"\media\Windows Notify System Generic.wav";
+                Sounds.Snd_Win_Notification_IM = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm = Program.PATH_Windows + @"\media\Alarm01.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm2 = Program.PATH_Windows + @"\media\Alarm02.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm3 = Program.PATH_Windows + @"\media\Alarm03.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm4 = Program.PATH_Windows + @"\media\Alarm04.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm5 = Program.PATH_Windows + @"\media\Alarm05.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm6 = Program.PATH_Windows + @"\media\Alarm06.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm7 = Program.PATH_Windows + @"\media\Alarm07.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm8 = Program.PATH_Windows + @"\media\Alarm08.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm9 = Program.PATH_Windows + @"\media\Alarm09.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm10 = Program.PATH_Windows + @"\media\Alarm10.wav";
+                Sounds.Snd_Win_Notification_Looping_Call = Program.PATH_Windows + @"\media\Ring01.wav";
+                Sounds.Snd_Win_Notification_Looping_Call2 = Program.PATH_Windows + @"\media\Ring02.wav";
+                Sounds.Snd_Win_Notification_Looping_Call3 = Program.PATH_Windows + @"\media\Ring03.wav";
+                Sounds.Snd_Win_Notification_Looping_Call4 = Program.PATH_Windows + @"\media\Ring04.wav";
+                Sounds.Snd_Win_Notification_Looping_Call5 = Program.PATH_Windows + @"\media\Ring05.wav";
+                Sounds.Snd_Win_Notification_Looping_Call6 = Program.PATH_Windows + @"\media\Ring06.wav";
+                Sounds.Snd_Win_Notification_Looping_Call7 = Program.PATH_Windows + @"\media\Ring07.wav";
+                Sounds.Snd_Win_Notification_Looping_Call8 = Program.PATH_Windows + @"\media\Ring08.wav";
+                Sounds.Snd_Win_Notification_Looping_Call9 = Program.PATH_Windows + @"\media\Ring09.wav";
+                Sounds.Snd_Win_Notification_Looping_Call10 = Program.PATH_Windows + @"\media\Ring10.wav";
+                Sounds.Snd_Win_Notification_Mail = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_Notification_Proximity = Program.PATH_Windows + @"\media\Windows Proximity Notification.wav";
+                Sounds.Snd_Win_Notification_Reminder = Program.PATH_Windows + @"\media\Windows Notify Calendar.wav";
+                Sounds.Snd_Win_Notification_SMS = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
                 Sounds.Snd_Win_Open = "";
                 Sounds.Snd_Win_PrintComplete = "";
-                Sounds.Snd_Win_ProximityConnection = My.Env.PATH_Windows + @"\media\Windows Proximity Connection.wav";
+                Sounds.Snd_Win_ProximityConnection = Program.PATH_Windows + @"\media\Windows Proximity Connection.wav";
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemExit = "";
                 Sounds.Snd_Win_SystemStart = "";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
                 Sounds.Snd_Win_WindowsLogoff = "";
                 Sounds.Snd_Win_WindowsLogon = "";
-                Sounds.Snd_Win_WindowsUAC = My.Env.PATH_Windows + @"\media\Windows User Account Control.wav";
-                Sounds.Snd_Win_WindowsUnlock = My.Env.PATH_Windows + @"\media\Windows Unlock.wav";
+                Sounds.Snd_Win_WindowsUAC = Program.PATH_Windows + @"\media\Windows User Account Control.wav";
+                Sounds.Snd_Win_WindowsUnlock = Program.PATH_Windows + @"\media\Windows Unlock.wav";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
                 Sounds.Snd_Explorer_BlockedPopup = "";
                 Sounds.Snd_Explorer_EmptyRecycleBin = "";
@@ -314,12 +314,12 @@ namespace WinPaletter.Theme
                 Sounds.Snd_NetMeeting_PersonLeaves = "";
                 Sounds.Snd_NetMeeting_ReceiveCall = "";
                 Sounds.Snd_NetMeeting_ReceiveRequestToJoin = "";
-                Sounds.Snd_SpeechRec_DisNumbersSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
-                Sounds.Snd_SpeechRec_HubOffSound = My.Env.PATH_Windows + @"\media\Speech Off.wav";
-                Sounds.Snd_SpeechRec_HubOnSound = My.Env.PATH_Windows + @"\media\Speech On.wav";
-                Sounds.Snd_SpeechRec_HubSleepSound = My.Env.PATH_Windows + @"\media\Speech Sleep.wav";
-                Sounds.Snd_SpeechRec_MisrecoSound = My.Env.PATH_Windows + @"\media\Speech Misrecognition.wav";
-                Sounds.Snd_SpeechRec_PanelSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_DisNumbersSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_HubOffSound = Program.PATH_Windows + @"\media\Speech Off.wav";
+                Sounds.Snd_SpeechRec_HubOnSound = Program.PATH_Windows + @"\media\Speech On.wav";
+                Sounds.Snd_SpeechRec_HubSleepSound = Program.PATH_Windows + @"\media\Speech Sleep.wav";
+                Sounds.Snd_SpeechRec_MisrecoSound = Program.PATH_Windows + @"\media\Speech Misrecognition.wav";
+                Sounds.Snd_SpeechRec_PanelSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
 
                 Sounds.Snd_Win_SystemExit_TaskMgmt = true;
                 Sounds.Snd_Win_WindowsLogoff_TaskMgmt = true;
@@ -341,7 +341,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -355,7 +355,7 @@ namespace WinPaletter.Theme
                 CMD.FaceName = "Consolas";
                 CMD.FontSize = 18 * 65536;
                 CMD.FontRaster = false;
-                CMD.W10_1909_ForceV2 = My.Env.W10_1909;
+                CMD.W10_1909_ForceV2 = Program.W10_1909;
             }
 
             {
@@ -369,7 +369,7 @@ namespace WinPaletter.Theme
                 PS86.FaceName = "Consolas";
                 PS86.FontSize = 17 * 65536;
                 PS86.FontRaster = false;
-                PS86.W10_1909_ForceV2 = My.Env.W10_1909;
+                PS86.W10_1909_ForceV2 = Program.W10_1909;
             }
 
             {
@@ -383,7 +383,7 @@ namespace WinPaletter.Theme
                 PS64.FaceName = "Consolas";
                 PS64.FontSize = 17 * 65536;
                 PS64.FontRaster = false;
-                PS64.W10_1909_ForceV2 = My.Env.W10_1909;
+                PS64.W10_1909_ForceV2 = Program.W10_1909;
             }
 
             {
@@ -422,66 +422,66 @@ namespace WinPaletter.Theme
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
                 Sounds.Snd_Win_ChangeTheme = "";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows Hardware Fail.wav";
-                Sounds.Snd_Win_FaxBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows Hardware Fail.wav";
+                Sounds.Snd_Win_FaxBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
-                Sounds.Snd_Win_MessageNudge = My.Env.PATH_Windows + @"\media\Windows Message Nudge.wav";
+                Sounds.Snd_Win_MessageNudge = Program.PATH_Windows + @"\media\Windows Message Nudge.wav";
                 Sounds.Snd_Win_Minimize = "";
-                Sounds.Snd_Win_Notification_Default = My.Env.PATH_Windows + @"\media\Windows Notify System Generic.wav";
-                Sounds.Snd_Win_Notification_IM = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm = My.Env.PATH_Windows + @"\media\Alarm01.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm2 = My.Env.PATH_Windows + @"\media\Alarm02.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm3 = My.Env.PATH_Windows + @"\media\Alarm03.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm4 = My.Env.PATH_Windows + @"\media\Alarm04.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm5 = My.Env.PATH_Windows + @"\media\Alarm05.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm6 = My.Env.PATH_Windows + @"\media\Alarm06.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm7 = My.Env.PATH_Windows + @"\media\Alarm07.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm8 = My.Env.PATH_Windows + @"\media\Alarm08.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm9 = My.Env.PATH_Windows + @"\media\Alarm09.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm10 = My.Env.PATH_Windows + @"\media\Alarm10.wav";
-                Sounds.Snd_Win_Notification_Looping_Call = My.Env.PATH_Windows + @"\media\Ring01.wav";
-                Sounds.Snd_Win_Notification_Looping_Call2 = My.Env.PATH_Windows + @"\media\Ring02.wav";
-                Sounds.Snd_Win_Notification_Looping_Call3 = My.Env.PATH_Windows + @"\media\Ring03.wav";
-                Sounds.Snd_Win_Notification_Looping_Call4 = My.Env.PATH_Windows + @"\media\Ring04.wav";
-                Sounds.Snd_Win_Notification_Looping_Call5 = My.Env.PATH_Windows + @"\media\Ring05.wav";
-                Sounds.Snd_Win_Notification_Looping_Call6 = My.Env.PATH_Windows + @"\media\Ring06.wav";
-                Sounds.Snd_Win_Notification_Looping_Call7 = My.Env.PATH_Windows + @"\media\Ring07.wav";
-                Sounds.Snd_Win_Notification_Looping_Call8 = My.Env.PATH_Windows + @"\media\Ring08.wav";
-                Sounds.Snd_Win_Notification_Looping_Call9 = My.Env.PATH_Windows + @"\media\Ring09.wav";
-                Sounds.Snd_Win_Notification_Looping_Call10 = My.Env.PATH_Windows + @"\media\Ring10.wav";
-                Sounds.Snd_Win_Notification_Mail = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_Notification_Proximity = My.Env.PATH_Windows + @"\media\Windows Proximity Notification.wav";
-                Sounds.Snd_Win_Notification_Reminder = My.Env.PATH_Windows + @"\media\Windows Notify Calendar.wav";
-                Sounds.Snd_Win_Notification_SMS = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Default = Program.PATH_Windows + @"\media\Windows Notify System Generic.wav";
+                Sounds.Snd_Win_Notification_IM = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm = Program.PATH_Windows + @"\media\Alarm01.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm2 = Program.PATH_Windows + @"\media\Alarm02.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm3 = Program.PATH_Windows + @"\media\Alarm03.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm4 = Program.PATH_Windows + @"\media\Alarm04.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm5 = Program.PATH_Windows + @"\media\Alarm05.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm6 = Program.PATH_Windows + @"\media\Alarm06.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm7 = Program.PATH_Windows + @"\media\Alarm07.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm8 = Program.PATH_Windows + @"\media\Alarm08.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm9 = Program.PATH_Windows + @"\media\Alarm09.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm10 = Program.PATH_Windows + @"\media\Alarm10.wav";
+                Sounds.Snd_Win_Notification_Looping_Call = Program.PATH_Windows + @"\media\Ring01.wav";
+                Sounds.Snd_Win_Notification_Looping_Call2 = Program.PATH_Windows + @"\media\Ring02.wav";
+                Sounds.Snd_Win_Notification_Looping_Call3 = Program.PATH_Windows + @"\media\Ring03.wav";
+                Sounds.Snd_Win_Notification_Looping_Call4 = Program.PATH_Windows + @"\media\Ring04.wav";
+                Sounds.Snd_Win_Notification_Looping_Call5 = Program.PATH_Windows + @"\media\Ring05.wav";
+                Sounds.Snd_Win_Notification_Looping_Call6 = Program.PATH_Windows + @"\media\Ring06.wav";
+                Sounds.Snd_Win_Notification_Looping_Call7 = Program.PATH_Windows + @"\media\Ring07.wav";
+                Sounds.Snd_Win_Notification_Looping_Call8 = Program.PATH_Windows + @"\media\Ring08.wav";
+                Sounds.Snd_Win_Notification_Looping_Call9 = Program.PATH_Windows + @"\media\Ring09.wav";
+                Sounds.Snd_Win_Notification_Looping_Call10 = Program.PATH_Windows + @"\media\Ring10.wav";
+                Sounds.Snd_Win_Notification_Mail = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_Notification_Proximity = Program.PATH_Windows + @"\media\Windows Proximity Notification.wav";
+                Sounds.Snd_Win_Notification_Reminder = Program.PATH_Windows + @"\media\Windows Notify Calendar.wav";
+                Sounds.Snd_Win_Notification_SMS = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
                 Sounds.Snd_Win_Open = "";
                 Sounds.Snd_Win_PrintComplete = "";
-                Sounds.Snd_Win_ProximityConnection = My.Env.PATH_Windows + @"\media\Windows Proximity Connection.wav";
+                Sounds.Snd_Win_ProximityConnection = Program.PATH_Windows + @"\media\Windows Proximity Connection.wav";
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemExit = "";
                 Sounds.Snd_Win_SystemStart = "";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
                 Sounds.Snd_Win_WindowsLogoff = "";
                 Sounds.Snd_Win_WindowsLogon = "";
-                Sounds.Snd_Win_WindowsUAC = My.Env.PATH_Windows + @"\media\Windows User Account Control.wav";
-                Sounds.Snd_Win_WindowsUnlock = My.Env.PATH_Windows + @"\media\Windows Unlock.wav";
+                Sounds.Snd_Win_WindowsUAC = Program.PATH_Windows + @"\media\Windows User Account Control.wav";
+                Sounds.Snd_Win_WindowsUnlock = Program.PATH_Windows + @"\media\Windows Unlock.wav";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
                 Sounds.Snd_Explorer_BlockedPopup = "";
                 Sounds.Snd_Explorer_EmptyRecycleBin = "";
@@ -498,12 +498,12 @@ namespace WinPaletter.Theme
                 Sounds.Snd_NetMeeting_PersonLeaves = "";
                 Sounds.Snd_NetMeeting_ReceiveCall = "";
                 Sounds.Snd_NetMeeting_ReceiveRequestToJoin = "";
-                Sounds.Snd_SpeechRec_DisNumbersSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
-                Sounds.Snd_SpeechRec_HubOffSound = My.Env.PATH_Windows + @"\media\Speech Off.wav";
-                Sounds.Snd_SpeechRec_HubOnSound = My.Env.PATH_Windows + @"\media\Speech On.wav";
-                Sounds.Snd_SpeechRec_HubSleepSound = My.Env.PATH_Windows + @"\media\Speech Sleep.wav";
-                Sounds.Snd_SpeechRec_MisrecoSound = My.Env.PATH_Windows + @"\media\Speech Misrecognition.wav";
-                Sounds.Snd_SpeechRec_PanelSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_DisNumbersSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_HubOffSound = Program.PATH_Windows + @"\media\Speech Off.wav";
+                Sounds.Snd_SpeechRec_HubOnSound = Program.PATH_Windows + @"\media\Speech On.wav";
+                Sounds.Snd_SpeechRec_HubSleepSound = Program.PATH_Windows + @"\media\Speech Sleep.wav";
+                Sounds.Snd_SpeechRec_MisrecoSound = Program.PATH_Windows + @"\media\Speech Misrecognition.wav";
+                Sounds.Snd_SpeechRec_PanelSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
 
                 Sounds.Snd_Win_SystemExit_TaskMgmt = true;
                 Sounds.Snd_Win_WindowsLogoff_TaskMgmt = true;
@@ -525,7 +525,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -640,73 +640,73 @@ namespace WinPaletter.Theme
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
                 Sounds.Snd_Win_ChangeTheme = "";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows Hardware Fail.wav";
-                Sounds.Snd_Win_FaxBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows Hardware Fail.wav";
+                Sounds.Snd_Win_FaxBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
-                Sounds.Snd_Win_MessageNudge = My.Env.PATH_Windows + @"\media\Windows Message Nudge.wav";
+                Sounds.Snd_Win_MessageNudge = Program.PATH_Windows + @"\media\Windows Message Nudge.wav";
                 Sounds.Snd_Win_Minimize = "";
-                Sounds.Snd_Win_Notification_Default = My.Env.PATH_Windows + @"\media\Windows Notify System Generic.wav";
-                Sounds.Snd_Win_Notification_IM = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm = My.Env.PATH_Windows + @"\media\Alarm01.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm2 = My.Env.PATH_Windows + @"\media\Alarm02.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm3 = My.Env.PATH_Windows + @"\media\Alarm03.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm4 = My.Env.PATH_Windows + @"\media\Alarm04.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm5 = My.Env.PATH_Windows + @"\media\Alarm05.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm6 = My.Env.PATH_Windows + @"\media\Alarm06.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm7 = My.Env.PATH_Windows + @"\media\Alarm07.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm8 = My.Env.PATH_Windows + @"\media\Alarm08.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm9 = My.Env.PATH_Windows + @"\media\Alarm09.wav";
-                Sounds.Snd_Win_Notification_Looping_Alarm10 = My.Env.PATH_Windows + @"\media\Alarm10.wav";
-                Sounds.Snd_Win_Notification_Looping_Call = My.Env.PATH_Windows + @"\media\Ring01.wav";
-                Sounds.Snd_Win_Notification_Looping_Call2 = My.Env.PATH_Windows + @"\media\Ring02.wav";
-                Sounds.Snd_Win_Notification_Looping_Call3 = My.Env.PATH_Windows + @"\media\Ring03.wav";
-                Sounds.Snd_Win_Notification_Looping_Call4 = My.Env.PATH_Windows + @"\media\Ring04.wav";
-                Sounds.Snd_Win_Notification_Looping_Call5 = My.Env.PATH_Windows + @"\media\Ring05.wav";
-                Sounds.Snd_Win_Notification_Looping_Call6 = My.Env.PATH_Windows + @"\media\Ring06.wav";
-                Sounds.Snd_Win_Notification_Looping_Call7 = My.Env.PATH_Windows + @"\media\Ring07.wav";
-                Sounds.Snd_Win_Notification_Looping_Call8 = My.Env.PATH_Windows + @"\media\Ring08.wav";
-                Sounds.Snd_Win_Notification_Looping_Call9 = My.Env.PATH_Windows + @"\media\Ring09.wav";
-                Sounds.Snd_Win_Notification_Looping_Call10 = My.Env.PATH_Windows + @"\media\Ring10.wav";
-                Sounds.Snd_Win_Notification_Mail = My.Env.PATH_Windows + @"\media\Windows Notify Email.wav";
-                Sounds.Snd_Win_Notification_Proximity = My.Env.PATH_Windows + @"\media\Windows Proximity Notification.wav";
-                Sounds.Snd_Win_Notification_Reminder = My.Env.PATH_Windows + @"\media\Windows Notify Calendar.wav";
-                Sounds.Snd_Win_Notification_SMS = My.Env.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Default = Program.PATH_Windows + @"\media\Windows Notify System Generic.wav";
+                Sounds.Snd_Win_Notification_IM = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm = Program.PATH_Windows + @"\media\Alarm01.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm2 = Program.PATH_Windows + @"\media\Alarm02.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm3 = Program.PATH_Windows + @"\media\Alarm03.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm4 = Program.PATH_Windows + @"\media\Alarm04.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm5 = Program.PATH_Windows + @"\media\Alarm05.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm6 = Program.PATH_Windows + @"\media\Alarm06.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm7 = Program.PATH_Windows + @"\media\Alarm07.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm8 = Program.PATH_Windows + @"\media\Alarm08.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm9 = Program.PATH_Windows + @"\media\Alarm09.wav";
+                Sounds.Snd_Win_Notification_Looping_Alarm10 = Program.PATH_Windows + @"\media\Alarm10.wav";
+                Sounds.Snd_Win_Notification_Looping_Call = Program.PATH_Windows + @"\media\Ring01.wav";
+                Sounds.Snd_Win_Notification_Looping_Call2 = Program.PATH_Windows + @"\media\Ring02.wav";
+                Sounds.Snd_Win_Notification_Looping_Call3 = Program.PATH_Windows + @"\media\Ring03.wav";
+                Sounds.Snd_Win_Notification_Looping_Call4 = Program.PATH_Windows + @"\media\Ring04.wav";
+                Sounds.Snd_Win_Notification_Looping_Call5 = Program.PATH_Windows + @"\media\Ring05.wav";
+                Sounds.Snd_Win_Notification_Looping_Call6 = Program.PATH_Windows + @"\media\Ring06.wav";
+                Sounds.Snd_Win_Notification_Looping_Call7 = Program.PATH_Windows + @"\media\Ring07.wav";
+                Sounds.Snd_Win_Notification_Looping_Call8 = Program.PATH_Windows + @"\media\Ring08.wav";
+                Sounds.Snd_Win_Notification_Looping_Call9 = Program.PATH_Windows + @"\media\Ring09.wav";
+                Sounds.Snd_Win_Notification_Looping_Call10 = Program.PATH_Windows + @"\media\Ring10.wav";
+                Sounds.Snd_Win_Notification_Mail = Program.PATH_Windows + @"\media\Windows Notify Email.wav";
+                Sounds.Snd_Win_Notification_Proximity = Program.PATH_Windows + @"\media\Windows Proximity Notification.wav";
+                Sounds.Snd_Win_Notification_Reminder = Program.PATH_Windows + @"\media\Windows Notify Calendar.wav";
+                Sounds.Snd_Win_Notification_SMS = Program.PATH_Windows + @"\media\Windows Notify Messaging.wav";
                 Sounds.Snd_Win_Open = "";
                 Sounds.Snd_Win_PrintComplete = "";
-                Sounds.Snd_Win_ProximityConnection = My.Env.PATH_Windows + @"\media\Windows Proximity Connection.wav";
+                Sounds.Snd_Win_ProximityConnection = Program.PATH_Windows + @"\media\Windows Proximity Connection.wav";
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows Background.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemExit = "";
                 Sounds.Snd_Win_SystemStart = "";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows Foreground.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows Background.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows Foreground.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
                 Sounds.Snd_Win_WindowsLogoff = "";
                 Sounds.Snd_Win_WindowsLogon = "";
-                Sounds.Snd_Win_WindowsUAC = My.Env.PATH_Windows + @"\media\Windows User Account Control.wav";
-                Sounds.Snd_Win_WindowsUnlock = My.Env.PATH_Windows + @"\media\Windows Unlock.wav";
+                Sounds.Snd_Win_WindowsUAC = Program.PATH_Windows + @"\media\Windows User Account Control.wav";
+                Sounds.Snd_Win_WindowsUnlock = Program.PATH_Windows + @"\media\Windows Unlock.wav";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
-                Sounds.Snd_Explorer_BlockedPopup = My.Env.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
+                Sounds.Snd_Explorer_BlockedPopup = Program.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
                 Sounds.Snd_Explorer_EmptyRecycleBin = "";
-                Sounds.Snd_Explorer_FeedDiscovered = My.Env.PATH_Windows + @"\media\Windows Feed Discovered.wav";
+                Sounds.Snd_Explorer_FeedDiscovered = Program.PATH_Windows + @"\media\Windows Feed Discovered.wav";
                 Sounds.Snd_Explorer_MoveMenuItem = "";
                 Sounds.Snd_Explorer_Navigating = "";
-                Sounds.Snd_Explorer_SecurityBand = My.Env.PATH_Windows + @"\media\Windows Information Bar.wav";
+                Sounds.Snd_Explorer_SecurityBand = Program.PATH_Windows + @"\media\Windows Information Bar.wav";
                 Sounds.Snd_Explorer_SearchProviderDiscovered = "";
                 Sounds.Snd_Explorer_FaxError = "";
                 Sounds.Snd_Explorer_FaxLineRings = "";
@@ -716,12 +716,12 @@ namespace WinPaletter.Theme
                 Sounds.Snd_NetMeeting_PersonLeaves = "";
                 Sounds.Snd_NetMeeting_ReceiveCall = "";
                 Sounds.Snd_NetMeeting_ReceiveRequestToJoin = "";
-                Sounds.Snd_SpeechRec_DisNumbersSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
-                Sounds.Snd_SpeechRec_HubOffSound = My.Env.PATH_Windows + @"\media\Speech Off.wav";
-                Sounds.Snd_SpeechRec_HubOnSound = My.Env.PATH_Windows + @"\media\Speech On.wav";
-                Sounds.Snd_SpeechRec_HubSleepSound = My.Env.PATH_Windows + @"\media\Speech Sleep.wav";
-                Sounds.Snd_SpeechRec_MisrecoSound = My.Env.PATH_Windows + @"\media\Speech Misrecognition.wav";
-                Sounds.Snd_SpeechRec_PanelSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_DisNumbersSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_HubOffSound = Program.PATH_Windows + @"\media\Speech Off.wav";
+                Sounds.Snd_SpeechRec_HubOnSound = Program.PATH_Windows + @"\media\Speech On.wav";
+                Sounds.Snd_SpeechRec_HubSleepSound = Program.PATH_Windows + @"\media\Speech Sleep.wav";
+                Sounds.Snd_SpeechRec_MisrecoSound = Program.PATH_Windows + @"\media\Speech Misrecognition.wav";
+                Sounds.Snd_SpeechRec_PanelSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
 
                 Sounds.Snd_Win_SystemExit_TaskMgmt = true;
                 Sounds.Snd_Win_WindowsLogoff_TaskMgmt = true;
@@ -743,7 +743,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -857,18 +857,18 @@ namespace WinPaletter.Theme
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "Default";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Ding.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows Ding.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
-                Sounds.Snd_Win_ChangeTheme = My.Env.PATH_Windows + @"\media\Windows Logon Sound.wav";
+                Sounds.Snd_Win_ChangeTheme = Program.PATH_Windows + @"\media\Windows Logon Sound.wav";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Battery Critical.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows Hardware Fail.wav";
-                Sounds.Snd_Win_FaxBeep = My.Env.PATH_Windows + @"\media\Windows Notify.wav";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Battery Low.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows Notify.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows Battery Critical.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows Hardware Fail.wav";
+                Sounds.Snd_Win_FaxBeep = Program.PATH_Windows + @"\media\Windows Notify.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows Battery Low.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows Notify.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
@@ -906,39 +906,39 @@ namespace WinPaletter.Theme
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows Error.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows Exclamation.wav";
-                Sounds.Snd_Win_SystemExit = My.Env.PATH_Windows + @"\media\Windows Shutdown.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows Error.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows Exclamation.wav";
+                Sounds.Snd_Win_SystemExit = Program.PATH_Windows + @"\media\Windows Shutdown.wav";
                 Sounds.Snd_Win_SystemStart = "";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows Critical Stop.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows Balloon.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows Critical Stop.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows Balloon.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
-                Sounds.Snd_Win_WindowsLogoff = My.Env.PATH_Windows + @"\media\Windows Logoff Sound.wav";
-                Sounds.Snd_Win_WindowsLogon = My.Env.PATH_Windows + @"\media\Windows Logon Sound.wav";
-                Sounds.Snd_Win_WindowsUAC = My.Env.PATH_Windows + @"\media\Windows User Account Control.wav";
+                Sounds.Snd_Win_WindowsLogoff = Program.PATH_Windows + @"\media\Windows Logoff Sound.wav";
+                Sounds.Snd_Win_WindowsLogon = Program.PATH_Windows + @"\media\Windows Logon Sound.wav";
+                Sounds.Snd_Win_WindowsUAC = Program.PATH_Windows + @"\media\Windows User Account Control.wav";
                 Sounds.Snd_Win_WindowsUnlock = "";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
-                Sounds.Snd_Explorer_BlockedPopup = My.Env.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
-                Sounds.Snd_Explorer_EmptyRecycleBin = My.Env.PATH_Windows + @"\media\Windows Recycle.wav";
-                Sounds.Snd_Explorer_FeedDiscovered = My.Env.PATH_Windows + @"\media\Windows Feed Discovered.wav";
+                Sounds.Snd_Explorer_BlockedPopup = Program.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
+                Sounds.Snd_Explorer_EmptyRecycleBin = Program.PATH_Windows + @"\media\Windows Recycle.wav";
+                Sounds.Snd_Explorer_FeedDiscovered = Program.PATH_Windows + @"\media\Windows Feed Discovered.wav";
                 Sounds.Snd_Explorer_MoveMenuItem = "";
-                Sounds.Snd_Explorer_Navigating = My.Env.PATH_Windows + @"\media\Windows Navigation Start.wav";
-                Sounds.Snd_Explorer_SecurityBand = My.Env.PATH_Windows + @"\media\Windows Information Bar.wav";
+                Sounds.Snd_Explorer_Navigating = Program.PATH_Windows + @"\media\Windows Navigation Start.wav";
+                Sounds.Snd_Explorer_SecurityBand = Program.PATH_Windows + @"\media\Windows Information Bar.wav";
                 Sounds.Snd_Explorer_SearchProviderDiscovered = "";
-                Sounds.Snd_Explorer_FaxError = My.Env.PATH_Windows + @"\media\ding.wav";
-                Sounds.Snd_Explorer_FaxLineRings = My.Env.PATH_Windows + @"\media\Windows Ringin.wav";
+                Sounds.Snd_Explorer_FaxError = Program.PATH_Windows + @"\media\ding.wav";
+                Sounds.Snd_Explorer_FaxLineRings = Program.PATH_Windows + @"\media\Windows Ringin.wav";
                 Sounds.Snd_Explorer_FaxNew = "";
-                Sounds.Snd_Explorer_FaxSent = My.Env.PATH_Windows + @"\media\tada.wav";
+                Sounds.Snd_Explorer_FaxSent = Program.PATH_Windows + @"\media\tada.wav";
                 Sounds.Snd_NetMeeting_PersonJoins = "";
                 Sounds.Snd_NetMeeting_PersonLeaves = "";
                 Sounds.Snd_NetMeeting_ReceiveCall = "";
                 Sounds.Snd_NetMeeting_ReceiveRequestToJoin = "";
-                Sounds.Snd_SpeechRec_DisNumbersSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
-                Sounds.Snd_SpeechRec_HubOffSound = My.Env.PATH_Windows + @"\media\Speech Off.wav";
-                Sounds.Snd_SpeechRec_HubOnSound = My.Env.PATH_Windows + @"\media\Speech On.wav";
-                Sounds.Snd_SpeechRec_HubSleepSound = My.Env.PATH_Windows + @"\media\Speech Sleep.wav";
-                Sounds.Snd_SpeechRec_MisrecoSound = My.Env.PATH_Windows + @"\media\Speech Misrecognition.wav";
-                Sounds.Snd_SpeechRec_PanelSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_DisNumbersSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_HubOffSound = Program.PATH_Windows + @"\media\Speech Off.wav";
+                Sounds.Snd_SpeechRec_HubOnSound = Program.PATH_Windows + @"\media\Speech On.wav";
+                Sounds.Snd_SpeechRec_HubSleepSound = Program.PATH_Windows + @"\media\Speech Sleep.wav";
+                Sounds.Snd_SpeechRec_MisrecoSound = Program.PATH_Windows + @"\media\Speech Misrecognition.wav";
+                Sounds.Snd_SpeechRec_PanelSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
 
                 Sounds.Snd_Win_SystemExit_TaskMgmt = false;
                 Sounds.Snd_Win_WindowsLogoff_TaskMgmt = false;
@@ -960,7 +960,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -1116,18 +1116,18 @@ namespace WinPaletter.Theme
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "Default";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Ding.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows Ding.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
                 Sounds.Snd_Win_ChangeTheme = "";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Battery Critical.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows Hardware Fail.wav";
-                Sounds.Snd_Win_FaxBeep = My.Env.PATH_Windows + @"\media\Windows Notify.wav";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows Battery Low.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows Notify.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows Battery Critical.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows Hardware Fail.wav";
+                Sounds.Snd_Win_FaxBeep = Program.PATH_Windows + @"\media\Windows Notify.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows Battery Low.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows Notify.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
@@ -1165,39 +1165,39 @@ namespace WinPaletter.Theme
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows Error.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows Exclamation.wav";
-                Sounds.Snd_Win_SystemExit = My.Env.PATH_Windows + @"\media\Windows Shutdown.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows Error.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows Exclamation.wav";
+                Sounds.Snd_Win_SystemExit = Program.PATH_Windows + @"\media\Windows Shutdown.wav";
                 Sounds.Snd_Win_SystemStart = "";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows Critical Stop.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows Balloon.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows Critical Stop.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows Balloon.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
-                Sounds.Snd_Win_WindowsLogoff = My.Env.PATH_Windows + @"\media\Windows Logoff Sound.wav";
-                Sounds.Snd_Win_WindowsLogon = My.Env.PATH_Windows + @"\media\Windows Logon Sound.wav";
-                Sounds.Snd_Win_WindowsUAC = My.Env.PATH_Windows + @"\media\Windows User Account Control.wav";
+                Sounds.Snd_Win_WindowsLogoff = Program.PATH_Windows + @"\media\Windows Logoff Sound.wav";
+                Sounds.Snd_Win_WindowsLogon = Program.PATH_Windows + @"\media\Windows Logon Sound.wav";
+                Sounds.Snd_Win_WindowsUAC = Program.PATH_Windows + @"\media\Windows User Account Control.wav";
                 Sounds.Snd_Win_WindowsUnlock = "";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
-                Sounds.Snd_Explorer_BlockedPopup = My.Env.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
-                Sounds.Snd_Explorer_EmptyRecycleBin = My.Env.PATH_Windows + @"\media\Windows Recycle.wav";
-                Sounds.Snd_Explorer_FeedDiscovered = My.Env.PATH_Windows + @"\media\Windows Feed Discovered.wav";
+                Sounds.Snd_Explorer_BlockedPopup = Program.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
+                Sounds.Snd_Explorer_EmptyRecycleBin = Program.PATH_Windows + @"\media\Windows Recycle.wav";
+                Sounds.Snd_Explorer_FeedDiscovered = Program.PATH_Windows + @"\media\Windows Feed Discovered.wav";
                 Sounds.Snd_Explorer_MoveMenuItem = "";
-                Sounds.Snd_Explorer_Navigating = My.Env.PATH_Windows + @"\media\Windows Navigation Start.wav";
-                Sounds.Snd_Explorer_SecurityBand = My.Env.PATH_Windows + @"\media\Windows Information Bar.wav";
+                Sounds.Snd_Explorer_Navigating = Program.PATH_Windows + @"\media\Windows Navigation Start.wav";
+                Sounds.Snd_Explorer_SecurityBand = Program.PATH_Windows + @"\media\Windows Information Bar.wav";
                 Sounds.Snd_Explorer_SearchProviderDiscovered = "";
-                Sounds.Snd_Explorer_FaxError = My.Env.PATH_Windows + @"\media\ding.wav";
-                Sounds.Snd_Explorer_FaxLineRings = My.Env.PATH_Windows + @"\media\Windows Ringin.wav";
+                Sounds.Snd_Explorer_FaxError = Program.PATH_Windows + @"\media\ding.wav";
+                Sounds.Snd_Explorer_FaxLineRings = Program.PATH_Windows + @"\media\Windows Ringin.wav";
                 Sounds.Snd_Explorer_FaxNew = "";
-                Sounds.Snd_Explorer_FaxSent = My.Env.PATH_Windows + @"\media\tada.wav";
+                Sounds.Snd_Explorer_FaxSent = Program.PATH_Windows + @"\media\tada.wav";
                 Sounds.Snd_NetMeeting_PersonJoins = "";
                 Sounds.Snd_NetMeeting_PersonLeaves = "";
                 Sounds.Snd_NetMeeting_ReceiveCall = "";
                 Sounds.Snd_NetMeeting_ReceiveRequestToJoin = "";
-                Sounds.Snd_SpeechRec_DisNumbersSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
-                Sounds.Snd_SpeechRec_HubOffSound = My.Env.PATH_Windows + @"\media\Speech Off.wav";
-                Sounds.Snd_SpeechRec_HubOnSound = My.Env.PATH_Windows + @"\media\Speech On.wav";
-                Sounds.Snd_SpeechRec_HubSleepSound = My.Env.PATH_Windows + @"\media\Speech Sleep.wav";
-                Sounds.Snd_SpeechRec_MisrecoSound = My.Env.PATH_Windows + @"\media\Speech Misrecognition.wav";
-                Sounds.Snd_SpeechRec_PanelSound = My.Env.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_DisNumbersSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
+                Sounds.Snd_SpeechRec_HubOffSound = Program.PATH_Windows + @"\media\Speech Off.wav";
+                Sounds.Snd_SpeechRec_HubOnSound = Program.PATH_Windows + @"\media\Speech On.wav";
+                Sounds.Snd_SpeechRec_HubSleepSound = Program.PATH_Windows + @"\media\Speech Sleep.wav";
+                Sounds.Snd_SpeechRec_MisrecoSound = Program.PATH_Windows + @"\media\Speech Misrecognition.wav";
+                Sounds.Snd_SpeechRec_PanelSound = Program.PATH_Windows + @"\media\Speech Disambiguation.wav";
 
                 Sounds.Snd_Win_SystemExit_TaskMgmt = false;
                 Sounds.Snd_Win_WindowsLogoff_TaskMgmt = false;
@@ -1219,7 +1219,7 @@ namespace WinPaletter.Theme
                 Info.ThemeVersion = "1.0.0.0";
                 Info.Author = "Microsoft";
                 Info.AuthorSocialMediaLink = "www.microsoft.com";
-                Info.AppVersion = My.Env.AppVersion;
+                Info.AppVersion = Program.AppVersion;
             }
 
             {
@@ -1795,24 +1795,24 @@ namespace WinPaletter.Theme
                 ScreenSaver.Enabled = true;
                 ScreenSaver.IsSecure = false;
                 ScreenSaver.TimeOut = 60;
-                ScreenSaver.File = My.Env.PATH_System32 + @"\logon.scr";
+                ScreenSaver.File = Program.PATH_System32 + @"\logon.scr";
             }
 
             {
                 ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "";
-                Sounds.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows XP Ding.wav";
+                Sounds.Snd_Win_Default = Program.PATH_Windows + @"\media\Windows XP Ding.wav";
                 Sounds.Snd_Win_AppGPFault = "";
                 Sounds.Snd_Win_CCSelect = "";
                 Sounds.Snd_Win_ChangeTheme = "";
                 Sounds.Snd_Win_Close = "";
-                Sounds.Snd_Win_CriticalBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows XP Battery Critical.wav";
-                Sounds.Snd_Win_DeviceConnect = My.Env.PATH_Windows + @"\media\Windows XP Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = My.Env.PATH_Windows + @"\media\Windows XP Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = My.Env.PATH_Windows + @"\media\Windows XP Hardware Fail.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = Program.PATH_Windows + @"\media\Windows XP Battery Critical.wav";
+                Sounds.Snd_Win_DeviceConnect = Program.PATH_Windows + @"\media\Windows XP Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = Program.PATH_Windows + @"\media\Windows XP Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = Program.PATH_Windows + @"\media\Windows XP Hardware Fail.wav";
                 Sounds.Snd_Win_FaxBeep = "";
-                Sounds.Snd_Win_LowBatteryAlarm = My.Env.PATH_Windows + @"\media\Windows XP Battery Low.wav";
-                Sounds.Snd_Win_MailBeep = My.Env.PATH_Windows + @"\media\Windows XP Notify.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = Program.PATH_Windows + @"\media\Windows XP Battery Low.wav";
+                Sounds.Snd_Win_MailBeep = Program.PATH_Windows + @"\media\Windows XP Notify.wav";
                 Sounds.Snd_Win_Maximize = "";
                 Sounds.Snd_Win_MenuCommand = "";
                 Sounds.Snd_Win_MenuPopup = "";
@@ -1850,33 +1850,33 @@ namespace WinPaletter.Theme
                 Sounds.Snd_Win_RestoreDown = "";
                 Sounds.Snd_Win_RestoreUp = "";
                 Sounds.Snd_Win_ShowBand = "";
-                Sounds.Snd_Win_SystemAsterisk = My.Env.PATH_Windows + @"\media\Windows XP Error.wav";
-                Sounds.Snd_Win_SystemExclamation = My.Env.PATH_Windows + @"\media\Windows XP Exclamation.wav";
-                Sounds.Snd_Win_SystemExit = My.Env.PATH_Windows + @"\media\Windows XP Shutdown.wav";
-                Sounds.Snd_Win_SystemStart = My.Env.PATH_Windows + @"\media\Windows XP Startup.wav";
-                Sounds.Snd_Win_SystemHand = My.Env.PATH_Windows + @"\media\Windows XP Critical Stop.wav";
-                Sounds.Snd_Win_SystemNotification = My.Env.PATH_Windows + @"\media\Windows XP Balloon.wav";
+                Sounds.Snd_Win_SystemAsterisk = Program.PATH_Windows + @"\media\Windows XP Error.wav";
+                Sounds.Snd_Win_SystemExclamation = Program.PATH_Windows + @"\media\Windows XP Exclamation.wav";
+                Sounds.Snd_Win_SystemExit = Program.PATH_Windows + @"\media\Windows XP Shutdown.wav";
+                Sounds.Snd_Win_SystemStart = Program.PATH_Windows + @"\media\Windows XP Startup.wav";
+                Sounds.Snd_Win_SystemHand = Program.PATH_Windows + @"\media\Windows XP Critical Stop.wav";
+                Sounds.Snd_Win_SystemNotification = Program.PATH_Windows + @"\media\Windows XP Balloon.wav";
                 Sounds.Snd_Win_SystemQuestion = "";
-                Sounds.Snd_Win_WindowsLogoff = My.Env.PATH_Windows + @"\media\Windows XP Logoff Sound.wav";
-                Sounds.Snd_Win_WindowsLogon = My.Env.PATH_Windows + @"\media\Windows XP Logon Sound.wav";
+                Sounds.Snd_Win_WindowsLogoff = Program.PATH_Windows + @"\media\Windows XP Logoff Sound.wav";
+                Sounds.Snd_Win_WindowsLogon = Program.PATH_Windows + @"\media\Windows XP Logon Sound.wav";
                 Sounds.Snd_Win_WindowsUAC = "";
                 Sounds.Snd_Win_WindowsUnlock = "";
                 Sounds.Snd_Explorer_ActivatingDocument = "";
-                Sounds.Snd_Explorer_BlockedPopup = My.Env.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
-                Sounds.Snd_Explorer_EmptyRecycleBin = My.Env.PATH_Windows + @"\media\Windows XP Recycle.wav";
-                Sounds.Snd_Explorer_FeedDiscovered = My.Env.PATH_Windows + @"\media\Windows Feed Discovered.wav";
+                Sounds.Snd_Explorer_BlockedPopup = Program.PATH_Windows + @"\media\Windows Pop-up Blocked.wav";
+                Sounds.Snd_Explorer_EmptyRecycleBin = Program.PATH_Windows + @"\media\Windows XP Recycle.wav";
+                Sounds.Snd_Explorer_FeedDiscovered = Program.PATH_Windows + @"\media\Windows Feed Discovered.wav";
                 Sounds.Snd_Explorer_MoveMenuItem = "";
-                Sounds.Snd_Explorer_Navigating = My.Env.PATH_Windows + @"\media\Windows Navigation Start.wav";
-                Sounds.Snd_Explorer_SecurityBand = My.Env.PATH_Windows + @"\media\Windows Information Bar.wav";
+                Sounds.Snd_Explorer_Navigating = Program.PATH_Windows + @"\media\Windows Navigation Start.wav";
+                Sounds.Snd_Explorer_SecurityBand = Program.PATH_Windows + @"\media\Windows Information Bar.wav";
                 Sounds.Snd_Explorer_SearchProviderDiscovered = "";
-                Sounds.Snd_Explorer_FaxError = My.Env.PATH_Windows + @"\media\ding.wav";
-                Sounds.Snd_Explorer_FaxLineRings = My.Env.PATH_Windows + @"\media\ringin.wav";
-                Sounds.Snd_Explorer_FaxNew = My.Env.PATH_Windows + @"\media\notify.wav";
-                Sounds.Snd_Explorer_FaxSent = My.Env.PATH_Windows + @"\media\tada.wav";
-                Sounds.Snd_NetMeeting_PersonJoins = My.Env.PATH_ProgramFiles + @"\NetMeeting\Blip.wav";
-                Sounds.Snd_NetMeeting_PersonLeaves = My.Env.PATH_ProgramFiles + @"\NetMeeting\Blip.wav";
-                Sounds.Snd_NetMeeting_ReceiveCall = My.Env.PATH_Windows + @"\media\Windows XP RingIn.wav";
-                Sounds.Snd_NetMeeting_ReceiveRequestToJoin = My.Env.PATH_Windows + @"\media\Windows XP RingIn.wav";
+                Sounds.Snd_Explorer_FaxError = Program.PATH_Windows + @"\media\ding.wav";
+                Sounds.Snd_Explorer_FaxLineRings = Program.PATH_Windows + @"\media\ringin.wav";
+                Sounds.Snd_Explorer_FaxNew = Program.PATH_Windows + @"\media\notify.wav";
+                Sounds.Snd_Explorer_FaxSent = Program.PATH_Windows + @"\media\tada.wav";
+                Sounds.Snd_NetMeeting_PersonJoins = Program.PATH_ProgramFiles + @"\NetMeeting\Blip.wav";
+                Sounds.Snd_NetMeeting_PersonLeaves = Program.PATH_ProgramFiles + @"\NetMeeting\Blip.wav";
+                Sounds.Snd_NetMeeting_ReceiveCall = Program.PATH_Windows + @"\media\Windows XP RingIn.wav";
+                Sounds.Snd_NetMeeting_ReceiveRequestToJoin = Program.PATH_Windows + @"\media\Windows XP RingIn.wav";
                 Sounds.Snd_SpeechRec_DisNumbersSound = "";
                 Sounds.Snd_SpeechRec_HubOffSound = "";
                 Sounds.Snd_SpeechRec_HubOnSound = "";
@@ -1892,7 +1892,7 @@ namespace WinPaletter.Theme
 
             {
                 ref Theme.Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
-                Wallpaper.ImageFile = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                Wallpaper.ImageFile = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
                 Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
             }
 

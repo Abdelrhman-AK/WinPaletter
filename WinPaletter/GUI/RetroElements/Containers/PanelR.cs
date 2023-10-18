@@ -32,7 +32,7 @@ namespace WinPaletter.UI.Retro
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = My.Env.RenderingHint;
+            G.TextRenderingHint = Program.RenderingHint;
             DoubleBuffered = true;
             var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
 

@@ -230,7 +230,7 @@ namespace WinPaletter
 
         public Color Pick(List<Control> Ctrl, Conditions Conditions = null, bool EnableAlpha = false)
         {
-            if (!My.Env.Settings.Miscellaneous.Classic_Color_Picker)
+            if (!Program.Settings.NerdStats.Classic_Color_Picker)
             {
                 var c = Ctrl[0].BackColor;
                 ColorEditorManager1.Color = Ctrl[0].BackColor;
@@ -255,12 +255,12 @@ namespace WinPaletter
                     _Conditions = Conditions;
 
                 Location = Ctrl[0].PointToScreen(Point.Empty) + (Size)new Point(-Width + Ctrl[0].Width + 5, Ctrl[0].Height - 1);
-                if (Location.Y + Height > My.MyProject.Computer.Screen.Bounds.Height)
-                    Location = new Point(Location.X, My.MyProject.Computer.Screen.Bounds.Height - Height);
+                if (Location.Y + Height > Program.Computer.Screen.Bounds.Height)
+                    Location = new Point(Location.X, Program.Computer.Screen.Bounds.Height - Height);
                 if (Location.Y < 0)
                     Location = new Point(Location.X, 0);
-                if (Location.X + Width > My.MyProject.Computer.Screen.Bounds.Width)
-                    Location = new Point(My.MyProject.Computer.Screen.Bounds.Width - Width, Location.Y);
+                if (Location.X + Width > Program.Computer.Screen.Bounds.Width)
+                    Location = new Point(Program.Computer.Screen.Bounds.Width - Width, Location.Y);
                 if (Location.X < 0)
                     Location = new Point(0, Location.Y);
 
@@ -869,16 +869,16 @@ namespace WinPaletter
 
             }
 
-            if ((My.Env.WVista | My.Env.W7 | My.Env.W8 | My.Env.W81) & My.Env.Settings.Miscellaneous.Win7LivePreview)
+            if ((Program.WVista | Program.W7 | Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
             {
                 if (_Conditions.Win7LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(ColorEditorManager1.Color, My.Env.TM.Windows7.ColorizationAfterglow);
+                    UpdateWin7Preview(ColorEditorManager1.Color, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
                 if (_Conditions.Win7LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(My.Env.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
+                    UpdateWin7Preview(Program.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
                 }
             }
         }
@@ -899,30 +899,30 @@ namespace WinPaletter
                         clrAfterGlow = Color2.ToArgb()
                     };
 
-                    if (My.Env.PreviewStyle == WindowStyle.W81)
+                    if (Program.PreviewStyle == WindowStyle.W81)
                     {
-                        temp.nIntensity = My.Env.TM.Windows81.ColorizationColorBalance;
+                        temp.nIntensity = Program.TM.Windows81.ColorizationColorBalance;
                     }
 
-                    else if (My.Env.PreviewStyle == WindowStyle.W7)
+                    else if (Program.PreviewStyle == WindowStyle.W7)
                     {
-                        temp.nIntensity = My.Env.TM.Windows7.ColorizationColorBalance;
+                        temp.nIntensity = Program.TM.Windows7.ColorizationColorBalance;
 
-                        temp.clrAfterGlowBalance = My.Env.TM.Windows7.ColorizationAfterglowBalance;
-                        temp.clrBlurBalance = My.Env.TM.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = My.Env.TM.Windows7.ColorizationGlassReflectionIntensity;
-                        temp.fOpaque = My.Env.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                        temp.clrAfterGlowBalance = Program.TM.Windows7.ColorizationAfterglowBalance;
+                        temp.clrBlurBalance = Program.TM.Windows7.ColorizationBlurBalance;
+                        temp.clrGlassReflectionIntensity = Program.TM.Windows7.ColorizationGlassReflectionIntensity;
+                        temp.fOpaque = Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
-                    else if (My.Env.PreviewStyle == WindowStyle.WVista)
+                    else if (Program.PreviewStyle == WindowStyle.WVista)
                     {
-                        temp.clrColor = Color.FromArgb(My.Env.TM.WindowsVista.Alpha, My.Env.TM.WindowsVista.ColorizationColor).ToArgb();
-                        temp.clrAfterGlowBalance = Color.FromArgb(My.Env.TM.WindowsVista.Alpha, My.Env.TM.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrColor = Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrAfterGlowBalance = Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
 
                         // temp.nIntensity = My.Manager.WindowsVista.ColorizationColorBalance
                         // temp.clrBlurBalance = My.Manager.WindowsVista.ColorizationBlurBalance
                         // temp.clrGlassReflectionIntensity = My.Manager.WindowsVista.ColorizationGlassReflectionIntensity
-                        temp.fOpaque = My.Env.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                        temp.fOpaque = Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     Dwmapi.DwmSetColorizationParameters(ref temp, false);
@@ -948,7 +948,7 @@ namespace WinPaletter
             {
                 case true:
                     {
-                        img = My.Env.Wallpaper_Unscaled;
+                        img = Program.Wallpaper_Unscaled;
                         break;
                     }
 
@@ -961,13 +961,13 @@ namespace WinPaletter
             }
 
             if (CheckBox2.Checked)
-                img = img.Resize(My.MyProject.Forms.MainFrm.pnl_preview.Size);
+                img = img.Resize(Forms.MainFrm.pnl_preview.Size);
 
             if (img is not null)
             {
-                Label4.Text = My.Env.Lang.Extracting;
-                My.Env.Animator.HideSync(Button6, true);
-                My.Env.Animator.HideSync(ImgPaletteContainer, true);
+                Label4.Text = Program.Lang.Extracting;
+                Program.Animator.HideSync(Button6, true);
+                Program.Animator.HideSync(ImgPaletteContainer, true);
                 ProgressBar1.Visible = true;
                 Colors_List.Clear();
 
@@ -1025,8 +1025,8 @@ namespace WinPaletter
 
             ProgressBar1.Visible = false;
             Colors_List.Clear();
-            My.Env.Animator.ShowSync(ImgPaletteContainer, true);
-            My.Env.Animator.ShowSync(Button6, true);
+            Program.Animator.ShowSync(ImgPaletteContainer, true);
+            Program.Animator.ShowSync(Button6, true);
         }
 
         private void MiniColorItem_click(object sender, EventArgs e)
@@ -1076,7 +1076,7 @@ namespace WinPaletter
             {
                 case 0:
                     {
-                        GetColorsFromPalette(My.Env.TM);
+                        GetColorsFromPalette(Program.TM);
                         break;
                     }
                 case 1:
@@ -1112,7 +1112,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        GetColorsFromPalette(My.Env.TM);
+                        GetColorsFromPalette(Program.TM);
                         break;
                     }
             }
@@ -1120,16 +1120,16 @@ namespace WinPaletter
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (DialogResult != DialogResult.OK & (My.Env.WVista | My.Env.W7 | My.Env.W8 | My.Env.W81) & My.Env.Settings.Miscellaneous.Win7LivePreview)
+            if (DialogResult != DialogResult.OK & (Program.WVista | Program.W7 | Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
             {
                 if (_Conditions.Win7LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(InitColor, My.Env.TM.Windows7.ColorizationAfterglow);
+                    UpdateWin7Preview(InitColor, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
                 if (_Conditions.Win7LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(My.Env.TM.Windows7.ColorizationColor, InitColor);
+                    UpdateWin7Preview(Program.TM.Windows7.ColorizationColor, InitColor);
                 }
             }
         }
@@ -1175,14 +1175,14 @@ namespace WinPaletter
 
         private void Ttl_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1230,7 +1230,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        WPStyle.MsgBox(My.Env.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -1238,9 +1238,9 @@ namespace WinPaletter
                 {
                     try
                     {
-                        System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
+                        System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
 
-                        var vs = new VisualStyleFile(My.Env.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme");
+                        var vs = new VisualStyleFile(Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme");
 
                         foreach (var field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                         {
@@ -1262,12 +1262,12 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        WPStyle.MsgBox(My.Env.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

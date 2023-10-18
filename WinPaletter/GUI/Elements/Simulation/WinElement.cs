@@ -460,7 +460,7 @@ namespace WinPaletter.UI.Simulation
             {
                 Bitmap Wallpaper;
                 if (Parent.BackgroundImage is null)
-                    Wallpaper = My.Env.Wallpaper;
+                    Wallpaper = Program.Wallpaper;
                 else
                     Wallpaper = (Bitmap)Parent.BackgroundImage;
 
@@ -654,7 +654,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = My.Env.RenderingHint;
+            G.TextRenderingHint = Program.RenderingHint;
             DoubleBuffered = true;
             var Rect = new Rectangle(-1, -1, Width + 2, Height + 2);
             var RRect = new Rectangle(0, 0, Width - 1, Height - 1);
@@ -2054,8 +2054,8 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(My.Env.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(My.Env.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
                         break;
                     }
                 #endregion
@@ -2085,8 +2085,8 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(My.Env.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(My.Env.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
                         break;
                     }
                 #endregion
@@ -2112,8 +2112,8 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(My.Env.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(My.Env.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
+                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
                         break;
                     }
                 #endregion
@@ -2125,7 +2125,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             SmoothingMode sm = G.SmoothingMode;
                             G.SmoothingMode = SmoothingMode.HighSpeed;
-                            My.Env.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, true, false);
+                            Program.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, true, false);
                             G.SmoothingMode = sm;
                         }
                         catch

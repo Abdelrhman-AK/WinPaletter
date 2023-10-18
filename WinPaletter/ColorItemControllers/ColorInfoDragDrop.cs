@@ -87,20 +87,20 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            Label6.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label7.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label8.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label9.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label10.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label11.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label12.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label13.Font = My.MyProject.Application.ConsoleFontMedium;
+            Label6.Font = Program.ConsoleFontMedium;
+            Label7.Font = Program.ConsoleFontMedium;
+            Label8.Font = Program.ConsoleFontMedium;
+            Label9.Font = Program.ConsoleFontMedium;
+            Label10.Font = Program.ConsoleFontMedium;
+            Label11.Font = Program.ConsoleFontMedium;
+            Label12.Font = Program.ConsoleFontMedium;
+            Label13.Font = Program.ConsoleFontMedium;
         }
 
         private void Color_From_BackColorChanged(object sender, EventArgs e)
         {
             var Color = ((Panel)sender).BackColor;
-            BackColor = My.Env.Style.DarkMode ? Color.Dark(_dark) : Color.LightLight();
+            BackColor = Program.Style.DarkMode ? Color.Dark(_dark) : Color.LightLight();
 
             Label6.Text = Color.ReturnFormat(ColorsExtensions.ColorFormat.RGB, true, Color.A < 255).Replace(" ", ", ");
             Label7.Text = Color.ReturnFormat(ColorsExtensions.ColorFormat.HEX, true, Color.A < 255).Replace(" ", ", ");

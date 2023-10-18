@@ -215,7 +215,7 @@ namespace WinPaletter.UI.Controllers
 
             }
 
-            if (!My.Env.Style.DarkMode)
+            if (!Program.Style.DarkMode)
             {
                 using (var imgF = new ImageFactory())
                 {
@@ -292,7 +292,7 @@ namespace WinPaletter.UI.Controllers
             }
             else
             {
-                G.TextRenderingHint = My.Env.RenderingHint;
+                G.TextRenderingHint = Program.RenderingHint;
             }
 
             DoubleBuffered = true;
@@ -301,12 +301,12 @@ namespace WinPaletter.UI.Controllers
             var rect_outer = new Rectangle(0, 0, Width - 1, Height - 1);
             var rect_inner = new Rectangle(1, 1, Width - 3, Height - 3);
 
-            var bkC = Color.FromArgb(255 - alpha, My.Env.Style.Colors.Back);
+            var bkC = Color.FromArgb(255 - alpha, Program.Style.Colors.Back);
             var bkCC = bkC;
 
             if (TM is not null)
             {
-                if (My.Env.Style.DarkMode)
+                if (Program.Style.DarkMode)
                 {
                     bkCC = Color.FromArgb(alpha, TM.Info.Color1.Dark());
                 }
@@ -361,8 +361,8 @@ namespace WinPaletter.UI.Controllers
             if (State != MouseState.None)
                 G.FillRoundedRect(Noise, rect_inner);
 
-            var lC = Color.FromArgb(255 - alpha, State != MouseState.None ? My.Env.Style.Colors.Border_Checked : My.Env.Style.Colors.Border);
-            var lCC = Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover);
+            var lC = Color.FromArgb(255 - alpha, State != MouseState.None ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
+            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
 
             G.DrawRoundedRect_LikeW11(new Pen(lC), rect_inner);
             G.DrawRoundedRect_LikeW11(new Pen(lCC), rect_outer);
@@ -389,11 +389,11 @@ namespace WinPaletter.UI.Controllers
                     G.DrawImage(Properties.Resources.Store_DoneByUser, BadgeRect);
                 }
 
-                string author = DoneByWinPaletter ? My.MyProject.Application.Info.ProductName : TM.Info.Author;
-                G.DrawString(My.Env.Lang.By + " " + author, new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                string author = DoneByWinPaletter ? Application.ProductName : TM.Info.Author;
+                G.DrawString(Program.Lang.By + " " + author, new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 G.DrawImage(Properties.Resources.Store_ThemeVersion, VerRect);
-                G.DrawString(TM.Info.ThemeVersion, My.MyProject.Application.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                G.DrawString(TM.Info.ThemeVersion, Program.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 for (int i = 0, loopTo = DesignedFor_Badges.Count - 1; i <= loopTo; i++)
                     G.DrawImage(DesignedFor_Badges[i], new Rectangle(BadgeRect.Right - 16 - 18 * i, OS_Rect.Y, OS_Rect.Width, OS_Rect.Height));

@@ -124,40 +124,40 @@ namespace WinPaletter
 
             if (ShowDialog() == DialogResult.OK)
             {
-                switch (My.MyProject.Application.ColorEvent)
+                switch (Program.ColorEvent)
                 {
-                    case My.MyApplication.MenuEvent.Copy:
+                    case Program.MenuEvent.Copy:
                         {
-                            My.MyProject.Application.CopiedColor = MainColor.BackColor;
+                            Program.CopiedColor = MainColor.BackColor;
                             return ColorItem.BackColor;
                         }
 
-                    case My.MyApplication.MenuEvent.Cut:
+                    case Program.MenuEvent.Cut:
                         {
-                            My.MyProject.Application.CopiedColor = MainColor.BackColor;
+                            Program.CopiedColor = MainColor.BackColor;
                             ColorItem.BackColor = Color.Black;
                             break;
                         }
 
-                    case My.MyApplication.MenuEvent.Paste:
+                    case Program.MenuEvent.Paste:
                         {
-                            ColorItem.BackColor = My.MyProject.Application.CopiedColor;
-                            return My.MyProject.Application.CopiedColor;
+                            ColorItem.BackColor = Program.CopiedColor;
+                            return Program.CopiedColor;
                         }
 
-                    case My.MyApplication.MenuEvent.Override:
+                    case Program.MenuEvent.Override:
                         {
                             ColorItem.BackColor = _overrideColor;
                             return ColorItem.BackColor;
                         }
 
-                    case My.MyApplication.MenuEvent.Delete:
+                    case Program.MenuEvent.Delete:
                         {
                             ColorItem.BackColor = Color.FromArgb(0, 0, 0, 0);
                             return ColorItem.BackColor;
                         }
 
-                    case My.MyApplication.MenuEvent.None:
+                    case Program.MenuEvent.None:
                         {
                             return MainColor.DefaultColor;
                         }
@@ -166,7 +166,7 @@ namespace WinPaletter
             }
             else
             {
-                My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.None;
+                Program.ColorEvent = Program.MenuEvent.None;
                 return MainColor.DefaultColor;
             } // Nothing
 
@@ -242,22 +242,22 @@ namespace WinPaletter
 
             var p = MousePosition;
 
-            if (p.Y + Height > My.MyProject.Computer.Screen.WorkingArea.Bottom)
+            if (p.Y + Height > Program.Computer.Screen.WorkingArea.Bottom)
             {
-                p.Y = My.MyProject.Computer.Screen.WorkingArea.Bottom - Height - 5;
+                p.Y = Program.Computer.Screen.WorkingArea.Bottom - Height - 5;
             }
 
-            if (p.Y < My.MyProject.Computer.Screen.WorkingArea.Top)
+            if (p.Y < Program.Computer.Screen.WorkingArea.Top)
             {
                 p.Y = 0;
             }
 
-            if (p.X + Width > My.MyProject.Computer.Screen.WorkingArea.Right)
+            if (p.X + Width > Program.Computer.Screen.WorkingArea.Right)
             {
-                p.X = My.MyProject.Computer.Screen.WorkingArea.Right - Width - 5;
+                p.X = Program.Computer.Screen.WorkingArea.Right - Width - 5;
             }
 
-            if (p.X < My.MyProject.Computer.Screen.WorkingArea.Left)
+            if (p.X < Program.Computer.Screen.WorkingArea.Left)
             {
                 p.X = 0;
             }
@@ -274,7 +274,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            if (My.MyProject.Application.CopiedColor == null)
+            if (Program.CopiedColor == null)
             {
 
                 Button3.Enabled = false;
@@ -306,7 +306,7 @@ namespace WinPaletter
                                     C = Color.FromArgb(C.A, C.R, C.G, i);
                             }
 
-                            My.MyProject.Application.CopiedColor = C;
+                            Program.CopiedColor = C;
                             Button3.Enabled = true;
                         }
                     }
@@ -322,7 +322,7 @@ namespace WinPaletter
                 Button3.Enabled = true;
             }
 
-            BackColor = My.Env.Style.DarkMode ? MainColor.BackColor.Dark(_dark) : MainColor.BackColor.LightLight();
+            BackColor = Program.Style.DarkMode ? MainColor.BackColor.Dark(_dark) : MainColor.BackColor.LightLight();
 
             User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE | User32.AnimateWindowFlags.AW_BLEND);
 
@@ -378,7 +378,7 @@ namespace WinPaletter
         {
             Clipboard.SetData("Text", MainColor.BackColor);
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Copy;
+            Program.ColorEvent = Program.MenuEvent.Copy;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -386,7 +386,7 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Cut;
+            Program.ColorEvent = Program.MenuEvent.Cut;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -394,7 +394,7 @@ namespace WinPaletter
         private void Button3_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Paste;
+            Program.ColorEvent = Program.MenuEvent.Paste;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -402,7 +402,7 @@ namespace WinPaletter
         private void MainColor_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Override;
+            Program.ColorEvent = Program.MenuEvent.Override;
             _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
@@ -416,7 +416,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Delete;
+            Program.ColorEvent = Program.MenuEvent.Delete;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -464,7 +464,7 @@ namespace WinPaletter
         private void PreviousColor_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Override;
+            Program.ColorEvent = Program.MenuEvent.Override;
             _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
@@ -473,7 +473,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            My.MyProject.Application.ColorEvent = My.MyApplication.MenuEvent.Override;
+            Program.ColorEvent = Program.MenuEvent.Override;
             _overrideColor = PreviousClr;
             DialogResult = DialogResult.OK;
             Close();

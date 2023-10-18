@@ -19,32 +19,31 @@ namespace WinPaletter
         private void BugReport_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
-            var c = PictureBox1.Image.AverageColor().CB((float)(My.Env.Style.DarkMode ? -0.35d : 0.35d));
+            ApplyStyle(this);
+            var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
-            CheckBox1.Checked = My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
+            CheckBox1.Checked = Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
 
-            TreeView1.Font = My.MyProject.Application.ConsoleFontMedium;
+            TreeView1.Font = Program.ConsoleFontMedium;
 
             try
             {
-                My.MyProject.Forms.BK.Close();
+                Forms.BK.Close();
             }
             catch
             {
             }
             try
             {
-                My.MyProject.Forms.BK.Show();
+                Forms.BK.Show();
             }
             catch
             {
             }
 
-            foreach (var lbl in AnimatedBox1.Controls.OfType<Label>())
-                lbl.ForeColor = Color.White;
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
 
-            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            BringToFront();
         }
 
         public DialogResult NotifyAction(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
@@ -56,26 +55,26 @@ namespace WinPaletter
 
             PE_File = SourceFile;
 
-            TreeView1.Nodes.Add(My.Env.Lang.PE_Systemfile).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
+            TreeView1.Nodes.Add(Program.Lang.PE_Systemfile).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
 
             {
-                var temp = TreeView1.Nodes.Add(My.Env.Lang.PE_ReplacedResourceProperties);
-                temp.Nodes.Add(My.Env.Lang.PE_ResourceType).Nodes.Add(ResourceType);
-                temp.Nodes.Add(My.Env.Lang.PE_ResourceID).Nodes.Add(ID.ToString());
-                temp.Nodes.Add(My.Env.Lang.PE_ResourceLanguageCode).Nodes.Add(LangID.ToString());
+                var temp = TreeView1.Nodes.Add(Program.Lang.PE_ReplacedResourceProperties);
+                temp.Nodes.Add(Program.Lang.PE_ResourceType).Nodes.Add(ResourceType);
+                temp.Nodes.Add(Program.Lang.PE_ResourceID).Nodes.Add(ID.ToString());
+                temp.Nodes.Add(Program.Lang.PE_ResourceLanguageCode).Nodes.Add(LangID.ToString());
             }
 
             {
-                var temp1 = TreeView1.Nodes.Add(My.Env.Lang.PE_RunSFCinCMD_Node);
+                var temp1 = TreeView1.Nodes.Add(Program.Lang.PE_RunSFCinCMD_Node);
                 temp1.Nodes.Add("sfc /scanfile=\"" + System.IO.Path.GetFullPath(SourceFile) + "\"");
-                temp1.Nodes.Add(My.Env.Lang.PE_DontForgetToRestart);
+                temp1.Nodes.Add(Program.Lang.PE_DontForgetToRestart);
             }
 
             TreeView1.ExpandAll();
 
             result = ShowDialog();
 
-            My.MyProject.Forms.BK.Close();
+            Forms.BK.Close();
 
             return result;
         }
@@ -83,8 +82,8 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            My.Env.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
+            Program.Settings.Save(WPSettings.Mode.Registry);
 
             DialogResult = DialogResult.Cancel;
             Close();
@@ -92,8 +91,8 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            My.Env.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
+            Program.Settings.Save(WPSettings.Mode.Registry);
 
             DialogResult = DialogResult.OK;
             Close();
@@ -113,8 +112,8 @@ namespace WinPaletter
 
         private void PE_Warning_FormClosing(object sender, FormClosingEventArgs e)
         {
-            My.Env.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            My.Env.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
+            Program.Settings.Save(WPSettings.Mode.Registry);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -131,7 +130,7 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
             Reg_IO.SFC(PE_File);
-            WPStyle.MsgBox(string.Format("{0}. {1}.", My.Env.Lang.Done, My.Env.Lang.PE_DontForgetToRestart), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            WPStyle.MsgBox(string.Format("{0}. {1}.", Program.Lang.Done, Program.Lang.PE_DontForgetToRestart), MessageBoxButtons.OK, MessageBoxIcon.Information);
             Cursor = Cursors.Default;
         }
     }

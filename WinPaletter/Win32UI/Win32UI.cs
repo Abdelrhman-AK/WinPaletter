@@ -28,8 +28,8 @@ namespace WinPaletter
             ComboBox1.PopulateThemes();
             ComboBox1.SelectedIndex = 0;
             ApplyDefaultTMValues();
-            LoadTM(My.Env.TM);
-            SetMetrics(My.Env.TM);
+            LoadTM(Program.TM);
+            SetMetrics(Program.TM);
             this.DoubleBuffer();
 
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
@@ -114,27 +114,27 @@ namespace WinPaletter
         {
             Theme.Manager DefTM;
 
-            if (My.Env.W11)
+            if (Program.W11)
             {
                 DefTM = new Theme.Default().Windows11();
             }
-            else if (My.Env.W10)
+            else if (Program.W10)
             {
                 DefTM = new Theme.Default().Windows10();
             }
-            else if (My.Env.W81)
+            else if (Program.W81)
             {
                 DefTM = new Theme.Default().Windows81();
             }
-            else if (My.Env.W7)
+            else if (Program.W7)
             {
                 DefTM = new Theme.Default().Windows7();
             }
-            else if (My.Env.WVista)
+            else if (Program.WVista)
             {
                 DefTM = new Theme.Default().WindowsVista();
             }
-            else if (My.Env.WXP)
+            else if (Program.WXP)
             {
                 DefTM = new Theme.Default().WindowsXP();
             }
@@ -217,13 +217,13 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
-            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicTaskbar);
+            ApplyToTM(Program.TM);
+            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow2, false);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR2);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR3);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR4);
+            SetClassicPanelRaisedRColors(Program.TM, Forms.MainFrm.ClassicTaskbar);
             Close();
         }
 
@@ -237,8 +237,8 @@ namespace WinPaletter
             {
                 if (((MouseEventArgs)e).Button == MouseButtons.Right)
                 {
-                    My.MyProject.Forms.SubMenu.ShowMenu((ColorItem)sender);
-                    if (My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Cut | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Paste | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Override)
+                    Forms.SubMenu.ShowMenu((ColorItem)sender);
+                    if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
                     {
                         ApplyRetroPreview();
                     }
@@ -262,7 +262,7 @@ namespace WinPaletter
                         CList.Add(WindowR4);
 
                         var _Conditions = new Conditions() { WindowRColor1 = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR2.Color1 = C;
                         WindowR3.Color1 = C;
                         WindowR4.Color1 = C;
@@ -276,7 +276,7 @@ namespace WinPaletter
                         CList.Add(WindowR4);
 
                         var _Conditions = new Conditions() { WindowRColor2 = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR2.Color2 = C;
                         WindowR3.Color2 = C;
                         WindowR4.Color2 = C;
@@ -290,7 +290,7 @@ namespace WinPaletter
                         CList.Add(WindowR4);
 
                         var _Conditions = new Conditions() { WindowRForeColor = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR2.ForeColor = C;
                         WindowR3.ForeColor = C;
                         WindowR4.ForeColor = C;
@@ -301,7 +301,7 @@ namespace WinPaletter
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRColor1 = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR1.Color1 = C;
                         break;
                     }
@@ -310,7 +310,7 @@ namespace WinPaletter
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRColor2 = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR1.Color2 = C;
                         break;
                     }
@@ -319,7 +319,7 @@ namespace WinPaletter
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRForeColor = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR1.ForeColor = C;
                         break;
                     }
@@ -331,7 +331,7 @@ namespace WinPaletter
                         CList.Add(WindowR4);
 
                         var _Conditions = new Conditions() { WindowRBorder = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR2.ColorBorder = C;
                         WindowR3.ColorBorder = C;
                         WindowR4.ColorBorder = C;
@@ -342,7 +342,7 @@ namespace WinPaletter
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRBorder = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         WindowR1.ColorBorder = C;
                         break;
                     }
@@ -355,7 +355,7 @@ namespace WinPaletter
                         CList.Add(Retro3DPreview1);
 
                         var _Conditions = new Conditions() { WindowRFrame = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
                             ButtonR.WindowFrame = C;
@@ -374,7 +374,7 @@ namespace WinPaletter
                         CList.Add(Retro3DPreview1);
                         CList.Add(PanelR2);
                         var _Conditions = new Conditions() { ButtonRFace = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                         {
@@ -402,7 +402,7 @@ namespace WinPaletter
                         CList.Add(TextBoxR1);
 
                         var _Conditions = new Conditions() { ButtonRDkShadow = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             WindowR.ButtonDkShadow = C;
@@ -429,7 +429,7 @@ namespace WinPaletter
                         CList.Add(PanelR2);
 
                         var _Conditions = new Conditions() { ButtonRHilight = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             WindowR.ButtonHilight = C;
@@ -456,7 +456,7 @@ namespace WinPaletter
                         CList.Add(TextBoxR1);
 
                         var _Conditions = new Conditions() { ButtonRLight = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             WindowR.ButtonLight = C;
@@ -482,7 +482,7 @@ namespace WinPaletter
                         CList.Add(PanelR1);
 
                         var _Conditions = new Conditions() { ButtonRShadow = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             WindowR.ButtonShadow = C;
@@ -506,7 +506,7 @@ namespace WinPaletter
 
                         CList.Add(Retro3DPreview1);
                         var _Conditions = new Conditions() { ButtonRText = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             WindowR.ButtonText = C;
@@ -521,7 +521,7 @@ namespace WinPaletter
                     {
                         CList.Add(programcontainer);
                         var _Conditions = new Conditions() { RetroAppWorkspace = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         programcontainer.BackColor = C;
                         break;
                     }
@@ -530,7 +530,7 @@ namespace WinPaletter
                     {
                         CList.Add(pnl_preview);
                         var _Conditions = new Conditions() { RetroBackground = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         pnl_preview.BackColor = C;
                         break;
                     }
@@ -545,7 +545,7 @@ namespace WinPaletter
                             CList.Add(menucontainer0);
 
                         var _Conditions = new Conditions() { RetroBackground = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         Menu_Window.BackColor = C;
                         Menu_Window.Invalidate();
 
@@ -562,12 +562,12 @@ namespace WinPaletter
                         {
                             CList.Add(menucontainer0);
                             var _Conditions = new Conditions() { RetroBackground = true };
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                             menucontainer0.BackColor = C;
                         }
                         else
                         {
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                            C = Forms.ColorPickerDlg.Pick(CList);
                             ((UI.Controllers.ColorItem)sender).BackColor = C;
                         }
 
@@ -581,7 +581,7 @@ namespace WinPaletter
                             CList.Add(highlight);
                             CList.Add(PanelR1);
                             var _Conditions = new Conditions() { ButtonRShadow = true, RetroBackground = true, RetroHighlight17BitFixer = true };
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                             highlight.BackColor = C;
                             PanelR1.ButtonShadow = C;
                         }
@@ -590,7 +590,7 @@ namespace WinPaletter
                             CList.Add(highlight);
                             CList.Add(menuhilight);
                             var _Conditions = new Conditions() { RetroBackground = true };
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                             highlight.BackColor = C;
                             menuhilight.BackColor = C;
                         }
@@ -606,13 +606,13 @@ namespace WinPaletter
                             CList.Add(menuhilight);
                             CList.Add(PanelR1);
                             var _Conditions = new Conditions() { RetroBackground = true };
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                             menuhilight.BackColor = C;
                             PanelR1.BackColor = C;
                         }
                         else
                         {
-                            C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                            C = Forms.ColorPickerDlg.Pick(CList);
                             ((UI.Controllers.ColorItem)sender).BackColor = C;
                         }
 
@@ -626,7 +626,7 @@ namespace WinPaletter
                             CList.Add(LabelR3);
                         CList.Add(LabelR6);
 
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
 
                         LabelR1.ForeColor = C;
                         if (!Toggle1.Checked)
@@ -641,7 +641,7 @@ namespace WinPaletter
                         if (Toggle1.Checked)
                             CList.Add(LabelR3);
 
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
                         LabelR5.ForeColor = C;
                         if (Toggle1.Checked)
                             LabelR3.ForeColor = C;
@@ -653,7 +653,7 @@ namespace WinPaletter
                         CList.Add(LabelR2);
                         CList.Add(LabelR9);
 
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
                         LabelR2.ForeColor = C;
                         LabelR9.ForeColor = C;
                         break;
@@ -663,7 +663,7 @@ namespace WinPaletter
                     {
                         CList.Add(TextBoxR1);
                         var _Conditions = new Conditions() { RetroBackground = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         TextBoxR1.BackColor = C;
                         break;
                     }
@@ -674,7 +674,7 @@ namespace WinPaletter
                         CList.Add(LabelR4);
 
                         var _Conditions = new Conditions() { WindowRText = true, WindowRForeColor = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         TextBoxR1.ForeColor = C;
                         LabelR4.ForeColor = C;
                         break;
@@ -684,7 +684,7 @@ namespace WinPaletter
                     {
                         CList.Add(LabelR13);
                         var _Conditions = new Conditions() { RetroBackground = true };
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
                         LabelR13.BackColor = C;
                         break;
                     }
@@ -692,20 +692,20 @@ namespace WinPaletter
                 case var case27 when case27 == ("InfoText_pick".ToLower() ?? ""):
                     {
                         CList.Add(LabelR13);
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
                         LabelR13.ForeColor = C;
                         break;
                     }
 
                 case var case28 when case28 == ("Scrollbar_pick".ToLower() ?? ""):
                     {
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
                         break;
                     }
 
                 default:
                     {
-                        C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+                        C = Forms.ColorPickerDlg.Pick(CList);
                         break;
                     }
 
@@ -845,7 +845,7 @@ namespace WinPaletter
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
                 Toggle1.Checked = false;
-                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(Program.PreviewStyle))
                 {
                     LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
                 }
@@ -970,20 +970,20 @@ namespace WinPaletter
             foreach (string x in SelectedThemeList)
             {
 
-                if (x.StartsWith("activetitle=", My.Env._ignore))
+                if (x.StartsWith("activetitle=", Program._ignore))
                 {
                     activetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientActive)
                         GActivetitle_pick.BackColor = activetitle_pick.BackColor;
                 }
 
-                if (x.StartsWith("gradientactivetitle=", My.Env._ignore))
+                if (x.StartsWith("gradientactivetitle=", Program._ignore))
                 {
                     GActivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientActive = true;
                 }
 
-                if (x.StartsWith("inactivetitle=", My.Env._ignore))
+                if (x.StartsWith("inactivetitle=", Program._ignore))
                 {
                     InactiveTitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientInactive)
@@ -991,68 +991,68 @@ namespace WinPaletter
 
                 }
 
-                if (x.StartsWith("gradientinactivetitle=", My.Env._ignore))
+                if (x.StartsWith("gradientinactivetitle=", Program._ignore))
                 {
                     GInactivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientInactive = true;
                 }
 
-                if (x.StartsWith("background=", My.Env._ignore))
+                if (x.StartsWith("background=", Program._ignore))
                     background_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilight=", My.Env._ignore))
+                if (x.StartsWith("hilight=", Program._ignore))
                     hilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilighttext=", My.Env._ignore))
+                if (x.StartsWith("hilighttext=", Program._ignore))
                     hilighttext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("titletext=", My.Env._ignore))
+                if (x.StartsWith("titletext=", Program._ignore))
                     TitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("window=", My.Env._ignore))
+                if (x.StartsWith("window=", Program._ignore))
                     Window_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowtext=", My.Env._ignore))
+                if (x.StartsWith("windowtext=", Program._ignore))
                     WindowText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("scrollbar=", My.Env._ignore))
+                if (x.StartsWith("scrollbar=", Program._ignore))
                     Scrollbar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menu=", My.Env._ignore))
+                if (x.StartsWith("menu=", Program._ignore))
                     menu_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowframe=", My.Env._ignore))
+                if (x.StartsWith("windowframe=", Program._ignore))
                     Frame_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menutext=", My.Env._ignore))
+                if (x.StartsWith("menutext=", Program._ignore))
                     menutext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("activeborder=", My.Env._ignore))
+                if (x.StartsWith("activeborder=", Program._ignore))
                     ActiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactiveborder=", My.Env._ignore))
+                if (x.StartsWith("inactiveborder=", Program._ignore))
                     InactiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("appworkspace=", My.Env._ignore))
+                if (x.StartsWith("appworkspace=", Program._ignore))
                     AppWorkspace_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonface=", My.Env._ignore))
+                if (x.StartsWith("buttonface=", Program._ignore))
                     btnface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonshadow=", My.Env._ignore))
+                if (x.StartsWith("buttonshadow=", Program._ignore))
                     btnshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("graytext=", My.Env._ignore))
+                if (x.StartsWith("graytext=", Program._ignore))
                     GrayText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttontext=", My.Env._ignore))
+                if (x.StartsWith("buttontext=", Program._ignore))
                     btntext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactivetitletext=", My.Env._ignore))
+                if (x.StartsWith("inactivetitletext=", Program._ignore))
                     InactivetitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonhilight=", My.Env._ignore))
+                if (x.StartsWith("buttonhilight=", Program._ignore))
                     btnhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttondkshadow=", My.Env._ignore))
+                if (x.StartsWith("buttondkshadow=", Program._ignore))
                     btndkshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonlight=", My.Env._ignore))
+                if (x.StartsWith("buttonlight=", Program._ignore))
                     btnlight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infotext=", My.Env._ignore))
+                if (x.StartsWith("infotext=", Program._ignore))
                     InfoText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infowindow=", My.Env._ignore))
+                if (x.StartsWith("infowindow=", Program._ignore))
                     InfoWindow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hottrackingcolor=", My.Env._ignore))
+                if (x.StartsWith("hottrackingcolor=", Program._ignore))
                     hottracking_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
 
-                if (x.StartsWith("buttonalternateface=", My.Env._ignore))
+                if (x.StartsWith("buttonalternateface=", Program._ignore))
                     btnaltface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menubar=", My.Env._ignore))
+                if (x.StartsWith("menubar=", Program._ignore))
                     menubar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menuhilight=", My.Env._ignore))
+                if (x.StartsWith("menuhilight=", Program._ignore))
                     menuhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("desktop=", My.Env._ignore))
+                if (x.StartsWith("desktop=", Program._ignore))
                     desktop_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
             }
 
@@ -1064,7 +1064,7 @@ namespace WinPaletter
             PanelR2.Width = TM.MetricsFonts.ScrollWidth;
             menucontainer0.Height = TM.MetricsFonts.MenuHeight;
 
-            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
+            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
 
             LabelR1.Font = TM.MetricsFonts.MenuFont;
             LabelR2.Font = TM.MetricsFonts.MenuFont;
@@ -1074,7 +1074,7 @@ namespace WinPaletter
             LabelR5.Font = TM.MetricsFonts.MenuFont;
             LabelR6.Font = TM.MetricsFonts.MenuFont;
 
-            menucontainer1.Height = My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
+            menucontainer1.Height = Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
             highlight.Height = menucontainer1.Height + 1;
             menucontainer3.Height = menucontainer1.Height + 1;
             Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom;
@@ -1323,14 +1323,14 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
 
-            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicTaskbar);
+            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow2, false);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR2);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR3);
+            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR4);
+            SetClassicPanelRaisedRColors(Program.TM, Forms.MainFrm.ClassicTaskbar);
 
             try
             {
@@ -1350,12 +1350,12 @@ namespace WinPaletter
             {
                 var s = new List<string>();
                 s.Clear();
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_Copyrights, DateTime.Now.Year));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ProgrammedBy, My.MyProject.Application.Info.CompanyName));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedFromAppVer, My.Env.TM.Info.AppVersion));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedBy, My.Env.TM.Info.Author));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeName, My.Env.TM.Info.ThemeName));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeVersion, My.Env.TM.Info.ThemeVersion));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName));
+                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion));
                 s.Add("");
 
                 s.Add(string.Format(@"[Control Panel\Colors]"));
@@ -1514,7 +1514,7 @@ namespace WinPaletter
                 }
                 catch (Exception ex)
                 {
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.ThrowError(ex);
                 }
 
             }
@@ -1522,7 +1522,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.VS2Win32UI.ShowDialog();
+            Forms.VS2Win32UI.ShowDialog();
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)

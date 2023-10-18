@@ -14,9 +14,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            TextBox1.Font = My.MyProject.Application.ConsoleFontLarge;
-            Icon = My.MyProject.Forms.LicenseForm.Icon;
-            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            TextBox1.Font = Program.ConsoleFontLarge;
+            Icon = Forms.LicenseForm.Icon;
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
         }
 
         private void Button1_Click(object sender, EventArgs e)

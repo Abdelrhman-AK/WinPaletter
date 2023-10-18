@@ -2088,6 +2088,16 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] WinPaletter_Elevator {
+            get {
+                object obj = ResourceManager.GetObject("WinPaletter_Elevator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap WP_Admin {

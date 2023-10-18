@@ -21,9 +21,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             pnl_preview.DoubleBuffer();
-            ApplyFromTM(My.Env.TM);
+            ApplyFromTM(Program.TM);
         }
 
 
@@ -67,7 +67,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -75,7 +75,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             Close();
         }
 
@@ -84,7 +84,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             TMx.ScreenSaver.Apply();
             TMx.Dispose();
             Cursor = Cursors.Default;
@@ -166,7 +166,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -176,7 +176,7 @@ namespace WinPaletter
 
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
                 }

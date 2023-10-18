@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
 
         private readonly string S1 = "(c) Microsoft Corporation. All rights reserved.";
-        private readonly string S2 = My.Env.PATH_System32 + ">";
+        private readonly string S2 = Program.PATH_System32 + ">";
         private readonly string CV = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
 
         public enum Raster_Sizes
@@ -474,13 +474,13 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                S = My.Env.Lang.CMDSimulator_Alert0 + "\r\n" + "\r\n" + S2;
+                S = Program.Lang.CMDSimulator_Alert0 + "\r\n" + "\r\n" + S2;
             }
 
 
             if (Raster)
             {
-                S += "\r\n" + "\r\n" + My.Env.Lang.CMDSimulator_Alert1;
+                S += "\r\n" + "\r\n" + Program.Lang.CMDSimulator_Alert1;
             }
 
             if (!Raster)
@@ -501,7 +501,7 @@ namespace WinPaletter.UI.Simulation
 
                 using (var br = new SolidBrush(PCF))
                 {
-                    G.DrawString(My.Env.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat());
+                    G.DrawString(Program.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat());
                 }
             }
 

@@ -27,7 +27,7 @@ namespace WinPaletter
 
         private void WindowsTerminal_Load(object sender, EventArgs e)
         {
-            CheckBox1.Checked = My.Env.Settings.WindowsTerminals.ListAllFonts;
+            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
@@ -37,20 +37,20 @@ namespace WinPaletter
             {
                 case WinTerminal.Version.Stable:
                     {
-                        _Terminal = My.Env.TM.Terminal;
-                        _TerminalDefault = My.Env.TM.Terminal;
-                        Text = My.Env.Lang.TerminalStable;
-                        TerEnabled.Checked = My.Env.TM.Terminal.Enabled;
+                        _Terminal = Program.TM.Terminal;
+                        _TerminalDefault = Program.TM.Terminal;
+                        Text = Program.Lang.TerminalStable;
+                        TerEnabled.Checked = Program.TM.Terminal.Enabled;
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        _Terminal = My.Env.TM.TerminalPreview;
-                        _TerminalDefault = My.Env.TM.TerminalPreview;
+                        _Terminal = Program.TM.TerminalPreview;
+                        _TerminalDefault = Program.TM.TerminalPreview;
 
-                        Text = My.Env.Lang.TerminalPreview;
-                        TerEnabled.Checked = My.Env.TM.TerminalPreview.Enabled;
+                        Text = Program.Lang.TerminalPreview;
+                        TerEnabled.Checked = Program.TM.TerminalPreview.Enabled;
                         break;
                     }
 
@@ -119,29 +119,29 @@ namespace WinPaletter
                 TerTabActive.BackColor = default;
                 TerTabInactive.BackColor = default;
 
-                switch (My.Env.PreviewStyle)
+                switch (Program.PreviewStyle)
                 {
                     case WindowStyle.W11:
                         {
-                            TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
-                            Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
-                            Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
+                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                             break;
                         }
 
                     case WindowStyle.W10:
                         {
-                            TerMode.Checked = !My.Env.TM.Windows10.AppMode_Light;
-                            Terminal1.Light = My.Env.TM.Windows10.AppMode_Light;
-                            Terminal2.Light = My.Env.TM.Windows10.AppMode_Light;
+                            TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows10.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows10.AppMode_Light;
                             break;
                         }
 
                     default:
                         {
-                            TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
-                            Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
-                            Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
+                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                             break;
                         }
                 }
@@ -570,11 +570,11 @@ namespace WinPaletter
                 }
                 else if (TerProfiles.SelectedIndex == 0)
                 {
-                    Terminal1.TabTitle = My.Env.Lang.Default;
+                    Terminal1.TabTitle = Program.Lang.Default;
                 }
                 else
                 {
-                    Terminal1.TabTitle = My.Env.Lang.Untitled;
+                    Terminal1.TabTitle = Program.Lang.Untitled;
                 }
 
                 if (File.Exists(temp.Icon))
@@ -588,7 +588,7 @@ namespace WinPaletter
                     NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                     string path = "";
                     if (temp.Commandline is not null)
-                        path = temp.Commandline.Replace("%SystemRoot%", My.Env.PATH_Windows);
+                        path = temp.Commandline.Replace("%SystemRoot%", Program.PATH_Windows);
                     NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                     if (File.Exists(path))
@@ -672,7 +672,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            _Terminal.Colors.Add(new TColor() { Name = My.Env.Lang.Terminal_NewScheme + " #" + TerSchemes.Items.Count });
+            _Terminal.Colors.Add(new TColor() { Name = Program.Lang.Terminal_NewScheme + " #" + TerSchemes.Items.Count });
             FillTerminalSchemes(_Terminal, TerSchemes);
             TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1;
         }
@@ -686,7 +686,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 return;
             }
 
@@ -727,7 +727,7 @@ namespace WinPaletter
                 _Conditions.CMD_ColorTable15 = true;
 
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -786,9 +786,9 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var cx = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
+                var cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
 
-                if (My.MyProject.Application.ColorEvent != My.MyApplication.MenuEvent.None)
+                if (Program.ColorEvent != Program.MenuEvent.None)
                 {
                     if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
                     {
@@ -859,7 +859,7 @@ namespace WinPaletter
                 _Conditions.Terminal_TitlebarInactive = true;
 
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
             {
@@ -983,26 +983,26 @@ namespace WinPaletter
 
                     else if (TerThemes.SelectedItem.ToString().ToLower() == "system")
                     {
-                        switch (My.Env.PreviewStyle)
+                        switch (Program.PreviewStyle)
                         {
                             case WindowStyle.W11:
                                 {
-                                    Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
-                                    Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
+                                    Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                                    Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                                     break;
                                 }
 
                             case WindowStyle.W10:
                                 {
-                                    Terminal1.Light = My.Env.TM.Windows10.AppMode_Light;
-                                    Terminal2.Light = My.Env.TM.Windows10.AppMode_Light;
+                                    Terminal1.Light = Program.TM.Windows10.AppMode_Light;
+                                    Terminal2.Light = Program.TM.Windows10.AppMode_Light;
                                     break;
                                 }
 
                             default:
                                 {
-                                    Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
-                                    Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
+                                    Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                                    Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                                     break;
                                 }
                         }
@@ -1037,7 +1037,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            _Terminal.Themes.Add(new ThemesList() { Name = My.Env.Lang.Terminal_NewTheme + " #" + (TerThemes.Items.Count - 3) });
+            _Terminal.Themes.Add(new ThemesList() { Name = Program.Lang.Terminal_NewTheme + " #" + (TerThemes.Items.Count - 3) });
             FillTerminalThemes(_Terminal, TerThemes);
             TerThemes.SelectedIndex = TerThemes.Items.Count - 1;
         }
@@ -1095,26 +1095,26 @@ namespace WinPaletter
                 if (TerThemes.SelectedIndex == 1)
                     TerMode.Checked = false;
 
-                switch (My.Env.PreviewStyle)
+                switch (Program.PreviewStyle)
                 {
                     case WindowStyle.W11:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
                             break;
                         }
 
                     case WindowStyle.W10:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.TM.Windows10.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
                             break;
                         }
 
                     default:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
                             break;
                         }
 
@@ -1151,7 +1151,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex > 2)
             {
-                string s = WPStyle.InputBox(My.Env.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString());
+                string s = WPStyle.InputBox(Program.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString());
                 if ((s ?? "") != (TerThemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
                 {
                     int i = TerThemes.SelectedIndex;
@@ -1165,7 +1165,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string s = WPStyle.InputBox(My.Env.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString());
+            string s = WPStyle.InputBox(Program.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString());
             if ((s ?? "") != (TerSchemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
             {
                 int i = TerSchemes.SelectedIndex;
@@ -1178,16 +1178,16 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.TerminalInfo.Profile = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-            if (My.MyProject.Forms.TerminalInfo.OpenDialog(TerProfiles.SelectedIndex == 0) == DialogResult.OK)
+            Forms.TerminalInfo.Profile = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            if (Forms.TerminalInfo.OpenDialog(TerProfiles.SelectedIndex == 0) == DialogResult.OK)
             {
 
                 {
                     var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                    temp.Name = My.MyProject.Forms.TerminalInfo.Profile.Name;
-                    temp.TabTitle = My.MyProject.Forms.TerminalInfo.Profile.TabTitle;
-                    temp.Icon = My.MyProject.Forms.TerminalInfo.Profile.Icon;
-                    temp.TabColor = My.MyProject.Forms.TerminalInfo.Profile.TabColor;
+                    temp.Name = Forms.TerminalInfo.Profile.Name;
+                    temp.TabTitle = Forms.TerminalInfo.Profile.TabTitle;
+                    temp.Icon = Forms.TerminalInfo.Profile.Icon;
+                    temp.TabColor = Forms.TerminalInfo.Profile.TabColor;
                 }
 
                 int i = TerProfiles.SelectedIndex;
@@ -1233,13 +1233,13 @@ namespace WinPaletter
 
         private void CheckBox1_CheckedChanged(object sender)
         {
-            My.Env.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
-            My.Env.Settings.WindowsTerminals.Save();
+            Program.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
+            Program.Settings.WindowsTerminals.Save();
         }
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            _Terminal.Profiles.Add(new ProfilesList() { Name = My.Env.Lang.Terminal_NewProfile + " #" + TerProfiles.Items.Count, ColorScheme = _Terminal.DefaultProf.ColorScheme });
+            _Terminal.Profiles.Add(new ProfilesList() { Name = Program.Lang.Terminal_NewProfile + " #" + TerProfiles.Items.Count, ColorScheme = _Terminal.DefaultProf.ColorScheme });
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
         }
@@ -1249,29 +1249,29 @@ namespace WinPaletter
             string TerDir;
             string TerPreDir;
 
-            if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+            if (!Program.Settings.WindowsTerminals.Path_Deflection)
             {
-                TerDir = My.Env.PATH_TerminalJSON;
-                TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                TerDir = Program.PATH_TerminalJSON;
+                TerPreDir = Program.PATH_TerminalPreviewJSON;
             }
             else
             {
-                if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                 {
-                    TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                    TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                 }
                 else
                 {
-                    TerDir = My.Env.PATH_TerminalJSON;
+                    TerDir = Program.PATH_TerminalJSON;
                 }
 
-                if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                 {
-                    TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                    TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                 }
                 else
                 {
-                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                    TerPreDir = Program.PATH_TerminalPreviewJSON;
                 }
             }
 
@@ -1305,7 +1305,7 @@ namespace WinPaletter
         {
             if (TerBackImage.Text == "desktopWallpaper")
             {
-                Terminal1.BackImage = My.Env.Wallpaper;
+                Terminal1.BackImage = Program.Wallpaper;
             }
             else if (File.Exists(TerBackImage.Text))
             {
@@ -1353,15 +1353,15 @@ namespace WinPaletter
             {
                 case WinTerminal.Version.Stable:
                     {
-                        My.Env.TM.Terminal.Enabled = TerEnabled.Checked;
-                        My.Env.TM.Terminal = _Terminal;
+                        Program.TM.Terminal.Enabled = TerEnabled.Checked;
+                        Program.TM.Terminal = _Terminal;
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        My.Env.TM.TerminalPreview.Enabled = TerEnabled.Checked;
-                        My.Env.TM.TerminalPreview = _Terminal;
+                        Program.TM.TerminalPreview.Enabled = TerEnabled.Checked;
+                        Program.TM.TerminalPreview = _Terminal;
                         break;
                     }
 
@@ -1382,13 +1382,13 @@ namespace WinPaletter
                 {
                     case WinTerminal.Version.Stable:
                         {
-                            My.Env.TM.Terminal = _TerminalDefault;
+                            Program.TM.Terminal = _TerminalDefault;
                             break;
                         }
 
                     case WinTerminal.Version.Preview:
                         {
-                            My.Env.TM.TerminalPreview = _TerminalDefault;
+                            Program.TM.TerminalPreview = _TerminalDefault;
                             break;
                         }
 
@@ -1404,7 +1404,7 @@ namespace WinPaletter
 
             if (TerEnabled.Checked)
             {
-                if (My.Env.W10 | My.Env.W11)
+                if (Program.W10 | Program.W11)
                 {
 
                     try
@@ -1414,29 +1414,29 @@ namespace WinPaletter
                         string TerDir;
                         string TerPreDir;
 
-                        if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                        if (!Program.Settings.WindowsTerminals.Path_Deflection)
                         {
-                            TerDir = My.Env.PATH_TerminalJSON;
-                            TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                            TerDir = Program.PATH_TerminalJSON;
+                            TerPreDir = Program.PATH_TerminalPreviewJSON;
                         }
                         else
                         {
-                            if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                             {
-                                TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                             }
                             else
                             {
-                                TerDir = My.Env.PATH_TerminalJSON;
+                                TerDir = Program.PATH_TerminalJSON;
                             }
 
-                            if (File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                             {
-                                TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                                TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                             }
                             else
                             {
-                                TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                                TerPreDir = Program.PATH_TerminalPreviewJSON;
                             }
                         }
 
@@ -1463,20 +1463,20 @@ namespace WinPaletter
 
             else
             {
-                WPStyle.MsgBox(My.Env.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            if (My.Env.W10 | My.Env.W11)
+            if (Program.W10 | Program.W11)
             {
                 string TerDir;
                 string TerPreDir;
 
-                TerDir = My.Env.PATH_TerminalJSON;
-                TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                TerDir = Program.PATH_TerminalJSON;
+                TerPreDir = Program.PATH_TerminalPreviewJSON;
 
 
                 if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
@@ -1496,13 +1496,13 @@ namespace WinPaletter
         {
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
-                if (My.Env.W10 | My.Env.W11)
+                if (Program.W10 | Program.W11)
                 {
                     string TerDir;
                     string TerPreDir;
 
-                    TerDir = My.Env.PATH_TerminalJSON;
-                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                    TerDir = Program.PATH_TerminalJSON;
+                    TerPreDir = Program.PATH_TerminalPreviewJSON;
 
                     if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
                     {
@@ -1526,7 +1526,7 @@ namespace WinPaletter
             {
 
                 SaveState = _Mode;
-                if (My.MyProject.Forms.WindowsTerminalDecide.ShowDialog() == DialogResult.OK)
+                if (Forms.WindowsTerminalDecide.ShowDialog() == DialogResult.OK)
                 {
                     if (SaveState == WinTerminal.Version.Stable)
                     {
@@ -1568,8 +1568,8 @@ namespace WinPaletter
 
                 catch (Exception ex)
                 {
-                    WPStyle.MsgBox(My.Env.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                    WPStyle.MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Forms.BugReport.ThrowError(ex);
                 }
 
             }
@@ -1613,13 +1613,13 @@ namespace WinPaletter
 
             if (TerProfiles.SelectedIndex == 0)
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.Terminal_ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var P = new ProfilesList()
             {
-                Name = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].Name + " " + My.Env.Lang.Terminal_Clone + " #" + TerProfiles.Items.Count,
+                Name = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].Name + " " + Program.Lang.Terminal_Clone + " #" + TerProfiles.Items.Count,
                 BackgroundImage = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].BackgroundImage,
                 BackgroundImageOpacity = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].BackgroundImageOpacity,
                 ColorScheme = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].ColorScheme,
@@ -1644,13 +1644,13 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 3)
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var Th = new ThemesList()
             {
-                Name = _Terminal.Themes[TerThemes.SelectedIndex - 3].Name + " " + My.Env.Lang.Terminal_Clone + " #" + TerThemes.Items.Count,
+                Name = _Terminal.Themes[TerThemes.SelectedIndex - 3].Name + " " + Program.Lang.Terminal_Clone + " #" + TerThemes.Items.Count,
                 ApplicationTheme_light = _Terminal.Themes[TerThemes.SelectedIndex - 3].ApplicationTheme_light,
                 Tab_Active = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Active,
                 Tab_Inactive = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Inactive,
@@ -1675,7 +1675,7 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
             {
-                var temp = My.MyProject.Forms.WindowsTerminalCopycat.ComboBox1;
+                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
@@ -1683,7 +1683,7 @@ namespace WinPaletter
                     temp.Items.Add(x);
             }
 
-            if (My.MyProject.Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
+            if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
                 for (int x = 0, loopTo = TerProfiles.Items.Count - 1; x <= loopTo; x++)
                 {
@@ -1753,11 +1753,11 @@ namespace WinPaletter
                         }
                         else if (TerProfiles.SelectedIndex == 0)
                         {
-                            Terminal1.TabTitle = My.Env.Lang.Default;
+                            Terminal1.TabTitle = Program.Lang.Default;
                         }
                         else
                         {
-                            Terminal1.TabTitle = My.Env.Lang.Untitled;
+                            Terminal1.TabTitle = Program.Lang.Untitled;
                         }
 
                         if (File.Exists(CCatFrom.Icon))
@@ -1771,7 +1771,7 @@ namespace WinPaletter
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                             string path = "";
                             if (CCatFrom.Commandline is not null)
-                                path = CCatFrom.Commandline.Replace("%SystemRoot%", My.Env.PATH_Windows);
+                                path = CCatFrom.Commandline.Replace("%SystemRoot%", Program.PATH_Windows);
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                             if (File.Exists(path))
@@ -1801,7 +1801,7 @@ namespace WinPaletter
         private void Button20_Click(object sender, EventArgs e)
         {
             {
-                var temp = My.MyProject.Forms.WindowsTerminalCopycat.ComboBox1;
+                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
@@ -1809,7 +1809,7 @@ namespace WinPaletter
                     temp.Items.Add(x);
             }
 
-            if (My.MyProject.Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
+            if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
                 for (int x = 0, loopTo = TerSchemes.Items.Count - 1; x <= loopTo; x++)
                 {
@@ -1880,12 +1880,12 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 3)
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             {
-                var temp = My.MyProject.Forms.WindowsTerminalCopycat.ComboBox1;
+                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
@@ -1893,7 +1893,7 @@ namespace WinPaletter
                     temp.Items.Add(x);
             }
 
-            if (My.MyProject.Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
+            if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
                 for (int x = 0, loopTo = TerThemes.Items.Count - 1; x <= loopTo; x++)
                 {
@@ -1954,28 +1954,28 @@ namespace WinPaletter
 
         private void TerFontSizeVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum).ToString();
             TerFontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerCursorHeightVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum).ToString();
             TerCursorHeightBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerImageOpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum).ToString();
             TerImageOpacity.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerOpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum).ToString();
             TerOpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1987,7 +1987,7 @@ namespace WinPaletter
 
         private void Button23_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !My.Env.Settings.WindowsTerminals.ListAllFonts;
+            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
             FontDialog1.Font = Terminal1.Font;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {

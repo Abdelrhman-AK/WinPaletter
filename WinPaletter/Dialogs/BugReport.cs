@@ -19,23 +19,23 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            var c = PictureBox1.Image.AverageColor().CB((float)(My.Env.Style.DarkMode ? -0.35d : 0.35d));
+            var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
 
-            Label2.Font = My.MyProject.Application.ConsoleFontMedium;
-            Label3.Font = My.MyProject.Application.ConsoleFontMedium;
-            TreeView1.Font = My.MyProject.Application.ConsoleFontMedium;
+            Label2.Font = Program.ConsoleFontMedium;
+            Label3.Font = Program.ConsoleFontMedium;
+            TreeView1.Font = Program.ConsoleFontMedium;
 
             try
             {
-                My.MyProject.Forms.BK.Close();
+                Forms.BK.Close();
             }
             catch
             {
             }
             try
             {
-                My.MyProject.Forms.BK.Show();
+                Forms.BK.Show();
             }
             catch
             {
@@ -44,7 +44,9 @@ namespace WinPaletter
             foreach (var lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
 
-            My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+
+            BringToFront();
         }
 
         public void AddData(string str, Exception Exception, TreeView Treeview)
@@ -117,11 +119,11 @@ namespace WinPaletter
             string sx = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", "");
             sx = sx.Replace("S", "").Trim();
 
-            Label7.Text = string.Format(My.Env.Lang.BugReport_Title, Exception.GetType().ToString());
+            Label7.Text = string.Format(Program.Lang.BugReport_Title, Exception.GetType().ToString());
 
             Label2.Text = System.Runtime.InteropServices.RuntimeInformation.OSDescription + " - " + sx + sy + " - " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
 
-            Label3.Text = My.Env.AppVersion;
+            Label3.Text = Program.AppVersion;
 
             AlertBox1.Visible = NoRecovery;
 
@@ -141,19 +143,19 @@ namespace WinPaletter
 
             TreeView1.ExpandAll();
 
-            if (!System.IO.Directory.Exists(My.Env.PATH_appData + @"\Reports"))
-                System.IO.Directory.CreateDirectory(My.Env.PATH_appData + @"\Reports");
+            if (!System.IO.Directory.Exists(Program.PATH_appData + @"\Reports"))
+                System.IO.Directory.CreateDirectory(Program.PATH_appData + @"\Reports");
 
-            System.IO.File.WriteAllText(string.Format(My.Env.PATH_appData + @"\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
+            System.IO.File.WriteAllText(string.Format(Program.PATH_appData + @"\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
 
             ShowDialog();
 
-            My.MyProject.Forms.BK.Close();
+            Forms.BK.Close();
 
             if (DialogResult == DialogResult.Abort)
-                My.MyProject.Application.ExitAfterException = true;
+                Program.ExitAfterException = true;
             else
-                My.MyProject.Application.ExitAfterException = false;
+                Program.ExitAfterException = false;
 
         }
 
@@ -179,7 +181,7 @@ namespace WinPaletter
             Process.Start(Properties.Resources.Link_Repository + "issues");
             try
             {
-                My.MyProject.Forms.BK.Close();
+                Forms.BK.Close();
             }
             catch
             {
@@ -242,12 +244,12 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
 
-            if (System.IO.Directory.Exists(My.Env.PATH_appData + @"\Reports"))
+            if (System.IO.Directory.Exists(Program.PATH_appData + @"\Reports"))
             {
-                Process.Start(My.Env.PATH_appData + @"\Reports");
+                Process.Start(Program.PATH_appData + @"\Reports");
                 try
                 {
-                    My.MyProject.Forms.BK.Close();
+                    Forms.BK.Close();
                 }
                 catch
                 {
@@ -255,7 +257,7 @@ namespace WinPaletter
             }
             else
             {
-                WPStyle.MsgBox(string.Format(My.Env.Lang.Bug_NoReport, My.Env.PATH_appData + @"\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(string.Format(Program.Lang.Bug_NoReport, Program.PATH_appData + @"\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

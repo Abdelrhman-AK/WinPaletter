@@ -17,8 +17,8 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            ApplyFromTM(My.Env.TM);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
         }
 
         public void ApplyFromTM(Theme.Manager TM)
@@ -60,7 +60,7 @@ namespace WinPaletter
         private void Button12_Click(object sender, EventArgs e)
         {
             Theme.Manager TMx;
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
@@ -105,7 +105,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Save(My.Env.TM);
+            Save(Program.TM);
             Close();
         }
 

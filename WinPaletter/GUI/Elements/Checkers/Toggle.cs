@@ -289,7 +289,7 @@ namespace WinPaletter.UI.WP
             if (Parent is null)
                 return;
 
-            BackColor = My.Env.Style.Colors.Back;
+            BackColor = Program.Style.Colors.Back;
 
             G.Clear(this.GetParentColor());
 
@@ -297,16 +297,16 @@ namespace WinPaletter.UI.WP
             var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
             Color BorderColor;
 
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
                 BorderColor = base.BackColor.LightLight();
             else
                 BorderColor = base.BackColor.Dark(0.5f);
 
             Color CheckColor;
             if (MouseState == 0)
-                CheckColor = My.Env.Style.Colors.BaseColor;
+                CheckColor = Program.Style.Colors.BaseColor;
             else
-                CheckColor = base.BackColor.CB((float)(My.Env.Style.DarkMode ? 0.3d : -0.5d));
+                CheckColor = base.BackColor.CB((float)(Program.Style.DarkMode ? 0.3d : -0.5d));
 
             // #################################################################################
             int min = 4;
@@ -324,20 +324,20 @@ namespace WinPaletter.UI.WP
 
             LinearGradientBrush lgbChecked, lgbNonChecked, lgborderChecked, lgborderNonChecked;
 
-            lgbChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Border_Checked_Hover), Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal);
-            lgborderChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Border_Checked), Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Back_Checked), LinearGradientMode.BackwardDiagonal);
-            lgbNonChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * (1m - val)), My.Env.Style.Colors.Back_Checked), Color.FromArgb((int)Math.Round(255m * (1m - val)), My.Env.Style.Colors.Border_Checked_Hover), LinearGradientMode.BackwardDiagonal);
-            lgborderNonChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * (1m - val)), My.Env.Style.Colors.Border_Checked), Color.FromArgb((int)Math.Round(255m * (1m - val)), My.Env.Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal);
+            lgbChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Border_Checked_Hover), Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal);
+            lgborderChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Border_Checked), Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Back_Checked), LinearGradientMode.BackwardDiagonal);
+            lgbNonChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * (1m - val)), Program.Style.Colors.Back_Checked), Color.FromArgb((int)Math.Round(255m * (1m - val)), Program.Style.Colors.Border_Checked_Hover), LinearGradientMode.BackwardDiagonal);
+            lgborderNonChecked = new LinearGradientBrush(MainRect, Color.FromArgb((int)Math.Round(255m * (1m - val)), Program.Style.Colors.Border_Checked), Color.FromArgb((int)Math.Round(255m * (1m - val)), Program.Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal);
 
             if (!DarkLight_Toggler)
             {
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Border_Checked_Hover)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Border_Checked_Hover)))
                 {
                     e.Graphics.FillRoundedRect(br, MainRect, 9, true);
                 }
 
-                using (var P = new Pen(Color.FromArgb((int)Math.Round(255m * val), My.Env.Style.Colors.Border_Checked)))
+                using (var P = new Pen(Color.FromArgb((int)Math.Round(255m * val), Program.Style.Colors.Border_Checked)))
                 {
                     e.Graphics.DrawRoundedRect(P, MainRect, 9, true);
                 }
@@ -349,7 +349,7 @@ namespace WinPaletter.UI.WP
 
                 if (Checked)
                 {
-                    using (var br = new SolidBrush(My.Env.Style.DarkMode ? Color.Black : Color.White))
+                    using (var br = new SolidBrush(Program.Style.DarkMode ? Color.Black : Color.White))
                     {
                         G.FillEllipse(br, CheckC);
                     }
@@ -376,8 +376,8 @@ namespace WinPaletter.UI.WP
                 }
                 else
                 {
-                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
-                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
+                    G.DrawImage((Program.Style.Colors.BaseColor.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
+                    G.DrawImage((Program.Style.Colors.BaseColor.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
                 }
 
                 using (var P = new Pen(lgborderChecked))

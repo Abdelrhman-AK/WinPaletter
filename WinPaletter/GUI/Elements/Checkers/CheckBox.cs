@@ -317,19 +317,19 @@ namespace WinPaletter.UI.WP
 
                 if (Enabled)
                 {
-                    HoverRect_Color = Color.FromArgb(alpha2, My.Env.Style.Colors.Back_Checked);
-                    HoverCheckedRect_Color = Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover);
-                    CheckRect_Color = Color.FromArgb(alpha2, My.Env.Style.Colors.Core);
-                    NonHoverRect_Color = My.Env.Style.Colors.Border;
-                    BackRect_Color = My.Env.Style.Colors.Back;
+                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Colors.Back_Checked);
+                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+                    CheckRect_Color = Color.FromArgb(alpha2, Program.Style.Colors.Core);
+                    NonHoverRect_Color = Program.Style.Colors.Border;
+                    BackRect_Color = Program.Style.Colors.Back;
                 }
                 else
                 {
-                    HoverRect_Color = Color.FromArgb(alpha2, My.Env.Style.Disabled_Colors.Back_Checked);
-                    HoverCheckedRect_Color = Color.FromArgb(alpha, My.Env.Style.Disabled_Colors.Border_Checked_Hover);
-                    CheckRect_Color = Color.FromArgb(alpha2, My.Env.Style.Disabled_Colors.Core);
-                    NonHoverRect_Color = My.Env.Style.Disabled_Colors.Border;
-                    BackRect_Color = My.Env.Style.Disabled_Colors.Back;
+                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Disabled_Colors.Back_Checked);
+                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Disabled_Colors.Border_Checked_Hover);
+                    CheckRect_Color = Color.FromArgb(alpha2, Program.Style.Disabled_Colors.Core);
+                    NonHoverRect_Color = Program.Style.Disabled_Colors.Border;
+                    BackRect_Color = Program.Style.Disabled_Colors.Back;
                 }
 
                 #endregion
@@ -363,7 +363,7 @@ namespace WinPaletter.UI.WP
 
                     G.Clear(ParentColor);
 
-                    using (var br = new SolidBrush(My.Env.Style.Colors.Back))
+                    using (var br = new SolidBrush(Program.Style.Colors.Back))
                     {
                         G.FillRoundedRect(br, InnerCheckRect, Radius);
                     }
@@ -405,7 +405,7 @@ namespace WinPaletter.UI.WP
                         G.DrawLine(CheckSignPen, x1_Left, y1_Left, x2_Left, y2_Left);
                         G.DrawLine(CheckSignPen, x1_Right, y1_Right, x2_Right, y2_Right);
 
-                        using (var P = new Pen(Color.FromArgb(255 - alpha, My.Env.Style.Colors.Back_Hover)))
+                        using (var P = new Pen(Color.FromArgb(255 - alpha, Program.Style.Colors.Back_Hover)))
                         {
                             G.DrawRoundedRect(P, InnerCheckRect, Radius);
                         }

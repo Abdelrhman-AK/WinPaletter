@@ -134,7 +134,7 @@ namespace WinPaletter.Theme.Structures
             FontWeight = Convert.ToInt32(GetReg(RegAddress, "FontWeight", 400));
 
 
-            if (My.Env.W10_1909)
+            if (Program.W10_1909)
             {
                 temp = GetReg(RegAddress, "CursorColor", Color.White.Reverse().ToArgb());
                 W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
@@ -200,7 +200,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, RegAddress, "FontSize", Console.FontSize);
             EditReg(TreeView, RegAddress, "FontWeight", Console.FontWeight);
 
-            if (My.Env.W10_1909)
+            if (Program.W10_1909)
             {
                 EditReg(TreeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
                 EditReg(TreeView, RegAddress, "CursorType", Console.W10_1909_CursorType);

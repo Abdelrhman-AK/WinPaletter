@@ -1806,7 +1806,7 @@ namespace WinPaletter
         #region Properties
         public Structures.Info Info = new Structures.Info()
         {
-            AppVersion = My.Env.AppVersion,
+            AppVersion = Program.AppVersion,
             ThemeName = "Current Mode",
             Description = "",
             ThemeVersion = "1.0.0.0",
@@ -1899,7 +1899,7 @@ namespace WinPaletter
         {
             Theme = Structures.WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
-            ThemeFile = My.Env.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles"
+            ThemeFile = Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles"
         };
 
         public Structures.LogonUI7 LogonUI7 = new Structures.LogonUI7()
@@ -1965,7 +1965,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W11 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1974,7 +1974,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W10 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1983,7 +1983,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W8 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1992,7 +1992,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W7 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2001,7 +2001,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WVista = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2010,7 +2010,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WXP = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp",
+            Image = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp",
             H = 0,
             S = 100,
             L = 100
@@ -2048,7 +2048,7 @@ namespace WinPaletter
             AWT_Enabled = false,
             AWT_Delay = 0,
             AWT_BringActivatedWindowToTop = false,
-            Win11BootDots = !My.Env.W11,
+            Win11BootDots = !Program.W11,
             Win11ExplorerBar = Structures.WinEffects.ExplorerBar.Default,
             DisableNavBar = false
         };
@@ -3188,7 +3188,7 @@ namespace WinPaletter
             tx.Clear();
             tx.Add("<WinPaletter - Programmed by Abdelrhman-AK>");
             tx.Add("*Created from App Version= " + Info.AppVersion);
-            tx.Add("*Last Modified by App Version= " + My.Env.AppVersion + "\r\n");
+            tx.Add("*Last Modified by App Version= " + Program.AppVersion + "\r\n");
 
             tx.Add(Info.ToString());
 
@@ -3198,7 +3198,7 @@ namespace WinPaletter
                 try
                 {
                     {
-                        var temp = My.Env.W11 ? Windows11 : Windows10;
+                        var temp = Program.W11 ? Windows11 : Windows10;
                         tx.Add("<LegacyWinPaletter_Windows11/10>");
                         tx.Add("*WinMode_Light= " + temp.WinMode_Light);
                         tx.Add("*AppMode_Light= " + temp.AppMode_Light);

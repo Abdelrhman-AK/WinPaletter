@@ -19,11 +19,11 @@ namespace WinPaletter.Theme.Structures
 
             if (SubKey.ToLower() == "winxp")
             {
-                wallpaper = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                wallpaper = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                wallpaper = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                wallpaper = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(wallpaper))
@@ -51,17 +51,17 @@ namespace WinPaletter.Theme.Structures
                 throw new IOException("Couldn't Find image");
 
             string path;
-            if (!My.Env.WXP & !My.Env.WVista)
+            if (!Program.WXP & !Program.WVista)
             {
-                path = Path.Combine(My.Env.PATH_appData, "TintedWallpaper.bmp");
+                path = Path.Combine(Program.PATH_appData, "TintedWallpaper.bmp");
             }
             else
             {
-                path = Path.Combine(My.Env.PATH_Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
+                path = Path.Combine(Program.PATH_Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
             if (TreeView is not null)
-                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_SettingHSLImage, path), "pe_patch");
+                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_SettingHSLImage, path), "pe_patch");
 
             using (var ImgF = new ImageProcessor.ImageFactory())
             {
@@ -73,12 +73,12 @@ namespace WinPaletter.Theme.Structures
             }
 
             if (TreeView is not null)
-                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, path, SPIF.UpdateINIFile.ToString()), "dll");
+                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, path, SPIF.UpdateINIFile.ToString()), "dll");
             User32.SystemParametersInfo((int)SPI.Desktop.SETDESKWALLPAPER, 0, path, (int)SPIF.UpdateINIFile);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
 
-            My.MyProject.Forms.MainFrm.Update_Wallpaper_Preview();
+            Forms.MainFrm.Update_Wallpaper_Preview();
         }
 
         public static bool operator ==(WallpaperTone First, WallpaperTone Second)

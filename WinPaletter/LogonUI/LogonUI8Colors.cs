@@ -16,7 +16,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            Icon = My.MyProject.Forms.Start8Selector.Icon;
+            Icon = Forms.Start8Selector.Icon;
 
             color0.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(32, 32));
             color1.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(32, 32));
@@ -46,7 +46,7 @@ namespace WinPaletter
 
             foreach (UI.WP.RadioImage ri in Controls.OfType<UI.WP.RadioImage>())
             {
-                if (My.Env.TM.Windows81.LogonUI == Conversions.ToDouble(ri.Name.Replace("color", "")))
+                if (Program.TM.Windows81.LogonUI == Conversions.ToDouble(ri.Name.Replace("color", "")))
                     ri.Checked = true;
                 else
                     ri.Checked = false;
@@ -67,7 +67,7 @@ namespace WinPaletter
             {
                 if (ri.Checked)
                 {
-                    My.Env.TM.Windows81.LogonUI = Conversions.ToInteger(ri.Name.Replace("color", ""));
+                    Program.TM.Windows81.LogonUI = Conversions.ToInteger(ri.Name.Replace("color", ""));
                     break;
                 }
             }

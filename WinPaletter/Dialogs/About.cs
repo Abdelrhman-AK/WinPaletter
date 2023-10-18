@@ -37,10 +37,10 @@ namespace WinPaletter
 
         private void About_Load(object sender, EventArgs e)
         {
-            Icon = My.MyProject.Forms.MainFrm.Icon;
+            Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Label2.Text = My.Env.AppVersion;
+            Label2.Text = Program.AppVersion;
         }
 
         private void Button3_Click(object sender, EventArgs e)

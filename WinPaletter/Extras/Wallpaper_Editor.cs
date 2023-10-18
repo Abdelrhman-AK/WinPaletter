@@ -36,47 +36,47 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(My.Env.TM);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
             index = 0;
             ApplyPreviewStyle();
 
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_Win11);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win11);
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_Win10);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win10);
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_Win81);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win81);
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_Win7);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win7);
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_WinVista);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinVista);
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_WinXP);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinXP);
                         break;
                     }
 
                 default:
                     {
-                        AlertBox3.Text = string.Format(My.Env.Lang.WallpaperTone_Notice, My.Env.Lang.OS_WinUndefined);
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinUndefined);
                         break;
                     }
             }
@@ -275,42 +275,42 @@ namespace WinPaletter
                 L = LBar.Value
             };
 
-            switch (My.Env.PreviewStyle)
+            switch (Program.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
-                        My.Env.TM.WallpaperTone_W11 = WT;
+                        Program.TM.WallpaperTone_W11 = WT;
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        My.Env.TM.WallpaperTone_W10 = WT;
+                        Program.TM.WallpaperTone_W10 = WT;
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        My.Env.TM.WallpaperTone_W81 = WT;
+                        Program.TM.WallpaperTone_W81 = WT;
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        My.Env.TM.WallpaperTone_W7 = WT;
+                        Program.TM.WallpaperTone_W7 = WT;
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        My.Env.TM.WallpaperTone_WVista = WT;
+                        Program.TM.WallpaperTone_WVista = WT;
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        My.Env.TM.WallpaperTone_WXP = WT;
+                        Program.TM.WallpaperTone_WXP = WT;
                         break;
                     }
 
                 default:
                     {
-                        My.Env.TM.WallpaperTone_W11 = WT;
+                        Program.TM.WallpaperTone_W11 = WT;
                         break;
                     }
 
@@ -336,7 +336,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -344,9 +344,9 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             ApplyWT();
-            My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM);
+            Forms.MainFrm.ApplyStylesToElements(Program.TM);
             Close();
         }
 
@@ -355,7 +355,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             ApplyWT();
 
             TMx.Wallpaper.Apply(source_wallpapertone.Checked);
@@ -390,13 +390,13 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (My.Env.PreviewStyle == WindowStyle.WXP)
+            if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox1.Text = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox1.Text = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox1.Text = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox1.Text = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
         }
 
@@ -412,7 +412,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (!My.Env.WXP)
+            if (!Program.WXP)
             {
                 var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -466,7 +466,7 @@ namespace WinPaletter
 
         private void MD_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -705,7 +705,7 @@ namespace WinPaletter
             {
                 if (File.Exists(TextBox1.Text))
                 {
-                    img = (Bitmap)GetWall(TextBox1.Text).GetThumbnailImage(My.MyProject.Computer.Screen.Bounds.Width, My.MyProject.Computer.Screen.Bounds.Height, null, IntPtr.Zero);
+                    img = (Bitmap)GetWall(TextBox1.Text).GetThumbnailImage(Program.Computer.Screen.Bounds.Width, Program.Computer.Screen.Bounds.Height, null, IntPtr.Zero);
                     img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
                     img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
                 }
@@ -743,8 +743,8 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var clr = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Cut | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Paste | My.MyProject.Application.ColorEvent == My.MyApplication.MenuEvent.Override)
+                var clr = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
                 {
                     pnl_preview.BackColor = clr;
                 }
@@ -752,7 +752,7 @@ namespace WinPaletter
             }
 
             var CList = new List<Control>() { pnl_preview };
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+            var C = Forms.ColorPickerDlg.Pick(CList);
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
             CList.Clear();
@@ -876,7 +876,7 @@ namespace WinPaletter
 
         private void HB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), HBar.Maximum), HBar.Minimum).ToString();
             HBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();
@@ -918,13 +918,13 @@ namespace WinPaletter
 
             if (!File.Exists(WallpaperPath))
             {
-                if (My.Env.PreviewStyle == WindowStyle.WXP)
+                if (Program.PreviewStyle == WindowStyle.WXP)
                 {
-                    WallpaperPath = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WallpaperPath = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WallpaperPath = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WallpaperPath = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 
@@ -934,18 +934,18 @@ namespace WinPaletter
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            if (My.Env.PreviewStyle == WindowStyle.WXP)
+            if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox3.Text = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox3.Text = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox3.Text = My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox3.Text = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", My.Env.PreviewStyle == WindowStyle.WXP ? My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp" : My.Env.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp" : Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }
@@ -961,7 +961,7 @@ namespace WinPaletter
 
         private void SB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), SBar.Maximum), SBar.Minimum).ToString();
             SBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();
@@ -969,7 +969,7 @@ namespace WinPaletter
 
         private void LB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), LBar.Maximum), LBar.Minimum).ToString();
             LBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();

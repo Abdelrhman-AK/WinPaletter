@@ -168,7 +168,7 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") is not null)
+                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") is not null)
                 {
                     Win11ClassicContextMenu = true;
                 }
@@ -183,12 +183,12 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                My.MyProject.Computer.Registry.CurrentUser.Close();
+                Program.Computer.Registry.CurrentUser.Close();
             }
 
             try
             {
-                if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") is not null)
+                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") is not null)
                 {
                     SysListView32 = true;
                 }
@@ -203,17 +203,17 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                My.MyProject.Computer.Registry.CurrentUser.Close();
+                Program.Computer.Registry.CurrentUser.Close();
             }
 
             if (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
             {
-                Win11BootDots = !My.Env.W11;
+                Win11BootDots = !Program.W11;
             }
 
             else
             {
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", My.Env.W11 ? 1 : 0))
+                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Program.W11 ? 1 : 0))
                 {
                     case 0:
                         {
@@ -240,7 +240,7 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") is not null)
+                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") is not null)
                 {
                     DisableNavBar = true;
                 }
@@ -255,7 +255,7 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                My.MyProject.Computer.Registry.CurrentUser.Close();
+                Program.Computer.Registry.CurrentUser.Close();
             }
 
             AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", _DefEffects.AutoHideScrollBars));
@@ -275,87 +275,87 @@ namespace WinPaletter.Theme.Structures
                 anim.IMinAnimate = WindowAnimation.ToInteger();
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETANIMATION.ToString(), anim.cbSize, anim.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETANIMATION.ToString(), anim.cbSize, anim.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETANIMATION, (int)anim.cbSize, ref anim, SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDROPSHADOW.ToString(), 0, WindowShadow, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDROPSHADOW.ToString(), 0, WindowShadow, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETDROPSHADOW, 0, WindowShadow, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETUIEFFECTS.ToString(), 0, WindowUIEffects, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETUIEFFECTS.ToString(), 0, WindowUIEffects, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCLIENTAREAANIMATION.ToString(), 0, AnimateControlsInsideWindow, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCLIENTAREAANIMATION.ToString(), 0, AnimateControlsInsideWindow, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDRAGFULLWINDOWS.ToString(), 0, ShowWinContentDrag, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDRAGFULLWINDOWS.ToString(), 0, ShowWinContentDrag, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, (int)SPIF.UpdateINIFile);        // use uiParam not pvParam
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUANIMATION.ToString(), 0, MenuAnimation, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUANIMATION.ToString(), 0, MenuAnimation, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUFADE.ToString(), 0, MenuFade == MenuAnimType.Fade, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUFADE.ToString(), 0, MenuFade == MenuAnimType.Fade, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETMENUFADE, 0, MenuFade == MenuAnimType.Fade, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUSHOWDELAY.ToString(), MenuShowDelay, 0, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUSHOWDELAY.ToString(), MenuShowDelay, 0, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, (int)SPIF.UpdateINIFile);               // use uiParam not pvParam
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETSELECTIONFADE.ToString(), 0, MenuSelectionFade, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETSELECTIONFADE.ToString(), 0, MenuSelectionFade, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCOMBOBOXANIMATION.ToString(), 0, ComboBoxAnimation, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCOMBOBOXANIMATION.ToString(), 0, ComboBoxAnimation, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboBoxAnimation, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETLISTBOXSMOOTHSCROLLING.ToString(), 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETLISTBOXSMOOTHSCROLLING.ToString(), 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPANIMATION.ToString(), 0, TooltipAnimation, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPANIMATION.ToString(), 0, TooltipAnimation, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPFADE.ToString(), 0, TooltipFade == MenuAnimType.Fade, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPFADE.ToString(), 0, TooltipFade == MenuAnimType.Fade, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade == MenuAnimType.Fade, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUUNDERLINES.ToString(), 0, KeyboardUnderline, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUUNDERLINES.ToString(), 0, KeyboardUnderline, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERWIDTH.ToString(), 0, FocusRectWidth, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERWIDTH.ToString(), 0, FocusRectWidth, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERHEIGHT.ToString(), 0, FocusRectHeight, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERHEIGHT.ToString(), 0, FocusRectHeight, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCARETWIDTH.ToString(), 0, Caret, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCARETWIDTH.ToString(), 0, Caret, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETCARETWIDTH, 0, Caret, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWINDOWTRACKING.ToString(), 0, AWT_Enabled, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWINDOWTRACKING.ToString(), 0, AWT_Enabled, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKZORDER.ToString(), 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKZORDER.ToString(), 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKTIMEOUT.ToString(), 0, AWT_Delay, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKTIMEOUT.ToString(), 0, AWT_Delay, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, (int)SPIF.UpdateINIFile);
 
                 if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETSNAPTODEFBUTTON.ToString(), 0, SnapCursorToDefButton, SPIF.UpdateINIFile.ToString()), "dll");
+                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETSNAPTODEFBUTTON.ToString(), 0, SnapCursorToDefButton, SPIF.UpdateINIFile.ToString()), "dll");
                 SystemParametersInfo((int)SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, (int)SPIF.UpdateINIFile);     // use uiParam not pvParam
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger());
@@ -373,7 +373,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : "", RegistryValueKind.String);
 
-                if (My.Env.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
+                if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
                 {
                     EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger());
                     EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret);
@@ -383,7 +383,7 @@ namespace WinPaletter.Theme.Structures
 
                 try
                 {
-                    if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
+                    if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
                     {
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
                     }
@@ -391,16 +391,16 @@ namespace WinPaletter.Theme.Structures
                 catch
                 {
                     // Do nothing
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
 
                 try
                 {
-                    if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
+                    if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
                     {
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
                     }
@@ -408,31 +408,31 @@ namespace WinPaletter.Theme.Structures
                 catch
                 {
                     // Do nothing
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
 
-                if (My.Env.W11)
+                if (Program.W11)
                     EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots).ToInteger());
 
-                if (My.Env.W8 | My.Env.W81 || My.Env.W10)
+                if (Program.W8 | Program.W81 || Program.W10)
                 {
                     switch (Win11ExplorerBar)
                     {
                         case ExplorerBar.Bar:
                             {
-                                if (System.IO.File.Exists(My.Env.PATH_System32 + @"\UIRibbon.dll"))
+                                if (System.IO.File.Exists(Program.PATH_System32 + @"\UIRibbon.dll"))
                                 {
                                     if (TreeView is not null)
-                                        Manager.AddNode(TreeView, My.Env.Lang.Verbose_EnableExplorerBar, "file_rename");
+                                        Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
-                                    Takeown_File(My.Env.PATH_System32 + @"\UIRibbon.dll");
-                                    Move_File(My.Env.PATH_System32 + @"\UIRibbon.dll", My.Env.PATH_System32 + @"\UIRibbon.dll_bak");
+                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll");
+                                    Move_File(Program.PATH_System32 + @"\UIRibbon.dll", Program.PATH_System32 + @"\UIRibbon.dll_bak");
 
                                     // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
 
@@ -443,14 +443,14 @@ namespace WinPaletter.Theme.Structures
 
                         default:
                             {
-                                if (System.IO.File.Exists(My.Env.PATH_System32 + @"\UIRibbon.dll_bak"))
+                                if (System.IO.File.Exists(Program.PATH_System32 + @"\UIRibbon.dll_bak"))
                                 {
                                     if (TreeView is not null)
-                                        Manager.AddNode(TreeView, My.Env.Lang.Verbose_RestoreExplorerBar, "file_rename");
+                                        Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
-                                    Takeown_File(My.Env.PATH_System32 + @"\UIRibbon.dll_bak");
-                                    Takeown_File(My.Env.PATH_System32 + @"\UIRibbon.dll");
-                                    Move_File(My.Env.PATH_System32 + @"\UIRibbon.dll_bak", My.Env.PATH_System32 + @"\UIRibbon.dll");
+                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll_bak");
+                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll");
+                                    Move_File(Program.PATH_System32 + @"\UIRibbon.dll_bak", Program.PATH_System32 + @"\UIRibbon.dll");
                                 }
 
                                 break;
@@ -483,7 +483,7 @@ namespace WinPaletter.Theme.Structures
                     EditReg_CMD(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
                 }
 
-                if (My.Env.W11)
+                if (Program.W11)
                 {
                     try
                     {
@@ -491,27 +491,27 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
-                            My.MyProject.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
                         }
                         else
                         {
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
-                            My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
+                            Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
                         }
                     }
                     catch
                     {
                         // Do nothing
-                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                        Program.Computer.Registry.CurrentUser.Close();
                     }
                     finally
                     {
-                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                        Program.Computer.Registry.CurrentUser.Close();
                     }
                 }
 
-                if (!My.Env.WXP && !My.Env.WVista)
+                if (!Program.WXP && !Program.WVista)
                 {
                     try
                     {
@@ -519,23 +519,23 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
-                            My.MyProject.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
                         }
                         else
                         {
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
-                            My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
+                            Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
                         }
                     }
                     catch
                     {
                         // Do nothing
-                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                        Program.Computer.Registry.CurrentUser.Close();
                     }
                     finally
                     {
-                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                        Program.Computer.Registry.CurrentUser.Close();
                     }
                 }
 
@@ -545,23 +545,23 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
-                        My.MyProject.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                        Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
                     }
                     else
                     {
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
-                        My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
+                        Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
                     }
                 }
                 catch
                 {
                     // Do nothing
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    My.MyProject.Computer.Registry.CurrentUser.Close();
+                    Program.Computer.Registry.CurrentUser.Close();
                 }
 
             }

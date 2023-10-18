@@ -29,9 +29,9 @@ namespace WinPaletter
 
             if (CheckBox1.Checked)
             {
-                My.MyProject.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
-                My.MyProject.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");
-                My.MyProject.Application.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
+                Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
+                Program.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");
+                Program.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
             }
 
             if (CheckBox3.Checked)
@@ -41,9 +41,9 @@ namespace WinPaletter
 
             try
             {
-                if (!My.Env.WXP && System.IO.File.Exists(My.Env.PATH_appData + @"\WindowsStartup_Backup.wav"))
+                if (!Program.WXP && System.IO.File.Exists(Program.PATH_appData + @"\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(My.Env.PATH_imageres, "WAV", My.Env.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(My.Env.PATH_appData + @"\WindowsStartup_Backup.wav"));
+                    PE.ReplaceResource(Program.PATH_imageres, "WAV", Program.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(Program.PATH_appData + @"\WindowsStartup_Backup.wav"));
                 }
             }
             catch
@@ -52,20 +52,20 @@ namespace WinPaletter
 
             if (CheckBox2.Checked)
             {
-                if (System.IO.Directory.Exists(My.Env.PATH_appData))
+                if (System.IO.Directory.Exists(Program.PATH_appData))
                 {
-                    System.IO.Directory.Delete(My.Env.PATH_appData, true);
-                    if (!My.Env.WXP)
+                    System.IO.Directory.Delete(Program.PATH_appData, true);
+                    if (!Program.WXP)
                     {
                         Theme.Manager.ResetCursorsToAero();
-                        if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                     }
 
                     else
                     {
                         Theme.Manager.ResetCursorsToNone_XP();
-                        if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                     }
@@ -83,22 +83,24 @@ namespace WinPaletter
                 {
                     var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                     TMx.Save(Theme.Manager.Source.Registry);
-                    if (My.Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+
+                    if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                         RestartExplorer();
+
                     TMx.Dispose();
                 }
             }
             else if (RadioImage3.Checked)
             {
-                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.Get())
                 {
                     _Def.Save(Theme.Manager.Source.Registry);
-                    if (My.Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+                    if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                         RestartExplorer();
                 }
             }
 
-            string guidText = My.MyProject.Application.Info.ProductName;
+            string guidText = Application.ProductName;
             string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
             Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
 

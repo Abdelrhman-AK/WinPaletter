@@ -51,7 +51,7 @@ namespace WinPaletter.Theme.Structures
             string spotlight_img = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
 
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
-            if (ImageFile.StartsWith(slideshow_img, My.Env._ignore) || ImageFile.StartsWith(spotlight_img, My.Env._ignore) || !File.Exists(ImageFile))
+            if (ImageFile.StartsWith(slideshow_img, Program._ignore) || ImageFile.StartsWith(spotlight_img, Program._ignore) || !File.Exists(ImageFile))
             {
                 ImageFile = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", _DefWallpaper.ImageFile).ToString();
             }
@@ -108,20 +108,20 @@ namespace WinPaletter.Theme.Structures
                     if (WallpaperType == WallpaperTypes.SolidColor)
                     {
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, "", SPIF.UpdateINIFile.ToString()), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, "", SPIF.UpdateINIFile.ToString()), "dll");
                         User32.SystemParametersInfo((int)SPI.Desktop.SETDESKWALLPAPER, 0, "", (int)SPIF.UpdateINIFile);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
                     }
 
                     else if (WallpaperType == WallpaperTypes.Picture)
                     {
-                        if (My.Env.WXP | My.Env.WVista | My.Env.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(My.Env.PATH_Windows + @"\Web", My.Env._ignore))
+                        if (Program.WXP | Program.WVista | Program.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(Program.PATH_Windows + @"\Web", Program._ignore))
                         {
                             using (var bmp = new Bitmap(Bitmap_Mgr.Load(ImageFile)))
                             {
                                 if (bmp.RawFormat != System.Drawing.Imaging.ImageFormat.Bmp)
                                 {
-                                    if (MsgBox(My.Env.Lang.TM_Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, My.Env.Lang.TM_Wallpaper_NonBMP1) == DialogResult.Yes)
+                                    if (MsgBox(Program.Lang.TM_Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.TM_Wallpaper_NonBMP1) == DialogResult.Yes)
                                     {
                                         bmp.Save(ImageFile, System.Drawing.Imaging.ImageFormat.Bmp);
                                     }
@@ -130,7 +130,7 @@ namespace WinPaletter.Theme.Structures
                         }
 
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, ImageFile, SPIF.UpdateINIFile.ToString()), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, ImageFile, SPIF.UpdateINIFile.ToString()), "dll");
                         User32.SystemParametersInfo((int)SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, (int)SPIF.UpdateINIFile);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String);
 
@@ -141,7 +141,7 @@ namespace WinPaletter.Theme.Structures
                     else if (WallpaperType == WallpaperTypes.SlideShow)
                     {
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, slideshow_img, SPIF.UpdateINIFile.ToString()), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, slideshow_img, SPIF.UpdateINIFile.ToString()), "dll");
                         User32.SystemParametersInfo((int)SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, (int)SPIF.UpdateINIFile);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String);
 
@@ -150,7 +150,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
 
-                if (!My.Env.WXP && !My.Env.WVista)
+                if (!Program.WXP && !Program.WVista)
                 {
 
                     if (!SkipSettingWallpaper)
@@ -159,7 +159,7 @@ namespace WinPaletter.Theme.Structures
                         {
 
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_SettingSlideshow, slideshow_ini), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_SettingSlideshow, slideshow_ini), "dll");
 
                             if (WallpaperType == WallpaperTypes.SlideShow && SlideShow_Folder_or_ImagesList && Directory.Exists(Wallpaper_Slideshow_ImagesRootPath))
                             {

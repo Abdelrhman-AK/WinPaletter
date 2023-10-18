@@ -249,7 +249,7 @@ namespace WinPaletter.UI.Simulation
         {
             Bitmap Wallpaper;
             if (Parent.BackgroundImage is null)
-                Wallpaper = My.Env.Wallpaper;
+                Wallpaper = Program.Wallpaper;
             else
                 Wallpaper = (Bitmap)Parent.BackgroundImage;
             try
@@ -428,7 +428,7 @@ namespace WinPaletter.UI.Simulation
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = My.Env.RenderingHint;
+            G.TextRenderingHint = Program.RenderingHint;
             DoubleBuffered = true;
 
             if (Win7Alpha > 255)
@@ -1330,12 +1330,12 @@ namespace WinPaletter.UI.Simulation
 
                 var innerRect = new Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Rect.Width - 2, Rect.Height - TitlebarRect.Height - 1);
 
-                using (var br = new SolidBrush(My.Env.resVS.Colors.Btnface))
+                using (var br = new SolidBrush(Program.resVS.Colors.Btnface))
                 {
                     G.FillRectangle(br, innerRect);
                 }
 
-                My.Env.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
+                Program.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
 
                 var LE = new Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Math.Max(4, Metrics_BorderWidth) + 2);
                 var RE = new Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth) - 1, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2);
@@ -1354,11 +1354,11 @@ namespace WinPaletter.UI.Simulation
 
                 IconRect = new Rectangle(Rect.X + LE.Width + 2, (int)Math.Round(Rect.Y + (TitlebarRect.Height - 14) / 2d), 14, 14);
 
-                My.Env.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
-                My.Env.resVS.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
-                My.Env.resVS.Draw(G, RE, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
-                My.Env.resVS.Draw(G, BE, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
-                My.Env.resVS.Draw(G, CB, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
+                Program.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
+                Program.resVS.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
+                Program.resVS.Draw(G, RE, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
+                Program.resVS.Draw(G, BE, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
+                Program.resVS.Draw(G, CB, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
 
                 G.SmoothingMode = sm;
                 #endregion
@@ -1462,14 +1462,14 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Active)
                 {
-                    using (var br = new SolidBrush(My.Env.TM.Win32.TitleText))
+                    using (var br = new SolidBrush(Program.TM.Win32.TitleText))
                     {
                         G.DrawString(Text, Font, br, LabelRect8, ContentAlignment.MiddleCenter.ToStringFormat());
                     }
                 }
                 else
                 {
-                    using (var br = new SolidBrush(My.Env.TM.Win32.InactiveTitleText))
+                    using (var br = new SolidBrush(Program.TM.Win32.InactiveTitleText))
                     {
                         G.DrawString(Text, Font, br, LabelRect8, ContentAlignment.MiddleCenter.ToStringFormat());
                     }

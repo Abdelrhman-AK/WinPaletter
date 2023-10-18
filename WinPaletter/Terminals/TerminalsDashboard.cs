@@ -90,13 +90,13 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.CMD.Icon;
+            Icon = Forms.CMD.Icon;
 
             _shown = false;
 
-            Location = My.MyProject.Forms.MainFrm.Button24.PointToScreen(Point.Empty) - (Size)new Point(0, Height);
+            Location = Forms.MainFrm.Button24.PointToScreen(Point.Empty) - (Size)new Point(0, Height);
 
-            if (My.Env.W10)
+            if (Program.W10)
                 PictureBox1.Image = Properties.Resources.Native10;
             else
                 PictureBox1.Image = Properties.Resources.Native11;
@@ -129,45 +129,45 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
 
-            if (My.Env.Settings.WindowsTerminals.Bypass)
+            if (Program.Settings.WindowsTerminals.Bypass)
             {
-                My.MyProject.Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
+                Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
                 Close();
-                My.MyProject.Forms.WindowsTerminal.Show();
+                Forms.WindowsTerminal.Show();
             }
 
-            else if (My.Env.W10 | My.Env.W11)
+            else if (Program.W10 | Program.W11)
             {
                 string TerDir;
 
-                if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerDir = My.Env.PATH_TerminalJSON;
+                    TerDir = Program.PATH_TerminalJSON;
                 }
-                else if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Stable_Path))
+                else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                 {
-                    TerDir = My.Env.Settings.WindowsTerminals.Terminal_Stable_Path;
+                    TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                 }
                 else
                 {
-                    TerDir = My.Env.PATH_TerminalJSON;
+                    TerDir = Program.PATH_TerminalJSON;
                 }
 
                 if (System.IO.File.Exists(TerDir))
                 {
-                    My.MyProject.Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
+                    Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
                     Close();
-                    My.MyProject.Forms.WindowsTerminal.Show();
+                    Forms.WindowsTerminal.Show();
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, My.Env.Lang.Terminal_supposed + "\"" + TerDir + "\"", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                    WPStyle.MsgBox(Program.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
             else
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                WPStyle.MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
 
             }
 
@@ -175,67 +175,67 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (My.Env.Settings.WindowsTerminals.Bypass)
+            if (Program.Settings.WindowsTerminals.Bypass)
             {
-                My.MyProject.Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
+                Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
                 Close();
-                My.MyProject.Forms.WindowsTerminal.Show();
+                Forms.WindowsTerminal.Show();
             }
-            else if (My.Env.W10 | My.Env.W11)
+            else if (Program.W10 | Program.W11)
             {
                 string TerPreDir;
 
-                if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
+                if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                    TerPreDir = Program.PATH_TerminalPreviewJSON;
                 }
-                else if (System.IO.File.Exists(My.Env.Settings.WindowsTerminals.Terminal_Preview_Path))
+                else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                 {
-                    TerPreDir = My.Env.Settings.WindowsTerminals.Terminal_Preview_Path;
+                    TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                 }
                 else
                 {
-                    TerPreDir = My.Env.PATH_TerminalPreviewJSON;
+                    TerPreDir = Program.PATH_TerminalPreviewJSON;
                 }
 
                 if (System.IO.File.Exists(TerPreDir))
                 {
-                    My.MyProject.Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
+                    Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
                     Close();
-                    My.MyProject.Forms.WindowsTerminal.Show();
+                    Forms.WindowsTerminal.Show();
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, My.Env.Lang.Terminal_supposed + "\"" + TerPreDir + "\"", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                    WPStyle.MsgBox(Program.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerPreDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
             else
             {
-                WPStyle.MsgBox(My.Env.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                WPStyle.MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
             }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.CMD._Edition = CMD.Edition.CMD;
+            Forms.CMD._Edition = CMD.Edition.CMD;
             Close();
-            My.MyProject.Forms.CMD.Show();
+            Forms.CMD.Show();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.ExternalTerminal.Show();
+            Forms.ExternalTerminal.Show();
             Close();
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (My.Env.Settings.WindowsTerminals.Bypass)
+            if (Program.Settings.WindowsTerminals.Bypass)
             {
-                My.MyProject.Forms.CMD._Edition = CMD.Edition.PowerShellx86;
+                Forms.CMD._Edition = CMD.Edition.PowerShellx86;
                 Close();
-                My.MyProject.Forms.CMD.Show();
+                Forms.CMD.Show();
             }
             else
             {
@@ -245,13 +245,13 @@ namespace WinPaletter
 
                 if (System.IO.Directory.Exists(Dir))
                 {
-                    My.MyProject.Forms.CMD._Edition = CMD.Edition.PowerShellx86;
+                    Forms.CMD._Edition = CMD.Edition.PowerShellx86;
                     Close();
-                    My.MyProject.Forms.CMD.Show();
+                    Forms.CMD.Show();
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, My.Env.Lang.Terminal_supposed + "\"" + Dir + "\"", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                    WPStyle.MsgBox(Program.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -260,11 +260,11 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (My.Env.Settings.WindowsTerminals.Bypass)
+            if (Program.Settings.WindowsTerminals.Bypass)
             {
-                My.MyProject.Forms.CMD._Edition = CMD.Edition.PowerShellx64;
+                Forms.CMD._Edition = CMD.Edition.PowerShellx64;
                 Close();
-                My.MyProject.Forms.CMD.Show();
+                Forms.CMD.Show();
             }
             else
             {
@@ -274,13 +274,13 @@ namespace WinPaletter
 
                 if (System.IO.Directory.Exists(Dir))
                 {
-                    My.MyProject.Forms.CMD._Edition = CMD.Edition.PowerShellx64;
+                    Forms.CMD._Edition = CMD.Edition.PowerShellx64;
                     Close();
-                    My.MyProject.Forms.CMD.Show();
+                    Forms.CMD.Show();
                 }
                 else
                 {
-                    WPStyle.MsgBox(My.Env.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, My.Env.Lang.Terminal_supposed + "\"" + Dir + "\"", My.Env.Lang.CollapseNote, My.Env.Lang.ExpandNote, My.Env.Lang.Terminal_Bypass);
+                    WPStyle.MsgBox(Program.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

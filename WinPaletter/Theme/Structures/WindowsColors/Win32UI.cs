@@ -358,7 +358,7 @@ namespace WinPaletter.Theme.Structures
             fl.Clear();
             if (isClassic)
             {
-                foreach (Form f in My.MyProject.Application.OpenForms)
+                foreach (Form f in Application.OpenForms)
                 {
                     if (f.Visible)
                     {
@@ -553,7 +553,7 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            if (My.Env.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
             {
                 EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
                 EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
@@ -589,7 +589,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
             }
 
-            if (My.Env.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
             {
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
@@ -606,30 +606,30 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
             }
 
-            else if (My.Env.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+            else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
             {
                 Win32UI _DefWin32;
-                if (My.Env.PreviewStyle == WindowStyle.W11)
+                if (Program.PreviewStyle == WindowStyle.W11)
                 {
                     _DefWin32 = new Theme.Default().Windows11().Win32;
                 }
-                else if (My.Env.PreviewStyle == WindowStyle.W10)
+                else if (Program.PreviewStyle == WindowStyle.W10)
                 {
                     _DefWin32 = new Theme.Default().Windows10().Win32;
                 }
-                else if (My.Env.PreviewStyle == WindowStyle.W81)
+                else if (Program.PreviewStyle == WindowStyle.W81)
                 {
                     _DefWin32 = new Theme.Default().Windows81().Win32;
                 }
-                else if (My.Env.PreviewStyle == WindowStyle.W7)
+                else if (Program.PreviewStyle == WindowStyle.W7)
                 {
                     _DefWin32 = new Theme.Default().Windows7().Win32;
                 }
-                else if (My.Env.PreviewStyle == WindowStyle.WVista)
+                else if (Program.PreviewStyle == WindowStyle.WVista)
                 {
                     _DefWin32 = new Theme.Default().WindowsVista().Win32;
                 }
-                else if (My.Env.PreviewStyle == WindowStyle.WXP)
+                else if (Program.PreviewStyle == WindowStyle.WXP)
                 {
                     _DefWin32 = new Theme.Default().WindowsXP().Win32;
                 }
@@ -653,7 +653,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
             }
 
-            else if (My.Env.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
+            else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
             {
                 DelReg_AdministratorDeflector(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard");
             }
@@ -663,7 +663,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Update_UPM_DEFAULT(TreeView TreeView = null)
         {
-            if (My.Env.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
+            if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
             {
                 byte[] source = (byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", null);
                 if (source is not null)

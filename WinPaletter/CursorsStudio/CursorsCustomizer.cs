@@ -1689,12 +1689,12 @@ namespace WinPaletter
                 default:
                     {
 
-                        if (My.Env.WXP)
+                        if (Program.WXP)
                         {
                             F = new FontFamily("Tahoma");
                         }
 
-                        else if (My.Env.W7 | My.Env.WVista)
+                        else if (Program.W7 | Program.WVista)
                         {
                             F = new FontFamily("Segoe UI");
                         }

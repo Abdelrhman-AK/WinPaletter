@@ -14,19 +14,19 @@ namespace WinPaletter
             DialogResult = DialogResult.None;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.LogonUI.Icon;
+            Icon = Forms.LogonUI.Icon;
 
-            if (My.MyProject.Forms.LogonUI7.ID == 0)
+            if (Forms.LogonUI7.ID == 0)
                 img0.Checked = true;
-            if (My.MyProject.Forms.LogonUI7.ID == 1)
+            if (Forms.LogonUI7.ID == 1)
                 img1.Checked = true;
-            if (My.MyProject.Forms.LogonUI7.ID == 2)
+            if (Forms.LogonUI7.ID == 2)
                 img2.Checked = true;
-            if (My.MyProject.Forms.LogonUI7.ID == 3)
+            if (Forms.LogonUI7.ID == 3)
                 img3.Checked = true;
-            if (My.MyProject.Forms.LogonUI7.ID == 4)
+            if (Forms.LogonUI7.ID == 4)
                 img4.Checked = true;
-            if (My.MyProject.Forms.LogonUI7.ID == 5)
+            if (Forms.LogonUI7.ID == 5)
                 img5.Checked = true;
 
         }
@@ -41,17 +41,17 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.OK;
             if (img0.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 0;
+                Forms.LogonUI7.ID = 0;
             if (img1.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 1;
+                Forms.LogonUI7.ID = 1;
             if (img2.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 2;
+                Forms.LogonUI7.ID = 2;
             if (img3.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 3;
+                Forms.LogonUI7.ID = 3;
             if (img4.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 4;
+                Forms.LogonUI7.ID = 4;
             if (img5.Checked)
-                My.MyProject.Forms.LogonUI7.ID = 5;
+                Forms.LogonUI7.ID = 5;
             Close();
         }
     }

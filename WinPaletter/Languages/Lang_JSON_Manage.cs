@@ -18,14 +18,14 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            Label6.Font = My.MyProject.Application.ConsoleFontMedium;
-            TreeView1.ImageList = My.Env.Lang_IL;
+            Label6.Font = Program.ConsoleFontMedium;
+            TreeView1.ImageList = Program.Lang_IL;
 
-            if (My.Env.Settings.Language.Enabled & File.Exists(My.Env.Settings.Language.File))
+            if (Program.Settings.Language.Enabled & File.Exists(Program.Settings.Language.File))
             {
-                TreeView1.FromJSON(My.Env.Settings.Language.File, Path.GetFileName(My.Env.Settings.Language.File));
-                OpenJSONDlg.FileName = My.Env.Settings.Language.File;
-                SaveJSONDlg.FileName = My.Env.Settings.Language.File;
+                TreeView1.FromJSON(Program.Settings.Language.File, Path.GetFileName(Program.Settings.Language.File));
+                OpenJSONDlg.FileName = Program.Settings.Language.File;
+                SaveJSONDlg.FileName = Program.Settings.Language.File;
             }
         }
 
@@ -185,7 +185,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Lang_Add_Snippet.ShowDialog();
+            Forms.Lang_Add_Snippet.ShowDialog();
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -207,9 +207,9 @@ namespace WinPaletter
         private void Button9_Click(object sender, EventArgs e)
         {
 
-            if (My.MyProject.Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
+            if (Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
             {
-                TextBox1.Text = My.MyProject.Forms.Lang_Add_Snippet._Result;
+                TextBox1.Text = Forms.Lang_Add_Snippet._Result;
             }
 
         }

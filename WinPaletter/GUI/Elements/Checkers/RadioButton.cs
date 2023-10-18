@@ -325,7 +325,7 @@ namespace WinPaletter.UI.WP
                 if (Parent is null)
                     return;
                 BackColor = Parent.BackColor;
-                var clr = My.Env.Style.Colors.Core;
+                var clr = Program.Style.Colors.Core;
 
                 G = e.Graphics;
                 G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -352,11 +352,11 @@ namespace WinPaletter.UI.WP
                 }
 
                 #region Colors System
-                var HoverCircle_Color = Color.FromArgb(alpha2, My.Env.Style.Colors.Back_Checked);
-                var HoverCheckedCircle_Color = Color.FromArgb(alpha, My.Env.Style.Colors.Border_Checked_Hover);
-                var CheckCircle_Color = Color.FromArgb(alpha2, My.Env.Style.Colors.Core);
-                var NonHoverCircle_Color = My.Env.Style.Colors.Back_Hover;
-                var BackCircle_Color = My.Env.Style.Colors.Back;
+                var HoverCircle_Color = Color.FromArgb(alpha2, Program.Style.Colors.Back_Checked);
+                var HoverCheckedCircle_Color = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+                var CheckCircle_Color = Color.FromArgb(alpha2, Program.Style.Colors.Core);
+                var NonHoverCircle_Color = Program.Style.Colors.Back_Hover;
+                var BackCircle_Color = Program.Style.Colors.Back;
                 var ParentColor = this.GetParentColor();
                 #endregion
                 // #################################################################################

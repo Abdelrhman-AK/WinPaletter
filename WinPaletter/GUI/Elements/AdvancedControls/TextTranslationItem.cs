@@ -130,14 +130,14 @@ namespace WinPaletter.UI.Controllers
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = My.Env.RenderingHint;
+            G.TextRenderingHint = Program.RenderingHint;
             DoubleBuffered = true;
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var NotTranslatedColor = My.Env.Style.Colors.NotTranslatedColor;
+            var NotTranslatedColor = Program.Style.Colors.NotTranslatedColor;
 
             if (_SearchHighlight is not null && !string.IsNullOrWhiteSpace(_SearchHighlight) && Text.ToLower().Trim().Contains(_SearchHighlight.ToLower().Trim()))
             {
-                using (var br = new SolidBrush(My.Env.Style.Colors.SearchColor))
+                using (var br = new SolidBrush(Program.Style.Colors.SearchColor))
                 {
                     G.FillRectangle(br, rect);
                 }
@@ -162,12 +162,12 @@ namespace WinPaletter.UI.Controllers
 
             if (Pressed)
             {
-                G.FillRectangle(new SolidBrush(My.Env.Style.Colors.Back_Checked), rect);
-                G.DrawRectangle(new Pen(My.Env.Style.DarkMode ? Color.White : Color.Black, 2f) { DashStyle = DashStyle.Dot }, rect);
+                G.FillRectangle(new SolidBrush(Program.Style.Colors.Back_Checked), rect);
+                G.DrawRectangle(new Pen(Program.Style.DarkMode ? Color.White : Color.Black, 2f) { DashStyle = DashStyle.Dot }, rect);
             }
             else
             {
-                G.DrawRectangle(new Pen(Color.FromArgb(100, My.Env.Style.DarkMode ? Color.White : Color.Black), 1f), rect);
+                G.DrawRectangle(new Pen(Color.FromArgb(100, Program.Style.DarkMode ? Color.White : Color.Black), 1f), rect);
             }
 
             #region Text and Image Render

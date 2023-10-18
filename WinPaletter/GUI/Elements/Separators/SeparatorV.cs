@@ -52,7 +52,7 @@ namespace WinPaletter.UI.WP
 
             if (Parent is not null)
             {
-                if (My.Env.Style.DarkMode)
+                if (Program.Style.DarkMode)
                 {
                     if (!AlternativeLook)
                     {
@@ -72,7 +72,7 @@ namespace WinPaletter.UI.WP
                     IdleLine = Color.DarkRed;
                 }
             }
-            else if (My.Env.Style.DarkMode)
+            else if (Program.Style.DarkMode)
                 IdleLine = Color.FromArgb(60, 60, 60);
             else
                 IdleLine = Color.FromArgb(210, 210, 210);

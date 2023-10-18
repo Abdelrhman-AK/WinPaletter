@@ -90,10 +90,10 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.PaletteGenerateFromImage.Icon;
+            Icon = Forms.PaletteGenerateFromImage.Icon;
             _shown = false;
 
-            Location = My.MyProject.Forms.MainFrm.Button40.PointToScreen(Point.Empty) + (Size)new Point(0, My.MyProject.Forms.MainFrm.Button40.Height);
+            Location = Forms.MainFrm.Button40.PointToScreen(Point.Empty) + (Size)new Point(0, Forms.MainFrm.Button40.Height);
 
             User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE | User32.AnimateWindowFlags.AW_BLEND);
 
@@ -123,13 +123,13 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             Close();
-            My.MyProject.Forms.PaletteGenerateFromImage.ShowDialog();
+            Forms.PaletteGenerateFromImage.ShowDialog();
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
             Close();
-            My.MyProject.Forms.PaletteGenerateFromColor.ShowDialog();
+            Forms.PaletteGenerateFromColor.ShowDialog();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace WinPaletter.UI.WP
                     {
                         Color Cx1, Cx2;
 
-                        if (My.Env.Style.DarkMode)
+                        if (Program.Style.DarkMode)
                         {
                             Cx1 = Color1.Dark(0.15f);
                             Cx2 = Color2.Dark(0.15f);
@@ -194,7 +194,7 @@ namespace WinPaletter.UI.WP
 
                 if (Style == Styles.SwapColors)
                 {
-                    if (My.Env.Style.DarkMode)
+                    if (Program.Style.DarkMode)
                     {
                         C1 = Color.Dark(0.15f);
                     }
@@ -208,7 +208,7 @@ namespace WinPaletter.UI.WP
                 else if (Style == Styles.MixedColors)
                 {
 
-                    if (My.Env.Style.DarkMode)
+                    if (Program.Style.DarkMode)
                     {
                         C1 = Color1.Dark(0.15f);
                         C2 = Color2.Dark(0.15f);

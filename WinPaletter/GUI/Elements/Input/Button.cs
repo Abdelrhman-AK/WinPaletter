@@ -18,7 +18,7 @@ namespace WinPaletter.UI.WP
             Timer = new Timer() { Enabled = false, Interval = 1 };
             Font = new Font("Segoe UI", 9f);
             ForeColor = Color.White;
-            if (My.Env.Style.DarkMode)
+            if (Program.Style.DarkMode)
                 BackColor = Color.FromArgb(50, 50, 50);
             else
                 BackColor = Color.FromArgb(225, 225, 225);
@@ -148,7 +148,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = default(Color);
 
-            switch (My.Env.Style.DarkMode)
+            switch (Program.Style.DarkMode)
             {
                 case true:
                     {
@@ -201,7 +201,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = default(Color);
 
-            switch (My.Env.Style.DarkMode)
+            switch (Program.Style.DarkMode)
             {
                 case true:
                     {
@@ -237,7 +237,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = default(Color);
 
-            switch (My.Env.Style.DarkMode)
+            switch (Program.Style.DarkMode)
             {
                 case true:
                     {
@@ -273,7 +273,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = default(Color);
 
-            switch (My.Env.Style.DarkMode)
+            switch (Program.Style.DarkMode)
             {
                 case true:
                     {

@@ -101,16 +101,16 @@ namespace WinPaletter
 
         private void Store_Hover_Load(object sender, EventArgs e)
         {
-            Icon = My.MyProject.Forms.Store.Icon;
+            Icon = Forms.Store.Icon;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             this.DoubleBuffer();
 
             Point p;
 
-            if (My.MyProject.Forms.Store.selectedItem is not null)
+            if (Forms.Store.selectedItem is not null)
             {
-                p = My.MyProject.Forms.Store.selectedItem.PointToScreen(Point.Empty) - (Size)new Point((int)Math.Round((Width - My.MyProject.Forms.Store.selectedItem.Width) / 2d), (int)Math.Round((Height - My.MyProject.Forms.Store.selectedItem.Height) / 2d));
+                p = Forms.Store.selectedItem.PointToScreen(Point.Empty) - (Size)new Point((int)Math.Round((Width - Forms.Store.selectedItem.Width) / 2d), (int)Math.Round((Height - Forms.Store.selectedItem.Height) / 2d));
             }
 
             else
@@ -119,10 +119,10 @@ namespace WinPaletter
 
             }
 
-            if (p.X + Width > My.MyProject.Computer.Screen.Bounds.Width)
-                p = new Point(My.MyProject.Computer.Screen.Bounds.Width - Width, p.Y);
-            if (p.Y + Height > My.MyProject.Computer.Screen.Bounds.Height)
-                p = new Point(p.X, My.MyProject.Computer.Screen.Bounds.Height - Height);
+            if (p.X + Width > Program.Computer.Screen.Bounds.Width)
+                p = new Point(Program.Computer.Screen.Bounds.Width - Width, p.Y);
+            if (p.Y + Height > Program.Computer.Screen.Bounds.Height)
+                p = new Point(p.X, Program.Computer.Screen.Bounds.Height - Height);
             Location = p;
 
             _shown = false;
@@ -173,7 +173,7 @@ namespace WinPaletter
 
         private void Store_Hover_FormClosed(object sender, FormClosedEventArgs e)
         {
-            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
         }
 
     }

@@ -103,7 +103,7 @@ namespace WinPaletter.UI.WP
             Image img = null;
 
             G.Clear(ParentColor);
-            bool Dark = My.Env.Style.DarkMode;
+            bool Dark = Program.Style.DarkMode;
 
             var imgRect = default(Rectangle);
             for (int i = 0, loopTo = TabCount - 1; i <= loopTo; i++)

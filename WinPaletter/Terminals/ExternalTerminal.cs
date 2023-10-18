@@ -30,14 +30,14 @@ namespace WinPaletter
             FillTerminals(ComboBox1);
             RasterList.BringToFront();
 
-            CheckBox1.Checked = My.Env.Settings.WindowsTerminals.ListAllFonts;
+            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
-            ExtTerminal_PopupForegroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            ExtTerminal_PopupBackgroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            ExtTerminal_AccentForegroundLbl.Font = My.MyProject.Application.ConsoleFont;
-            ExtTerminal_AccentBackgroundLbl.Font = My.MyProject.Application.ConsoleFont;
+            ExtTerminal_PopupForegroundLbl.Font = Program.ConsoleFont;
+            ExtTerminal_PopupBackgroundLbl.Font = Program.ConsoleFont;
+            ExtTerminal_AccentForegroundLbl.Font = Program.ConsoleFont;
+            ExtTerminal_AccentBackgroundLbl.Font = Program.ConsoleFont;
 
-            Button4.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
+            Button4.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
 
         }
 
@@ -80,13 +80,13 @@ namespace WinPaletter
 
             if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(RegKey))
             {
-                WPStyle.MsgBox(My.Env.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             object y_cmd;
 
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "ColorTable00", _Def.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
                 ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "ColorTable01", _Def.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
@@ -400,11 +400,11 @@ namespace WinPaletter
 
                 EditReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100);
 
-                WPStyle.MsgBox(My.Env.Lang.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WPStyle.MsgBox(Program.Lang.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                My.MyProject.Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.ThrowError(ex);
             }
         }
 
@@ -571,13 +571,13 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 return;
             }
 
             var CList = new List<Control>() { (Control)sender, ExtTerminal_PreviewCUR2 };
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList);
+            var C = Forms.ColorPickerDlg.Pick(CList);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -630,7 +630,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -676,7 +676,7 @@ namespace WinPaletter
                 _Conditions.CMD_ColorTable15 = true;
 
 
-            var C = My.MyProject.Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -1296,7 +1296,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.NewExtTerminal.ShowDialog();
+            Forms.NewExtTerminal.ShowDialog();
         }
 
         private void RasterList_SelectedIndexChanged(object sender, EventArgs e)
@@ -1464,7 +1464,7 @@ namespace WinPaletter
         {
             if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
             {
-                WPStyle.MsgBox(My.Env.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1481,7 +1481,7 @@ namespace WinPaletter
         {
             if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
             {
-                WPStyle.MsgBox(My.Env.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1495,11 +1495,11 @@ namespace WinPaletter
         {
             if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
             {
-                WPStyle.MsgBox(My.Env.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WPStyle.MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
                 ApplyPreview();
@@ -1508,28 +1508,28 @@ namespace WinPaletter
 
         private void ExtTerminal_FontSizeVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_FontSizeBar.Maximum), ExtTerminal_FontSizeBar.Minimum).ToString();
             ExtTerminal_FontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void ExtTerminal_PreviewCUR_Val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_CursorSizeBar.Maximum), ExtTerminal_CursorSizeBar.Minimum).ToString();
             ExtTerminal_CursorSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void ExtTerminal_OpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(My.Env.Lang.InputValue, ((UI.WP.Button)sender).Text, My.Env.Lang.ItMustBeNumerical);
+            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum).ToString();
             ExtTerminal_OpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !My.Env.Settings.WindowsTerminals.ListAllFonts;
+            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
             FontDialog1.Font = f_extterminal;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {

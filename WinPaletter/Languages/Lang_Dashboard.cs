@@ -12,7 +12,7 @@ namespace WinPaletter
         }
         private void Lang_Dashboard_Load(object sender, EventArgs e)
         {
-            Icon = My.MyProject.Forms.Lang_JSON_Manage.Icon;
+            Icon = Forms.Lang_JSON_Manage.Icon;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
         }
@@ -24,12 +24,12 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Lang_JSON_Manage.ShowDialog();
+            Forms.Lang_JSON_Manage.ShowDialog();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Lang_JSON_Update.ShowDialog();
+            Forms.Lang_JSON_Update.ShowDialog();
         }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -39,7 +39,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Lang_JSON_GUI.ShowDialog();
+            Forms.Lang_JSON_GUI.ShowDialog();
         }
     }
 }

@@ -28,8 +28,8 @@ namespace WinPaletter
             BackupSettings = new WPSettings(WPSettings.Mode.Registry);
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(My.Env.TM);
+            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            ApplyFromTM(Program.TM);
             AdjustPreview();
             CloseAndApply = false;
         }
@@ -45,7 +45,7 @@ namespace WinPaletter
             if (!CloseAndApply) // Restore previous settings
             {
                 {
-                    ref WPSettings.Structures.Appearance appearance = ref My.Env.Settings.Appearance;
+                    ref WPSettings.Structures.Appearance appearance = ref Program.Settings.Appearance;
                     appearance.CustomColors = BackupSettings.Appearance.CustomColors;
                     appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
                     appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
@@ -92,7 +92,7 @@ namespace WinPaletter
                 return;
 
             {
-                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = true;
                 Appearance.CustomTheme = appearance_dark.Checked;
                 Appearance.RoundedCorners = RoundedCorners.Checked;
@@ -130,7 +130,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
                 AdjustPreview();
@@ -139,7 +139,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             CloseAndApply = false;
             Close();
         }
@@ -149,7 +149,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
-            ApplyToTM(My.Env.TM);
+            ApplyToTM(Program.TM);
             TMx.AppTheme.Apply();
             CloseAndApply = true;
             BackupSettings = new WPSettings(WPSettings.Mode.Registry);
@@ -181,7 +181,7 @@ namespace WinPaletter
                 return;
 
             {
-                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
                 Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
                 Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
@@ -191,12 +191,12 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                AccentColor.BackColor = My.MyProject.Forms.SubMenu.ShowMenu(AccentColor);
+                AccentColor.BackColor = Forms.SubMenu.ShowMenu(AccentColor);
                 AdjustPreview();
                 return;
             }
             var clist = new List<Control>() { AccentColor };
-            My.MyProject.Forms.ColorPickerDlg.Pick(clist);
+            Forms.ColorPickerDlg.Pick(clist);
             clist.Clear();
 
             AdjustPreview();
@@ -205,7 +205,7 @@ namespace WinPaletter
         private void BackColorPick_Click(object sender, EventArgs e)
         {
             {
-                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
                 Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
                 Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
@@ -215,13 +215,13 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                BackColorPick.BackColor = My.MyProject.Forms.SubMenu.ShowMenu(BackColorPick);
+                BackColorPick.BackColor = Forms.SubMenu.ShowMenu(BackColorPick);
                 AdjustPreview();
                 return;
             }
 
             var clist = new List<Control>() { BackColorPick, this };
-            My.MyProject.Forms.ColorPickerDlg.Pick(clist);
+            Forms.ColorPickerDlg.Pick(clist);
             clist.Clear();
 
             AdjustPreview();
@@ -241,26 +241,26 @@ namespace WinPaletter
                     case var @case when @case == ("Default Dark".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = My.Env.W11 | My.Env.W7;
-                            AccentColor.BackColor = My.Env.DefaultAccent;
-                            BackColorPick.BackColor = My.Env.DefaultBackColorDark;
+                            RoundedCorners.Checked = Program.W11 | Program.W7;
+                            AccentColor.BackColor = Program.DefaultAccent;
+                            BackColorPick.BackColor = Program.DefaultBackColorDark;
                             break;
                         }
 
                     case var case1 when case1 == ("Default Light".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = My.Env.W11 | My.Env.W7;
-                            AccentColor.BackColor = My.Env.DefaultAccent;
-                            BackColorPick.BackColor = My.Env.DefaultBackColorLight;
+                            RoundedCorners.Checked = Program.W11 | Program.W7;
+                            AccentColor.BackColor = Program.DefaultAccent;
+                            BackColorPick.BackColor = Program.DefaultBackColorLight;
                             break;
                         }
 
                     case var case2 when case2 == ("AMOLED".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = My.Env.W11 | My.Env.W7;
-                            AccentColor.BackColor = My.Env.DefaultAccent;
+                            RoundedCorners.Checked = Program.W11 | Program.W7;
+                            AccentColor.BackColor = Program.DefaultAccent;
                             BackColorPick.BackColor = Color.Black;
                             break;
                         }
@@ -268,8 +268,8 @@ namespace WinPaletter
                     case var case3 when case3 == ("Extreme White".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = My.Env.W11 | My.Env.W7;
-                            AccentColor.BackColor = My.Env.DefaultAccent;
+                            RoundedCorners.Checked = Program.W11 | Program.W7;
+                            AccentColor.BackColor = Program.DefaultAccent;
                             BackColorPick.BackColor = Color.White;
                             break;
                         }

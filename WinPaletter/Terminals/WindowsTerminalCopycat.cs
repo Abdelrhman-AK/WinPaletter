@@ -13,7 +13,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.WindowsTerminal.Icon;
+            Icon = Forms.WindowsTerminal.Icon;
 
             try
             {
@@ -29,12 +29,12 @@ namespace WinPaletter
         {
             if (!string.IsNullOrEmpty(ComboBox1.SelectedItem.ToString()))
             {
-                My.MyProject.Forms.WindowsTerminal.CCat = ComboBox1.SelectedItem.ToString();
+                Forms.WindowsTerminal.CCat = ComboBox1.SelectedItem.ToString();
                 DialogResult = DialogResult.OK;
             }
             else
             {
-                My.MyProject.Forms.WindowsTerminal.CCat = null;
+                Forms.WindowsTerminal.CCat = null;
                 DialogResult = DialogResult.Cancel;
             }
 

@@ -397,16 +397,6 @@ namespace WinPaletter
             this.WXP_Luna_Silver = new WinPaletter.UI.WP.RadioImage();
             this.Label65 = new System.Windows.Forms.Label();
             this.WXP_Luna_OliveGreen = new WinPaletter.UI.WP.RadioImage();
-            this.TabPage5 = new System.Windows.Forms.TabPage();
-            this.Button25 = new WinPaletter.UI.WP.Button();
-            this.Button22 = new WinPaletter.UI.WP.Button();
-            this.log_lbl = new System.Windows.Forms.Label();
-            this.Button14 = new WinPaletter.UI.WP.Button();
-            this.Button8 = new WinPaletter.UI.WP.Button();
-            this.TreeView1 = new System.Windows.Forms.TreeView();
-            this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
-            this.Label60 = new System.Windows.Forms.Label();
-            this.PictureBox36 = new System.Windows.Forms.PictureBox();
             this.Button19 = new WinPaletter.UI.WP.Button();
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
@@ -579,8 +569,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).BeginInit();
             this.GroupBox47.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
-            this.TabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
             this.MainToolbar.SuspendLayout();
             this.GroupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -607,11 +595,6 @@ namespace WinPaletter
             this.SaveFileDialog2.DefaultExt = "wpt";
             this.SaveFileDialog2.Filter = "PNG File|*.png";
             // 
-            // Timer1
-            // 
-            this.Timer1.Interval = 1000;
-            this.Timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
             // SaveFileDialog3
             // 
             this.SaveFileDialog3.DefaultExt = "wpt";
@@ -637,11 +620,11 @@ namespace WinPaletter
             this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
             this.button41.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button41.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(52)))), ((int)(((byte)(84)))));
-            this.button41.Location = new System.Drawing.Point(954, 490);
+            this.button41.Location = new System.Drawing.Point(910, 490);
             this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(130, 38);
+            this.button41.Size = new System.Drawing.Size(174, 38);
             this.button41.TabIndex = 35;
-            this.button41.Text = "Support me";
+            this.button41.Text = "Support via PayPal";
             this.button41.UseVisualStyleBackColor = false;
             this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
@@ -1333,7 +1316,6 @@ namespace WinPaletter
             this.TablessControl1.Controls.Add(this.TabPage4);
             this.TablessControl1.Controls.Add(this.TabPage8);
             this.TablessControl1.Controls.Add(this.TabPage9);
-            this.TablessControl1.Controls.Add(this.TabPage5);
             this.TablessControl1.Location = new System.Drawing.Point(11, 74);
             this.TablessControl1.Name = "TablessControl1";
             this.TablessControl1.SelectedIndex = 0;
@@ -5677,162 +5659,6 @@ namespace WinPaletter
             this.WXP_Luna_OliveGreen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_Luna_OliveGreen.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.WXP_Luna_OliveGreen_CheckedChanged);
             // 
-            // TabPage5
-            // 
-            this.TabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage5.Controls.Add(this.Button25);
-            this.TabPage5.Controls.Add(this.Button22);
-            this.TabPage5.Controls.Add(this.log_lbl);
-            this.TabPage5.Controls.Add(this.Button14);
-            this.TabPage5.Controls.Add(this.Button8);
-            this.TabPage5.Controls.Add(this.TreeView1);
-            this.TabPage5.Controls.Add(this.Separator1);
-            this.TabPage5.Controls.Add(this.Label60);
-            this.TabPage5.Controls.Add(this.PictureBox36);
-            this.TabPage5.Location = new System.Drawing.Point(4, 24);
-            this.TabPage5.Name = "TabPage5";
-            this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(529, 517);
-            this.TabPage5.TabIndex = 4;
-            this.TabPage5.Text = "Log";
-            // 
-            // Button25
-            // 
-            this.Button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.Button25.DrawOnGlass = false;
-            this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button25.ForeColor = System.Drawing.Color.White;
-            this.Button25.Image = null;
-            this.Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button25.Location = new System.Drawing.Point(297, 482);
-            this.Button25.Name = "Button25";
-            this.Button25.Size = new System.Drawing.Size(80, 34);
-            this.Button25.TabIndex = 22;
-            this.Button25.Text = "Stop timer";
-            this.Button25.UseVisualStyleBackColor = false;
-            this.Button25.Visible = false;
-            this.Button25.Click += new System.EventHandler(this.Button25_Click);
-            // 
-            // Button22
-            // 
-            this.Button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.Button22.DrawOnGlass = false;
-            this.Button22.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button22.ForeColor = System.Drawing.Color.White;
-            this.Button22.Image = null;
-            this.Button22.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button22.Location = new System.Drawing.Point(379, 482);
-            this.Button22.Name = "Button22";
-            this.Button22.Size = new System.Drawing.Size(85, 34);
-            this.Button22.TabIndex = 21;
-            this.Button22.Text = "Export details";
-            this.Button22.UseVisualStyleBackColor = false;
-            this.Button22.Visible = false;
-            this.Button22.Click += new System.EventHandler(this.Button22_Click);
-            // 
-            // log_lbl
-            // 
-            this.log_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.log_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.log_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.log_lbl.Location = new System.Drawing.Point(6, 454);
-            this.log_lbl.Name = "log_lbl";
-            this.log_lbl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.log_lbl.Size = new System.Drawing.Size(519, 25);
-            this.log_lbl.TabIndex = 20;
-            this.log_lbl.Text = "Error\\s happened. Press on \'Show errors\' for details";
-            this.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.log_lbl.Visible = false;
-            // 
-            // Button14
-            // 
-            this.Button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.Button14.DrawOnGlass = false;
-            this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button14.ForeColor = System.Drawing.Color.White;
-            this.Button14.Image = null;
-            this.Button14.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button14.Location = new System.Drawing.Point(213, 482);
-            this.Button14.Name = "Button14";
-            this.Button14.Size = new System.Drawing.Size(82, 34);
-            this.Button14.TabIndex = 7;
-            this.Button14.Text = "Show errors";
-            this.Button14.UseVisualStyleBackColor = false;
-            this.Button14.Visible = false;
-            this.Button14.Click += new System.EventHandler(this.Button14_Click);
-            // 
-            // Button8
-            // 
-            this.Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.Button8.DrawOnGlass = false;
-            this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button8.ForeColor = System.Drawing.Color.White;
-            this.Button8.Image = null;
-            this.Button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button8.Location = new System.Drawing.Point(466, 482);
-            this.Button8.Name = "Button8";
-            this.Button8.Size = new System.Drawing.Size(59, 34);
-            this.Button8.TabIndex = 6;
-            this.Button8.Text = "OK";
-            this.Button8.UseVisualStyleBackColor = false;
-            this.Button8.Click += new System.EventHandler(this.Button8_Click);
-            // 
-            // TreeView1
-            // 
-            this.TreeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TreeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TreeView1.ForeColor = System.Drawing.Color.White;
-            this.TreeView1.FullRowSelect = true;
-            this.TreeView1.ItemHeight = 28;
-            this.TreeView1.Location = new System.Drawing.Point(6, 54);
-            this.TreeView1.Name = "TreeView1";
-            this.TreeView1.ShowLines = false;
-            this.TreeView1.Size = new System.Drawing.Size(519, 397);
-            this.TreeView1.TabIndex = 5;
-            // 
-            // Separator1
-            // 
-            this.Separator1.AlternativeLook = false;
-            this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Separator1.Location = new System.Drawing.Point(6, 47);
-            this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(519, 1);
-            this.Separator1.TabIndex = 4;
-            this.Separator1.TabStop = false;
-            // 
-            // Label60
-            // 
-            this.Label60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label60.BackColor = System.Drawing.Color.Transparent;
-            this.Label60.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.Label60.Location = new System.Drawing.Point(47, 6);
-            this.Label60.Name = "Label60";
-            this.Label60.Size = new System.Drawing.Size(60, 35);
-            this.Label60.TabIndex = 3;
-            this.Label60.Text = "Log";
-            this.Label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PictureBox36
-            // 
-            this.PictureBox36.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox36.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox36.Image")));
-            this.PictureBox36.Location = new System.Drawing.Point(6, 6);
-            this.PictureBox36.Name = "PictureBox36";
-            this.PictureBox36.Size = new System.Drawing.Size(35, 35);
-            this.PictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox36.TabIndex = 2;
-            this.PictureBox36.TabStop = false;
-            // 
             // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -6458,7 +6284,6 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(1094, 701);
-            this.Controls.Add(this.button41);
             this.Controls.Add(this.Button28);
             this.Controls.Add(this.previewContainer);
             this.Controls.Add(this.TablessControl1);
@@ -6467,6 +6292,7 @@ namespace WinPaletter
             this.Controls.Add(this.Button13);
             this.Controls.Add(this.MainToolbar);
             this.Controls.Add(this.GroupBox3);
+            this.Controls.Add(this.button41);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -6618,8 +6444,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).EndInit();
             this.GroupBox47.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
-            this.TabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).EndInit();
             this.MainToolbar.ResumeLayout(false);
             this.GroupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -6926,23 +6750,13 @@ namespace WinPaletter
         internal UI.WP.RadioImage Select_W81;
         internal UI.WP.RadioImage Select_W10;
         internal UI.WP.RadioImage Select_W11;
-        internal TabPage TabPage5;
-        internal UI.WP.SeparatorH Separator1;
-        internal Label Label60;
-        internal PictureBox PictureBox36;
-        internal UI.WP.Button Button8;
-        internal TreeView TreeView1;
-        internal UI.WP.Button Button14;
-        internal Label log_lbl;
         internal Timer Timer1;
-        internal UI.WP.Button Button22;
         internal SaveFileDialog SaveFileDialog3;
         internal UI.WP.Button W81_ColorizationBalance_val;
         internal UI.WP.Button W7_ColorizationGlassReflectionIntensity_val;
         internal UI.WP.Button W7_ColorizationBlurBalance_val;
         internal UI.WP.Button W7_ColorizationColorBalance_val;
         internal UI.WP.Button W7_ColorizationAfterglowBalance_val;
-        internal UI.WP.Button Button25;
         internal NotifyIcon NotifyUpdates;
         internal UI.Retro.PanelRaisedR ClassicTaskbar;
         internal UI.Retro.WindowR ClassicWindow2;

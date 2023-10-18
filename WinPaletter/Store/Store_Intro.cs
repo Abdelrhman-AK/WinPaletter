@@ -14,10 +14,10 @@ namespace WinPaletter
         }
         private void Store_Intro_Load(object sender, EventArgs e)
         {
-            CheckBox1.Checked = My.Env.Settings.Store.ShowTips;
+            CheckBox1.Checked = Program.Settings.Store.ShowTips;
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.MyProject.Forms.Store.Icon;
+            Icon = Forms.Store.Icon;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -25,21 +25,21 @@ namespace WinPaletter
             if (TablessControl1.SelectedIndex + 1 <= TablessControl1.TabPages.Count - 1)
                 TablessControl1.SelectedIndex += 1;
 
-            if ((Button1.Text ?? "") == (My.Env.Lang.Finish ?? ""))
+            if ((Button1.Text ?? "") == (Program.Lang.Finish ?? ""))
             {
                 Close();
                 TablessControl1.SelectedIndex = 0;
-                Button1.Text = My.Env.Lang.Next;
+                Button1.Text = Program.Lang.Next;
             }
 
             if (TablessControl1.SelectedIndex == TablessControl1.TabPages.Count - 1)
             {
-                Button1.Text = My.Env.Lang.Finish;
+                Button1.Text = Program.Lang.Finish;
                 CheckBox1.Visible = true;
             }
             else
             {
-                Button1.Text = My.Env.Lang.Next;
+                Button1.Text = Program.Lang.Next;
                 CheckBox1.Visible = false;
             }
         }
@@ -48,7 +48,7 @@ namespace WinPaletter
         {
             if (TablessControl1.SelectedIndex - 1 >= 0)
                 TablessControl1.SelectedIndex -= 1;
-            Button1.Text = My.Env.Lang.Next;
+            Button1.Text = Program.Lang.Next;
             CheckBox1.Visible = false;
         }
 
@@ -59,8 +59,8 @@ namespace WinPaletter
 
         private void Store_Intro_FormClosing(object sender, FormClosingEventArgs e)
         {
-            My.Env.Settings.Store.ShowTips = CheckBox1.Checked;
-            My.Env.Settings.Store.Save();
+            Program.Settings.Store.ShowTips = CheckBox1.Checked;
+            Program.Settings.Store.Save();
         }
 
         private void Button4_Click(object sender, EventArgs e)

@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Windows.Forms;
+using System.Windows.Input;
 using WinPaletter.NativeMethods;
 
 namespace WinPaletter
@@ -38,7 +40,7 @@ namespace WinPaletter
         {
             RegistryKey R = null;
 
-            if (Key.StartsWith(@"Computer\", My.Env._ignore))
+            if (Key.StartsWith(@"Computer\", Program._ignore))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
@@ -48,31 +50,31 @@ namespace WinPaletter
 
             var scope = default(Reg_scope);
 
-            if (Key.StartsWith("HKEY_CURRENT_USER", My.Env._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_USER", Program._ignore))
             {
                 scope = Reg_scope.HKEY_CURRENT_USER;
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_USERS", My.Env._ignore))
+            else if (Key.StartsWith("HKEY_USERS", Program._ignore))
             {
                 scope = Reg_scope.HKEY_USERS;
                 Key = Key.Remove(0, @"HKEY_USERS\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", My.Env._ignore))
+            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
             {
                 scope = Reg_scope.HKEY_LOCAL_MACHINE;
                 Key = Key.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CLASSES_ROOT", My.Env._ignore))
+            else if (Key.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
             {
                 scope = Reg_scope.HKEY_CLASSES_ROOT;
                 Key = Key.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", My.Env._ignore))
+            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
             {
                 scope = Reg_scope.HKEY_CURRENT_CONFIG;
                 Key = Key.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
@@ -107,7 +109,7 @@ namespace WinPaletter
                 case Reg_scope.HKEY_LOCAL_MACHINE:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
-                        if (My.Env.isElevated)
+                        if (Program.isElevated)
                         {
                             if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
                                 R.CreateSubKey(Key, true);
@@ -119,7 +121,7 @@ namespace WinPaletter
                 case Reg_scope.HKEY_USERS:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
-                        if (My.Env.isElevated)
+                        if (Program.isElevated)
                         {
                             if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
                                 R.CreateSubKey(Key, true);
@@ -255,7 +257,7 @@ namespace WinPaletter
 
             try
             {
-                if (My.Env.isElevated && (scope == Reg_scope.HKEY_LOCAL_MACHINE || scope == Reg_scope.HKEY_USERS) || !(scope == Reg_scope.HKEY_LOCAL_MACHINE) & !(scope == Reg_scope.HKEY_USERS))
+                if (Program.isElevated && (scope == Reg_scope.HKEY_LOCAL_MACHINE || scope == Reg_scope.HKEY_USERS) || !(scope == Reg_scope.HKEY_LOCAL_MACHINE) & !(scope == Reg_scope.HKEY_USERS))
                 {
                     R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType);
                     AddVerboseItem(TreeView, false, Key_BeforeModification, ValueName, Value, RegType);
@@ -292,21 +294,21 @@ namespace WinPaletter
         {
             string regTemplate;
 
-            if (Key.StartsWith(@"Computer\", My.Env._ignore))
+            if (Key.StartsWith(@"Computer\", Program._ignore))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
 
             string _Value;
-            if (Key.StartsWith("HKEY_LOCAL_MACHINE", My.Env._ignore))
+            if (Key.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (Key.StartsWith("HKEY_CURRENT_USER", My.Env._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_USER", Program._ignore))
                 Key = "HKCU" + Key.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (Key.StartsWith("HKEY_USERS", My.Env._ignore))
+            if (Key.StartsWith("HKEY_USERS", Program._ignore))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
-            if (Key.StartsWith("HKEY_CLASSES_ROOT", My.Env._ignore))
+            if (Key.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
                 Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (Key.StartsWith("HKEY_CURRENT_CONFIG", My.Env._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
                 Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /v = Value Name
@@ -389,23 +391,7 @@ namespace WinPaletter
 
             try
             {
-                using (var process = new Process()
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = "reg",
-                        Verb = My.Env.WXP && My.Env.isElevated ? "" : "runas",
-                        Arguments = string.Format(regTemplate, Key, ValueName, _Value),
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = true
-                    }
-                })
-                {
-
-                    process.Start();
-                    process.WaitForExit();
-                }
+                Program.CMD_Wrapper.SendCommand($"reg {string.Format(regTemplate, Key, ValueName, _Value)}");
             }
             catch (Exception ex)
             {
@@ -422,7 +408,7 @@ namespace WinPaletter
         {
             if (TreeView is null)
                 return;
-            if (My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
+            if (Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
                 string v0 = ValueName;
                 string v1;
@@ -446,14 +432,14 @@ namespace WinPaletter
                     v1 = "null";
                 if (!Skipped)
                 {
-                    v2 = string.Format(My.Env.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
+                    v2 = string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
                     v3 = "reg_add";
                 }
                 else
                 {
-                    if (!My.Env.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
+                    if (!Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
                         return;
-                    v2 = string.Format(My.Env.Lang.Verbose_RegSkipped, string.Format(My.Env.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()));
+                    v2 = string.Format(Program.Lang.Verbose_RegSkipped, string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()));
                     v3 = "reg_skip";
                 }
                 Theme.Manager.AddNode(TreeView, v2, v3);
@@ -462,7 +448,7 @@ namespace WinPaletter
 
         private static void AddVerboseException(TreeView TreeView, Exception ex, string Key, string ValueName, object Value, RegistryValueKind RegType)
         {
-            if (My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
+            if (Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
                 string v0 = ValueName;
                 string v1;
@@ -482,16 +468,16 @@ namespace WinPaletter
                     v0 = "(default)";
                 if (string.IsNullOrWhiteSpace(v1))
                     v1 = "null";
-                string v2 = ex.Message + " - " + "CMD: " + string.Format(My.Env.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
+                string v2 = ex.Message + " - " + "CMD: " + string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
                 if (TreeView is not null)
                     Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), v2), "error");
-                My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(v2, ex));
+                Program.Saving_Exceptions.Add(new Tuple<string, Exception>(v2, ex));
             }
             else
             {
                 if (TreeView is not null)
                     Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ex.Message), "error");
-                My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(ex.Message, ex));
+                Program.Saving_Exceptions.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
         }
 
@@ -500,34 +486,34 @@ namespace WinPaletter
             object Result = null;
             RegistryKey R = null;
 
-            if (KeyName.StartsWith(@"Computer\", My.Env._ignore))
+            if (KeyName.StartsWith(@"Computer\", Program._ignore))
                 KeyName = KeyName.Remove(0, @"Computer\".Count());
 
-            if (KeyName.StartsWith("HKEY_CURRENT_USER", My.Env._ignore))
+            if (KeyName.StartsWith("HKEY_CURRENT_USER", Program._ignore))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CURRENT_USER\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_USERS", My.Env._ignore))
+            else if (KeyName.StartsWith("HKEY_USERS", Program._ignore))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_USERS\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_LOCAL_MACHINE", My.Env._ignore))
+            else if (KeyName.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
             }
 
-            else if (KeyName.StartsWith("HKEY_CLASSES_ROOT", My.Env._ignore))
+            else if (KeyName.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_CURRENT_CONFIG", My.Env._ignore))
+            else if (KeyName.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32);
@@ -554,9 +540,9 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                My.Env.Loading_Exceptions.Add(new Tuple<string, Exception>(KeyName + " : " + ValueName, ex));
+                Program.Loading_Exceptions.Add(new Tuple<string, Exception>(KeyName + " : " + ValueName, ex));
                 if (RaiseExceptions)
-                    My.MyProject.Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.ThrowError(ex);
                 try
                 {
                     if (R is not null)
@@ -571,47 +557,29 @@ namespace WinPaletter
                 }
                 return DefaultValue;
             }
-
         }
         public static void DelReg_AdministratorDeflector(string RegistryKeyPath, string ValueName)
         {
             string regTemplate;
-            if (RegistryKeyPath.StartsWith("HKEY_LOCAL_MACHINE", My.Env._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
                 RegistryKeyPath = "HKLM" + RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_USER", My.Env._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_USER", Program._ignore))
                 RegistryKeyPath = "HKCU" + RegistryKeyPath.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_USERS", My.Env._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_USERS", Program._ignore))
                 RegistryKeyPath = "HKU" + RegistryKeyPath.Remove(0, "HKEY_USERS".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CLASSES_ROOT", My.Env._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
                 RegistryKeyPath = "HKCR" + RegistryKeyPath.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_CONFIG", My.Env._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
                 RegistryKeyPath = "HKCC" + RegistryKeyPath.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /f = Disable prompt
             regTemplate = @"delete ""{0}\{1}"" /f";
-
-            using (var process = new Process()
-            {
-                StartInfo = new ProcessStartInfo()
-                {
-                    FileName = "reg",
-                    Verb = My.Env.WXP && My.Env.isElevated ? "" : "runas",
-                    Arguments = string.Format(regTemplate, RegistryKeyPath, ValueName),
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
-                    UseShellExecute = true
-                }
-            })
-            {
-
-                process.Start();
-                process.WaitForExit();
-            }
+            Program.CMD_Wrapper.SendCommand($"reg {string.Format(regTemplate, RegistryKeyPath, ValueName)}");
         }
 
-        public static void SFC(string File = "", bool IfNotExist_DoScannow = false)
+        public static void SFC(string File = "", bool IfNotExist_DoScannow = false, bool Hide = true)
         {
-            if (My.Env.WXP)
+            if (Program.WXP)
                 return;
 
             IntPtr intPtr = IntPtr.Zero;
@@ -621,10 +589,10 @@ namespace WinPaletter
             {
                 StartInfo = new ProcessStartInfo()
                 {
-                    FileName = My.Env.PATH_System32 + @"\sfc.exe",
+                    FileName = Program.PATH_System32 + @"\sfc.exe",
                     Verb = "runas",
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
+                    WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+                    CreateNoWindow = Hide,
                     UseShellExecute = true
                 }
             })
@@ -655,24 +623,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                using (var process = new Process()
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = My.Env.PATH_System32 + @"\takeown.exe",
-                        Verb = My.Env.WXP ? "" : "runas",
-                        Arguments = string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : ""),
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = true
-                    }
-                })
-                {
-
-
-                    process.Start();
-                    process.WaitForExit();
-                }
+                Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\takeown.exe {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
 
                 try
                 {
@@ -691,23 +642,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                using (var process = new Process()
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = My.Env.PATH_System32 + @"\ICACLS.exe",
-                        Verb = My.Env.WXP ? "" : "runas",
-                        Arguments = string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%"),
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = true
-                    }
-                })
-                {
-
-                    process.Start();
-                    process.WaitForExit();
-                }
+                Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
 
                 try
                 {
@@ -724,24 +659,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(source))
             {
-                using (var process = new Process()
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = "cmd",
-                        Verb = My.Env.WXP && My.Env.isElevated ? "" : "runas",
-                        Arguments = string.Format("/c move \"{0}\" \"{1}\"", source, destination),
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = true
-                    }
-                })
-                {
-
-                    process.Start();
-                    process.WaitForExit();
-                }
-
+                Program.CMD_Wrapper.SendCommand($"{Program.PATH_CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
             }
         }
     }

@@ -84,7 +84,7 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
             bool RTL = (int)RightToLeft == 1;
-            bool DM = My.Env.Style.DarkMode;
+            bool DM = Program.Style.DarkMode;
 
             switch (_alertStyle)
             {

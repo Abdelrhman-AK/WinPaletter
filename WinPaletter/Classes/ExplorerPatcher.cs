@@ -22,7 +22,7 @@ namespace WinPaletter
 
             try
             {
-                if (My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
+                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
                 {
                     IsInstalled = true;
                 }
@@ -35,19 +35,19 @@ namespace WinPaletter
             { }
             finally
             {
-                My.MyProject.Computer.Registry.CurrentUser.Close();
+                Program.Computer.Registry.CurrentUser.Close();
             }
 
-            if (!My.Env.Settings.ExplorerPatcher.Enabled_Force)
+            if (!Program.Settings.ExplorerPatcher.Enabled_Force)
             {
 
-                if (IsInstalled & My.Env.W11)
+                if (IsInstalled & Program.W11)
                 {
                     UseStart10 = Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
                     {
                         {
-                            var temp = My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
+                            var temp = Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
                             UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
                             TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
                             StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
@@ -55,7 +55,7 @@ namespace WinPaletter
                     }
                     finally
                     {
-                        My.MyProject.Computer.Registry.CurrentUser.Close();
+                        Program.Computer.Registry.CurrentUser.Close();
                     }
                 }
                 else
@@ -69,10 +69,10 @@ namespace WinPaletter
 
             else
             {
-                UseStart10 = My.Env.Settings.ExplorerPatcher.UseStart10;
-                UseTaskbar10 = My.Env.Settings.ExplorerPatcher.UseTaskbar10;
-                TaskbarButton10 = My.Env.Settings.ExplorerPatcher.TaskbarButton10;
-                StartStyle = My.Env.Settings.ExplorerPatcher.StartStyle;
+                UseStart10 = Program.Settings.ExplorerPatcher.UseStart10;
+                UseTaskbar10 = Program.Settings.ExplorerPatcher.UseTaskbar10;
+                TaskbarButton10 = Program.Settings.ExplorerPatcher.TaskbarButton10;
+                StartStyle = Program.Settings.ExplorerPatcher.StartStyle;
             }
 
 
@@ -80,8 +80,8 @@ namespace WinPaletter
 
         public static bool IsAllowed()
         {
-            bool condition0 = My.Env.W11 && My.Env.Settings.ExplorerPatcher.Enabled && IsInstalled;
-            bool condition1 = My.Env.Settings.ExplorerPatcher.Enabled_Force;
+            bool condition0 = Program.W11 && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;
+            bool condition1 = Program.Settings.ExplorerPatcher.Enabled_Force;
 
             return condition0 || condition1;
         }

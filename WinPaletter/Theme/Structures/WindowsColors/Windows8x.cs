@@ -38,7 +38,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(Windows8x _DefWin)
         {
-            if (My.Env.W8 | My.Env.W81)
+            if (Program.W8 | Program.W81)
             {
                 object y;
 
@@ -107,11 +107,11 @@ namespace WinPaletter.Theme.Structures
                         {
                             UxTheme.EnableTheming(1);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                            UxTheme.SetSystemVisualStyle(My.Env.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.Env.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
                             break;
                         }
 
@@ -119,26 +119,26 @@ namespace WinPaletter.Theme.Structures
                         {
                             UxTheme.EnableTheming(1);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                            UxTheme.SetSystemVisualStyle(My.Env.PATH_Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.Env.PATH_Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                             try
                             {
-                                My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
+                                Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
                                 if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
+                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
                             }
                             catch
                             {
                                 // Do nothing
-                                My.MyProject.Computer.Registry.CurrentUser.Close();
+                                Program.Computer.Registry.CurrentUser.Close();
                             }
                             finally
                             {
-                                My.MyProject.Computer.Registry.CurrentUser.Close();
+                                Program.Computer.Registry.CurrentUser.Close();
                             }
 
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String);

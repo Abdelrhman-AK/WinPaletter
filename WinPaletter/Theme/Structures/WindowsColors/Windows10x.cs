@@ -36,7 +36,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(Windows10x _DefWin, byte[] DefColorsBytes)
         {
-            if (My.Env.W10 | My.Env.W11 | My.Env.W12)
+            if (Program.W10 | Program.W11 | Program.W12)
             {
                 var Colors = new List<Color>();
                 Colors.Clear();
@@ -183,7 +183,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger());
             EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger());
 
-            if (My.Env.W10)
+            if (Program.W10)
             {
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger());
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!TB_Blur).ToInteger());
