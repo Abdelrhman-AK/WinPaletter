@@ -19,10 +19,10 @@ namespace WinPaletter
         private void EditInfo_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Load_Info(Program.TM);
-            TextBox3.Font = Program.ConsoleFontMedium;
-            TextBox6.Font = Program.ConsoleFontMedium;
+            TextBox3.Font = Fonts.ConsoleMedium;
+            TextBox6.Font = Fonts.ConsoleMedium;
 
         }
 
@@ -47,25 +47,25 @@ namespace WinPaletter
                 ref Localizer lang = ref Program.Lang;
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
                 {
-                    WPStyle.MsgBox(lang.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox2.Text))
                 {
-                    WPStyle.MsgBox(lang.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (!TextBox2.Text.Replace(".", "").All(char.IsDigit))
                 {
-                    WPStyle.MsgBox(lang.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox4.Text))
                 {
-                    WPStyle.MsgBox(lang.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -143,7 +143,7 @@ namespace WinPaletter
                 return;
             }
 
-            var _conditions = new Conditions() { BackColor1 = true };
+            var _conditions = new Conditions() { Background = true };
             var clist = new List<Control>() { color1, StoreItem1 };
             var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
 
@@ -162,7 +162,7 @@ namespace WinPaletter
                 return;
             }
 
-            var _conditions = new Conditions() { BackColor2 = true };
+            var _conditions = new Conditions() { Background2 = true };
             var clist = new List<Control>() { color2, StoreItem1 };
             var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
 

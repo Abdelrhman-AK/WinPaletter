@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -6,15 +7,15 @@ namespace WinPaletter
 {
     public class Elevator
     {
-        private static string elevator_path = $"{Program.PATH_appData}\\Elevator";
+        private static string elevator_path = $"{PathsExt.appData}\\Elevator";
 
         private readonly Process WPElevator = new()
         {
             StartInfo = new ProcessStartInfo()
             {
                 FileName = "cmd.exe",
-                Arguments = $"/c {Program.PATH_WPElevator} {elevator_path}",
-                WorkingDirectory = Program.PATH_appData,
+                Arguments = $"/c {PathsExt.WPElevator} {elevator_path}",
+                WorkingDirectory = PathsExt.appData,
                 UseShellExecute = true,
                 Verb = "runas"
             }
@@ -22,18 +23,19 @@ namespace WinPaletter
 
         public void Start()
         {
-            foreach (Process p in ProgramsRunning(Program.PATH_WPElevator))
+            List<Process> List = ProgramsRunning(PathsExt.WPElevator);
+            foreach (Process p in List)
                 p.Kill();
 
             Thread.Sleep(100);
 
             try
             {
-                if (System.IO.File.Exists(Program.PATH_WPElevator))
+                if (System.IO.File.Exists(PathsExt.WPElevator))
                 {
-                    System.IO.File.Delete(Program.PATH_WPElevator);
+                    System.IO.File.Delete(PathsExt.WPElevator);
                 }
-                System.IO.File.WriteAllBytes(Program.PATH_WPElevator, Properties.Resources.WinPaletter_Elevator);
+                System.IO.File.WriteAllBytes(PathsExt.WPElevator, Properties.Resources.WinPaletter_Elevator);
             }
             catch { }
 
@@ -44,27 +46,27 @@ namespace WinPaletter
 
             WPElevator.StartInfo.WindowStyle = Program.Settings.Miscellaneous.ShowWPElevatorConsole ? ProcessWindowStyle.Normal : ProcessWindowStyle.Hidden;
             WPElevator.StartInfo.CreateNoWindow = !Program.Settings.Miscellaneous.ShowWPElevatorConsole;
-            WPElevator.StartInfo.Arguments = $"/c {Program.PATH_WPElevator} {elevator_path}";
+            WPElevator.StartInfo.Arguments = $"/c {PathsExt.WPElevator} {elevator_path}";
 
             WPElevator.Start();
         }
 
         public void Exit()
         {
-            foreach (Process p in ProgramsRunning(Program.PATH_WPElevator))
+            foreach (Process p in ProgramsRunning(PathsExt.WPElevator))
                 p.Kill();
         }
 
         public void SendCommand(string command, bool DelayWait = true, bool runas = true)
         {
-            if (Program.Settings.Miscellaneous.DontUseWPElevatorConsole || Program.WXP || Program.isElevated)
+            if (Program.Settings.Miscellaneous.DontUseWPElevatorConsole || OS.WXP || Program.Elevated)
             {
                 using (var process = new Process()
                 {
                     StartInfo = new ProcessStartInfo()
                     {
                         FileName = command.Split(' ')[0],
-                        Verb = Program.WXP || !runas ? "" : "runas",
+                        Verb = OS.WXP || !runas ? "" : "runas",
                         Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : "",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
@@ -80,7 +82,7 @@ namespace WinPaletter
             }
             else
             {
-                if (ProgramsRunning(Program.PATH_WPElevator).Count() == 0)
+                if (ProgramsRunning(PathsExt.WPElevator).Count() == 0)
                 {
                     Start();
                     Thread.Sleep(500);
@@ -94,11 +96,11 @@ namespace WinPaletter
                 catch { }
 
                 if (DelayWait)
-                    Thread.Sleep(200);
+                    Thread.Sleep(350);
             }
         }
 
-        public System.Collections.Generic.List<Process> ProgramsRunning(string FullPath)
+        public static System.Collections.Generic.List<Process> ProgramsRunning(string FullPath)
         {
             System.Collections.Generic.List<Process> processes = new();
             string FileName = System.IO.Path.GetFileNameWithoutExtension(FullPath).ToLower();

@@ -24,7 +24,7 @@ namespace WinPaletter.Dialogs
             this.LoadLanguage();
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
-            TreeView1.ImageList = Program.Notifications_IL;
+            TreeView1.ImageList = ImageLists.ThemeLog;
         }
 
         private void ThemeLog_Closing(object sender, FormClosingEventArgs e)
@@ -74,10 +74,6 @@ namespace WinPaletter.Dialogs
 
             Apply_Thread = new Thread(() =>
             {
-                // New method of restarting explorer
-                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                    Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\taskkill.exe /F /IM explorer.exe");
-
                 bool LogEnabled = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None;
 
                 animatedBox1.Color = TM.Info.Color1;
@@ -94,7 +90,11 @@ namespace WinPaletter.Dialogs
                 Button14.Visible = false;
                 Button22.Visible = false;
                 Button25.Visible = false;
-                button1.Visible = false;
+
+                // New method of restarting explorer
+                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+                    Program.ExplorerKiller.Start();
+                Program.ExplorerKiller.WaitForExit();
 
                 try
                 {
@@ -112,7 +112,7 @@ namespace WinPaletter.Dialogs
                 catch (Exception ex)
                 {
                     Theme.Manager.AddNode(TreeView1, Program.Lang.TM_FatalErrorHappened, "error");
-                    Program.Saving_Exceptions.Add(new Tuple<string, Exception>(ex.Message, ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
                 Program.TM_Original = new Theme.Manager(Theme.Manager.Source.Registry);
@@ -123,9 +123,8 @@ namespace WinPaletter.Dialogs
                 Button8.Visible = true;
                 Button22.Visible = true;
                 Button25.Visible = true;
-                button1.Visible = true;
 
-                if (Program.Saving_Exceptions.Count != 0)
+                if (Exceptions.ThemeApply.Count != 0)
                 {
                     log_lbl.Text = Program.Lang.TM_ErrorHappened;
                     Button14.Visible = true;
@@ -136,7 +135,7 @@ namespace WinPaletter.Dialogs
                     elapsedSecs = 1;
 
                     //Invoking is important to access timer from different thread
-                    this.Invoke(new Action(() => 
+                    this.Invoke(new Action(() =>
                     {
                         timer1.Enabled = true;
                         timer1.Start();
@@ -149,7 +148,7 @@ namespace WinPaletter.Dialogs
 
                 //New method of restarting explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                    Program.processExplorer.Start();
+                    Program.Explorer_exe.Start();
                 else if (LogEnabled)
                     Theme.Manager.AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning");
 
@@ -205,7 +204,7 @@ namespace WinPaletter.Dialogs
             log_lbl.Text = Program.Lang.TM_LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
-            Forms.Saving_ex_list.ex_List = Program.Saving_Exceptions;
+            Forms.Saving_ex_list.ex_List = Exceptions.ThemeApply;
             Forms.Saving_ex_list.ShowDialog();
         }
 

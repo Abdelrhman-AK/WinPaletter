@@ -19,11 +19,11 @@ namespace WinPaletter.Theme.Structures
 
             if (SubKey.ToLower() == "winxp")
             {
-                wallpaper = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                wallpaper = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                wallpaper = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                wallpaper = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(wallpaper))
@@ -51,13 +51,13 @@ namespace WinPaletter.Theme.Structures
                 throw new IOException("Couldn't Find image");
 
             string path;
-            if (!Program.WXP & !Program.WVista)
+            if (!OS.WXP & !OS.WVista)
             {
-                path = Path.Combine(Program.PATH_appData, "TintedWallpaper.bmp");
+                path = Path.Combine(PathsExt.appData, "TintedWallpaper.bmp");
             }
             else
             {
-                path = Path.Combine(Program.PATH_Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
+                path = Path.Combine(PathsExt.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
             if (TreeView is not null)

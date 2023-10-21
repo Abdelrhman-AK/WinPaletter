@@ -19,7 +19,7 @@ namespace WinPaletter
         private void WinEffecter_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
             SetClassicButtonColors(Program.TM, ButtonR1);
@@ -264,7 +264,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -305,7 +305,7 @@ namespace WinPaletter
 
         private void MD_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -317,35 +317,35 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
             Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
             Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
             Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

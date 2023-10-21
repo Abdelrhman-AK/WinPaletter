@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System;
 using WinPaletter.Dialogs;
 
 namespace WinPaletter

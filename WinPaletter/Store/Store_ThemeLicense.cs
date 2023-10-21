@@ -13,8 +13,8 @@ namespace WinPaletter
         private void Store_ThemeLicense_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
-            TextBox1.Font = Program.ConsoleFontLarge;
+            ApplyStyle(this);
+            TextBox1.Font = Fonts.ConsoleLarge;
             Icon = Forms.LicenseForm.Icon;
             Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
         }

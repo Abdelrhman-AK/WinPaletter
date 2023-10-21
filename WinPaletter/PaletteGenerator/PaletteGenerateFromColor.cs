@@ -24,7 +24,7 @@ namespace WinPaletter
         private void PaletteGenerateFromImage_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.PaletteGenerateFromImage.Icon;
             TM_Backup = new Theme.Manager(Theme.Manager.Source.Registry);
         }
@@ -73,7 +73,7 @@ namespace WinPaletter
 
         private void val1_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

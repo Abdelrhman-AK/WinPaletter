@@ -52,7 +52,7 @@ namespace WinPaletter
         private void Store_DownloadProgress_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.Store.Icon;
 
             Label1.Text = string.Format(Program.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);

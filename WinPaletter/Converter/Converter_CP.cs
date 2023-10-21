@@ -788,7 +788,7 @@ namespace WinPaletter
                 {
                     if (Lines.Count() > 0)
                     {
-                        // Dim WT As New WallpaperTone With {.Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"}
+                        // Dim WT As New WallpaperTone With {.Image = My.Directories.Windows & "\Web\Wallpaper\Windows\img0.jpg"}
 
                         foreach (string lin in Lines)
                         {
@@ -810,7 +810,7 @@ namespace WinPaletter
                     {
                         // Return New Structures.WallpaperTone With {
                         // .Enabled = False,
-                        // .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
+                        // .Image = My.Directories.Windows & "\Web\Wallpaper\Windows\img0.jpg",
                         // .H = 0, .S = 100, .L = 100}
                     }
                 }
@@ -1806,7 +1806,7 @@ namespace WinPaletter
         #region Properties
         public Structures.Info Info = new Structures.Info()
         {
-            AppVersion = Program.AppVersion,
+            AppVersion = Program.Version,
             ThemeName = "Current Mode",
             Description = "",
             ThemeVersion = "1.0.0.0",
@@ -1899,7 +1899,7 @@ namespace WinPaletter
         {
             Theme = Structures.WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
-            ThemeFile = Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles"
+            ThemeFile = PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles"
         };
 
         public Structures.LogonUI7 LogonUI7 = new Structures.LogonUI7()
@@ -1965,7 +1965,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W11 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1974,7 +1974,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W10 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1983,7 +1983,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W8 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1992,7 +1992,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W7 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2001,7 +2001,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WVista = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2010,7 +2010,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WXP = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp",
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp",
             H = 0,
             S = 100,
             L = 100
@@ -2048,7 +2048,7 @@ namespace WinPaletter
             AWT_Enabled = false,
             AWT_Delay = 0,
             AWT_BringActivatedWindowToTop = false,
-            Win11BootDots = !Program.W11,
+            Win11BootDots = !OS.W11,
             Win11ExplorerBar = Structures.WinEffects.ExplorerBar.Default,
             DisableNavBar = false
         };
@@ -3074,7 +3074,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        WPStyle.MsgBox("Error during loading from old wpth format (<1.0.6.9)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox("Error during loading from old wpth format (<1.0.6.9)", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -3188,7 +3188,7 @@ namespace WinPaletter
             tx.Clear();
             tx.Add("<WinPaletter - Programmed by Abdelrhman-AK>");
             tx.Add("*Created from App Version= " + Info.AppVersion);
-            tx.Add("*Last Modified by App Version= " + Program.AppVersion + "\r\n");
+            tx.Add("*Last Modified by App Version= " + Program.Version + "\r\n");
 
             tx.Add(Info.ToString());
 
@@ -3198,7 +3198,7 @@ namespace WinPaletter
                 try
                 {
                     {
-                        var temp = Program.W11 ? Windows11 : Windows10;
+                        var temp = OS.W11 ? Windows11 : Windows10;
                         tx.Add("<LegacyWinPaletter_Windows11/10>");
                         tx.Add("*WinMode_Light= " + temp.WinMode_Light);
                         tx.Add("*AppMode_Light= " + temp.AppMode_Light);

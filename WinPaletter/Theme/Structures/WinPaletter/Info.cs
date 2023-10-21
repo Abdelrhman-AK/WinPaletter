@@ -31,7 +31,7 @@ namespace WinPaletter.Theme.Structures
             ThemeVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0").ToString();
             Author = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Environment.UserName).ToString();
             AuthorSocialMediaLink = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "").ToString();
-            AppVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", Program.AppVersion).ToString();
+            AppVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", Program.Version).ToString();
             Description = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "").ToString();
             ExportResThemePack = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", false));
             License = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", "").ToString();
@@ -55,7 +55,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", Program.AppVersion, RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", Program.Version, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", ExportResThemePack, RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String);

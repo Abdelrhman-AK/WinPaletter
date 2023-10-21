@@ -27,7 +27,7 @@ namespace WinPaletter
         {
             ID = 0;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             _Shown = false;
             LoadFromTM(Program.TM);
             ApplyPreview();
@@ -264,21 +264,21 @@ namespace WinPaletter
 
             if (RadioButton1.Checked)
             {
-                if (Program.W7 | Program.WVista)
+                if (OS.W7 | OS.WVista)
                 {
-                    bmpX = PE_Functions.GetPNGFromDLL(Program.PATH_imageres, 5038);
+                    bmpX = PE_Functions.GetPNGFromDLL(PathsExt.imageres, 5038);
                 }
 
-                else if (Program.W8 | Program.W81)
+                else if (OS.W8 | OS.W81)
                 {
                     string SysLock;
                     if (!(ID == 1) & !(ID == 3))
                     {
-                        SysLock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.jpg", ID);
+                        SysLock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", ID);
                     }
                     else
                     {
-                        SysLock = string.Format(Program.PATH_Windows + @"\Web\Screen\img10{0}.png", ID);
+                        SysLock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", ID);
                     }
 
                     bmpX = Bitmap_Mgr.Load(SysLock);
@@ -463,7 +463,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     pnl_preview.BackgroundImage = ReturnBK();
                 }
@@ -499,14 +499,14 @@ namespace WinPaletter
 
         private void ttl_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

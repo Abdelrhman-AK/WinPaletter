@@ -155,7 +155,7 @@ namespace WinPaletter
                     Desktop_HKU_DEFAULT = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
                     CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
                     AutoApplyCursors = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", true));
-                    ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", Program.WXP));
+                    ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
                     DelayMetrics = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "DelayMetrics", false));
                     SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
                     Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
@@ -322,8 +322,8 @@ namespace WinPaletter
                     Bypass = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Bypass", false));
                     ListAllFonts = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "ListAllFonts", false));
                     Path_Deflection = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Path_Deflection", false));
-                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", Program.PATH_TerminalJSON).ToString();
-                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", Program.PATH_TerminalPreviewJSON).ToString();
+                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", PathsExt.TerminalJSON).ToString();
+                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", PathsExt.TerminalPreviewJSON).ToString();
                 }
 
                 public void Save()
@@ -506,7 +506,7 @@ namespace WinPaletter
             UPM_HKU_DEFAULT = true,
             Metrics_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             AutoApplyCursors = true,
-            ResetCursorsToAero = Program.WXP,
+            ResetCursorsToAero = OS.WXP,
             Cursors_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             CMD_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             PS86_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
@@ -559,8 +559,8 @@ namespace WinPaletter
             Bypass = false,
             ListAllFonts = false,
             Path_Deflection = false,
-            Terminal_Stable_Path = Program.PATH_TerminalJSON,
-            Terminal_Preview_Path = Program.PATH_TerminalPreviewJSON
+            Terminal_Stable_Path = PathsExt.TerminalJSON,
+            Terminal_Preview_Path = PathsExt.TerminalPreviewJSON
         };
 
         public Structures.Store Store = new Structures.Store()

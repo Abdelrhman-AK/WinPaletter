@@ -428,7 +428,7 @@ namespace WinPaletter.UI.Simulation
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.RenderingHint;
+            G.TextRenderingHint = Config.RenderingHint;
             DoubleBuffered = true;
 
             if (Win7Alpha > 255)
@@ -525,22 +525,22 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (Active)
                     {
-                        using (var br = new SolidBrush(AccentColor_Active))
+                        using (var br = new SolidBrush(Color.FromArgb(255, AccentColor_Active)))
                         {
                             FillSemiRect(G, br, TitlebarRect, Radius);
                         }
-                        using (var P = new Pen(AccentColor_Active))
+                        using (var P = new Pen(Color.FromArgb(255, AccentColor_Active)))
                         {
                             G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
                     }
                     else
                     {
-                        using (var br = new SolidBrush(AccentColor_Inactive))
+                        using (var br = new SolidBrush(Color.FromArgb(255, AccentColor_Inactive)))
                         {
                             FillSemiRect(G, br, TitlebarRect, Radius);
                         }
-                        using (var P = new Pen(AccentColor_Inactive))
+                        using (var P = new Pen(Color.FromArgb(255, AccentColor_Inactive)))
                         {
                             G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
@@ -594,14 +594,14 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (Active)
                     {
-                        using (var br = new SolidBrush(AccentColor_Active))
+                        using (var br = new SolidBrush(Color.FromArgb(255, AccentColor_Active)))
                         {
                             G.FillRectangle(br, TitlebarRect);
                         }
                     }
                     else
                     {
-                        using (var br = new SolidBrush(AccentColor_Inactive))
+                        using (var br = new SolidBrush(Color.FromArgb(255, AccentColor_Inactive)))
                         {
                             G.FillRectangle(br, TitlebarRect);
                         }

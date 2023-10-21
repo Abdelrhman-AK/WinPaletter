@@ -1,12 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -29,12 +23,13 @@ namespace WinPaletter.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.processExplorer.Start();
+            Program.Explorer_exe.Start();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\taskkill.exe /F /IM explorer.exe");
+            Program.ExplorerKiller.Start();
+            Program.ExplorerKiller.WaitForExit();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -49,13 +44,13 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(Program.PATH_System32 + @"\logoff.exe"))
+                if (System.IO.File.Exists(PathsExt.System32 + @"\logoff.exe"))
                 {
-                    Interaction.Shell(Program.PATH_System32 + @"\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell(PathsExt.System32 + @"\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, Program.PATH_System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.LogoffNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -67,13 +62,13 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(Program.PATH_System32 + @"\shutdown.exe"))
+                if (System.IO.File.Exists(PathsExt.System32 + @"\shutdown.exe"))
                 {
-                    Interaction.Shell(Program.PATH_System32 + @"\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                    Interaction.Shell(PathsExt.System32 + @"\shutdown.exe /r /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, Program.PATH_System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -85,20 +80,20 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(Program.PATH_System32 + @"\shutdown.exe"))
+                if (System.IO.File.Exists(PathsExt.System32 + @"\shutdown.exe"))
                 {
-                    Interaction.Shell(Program.PATH_System32 + @"\shutdown.exe /s /t 0", AppWinStyle.Hide);
+                    Interaction.Shell(PathsExt.System32 + @"\shutdown.exe /s /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, Program.PATH_System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            Task.Run(new Action(() => { SFC(Program.PATH_imageres, false, false); }));
+            Task.Run(new Action(() => { SFC(PathsExt.imageres, false, false); }));
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -108,9 +103,8 @@ namespace WinPaletter.Dialogs
 
         private void button10_Click(object sender, EventArgs e)
         {
-            Task.Run(new Action(() => 
+            Task.Run(new Action(() =>
             {
-
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
@@ -118,23 +112,60 @@ namespace WinPaletter.Dialogs
                 {
                     StartInfo = new ProcessStartInfo()
                     {
-                        FileName = Program.PATH_System32 + @"\dism.exe",
+                        FileName = PathsExt.System32 + "\\cmd.exe",
                         Verb = "runas",
                         UseShellExecute = true
                     }
                 })
                 {
-                    process.StartInfo.Arguments = "/Online /Cleanup-Image /CheckHealth";
+                    process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /CheckHealth && pause";
                     process.Start();
                     process.WaitForExit();
 
-                    process.StartInfo.Arguments = "/Online /Cleanup-Image /ScanHealth";
+                    process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /ScanHealth && pause";
                     process.Start();
                     process.WaitForExit();
 
-                    process.StartInfo.Arguments = "/Online /Cleanup-Image /RestoreHealth";
-                    process.Start();
-                    process.WaitForExit();
+                    switch (MsgBox(Program.Lang.RT_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.RT_UseInstallWIM))
+                    {
+                        case DialogResult.Yes:
+                            {
+                                process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /RestoreHealth && pause";
+                                process.Start();
+                                process.WaitForExit();
+                                break;
+                            }
+
+                        case DialogResult.No:
+                            {
+                                string file = "";
+                                DialogResult result = DialogResult.None;
+
+                                //Cross thread issue
+                                Invoke(() =>
+                                {
+                                    using (OpenFileDialog o = new() { Filter = "install.wim|install.wim|install.esd|install.esd|*.wim|*.wim|*.esd|*.esd" })
+                                    {
+                                        result = o.ShowDialog();
+                                        file = o.FileName;
+                                    }
+                                });
+
+                                if (result == DialogResult.OK)
+                                {
+                                    process.StartInfo.Arguments = $"/c dism.exe /Online /Cleanup-Image /RestoreHealth /Source:{file} && pause";
+                                    process.Start();
+                                    process.WaitForExit();
+                                }
+
+                                break;
+                            }
+
+                        case DialogResult.Cancel:
+                            {
+                                break;
+                            }
+                    }
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

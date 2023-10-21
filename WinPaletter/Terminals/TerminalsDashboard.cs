@@ -11,18 +11,14 @@ namespace WinPaletter
         private bool _shown;
 
         #region Form Shadow
-
-        private bool aeroEnabled;
-
         protected override CreateParams CreateParams
         {
             get
             {
-                CheckAeroEnabled();
                 var cp = base.CreateParams;
-                if (!aeroEnabled)
+                if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | Dwmapi.CS_DROPSHADOW;
+                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle = cp.ExStyle | 33554432;
                     return cp;
                 }
@@ -42,20 +38,20 @@ namespace WinPaletter
         {
             switch (m.Msg)
             {
-                case Dwmapi.WM_NCPAINT:
+                case DWMAPI.WM_NCPAINT:
                     {
                         int val = 2;
-                        if (aeroEnabled)
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            Dwmapi.MARGINS bla = new();
+                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;
                                 bla.leftWidth = 1;
                                 bla.rightWidth = 1;
                                 bla.topHeight = 1;
                             }
-                            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }
                         break;
                     }
@@ -70,33 +66,19 @@ namespace WinPaletter
 
             base.WndProc(ref m);
         }
-
-        private void CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-                aeroEnabled = Com;
-            }
-            else
-            {
-                aeroEnabled = false;
-            }
-        }
         #endregion
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.CMD.Icon;
 
             _shown = false;
 
             Location = Forms.MainFrm.Button24.PointToScreen(Point.Empty) - (Size)new Point(0, Height);
 
-            if (Program.W10)
+            if (OS.W10)
                 PictureBox1.Image = Properties.Resources.Native10;
             else
                 PictureBox1.Image = Properties.Resources.Native11;
@@ -136,13 +118,13 @@ namespace WinPaletter
                 Forms.WindowsTerminal.Show();
             }
 
-            else if (Program.W10 | Program.W11)
+            else if (OS.W10 | OS.W11)
             {
                 string TerDir;
 
                 if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerDir = Program.PATH_TerminalJSON;
+                    TerDir = PathsExt.TerminalJSON;
                 }
                 else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                 {
@@ -150,7 +132,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerDir = Program.PATH_TerminalJSON;
+                    TerDir = PathsExt.TerminalJSON;
                 }
 
                 if (System.IO.File.Exists(TerDir))
@@ -161,13 +143,13 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
             else
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
 
             }
 
@@ -181,13 +163,13 @@ namespace WinPaletter
                 Close();
                 Forms.WindowsTerminal.Show();
             }
-            else if (Program.W10 | Program.W11)
+            else if (OS.W10 | OS.W11)
             {
                 string TerPreDir;
 
                 if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerPreDir = Program.PATH_TerminalPreviewJSON;
+                    TerPreDir = PathsExt.TerminalPreviewJSON;
                 }
                 else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                 {
@@ -195,7 +177,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerPreDir = Program.PATH_TerminalPreviewJSON;
+                    TerPreDir = PathsExt.TerminalPreviewJSON;
                 }
 
                 if (System.IO.File.Exists(TerPreDir))
@@ -206,13 +188,13 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerPreDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerPreDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
             else
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                MsgBox(Program.Lang.Terminal_CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
             }
         }
 
@@ -251,7 +233,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -280,7 +262,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

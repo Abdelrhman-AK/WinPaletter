@@ -13,13 +13,13 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void Saving_exceptions_list_Load(object sender, EventArgs e)
+        private void ThemeApply_list_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.BugReport.Icon;
 
-            TreeView1.ImageList = Program.Notifications_IL;
+            TreeView1.ImageList = ImageLists.ThemeLog;
             TreeView1.Nodes.Clear();
 
             foreach (var x in ex_List)

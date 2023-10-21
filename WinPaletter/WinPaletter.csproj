@@ -251,6 +251,15 @@
     <Compile Include="Classes\Assemblies\AnimatedCursors\OffsetStream.cs" />
     <Compile Include="Classes\Assemblies\AnimatedCursors\StreamOps.cs" />
     <Compile Include="Classes\Elevator.cs" />
+    <Compile Include="Classes\NativeMethods\Dnsapi.cs" />
+    <Compile Include="Classes\NativeMethods\DWMAPI.cs" />
+    <Compile Include="Classes\NativeMethods\GDI32.cs" />
+    <Compile Include="Classes\NativeMethods\Kernel32.cs" />
+    <Compile Include="Classes\NativeMethods\Shell32.cs" />
+    <Compile Include="Classes\NativeMethods\User32.cs" />
+    <Compile Include="Classes\NativeMethods\UxTheme.cs" />
+    <Compile Include="Classes\NativeMethods\Wininet.cs" />
+    <Compile Include="Classes\NativeMethods\Winmm.cs" />
     <Compile Include="Dialogs\RescueTools.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,11 +273,49 @@
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms.cs" />
+    <Compile Include="Program\GlobalVariables\ColorClipboard.cs" />
+    <Compile Include="Program\GlobalVariables\Exceptions.cs" />
+    <Compile Include="Program\GlobalVariables\Fonts.cs" />
+    <Compile Include="Program\GlobalVariables\ImageLists.cs" />
+    <Compile Include="Program\GlobalVariables\PathsExt.cs" />
+    <Compile Include="Program\GlobalVariables\OS.cs" />
+    <Compile Include="Program\Arguments.cs" />
+    <Compile Include="Program\AssemblyLoader.cs" />
+    <Compile Include="Program\ExceptionsHandler.cs" />
+    <Compile Include="Program\FileAssoc.cs" />
+    <Compile Include="Program\Helpers.cs" />
+    <Compile Include="Program\Invoker.cs" />
+    <Compile Include="Program\PreferencesMonitor.cs" />
+    <Compile Include="Program\Uninstaller.cs" />
+    <Compile Include="Program\Variables.cs" />
+    <Compile Include="GUI\Style\DefaultColors.cs" />
+    <Compile Include="GUI\Style\Dialogs\InputBox.cs" />
+    <Compile Include="GUI\Style\Dialogs\MsgBox.cs" />
+    <Compile Include="GUI\Style\Helpers.cs" />
+    <Compile Include="GUI\Style\Properties.cs" />
+    <Compile Include="GUI\Style\Structures.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Theme\Default\DisposeSupport.cs" />
+    <Compile Include="Theme\Default\Windows10.cs" />
+    <Compile Include="Theme\Default\Windows11.cs" />
+    <Compile Include="Theme\Default\Windows7.cs" />
+    <Compile Include="Theme\Default\Windows8.cs" />
+    <Compile Include="Theme\Default\Windows81.cs" />
+    <Compile Include="Theme\Default\WindowsVista.cs" />
+    <Compile Include="Theme\Default\WindowsXP.cs" />
+    <Compile Include="Theme\Support\CloneSupport.cs" />
+    <Compile Include="Theme\Support\CursorsRender.cs" />
+    <Compile Include="Theme\Support\DisposeSupport.cs" />
+    <Compile Include="Theme\Support\Functions.cs" />
+    <Compile Include="Theme\Support\JSON_Helpers.cs" />
+    <Compile Include="Theme\Support\Operators.cs" />
+    <Compile Include="Theme\Support\Apply.cs" />
+    <Compile Include="Theme\Properties\CursorsProperties.cs" />
+    <Compile Include="Theme\Properties\Properties.cs" />
     <Compile Include="Theme\Structures\Others\AltTab.cs" />
     <Compile Include="Theme\Structures\WinPaletter\AppTheme.cs" />
     <Compile Include="Theme\Structures\Consoles\Console.cs" />
@@ -319,7 +366,7 @@
     </Compile>
     <Compile Include="Converter\Converter.cs" />
     <Compile Include="Converter\Converter_WT.cs" />
-    <Compile Include="Theme\PreviewHelpers.cs" />
+    <Compile Include="Theme\Support\PreviewHelpers.cs" />
     <Compile Include="Extras\AltTabEditor.Designer.cs">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
     </Compile>
@@ -341,7 +388,7 @@
     <Compile Include="Classes\PE.cs" />
     <Compile Include="Classes\ExplorerPatcher.cs" />
     <Compile Include="Classes\MemoryFonts.cs" />
-    <Compile Include="Classes\NativeMethods.cs" />
+    <Compile Include="Classes\NativeMethods\NativeMethods.cs" />
     <Compile Include="Classes\Reg_IO.cs" />
     <Compile Include="Classes\TypesExtensions.cs" />
     <Compile Include="Classes\Core.cs" />
@@ -490,7 +537,7 @@
     <Compile Include="Languages\Lang_ReplaceText.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.cs">
       <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
@@ -550,8 +597,8 @@
     <Compile Include="EditInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\VisualStylesRes.cs" />
-    <Compile Include="GUI\WPStyle.cs" />
+    <Compile Include="GUI\Style\VisualStylesRes.cs" />
+    <Compile Include="GUI\Style\Config.cs" />
     <Compile Include="Languages\Lang_Add_Snippet.Designer.cs">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
     </Compile>
@@ -742,6 +789,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Theme\Structures\Consoles\WinTerminal.cs" />
+    <Compile Include="Theme\Variables.cs" />
+    <Compile Include="Theme\Support\Voids.cs" />
     <Compile Include="Updates\Updates.Designer.cs">
       <DependentUpon>Updates.cs</DependentUpon>
     </Compile>
@@ -789,6 +838,7 @@
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
+    <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <None Include="Resources\WinPaletter.Elevator.exe" />
     <None Include="Resources\Start10_Light.png" />
     <None Include="Resources\Start10_Dark.png" />
@@ -810,7 +860,6 @@
     <None Include="Resources\XML_Shutdown.xml" />
     <None Include="Resources\XML_Logon.xml" />
     <None Include="Resources\XML_Logoff.xml" />
-    <None Include="Resources\XML_ChargerConnected.xml" />
     <None Include="Resources\AC_11_Dark.png" />
     <None Include="Resources\add_win10.png" />
     <None Include="Resources\add_win11.png" />
@@ -1012,7 +1061,7 @@
     <EmbeddedResource Include="BK.resx">
       <DependentUpon>BK.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>BK2.Designer.cs</LastGenOutput>
+      <LastGenOutput>BK.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.cs</DependentUpon>

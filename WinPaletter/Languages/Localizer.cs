@@ -141,6 +141,9 @@ namespace WinPaletter
         public string WP_Theme_FileType { get; set; } = "WinPaletter Theme File";
         public string WP_Settings_FileType { get; set; } = "WinPaletter Settings File";
         public string WP_ResourcesPack_FileType { get; set; } = "WinPaletter Theme Resources Pack";
+        public string RT_UseWinUpdate { get; set; } = "Do you want to use Windows Update if repair is required?";
+        public string RT_UseInstallWIM { get; set; } = "If you pressed no, an open file dialog will appear to select install.wim/install.esd file that will be repair source.";
+
 
         public string TM_ApplyingTheme { get; set; } = "Applying theme: {0}";
         public string TM_CloseOnApplying0 { get; set; } = "WinPaletter is still applying the theme. Do you want to close it anyway?";
@@ -340,7 +343,7 @@ namespace WinPaletter
         public string WhatsNewInVersion { get; set; } = "What's new in {0}!";
         public string ThisWillRestartExplorer { get; set; } = "This will restart the explorer, don't worry this won't close other applications";
         public string LogoffNotice { get; set; } = "This will logoff your Windows account. Please save your open files before logging-off";
-        public string TitlebarColorNotice { get; set; } = "Windows volume slider, UAC and Windows 10 logonUI follow active titlebar color";
+        public string TitlebarColorNotice { get; set; } = "Windows volume slider, UAC dialogs and LogonUI background follow active titlebar color";
         public string NoDefResExplorer { get; set; } = "Restarting Explorer is disabled. If theme is not applied correctly, restart it";
         public string RemoveExtMsg { get; set; } = "Are you sure from removing files association (*.wpth, *.wptp, *.wpsf) from registry?";
         public string RemoveExtMsgNote { get; set; } = "Note: You can reassociate them by activating its checkbox and restarting WinPaletter";
@@ -718,7 +721,7 @@ namespace WinPaletter
             j_info.Add("TranslationVersion".ToLower(), newL.TranslationVersion);
             j_info.Add("Lang".ToLower(), newL.Lang);
             j_info.Add("LangCode".ToLower(), newL.LangCode);
-            j_info.Add("AppVer".ToLower(), Program.AppVersion);
+            j_info.Add("AppVer".ToLower(), Program.Version);
             j_info.Add("RightToLeft".ToLower(), newL.RightToLeft);
 
             var j_globalstrings = new JObject();

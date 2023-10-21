@@ -4,14 +4,13 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("ToolStripMenuItem fixed To respect dark/light mode")]
     public class ToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
     {
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.TextRenderingHint = Program.RenderingHint;
+            e.Graphics.TextRenderingHint = Config.RenderingHint;
             e.Graphics.Clear(BackColor);
             using (var br = new SolidBrush(ForeColor))
             {
@@ -19,5 +18,4 @@ namespace WinPaletter.UI.WP
             }
         }
     }
-
 }

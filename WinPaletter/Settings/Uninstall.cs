@@ -15,7 +15,7 @@ namespace WinPaletter
         private void Uninstall_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Properties.Resources.Icon_Uninstall;
         }
 
@@ -41,9 +41,9 @@ namespace WinPaletter
 
             try
             {
-                if (!Program.WXP && System.IO.File.Exists(Program.PATH_appData + @"\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && System.IO.File.Exists(PathsExt.appData + @"\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(Program.PATH_imageres, "WAV", Program.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(Program.PATH_appData + @"\WindowsStartup_Backup.wav"));
+                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav"));
                 }
             }
             catch
@@ -52,10 +52,10 @@ namespace WinPaletter
 
             if (CheckBox2.Checked)
             {
-                if (System.IO.Directory.Exists(Program.PATH_appData))
+                if (System.IO.Directory.Exists(PathsExt.appData))
                 {
-                    System.IO.Directory.Delete(Program.PATH_appData, true);
-                    if (!Program.WXP)
+                    System.IO.Directory.Delete(PathsExt.appData, true);
+                    if (!OS.WXP)
                     {
                         Theme.Manager.ResetCursorsToAero();
                         if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

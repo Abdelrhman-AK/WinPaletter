@@ -330,7 +330,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -340,7 +340,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorBack1 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorBack1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_PrimaryColor1 = c;
@@ -366,7 +366,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_PrimaryColor2 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -376,7 +376,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorBack2 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorBack2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_PrimaryColor2 = c;
@@ -401,7 +401,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_SecondaryColor1 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -411,7 +411,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorLine1 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorLine1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_SecondaryColor1 = c;
@@ -436,7 +436,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_SecondaryColor2 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -446,7 +446,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorLine2 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorLine2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_SecondaryColor2 = c;
@@ -471,7 +471,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -481,7 +481,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircle1 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorCircle1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_LoadingCircleBack1 = c;
@@ -628,7 +628,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -638,7 +638,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircle2 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorCircle2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_LoadingCircleBack2 = c;
@@ -663,7 +663,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleHot1 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -673,7 +673,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircleHot1 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorCircleHot1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_LoadingCircleHot1 = c;
@@ -698,7 +698,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -708,7 +708,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircleHot2 = true, Win7 = false, Win7LivePreview_AfterGlow = false, Win7LivePreview_Colorization = false };
+            var _Condition = new Conditions() { CursorCircleHot2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
             var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
 
             _SelectedControl.Prop_LoadingCircleHot2 = c;
@@ -859,7 +859,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 LoadFromTM(_Def);
             }
@@ -876,7 +876,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            WPStyle.MsgBox(Program.Lang.ScalingTip, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.ScalingTip, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -893,7 +893,7 @@ namespace WinPaletter
 
         private void Ttl_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -928,7 +928,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
             Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -956,7 +956,7 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
             Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -984,7 +984,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1012,7 +1012,7 @@ namespace WinPaletter
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
             Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1051,7 +1051,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_Shadow_Color = ((ColorItem)sender).BackColor;
                     _SelectedControl.Invalidate();
@@ -1075,28 +1075,28 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar7.Maximum), Trackbar7.Minimum).ToString();
             Trackbar7.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button17_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar8.Maximum), Trackbar8.Minimum).ToString();
             Trackbar8.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar9.Maximum), Trackbar9.Minimum).ToString();
             Trackbar9.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar10.Maximum), Trackbar10.Minimum).ToString();
             Trackbar10.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

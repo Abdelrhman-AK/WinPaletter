@@ -267,8 +267,8 @@ namespace WinPaletter
 
             if (ch_appearance)
             {
-                WPStyle.FetchDarkMode();
-                WPStyle.ApplyStyle();
+                FetchDarkMode();
+                ApplyStyle();
             }
 
             if (ch_nerd)
@@ -279,15 +279,15 @@ namespace WinPaletter
 
             if (ch_terminal)
             {
-                if (Program.W10 | Program.W11)
+                if (OS.W10 | OS.W11)
                 {
                     string TerDir;
                     string TerPreDir;
 
                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                     {
-                        TerDir = Program.PATH_TerminalJSON;
-                        TerPreDir = Program.PATH_TerminalPreviewJSON;
+                        TerDir = PathsExt.TerminalJSON;
+                        TerPreDir = PathsExt.TerminalPreviewJSON;
                     }
                     else
                     {
@@ -297,7 +297,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerDir = Program.PATH_TerminalJSON;
+                            TerDir = PathsExt.TerminalJSON;
                         }
 
                         if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -306,7 +306,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerPreDir = Program.PATH_TerminalPreviewJSON;
+                            TerPreDir = PathsExt.TerminalPreviewJSON;
                         }
                     }
 
@@ -349,7 +349,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.LanguageRestart, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MsgBox(Program.Lang.LanguageRestart, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -368,7 +368,7 @@ namespace WinPaletter
 
             Cursor = Cursors.Default;
 
-            WPStyle.MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void Write(WPSettings Sets, WPSettings.Mode Mode, string File = "")
         {
@@ -661,7 +661,7 @@ namespace WinPaletter
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
             {
-                switch (WPStyle.MsgBox(Program.Lang.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MsgBox(Program.Lang.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Cancel:
                         {
@@ -706,7 +706,7 @@ namespace WinPaletter
             ComboBox2.Items.Add(Program.Lang.Stable);
             ComboBox2.Items.Add(Program.Lang.Beta);
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             LoadSettings();
 
             int w = 19;
@@ -726,28 +726,28 @@ namespace WinPaletter
                 EP_ORB_10.Image = Properties.Resources.StartBtn_10Light.Resize(w, w);
             }
 
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 AlertBox17.Visible = true;
                 AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP);
             }
 
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 AlertBox17.Visible = true;
                 AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinVista);
             }
 
-            Label38.Font = Program.ConsoleFontMedium;
-            Label43.Font = Program.ConsoleFontMedium;
+            Label38.Font = Fonts.ConsoleMedium;
+            Label43.Font = Fonts.ConsoleMedium;
 
         }
 
         public int CalcStoreCache()
         {
-            if (Directory.Exists(Program.PATH_StoreCache))
+            if (Directory.Exists(PathsExt.StoreCache))
             {
-                return (int)Directory.EnumerateFiles(Program.PATH_StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(PathsExt.StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -757,9 +757,9 @@ namespace WinPaletter
 
         public int CalcThemesResCache()
         {
-            if (Directory.Exists(Program.PATH_ThemeResPackCache))
+            if (Directory.Exists(PathsExt.ThemeResPackCache))
             {
-                return (int)Directory.EnumerateFiles(Program.PATH_ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(PathsExt.ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -824,7 +824,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (WPStyle.MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
             {
 
                 CheckBox1.Checked = false;
@@ -903,7 +903,7 @@ namespace WinPaletter
             string inputText = "";
             if (ListBox1.SelectedItem is not null)
                 inputText = ListBox1.SelectedItem.ToString();
-            string response = WPStyle.InputBox(Program.Lang.InputThemeRepos, inputText, Program.Lang.InputThemeRepos_Notice);
+            string response = InputBox(Program.Lang.InputThemeRepos, inputText, Program.Lang.InputThemeRepos_Notice);
             if (!ListBox1.Items.Contains(response))
                 ListBox1.Items.Add(response);
         }
@@ -924,7 +924,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.Store_RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Lang.Store_RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -933,7 +933,7 @@ namespace WinPaletter
         private void Button18_Click(object sender, EventArgs e)
         {
 
-            if (!Program.WXP)
+            if (!OS.WXP)
             {
                 var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -968,7 +968,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(Program.PATH_StoreCache, true);
+                Directory.Delete(PathsExt.StoreCache, true);
             }
             catch
             {
@@ -980,7 +980,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(Program.PATH_ThemeResPackCache, true);
+                Directory.Delete(PathsExt.ThemeResPackCache, true);
             }
             catch
             {

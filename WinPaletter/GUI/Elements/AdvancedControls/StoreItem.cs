@@ -292,7 +292,7 @@ namespace WinPaletter.UI.Controllers
             }
             else
             {
-                G.TextRenderingHint = Program.RenderingHint;
+                G.TextRenderingHint = Config.RenderingHint;
             }
 
             DoubleBuffered = true;
@@ -393,7 +393,7 @@ namespace WinPaletter.UI.Controllers
                 G.DrawString(Program.Lang.By + " " + author, new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 G.DrawImage(Properties.Resources.Store_ThemeVersion, VerRect);
-                G.DrawString(TM.Info.ThemeVersion, Program.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                G.DrawString(TM.Info.ThemeVersion, Fonts.Console, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 for (int i = 0, loopTo = DesignedFor_Badges.Count - 1; i <= loopTo; i++)
                     G.DrawImage(DesignedFor_Badges[i], new Rectangle(BadgeRect.Right - 16 - 18 * i, OS_Rect.Y, OS_Rect.Width, OS_Rect.Height));

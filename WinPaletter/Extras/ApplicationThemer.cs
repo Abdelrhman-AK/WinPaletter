@@ -27,7 +27,7 @@ namespace WinPaletter
             _Shown = false;
             BackupSettings = new WPSettings(WPSettings.Mode.Registry);
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
             AdjustPreview();
@@ -54,8 +54,8 @@ namespace WinPaletter
                     appearance.Save();
                 }
 
-                WPStyle.FetchDarkMode();
-                WPStyle.ApplyStyle();
+                FetchDarkMode();
+                ApplyStyle();
             }
 
             FixLanguageDarkModeBug = true;
@@ -100,7 +100,7 @@ namespace WinPaletter
                 Appearance.AccentColor = AccentColor.BackColor;
             }
 
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             foreach (Control ctrl in Controls)
                 ctrl.Invalidate();
@@ -130,7 +130,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
                 AdjustPreview();
@@ -241,26 +241,26 @@ namespace WinPaletter
                     case var @case when @case == ("Default Dark".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = Program.W11 | Program.W7;
-                            AccentColor.BackColor = Program.DefaultAccent;
-                            BackColorPick.BackColor = Program.DefaultBackColorDark;
+                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            AccentColor.BackColor = DefaultColors.Accent;
+                            BackColorPick.BackColor = DefaultColors.BackColorDark;
                             break;
                         }
 
                     case var case1 when case1 == ("Default Light".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = Program.W11 | Program.W7;
-                            AccentColor.BackColor = Program.DefaultAccent;
-                            BackColorPick.BackColor = Program.DefaultBackColorLight;
+                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            AccentColor.BackColor = DefaultColors.Accent;
+                            BackColorPick.BackColor = DefaultColors.BackColorLight;
                             break;
                         }
 
                     case var case2 when case2 == ("AMOLED".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = Program.W11 | Program.W7;
-                            AccentColor.BackColor = Program.DefaultAccent;
+                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = Color.Black;
                             break;
                         }
@@ -268,8 +268,8 @@ namespace WinPaletter
                     case var case3 when case3 == ("Extreme White".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = Program.W11 | Program.W7;
-                            AccentColor.BackColor = Program.DefaultAccent;
+                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = Color.White;
                             break;
                         }

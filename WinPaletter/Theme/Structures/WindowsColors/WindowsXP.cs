@@ -22,7 +22,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(WindowsXP _DefWin)
         {
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 var vsFile = new System.Text.StringBuilder(260);
                 var colorName = new System.Text.StringBuilder(260);
@@ -30,7 +30,7 @@ namespace WinPaletter.Theme.Structures
 
                 UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260);
 
-                if ((vsFile.ToString().ToLower() ?? "") == (Program.PATH_Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? ""))
+                if ((vsFile.ToString().ToLower() ?? "") == (PathsExt.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? ""))
                 {
                     if (colorName.ToString().ToLower() == "normalcolor")
                     {
@@ -63,7 +63,7 @@ namespace WinPaletter.Theme.Structures
                 else if (string.IsNullOrEmpty(vsFile.ToString()))
                 {
                     Theme = Themes.Classic;
-                    ThemeFile = Program.PATH_Windows.ToLower() + @"\resources\Themes\Luna.theme";
+                    ThemeFile = PathsExt.Windows.ToLower() + @"\resources\Themes\Luna.theme";
                     ColorScheme = "NormalColor";
                 }
 
@@ -96,9 +96,9 @@ namespace WinPaletter.Theme.Structures
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                            UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                             Program.StartedWithClassicTheme = false;
                             break;
@@ -110,9 +110,9 @@ namespace WinPaletter.Theme.Structures
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                            UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0), "dll");
                             Program.StartedWithClassicTheme = false;
                             break;
                         }
@@ -123,9 +123,9 @@ namespace WinPaletter.Theme.Structures
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                            UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
                             if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0), "dll");
+                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0), "dll");
                             Program.StartedWithClassicTheme = false;
                             break;
                         }

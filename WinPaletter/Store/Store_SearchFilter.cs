@@ -12,7 +12,7 @@ namespace WinPaletter
         private void Store_SearchFilter_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.Store.Icon;
 
             CheckBox1.Checked = Program.Settings.Store.Search_ThemeNames;

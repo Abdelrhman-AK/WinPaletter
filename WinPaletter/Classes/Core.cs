@@ -16,47 +16,38 @@ namespace WinPaletter
     {
         public static void RefreshDWM(Theme.Manager TM)
         {
-
             try
             {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-
-                if (Com)
+                if (DWMAPI.IsCompositionEnabled())
                 {
-                    var temp = new Dwmapi.DWM_COLORIZATION_PARAMS();
+                    var temp = new DWMAPI.DWM_COLORIZATION_PARAMS();
 
-                    if (Program.W8 | Program.W81)
+                    if (OS.W8 || OS.W81)
                     {
-                        temp.clrColor = TM.Windows81.ColorizationColor.ToArgb();
-                        temp.nIntensity = TM.Windows81.ColorizationColorBalance;
+                        temp.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
+                        temp.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
                     }
 
-                    else if (Program.W7)
+                    else if (OS.W7)
                     {
-                        temp.clrColor = TM.Windows7.ColorizationColor.ToArgb();
-                        temp.nIntensity = TM.Windows7.ColorizationColorBalance;
+                        temp.clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb();
+                        temp.nIntensity = (uint)TM.Windows7.ColorizationColorBalance;
 
-                        temp.clrAfterGlow = TM.Windows7.ColorizationAfterglow.ToArgb();
-                        temp.clrAfterGlowBalance = TM.Windows7.ColorizationAfterglowBalance;
-                        temp.clrBlurBalance = TM.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = TM.Windows7.ColorizationGlassReflectionIntensity;
+                        temp.clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb();
+                        temp.clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance;
+
+                        temp.clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance;
+                        temp.clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity;
                         temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
-                    else if (Program.WVista)
+                    else if (OS.WVista)
                     {
-                        temp.clrColor = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
-                        temp.clrAfterGlow = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
-
-                        // temp.nIntensity = Manager.WindowsVista.ColorizationColorBalance
-                        // temp.clrAfterGlowBalance = Manager.WindowsVista.ColorizationAfterglowBalance
-                        // temp.clrBlurBalance = Manager.WindowsVista.ColorizationBlurBalance
-                        // temp.clrGlassReflectionIntensity = Manager.WindowsVista.ColorizationGlassReflectionIntensity
+                        temp.clrColor = (uint)Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
                         temp.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
-                    Dwmapi.DwmSetColorizationParameters(ref temp, false);
+                    DWMAPI.DwmSetColorizationParameters(ref temp, false);
                 }
             }
             catch
@@ -74,8 +65,9 @@ namespace WinPaletter
                     sw.Reset();
                     sw.Start();
 
-                    Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\taskkill.exe /F /IM explorer.exe");
-                    Program.processExplorer.Start();
+                    Program.ExplorerKiller.Start();
+                    Program.ExplorerKiller.WaitForExit();
+                    Program.Explorer_exe.Start();
 
                     sw.Stop();
                     if (TreeView is not null)
@@ -87,7 +79,7 @@ namespace WinPaletter
                     if (TreeView is not null)
                     {
                         Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.ErrorExplorerRestart), "error");
-                        Program.Saving_Exceptions.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
                     }
                 }
 
@@ -174,7 +166,7 @@ namespace WinPaletter
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Shutdown"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Create /TN WinPaletter\Shutdown /XML """ + tmp + "\"");
+                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Shutdown /XML """ + tmp + "\"");
                             break;
                         }
 
@@ -184,7 +176,7 @@ namespace WinPaletter
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Logoff"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Create /TN WinPaletter\Logoff /XML """ + tmp + "\"");
+                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Logoff /XML """ + tmp + "\"");
                             break;
                         }
 
@@ -194,7 +186,7 @@ namespace WinPaletter
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Logon"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Create /TN WinPaletter\Logon /XML """ + tmp + "\"");
+                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Logon /XML """ + tmp + "\"");
                             break;
                         }
 
@@ -204,21 +196,9 @@ namespace WinPaletter
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Unlock"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Create /TN WinPaletter\Unlock /XML """ + tmp + "\"");
+                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Unlock /XML """ + tmp + "\"");
                             break;
                         }
-
-                    case TaskType.ChargerConnected:
-                        {
-                            // Use Replace instead of format to avoid FormatExceptionError
-                            string XML_Scheme = Properties.Resources.XML_ChargerConnected.Replace("{0}", File);
-                            System.IO.File.WriteAllText(tmp, XML_Scheme);
-                            if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\ChargerConnected"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Create /TN WinPaletter\ChargerConnected /XML """ + tmp + "\"");
-                            break;
-                        }
-
                 }
 
                 if (System.IO.File.Exists(tmp))
@@ -233,7 +213,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
-                        Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Delete /TN WinPaletter\Shutdown /F");
+                        Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Shutdown /F");
                         break;
                     }
 
@@ -241,7 +221,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Logoff"), "task_remove");
-                        Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Delete /TN WinPaletter\Logoff /F");
+                        Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Logoff /F");
                         break;
                     }
 
@@ -249,7 +229,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Logon"), "task_remove");
-                        Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Delete /TN WinPaletter\Logon /F");
+                        Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Logon /F");
                         break;
                     }
 
@@ -257,7 +237,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Unlock"), "task_remove");
-                        Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Delete /TN WinPaletter\Unlock /F");
+                        Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Unlock /F");
                         break;
                     }
 
@@ -265,7 +245,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
-                        Program.CMD_Wrapper.SendCommand(@$"{Program.PATH_SchTasks} /Delete /TN WinPaletter\ChargerConnected /F");
+                        Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\ChargerConnected /F");
                         break;
                     }
             }
@@ -287,22 +267,14 @@ namespace WinPaletter
             if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
 
-            var CompositionEnabled = default(bool);
-            try
-            {
-                Dwmapi.DwmIsCompositionEnabled(ref CompositionEnabled);
-            }
-            catch
-            {
-                CompositionEnabled = false;
-            }
+            bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
 
             bool Transparency_W11_10;
-            Transparency_W11_10 = (Program.W10 | Program.W11) && Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
+            Transparency_W11_10 = (OS.W10 | OS.W11) && Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
 
             try
             {
-                if (Program.W11 && Transparency_W11_10)
+                if (OS.W11 && Transparency_W11_10)
                 {
                     if (FormStyle == FormStyle.Mica)
                     {
@@ -326,12 +298,12 @@ namespace WinPaletter
                     }
                 }
 
-                else if (Program.W10 && Transparency_W11_10)
+                else if (OS.W10 && Transparency_W11_10)
                 {
                     Form.DrawAcrylic(Border);
                 }
 
-                else if (Program.W7 | Program.WVista && CompositionEnabled)
+                else if ((OS.W7 | OS.WVista) && CompositionEnabled)
                 {
                     Form.DrawAero(Margins);
                 }
@@ -393,62 +365,42 @@ namespace WinPaletter
         /// </summary>
         public static void DrawMica(this Form Form, Padding Margins, MicaStyle Style = MicaStyle.Mica)
         {
-            var CompositionEnabled = default(bool);
-            try
-            {
-                Dwmapi.DwmIsCompositionEnabled(ref CompositionEnabled);
-            }
-            catch
-            {
-                CompositionEnabled = false;
-            }
-
             var FS = new FormStyle();
             if (Style == MicaStyle.Mica)
                 FS = FormStyle.Mica;
-            if (Style == MicaStyle.Tabbed & Program.W11_22523)
+            if (Style == MicaStyle.Tabbed & OS.W11_22523)
                 FS = FormStyle.Tabbed;
             else
                 FS = FormStyle.Mica;
 
             if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
-            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            var DWM_Margins = new DWMAPI.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
 
             DLLFunc.DarkTitlebar(Form.Handle, Program.Style.DarkMode);
             int argpvAttribute = (int)FS;
-            Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-            Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
+            DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            DWMAPI.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
         }
 
         public static void DrawMica(IntPtr Handle, Padding Margins, MicaStyle Style = MicaStyle.Mica)
         {
-            var CompositionEnabled = default(bool);
-            try
-            {
-                Dwmapi.DwmIsCompositionEnabled(ref CompositionEnabled);
-            }
-            catch
-            {
-                CompositionEnabled = false;
-            }
-
             var FS = new FormStyle();
             if (Style == MicaStyle.Mica)
                 FS = FormStyle.Mica;
-            if (Style == MicaStyle.Tabbed & Program.W11_22523)
+            if (Style == MicaStyle.Tabbed & OS.W11_22523)
                 FS = FormStyle.Tabbed;
             else
                 FS = FormStyle.Mica;
 
             if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
-            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            var DWM_Margins = new DWMAPI.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
 
             DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
             int argpvAttribute = (int)FS;
-            Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
+            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
         }
 
 
@@ -456,16 +408,16 @@ namespace WinPaletter
         {
             if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
-            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
-            Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
+            var DWM_Margins = new DWMAPI.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            DWMAPI.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
         }
 
         public static void DrawAero(IntPtr Handle, Padding Margins)
         {
             if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
-            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
-            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
+            var DWM_Margins = new DWMAPI.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
         }
 
         public static void DrawTransparentGray(this Form Form, bool NoWindowBorders = true)
@@ -482,14 +434,14 @@ namespace WinPaletter
         public static void DrawCustomTitlebar(this Form Form, Color BackColor = default, Color BorderColor = default, Color ForeColor = default)
         {
 
-            if (Program.W11)
+            if (OS.W11)
             {
                 try
                 {
                     if (BackColor != null)
                     {
                         int argpvAttribute = ColorTranslator.ToWin32(BackColor);
-                        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.CAPTION_COLOR, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                        DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.CAPTION_COLOR, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
                     }
                 }
                 catch
@@ -501,7 +453,7 @@ namespace WinPaletter
                     if (ForeColor != null)
                     {
                         int argpvAttribute1 = ColorTranslator.ToWin32(ForeColor);
-                        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.TEXT_COLOR, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                        DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.TEXT_COLOR, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
                     }
                 }
                 catch
@@ -513,7 +465,7 @@ namespace WinPaletter
                     if (BorderColor != null)
                     {
                         int argpvAttribute2 = ColorTranslator.ToWin32(BorderColor);
-                        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.BORDER_COLOR, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
+                        DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.BORDER_COLOR, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
                     }
                 }
                 catch

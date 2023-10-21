@@ -89,7 +89,7 @@ namespace WinPaletter.Theme.Structures
             SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15)) / -15;
             SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15)) / -15;
 
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 try
                 {
@@ -134,7 +134,7 @@ namespace WinPaletter.Theme.Structures
 
             bool temp = false;
             Fixer.SystemParametersInfo((int)SPI.Fonts.GETFONTSMOOTHING, default, ref temp, (int)SPIF.None);
-            Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", Program.WXP ? 1 : 2)) != 2;
+            Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", OS.WXP ? 1 : 2)) != 2;
         }
 
         private Font AdjustFont(Font Font, bool Reverse)
@@ -258,7 +258,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String);
 
-                if (Program.WXP)
+                if (OS.WXP)
                 {
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);

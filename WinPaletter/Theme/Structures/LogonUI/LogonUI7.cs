@@ -39,7 +39,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(LogonUI7 _DefLogonUI)
         {
-            if (Program.W7 | Program.W8 | Program.W81)
+            if (OS.W7 | OS.W8 | OS.W81)
             {
 
                 ImagePath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", "").ToString();
@@ -51,7 +51,7 @@ namespace WinPaletter.Theme.Structures
                 Noise_Mode = (BitmapExtensions.NoiseMode)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic));
                 Noise_Intensity = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Intensity", 0));
 
-                if (Program.W7)
+                if (OS.W7)
                 {
                     bool b1 = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", false));
                     bool b2 = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", false));

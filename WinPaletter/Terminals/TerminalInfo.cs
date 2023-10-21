@@ -16,7 +16,7 @@ namespace WinPaletter
         private void TerminalInfo_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.WindowsTerminal.Icon;
         }
 
@@ -52,7 +52,7 @@ namespace WinPaletter
 
             if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? "") == (TerName.Text.ToLower() ?? "")))
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

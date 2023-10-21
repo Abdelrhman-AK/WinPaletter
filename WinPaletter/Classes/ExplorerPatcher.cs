@@ -41,7 +41,7 @@ namespace WinPaletter
             if (!Program.Settings.ExplorerPatcher.Enabled_Force)
             {
 
-                if (IsInstalled & Program.W11)
+                if (IsInstalled & OS.W11)
                 {
                     UseStart10 = Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
@@ -80,7 +80,7 @@ namespace WinPaletter
 
         public static bool IsAllowed()
         {
-            bool condition0 = Program.W11 && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;
+            bool condition0 = OS.W11 && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;
             bool condition1 = Program.Settings.ExplorerPatcher.Enabled_Force;
 
             return condition0 || condition1;

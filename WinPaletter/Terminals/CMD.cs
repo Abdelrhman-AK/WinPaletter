@@ -34,17 +34,17 @@ namespace WinPaletter
         {
             _Shown = false;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
             RasterList.BringToFront();
 
             ApplyFromTM(Program.TM, _Edition);
             ApplyPreview();
 
-            CMD_PopupForegroundLbl.Font = Program.ConsoleFont;
-            CMD_PopupBackgroundLbl.Font = Program.ConsoleFont;
-            CMD_AccentForegroundLbl.Font = Program.ConsoleFont;
-            CMD_AccentBackgroundLbl.Font = Program.ConsoleFont;
+            CMD_PopupForegroundLbl.Font = Fonts.Console;
+            CMD_PopupBackgroundLbl.Font = Fonts.Console;
+            CMD_AccentForegroundLbl.Font = Fonts.Console;
+            CMD_AccentBackgroundLbl.Font = Fonts.Console;
 
             switch (_Edition)
             {
@@ -145,7 +145,7 @@ namespace WinPaletter
             }
             else
             {
-                WPStyle.MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -1202,9 +1202,9 @@ namespace WinPaletter
                         {
                             StartInfo = new ProcessStartInfo()
                             {
-                                FileName = "cmd.exe",
+                                FileName = PathsExt.CMD,
                                 Verb = "runas",
-                                WorkingDirectory = Program.PATH_UserProfile
+                                WorkingDirectory = PathsExt.UserProfile
                             }
                         };
                         prc.Start();
@@ -1217,9 +1217,9 @@ namespace WinPaletter
                         {
                             StartInfo = new ProcessStartInfo()
                             {
-                                FileName = Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0\powershell.exe",
+                                FileName = PathsExt.PS86_app,
                                 Verb = "runas",
-                                WorkingDirectory = Program.PATH_UserProfile
+                                WorkingDirectory = PathsExt.UserProfile
                             }
                         };
                         prc.Start();
@@ -1232,9 +1232,9 @@ namespace WinPaletter
                         {
                             StartInfo = new ProcessStartInfo()
                             {
-                                FileName = Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0\powershell.exe",
+                                FileName = PathsExt.PS64_app,
                                 Verb = "runas",
-                                WorkingDirectory = Program.PATH_UserProfile
+                                WorkingDirectory = PathsExt.UserProfile
                             }
                         };
                         prc.Start();
@@ -1419,7 +1419,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 bool ee = CMDEnabled.Checked;
                 ApplyFromTM(_Def, _Edition);
@@ -1443,7 +1443,7 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            WPStyle.MsgBox(Program.Lang.CMD_NotAllWeights, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.CMD_NotAllWeights, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1458,21 +1458,21 @@ namespace WinPaletter
 
         private void CMD_FontSizeVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum).ToString();
             CMD_FontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CMD_PreviewCUR_Val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum).ToString();
             CMD_CursorSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CMD_OpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum).ToString();
             CMD_OpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

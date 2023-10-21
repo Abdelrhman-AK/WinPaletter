@@ -12,10 +12,10 @@ namespace WinPaletter
         }
         private void BK_Load(object sender, EventArgs e)
         {
-            if (Program.W7 | Program.WVista)
+            if (OS.W7 | OS.WVista)
                 FormBorderStyle = FormBorderStyle.Sizable;
 
-            if (!Program.WVista)
+            if (!OS.WVista)
             {
                 this.DrawDWMEffect(Padding.Empty, false, FormDWMEffects.FormStyle.Acrylic);
             }

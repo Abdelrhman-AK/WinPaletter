@@ -30,7 +30,7 @@ namespace WinPaletter
             CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             _Shown = false;
 
             switch (_Mode)
@@ -588,7 +588,7 @@ namespace WinPaletter
                     NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                     string path = "";
                     if (temp.Commandline is not null)
-                        path = temp.Commandline.Replace("%SystemRoot%", Program.PATH_Windows);
+                        path = temp.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
                     NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                     if (File.Exists(path))
@@ -788,7 +788,7 @@ namespace WinPaletter
             {
                 var cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
 
-                if (Program.ColorEvent != Program.MenuEvent.None)
+                if (ColorClipboard.Event != ColorClipboard.MenuEvent.None)
                 {
                     if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
                     {
@@ -1151,7 +1151,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex > 2)
             {
-                string s = WPStyle.InputBox(Program.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString());
+                string s = InputBox(Program.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString());
                 if ((s ?? "") != (TerThemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
                 {
                     int i = TerThemes.SelectedIndex;
@@ -1165,7 +1165,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string s = WPStyle.InputBox(Program.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString());
+            string s = InputBox(Program.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString());
             if ((s ?? "") != (TerSchemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
             {
                 int i = TerSchemes.SelectedIndex;
@@ -1251,8 +1251,8 @@ namespace WinPaletter
 
             if (!Program.Settings.WindowsTerminals.Path_Deflection)
             {
-                TerDir = Program.PATH_TerminalJSON;
-                TerPreDir = Program.PATH_TerminalPreviewJSON;
+                TerDir = PathsExt.TerminalJSON;
+                TerPreDir = PathsExt.TerminalPreviewJSON;
             }
             else
             {
@@ -1262,7 +1262,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerDir = Program.PATH_TerminalJSON;
+                    TerDir = PathsExt.TerminalJSON;
                 }
 
                 if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -1271,7 +1271,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerPreDir = Program.PATH_TerminalPreviewJSON;
+                    TerPreDir = PathsExt.TerminalPreviewJSON;
                 }
             }
 
@@ -1404,7 +1404,7 @@ namespace WinPaletter
 
             if (TerEnabled.Checked)
             {
-                if (Program.W10 | Program.W11)
+                if (OS.W10 | OS.W11)
                 {
 
                     try
@@ -1416,8 +1416,8 @@ namespace WinPaletter
 
                         if (!Program.Settings.WindowsTerminals.Path_Deflection)
                         {
-                            TerDir = Program.PATH_TerminalJSON;
-                            TerPreDir = Program.PATH_TerminalPreviewJSON;
+                            TerDir = PathsExt.TerminalJSON;
+                            TerPreDir = PathsExt.TerminalPreviewJSON;
                         }
                         else
                         {
@@ -1427,7 +1427,7 @@ namespace WinPaletter
                             }
                             else
                             {
-                                TerDir = Program.PATH_TerminalJSON;
+                                TerDir = PathsExt.TerminalJSON;
                             }
 
                             if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -1436,7 +1436,7 @@ namespace WinPaletter
                             }
                             else
                             {
-                                TerPreDir = Program.PATH_TerminalPreviewJSON;
+                                TerPreDir = PathsExt.TerminalPreviewJSON;
                             }
                         }
 
@@ -1463,20 +1463,20 @@ namespace WinPaletter
 
             else
             {
-                WPStyle.MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            if (Program.W10 | Program.W11)
+            if (OS.W10 | OS.W11)
             {
                 string TerDir;
                 string TerPreDir;
 
-                TerDir = Program.PATH_TerminalJSON;
-                TerPreDir = Program.PATH_TerminalPreviewJSON;
+                TerDir = PathsExt.TerminalJSON;
+                TerPreDir = PathsExt.TerminalPreviewJSON;
 
 
                 if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
@@ -1496,13 +1496,13 @@ namespace WinPaletter
         {
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
-                if (Program.W10 | Program.W11)
+                if (OS.W10 | OS.W11)
                 {
                     string TerDir;
                     string TerPreDir;
 
-                    TerDir = Program.PATH_TerminalJSON;
-                    TerPreDir = Program.PATH_TerminalPreviewJSON;
+                    TerDir = PathsExt.TerminalJSON;
+                    TerPreDir = PathsExt.TerminalPreviewJSON;
 
                     if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
                     {
@@ -1568,7 +1568,7 @@ namespace WinPaletter
 
                 catch (Exception ex)
                 {
-                    WPStyle.MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Forms.BugReport.ThrowError(ex);
                 }
 
@@ -1613,7 +1613,7 @@ namespace WinPaletter
 
             if (TerProfiles.SelectedIndex == 0)
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Terminal_ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1644,7 +1644,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 3)
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1771,7 +1771,7 @@ namespace WinPaletter
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                             string path = "";
                             if (CCatFrom.Commandline is not null)
-                                path = CCatFrom.Commandline.Replace("%SystemRoot%", Program.PATH_Windows);
+                                path = CCatFrom.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                             if (File.Exists(path))
@@ -1880,7 +1880,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 3)
             {
-                WPStyle.MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Terminal_ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1954,28 +1954,28 @@ namespace WinPaletter
 
         private void TerFontSizeVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum).ToString();
             TerFontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerCursorHeightVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum).ToString();
             TerCursorHeightBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerImageOpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum).ToString();
             TerImageOpacity.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void TerOpacityVal_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum).ToString();
             TerOpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }

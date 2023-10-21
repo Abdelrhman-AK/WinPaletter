@@ -103,7 +103,7 @@ namespace WinPaletter
 
                         ver = ls[UpdateChannel].Split(' ')[1];
 
-                        if (new Version(ver) > new Version(Program.AppVersion))
+                        if (new Version(ver) > new Version(Program.Version))
                         {
                             url = ls[UpdateChannel].Split(' ')[4];
                             UpdateSize = Conversions.ToDecimal(ls[UpdateChannel].Split(' ')[2]);
@@ -212,7 +212,7 @@ namespace WinPaletter
         private void Updates_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             UC = new WebClient();
             LinkLabel3.Visible = false;
             string F = Program.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
@@ -229,7 +229,7 @@ namespace WinPaletter
             Panel1.Enabled = true;
 
             Button1.Text = Program.Lang.CheckForUpdates;
-            Label2.Text = Program.AppVersion;
+            Label2.Text = Program.Version;
 
             if (ls.Count > 0)
             {
@@ -272,14 +272,14 @@ namespace WinPaletter
                 Program.Animator.ShowSync(Button1, true);
             }
 
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
                 AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP);
             }
 
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
@@ -332,7 +332,7 @@ namespace WinPaletter
             ProgressBar1.Visible = false;
             ProgressBar1.Value = 0;
             if (RadioButton2.Checked)
-                WPStyle.MsgBox(Program.Lang.Msgbox_Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.Msgbox_Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);

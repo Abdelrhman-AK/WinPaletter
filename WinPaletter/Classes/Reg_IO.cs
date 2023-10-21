@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Windows.Forms;
-using System.Windows.Input;
 using WinPaletter.NativeMethods;
 
 namespace WinPaletter
@@ -40,7 +38,7 @@ namespace WinPaletter
         {
             RegistryKey R = null;
 
-            if (Key.StartsWith(@"Computer\", Program._ignore))
+            if (Key.StartsWith(@"Computer\", (StringComparison)5))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
@@ -50,31 +48,31 @@ namespace WinPaletter
 
             var scope = default(Reg_scope);
 
-            if (Key.StartsWith("HKEY_CURRENT_USER", Program._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
             {
                 scope = Reg_scope.HKEY_CURRENT_USER;
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_USERS", Program._ignore))
+            else if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
             {
                 scope = Reg_scope.HKEY_USERS;
                 Key = Key.Remove(0, @"HKEY_USERS\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
+            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
             {
                 scope = Reg_scope.HKEY_LOCAL_MACHINE;
                 Key = Key.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
+            else if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
             {
                 scope = Reg_scope.HKEY_CLASSES_ROOT;
                 Key = Key.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
+            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
             {
                 scope = Reg_scope.HKEY_CURRENT_CONFIG;
                 Key = Key.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
@@ -109,7 +107,7 @@ namespace WinPaletter
                 case Reg_scope.HKEY_LOCAL_MACHINE:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
-                        if (Program.isElevated)
+                        if (Program.Elevated)
                         {
                             if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
                                 R.CreateSubKey(Key, true);
@@ -121,7 +119,7 @@ namespace WinPaletter
                 case Reg_scope.HKEY_USERS:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
-                        if (Program.isElevated)
+                        if (Program.Elevated)
                         {
                             if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
                                 R.CreateSubKey(Key, true);
@@ -257,7 +255,7 @@ namespace WinPaletter
 
             try
             {
-                if (Program.isElevated && (scope == Reg_scope.HKEY_LOCAL_MACHINE || scope == Reg_scope.HKEY_USERS) || !(scope == Reg_scope.HKEY_LOCAL_MACHINE) & !(scope == Reg_scope.HKEY_USERS))
+                if (Program.Elevated && (scope == Reg_scope.HKEY_LOCAL_MACHINE || scope == Reg_scope.HKEY_USERS) || !(scope == Reg_scope.HKEY_LOCAL_MACHINE) & !(scope == Reg_scope.HKEY_USERS))
                 {
                     R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType);
                     AddVerboseItem(TreeView, false, Key_BeforeModification, ValueName, Value, RegType);
@@ -294,21 +292,21 @@ namespace WinPaletter
         {
             string regTemplate;
 
-            if (Key.StartsWith(@"Computer\", Program._ignore))
+            if (Key.StartsWith(@"Computer\", (StringComparison)5))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
 
             string _Value;
-            if (Key.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
+            if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (Key.StartsWith("HKEY_CURRENT_USER", Program._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
                 Key = "HKCU" + Key.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (Key.StartsWith("HKEY_USERS", Program._ignore))
+            if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
-            if (Key.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
+            if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
                 Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (Key.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
+            if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
                 Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /v = Value Name
@@ -471,13 +469,13 @@ namespace WinPaletter
                 string v2 = ex.Message + " - " + "CMD: " + string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
                 if (TreeView is not null)
                     Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), v2), "error");
-                Program.Saving_Exceptions.Add(new Tuple<string, Exception>(v2, ex));
+                Exceptions.ThemeApply.Add(new Tuple<string, Exception>(v2, ex));
             }
             else
             {
                 if (TreeView is not null)
                     Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ex.Message), "error");
-                Program.Saving_Exceptions.Add(new Tuple<string, Exception>(ex.Message, ex));
+                Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
         }
 
@@ -486,34 +484,34 @@ namespace WinPaletter
             object Result = null;
             RegistryKey R = null;
 
-            if (KeyName.StartsWith(@"Computer\", Program._ignore))
+            if (KeyName.StartsWith(@"Computer\", (StringComparison)5))
                 KeyName = KeyName.Remove(0, @"Computer\".Count());
 
-            if (KeyName.StartsWith("HKEY_CURRENT_USER", Program._ignore))
+            if (KeyName.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CURRENT_USER\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_USERS", Program._ignore))
+            else if (KeyName.StartsWith("HKEY_USERS", (StringComparison)5))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_USERS\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
+            else if (KeyName.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
             }
 
-            else if (KeyName.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
+            else if (KeyName.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32);
             }
 
-            else if (KeyName.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
+            else if (KeyName.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
             {
                 KeyName = KeyName.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32);
@@ -540,7 +538,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Loading_Exceptions.Add(new Tuple<string, Exception>(KeyName + " : " + ValueName, ex));
+                Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(KeyName + " : " + ValueName, ex));
                 if (RaiseExceptions)
                     Forms.BugReport.ThrowError(ex);
                 try
@@ -561,15 +559,15 @@ namespace WinPaletter
         public static void DelReg_AdministratorDeflector(string RegistryKeyPath, string ValueName)
         {
             string regTemplate;
-            if (RegistryKeyPath.StartsWith("HKEY_LOCAL_MACHINE", Program._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
                 RegistryKeyPath = "HKLM" + RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_USER", Program._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
                 RegistryKeyPath = "HKCU" + RegistryKeyPath.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_USERS", Program._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_USERS", (StringComparison)5))
                 RegistryKeyPath = "HKU" + RegistryKeyPath.Remove(0, "HKEY_USERS".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CLASSES_ROOT", Program._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
                 RegistryKeyPath = "HKCR" + RegistryKeyPath.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_CONFIG", Program._ignore))
+            if (RegistryKeyPath.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
                 RegistryKeyPath = "HKCC" + RegistryKeyPath.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /f = Disable prompt
@@ -579,7 +577,7 @@ namespace WinPaletter
 
         public static void SFC(string File = "", bool IfNotExist_DoScannow = false, bool Hide = true)
         {
-            if (Program.WXP)
+            if (OS.WXP)
                 return;
 
             IntPtr intPtr = IntPtr.Zero;
@@ -589,7 +587,7 @@ namespace WinPaletter
             {
                 StartInfo = new ProcessStartInfo()
                 {
-                    FileName = Program.PATH_System32 + @"\sfc.exe",
+                    FileName = PathsExt.System32 + "\\cmd.exe",
                     Verb = "runas",
                     WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
                     CreateNoWindow = Hide,
@@ -600,11 +598,11 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(File))
                 {
-                    process.StartInfo.Arguments = "/SCANFILE=\"" + File + "\"";
+                    process.StartInfo.Arguments = "/c sfc.exe /SCANFILE=\"" + File + $"\"{(!Hide ? " && pause" : "")}";
                 }
                 else if (IfNotExist_DoScannow)
                 {
-                    process.StartInfo.Arguments = "/Scannow";
+                    process.StartInfo.Arguments = $"/c sfc.exe /scannow{(!Hide ? " && pause" : "")}";
                 }
                 else
                 {
@@ -623,7 +621,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\takeown.exe {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
+                Program.CMD_Wrapper.SendCommand($"{PathsExt.System32}\\takeown.exe {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
 
                 try
                 {
@@ -642,7 +640,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.CMD_Wrapper.SendCommand($"{Program.PATH_System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
+                Program.CMD_Wrapper.SendCommand($"{PathsExt.System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
 
                 try
                 {
@@ -659,7 +657,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(source))
             {
-                Program.CMD_Wrapper.SendCommand($"{Program.PATH_CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
+                Program.CMD_Wrapper.SendCommand($"{PathsExt.CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
             }
         }
     }

@@ -34,7 +34,7 @@ namespace WinPaletter
             Classic_Preview4.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             ApplyFromTM(Program.TM);
 
             Window1.CopycatFrom(Forms.MainFrm.Window1, true);
@@ -87,7 +87,7 @@ namespace WinPaletter
             FakeIcon2.Icon = Properties.Resources.fileextension;    // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
             FakeIcon3.Icon = Properties.Resources.ThemesResIcon;    // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 PictureBox35.Image = SystemIcons.Information.ToBitmap();
                 PictureBox36.Image = SystemIcons.Information.ToBitmap();
@@ -243,7 +243,7 @@ namespace WinPaletter
             WindowR3.Refresh();
             WindowR5.Refresh();
 
-            WPStyle.CtrlTheme theme;
+            CtrlTheme theme;
             Color statusBackColor, StatusForeColor;
 
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -251,13 +251,13 @@ namespace WinPaletter
 
                 if (TM.Windows11.AppMode_Light)
                 {
-                    theme = WPStyle.CtrlTheme.Default;
+                    theme = CtrlTheme.Default;
                     StatusForeColor = Color.Black;
                     statusBackColor = Color.White;
                 }
                 else
                 {
-                    theme = WPStyle.CtrlTheme.DarkExplorer;
+                    theme = CtrlTheme.DarkExplorer;
                     StatusForeColor = Color.White;
                     statusBackColor = Color.FromArgb(28, 28, 28);
                 }
@@ -268,13 +268,13 @@ namespace WinPaletter
 
                 if (TM.Windows10.AppMode_Light)
                 {
-                    theme = WPStyle.CtrlTheme.Default;
+                    theme = CtrlTheme.Default;
                     StatusForeColor = Color.Black;
                     statusBackColor = Color.White;
                 }
                 else
                 {
-                    theme = WPStyle.CtrlTheme.DarkExplorer;
+                    theme = CtrlTheme.DarkExplorer;
                     StatusForeColor = Color.White;
                     statusBackColor = Color.FromArgb(28, 28, 28);
                 }
@@ -284,13 +284,13 @@ namespace WinPaletter
             {
                 StatusForeColor = Color.Black;
                 statusBackColor = Color.White;
-                theme = WPStyle.CtrlTheme.Default;
+                theme = CtrlTheme.Default;
             }
 
-            WPStyle.SetControlTheme(MenuStrip1.Handle, theme);
-            WPStyle.SetControlTheme(VScrollBar1.Handle, theme);
-            WPStyle.SetControlTheme(HScrollBar1.Handle, theme);
-            WPStyle.SetControlTheme(StatusStrip1.Handle, theme);
+            SetControlTheme(MenuStrip1.Handle, theme);
+            SetControlTheme(VScrollBar1.Handle, theme);
+            SetControlTheme(HScrollBar1.Handle, theme);
+            SetControlTheme(StatusStrip1.Handle, theme);
 
             statusLbl.ForeColor = StatusForeColor;
             StatusStrip1.BackColor = statusBackColor;
@@ -636,7 +636,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -644,98 +644,98 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button13_Click_1(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
             Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar12.Maximum), Trackbar12.Minimum).ToString();
             Trackbar12.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Tw_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar14.Maximum), Trackbar14.Minimum).ToString();
             Trackbar14.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Tw_w_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar13.Maximum), Trackbar13.Minimum).ToString();
             Trackbar13.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_v_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
             Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
             Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_d_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar7.Maximum), Trackbar7.Minimum).ToString();
             Trackbar7.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void I_s_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Mh_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar9.Maximum), Trackbar9.Minimum).ToString();
             Trackbar9.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Mw_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar8.Maximum), Trackbar8.Minimum).ToString();
             Trackbar8.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Sh_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar11.Maximum), Trackbar11.Minimum).ToString();
             Trackbar11.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Sw_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar10.Maximum), Trackbar10.Minimum).ToString();
             Trackbar10.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -758,7 +758,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Forms.MainFrm.Visible = true;
         }
 
@@ -866,14 +866,14 @@ namespace WinPaletter
 
         private void I_s_s_s_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar15.Maximum), Trackbar15.Minimum).ToString();
             Trackbar15.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void CheckBox1_CheckedChanged(object sender)
         {
-            Program.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Window1.Refresh();
             Window2.Refresh();
             Window4.Refresh();

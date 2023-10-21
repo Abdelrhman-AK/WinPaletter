@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.PreviewHelpers;
@@ -92,7 +91,7 @@ namespace WinPaletter
                 Appearance.CustomTheme = TM.AppTheme.DarkMode;
                 Appearance.RoundedCorners = TM.AppTheme.RoundCorners;
             }
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             W11_WinMode_Toggle.Checked = !TM.Windows11.WinMode_Light;
             W11_AppMode_Toggle.Checked = !TM.Windows11.AppMode_Light;
@@ -304,27 +303,27 @@ namespace WinPaletter
         {
             Theme.Manager DefTM;
 
-            if (Program.W11)
+            if (OS.W11)
             {
                 DefTM = new Theme.Default().Windows11();
             }
-            else if (Program.W10)
+            else if (OS.W10)
             {
                 DefTM = new Theme.Default().Windows10();
             }
-            else if (Program.W81)
+            else if (OS.W81)
             {
                 DefTM = new Theme.Default().Windows81();
             }
-            else if (Program.W7)
+            else if (OS.W7)
             {
                 DefTM = new Theme.Default().Windows7();
             }
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 DefTM = new Theme.Default().WindowsVista();
             }
-            else if (Program.WXP)
+            else if (OS.WXP)
             {
                 DefTM = new Theme.Default().WindowsXP();
             }
@@ -460,7 +459,7 @@ namespace WinPaletter
 
         public void AutoUpdatesCheck()
         {
-            if (Program.WXP || Program.WVista)
+            if (OS.WXP || OS.WVista)
                 return;
 
             StableInt = 0;
@@ -504,7 +503,7 @@ namespace WinPaletter
 
                     ver = Updates_ls[UpdateChannel].Split(' ')[1];
 
-                    RaiseUpdate = ver.CompareTo(Program.AppVersion) == +1;
+                    RaiseUpdate = ver.CompareTo(Program.Version) == +1;
                 }
                 catch
                 {
@@ -569,7 +568,7 @@ namespace WinPaletter
             Select_W7.Image = Properties.Resources.Native7;
             Select_WVista.Image = Properties.Resources.NativeVista;
             Select_WXP.Image = Properties.Resources.NativeXP;
-            if (!Program.isElevated)
+            if (!Program.Elevated)
                 apply_btn.Image = Properties.Resources.WP_Admin;
 
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -622,7 +621,7 @@ namespace WinPaletter
             }
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             this.DoubleBuffer();
             UpdateLegends();
             ApplyColorsToElements(Program.TM);
@@ -815,7 +814,7 @@ namespace WinPaletter
                         case DialogResult.No:
                             {
                                 e.Cancel = false;
-                                if ((Program.W7 | Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+                                if ((OS.W7 | OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
                                     RefreshDWM(Program.TM_Original);
                                 base.OnFormClosing(e);
                                 break;
@@ -867,7 +866,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Titlebar_Active = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -895,7 +894,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Titlebar_Inactive = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1010,7 +1009,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1067,7 +1066,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index5 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1123,7 +1122,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index0 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1166,7 +1165,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index3 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1200,7 +1199,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index6 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1238,7 +1237,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.StartMenu_Accent = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1267,7 +1266,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1295,7 +1294,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows11.Color_Index4 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W11)
@@ -1422,7 +1421,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Titlebar_Active = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1433,7 +1432,9 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (Control)sender, Window1 };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            var _Conditions = new Conditions() { Window_ActiveTitlebar = true };
+            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+
             Program.TM.Windows10.Titlebar_Active = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
                 ApplyColorsToElements(Program.TM);
@@ -1449,7 +1450,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Titlebar_Inactive = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1574,7 +1575,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1626,7 +1627,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index5 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1663,7 +1664,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index0 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1719,7 +1720,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index3 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1797,7 +1798,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index6 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1868,7 +1869,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.StartMenu_Accent = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1898,7 +1899,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -1932,7 +1933,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows10.Color_Index4 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W10)
@@ -2083,7 +2084,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows81.ColorizationColor = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W81)
@@ -2094,7 +2095,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, Win7LivePreview_Colorization = true };
+            var _Conditions = new Conditions() { Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, LivePreview_Colorization = true };
 
             var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
@@ -2125,7 +2126,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows81.StartColor = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W81)
@@ -2154,7 +2155,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows81.AccentColor = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W81)
@@ -2183,7 +2184,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows81.PersonalColors_Background = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W81)
@@ -2212,7 +2213,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows81.PersonalColors_Accent = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W81)
@@ -2238,7 +2239,7 @@ namespace WinPaletter
 
         private void W8_ColorizationBalance_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), W81_ColorizationBalance_bar.Maximum), W81_ColorizationBalance_bar.Minimum).ToString();
             W81_ColorizationBalance_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -2294,7 +2295,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows7.ColorizationColor = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.W7)
@@ -2305,7 +2306,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color1 = true, BackColor1 = true, Win7LivePreview_Colorization = true };
+            var _Conditions = new Conditions() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true };
 
             var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
@@ -2325,7 +2326,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.Windows7.ColorizationAfterglow = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     ApplyColorsToElements(Program.TM);
@@ -2335,7 +2336,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color2 = true, BackColor2 = true, Win7LivePreview_AfterGlow = true };
+            var _Conditions = new Conditions() { Win7 = true, Color2 = true, Background2 = true, LivePreview_AfterGlow = true };
 
             var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
@@ -2460,28 +2461,28 @@ namespace WinPaletter
         }
         private void W7_ColorizationColorBalance_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum).ToString();
             W7_ColorizationColorBalance_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void W7_ColorizationAfterglowBalance_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum).ToString();
             W7_ColorizationAfterglowBalance_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void W7_ColorizationBlurBalance_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum).ToString();
             W7_ColorizationBlurBalance_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void W7_ColorizationGlassReflectionIntensity_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum).ToString();
             W7_ColorizationGlassReflectionIntensity_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -2503,7 +2504,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     Program.TM.WindowsVista.ColorizationColor = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                     if (Program.PreviewStyle == WindowStyle.WVista)
@@ -2514,7 +2515,7 @@ namespace WinPaletter
 
             var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color1 = true, BackColor1 = true, Win7LivePreview_Colorization = true };
+            var _Conditions = new Conditions() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true, LivePreview_AfterGlow = true };
 
             var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
 
@@ -2595,7 +2596,7 @@ namespace WinPaletter
 
         private void WVista_ColorizationColorBalance_val_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), WVista_ColorizationColorBalance_bar.Maximum), WVista_ColorizationColorBalance_bar.Minimum).ToString();
             WVista_ColorizationColorBalance_bar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -2664,8 +2665,8 @@ namespace WinPaletter
 
             else if (System.IO.Path.GetExtension(WXP_VS_textbox.Text) == ".msstyles")
             {
-                theme = Program.PATH_appData + @"\VisualStyles\Luna\custom.theme";
-                System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\custom.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, "\r\n"));
+                theme = PathsExt.appData + @"\VisualStyles\Luna\custom.theme";
+                System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\custom.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, "\r\n"));
 
             }
 
@@ -3137,13 +3138,13 @@ namespace WinPaletter
                 LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(Program.PATH_System32 + @"\logoff.exe"))
+                if (System.IO.File.Exists(PathsExt.System32 + @"\logoff.exe"))
                 {
-                    Interaction.Shell(Program.PATH_System32 + @"\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell(PathsExt.System32 + @"\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, Program.PATH_System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.LogoffNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
 
@@ -3176,6 +3177,11 @@ namespace WinPaletter
             Process.Start(Properties.Resources.Link_PayPal);
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Forms.RescueTools.Show();
+        }
+
         private void Button30_Click_1(object sender, EventArgs e)
         {
             MsgBox(Program.Lang.Win11ColorsDescTip, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Win11ColorsDescTip2);
@@ -3183,12 +3189,12 @@ namespace WinPaletter
 
         private void Button31_Click(object sender, EventArgs e)
         {
-            if (Program.WXP)
+            if (OS.WXP)
             {
                 if (MsgBox(string.Format(Program.Lang.Store_WontWork_Protocol, Program.Lang.OS_WinXP), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
             }
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 if (MsgBox(string.Format(Program.Lang.Store_WontWork_Protocol, Program.Lang.OS_WinVista), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;

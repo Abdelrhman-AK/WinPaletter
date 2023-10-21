@@ -426,7 +426,7 @@ namespace WinPaletter
                                 {
                                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = Program.PATH_TerminalJSON;
+                                        SettingsFile = PathsExt.TerminalJSON;
                                     }
                                     else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
@@ -434,7 +434,7 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        SettingsFile = Program.PATH_TerminalJSON;
+                                        SettingsFile = PathsExt.TerminalJSON;
                                     }
 
                                     break;
@@ -444,7 +444,7 @@ namespace WinPaletter
                                 {
                                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = Program.PATH_TerminalPreviewJSON;
+                                        SettingsFile = PathsExt.TerminalPreviewJSON;
                                     }
                                     else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
@@ -452,7 +452,7 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        SettingsFile = Program.PATH_TerminalPreviewJSON;
+                                        SettingsFile = PathsExt.TerminalPreviewJSON;
                                     }
 
                                     break;
@@ -894,7 +894,7 @@ namespace WinPaletter
 
     public class FontsBase : ICloneable
     {
-        public string Face { get; set; } = Program.W11 ? "Cascadia Mono" : "Consolas";
+        public string Face { get; set; } = OS.W11 ? "Cascadia Mono" : "Consolas";
         public FontWeight_Enum Weight { get; set; } = FontWeight_Enum.normal;
         public int Size { get; set; } = 12;
 

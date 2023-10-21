@@ -35,7 +35,7 @@ namespace WinPaletter
         private void Wallpaper_Editor_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
             index = 0;
@@ -336,7 +336,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -392,11 +392,11 @@ namespace WinPaletter
         {
             if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox1.Text = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox1.Text = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox1.Text = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox1.Text = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
         }
 
@@ -412,7 +412,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (!Program.WXP)
+            if (!OS.WXP)
             {
                 var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -466,7 +466,7 @@ namespace WinPaletter
 
         private void MD_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -744,7 +744,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 var clr = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     pnl_preview.BackColor = clr;
                 }
@@ -876,7 +876,7 @@ namespace WinPaletter
 
         private void HB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), HBar.Maximum), HBar.Minimum).ToString();
             HBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();
@@ -920,11 +920,11 @@ namespace WinPaletter
             {
                 if (Program.PreviewStyle == WindowStyle.WXP)
                 {
-                    WallpaperPath = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WallpaperPath = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WallpaperPath = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WallpaperPath = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 
@@ -936,16 +936,16 @@ namespace WinPaletter
         {
             if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox3.Text = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox3.Text = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox3.Text = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox3.Text = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp" : Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp" : PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }
@@ -961,7 +961,7 @@ namespace WinPaletter
 
         private void SB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), SBar.Maximum), SBar.Minimum).ToString();
             SBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();
@@ -969,7 +969,7 @@ namespace WinPaletter
 
         private void LB_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), LBar.Maximum), LBar.Minimum).ToString();
             LBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
             ApplyHSLPreview();

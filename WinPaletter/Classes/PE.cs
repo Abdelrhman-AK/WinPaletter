@@ -31,7 +31,7 @@ namespace WinPaletter
         public static void ReplaceResource(string SourceFile, string ResourceType, int ID, byte[] NewRes, ushort LangID = 1033, TreeView TreeView = null)
         {
 
-            if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(Program.PATH_Windows, Program._ignore))
+            if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(PathsExt.Windows, (StringComparison)5))
             {
                 // It is a system PE file that needs rights/permissions modification.
 

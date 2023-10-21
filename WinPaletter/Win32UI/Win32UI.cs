@@ -39,7 +39,7 @@ namespace WinPaletter
             }
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
         }
 
         private void Win32UI_FormClosing(object sender, FormClosingEventArgs e)
@@ -114,27 +114,27 @@ namespace WinPaletter
         {
             Theme.Manager DefTM;
 
-            if (Program.W11)
+            if (OS.W11)
             {
                 DefTM = new Theme.Default().Windows11();
             }
-            else if (Program.W10)
+            else if (OS.W10)
             {
                 DefTM = new Theme.Default().Windows10();
             }
-            else if (Program.W81)
+            else if (OS.W81)
             {
                 DefTM = new Theme.Default().Windows81();
             }
-            else if (Program.W7)
+            else if (OS.W7)
             {
                 DefTM = new Theme.Default().Windows7();
             }
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 DefTM = new Theme.Default().WindowsVista();
             }
-            else if (Program.WXP)
+            else if (OS.WXP)
             {
                 DefTM = new Theme.Default().WindowsXP();
             }
@@ -238,7 +238,7 @@ namespace WinPaletter
                 if (((MouseEventArgs)e).Button == MouseButtons.Right)
                 {
                     Forms.SubMenu.ShowMenu((ColorItem)sender);
-                    if (Program.ColorEvent == Program.MenuEvent.Cut | Program.ColorEvent == Program.MenuEvent.Paste | Program.ColorEvent == Program.MenuEvent.Override)
+                    if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                     {
                         ApplyRetroPreview();
                     }
@@ -845,7 +845,7 @@ namespace WinPaletter
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
                 Toggle1.Checked = false;
-                using (var _Def = Theme.Default.From(Program.PreviewStyle))
+                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
                 }
@@ -970,20 +970,20 @@ namespace WinPaletter
             foreach (string x in SelectedThemeList)
             {
 
-                if (x.StartsWith("activetitle=", Program._ignore))
+                if (x.StartsWith("activetitle=", (StringComparison)5))
                 {
                     activetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientActive)
                         GActivetitle_pick.BackColor = activetitle_pick.BackColor;
                 }
 
-                if (x.StartsWith("gradientactivetitle=", Program._ignore))
+                if (x.StartsWith("gradientactivetitle=", (StringComparison)5))
                 {
                     GActivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientActive = true;
                 }
 
-                if (x.StartsWith("inactivetitle=", Program._ignore))
+                if (x.StartsWith("inactivetitle=", (StringComparison)5))
                 {
                     InactiveTitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientInactive)
@@ -991,68 +991,68 @@ namespace WinPaletter
 
                 }
 
-                if (x.StartsWith("gradientinactivetitle=", Program._ignore))
+                if (x.StartsWith("gradientinactivetitle=", (StringComparison)5))
                 {
                     GInactivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientInactive = true;
                 }
 
-                if (x.StartsWith("background=", Program._ignore))
+                if (x.StartsWith("background=", (StringComparison)5))
                     background_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilight=", Program._ignore))
+                if (x.StartsWith("hilight=", (StringComparison)5))
                     hilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilighttext=", Program._ignore))
+                if (x.StartsWith("hilighttext=", (StringComparison)5))
                     hilighttext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("titletext=", Program._ignore))
+                if (x.StartsWith("titletext=", (StringComparison)5))
                     TitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("window=", Program._ignore))
+                if (x.StartsWith("window=", (StringComparison)5))
                     Window_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowtext=", Program._ignore))
+                if (x.StartsWith("windowtext=", (StringComparison)5))
                     WindowText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("scrollbar=", Program._ignore))
+                if (x.StartsWith("scrollbar=", (StringComparison)5))
                     Scrollbar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menu=", Program._ignore))
+                if (x.StartsWith("menu=", (StringComparison)5))
                     menu_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowframe=", Program._ignore))
+                if (x.StartsWith("windowframe=", (StringComparison)5))
                     Frame_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menutext=", Program._ignore))
+                if (x.StartsWith("menutext=", (StringComparison)5))
                     menutext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("activeborder=", Program._ignore))
+                if (x.StartsWith("activeborder=", (StringComparison)5))
                     ActiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactiveborder=", Program._ignore))
+                if (x.StartsWith("inactiveborder=", (StringComparison)5))
                     InactiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("appworkspace=", Program._ignore))
+                if (x.StartsWith("appworkspace=", (StringComparison)5))
                     AppWorkspace_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonface=", Program._ignore))
+                if (x.StartsWith("buttonface=", (StringComparison)5))
                     btnface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonshadow=", Program._ignore))
+                if (x.StartsWith("buttonshadow=", (StringComparison)5))
                     btnshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("graytext=", Program._ignore))
+                if (x.StartsWith("graytext=", (StringComparison)5))
                     GrayText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttontext=", Program._ignore))
+                if (x.StartsWith("buttontext=", (StringComparison)5))
                     btntext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactivetitletext=", Program._ignore))
+                if (x.StartsWith("inactivetitletext=", (StringComparison)5))
                     InactivetitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonhilight=", Program._ignore))
+                if (x.StartsWith("buttonhilight=", (StringComparison)5))
                     btnhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttondkshadow=", Program._ignore))
+                if (x.StartsWith("buttondkshadow=", (StringComparison)5))
                     btndkshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonlight=", Program._ignore))
+                if (x.StartsWith("buttonlight=", (StringComparison)5))
                     btnlight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infotext=", Program._ignore))
+                if (x.StartsWith("infotext=", (StringComparison)5))
                     InfoText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infowindow=", Program._ignore))
+                if (x.StartsWith("infowindow=", (StringComparison)5))
                     InfoWindow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hottrackingcolor=", Program._ignore))
+                if (x.StartsWith("hottrackingcolor=", (StringComparison)5))
                     hottracking_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
 
-                if (x.StartsWith("buttonalternateface=", Program._ignore))
+                if (x.StartsWith("buttonalternateface=", (StringComparison)5))
                     btnaltface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menubar=", Program._ignore))
+                if (x.StartsWith("menubar=", (StringComparison)5))
                     menubar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menuhilight=", Program._ignore))
+                if (x.StartsWith("menuhilight=", (StringComparison)5))
                     menuhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("desktop=", Program._ignore))
+                if (x.StartsWith("desktop=", (StringComparison)5))
                     desktop_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
             }
 

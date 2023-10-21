@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
 
         private readonly string S1 = "(c) Microsoft Corporation. All rights reserved.";
-        private readonly string S2 = Program.PATH_System32 + ">";
+        private readonly string S2 = PathsExt.System32 + ">";
         private readonly string CV = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
 
         public enum Raster_Sizes

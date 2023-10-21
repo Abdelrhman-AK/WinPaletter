@@ -14,7 +14,7 @@ namespace WinPaletter
         private void VS2Win32UI_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.Win32UI.Icon;
         }
 
@@ -39,8 +39,8 @@ namespace WinPaletter
 
                 else if (Path.GetExtension(TextBox1.Text) == ".msstyles")
                 {
-                    theme = Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme";
-                    File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox1.Text, "\r\n"));
+                    theme = PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme";
+                    File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox1.Text, "\r\n"));
                 }
 
                 if ((File.Exists(TextBox1.Text) && File.Exists(theme)) & !string.IsNullOrEmpty(theme))

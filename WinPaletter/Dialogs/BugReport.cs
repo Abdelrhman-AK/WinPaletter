@@ -18,13 +18,13 @@ namespace WinPaletter
         private void BugReport_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
 
-            Label2.Font = Program.ConsoleFontMedium;
-            Label3.Font = Program.ConsoleFontMedium;
-            TreeView1.Font = Program.ConsoleFontMedium;
+            Label2.Font = Fonts.ConsoleMedium;
+            Label3.Font = Fonts.ConsoleMedium;
+            TreeView1.Font = Fonts.ConsoleMedium;
 
             try
             {
@@ -123,7 +123,7 @@ namespace WinPaletter
 
             Label2.Text = System.Runtime.InteropServices.RuntimeInformation.OSDescription + " - " + sx + sy + " - " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
 
-            Label3.Text = Program.AppVersion;
+            Label3.Text = Program.Version;
 
             AlertBox1.Visible = NoRecovery;
 
@@ -143,10 +143,10 @@ namespace WinPaletter
 
             TreeView1.ExpandAll();
 
-            if (!System.IO.Directory.Exists(Program.PATH_appData + @"\Reports"))
-                System.IO.Directory.CreateDirectory(Program.PATH_appData + @"\Reports");
+            if (!System.IO.Directory.Exists(PathsExt.appData + @"\Reports"))
+                System.IO.Directory.CreateDirectory(PathsExt.appData + @"\Reports");
 
-            System.IO.File.WriteAllText(string.Format(Program.PATH_appData + @"\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
+            System.IO.File.WriteAllText(string.Format(PathsExt.appData + @"\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
 
             ShowDialog();
 
@@ -244,9 +244,9 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
 
-            if (System.IO.Directory.Exists(Program.PATH_appData + @"\Reports"))
+            if (System.IO.Directory.Exists(PathsExt.appData + @"\Reports"))
             {
-                Process.Start(Program.PATH_appData + @"\Reports");
+                Process.Start(PathsExt.appData + @"\Reports");
                 try
                 {
                     Forms.BK.Close();
@@ -257,7 +257,7 @@ namespace WinPaletter
             }
             else
             {
-                WPStyle.MsgBox(string.Format(Program.Lang.Bug_NoReport, Program.PATH_appData + @"\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Bug_NoReport, PathsExt.appData + @"\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

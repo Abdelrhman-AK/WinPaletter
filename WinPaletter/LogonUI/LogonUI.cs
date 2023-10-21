@@ -16,7 +16,7 @@ namespace WinPaletter
         private void LogonUI_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             ApplyFromTM(Program.TM);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
         }

@@ -21636,7 +21636,7 @@
   <data name="Start10_Dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAALYAAADJCAYAAACOhMgQAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAADKRJREFUeF7tnLuObFcRhm2wZCRnxBARYC4ShAYRI25CJkAIIRAvADm8gSUEGdjI
+        vAAADrwBlbxySQAADKRJREFUeF7tnLuObFcRhm2wZCRnxBARYC4ShAYRI25CJkAIIRAvADm8gSUEGdjI
         3EIH+BgegJvAoQPEM0COIB7Wsv7TOnR9qNaavU+vWsP/SZ/Uvbuqds2qYujpmeNnjDHGGGOMMcYYY0zn
         jTfeuBtR4cbsAS0xqXBjjDHGmDOhtx2kwqe4OxmVLY/aLYvafNjQEpMKn0LneBoqWx61Wxa1aYwxxlSA
         3naQCjdmD2iJSYUbY4wxxhhjjDHGmCEePXp0N6tSt+WVV175YmXVZoBiK6k2a0CLm6nUbaGhVFJtBii2
@@ -21696,7 +21696,7 @@
   <data name="Start10_Light" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAALYAAADJCAYAAACOhMgQAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAADYBJREFUeF7t3LuOZVcRxnEbWzKSM2KICDAXCUKDiBE3oSHACCEQL4BzeAYEGdjI
+        vAAADrwBlbxySQAADYBJREFUeF7t3LuOZVcRxnEbWzKSM2KICDAXCUKDiBE3oSHACCEQL4BzeAYEGdjI
         3B4A2/AA3AQOHSCeAXIE8bBq6ZzR7ur/+NtLe6/Tq8x3pN+ou3rtr2tWFUNPz4yfefz4sdn7DhbNqsOi
         WXVYNKsOi2bVYdGsunuFV1555fEe+Tmzldwr0BKT/JzZSrBoVh0Wzaq7V6AvO0h+bo/2ih9Ok/NXlfte
         Te73/eBegZaY5Of2yBd6VM5fVe57Nbnf9wMsmlWHRbPq7hXoyw6SnzNbyb0CLTHJz5mtBItm1WHRrDos
@@ -28052,6 +28052,9 @@
   <data name="WinPaletter_Elevator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WinPaletter.Elevator.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="WinPaletter_SysEventsSounds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WinPaletter.SysEventsSounds.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="WP_Admin" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -28075,9 +28078,6 @@
         K1jE3nRXsOVucEsqhPvHF0oFSXmkw7Z7bRaeKxd5/IcKD6ngo3M7eesv8u3uIbG7ODcB7z/LwouMJfdf
         sgAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="XML_ChargerConnected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_ChargerConnected.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
   <data name="XML_Logoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XML_Logoff.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>

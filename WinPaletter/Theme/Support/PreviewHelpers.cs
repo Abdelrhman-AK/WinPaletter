@@ -322,11 +322,10 @@ namespace WinPaletter
         }
         public static void ApplyWinElementsColors(Theme.Manager TM, WindowStyle Style, bool AnimateColorChange, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.WP.LabelAlt setting_icon_preview, UI.WP.LabelAlt settings_label, UI.WP.LabelAlt Link_preview)
         {
-
             if (ExplorerPatcher.IsAllowed())
                 Program.EP = new ExplorerPatcher();
 
-            Program.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -585,7 +584,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TB_Blur = (byte)(!TM.Windows10.IncreaseTBTransparency ? 8 : 6);
+                            TB_Blur = (byte)(!TM.Windows10.IncreaseTBTransparency ? 12 : 8);
                         }
 
                         if (TM.Windows10.Transparency)
@@ -1039,7 +1038,7 @@ namespace WinPaletter
         }
         public static void ApplyWinElementsStyle(Theme.Manager TM, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
         {
-            Program.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -1189,25 +1188,25 @@ namespace WinPaletter
                         {
                             case Theme.Structures.WindowsXP.Themes.LunaBlue:
                                 {
-                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(Program.VS);
+                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
                                 {
-                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(Program.VS);
+                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaSilver:
                                 {
-                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(Program.VS);
+                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1217,23 +1216,23 @@ namespace WinPaletter
                                     {
                                         if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".theme")
                                         {
-                                            Program.VS = TM.WindowsXP.ThemeFile;
+                                            PathsExt.MSTheme = TM.WindowsXP.ThemeFile;
                                         }
                                         else if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".msstyles")
                                         {
-                                            Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                            System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
+                                            PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
+                                            System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
                                         }
                                     }
-                                    Program.resVS = new VisualStylesRes(Program.VS);
+                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.Classic:
                                 {
-                                    Program.VS = Program.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Program.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(Program.VS);
+                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
+                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1241,27 +1240,27 @@ namespace WinPaletter
 
                         if (WXP_VS_ReplaceColors & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                            if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
                                 TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
                             }
                         }
 
                         if (WXP_VS_ReplaceMetrics & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                            if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
                                 TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                             }
                         }
 
                         if (WXP_VS_ReplaceFonts & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
-                            if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                            if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(Program.VS);
+                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
                                 TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                             }
                         }
@@ -1312,7 +1311,7 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        if (Program.W11)
+                        if (OS.W11)
                             Program.EP = new ExplorerPatcher();
 
                         if (ExplorerPatcher.IsAllowed())
@@ -1611,7 +1610,7 @@ namespace WinPaletter
                 case WindowStyle.W81:
                     {
                         #region Win8.1
-                        if ((Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+                        if ((OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -1649,7 +1648,7 @@ namespace WinPaletter
                 case WindowStyle.W7:
                     {
                         #region Win7
-                        if (Program.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
+                        if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -1717,7 +1716,7 @@ namespace WinPaletter
                 case WindowStyle.WVista:
                     {
                         #region WinVista
-                        if (Program.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
+                        if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             RefreshDWM(TM);
                         }
@@ -2180,13 +2179,13 @@ namespace WinPaletter
         {
             if (!System.IO.File.Exists(WT.Image))
             {
-                if (Program.WXP)
+                if (OS.WXP)
                 {
-                    WT.Image = Program.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WT.Image = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WT.Image = Program.PATH_Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WT.Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 

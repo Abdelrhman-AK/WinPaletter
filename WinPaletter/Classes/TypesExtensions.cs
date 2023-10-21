@@ -694,7 +694,7 @@ namespace WinPaletter
 
         public static string PhrasePath(this string path)
         {
-            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", Program.PATH_ProgramFiles + @"\Plus!\Themes"));
+            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", PathsExt.ProgramFiles + @"\Plus!\Themes"));
         }
 
 
@@ -1633,7 +1633,7 @@ namespace WinPaletter
                     throw new ArgumentNullException("graphics");
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                if ((WPStyle.GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = Rectangle.Round(Radius))
                     {
@@ -1660,7 +1660,7 @@ namespace WinPaletter
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
 
-                if ((WPStyle.GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = Rectangle.Round(Radius))
                     {
@@ -1717,7 +1717,7 @@ namespace WinPaletter
                 Radius_willbe_x2 *= 2;
 
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                if ((WPStyle.GetRoundedCorners() | ForcedRoundCorner) & Radius_willbe_x2 > 0)
+                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius_willbe_x2 > 0)
                 {
                     Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y, Radius_willbe_x2, Radius_willbe_x2, 180, 90);
                     Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius_willbe_x2 / 2d), Rectangle.Y, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius_willbe_x2 / 2d), Rectangle.Y);
@@ -1793,7 +1793,7 @@ namespace WinPaletter
                         using (var PenG = new Pen(G, PenX.Width) { DashStyle = PenX.DashStyle, DashOffset = PenX.DashOffset })
                         {
 
-                            if ((WPStyle.GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                            if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
                             {
 
                                 if (Dark)

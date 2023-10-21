@@ -9,8 +9,36 @@ namespace WinPaletter.Elevator
 {
     internal class Program
     {
+        #region Variables
+        static internal Program p = new Program();
         static System.IO.FileSystemWatcher watcher = new System.IO.FileSystemWatcher();
+        static bool exitSystem = false;
 
+        private delegate bool EventHandler(CtrlType sig);
+        static EventHandler ConsoleHandler;
+
+        enum CtrlType
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT = 1,
+            CTRL_CLOSE_EVENT = 2,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT = 6
+        }
+        #endregion
+
+        #region Native methods
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
+        #endregion
+
+        #region File watcher
         static public void Monitor(string WorkingDirectory)
         {
             if (!System.IO.Directory.Exists(WorkingDirectory))
@@ -22,16 +50,11 @@ namespace WinPaletter.Elevator
         public static void CreateFileWatcher(string path)
         {
             watcher.Path = path;
-            /* Watch for changes in LastAccess and LastWrite times, and the renaming of files or directories. */
             watcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-
-            // Only watch text files.
             watcher.Filter = "command";
-
-            // Add event handlers.
-            watcher.Changed += new System.IO.FileSystemEventHandler(OnChanged);
-            watcher.Created += new System.IO.FileSystemEventHandler(OnChanged);
-            watcher.Deleted += new System.IO.FileSystemEventHandler(OnChanged);
+            watcher.Changed += OnChanged;
+            watcher.Created += OnChanged;
+            watcher.Deleted += OnChanged;
 
             // Begin watching.
             watcher.EnableRaisingEvents = true;
@@ -98,21 +121,24 @@ namespace WinPaletter.Elevator
             th.Priority = ThreadPriority.Highest;
             th.Start();
         }
+        #endregion
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
-
-        static void Main(string[] args)
+        #region Console exit handler
+        private static bool Handler(CtrlType sig)
         {
-            if (args.Count() > 0 && args[0] != null && !watcher.EnableRaisingEvents)
-                Monitor(args[0].Replace("\"", ""));
+            Exit();
 
-            Main(Console.ReadLine().Split(' '));
+            //allow main to run off
+            exitSystem = true;
+
+            //shutdown right away so there are no lingering threads
+            Environment.Exit(-1);
+
+            return true;
         }
-        
+        #endregion
+
+        #region Helpers
         public static string DrawInConsoleBox(string s)
         {
             string ulCorner = "╔";
@@ -173,6 +199,40 @@ namespace WinPaletter.Elevator
 
             // the finished box
             return sb.ToString();
+        }
+        #endregion
+
+        static void Main(string[] args)
+        {
+            ConsoleHandler += new EventHandler(Handler);
+            SetConsoleCtrlHandler(ConsoleHandler, true);
+
+            //start multi threaded console
+            p.Start(args);
+
+            //hold the console so it doesn't run off the end
+            while (!exitSystem)
+            {
+                Thread.Sleep(500);
+            }
+        }
+
+        public void Start(string[] args)
+        {
+            if (args.Count() > 0 && args[0] != null && !watcher.EnableRaisingEvents)
+                Monitor(args[0].Replace("\"", ""));
+
+            Main(Console.ReadLine().Split(' '));
+        }
+
+        static void Exit()
+        {
+            watcher.EnableRaisingEvents = false;
+            watcher.Changed -= OnChanged;
+            watcher.Created -= OnChanged;
+            watcher.Deleted -= OnChanged;
+            watcher.Dispose();
+            Wow64RevertWow64FsRedirection(IntPtr.Zero);
         }
     }
 }

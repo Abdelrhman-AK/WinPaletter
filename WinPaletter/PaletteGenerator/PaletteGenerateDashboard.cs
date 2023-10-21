@@ -11,18 +11,14 @@ namespace WinPaletter
         private bool _shown;
 
         #region Form Shadow
-
-        private bool aeroEnabled;
-
         protected override CreateParams CreateParams
         {
             get
             {
-                CheckAeroEnabled();
                 var cp = base.CreateParams;
-                if (!aeroEnabled)
+                if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | Dwmapi.CS_DROPSHADOW;
+                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle = cp.ExStyle | 33554432;
                     return cp;
                 }
@@ -42,20 +38,20 @@ namespace WinPaletter
         {
             switch (m.Msg)
             {
-                case Dwmapi.WM_NCPAINT:
+                case DWMAPI.WM_NCPAINT:
                     {
                         int val = 2;
-                        if (aeroEnabled)
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            Dwmapi.MARGINS bla = new();
+                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;
                                 bla.leftWidth = 1;
                                 bla.rightWidth = 1;
                                 bla.topHeight = 1;
                             }
-                            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }
                         break;
                     }
@@ -70,26 +66,12 @@ namespace WinPaletter
 
             base.WndProc(ref m);
         }
-
-        private void CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-                aeroEnabled = Com;
-            }
-            else
-            {
-                aeroEnabled = false;
-            }
-        }
         #endregion
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.PaletteGenerateFromImage.Icon;
             _shown = false;
 

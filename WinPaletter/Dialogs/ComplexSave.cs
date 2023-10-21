@@ -45,8 +45,9 @@ namespace WinPaletter
 
         private void ComplexSave_Load(object sender, EventArgs e)
         {
+            Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             var c = PictureBox1.Image.AverageColor();
 
@@ -60,32 +61,32 @@ namespace WinPaletter
             string r1 = r[0];
             string r2 = r[1];
 
-            if (Program.W11)
+            if (OS.W11)
             {
                 RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
             }
 
-            else if (Program.W10)
+            else if (OS.W10)
             {
                 RadioImage7.Image = Properties.Resources.Native10.Resize(20, 20);
             }
 
-            else if (Program.W8 | Program.W81)
+            else if (OS.W8 | OS.W81)
             {
                 RadioImage7.Image = Properties.Resources.Native8.Resize(20, 20);
             }
 
-            else if (Program.W7)
+            else if (OS.W7)
             {
                 RadioImage7.Image = Properties.Resources.Native7.Resize(20, 20);
             }
 
-            else if (Program.WVista)
+            else if (OS.WVista)
             {
                 RadioImage7.Image = Properties.Resources.NativeVista.Resize(20, 20);
             }
 
-            else if (Program.WXP)
+            else if (OS.WXP)
             {
                 RadioImage7.Image = Properties.Resources.NativeXP.Resize(20, 20);
             }

@@ -1,0 +1,451 @@
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.User32;
+
+namespace WinPaletter.Theme
+{
+    public partial class Manager
+    {
+        public void Apply_LogonUI7(Theme.Structures.LogonUI7 LogonElement, string RegEntryHint = "LogonUI", TreeView TreeView = null)
+        {
+
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+
+            EditReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonElement.Enabled.ToInteger());
+            EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonElement.Enabled.ToInteger());
+
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Mode", (int)LogonElement.Mode);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "ImagePath", LogonElement.ImagePath, RegistryValueKind.String);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Color", LogonElement.Color.ToArgb());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Blur", LogonElement.Blur.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Blur_Intensity", LogonElement.Blur_Intensity);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Grayscale", LogonElement.Grayscale.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise", LogonElement.Noise.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise_Mode", (int)LogonElement.Noise_Mode);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise_Intensity", LogonElement.Noise_Intensity);
+
+            if (LogonElement.Enabled)
+            {
+                IntPtr wow64Value = IntPtr.Zero;
+                Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
+
+                string DirX = PathsExt.System32 + @"\oobe\info\backgrounds";
+
+                Directory.CreateDirectory(DirX);
+
+                foreach (string fileX in Program.Computer.FileSystem.GetFiles(DirX))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(fileX);
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                var bmpList = new List<Bitmap>();
+                bmpList.Clear();
+
+                if (ReportProgress_Detailed)
+                    AddNode(TreeView, Program.Lang.Verbose_GetInstanceLogonUIImg, "info");
+
+                switch (LogonElement.Mode)
+                {
+                    case Theme.Structures.LogonUI7.Modes.Default:
+                        {
+                            for (int i = 5031; i <= 5043; i += +1)
+                                bmpList.Add(PE_Functions.GetPNGFromDLL(PathsExt.imageres, i, "IMAGE", Program.Computer.Screen.Bounds.Size.Width, Program.Computer.Screen.Bounds.Size.Height));
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                        {
+                            if (System.IO.File.Exists(LogonElement.ImagePath))
+                            {
+                                bmpList.Add((Bitmap)Bitmap_Mgr.Load(LogonElement.ImagePath).Resize(Program.Computer.Screen.Bounds.Size));
+                            }
+                            else
+                            {
+                                bmpList.Add((Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                            }
+
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                        {
+                            bmpList.Add((Bitmap)LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                        {
+                            using (Bitmap b = new Bitmap(Program.GetWallpaper()))
+                            {
+                                bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
+                            }
+
+                            break;
+                        }
+
+                }
+
+                if (ReportProgress)
+                    AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+
+                for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
+                {
+                    if (ReportProgress)
+                        AddNode(TreeView, string.Format("{3}: " + Program.Lang.TM_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
+
+                    if (LogonElement.Grayscale)
+                    {
+                        if (ReportProgress_Detailed)
+                            AddNode(TreeView, Program.Lang.Verbose_GrayscaleLogonUIImg, "apply");
+                        bmpList[x] = bmpList[x].Grayscale();
+                    }
+
+
+                    if (LogonElement.Blur)
+                    {
+                        if (ReportProgress_Detailed)
+                            AddNode(TreeView, Program.Lang.Verbose_BlurringLogonUIImg, "apply");
+
+                        var imgF = new ImageProcessor.ImageFactory();
+                        using (var b = new Bitmap(bmpList[x]))
+                        {
+                            imgF.Load(b);
+                            imgF.GaussianBlur(LogonElement.Blur_Intensity);
+                            bmpList[x] = (Bitmap)imgF.Image;
+                        }
+
+                    }
+
+                    if (LogonElement.Noise)
+                    {
+                        if (ReportProgress_Detailed)
+                            AddNode(TreeView, Program.Lang.Verbose_NoiseLogonUIImg, "apply");
+
+                        bmpList[x] = bmpList[x].Noise(LogonElement.Noise_Mode, (float)(LogonElement.Noise_Intensity / 100d));
+                    }
+                }
+
+                if (bmpList.Count == 1)
+                {
+                    if (Program.Elevated)
+                    {
+                        bmpList[0].Save(DirX + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                    else
+                    {
+                        bmpList[0].Save(PathsExt.appData + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File(PathsExt.appData + @"\backgroundDefault.jpg", DirX + @"\backgroundDefault.jpg");
+                    }
+
+                    if (ReportProgress_Detailed)
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgSaved, DirX + @"\backgroundDefault.jpg"), "info");
+                }
+                else
+                {
+                    for (int x = 0, loopTo1 = bmpList.Count - 1; x <= loopTo1; x++)
+                    {
+                        if (Program.Elevated)
+                        {
+                            bmpList[x].Save(DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                        }
+                        else
+                        {
+                            bmpList[x].Save(PathsExt.appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                            Reg_IO.Move_File(PathsExt.appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height));
+                        }
+
+                        if (ReportProgress_Detailed)
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgNUMSaved, DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), x + 1), "info");
+
+                    }
+                }
+
+                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+            }
+        }
+
+        public void Apply_LogonUI_8(TreeView TreeView = null)
+        {
+
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+
+            string lockimg = PathsExt.appData + @"\LockScreen.png";
+
+            EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows81.NoLockScreen.ToInteger());
+            EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String);
+
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", (int)Windows81.LockScreenType);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", Windows81.LockScreenSystemID);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", LogonUI7.ImagePath, RegistryValueKind.String);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Color", LogonUI7.Color.ToArgb());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur", LogonUI7.Blur.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur_Intensity", LogonUI7.Blur_Intensity);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Grayscale", LogonUI7.Grayscale.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise", LogonUI7.Noise.ToInteger());
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Mode", (int)LogonUI7.Noise_Mode);
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Intensity", LogonUI7.Noise_Intensity);
+
+            if (!Windows81.NoLockScreen)
+            {
+                Bitmap bmp;
+
+                if (ReportProgress_Detailed)
+                    AddNode(TreeView, Program.Lang.Verbose_GetInstanceLockScreenImg, "info");
+
+                switch (Windows81.LockScreenType)
+                {
+                    case Theme.Structures.LogonUI7.Modes.Default:
+                        {
+                            string syslock = "";
+
+                            if (System.IO.File.Exists(string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID)))
+                            {
+                                syslock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID);
+                            }
+
+                            else if (System.IO.File.Exists(string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID)))
+                            {
+                                syslock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID);
+
+                            }
+
+                            if (System.IO.File.Exists(syslock))
+                            {
+                                bmp = Bitmap_Mgr.Load(syslock);
+                            }
+                            else
+                            {
+                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            }
+
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                        {
+                            if (System.IO.File.Exists(LogonUI7.ImagePath))
+                            {
+                                bmp = Bitmap_Mgr.Load(LogonUI7.ImagePath);
+                            }
+                            else
+                            {
+                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            }
+
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                        {
+                            bmp = (Bitmap)LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            break;
+                        }
+
+                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                        {
+                            using (var b = new Bitmap(Program.GetWallpaper()))
+                            {
+                                bmp = (Bitmap)b.Clone();
+                            }
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            break;
+                        }
+
+                }
+
+                if (ReportProgress)
+                    AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+
+                if (ReportProgress)
+                    AddNode(TreeView, string.Format("{0}:  " + Program.Lang.TM_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
+
+                if (LogonUI7.Grayscale)
+                {
+                    if (ReportProgress_Detailed)
+                        AddNode(TreeView, Program.Lang.Verbose_GrayscaleLockScreenImg, "apply");
+                    bmp = bmp.Grayscale();
+                }
+
+                if (LogonUI7.Blur)
+                {
+                    if (ReportProgress_Detailed)
+                        AddNode(TreeView, Program.Lang.Verbose_BlurringLockScreenImg, "apply");
+                    var imgF = new ImageProcessor.ImageFactory();
+                    using (var b = new Bitmap(bmp))
+                    {
+                        imgF.Load(b);
+                        imgF.GaussianBlur(LogonUI7.Blur_Intensity);
+                        bmp = (Bitmap)imgF.Image;
+                    }
+
+                }
+
+                if (LogonUI7.Noise)
+                {
+                    if (ReportProgress_Detailed)
+                        AddNode(TreeView, Program.Lang.Verbose_NoiseLockScreenImg, "apply");
+                    bmp = bmp.Noise(LogonUI7.Noise_Mode, (float)(LogonUI7.Noise_Intensity / 100d));
+                }
+
+                if (System.IO.File.Exists(lockimg))
+                    System.IO.File.Delete(lockimg);
+
+                if (ReportProgress_Detailed)
+                    AddNode(TreeView, string.Format(Program.Lang.Verbose_LockScreenImgSaved, lockimg), "info");
+
+                bmp.Save(lockimg);
+
+            }
+
+        }
+
+        public void Apply_CommandPrompt(TreeView TreeView = null)
+        {
+            if (CommandPrompt.Enabled)
+            {
+                Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt, TreeView);
+                if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
+                    Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
+
+                if (Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                {
+                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "", CommandPrompt, TreeView);
+                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
+                }
+            }
+        }
+
+        public void Apply_PowerShell86(TreeView TreeView = null)
+        {
+            if (PowerShellx86.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0"))
+            {
+                Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
+                if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                {
+                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
+                }
+            }
+        }
+
+        public void Apply_PowerShell64(TreeView TreeView = null)
+        {
+            if (PowerShellx64.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0"))
+            {
+                Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
+                if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                {
+                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
+                }
+            }
+        }
+
+        public void Apply_Cursors(TreeView TreeView = null)
+        {
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled);
+
+            var sw = new Stopwatch();
+            if (ReportProgress)
+                AddNode(TreeView, string.Format("{0}: " + Program.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
+
+            sw.Reset();
+            sw.Start();
+
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Busy", Cursor_Busy, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Move", Cursor_Move, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("NS", Cursor_NS, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("EW", Cursor_EW, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("NESW", Cursor_NESW, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("NWSE", Cursor_NWSE, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Up", Cursor_Up, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Pen", Cursor_Pen, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("None", Cursor_None, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Link", Cursor_Link, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Pin", Cursor_Pin, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, ReportProgress_Detailed ? TreeView : null);
+            Theme.Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, ReportProgress_Detailed ? TreeView : null);
+
+            if (ReportProgress)
+                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+            sw.Stop();
+
+            if (Cursor_Enabled)
+            {
+                this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, Program.Lang.TM_RenderingCursors, Program.Lang.TM_RenderingCursors_Error, Program.Lang.TM_Time);
+
+                if (Program.Settings.ThemeApplyingBehavior.AutoApplyCursors)
+                {
+                    this.Execute(new MethodInvoker(() =>
+                    {
+                        if (TreeView is not null)
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORSHADOW.ToString(), 0, Cursor_Shadow, SPIF.UpdateINIFile.ToString()), "dll");
+                        SystemParametersInfo((int)SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, (int)SPIF.UpdateINIFile);
+
+                        if (TreeView is not null)
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSESONAR.ToString(), 0, Cursor_Sonar, SPIF.UpdateINIFile.ToString()), "dll");
+                        SystemParametersInfo((int)SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, (int)SPIF.UpdateINIFile);
+
+                        if (TreeView is not null)
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSETRAILS.ToString(), 0, Cursor_Trails, SPIF.UpdateINIFile.ToString()), "dll");
+                        SystemParametersInfo((int)SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, (int)SPIF.UpdateINIFile);
+
+                        ApplyCursorsToReg("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
+
+                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        {
+                            EditReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails);
+                            ApplyCursorsToReg(@"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
+                        }
+
+                    }), TreeView, Program.Lang.TM_ApplyingCursors, Program.Lang.TM_CursorsApplying_Error, Program.Lang.TM_Time);
+                }
+                else if (ReportProgress)
+                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Restricted_Cursors), "error");
+            }
+
+            else if (Program.Settings.ThemeApplyingBehavior.ResetCursorsToAero)
+            {
+                if (!OS.WXP)
+                {
+                    ResetCursorsToAero("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
+                    if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
+                }
+
+                else
+                {
+                    ResetCursorsToNone_XP("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
+                    if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
+
+                }
+            }
+        }
+    }
+}

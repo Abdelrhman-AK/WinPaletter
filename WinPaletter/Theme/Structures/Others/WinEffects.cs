@@ -208,12 +208,12 @@ namespace WinPaletter.Theme.Structures
 
             if (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
             {
-                Win11BootDots = !Program.W11;
+                Win11BootDots = !OS.W11;
             }
 
             else
             {
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Program.W11 ? 1 : 0))
+                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", OS.W11 ? 1 : 0))
                 {
                     case 0:
                         {
@@ -417,22 +417,22 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
 
-                if (Program.W11)
+                if (OS.W11)
                     EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots).ToInteger());
 
-                if (Program.W8 | Program.W81 || Program.W10)
+                if (OS.W8 | OS.W81 || OS.W10)
                 {
                     switch (Win11ExplorerBar)
                     {
                         case ExplorerBar.Bar:
                             {
-                                if (System.IO.File.Exists(Program.PATH_System32 + @"\UIRibbon.dll"))
+                                if (System.IO.File.Exists(PathsExt.System32 + @"\UIRibbon.dll"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
-                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll");
-                                    Move_File(Program.PATH_System32 + @"\UIRibbon.dll", Program.PATH_System32 + @"\UIRibbon.dll_bak");
+                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll");
+                                    Move_File(PathsExt.System32 + @"\UIRibbon.dll", PathsExt.System32 + @"\UIRibbon.dll_bak");
 
                                     // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
 
@@ -443,14 +443,14 @@ namespace WinPaletter.Theme.Structures
 
                         default:
                             {
-                                if (System.IO.File.Exists(Program.PATH_System32 + @"\UIRibbon.dll_bak"))
+                                if (System.IO.File.Exists(PathsExt.System32 + @"\UIRibbon.dll_bak"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
-                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll_bak");
-                                    Takeown_File(Program.PATH_System32 + @"\UIRibbon.dll");
-                                    Move_File(Program.PATH_System32 + @"\UIRibbon.dll_bak", Program.PATH_System32 + @"\UIRibbon.dll");
+                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll_bak");
+                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll");
+                                    Move_File(PathsExt.System32 + @"\UIRibbon.dll_bak", PathsExt.System32 + @"\UIRibbon.dll");
                                 }
 
                                 break;
@@ -483,7 +483,7 @@ namespace WinPaletter.Theme.Structures
                     EditReg_CMD(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
                 }
 
-                if (Program.W11)
+                if (OS.W11)
                 {
                     try
                     {
@@ -511,7 +511,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                if (!Program.WXP && !Program.WVista)
+                if (!OS.WXP && !OS.WVista)
                 {
                     try
                     {

@@ -201,7 +201,7 @@ namespace WinPaletter.UI.Controllers
 
                 }
 
-                Program.CopiedColor = BackColor;
+                ColorClipboard.CopiedColor = BackColor;
 
                 Forms.ColorInfoDragDrop.Close();
 
@@ -836,7 +836,7 @@ namespace WinPaletter.UI.Controllers
 
                     if (!Program.Settings.NerdStats.UseWindowsMonospacedFont)
                     {
-                        F = Program.ConsoleFont;
+                        F = Fonts.Console;
                     }
                     else
                     {

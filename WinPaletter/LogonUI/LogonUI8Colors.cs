@@ -14,7 +14,7 @@ namespace WinPaletter
         private void LogonUI8Colors_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             Icon = Forms.Start8Selector.Icon;
 

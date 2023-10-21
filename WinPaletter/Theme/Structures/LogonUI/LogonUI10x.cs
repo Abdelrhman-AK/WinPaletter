@@ -26,9 +26,9 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(LogonUI10x _DefLogonUI)
         {
-            if (Program.W10 | Program.W11)
+            if (OS.W10 | OS.W11)
             {
-                var Def = Program.W11 ? new Theme.Default().Windows11() : new Theme.Default().Windows10();
+                var Def = OS.W11 ? new Theme.Default().Windows11() : new Theme.Default().Windows10();
 
                 DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", _DefLogonUI.DisableAcrylicBackgroundOnLogon));
                 DisableLogonBackgroundImage = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", _DefLogonUI.DisableLogonBackgroundImage));

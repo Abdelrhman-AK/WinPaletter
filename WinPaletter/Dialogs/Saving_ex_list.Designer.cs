@@ -107,7 +107,7 @@ namespace WinPaletter
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Errors";
             TopMost = true;
-            Load += new EventHandler(Saving_exceptions_list_Load);
+            Load += new EventHandler(ThemeApply_list_Load);
             ResumeLayout(false);
 
         }

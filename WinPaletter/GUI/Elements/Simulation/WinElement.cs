@@ -654,7 +654,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.RenderingHint;
+            G.TextRenderingHint = Config.RenderingHint;
             DoubleBuffered = true;
             var Rect = new Rectangle(-1, -1, Width + 2, Height + 2);
             var RRect = new Rectangle(0, 0, Width - 1, Height - 1);

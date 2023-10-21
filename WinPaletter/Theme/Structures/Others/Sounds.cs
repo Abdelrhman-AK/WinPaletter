@@ -98,12 +98,14 @@ namespace WinPaletter.Theme.Structures
         public bool Snd_Win_WindowsLogon_TaskMgmt;
         public bool Snd_Win_WindowsUnlock_TaskMgmt;
         public string Snd_ChargerConnected;
+        public string Snd_ChargerDisconnected;
 
         public void Load(Sounds _DefSounds)
         {
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled));
             Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStart).ToString();
             Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", _DefSounds.Snd_ChargerConnected).ToString();
+            Snd_ChargerDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", _DefSounds.Snd_ChargerDisconnected).ToString();
 
             Snd_Win_SystemExit_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", _DefSounds.Snd_Win_SystemExit_TaskMgmt));
             Snd_Win_WindowsLogoff_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", _DefSounds.Snd_Win_WindowsLogoff_TaskMgmt));
@@ -207,6 +209,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", Snd_ChargerDisconnected, RegistryValueKind.String);
 
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", Snd_Win_SystemExit_TaskMgmt);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", Snd_Win_WindowsLogoff_TaskMgmt);
@@ -237,8 +240,8 @@ namespace WinPaletter.Theme.Structures
 
                 else if (!(Snd_Imageres_SystemStart.Trim().ToUpper() == "CURRENT"))
                 {
-                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!Program.W11).ToInteger());
-                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!Program.W11).ToInteger());
+                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W11).ToInteger());
+                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W11).ToInteger());
                 }
 
                 else
@@ -247,37 +250,37 @@ namespace WinPaletter.Theme.Structures
                     EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", 1);
                 }
 
-                if (!Program.WXP)
+                if (!OS.WXP)
                 {
                     if (File.Exists(Snd_Imageres_SystemStart) && Path.GetExtension(Snd_Imageres_SystemStart).ToUpper() == ".WAV")
                     {
 
-                        byte[] CurrentSoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
+                        byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                         byte[] TargetSoundBytes = File.ReadAllBytes(Snd_Imageres_SystemStart);
 
                         if (!CurrentSoundBytes.Equals(TargetSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080, TargetSoundBytes);
+                            PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
                     }
 
                     else if (Snd_Imageres_SystemStart.Trim().ToUpper() == "DEFAULT")
                     {
-                        byte[] CurrentSoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
-                        byte[] OriginalSoundBytes = File.ReadAllBytes(Program.PATH_appData + @"\WindowsStartup_Backup.wav");
+                        byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                        byte[] OriginalSoundBytes = File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav");
 
                         if (!CurrentSoundBytes.Equals(OriginalSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080, OriginalSoundBytes);
+                            PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, OriginalSoundBytes);
                         }
 
                         if (Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound)
-                            SFC(Program.PATH_imageres);
+                            SFC(PathsExt.imageres);
                     }
 
                 }
 
-                if (Program.W8 | Program.W81 | Program.W10 | Program.W11 | Program.W12)
+                if (OS.W8 | OS.W81 | OS.W10 | OS.W11 | OS.W12)
                 {
                     if (Snd_Win_SystemExit_TaskMgmt && File.Exists(Snd_Win_SystemExit) && Path.GetExtension(Snd_Win_SystemExit).ToUpper() == ".WAV")
                     {
@@ -316,13 +319,23 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                if (File.Exists(Snd_ChargerConnected) && Path.GetExtension(Snd_ChargerConnected).ToUpper() == ".WAV")
+                TaskMgmt(TaskType.ChargerConnected, Actions.Delete, "", TreeView);
+                bool ChargerCondition = (File.Exists(Snd_ChargerConnected) && Path.GetExtension(Snd_ChargerConnected).ToUpper() == ".WAV") ||
+                    (File.Exists(Snd_ChargerDisconnected) && Path.GetExtension(Snd_ChargerDisconnected).ToUpper() == ".WAV") ;
+
+                if (ChargerCondition)
                 {
-                    TaskMgmt(TaskType.ChargerConnected, Actions.Add, Snd_ChargerConnected, TreeView);
+                    Program.InitializeWPSysEventsSounds();
+                    EditReg(TreeView, "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "WinPaletter system events sounds", PathsExt.WPSysEventsSounds, RegistryValueKind.String);
                 }
                 else
                 {
-                    TaskMgmt(TaskType.ChargerConnected, Actions.Delete, "", TreeView);
+                    Program.InitializeWPSysEventsSounds(true);
+                    using (RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                    {
+                        rk.DeleteValue("WinPaletter system events sounds", false);
+                        rk.Close();
+                    }
                 }
 
                 string[] Scope_Win = new[] { @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified" };

@@ -10,7 +10,7 @@ namespace WinPaletter.UI.WP
     {
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.TextRenderingHint = Program.RenderingHint;
+            e.Graphics.TextRenderingHint = Config.RenderingHint;
 
             using (var br = new SolidBrush(BackColor))
             {

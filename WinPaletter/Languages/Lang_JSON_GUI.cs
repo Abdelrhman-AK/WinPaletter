@@ -64,7 +64,7 @@ namespace WinPaletter
             data.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             data.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-            data.Columns[0].DefaultCellStyle.Font = Program.ConsoleFontMedium;
+            data.Columns[0].DefaultCellStyle.Font = Fonts.ConsoleMedium;
             data.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             data.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -450,7 +450,7 @@ namespace WinPaletter
         #region Child form events
         public void Child_Load(object sender, EventArgs e)
         {
-            WPStyle.ApplyStyle((Form)sender);
+            ApplyStyle((Form)sender);
         }
 
         public void Child_Closing(object sender, FormClosingEventArgs e)
@@ -703,9 +703,9 @@ namespace WinPaletter
             GroupBox4.Visible = true;
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
-            Label4.Font = Program.ConsoleFontMedium;
+            Label4.Font = Fonts.ConsoleMedium;
             Label9.Font = Label4.Font;
             Label5.Text = Program.Lang.Lang_ChooseAForm;
             data.DoubleBuffer();
@@ -793,7 +793,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            TextBox7.Text = Program.AppVersion;
+            TextBox7.Text = Program.Version;
         }
 
         private void Button9_Click(object sender, EventArgs e)
@@ -872,7 +872,7 @@ namespace WinPaletter
 
                 System.IO.File.WriteAllText(LangFile, JObj.ToString());
 
-                WPStyle.MsgBox(Program.Lang.LangSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.LangSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

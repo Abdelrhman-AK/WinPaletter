@@ -150,7 +150,7 @@ namespace WinPaletter.UI.WP
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            e.Graphics.TextRenderingHint = Program.RenderingHint;
+            e.Graphics.TextRenderingHint = Config.RenderingHint;
             using (var br = new SolidBrush(BackColor))
             {
                 e.Graphics.FillRectangle(br, new Rectangle(0, 0, Width, Height));

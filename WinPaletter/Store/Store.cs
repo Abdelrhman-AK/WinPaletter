@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -31,7 +30,7 @@ namespace WinPaletter
         public UI.Controllers.StoreItem selectedItem;
 
         private bool _Shown = false;
-        private readonly List<CursorControl> AnimateList = new List<CursorControl>();
+        private readonly List<UI.Controllers.CursorControl> AnimateList = new List<UI.Controllers.CursorControl>();
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
@@ -85,17 +84,17 @@ namespace WinPaletter
             {
                 if ((Program.PreviewStyle == WindowStyle.WXP && Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
-                    if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(Program.VS))
+                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
                         {
                             TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                         }
                     }
 
-                    if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(Program.VS))
+                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
                         {
                             TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
@@ -173,9 +172,9 @@ namespace WinPaletter
             {
                 if ((Program.PreviewStyle == WindowStyle.WXP && Forms.MainFrm.WXP_VS_ReplaceColors.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
-                    if (System.IO.File.Exists(Program.VS) & !string.IsNullOrEmpty(Program.VS))
+                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(Program.VS))
+                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
                         {
                             TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
                         }
@@ -464,16 +463,16 @@ namespace WinPaletter
             CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
             CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
 
-            foreach (CursorControl i in Cursors_Container.Controls)
+            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
             {
-                if (i is CursorControl)
+                if (i is UI.Controllers.CursorControl)
                 {
                     i.Invalidate();
                 }
             }
         }
 
-        public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
+        public void CursorTM_to_Cursor(UI.Controllers.CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
             CursorControl.Prop_ArrowStyle = Cursor.ArrowStyle;
             CursorControl.Prop_CircleStyle = Cursor.CircleStyle;
@@ -522,7 +521,7 @@ namespace WinPaletter
             _Shown = false;
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this, true);
+            ApplyStyle(this, true);
 
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
@@ -545,11 +544,11 @@ namespace WinPaletter
             pnl_preview.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
             pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage;
 
-            Status_lbl.Font = Program.ConsoleFontMedium;
-            themeSize_lbl.Font = Program.ConsoleFontLarge;
-            respacksize_lbl.Font = Program.ConsoleFontLarge;
-            desc_txt.Font = Program.ConsoleFontLarge;
-            Theme_MD5_lbl.Font = Program.ConsoleFont;
+            Status_lbl.Font = Fonts.ConsoleMedium;
+            themeSize_lbl.Font = Fonts.ConsoleLarge;
+            respacksize_lbl.Font = Fonts.ConsoleLarge;
+            desc_txt.Font = Fonts.ConsoleLarge;
+            Theme_MD5_lbl.Font = Fonts.Console;
         }
 
         private void Store_Shown(object sender, EventArgs e)
@@ -567,9 +566,9 @@ namespace WinPaletter
         {
             // To prevent effect of a store theme on the other forms
             Program.Settings = new WPSettings(WPSettings.Mode.Registry);
-            Program.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             Status_pnl.Visible = true;
             Status_lbl.SetText(Program.Lang.Store_CleaningFromMemory);
@@ -604,7 +603,7 @@ namespace WinPaletter
             {
                 string var = "";
 
-                if (!DB.StartsWith("https://", Program._ignore))
+                if (!DB.StartsWith("https://", (StringComparison)5))
                     var = "https://" + DB;
                 else
                     var = DB;
@@ -692,7 +691,7 @@ namespace WinPaletter
                     string FileName = temp.Split('/').Last();
                     temp = temp.Replace("/" + FileName, "");
                     string FolderName = temp.Split('/').Last();
-                    string Dir = Program.PATH_StoreCache;
+                    string Dir = PathsExt.StoreCache;
                     if (!string.IsNullOrWhiteSpace(FolderName))
                         Dir += @"\" + reposName + @"\" + FolderName;
                     if (!System.IO.Directory.Exists(Dir))
@@ -905,7 +904,7 @@ namespace WinPaletter
                 {
                     Status_lbl.SetText(Program.Lang.Store_NoNetwork);
 
-                    if (WPStyle.MsgBox(Program.Lang.Store_NoNetwork, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Store_TryOffline) == DialogResult.Yes)
+                    if (MsgBox(Program.Lang.Store_NoNetwork, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Store_TryOffline) == DialogResult.Yes)
                     {
                         StartedAsOnlineOrOffline = false;
                         OfflineMode();
@@ -1009,7 +1008,7 @@ namespace WinPaletter
                                 Program.Settings.Appearance.RoundedCorners = StoreItem.TM.AppTheme.RoundCorners;
                                 Program.Settings.Appearance.BackColor = StoreItem.TM.AppTheme.BackColor;
                                 Program.Settings.Appearance.AccentColor = StoreItem.TM.AppTheme.AccentColor;
-                                WPStyle.ApplyStyle(this, true);
+                                ApplyStyle(this, true);
                             }
 
                             if (StoreItem.TM.AppTheme.Enabled)
@@ -1030,11 +1029,11 @@ namespace WinPaletter
                             ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
                             ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
                             LoadCursorsFromTM(StoreItem.TM);
-                            Program.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                            Config.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-                            foreach (CursorControl i in Cursors_Container.Controls)
+                            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
                             {
-                                if (i is CursorControl)
+                                if (i is UI.Controllers.CursorControl)
                                 {
                                     if (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy)
                                         AnimateList.Add(i);
@@ -1059,14 +1058,14 @@ namespace WinPaletter
 
                             desc_txt.Text = StoreItem.TM.Info.Description;
 
-                            if (Program.AppVersion.CompareTo(StoreItem.TM.Info.AppVersion) != -1)
+                            if (Program.Version.CompareTo(StoreItem.TM.Info.AppVersion) != -1)
                             {
                                 VersionAlert_lbl.Visible = false;
                             }
                             else
                             {
                                 VersionAlert_lbl.Visible = true;
-                                VersionAlert_lbl.Text = string.Format(Program.Lang.Store_LowAppVersionAlert, StoreItem.TM.Info.AppVersion, Program.AppVersion);
+                                VersionAlert_lbl.Text = string.Format(Program.Lang.Store_LowAppVersionAlert, StoreItem.TM.Info.AppVersion, Program.Version);
                             }
 
                             var os_list = new List<string>();
@@ -1177,7 +1176,7 @@ namespace WinPaletter
             Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
             Appearance.CustomTheme = selectedItem.TM.AppTheme.DarkMode;
             Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
-            WPStyle.ApplyStyle(null, true);
+            ApplyStyle(null, true);
 
             using (var TMx = new Theme.Manager(Theme.Manager.Source.File, selectedItem.FileName))
             {
@@ -1356,10 +1355,9 @@ namespace WinPaletter
         {
             var Pd = new System.Windows.Forms.Padding(0, Titlebar_panel.Height, 0, 0);
             Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0);
-            bool CompositionEnabled = true;
-            Dwmapi.DwmIsCompositionEnabled(ref CompositionEnabled);
+            bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
 
-            if (Program.W11 | Program.W10)
+            if (OS.W11 | OS.W10)
             {
                 CompositionEnabled = CompositionEnabled & Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
             }
@@ -1369,15 +1367,15 @@ namespace WinPaletter
                 Titlebar_lbl.DrawOnGlass = true;
                 Titlebar_panel.BackColor = Color.Black;
 
-                if (Program.W11)
+                if (OS.W11)
                 {
                     this.DrawMica(Pd);
                 }
 
-                else if (Program.W10 || Program.W81 || Program.W8 || Program.W7 || Program.WVista)
+                else if (OS.W10 || OS.W81 || OS.W8 || OS.W7 || OS.WVista)
                 {
                     this.DrawAero(Pd);
-                    if (Program.W10)
+                    if (OS.W10)
                         DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
                 }
 
@@ -1388,11 +1386,11 @@ namespace WinPaletter
                 }
             }
 
-            else if (Program.W7 || Program.WVista)
+            else if (OS.W7 || OS.WVista)
             {
                 Titlebar_lbl.DrawOnGlass = false;
 
-                if (Program.W7)
+                if (OS.W7)
                 {
                     if (Program.TM.Windows7.Theme != Theme.Structures.Windows7.Themes.Classic)
                     {
@@ -1404,7 +1402,7 @@ namespace WinPaletter
                     }
                 }
 
-                else if (Program.WVista)
+                else if (OS.WVista)
                 {
                     if (Program.TM.WindowsVista.Theme != Theme.Structures.Windows7.Themes.Classic)
                     {
@@ -1418,7 +1416,7 @@ namespace WinPaletter
                 }
             }
 
-            else if (Program.WXP)
+            else if (OS.WXP)
             {
                 Titlebar_lbl.DrawOnGlass = false;
 
@@ -1435,7 +1433,7 @@ namespace WinPaletter
             else
             {
                 Titlebar_lbl.DrawOnGlass = true;
-                if (Program.W11 || Program.W10)
+                if (OS.W11 || OS.W10)
                     DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
                 this.DrawAero(Pd);
 
@@ -1469,7 +1467,7 @@ namespace WinPaletter
 
             try
             {
-                foreach (CursorControl i in AnimateList)
+                foreach (UI.Controllers.CursorControl i in AnimateList)
                 {
                     i.Angle = Angle;
                     i.Refresh();
@@ -1502,13 +1500,13 @@ namespace WinPaletter
         {
 
             Program.Animator.HideSync(Tabs);
-            Program.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
                 Program.Settings = new WPSettings(WPSettings.Mode.Registry);
-                WPStyle.FetchDarkMode();
-                WPStyle.ApplyStyle(this, true);
+                FetchDarkMode();
+                ApplyStyle(this, true);
             }
 
             RemoveAllStoreItems(search_results);
@@ -1629,7 +1627,7 @@ namespace WinPaletter
 
         private void Cur_tip_btn_Click(object sender, EventArgs e)
         {
-            WPStyle.MsgBox(Program.Lang.ScalingTip, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.ScalingTip, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -1658,7 +1656,7 @@ namespace WinPaletter
             if (!_Shown)
                 return;
 
-            foreach (CursorControl i in Cursors_Container.Controls)
+            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
             {
                 i.Prop_Scale = ((UI.WP.Trackbar)sender).Value / 100;
                 i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
@@ -1695,7 +1693,7 @@ namespace WinPaletter
         private void Author_url_button_Click(object sender, EventArgs e)
         {
 
-            if (WPStyle.MsgBox(Program.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
             {
                 try
                 {

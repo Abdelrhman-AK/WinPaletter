@@ -19,9 +19,9 @@ namespace WinPaletter
         private void Converter_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             CheckBox1.Checked = Program.Settings.FileTypeManagement.CompressThemeFile;
-            Label3.Font = Program.ConsoleFontMedium;
+            Label3.Font = Fonts.ConsoleMedium;
 
             if (System.IO.File.Exists(Forms.MainFrm.OpenFileDialog1.FileName) && !System.IO.File.Exists(TextBox1.Text))
             {
@@ -72,7 +72,7 @@ namespace WinPaletter
                 if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     _Convert.Convert(TextBox1.Text, SaveFileDialog1.FileName, CheckBox1.Checked, CheckBox2.Checked);
-                    WPStyle.MsgBox(Program.Lang.Convert_Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MsgBox(Program.Lang.Convert_Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

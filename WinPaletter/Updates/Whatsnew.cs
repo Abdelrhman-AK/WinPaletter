@@ -11,9 +11,9 @@ namespace WinPaletter
         }
         private void Tutorial_Load(object sender, EventArgs e)
         {
-            Label2.Text = string.Format(Program.Lang.WhatsNewInVersion, Program.AppVersion);
+            Label2.Text = string.Format(Program.Lang.WhatsNewInVersion, Program.Version);
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             TabControl1.SelectedIndex = 0;
             Button1.Text = Program.Lang.Next;
         }

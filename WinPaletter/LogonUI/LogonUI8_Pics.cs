@@ -13,7 +13,7 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.None;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.LogonUI.Icon;
 
             if (Forms.LogonUI7.ID == 0)

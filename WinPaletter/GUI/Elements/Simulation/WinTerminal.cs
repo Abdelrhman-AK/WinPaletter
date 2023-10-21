@@ -303,7 +303,7 @@ namespace WinPaletter.UI.Simulation
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
 
-                if ((WPStyle.GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = RoundedSemiRectangle(Rectangle, Radius))
                     {
@@ -436,7 +436,7 @@ namespace WinPaletter.UI.Simulation
 
             string s1 = Program.Lang.Terminal_ConsoleSample;
             string s2 = Program.Lang.Terminal_ThisIsASelection;
-            string s3 = Program.PATH_System32 + ">";
+            string s3 = PathsExt.System32 + ">";
 
             var s1X = s1.Measure(Font) + new SizeF(5f, 0f);
             var s2X = s2.Measure(Font) + new SizeF(2f, 0f);
@@ -471,7 +471,7 @@ namespace WinPaletter.UI.Simulation
 
             if (UseAcrylicOnTitlebar & !DesignMode)
             {
-                if (WPStyle.GetRoundedCorners())
+                if (GetRoundedCorners())
                 {
                     FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
                     FillSemiRect(G, Noise, Rect_Titlebar);
@@ -484,7 +484,7 @@ namespace WinPaletter.UI.Simulation
 
                 if (!Light)
                 {
-                    if (WPStyle.GetRoundedCorners())
+                    if (GetRoundedCorners())
                     {
                         using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
                         {
@@ -499,7 +499,7 @@ namespace WinPaletter.UI.Simulation
                         }
                     }
                 }
-                else if (WPStyle.GetRoundedCorners())
+                else if (GetRoundedCorners())
                 {
                     using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
                     {
@@ -518,7 +518,7 @@ namespace WinPaletter.UI.Simulation
 
             if (!UseAcrylicOnTitlebar)
             {
-                if (WPStyle.GetRoundedCorners())
+                if (GetRoundedCorners())
                 {
                     using (var br = new SolidBrush(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
                     {
@@ -593,7 +593,7 @@ namespace WinPaletter.UI.Simulation
 
             Font fx;
 
-            if (Program.W11)
+            if (OS.W11)
             {
                 fx = new Font("Segoe Fluent Icons", 12f);
             }

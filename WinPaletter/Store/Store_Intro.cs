@@ -16,7 +16,7 @@ namespace WinPaletter
         {
             CheckBox1.Checked = Program.Settings.Store.ShowTips;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.Store.Icon;
         }
 

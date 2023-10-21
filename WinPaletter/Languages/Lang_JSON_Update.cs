@@ -18,7 +18,7 @@ namespace WinPaletter
         {
             Icon = Forms.Lang_JSON_Manage.Icon;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
         }
 
         private void Button8_Click(object sender, EventArgs e)
@@ -143,7 +143,7 @@ namespace WinPaletter
 
                 Cursor = Cursors.Default;
 
-                WPStyle.MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

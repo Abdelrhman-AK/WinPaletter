@@ -12,7 +12,7 @@ namespace WinPaletter
         private void WindowsTerminalCopycat_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.WindowsTerminal.Icon;
 
             try

@@ -18,7 +18,7 @@ namespace WinPaletter
         private void LogonUIXP_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.LogonUI.Icon;
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
@@ -101,7 +101,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemeLog));
             this.TreeView1 = new System.Windows.Forms.TreeView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new WinPaletter.UI.WP.Button();
             this.Button25 = new WinPaletter.UI.WP.Button();
             this.Button22 = new WinPaletter.UI.WP.Button();
             this.Button14 = new WinPaletter.UI.WP.Button();
@@ -39,7 +40,6 @@
             this.animatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox36 = new System.Windows.Forms.PictureBox();
             this.log_lbl = new System.Windows.Forms.Label();
-            this.button1 = new WinPaletter.UI.WP.Button();
             this.animatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +65,24 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.button1.DrawOnGlass = false;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(56)))), ((int)(((byte)(61)))));
+            this.button1.Location = new System.Drawing.Point(12, 565);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 34);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Rescue tools";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Button25
             // 
             this.Button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -72,11 +90,12 @@
             this.Button25.DrawOnGlass = false;
             this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button25.ForeColor = System.Drawing.Color.White;
-            this.Button25.Image = null;
-            this.Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button25.Location = new System.Drawing.Point(410, 565);
+            this.Button25.Image = ((System.Drawing.Image)(resources.GetObject("Button25.Image")));
+            this.Button25.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(107)))), ((int)(((byte)(111)))));
+            this.Button25.Location = new System.Drawing.Point(350, 565);
             this.Button25.Name = "Button25";
-            this.Button25.Size = new System.Drawing.Size(100, 34);
+            this.Button25.Size = new System.Drawing.Size(120, 34);
             this.Button25.TabIndex = 30;
             this.Button25.Text = "Stop timer";
             this.Button25.UseVisualStyleBackColor = false;
@@ -90,11 +109,12 @@
             this.Button22.DrawOnGlass = false;
             this.Button22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button22.ForeColor = System.Drawing.Color.White;
-            this.Button22.Image = null;
-            this.Button22.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button22.Location = new System.Drawing.Point(516, 565);
+            this.Button22.Image = ((System.Drawing.Image)(resources.GetObject("Button22.Image")));
+            this.Button22.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button22.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(109)))), ((int)(((byte)(147)))));
+            this.Button22.Location = new System.Drawing.Point(476, 565);
             this.Button22.Name = "Button22";
-            this.Button22.Size = new System.Drawing.Size(100, 34);
+            this.Button22.Size = new System.Drawing.Size(120, 34);
             this.Button22.TabIndex = 29;
             this.Button22.Text = "Export details";
             this.Button22.UseVisualStyleBackColor = false;
@@ -108,11 +128,12 @@
             this.Button14.DrawOnGlass = false;
             this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button14.ForeColor = System.Drawing.Color.White;
-            this.Button14.Image = null;
-            this.Button14.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button14.Location = new System.Drawing.Point(304, 565);
+            this.Button14.Image = ((System.Drawing.Image)(resources.GetObject("Button14.Image")));
+            this.Button14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button14.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(152)))), ((int)(((byte)(49)))), ((int)(((byte)(57)))));
+            this.Button14.Location = new System.Drawing.Point(224, 565);
             this.Button14.Name = "Button14";
-            this.Button14.Size = new System.Drawing.Size(100, 34);
+            this.Button14.Size = new System.Drawing.Size(120, 34);
             this.Button14.TabIndex = 27;
             this.Button14.Text = "Show errors";
             this.Button14.UseVisualStyleBackColor = false;
@@ -126,11 +147,12 @@
             this.Button8.DrawOnGlass = false;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
-            this.Button8.Image = null;
-            this.Button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button8.Location = new System.Drawing.Point(622, 565);
+            this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
+            this.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(102)))), ((int)(((byte)(61)))));
+            this.Button8.Location = new System.Drawing.Point(602, 565);
             this.Button8.Name = "Button8";
-            this.Button8.Size = new System.Drawing.Size(100, 34);
+            this.Button8.Size = new System.Drawing.Size(120, 34);
             this.Button8.TabIndex = 26;
             this.Button8.Text = "OK";
             this.Button8.UseVisualStyleBackColor = false;
@@ -173,24 +195,6 @@
             this.log_lbl.Size = new System.Drawing.Size(669, 35);
             this.log_lbl.TabIndex = 24;
             this.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.button1.DrawOnGlass = false;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = null;
-            this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button1.Location = new System.Drawing.Point(12, 565);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 34);
-            this.button1.TabIndex = 32;
-            this.button1.Text = "Rescue tools";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ThemeLog
             // 

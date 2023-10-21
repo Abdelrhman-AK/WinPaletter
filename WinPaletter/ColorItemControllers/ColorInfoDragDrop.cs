@@ -11,17 +11,14 @@ namespace WinPaletter
 
         #region Form Shadow
 
-        private bool aeroEnabled;
-
         protected override CreateParams CreateParams
         {
             get
             {
-                CheckAeroEnabled();
                 var cp = base.CreateParams;
-                if (!aeroEnabled)
+                if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | Dwmapi.CS_DROPSHADOW;
+                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle = cp.ExStyle | 33554432;
                     return cp;
                 }
@@ -41,40 +38,26 @@ namespace WinPaletter
         {
             switch (m.Msg)
             {
-                case Dwmapi.WM_NCPAINT:
+                case DWMAPI.WM_NCPAINT:
                     {
                         int val = 2;
-                        if (aeroEnabled)
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            Dwmapi.MARGINS bla = new();
+                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;
                                 bla.leftWidth = 1;
                                 bla.rightWidth = 1;
                                 bla.topHeight = 1;
                             }
-                            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }
                         break;
                     }
             }
 
             base.WndProc(ref m);
-        }
-
-        private void CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-                aeroEnabled = Com;
-            }
-            else
-            {
-                aeroEnabled = false;
-            }
         }
         #endregion
 
@@ -85,16 +68,16 @@ namespace WinPaletter
             Location = MousePosition + (Size)new Point(15, 15);
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
-            Label6.Font = Program.ConsoleFontMedium;
-            Label7.Font = Program.ConsoleFontMedium;
-            Label8.Font = Program.ConsoleFontMedium;
-            Label9.Font = Program.ConsoleFontMedium;
-            Label10.Font = Program.ConsoleFontMedium;
-            Label11.Font = Program.ConsoleFontMedium;
-            Label12.Font = Program.ConsoleFontMedium;
-            Label13.Font = Program.ConsoleFontMedium;
+            Label6.Font = Fonts.ConsoleMedium;
+            Label7.Font = Fonts.ConsoleMedium;
+            Label8.Font = Fonts.ConsoleMedium;
+            Label9.Font = Fonts.ConsoleMedium;
+            Label10.Font = Fonts.ConsoleMedium;
+            Label11.Font = Fonts.ConsoleMedium;
+            Label12.Font = Fonts.ConsoleMedium;
+            Label13.Font = Fonts.ConsoleMedium;
         }
 
         private void Color_From_BackColorChanged(object sender, EventArgs e)

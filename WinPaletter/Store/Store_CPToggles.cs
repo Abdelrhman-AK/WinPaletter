@@ -16,7 +16,7 @@ namespace WinPaletter
         private void Store_CPToggles_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Opacity = 0d;
             Icon = Forms.Store.Icon;
 
@@ -24,9 +24,9 @@ namespace WinPaletter
 
             if (TM.AppTheme.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_AppTheme, true);
-            if (TM.LogonUI7.Enabled & (Program.W7 | Program.W8 | Program.W81))
+            if (TM.LogonUI7.Enabled & (OS.W7 | OS.W8 | OS.W81))
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
-            if (TM.LogonUIXP.Enabled & Program.WXP)
+            if (TM.LogonUIXP.Enabled & OS.WXP)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
             if (TM.Cursor_Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_Cursors, true);
@@ -71,11 +71,11 @@ namespace WinPaletter
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_LogonUI)
                 {
-                    if (Program.W7 | Program.W8 | Program.W81)
+                    if (OS.W7 | OS.W8 | OS.W81)
                     {
                         TM.LogonUI7.Enabled = CheckedListBox1.GetItemChecked(i);
                     }
-                    else if (Program.WXP)
+                    else if (OS.WXP)
                     {
                         TM.LogonUIXP.Enabled = CheckedListBox1.GetItemChecked(i);
                     }

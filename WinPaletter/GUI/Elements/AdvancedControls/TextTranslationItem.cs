@@ -130,7 +130,7 @@ namespace WinPaletter.UI.Controllers
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = Program.RenderingHint;
+            G.TextRenderingHint = Config.RenderingHint;
             DoubleBuffered = true;
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
             var NotTranslatedColor = Program.Style.Colors.NotTranslatedColor;

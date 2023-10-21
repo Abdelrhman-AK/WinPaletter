@@ -14,7 +14,7 @@ namespace WinPaletter
             Icon = Forms.MainFrm.Icon;
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             LoadImagesFromDLL();
 
             switch (Program.TM.Windows81.Start)

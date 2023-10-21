@@ -37,7 +37,7 @@ namespace WinPaletter.Theme.Structures
                 Appearance.RoundedCorners = RoundCorners;
             }
 
-            WPStyle.ApplyStyle();
+            ApplyStyle();
         }
 
         public static bool operator ==(AppTheme First, AppTheme Second)

@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace WinPaletter
+namespace WinPaletter.UI.Controllers
 {
 
     public class CursorControl : ContainerControl

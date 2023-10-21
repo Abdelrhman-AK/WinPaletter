@@ -23,7 +23,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(WindowsVista _DefWin)
         {
-            if (Program.WVista)
+            if (OS.WVista)
             {
                 object y;
 
@@ -31,10 +31,7 @@ namespace WinPaletter.Theme.Structures
                 ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
                 Alpha = Color.FromArgb(Convert.ToInt32(y)).A;
 
-                bool Com = default, Opaque;
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-
-                Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
+                bool Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
 
                 bool Classic = false;
 
@@ -53,12 +50,9 @@ namespace WinPaletter.Theme.Structures
                 {
                     Theme = Windows7.Themes.Classic;
                 }
-                else if (Com)
+                else if (DWMAPI.IsCompositionEnabled())
                 {
-                    if (!Opaque)
-                        Theme = Windows7.Themes.Aero;
-                    else
-                        Theme = Windows7.Themes.AeroOpaque;
+                    Theme = !Opaque ? Windows7.Themes.Aero : Windows7.Themes.AeroOpaque;
                 }
                 else
                 {
@@ -85,9 +79,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -101,9 +95,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -117,9 +111,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);

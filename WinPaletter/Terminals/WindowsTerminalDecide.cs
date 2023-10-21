@@ -13,7 +13,7 @@ namespace WinPaletter
         private void WindowsTerminalDecide_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Icon = Forms.WindowsTerminal.Icon;
             var c = PictureBox1.Image.AverageColor();
             var c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));

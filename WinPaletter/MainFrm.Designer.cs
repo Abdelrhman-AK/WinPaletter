@@ -251,13 +251,13 @@ namespace WinPaletter
             this.W10_Button8 = new WinPaletter.UI.WP.Button();
             this.W10_ShowAccentOnTitlebarAndBorders_Toggle = new WinPaletter.UI.WP.Toggle();
             this.GroupBox45 = new WinPaletter.UI.WP.GroupBox();
-            this.PictureBox33 = new System.Windows.Forms.PictureBox();
+            this.pictureBox35 = new System.Windows.Forms.PictureBox();
             this.Label57 = new System.Windows.Forms.Label();
             this.W10_InactiveTitlebar_pick = new WinPaletter.UI.Controllers.ColorItem();
             this.PictureBox34 = new System.Windows.Forms.PictureBox();
             this.Label58 = new System.Windows.Forms.Label();
             this.GroupBox46 = new WinPaletter.UI.WP.GroupBox();
-            this.PictureBox35 = new System.Windows.Forms.PictureBox();
+            this.pictureBox33 = new System.Windows.Forms.PictureBox();
             this.Label59 = new System.Windows.Forms.Label();
             this.W10_ActiveTitlebar_pick = new WinPaletter.UI.Controllers.ColorItem();
             this.TabPage3 = new System.Windows.Forms.TabPage();
@@ -401,6 +401,7 @@ namespace WinPaletter
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.MainToolbar = new WinPaletter.UI.WP.GroupBox();
+            this.button8 = new WinPaletter.UI.WP.Button();
             this.Button40 = new WinPaletter.UI.WP.Button();
             this.Button39 = new WinPaletter.UI.WP.Button();
             this.Button36 = new WinPaletter.UI.WP.Button();
@@ -517,10 +518,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
             this.GroupBox44.SuspendLayout();
             this.GroupBox45.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
             this.GroupBox46.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).BeginInit();
             this.TabPage3.SuspendLayout();
             this.PaletteContainer_W81.SuspendLayout();
             this.GroupBox17.SuspendLayout();
@@ -2383,15 +2384,15 @@ namespace WinPaletter
             // 
             // GroupBox20
             // 
-            this.GroupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBox20.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.GroupBox20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.GroupBox20.Controls.Add(this.PictureBox11);
             this.GroupBox20.Controls.Add(this.Label11);
             this.GroupBox20.Controls.Add(this.W11_InactiveTitlebar_pick);
-            this.GroupBox20.Location = new System.Drawing.Point(267, 41);
+            this.GroupBox20.Location = new System.Drawing.Point(261, 41);
             this.GroupBox20.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox20.Name = "GroupBox20";
-            this.GroupBox20.Size = new System.Drawing.Size(250, 28);
+            this.GroupBox20.Size = new System.Drawing.Size(256, 28);
             this.GroupBox20.TabIndex = 6;
             // 
             // PictureBox11
@@ -2413,7 +2414,7 @@ namespace WinPaletter
             this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label11.Location = new System.Drawing.Point(30, 4);
             this.Label11.Name = "Label11";
-            this.Label11.Size = new System.Drawing.Size(119, 20);
+            this.Label11.Size = new System.Drawing.Size(125, 20);
             this.Label11.TabIndex = 3;
             this.Label11.Text = "Inactive titlebar";
             this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2426,7 +2427,7 @@ namespace WinPaletter
             this.W11_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.W11_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
             this.W11_InactiveTitlebar_pick.DontShowInfo = false;
-            this.W11_InactiveTitlebar_pick.Location = new System.Drawing.Point(156, 4);
+            this.W11_InactiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W11_InactiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.W11_InactiveTitlebar_pick.Name = "W11_InactiveTitlebar_pick";
             this.W11_InactiveTitlebar_pick.Size = new System.Drawing.Size(90, 20);
@@ -2460,8 +2461,7 @@ namespace WinPaletter
             // 
             // GroupBox9
             // 
-            this.GroupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBox9.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.GroupBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.GroupBox9.Controls.Add(this.PictureBox5);
             this.GroupBox9.Controls.Add(this.Label5);
@@ -2469,7 +2469,7 @@ namespace WinPaletter
             this.GroupBox9.Location = new System.Drawing.Point(3, 41);
             this.GroupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox9.Name = "GroupBox9";
-            this.GroupBox9.Size = new System.Drawing.Size(262, 28);
+            this.GroupBox9.Size = new System.Drawing.Size(256, 28);
             this.GroupBox9.TabIndex = 5;
             // 
             // PictureBox5
@@ -2492,7 +2492,7 @@ namespace WinPaletter
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label5.Location = new System.Drawing.Point(30, 5);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(131, 19);
+            this.Label5.Size = new System.Drawing.Size(125, 19);
             this.Label5.TabIndex = 3;
             this.Label5.Text = "Active titlebar";
             this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2505,7 +2505,7 @@ namespace WinPaletter
             this.W11_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.W11_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
             this.W11_ActiveTitlebar_pick.DontShowInfo = false;
-            this.W11_ActiveTitlebar_pick.Location = new System.Drawing.Point(168, 4);
+            this.W11_ActiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W11_ActiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.W11_ActiveTitlebar_pick.Name = "W11_ActiveTitlebar_pick";
             this.W11_ActiveTitlebar_pick.Size = new System.Drawing.Size(90, 20);
@@ -3638,27 +3638,26 @@ namespace WinPaletter
             // 
             // GroupBox45
             // 
-            this.GroupBox45.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBox45.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.GroupBox45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.GroupBox45.Controls.Add(this.PictureBox33);
+            this.GroupBox45.Controls.Add(this.pictureBox35);
             this.GroupBox45.Controls.Add(this.Label57);
             this.GroupBox45.Controls.Add(this.W10_InactiveTitlebar_pick);
-            this.GroupBox45.Location = new System.Drawing.Point(267, 41);
+            this.GroupBox45.Location = new System.Drawing.Point(261, 41);
             this.GroupBox45.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox45.Name = "GroupBox45";
-            this.GroupBox45.Size = new System.Drawing.Size(250, 28);
+            this.GroupBox45.Size = new System.Drawing.Size(256, 28);
             this.GroupBox45.TabIndex = 6;
             // 
-            // PictureBox33
+            // pictureBox35
             // 
-            this.PictureBox33.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox33.Image")));
-            this.PictureBox33.Location = new System.Drawing.Point(2, 2);
-            this.PictureBox33.Name = "PictureBox33";
-            this.PictureBox33.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox33.TabIndex = 4;
-            this.PictureBox33.TabStop = false;
+            this.pictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox35.Image")));
+            this.pictureBox35.Location = new System.Drawing.Point(2, 2);
+            this.pictureBox35.Name = "pictureBox35";
+            this.pictureBox35.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox35.TabIndex = 5;
+            this.pictureBox35.TabStop = false;
             // 
             // Label57
             // 
@@ -3667,9 +3666,9 @@ namespace WinPaletter
             this.Label57.AutoEllipsis = true;
             this.Label57.BackColor = System.Drawing.Color.Transparent;
             this.Label57.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label57.Location = new System.Drawing.Point(30, 4);
+            this.Label57.Location = new System.Drawing.Point(30, 5);
             this.Label57.Name = "Label57";
-            this.Label57.Size = new System.Drawing.Size(119, 20);
+            this.Label57.Size = new System.Drawing.Size(125, 19);
             this.Label57.TabIndex = 3;
             this.Label57.Text = "Inactive titlebar";
             this.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3682,7 +3681,7 @@ namespace WinPaletter
             this.W10_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.W10_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
             this.W10_InactiveTitlebar_pick.DontShowInfo = false;
-            this.W10_InactiveTitlebar_pick.Location = new System.Drawing.Point(156, 4);
+            this.W10_InactiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W10_InactiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.W10_InactiveTitlebar_pick.Name = "W10_InactiveTitlebar_pick";
             this.W10_InactiveTitlebar_pick.Size = new System.Drawing.Size(90, 20);
@@ -3716,28 +3715,27 @@ namespace WinPaletter
             // 
             // GroupBox46
             // 
-            this.GroupBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBox46.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.GroupBox46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.GroupBox46.Controls.Add(this.PictureBox35);
+            this.GroupBox46.Controls.Add(this.pictureBox33);
             this.GroupBox46.Controls.Add(this.Label59);
             this.GroupBox46.Controls.Add(this.W10_ActiveTitlebar_pick);
             this.GroupBox46.Location = new System.Drawing.Point(3, 41);
             this.GroupBox46.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox46.Name = "GroupBox46";
-            this.GroupBox46.Size = new System.Drawing.Size(262, 28);
+            this.GroupBox46.Size = new System.Drawing.Size(256, 28);
             this.GroupBox46.TabIndex = 5;
             // 
-            // PictureBox35
+            // pictureBox33
             // 
-            this.PictureBox35.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox35.Image")));
-            this.PictureBox35.Location = new System.Drawing.Point(2, 2);
-            this.PictureBox35.Name = "PictureBox35";
-            this.PictureBox35.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox35.TabIndex = 4;
-            this.PictureBox35.TabStop = false;
+            this.pictureBox33.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox33.Image")));
+            this.pictureBox33.Location = new System.Drawing.Point(2, 2);
+            this.pictureBox33.Name = "pictureBox33";
+            this.pictureBox33.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox33.TabIndex = 5;
+            this.pictureBox33.TabStop = false;
             // 
             // Label59
             // 
@@ -3748,7 +3746,7 @@ namespace WinPaletter
             this.Label59.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label59.Location = new System.Drawing.Point(30, 5);
             this.Label59.Name = "Label59";
-            this.Label59.Size = new System.Drawing.Size(131, 19);
+            this.Label59.Size = new System.Drawing.Size(125, 19);
             this.Label59.TabIndex = 3;
             this.Label59.Text = "Active titlebar";
             this.Label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3761,7 +3759,7 @@ namespace WinPaletter
             this.W10_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.W10_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
             this.W10_ActiveTitlebar_pick.DontShowInfo = false;
-            this.W10_ActiveTitlebar_pick.Location = new System.Drawing.Point(168, 4);
+            this.W10_ActiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W10_ActiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.W10_ActiveTitlebar_pick.Name = "W10_ActiveTitlebar_pick";
             this.W10_ActiveTitlebar_pick.Size = new System.Drawing.Size(90, 20);
@@ -5721,6 +5719,7 @@ namespace WinPaletter
             this.MainToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(35)))));
+            this.MainToolbar.Controls.Add(this.button8);
             this.MainToolbar.Controls.Add(this.Button40);
             this.MainToolbar.Controls.Add(this.Button39);
             this.MainToolbar.Controls.Add(this.Button36);
@@ -5745,6 +5744,22 @@ namespace WinPaletter
             this.MainToolbar.Name = "MainToolbar";
             this.MainToolbar.Size = new System.Drawing.Size(1070, 60);
             this.MainToolbar.TabIndex = 1;
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
+            this.button8.DrawOnGlass = false;
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button8.ForeColor = System.Drawing.Color.White;
+            this.button8.Image = ((System.Drawing.Image)(resources.GetObject("button8.Image")));
+            this.button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
+            this.button8.Location = new System.Drawing.Point(542, 3);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(40, 54);
+            this.button8.TabIndex = 36;
+            this.button8.Tag = "Rescue tools";
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // Button40
             // 
@@ -5771,7 +5786,7 @@ namespace WinPaletter
             this.Button39.ForeColor = System.Drawing.Color.White;
             this.Button39.Image = ((System.Drawing.Image)(resources.GetObject("Button39.Image")));
             this.Button39.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(100)))), ((int)(((byte)(136)))));
-            this.Button39.Location = new System.Drawing.Point(583, 3);
+            this.Button39.Location = new System.Drawing.Point(624, 3);
             this.Button39.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button39.Name = "Button39";
             this.Button39.Size = new System.Drawing.Size(40, 54);
@@ -5891,7 +5906,7 @@ namespace WinPaletter
             this.Button12.ForeColor = System.Drawing.Color.White;
             this.Button12.Image = ((System.Drawing.Image)(resources.GetObject("Button12.Image")));
             this.Button12.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(94)))), ((int)(((byte)(130)))));
-            this.Button12.Location = new System.Drawing.Point(624, 3);
+            this.Button12.Location = new System.Drawing.Point(665, 3);
             this.Button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button12.Name = "Button12";
             this.Button12.Size = new System.Drawing.Size(40, 54);
@@ -5925,7 +5940,7 @@ namespace WinPaletter
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(45)))), ((int)(((byte)(137)))));
-            this.Button6.Location = new System.Drawing.Point(542, 3);
+            this.Button6.Location = new System.Drawing.Point(583, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(40, 54);
@@ -5982,10 +5997,10 @@ namespace WinPaletter
             // 
             this.status_lbl.BackColor = System.Drawing.Color.Transparent;
             this.status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.status_lbl.Location = new System.Drawing.Point(667, 5);
+            this.status_lbl.Location = new System.Drawing.Point(710, 5);
             this.status_lbl.Name = "status_lbl";
             this.status_lbl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.status_lbl.Size = new System.Drawing.Size(337, 50);
+            this.status_lbl.Size = new System.Drawing.Size(292, 50);
             this.status_lbl.TabIndex = 19;
             this.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -6392,10 +6407,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
             this.GroupBox44.ResumeLayout(false);
             this.GroupBox45.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
             this.GroupBox46.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).EndInit();
             this.TabPage3.ResumeLayout(false);
             this.PaletteContainer_W81.ResumeLayout(false);
             this.GroupBox17.ResumeLayout(false);
@@ -6737,13 +6752,11 @@ namespace WinPaletter
         internal UI.WP.Button W10_Button8;
         internal UI.WP.Toggle W10_ShowAccentOnTitlebarAndBorders_Toggle;
         internal UI.WP.GroupBox GroupBox45;
-        internal PictureBox PictureBox33;
         internal Label Label57;
         internal UI.Controllers.ColorItem W10_InactiveTitlebar_pick;
         internal PictureBox PictureBox34;
         internal Label Label58;
         internal UI.WP.GroupBox GroupBox46;
-        internal PictureBox PictureBox35;
         internal Label Label59;
         internal UI.Controllers.ColorItem W10_ActiveTitlebar_pick;
         internal UI.WP.RadioImage Select_W7;
@@ -6843,5 +6856,8 @@ namespace WinPaletter
         internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Button Button40;
         internal UI.WP.Button button41;
+        internal UI.WP.Button button8;
+        internal PictureBox pictureBox35;
+        internal PictureBox pictureBox33;
     }
 }

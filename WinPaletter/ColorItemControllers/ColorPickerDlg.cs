@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -24,20 +25,17 @@ namespace WinPaletter
         private List<Color> Colors_List = new List<Color>();
         private Conditions _Conditions = new Conditions();
         private readonly int _Speed = 40;
+        private bool _EnableAlpha;
 
         #region Form Shadow
-
-        private bool aeroEnabled;
-
         protected override CreateParams CreateParams
         {
             get
             {
-                CheckAeroEnabled();
                 var cp = base.CreateParams;
-                if (!aeroEnabled)
+                if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | Dwmapi.CS_DROPSHADOW;
+                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle = cp.ExStyle | 33554432;
                     return cp;
                 }
@@ -57,20 +55,20 @@ namespace WinPaletter
         {
             switch (m.Msg)
             {
-                case Dwmapi.WM_NCPAINT:
+                case DWMAPI.WM_NCPAINT:
                     {
                         int val = 2;
-                        if (aeroEnabled)
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            Dwmapi.MARGINS bla = new();
+                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;
                                 bla.leftWidth = 1;
                                 bla.rightWidth = 1;
                                 bla.topHeight = 1;
                             }
-                            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }
 
                         break;
@@ -78,20 +76,6 @@ namespace WinPaletter
             }
 
             base.WndProc(ref m);
-        }
-
-        private void CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-                aeroEnabled = Com;
-            }
-            else
-            {
-                aeroEnabled = false;
-            }
         }
         #endregion
 
@@ -120,7 +104,7 @@ namespace WinPaletter
         private void ColorPicker_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             ComboBox1.PopulateThemes();
 
             User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE | User32.AnimateWindowFlags.AW_BLEND);
@@ -156,7 +140,6 @@ namespace WinPaletter
 
             FlowLayoutPanel1.ResumeLayout();
         }
-
 
         public void GetColorsFromPalette(Theme.Manager TM)
         {
@@ -235,17 +218,19 @@ namespace WinPaletter
                 var c = Ctrl[0].BackColor;
                 ColorEditorManager1.Color = Ctrl[0].BackColor;
                 InitColor = Ctrl[0].BackColor;
-
+                _EnableAlpha = EnableAlpha;
                 ColorControls_List = Ctrl;
+
+                ColorEditorManager1.ColorEditor.ShowAlphaChannel = _EnableAlpha;
 
                 if (Ctrl[0] is UI.Controllers.ColorItem)
                 {
                     {
-                        var temp = (UI.Controllers.ColorItem)Ctrl[0];
+                        var ctrl = (UI.Controllers.ColorItem)Ctrl[0];
                         GetColorsHistory((UI.Controllers.ColorItem)Ctrl[0]);
-                        temp.PauseColorsHistory = true;
-                        temp.ColorPickerOpened = true;
-                        temp.Refresh();
+                        ctrl.PauseColorsHistory = true;
+                        ctrl.ColorPickerOpened = true;
+                        ctrl.Refresh();
                     }
                 }
 
@@ -270,15 +255,15 @@ namespace WinPaletter
                 if (Ctrl[0] is UI.Controllers.ColorItem)
                 {
                     {
-                        var temp1 = (UI.Controllers.ColorItem)Ctrl[0];
-                        temp1.Refresh();
-                        temp1.PauseColorsHistory = false;
-                        temp1.ColorPickerOpened = false;
-                        temp1.UpdateColorsHistory();
+                        var ColorItem = (UI.Controllers.ColorItem)Ctrl[0];
+                        ColorItem.Refresh();
+                        ColorItem.PauseColorsHistory = false;
+                        ColorItem.ColorPickerOpened = false;
+                        ColorItem.UpdateColorsHistory();
                     }
                 }
 
-                if (EnableAlpha)
+                if (_EnableAlpha)
                 {
                     return c;
                 }
@@ -323,617 +308,612 @@ namespace WinPaletter
 
         private void Change_Color_Preview(object sender, EventArgs e)
         {
-            int steps = 30;
+            int steps = 25;
             int delay = 1;
 
-            foreach (Control ctrl in ColorControls_List)
+            Color color = _EnableAlpha ? ColorEditorManager1.Color : Color.FromArgb(255, ColorEditorManager1.Color);
+
+            foreach (Control control in ColorControls_List)
             {
-
-                if (ctrl is UI.Simulation.Window)
+                if (control is UI.Simulation.Window)
                 {
+                    var Window = (UI.Simulation.Window)control;
+
+                    if (!_Conditions.Win7)
                     {
-                        var temp = (UI.Simulation.Window)ctrl;
-                        if (!_Conditions.Win7)
-                        {
-                            if (_Conditions.Window_ActiveTitlebar)
-                            {
-                                temp.AccentColor_Active = ColorEditorManager1.Color;
-                            }
+                        if (_Conditions.Window_ActiveTitlebar)
+                            Window.AccentColor_Active = color;
 
-                            if (_Conditions.Window_InactiveTitlebar)
-                            {
-                                temp.AccentColor_Inactive = ColorEditorManager1.Color;
-                            }
-                            else
-                            {
-                                temp.AccentColor_Active = ColorEditorManager1.Color;
-                            }
-                        }
+                        else if (_Conditions.Window_InactiveTitlebar)
+                            Window.AccentColor_Inactive = color;
 
+                        else
+                            Window.AccentColor_Active = color;
 
-                        else if (_Conditions.Color1)
-                        {
-                            temp.AccentColor_Active = ColorEditorManager1.Color;
-                            temp.AccentColor_Inactive = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.Color2)
-                        {
-                            temp.AccentColor2_Active = ColorEditorManager1.Color;
-                            temp.AccentColor2_Inactive = ColorEditorManager1.Color;
-
-                        }
-
-                        temp.Refresh();
                     }
+
+                    else if (_Conditions.Color1)
+                    {
+                        Window.AccentColor_Active = color;
+                        Window.AccentColor_Inactive = color;
+                    }
+
+                    else if (_Conditions.Color2)
+                    {
+                        Window.AccentColor2_Active = color;
+                        Window.AccentColor2_Inactive = color;
+                    }
+
+                    Window.Refresh();
                 }
 
-                else if (ctrl is UI.Simulation.WinElement)
+                else if (control is UI.Simulation.WinElement)
                 {
                     {
-                        var temp1 = (UI.Simulation.WinElement)ctrl;
+                        var WinElement = (UI.Simulation.WinElement)control;
 
-                        if (temp1.Style == UI.Simulation.WinElement.Styles.Taskbar11 | temp1.Style == UI.Simulation.WinElement.Styles.Taskbar10)
+                        if (WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar11 | WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar10)
                         {
                             if (_Conditions.AppUnderlineOnly)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "AppUnderline", temp1.AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light(), steps, delay);
-                                temp1.Refresh();
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppUnderline", WinElement.AppUnderline, color.Light(), steps, delay);
                             }
 
                             else if (_Conditions.AppUnderlineWithTaskbar)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "BackColor", temp1.BackColor, Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color), steps, delay);
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "AppUnderline", temp1.AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light(), steps, delay);
-                                temp1.Refresh();
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppUnderline", WinElement.AppUnderline, color.Light(), steps, delay);
                             }
 
                             else if (_Conditions.AppBackgroundOnly)
                             {
-
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "AppBackground", temp1.AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay);
-                                temp1.Refresh();
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppBackground", WinElement.AppBackground, color, steps, delay);
                             }
                             else if (_Conditions.StartColorOnly)
                             {
-
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "StartColor", temp1.StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay);
-                                temp1.Refresh();
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "StartColor", WinElement.StartColor, color, steps, delay);
                             }
                             else
                             {
-                                if (_Conditions.BackColor1)
+                                if (_Conditions.Background)
                                 {
-                                    temp1.BackColor = Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color);
+                                    WinElement.Background = color;
                                 }
-                                else if (_Conditions.BackColor2)
+                                else if (_Conditions.Background2)
                                 {
-                                    temp1.Background2 = Color.FromArgb(temp1.Background2.A, ColorEditorManager1.Color);
+                                    WinElement.Background2 = color;
                                 }
                                 else
                                 {
-                                    Visual.FadeColor((UI.Simulation.WinElement)ctrl, "BackColor", temp1.BackColor, Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color), steps, delay);
+                                    Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
                                 }
-                                temp1.Refresh();
                             }
                         }
 
-                        else if (temp1.Style == UI.Simulation.WinElement.Styles.ActionCenter11 & _Conditions.ActionCenterBtn)
+                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter11 & _Conditions.ActionCenterBtn)
                         {
-                            Visual.FadeColor((UI.Simulation.WinElement)ctrl, "ActionCenterButton_Normal", temp1.ActionCenterButton_Normal, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay);
-                            temp1.Refresh();
+                            Visual.FadeColor((UI.Simulation.WinElement)control, "ActionCenterButton_Normal", WinElement.ActionCenterButton_Normal, color, steps, delay);
                         }
 
-                        else if (temp1.Style == UI.Simulation.WinElement.Styles.ActionCenter10 & _Conditions.ActionCenterLink)
+                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter10 & _Conditions.ActionCenterLink)
                         {
-                            Visual.FadeColor((UI.Simulation.WinElement)ctrl, "LinkColor", temp1.LinkColor, Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color), steps, delay);
-                            temp1.Refresh();
+                            Visual.FadeColor((UI.Simulation.WinElement)control, "LinkColor", WinElement.LinkColor, color, steps, delay);
                         }
 
                         else
                         {
-                            if (_Conditions.BackColor1)
+                            if (_Conditions.Background)
                             {
-                                temp1.BackColor = Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color);
+                                WinElement.Background = color;
                             }
-                            else if (_Conditions.BackColor2)
+                            else if (_Conditions.Background2)
                             {
-                                temp1.Background2 = Color.FromArgb(temp1.Background2.A, ColorEditorManager1.Color);
+                                WinElement.Background2 = color;
                             }
                             else
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)ctrl, "BackColor", temp1.BackColor, Color.FromArgb(temp1.BackColor.A, ColorEditorManager1.Color), steps, delay);
+                                Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
                             }
 
-                            temp1.Refresh();
                         }
+
+                        WinElement.Refresh();
                     }
                 }
 
-                else if (ctrl is UI.Controllers.StoreItem)
+                else if (control is UI.Controllers.StoreItem)
                 {
+                    var StoreItem = (UI.Controllers.StoreItem)control;
+                    if (_Conditions.Background)
                     {
-                        var temp2 = (UI.Controllers.StoreItem)ctrl;
-                        if (_Conditions.BackColor1)
-                        {
-                            temp2.TM.Info.Color1 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-                        else if (_Conditions.BackColor2)
-                        {
-                            temp2.TM.Info.Color2 = Color.FromArgb(255, ColorEditorManager1.Color);
-
-                        }
-                        temp2.Invalidate();
+                        StoreItem.TM.Info.Color1 = color;
                     }
+                    else if (_Conditions.Background2)
+                    {
+                        StoreItem.TM.Info.Color2 = color;
+
+                    }
+                    StoreItem.Invalidate();
                 }
 
-                else if (ctrl is Label)
+                else if (control is Label)
                 {
                     if (_Conditions.RetroAppWorkspace | _Conditions.RetroBackground)
                     {
-                        ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
+                        control.BackColor = Color.FromArgb(255, color);
                     }
                     else
                     {
-                        Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color), steps, delay);
+                        Visual.FadeColor(control, "Forecolor", control.ForeColor, Color.FromArgb(control.ForeColor.A, color), steps, delay);
                     }
                 }
 
-                else if (ctrl is UI.Retro.WindowR)
+                else if (control is UI.Retro.WindowR)
                 {
+                    var WindowR = (UI.Retro.WindowR)control;
+                    if (_Conditions.WindowRColor1)
+                        WindowR.Color1 = color;
+
+                    if (_Conditions.WindowRColor2)
+                        WindowR.Color2 = color;
+
+                    if (_Conditions.WindowRForeColor)
+                        WindowR.ForeColor = color;
+
+                    if (_Conditions.WindowRBorder)
+                        WindowR.ColorBorder = color;
+
+                    if (_Conditions.ButtonRShadow)
+                        WindowR.ButtonShadow = color;
+
+                    if (_Conditions.ButtonRDkShadow)
+                        WindowR.ButtonDkShadow = color;
+
+                    if (_Conditions.ButtonRHilight)
+                        WindowR.ButtonHilight = color;
+
+                    if (_Conditions.ButtonRLight)
+                        WindowR.ButtonLight = color;
+
+                    if (_Conditions.ButtonRFace)
                     {
-                        var temp3 = (UI.Retro.WindowR)ctrl;
-                        if (_Conditions.WindowRColor1)
-                            temp3.Color1 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.WindowRColor2)
-                            temp3.Color2 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.WindowRForeColor)
-                            temp3.ForeColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.WindowRBorder)
-                            temp3.ColorBorder = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRShadow)
-                            temp3.ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRDkShadow)
-                            temp3.ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRHilight)
-                            temp3.ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRLight)
-                            temp3.ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRFace)
+                        if (!WindowR.UseItAsMenu)
                         {
-                            if (!temp3.UseItAsMenu)
-                            {
-                                temp3.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                            }
-                            else
-                            {
-                                temp3.ButtonFace = Color.FromArgb(255, ColorEditorManager1.Color);
-                            }
+                            WindowR.BackColor = color;
                         }
-                        if (_Conditions.RetroBackground)
-                            temp3.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        temp3.Refresh();
-                    }
-                }
-
-                else if (ctrl is UI.Retro.Preview3D)
-                {
-                    {
-                        var temp4 = (UI.Retro.Preview3D)ctrl;
-                        if (_Conditions.ButtonRFace)
-                            temp4.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.WindowRFrame)
-                            temp4.WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRText)
-                            temp4.ForeColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRShadow)
-                            temp4.ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRDkShadow)
-                            temp4.ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRHilight)
-                            temp4.ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRLight)
-                            temp4.ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        temp4.Refresh();
-                    }
-                }
-
-                else if (ctrl is UI.Retro.TextBoxR)
-                {
-                    {
-                        var temp5 = (UI.Retro.TextBoxR)ctrl;
-
-                        if (_Conditions.WindowRForeColor)
-                            temp5.ForeColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRShadow)
-                            temp5.ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRDkShadow)
-                            temp5.ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRHilight)
-                            temp5.ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRLight)
-                            temp5.ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRFace)
-                            temp5.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.RetroBackground)
-                            temp5.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-
-                        temp5.Refresh();
-                    }
-                }
-
-                else if (ctrl is UI.Retro.ButtonR)
-                {
-                    {
-                        var temp6 = (UI.Retro.ButtonR)ctrl;
-                        if (_Conditions.ButtonRFace)
-                            temp6.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.WindowRFrame)
-                            temp6.WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRText)
-                            temp6.ForeColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRShadow)
-                            temp6.ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRDkShadow)
-                            temp6.ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRHilight)
-                            temp6.ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (_Conditions.ButtonRLight)
-                            temp6.ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color);
-                        temp6.Refresh();
-                    }
-                }
-
-                else if (ctrl is UI.Retro.ScrollBarR)
-                {
-                    {
-                        var temp7 = (UI.Retro.ScrollBarR)ctrl;
-                        if (_Conditions.ButtonRHilight)
-                            temp7.ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
                         else
-                            temp7.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        temp7.Refresh();
+                        {
+                            WindowR.ButtonFace = color;
+                        }
                     }
+
+                    if (_Conditions.RetroBackground)
+                        WindowR.BackColor = color;
+
+                    WindowR.Refresh();
                 }
 
-                else if (ctrl is Panel)
+                else if (control is UI.Retro.Preview3D)
                 {
-                    if (_Conditions.RetroHighlight17BitFixer & ctrl is UI.Retro.PanelR)
+                    var Preview3D = (UI.Retro.Preview3D)control;
+                    if (_Conditions.ButtonRFace)
+                        Preview3D.BackColor = color;
+
+                    if (_Conditions.WindowRFrame)
+                        Preview3D.WindowFrame = color;
+
+                    if (_Conditions.ButtonRText)
+                        Preview3D.ForeColor = color;
+
+                    if (_Conditions.ButtonRShadow)
+                        Preview3D.ButtonShadow = color;
+
+                    if (_Conditions.ButtonRDkShadow)
+                        Preview3D.ButtonDkShadow = color;
+
+                    if (_Conditions.ButtonRHilight)
+                        Preview3D.ButtonHilight = color;
+
+                    if (_Conditions.ButtonRLight)
+                        Preview3D.ButtonLight = color;
+
+                    Preview3D.Refresh();
+                }
+
+                else if (control is UI.Retro.TextBoxR)
+                {
+                    var TextBoxR = (UI.Retro.TextBoxR)control;
+                    if (_Conditions.WindowRForeColor)
+                        TextBoxR.ForeColor = color;
+
+                    if (_Conditions.ButtonRShadow)
+                        TextBoxR.ButtonShadow = color;
+
+                    if (_Conditions.ButtonRDkShadow)
+                        TextBoxR.ButtonDkShadow = color;
+
+                    if (_Conditions.ButtonRHilight)
+                        TextBoxR.ButtonHilight = color;
+
+                    if (_Conditions.ButtonRLight)
+                        TextBoxR.ButtonLight = color;
+
+                    if (_Conditions.ButtonRFace)
+                        TextBoxR.BackColor = color;
+
+                    if (_Conditions.RetroBackground)
+                        TextBoxR.BackColor = color;
+
+                    TextBoxR.Refresh();
+                }
+
+                else if (control is UI.Retro.ButtonR)
+                {
+                    var ButtonR = (UI.Retro.ButtonR)control;
+                    if (_Conditions.ButtonRFace)
+                        ButtonR.BackColor = color;
+
+                    if (_Conditions.WindowRFrame)
+                        ButtonR.WindowFrame = color;
+
+                    if (_Conditions.ButtonRText)
+                        ButtonR.ForeColor = color;
+
+                    if (_Conditions.ButtonRShadow)
+                        ButtonR.ButtonShadow = color;
+
+                    if (_Conditions.ButtonRDkShadow)
+                        ButtonR.ButtonDkShadow = color;
+
+                    if (_Conditions.ButtonRHilight)
+                        ButtonR.ButtonHilight = color;
+
+                    if (_Conditions.ButtonRLight)
+                        ButtonR.ButtonLight = color;
+
+                    ButtonR.Refresh();
+                }
+
+                else if (control is UI.Retro.ScrollBarR)
+                {
+                    var ScrollBarR = (UI.Retro.ScrollBarR)control;
+
+                    if (_Conditions.ButtonRHilight)
+                        ScrollBarR.ButtonHilight = color;
+
+                    else
+                        ScrollBarR.BackColor = color;
+
+                    ScrollBarR.Refresh();
+                }
+
+                else if (control is Panel)
+                {
+                    if (_Conditions.RetroHighlight17BitFixer && control is UI.Retro.PanelR)
                     {
-                        ((UI.Retro.PanelR)ctrl).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
+                        ((UI.Retro.PanelR)control).ButtonShadow = color;
                     }
-                    else if (!(ctrl is UI.WP.GroupBox) & !(ctrl is UI.Controllers.ColorItem))
+
+                    else if (control is not UI.WP.GroupBox && control is not UI.Controllers.ColorItem)
                     {
                         if (_Conditions.RetroAppWorkspace | _Conditions.RetroBackground)
-                            ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        if (ctrl is UI.Retro.PanelR)
+                            control.BackColor = color;
+
+                        if (control is UI.Retro.PanelR)
                         {
                             if (_Conditions.ButtonRHilight)
-                                ((UI.Retro.PanelR)ctrl).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color);
+                                ((UI.Retro.PanelR)control).ButtonHilight = color;
+
                             if (_Conditions.ButtonRShadow)
-                                ((UI.Retro.PanelR)ctrl).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color);
+                                ((UI.Retro.PanelR)control).ButtonShadow = color;
                         }
-                        if (ctrl is Panel)
+
+                        if (control is Panel)
                         {
-                            ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
+                            control.BackColor = color;
                         }
                     }
 
-                    if (ctrl is UI.Controllers.ColorItem)
+                    else if (control is UI.Controllers.ColorItem)
                     {
-                        Visual.FadeColor(ctrl, "BackColor", ctrl.BackColor, ColorEditorManager1.Color, steps, delay);
+                        Visual.FadeColor(control, "BackColor", control.BackColor, color, steps, delay);
                     }
-                    ctrl.Refresh();
+
+                    control.Refresh();
                 }
 
-                else if (ctrl is UI.Retro.TextBoxR)
+                else if (control is UI.Retro.TextBoxR)
                 {
+                    var TextBoxR = (UI.Retro.TextBoxR)control;
+
+                    if (_Conditions.WindowRText)
                     {
-                        var temp8 = (UI.Retro.TextBoxR)ctrl;
-                        if (_Conditions.WindowRText)
-                        {
-                            ctrl.ForeColor = Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color);
-                        }
-                        else
-                        {
-                            ctrl.BackColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color);
-                        }
-                        ctrl.Refresh();
+                        TextBoxR.ForeColor = Color.FromArgb(control.ForeColor.A, color);
                     }
+
+                    else
+                    {
+                        TextBoxR.BackColor = Color.FromArgb(control.BackColor.A, color);
+                    }
+
+                    TextBoxR.Refresh();
                 }
 
-                else if (ctrl is UI.Simulation.WinTerminal)
+                else if (control is UI.Simulation.WinTerminal)
                 {
+                    var WinTerminal = (UI.Simulation.WinTerminal)control;
+
+                    if (_Conditions.Terminal_Back)
                     {
-                        var temp9 = (UI.Simulation.WinTerminal)ctrl;
-
-                        if (_Conditions.Terminal_Back)
-                        {
-                            temp9.Color_Background = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_Fore)
-                        {
-                            temp9.Color_Foreground = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_Selection)
-                        {
-                            temp9.Color_Selection = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_Cursor)
-                        {
-                            temp9.Color_Cursor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_TabColor)
-                        {
-                            temp9.TabColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_TabActive)
-                        {
-                            temp9.Color_TabFocused = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_TabInactive)
-                        {
-                            temp9.Color_TabUnFocused = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_TitlebarActive)
-                        {
-                            temp9.Color_Titlebar = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.Terminal_TitlebarInactive)
-                        {
-                            temp9.Color_Titlebar_Unfocused = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        temp9.Refresh();
+                        WinTerminal.Color_Background = Color.FromArgb(255, color);
                     }
+
+                    else if (_Conditions.Terminal_Fore)
+                    {
+                        WinTerminal.Color_Foreground = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_Selection)
+                    {
+                        WinTerminal.Color_Selection = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_Cursor)
+                    {
+                        WinTerminal.Color_Cursor = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_TabColor)
+                    {
+                        WinTerminal.TabColor = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_TabActive)
+                    {
+                        WinTerminal.Color_TabFocused = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_TabInactive)
+                    {
+                        WinTerminal.Color_TabUnFocused = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_TitlebarActive)
+                    {
+                        WinTerminal.Color_Titlebar = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.Terminal_TitlebarInactive)
+                    {
+                        WinTerminal.Color_Titlebar_Unfocused = Color.FromArgb(255, color);
+                    }
+
+                    WinTerminal.Refresh();
                 }
 
-                else if (ctrl is UI.Simulation.WinCMD)
+                else if (control is UI.Simulation.WinCMD)
                 {
+                    var WinCMD = (UI.Simulation.WinCMD)control;
+                    if (_Conditions.CMD_ColorTable00)
                     {
-                        var temp10 = (UI.Simulation.WinCMD)ctrl;
-                        if (_Conditions.CMD_ColorTable00)
-                        {
-                            temp10.CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.CMD_ColorTable01)
-                        {
-                            temp10.CMD_ColorTable01 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        else if (_Conditions.CMD_ColorTable02)
-                        {
-                            temp10.CMD_ColorTable02 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable03)
-                        {
-                            temp10.CMD_ColorTable03 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable04)
-                        {
-                            temp10.CMD_ColorTable04 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable05)
-                        {
-                            temp10.CMD_ColorTable05 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable06)
-                        {
-                            temp10.CMD_ColorTable06 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable07)
-                        {
-                            temp10.CMD_ColorTable07 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable08)
-                        {
-                            temp10.CMD_ColorTable08 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable09)
-                        {
-                            temp10.CMD_ColorTable09 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable10)
-                        {
-                            temp10.CMD_ColorTable10 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable11)
-                        {
-                            temp10.CMD_ColorTable11 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable12)
-                        {
-                            temp10.CMD_ColorTable12 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable13)
-                        {
-                            temp10.CMD_ColorTable13 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable14)
-                        {
-                            temp10.CMD_ColorTable14 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-
-                        else if (_Conditions.CMD_ColorTable15)
-                        {
-                            temp10.CMD_ColorTable15 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-                        else
-                        {
-                            temp10.CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-
-                        temp10.Refresh();
+                        WinCMD.CMD_ColorTable00 = Color.FromArgb(255, color);
                     }
+
+                    else if (_Conditions.CMD_ColorTable01)
+                    {
+                        WinCMD.CMD_ColorTable01 = Color.FromArgb(255, color);
+                    }
+
+                    else if (_Conditions.CMD_ColorTable02)
+                    {
+                        WinCMD.CMD_ColorTable02 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable03)
+                    {
+                        WinCMD.CMD_ColorTable03 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable04)
+                    {
+                        WinCMD.CMD_ColorTable04 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable05)
+                    {
+                        WinCMD.CMD_ColorTable05 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable06)
+                    {
+                        WinCMD.CMD_ColorTable06 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable07)
+                    {
+                        WinCMD.CMD_ColorTable07 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable08)
+                    {
+                        WinCMD.CMD_ColorTable08 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable09)
+                    {
+                        WinCMD.CMD_ColorTable09 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable10)
+                    {
+                        WinCMD.CMD_ColorTable10 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable11)
+                    {
+                        WinCMD.CMD_ColorTable11 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable12)
+                    {
+                        WinCMD.CMD_ColorTable12 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable13)
+                    {
+                        WinCMD.CMD_ColorTable13 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable14)
+                    {
+                        WinCMD.CMD_ColorTable14 = Color.FromArgb(255, color);
+                    }
+
+
+                    else if (_Conditions.CMD_ColorTable15)
+                    {
+                        WinCMD.CMD_ColorTable15 = Color.FromArgb(255, color);
+                    }
+                    else
+                    {
+                        WinCMD.CMD_ColorTable00 = Color.FromArgb(255, color);
+                    }
+
+                    WinCMD.Refresh();
                 }
 
-                else if (ctrl is CursorControl)
+                else if (control is UI.Controllers.CursorControl)
                 {
+                    var CursorControl = (UI.Controllers.CursorControl)control;
+
+                    if (_Conditions.CursorBack1)
                     {
-                        var temp11 = (CursorControl)ctrl;
-                        if (_Conditions.CursorBack1)
-                        {
-                            temp11.Prop_PrimaryColor1 = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.CursorBack2)
-                        {
-                            temp11.Prop_PrimaryColor2 = ColorEditorManager1.Color;
-                        }
-
-                        else if (_Conditions.CursorLine1)
-                        {
-                            temp11.Prop_SecondaryColor1 = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.CursorLine2)
-                        {
-                            temp11.Prop_SecondaryColor2 = ColorEditorManager1.Color;
-                        }
-
-                        else if (_Conditions.CursorCircle1)
-                        {
-                            temp11.Prop_LoadingCircleBack1 = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.CursorCircle2)
-                        {
-                            temp11.Prop_LoadingCircleBack2 = ColorEditorManager1.Color;
-                        }
-
-                        else if (_Conditions.CursorCircleHot1)
-                        {
-                            temp11.Prop_LoadingCircleHot1 = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.CursorCircleHot2)
-                        {
-                            temp11.Prop_LoadingCircleHot2 = ColorEditorManager1.Color;
-                        }
-                        else if (_Conditions.CursorShadow)
-                        {
-                            temp11.Prop_Shadow_Color = ColorEditorManager1.Color;
-
-                        }
-
-                        temp11.Refresh();
+                        CursorControl.Prop_PrimaryColor1 = color;
                     }
+                    else if (_Conditions.CursorBack2)
+                    {
+                        CursorControl.Prop_PrimaryColor2 = color;
+                    }
+
+                    else if (_Conditions.CursorLine1)
+                    {
+                        CursorControl.Prop_SecondaryColor1 = color;
+                    }
+                    else if (_Conditions.CursorLine2)
+                    {
+                        CursorControl.Prop_SecondaryColor2 = color;
+                    }
+
+                    else if (_Conditions.CursorCircle1)
+                    {
+                        CursorControl.Prop_LoadingCircleBack1 = color;
+                    }
+                    else if (_Conditions.CursorCircle2)
+                    {
+                        CursorControl.Prop_LoadingCircleBack2 = color;
+                    }
+
+                    else if (_Conditions.CursorCircleHot1)
+                    {
+                        CursorControl.Prop_LoadingCircleHot1 = color;
+                    }
+                    else if (_Conditions.CursorCircleHot2)
+                    {
+                        CursorControl.Prop_LoadingCircleHot2 = color;
+                    }
+
+                    else if (_Conditions.CursorShadow)
+                    {
+                        CursorControl.Prop_Shadow_Color = color;
+
+                    }
+
+                    CursorControl.Refresh();
                 }
 
                 else
                 {
-                    try
-                    {
-                        Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay);
-                    }
+                    try { Visual.FadeColor(control, "backcolor", control.BackColor, Color.FromArgb(255, color), steps, delay); }
                     catch
                     {
-                        try
-                        {
-                            ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color);
-                        }
-                        catch
-                        {
-                        }
+                        try { control.BackColor = Color.FromArgb(255, color); }
+                        catch { }
                     }
                 }
-
             }
 
-            if ((Program.WVista | Program.W7 | Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+            if ((OS.WVista || OS.W7 || OS.W8 || OS.W81) && Program.Settings.Miscellaneous.Win7LivePreview)
             {
-                if (_Conditions.Win7LivePreview_Colorization)
+                if (_Conditions.LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(ColorEditorManager1.Color, Program.TM.Windows7.ColorizationAfterglow);
+                    UpdateDWMPreview(ColorEditorManager1.Color, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
-                if (_Conditions.Win7LivePreview_AfterGlow)
+                if (_Conditions.LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(Program.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
+                    UpdateDWMPreview(Program.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
                 }
             }
         }
 
         #region DWM Windows 7 Live Preview
-        public static void UpdateWin7Preview(Color Color1, Color Color2)
+        public static void UpdateDWMPreview(Color Color1, Color Color2)
         {
             try
             {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-
-                if (Com)
+                if (DWMAPI.IsCompositionEnabled())
                 {
-                    var temp = new Dwmapi.DWM_COLORIZATION_PARAMS()
+                    var DCP = new DWMAPI.DWM_COLORIZATION_PARAMS()
                     {
-                        clrColor = Color1.ToArgb(),
-                        clrAfterGlow = Color2.ToArgb()
+                        clrColor = (uint)Color1.ToArgb(),
+                        clrAfterGlow = (uint)Color2.ToArgb()
                     };
 
                     if (Program.PreviewStyle == WindowStyle.W81)
                     {
-                        temp.nIntensity = Program.TM.Windows81.ColorizationColorBalance;
+                        DCP.nIntensity = (uint)Program.TM.Windows81.ColorizationColorBalance;
                     }
 
                     else if (Program.PreviewStyle == WindowStyle.W7)
                     {
-                        temp.nIntensity = Program.TM.Windows7.ColorizationColorBalance;
+                        DCP.nIntensity = (uint)Program.TM.Windows7.ColorizationColorBalance;
 
-                        temp.clrAfterGlowBalance = Program.TM.Windows7.ColorizationAfterglowBalance;
-                        temp.clrBlurBalance = Program.TM.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = Program.TM.Windows7.ColorizationGlassReflectionIntensity;
-                        temp.fOpaque = Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                        DCP.clrAfterGlowBalance = (uint)Program.TM.Windows7.ColorizationAfterglowBalance;
+                        DCP.clrBlurBalance = (uint)Program.TM.Windows7.ColorizationBlurBalance;
+                        DCP.clrGlassReflectionIntensity = (uint)Program.TM.Windows7.ColorizationGlassReflectionIntensity;
+                        DCP.fOpaque = Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     else if (Program.PreviewStyle == WindowStyle.WVista)
                     {
-                        temp.clrColor = Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
-                        temp.clrAfterGlowBalance = Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
+                        DCP.clrColor = (uint)Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
+                        DCP.clrAfterGlowBalance = (uint)Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
 
-                        // temp.nIntensity = My.Manager.WindowsVista.ColorizationColorBalance
-                        // temp.clrBlurBalance = My.Manager.WindowsVista.ColorizationBlurBalance
-                        // temp.clrGlassReflectionIntensity = My.Manager.WindowsVista.ColorizationGlassReflectionIntensity
-                        temp.fOpaque = Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                        // DCP.nIntensity = My.Manager.WindowsVista.ColorizationColorBalance
+                        // DCP.clrBlurBalance = My.Manager.WindowsVista.ColorizationBlurBalance
+                        // DCP.clrGlassReflectionIntensity = My.Manager.WindowsVista.ColorizationGlassReflectionIntensity
+                        DCP.fOpaque = Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
-                    Dwmapi.DwmSetColorizationParameters(ref temp, false);
+                    DWMAPI.DwmSetColorizationParameters(ref DCP, false);
                 }
             }
             catch
             {
             }
         }
-
-
         #endregion
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1120,16 +1100,16 @@ namespace WinPaletter
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (DialogResult != DialogResult.OK & (Program.WVista | Program.W7 | Program.W8 | Program.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+            if (DialogResult != DialogResult.OK & (OS.WVista | OS.W7 | OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
             {
-                if (_Conditions.Win7LivePreview_Colorization)
+                if (_Conditions.LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(InitColor, Program.TM.Windows7.ColorizationAfterglow);
+                    UpdateDWMPreview(InitColor, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
-                if (_Conditions.Win7LivePreview_AfterGlow)
+                if (_Conditions.LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(Program.TM.Windows7.ColorizationColor, InitColor);
+                    UpdateDWMPreview(Program.TM.Windows7.ColorizationColor, InitColor);
                 }
             }
         }
@@ -1175,14 +1155,14 @@ namespace WinPaletter
 
         private void Ttl_h_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
             Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
             Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -1230,7 +1210,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -1238,9 +1218,9 @@ namespace WinPaletter
                 {
                     try
                     {
-                        System.IO.File.WriteAllText(Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
+                        System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
 
-                        var vs = new VisualStyleFile(Program.PATH_appData + @"\VisualStyles\Luna\win32uischeme.theme");
+                        var vs = new VisualStyleFile(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme");
 
                         foreach (var field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                         {
@@ -1262,12 +1242,12 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    WPStyle.MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1308,15 +1288,15 @@ namespace WinPaletter
         public bool CMD_ColorTable14 { get; set; } = false;
         public bool CMD_ColorTable15 { get; set; } = false;
 
-        public bool Win7LivePreview_Colorization { get; set; } = false;
-        public bool Win7LivePreview_AfterGlow { get; set; } = false;
+        public bool LivePreview_Colorization { get; set; } = false;
+        public bool LivePreview_AfterGlow { get; set; } = false;
         public bool Win7 { get; set; } = false;
         public bool Color1 { get; set; } = false;
         public bool Color2 { get; set; } = false;
-        public bool BackColor1 { get; set; } = false;
-        public bool BackColor2 { get; set; } = false;
+        public bool Background { get; set; } = false;
+        public bool Background2 { get; set; } = false;
         public bool Window_InactiveTitlebar { get; set; } = false;
-        public bool Window_ActiveTitlebar { get; set; } = true;
+        public bool Window_ActiveTitlebar { get; set; } = false;
         public bool AppUnderlineOnly { get; set; } = false;
         public bool AppUnderlineWithTaskbar { get; set; } = false;
         public bool AppBackgroundOnly { get; set; } = false;

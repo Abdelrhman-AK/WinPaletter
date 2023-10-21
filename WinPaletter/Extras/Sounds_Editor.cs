@@ -30,10 +30,10 @@ namespace WinPaletter
 
             if (TextBox2.Text.ToUpper().Trim() == "CURRENT")
             {
-                if (!Program.WXP)
+                if (!OS.WXP)
                 {
 
-                    byte[] SoundBytes = PE.GetResource(Program.PATH_imageres, "WAVE", Program.WVista ? 5051 : 5080);
+                    byte[] SoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                     try
                     {
                         using (var ms = new MemoryStream(SoundBytes))
@@ -58,12 +58,12 @@ namespace WinPaletter
 
             else if (TextBox2.Text.ToUpper().Trim() == "DEFAULT")
             {
-                if (!Program.WXP)
+                if (!OS.WXP)
                 {
 
                     try
                     {
-                        using (var FS = new FileStream(Program.PATH_appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
+                        using (var FS = new FileStream(PathsExt.appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
                         {
                             SP = new SoundPlayer(FS);
                             SP.Load();
@@ -73,7 +73,7 @@ namespace WinPaletter
                     catch (Exception ex)
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(Program.PATH_appData + @"\WindowsStartup_Backup.wav");
+                        NativeMethods.DLLFunc.PlayAudio(PathsExt.appData + @"\WindowsStartup_Backup.wav");
                     }
 
                 }
@@ -218,7 +218,7 @@ namespace WinPaletter
         private void Sounds_Editor_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
             CheckBox35_SFC.Checked = Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
@@ -380,7 +380,7 @@ namespace WinPaletter
             CheckBox4.Checked = Sounds.Snd_Win_WindowsUnlock_TaskMgmt;
 
             TextBox84.Text = Sounds.Snd_ChargerConnected;
-
+            textBox85.Text = Sounds.Snd_ChargerDisconnected;
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -477,6 +477,7 @@ namespace WinPaletter
                 Sounds.Snd_Win_WindowsLogon_TaskMgmt = CheckBox3.Checked;
                 Sounds.Snd_Win_WindowsUnlock_TaskMgmt = CheckBox4.Checked;
                 Sounds.Snd_ChargerConnected = TextBox84.Text;
+                Sounds.Snd_ChargerDisconnected = textBox85.Text;
             }
         }
 
@@ -504,7 +505,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -558,7 +559,7 @@ namespace WinPaletter
         {
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.From(Program.PreviewStyle))
+                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
                 }

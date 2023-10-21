@@ -3,7 +3,6 @@ using System.Drawing;
 
 namespace WinPaletter
 {
-
     public class VisualStylesRes
     {
         public VisualStylesRes(string themeFile)

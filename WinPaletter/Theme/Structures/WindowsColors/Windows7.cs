@@ -38,7 +38,7 @@ namespace WinPaletter.Theme.Structures
 
         public void Load(Windows7 _DefWin)
         {
-            if (Program.W7 | Program.W8 | Program.W81)
+            if (OS.W7 | OS.W8 | OS.W81)
             {
                 object y;
 
@@ -48,7 +48,7 @@ namespace WinPaletter.Theme.Structures
                 y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance);
                 ColorizationColorBalance = Convert.ToInt32(y);
 
-                if (Program.W7)
+                if (OS.W7)
                 {
                     y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", _DefWin.ColorizationAfterglow.ToArgb());
                     ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
@@ -62,10 +62,7 @@ namespace WinPaletter.Theme.Structures
                     y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", _DefWin.ColorizationGlassReflectionIntensity);
                     ColorizationGlassReflectionIntensity = Convert.ToInt32(y);
 
-                    bool Com = default, Opaque;
-                    Dwmapi.DwmIsCompositionEnabled(ref Com);
-
-                    Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
+                    bool Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
 
                     bool Classic = false;
 
@@ -84,12 +81,9 @@ namespace WinPaletter.Theme.Structures
                     {
                         Theme = Themes.Classic;
                     }
-                    else if (Com)
+                    else if (DWMAPI.IsCompositionEnabled())
                     {
-                        if (!Opaque)
-                            Theme = Themes.Aero;
-                        else
-                            Theme = Themes.AeroOpaque;
+                        Theme = !Opaque ? Themes.Aero : Themes.AeroOpaque;
                     }
                     else
                     {
@@ -127,9 +121,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -143,9 +137,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -159,9 +153,9 @@ namespace WinPaletter.Theme.Structures
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
-                        UxTheme.SetSystemVisualStyle(Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                         if (TreeView is not null)
-                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", Program.PATH_Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
+                            Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);

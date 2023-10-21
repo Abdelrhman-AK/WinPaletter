@@ -39,8 +39,8 @@ namespace WinPaletter
         {
             Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
-            Label2.Text = Program.AppVersion;
+            ApplyStyle(this);
+            Label2.Text = Program.Version;
         }
 
         private void Button3_Click(object sender, EventArgs e)

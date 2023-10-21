@@ -19,18 +19,14 @@ namespace WinPaletter
         private Color PreviousClr;
 
         #region Form Shadow
-
-        private bool aeroEnabled;
-
         protected override CreateParams CreateParams
         {
             get
             {
-                CheckAeroEnabled();
                 var cp = base.CreateParams;
-                if (!aeroEnabled)
+                if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | Dwmapi.CS_DROPSHADOW;
+                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle = cp.ExStyle | 33554432;
                     return cp;
                 }
@@ -50,20 +46,20 @@ namespace WinPaletter
         {
             switch (m.Msg)
             {
-                case Dwmapi.WM_NCPAINT:
+                case DWMAPI.WM_NCPAINT:
                     {
                         int val = 2;
-                        if (aeroEnabled)
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            Dwmapi.MARGINS bla = new();
+                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;
                                 bla.leftWidth = 1;
                                 bla.rightWidth = 1;
                                 bla.topHeight = 1;
                             }
-                            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }
                         break;
                     }
@@ -77,20 +73,6 @@ namespace WinPaletter
             }
 
             base.WndProc(ref m);
-        }
-
-        private void CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                var Com = default(bool);
-                Dwmapi.DwmIsCompositionEnabled(ref Com);
-                aeroEnabled = Com;
-            }
-            else
-            {
-                aeroEnabled = false;
-            }
         }
         #endregion
 
@@ -124,40 +106,40 @@ namespace WinPaletter
 
             if (ShowDialog() == DialogResult.OK)
             {
-                switch (Program.ColorEvent)
+                switch (ColorClipboard.Event)
                 {
-                    case Program.MenuEvent.Copy:
+                    case ColorClipboard.MenuEvent.Copy:
                         {
-                            Program.CopiedColor = MainColor.BackColor;
+                            ColorClipboard.CopiedColor = MainColor.BackColor;
                             return ColorItem.BackColor;
                         }
 
-                    case Program.MenuEvent.Cut:
+                    case ColorClipboard.MenuEvent.Cut:
                         {
-                            Program.CopiedColor = MainColor.BackColor;
+                            ColorClipboard.CopiedColor = MainColor.BackColor;
                             ColorItem.BackColor = Color.Black;
                             break;
                         }
 
-                    case Program.MenuEvent.Paste:
+                    case ColorClipboard.MenuEvent.Paste:
                         {
-                            ColorItem.BackColor = Program.CopiedColor;
-                            return Program.CopiedColor;
+                            ColorItem.BackColor = ColorClipboard.CopiedColor;
+                            return ColorClipboard.CopiedColor;
                         }
 
-                    case Program.MenuEvent.Override:
+                    case ColorClipboard.MenuEvent.Override:
                         {
                             ColorItem.BackColor = _overrideColor;
                             return ColorItem.BackColor;
                         }
 
-                    case Program.MenuEvent.Delete:
+                    case ColorClipboard.MenuEvent.Delete:
                         {
                             ColorItem.BackColor = Color.FromArgb(0, 0, 0, 0);
                             return ColorItem.BackColor;
                         }
 
-                    case Program.MenuEvent.None:
+                    case ColorClipboard.MenuEvent.None:
                         {
                             return MainColor.DefaultColor;
                         }
@@ -166,7 +148,7 @@ namespace WinPaletter
             }
             else
             {
-                Program.ColorEvent = Program.MenuEvent.None;
+                ColorClipboard.Event = ColorClipboard.MenuEvent.None;
                 return MainColor.DefaultColor;
             } // Nothing
 
@@ -272,9 +254,9 @@ namespace WinPaletter
             Button4.Text = ">";
 
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
-            if (Program.CopiedColor == null)
+            if (ColorClipboard.CopiedColor == null)
             {
 
                 Button3.Enabled = false;
@@ -306,7 +288,7 @@ namespace WinPaletter
                                     C = Color.FromArgb(C.A, C.R, C.G, i);
                             }
 
-                            Program.CopiedColor = C;
+                            ColorClipboard.CopiedColor = C;
                             Button3.Enabled = true;
                         }
                     }
@@ -378,7 +360,7 @@ namespace WinPaletter
         {
             Clipboard.SetData("Text", MainColor.BackColor);
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Copy;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Copy;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -386,7 +368,7 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Cut;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Cut;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -394,7 +376,7 @@ namespace WinPaletter
         private void Button3_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Paste;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Paste;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -402,7 +384,7 @@ namespace WinPaletter
         private void MainColor_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Override;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Override;
             _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
@@ -416,7 +398,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Delete;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Delete;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -464,7 +446,7 @@ namespace WinPaletter
         private void PreviousColor_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Override;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Override;
             _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
@@ -473,7 +455,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             _eventDone = true;
-            Program.ColorEvent = Program.MenuEvent.Override;
+            ColorClipboard.Event = ColorClipboard.MenuEvent.Override;
             _overrideColor = PreviousClr;
             DialogResult = DialogResult.OK;
             Close();

@@ -14,7 +14,7 @@ namespace WinPaletter
         private void Lang_Add_Snippet_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
             DialogResult = DialogResult.None;
 

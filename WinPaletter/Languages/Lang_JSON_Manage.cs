@@ -16,10 +16,10 @@ namespace WinPaletter
         private void LangJSON_Manage_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
-            Label6.Font = Program.ConsoleFontMedium;
-            TreeView1.ImageList = Program.Lang_IL;
+            Label6.Font = Fonts.ConsoleMedium;
+            TreeView1.ImageList = ImageLists.Language;
 
             if (Program.Settings.Language.Enabled & File.Exists(Program.Settings.Language.File))
             {

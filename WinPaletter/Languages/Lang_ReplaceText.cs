@@ -13,7 +13,7 @@ namespace WinPaletter
         {
             Icon = Forms.Lang_JSON_Manage.Icon;
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
 
         }
 

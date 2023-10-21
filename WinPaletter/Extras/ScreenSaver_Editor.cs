@@ -20,7 +20,7 @@ namespace WinPaletter
         private void ScreenSaver_Editor_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             pnl_preview.DoubleBuffer();
             ApplyFromTM(Program.TM);
@@ -67,7 +67,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.From(Program.PreviewStyle))
+            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -166,7 +166,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string response = WPStyle.InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
             Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
@@ -176,7 +176,7 @@ namespace WinPaletter
 
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.From(Program.PreviewStyle))
+                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
                 }

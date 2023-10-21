@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -24,7 +22,7 @@ namespace WinPaletter
             AnimatedBox1.BackColor = c;
             CheckBox1.Checked = Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
 
-            TreeView1.Font = Program.ConsoleFontMedium;
+            TreeView1.Font = Fonts.ConsoleMedium;
 
             try
             {
@@ -130,7 +128,7 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
             Reg_IO.SFC(PE_File);
-            WPStyle.MsgBox(string.Format("{0}. {1}.", Program.Lang.Done, Program.Lang.PE_DontForgetToRestart), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(string.Format("{0}. {1}.", Program.Lang.Done, Program.Lang.PE_DontForgetToRestart), MessageBoxButtons.OK, MessageBoxIcon.Information);
             Cursor = Cursors.Default;
         }
     }
