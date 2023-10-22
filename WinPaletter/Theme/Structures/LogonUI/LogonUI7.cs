@@ -3,18 +3,49 @@ using System.Drawing;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// LogonUI structure for Windows 7/8.1
+    /// </summary>
     public struct LogonUI7 : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
+
+        /// <summary>
+        /// Source of LogonUI background image
+        /// <code>
+        /// Default
+        /// Wallpaper
+        /// CustomImage
+        /// SolidColor
+        /// </code>
+        /// </summary>
         public Modes Mode;
+
+        /// <summary>LogonUI background image path. Used if 'Mode' is 'CustomImage'</summary>
         public string ImagePath;
+
+        /// <summary>LogonUI background color. Used if 'Mode' is 'SolidColor'</summary>
         public Color Color;
+
+        /// <summary>LogonUI background blur enabled or not</summary>
         public bool Blur;
+
+        /// <summary>LogonUI background blur intensity</summary>
         public int Blur_Intensity;
+
+        /// <summary>LogonUI background grayscale effect enabled or not</summary>
         public bool Grayscale;
+
+        /// <summary>LogonUI background noise effect enabled or not</summary>
         public bool Noise;
+
+        /// <summary>LogonUI background noise type. It can be acrylic noise or Aero glass reflection</summary>
         public BitmapExtensions.NoiseMode Noise_Mode;
+
+        /// <summary>LogonUI background noise intensity</summary>
         public int Noise_Intensity;
+
 
         public static bool operator ==(LogonUI7 First, LogonUI7 Second)
         {

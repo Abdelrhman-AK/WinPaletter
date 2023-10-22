@@ -6,41 +6,113 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Windows console (Command Prompt, PowerShell x86, PowerShell x64 or other consoles)
+    /// </summary>
     public struct Console : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
+
+        /// <summary>Color table 0</summary>
         public Color ColorTable00;
+
+        /// <summary>Color table 1</summary>
         public Color ColorTable01;
+
+        /// <summary>Color table 2</summary>
         public Color ColorTable02;
+
+        /// <summary>Color table 3</summary>
         public Color ColorTable03;
+
+        /// <summary>Color table 4</summary>
         public Color ColorTable04;
+
+        /// <summary>Color table 5</summary>
         public Color ColorTable05;
+
+        /// <summary>Color table 6</summary>
         public Color ColorTable06;
+
+        /// <summary>Color table 7</summary>
         public Color ColorTable07;
+
+        /// <summary>Color table 8</summary>
         public Color ColorTable08;
+
+        /// <summary>Color table 9</summary>
         public Color ColorTable09;
+
+        /// <summary>Color table A</summary>
         public Color ColorTable10;
+
+        /// <summary>Color table B</summary>
         public Color ColorTable11;
+
+        /// <summary>Color table C</summary>
         public Color ColorTable12;
+
+        /// <summary>Color table D</summary>
         public Color ColorTable13;
+
+        /// <summary>Color table E</summary>
         public Color ColorTable14;
+
+        /// <summary>Color table F</summary>
         public Color ColorTable15;
+
+        /// <summary>Selected color table number as a popup foreground</summary>
         public int PopupForeground;
+
+        /// <summary>Selected color table number as a popup background</summary>
         public int PopupBackground;
+
+        /// <summary>Selected color table number as a screen foreground</summary>
         public int ScreenColorsForeground;
+
+        /// <summary>Selected color table number as a screen foreground</summary>
         public int ScreenColorsBackground;
+
+        /// <summary>Console carret size</summary>
         public int CursorSize;
+
+        /// <summary>Console font name</summary>
         public string FaceName;
+
+        /// <summary>Use raster (pixelated/retro) font</summary>
         public bool FontRaster;
+
+        /// <summary>Console font size or raster console screen size</summary>
         public int FontSize;
+
+        /// <summary>Console font weight</summary>
         public int FontWeight;
+
+        /// <summary>Cursor type<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public int W10_1909_CursorType;
+
+        /// <summary>Cursor color<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public Color W10_1909_CursorColor;
+
+        /// <summary>Use enhanced terminal<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public bool W10_1909_ForceV2;
+
+        /// <summary>Use line selection<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public bool W10_1909_LineSelection;
+
+        /// <summary>Use terminal scrolling<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public bool W10_1909_TerminalScrolling;
+
+        /// <summary>Console window opacity<br><b>- For Windows 10 1909 and higher</b></br></summary>
         public int W10_1909_WindowAlpha;
 
+        /// <summary>
+        /// Load console structure data from registry
+        /// </summary>
+        /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console</param>
+        /// <param name="Signature_Of_Enable">Name of console (for example: Terminal_CMD_Enabled). Used for getting Enabled property</param>
+        /// <param name="Defaults">Console structure that has default data</param>
         public void Load(string RegKey, string Signature_Of_Enable, Console Defaults)
         {
             object temp;
@@ -148,9 +220,16 @@ namespace WinPaletter.Theme.Structures
             Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)).ToBoolean();
 
         }
+
+        /// <summary>
+        /// Save console structure data into registry
+        /// </summary>
+        /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>
+        /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console or HKEY_USERS\...\Console</param>
+        /// <param name="Console">Console structure to be saved into registry</param>
+        /// <param name="TreeView">TreeView used as a theme log</param>
         public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView TreeView = null)
         {
-
             string RegAddress = scopeReg + @"\Console" + (string.IsNullOrEmpty(RegKey) ? "" : @"\" + RegKey);
 
             try
@@ -214,19 +293,45 @@ namespace WinPaletter.Theme.Structures
 
         }
 
+        /// <summary>
+        /// Operator to check if two consoles are equal
+        /// </summary>
         public static bool operator ==(Console First, Console Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>
+        /// Operator to check if two consoles are not equal
+        /// </summary>
         public static bool operator !=(Console First, Console Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>
+        /// Clone console structure
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>
+        /// Checks if two consoles are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets console hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

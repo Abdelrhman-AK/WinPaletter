@@ -9,6 +9,11 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
+        /// <summary>
+        /// Get all colors inside a .theme file
+        /// </summary>
+        /// <param name="Filename">.theme file</param>
+        /// <returns></returns>
         public static List<Color> GetPaletteFromMSTheme(string Filename)
         {
             if (System.IO.File.Exists(Filename))
@@ -55,26 +60,17 @@ namespace WinPaletter.Theme
                 return null;
             }
         }
+
+        /// <summary>
+        /// Get all colors inside from a string
+        /// <br><b>Take a look at Properties.Resources.RetroThemesDB</b></br>
+        /// </summary>
+        /// <param name="String">String that has .theme file data</param>
+        /// <param name="ThemeName">Selected theme name</param>
+        /// <returns></returns>
         public static List<Color> GetPaletteFromString(string String, string ThemeName)
         {
-
-            if (string.IsNullOrWhiteSpace(String))
-            {
-                return null;
-                return default;
-            }
-
-            if (!String.Contains("|"))
-            {
-                return null;
-                return default;
-            }
-
-            if (string.IsNullOrWhiteSpace(ThemeName))
-            {
-                return null;
-                return default;
-            }
+            if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) { return null; }
 
             var ls = new List<Color>();
             ls.Clear();
@@ -93,11 +89,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            if (!Found)
-            {
-                return null;
-                return default;
-            }
+            if (!Found) { return null; }
 
             var SelectedThemeList = SelectedTheme.CList();
 
@@ -133,7 +125,12 @@ namespace WinPaletter.Theme
             ls.Sort(new RGBColorComparer());
             return ls;
         }
-        public List<Color> ListColors(bool DontMergeRepeatedColors = false)
+
+        /// <summary>
+        /// Get all colors inside current WinPaletter theme
+        /// </summary>
+        /// <returns></returns>
+        public List<Color> Colors(bool DontMergeRepeatedColors = false)
         {
 
             var CL = new List<Color>();
@@ -345,6 +342,10 @@ namespace WinPaletter.Theme
 
             return CL;
         }
+        
+        /// <summary>
+        /// Checks if a font is installed or not (from its name)
+        /// </summary>
         public static bool IsFontInstalled(string fontName)
         {
             bool installed = IsFontInstalled(fontName, FontStyle.Regular);
@@ -361,6 +362,10 @@ namespace WinPaletter.Theme
 
             return installed;
         }
+
+        /// <summary>
+        /// Checks if a font is installed or not (from its name and style)
+        /// </summary>
         public static bool IsFontInstalled(string fontName, FontStyle style)
         {
             bool installed = false;
@@ -380,6 +385,10 @@ namespace WinPaletter.Theme
 
             return installed;
         }
+
+        /// <summary>
+        /// Decompress a WinPaletter theme file
+        /// </summary>
         public static IEnumerable<string> Decompress(string File)
         {
             IEnumerable<string> DecompressedData;
@@ -395,6 +404,10 @@ namespace WinPaletter.Theme
 
             return DecompressedData;
         }
+
+        /// <summary>
+        /// Checks if this type is a structure or not
+        /// </summary>
         public bool IsStructure(Type type)
         {
             return type.IsValueType && !type.IsPrimitive && type.Namespace is not null && !type.Namespace.StartsWith("System.");

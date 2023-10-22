@@ -7,7 +7,7 @@ namespace WinPaletter
         public static Converter_CP.WP_Format Format;
         private Converter_CP Converter_CP;
 
-        public Converter_CP.WP_Format FetchFile(string File)
+        public Converter_CP.WP_Format GetFormat(string File)
         {
             if (System.IO.File.Exists(File))
             {

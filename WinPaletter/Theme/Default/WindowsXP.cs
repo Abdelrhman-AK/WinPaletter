@@ -2,14 +2,14 @@
 
 namespace WinPaletter.Theme
 {
-    public partial class Default
+    public static partial class Default 
     {
-        public Theme.Manager WindowsXP()
+        public static Manager WindowsXP()
         {
-            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
+            var TM = new Manager(Manager.Source.Empty);
 
             {
-                ref Theme.Structures.Info Info = ref TM.Info;
+                ref Structures.Info Info = ref TM.Info;
                 Info.ThemeName = "Windows XP (Initial)";
                 Info.Description = "Initial; Like first time after Windows Setup";
                 Info.ThemeVersion = "1.0.0.0";
@@ -19,7 +19,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Win32UI Win32 = ref TM.Win32;
+                ref Structures.Win32UI Win32 = ref TM.Win32;
                 Win32.ActiveBorder = Color.FromArgb(212, 208, 200);
                 Win32.ActiveTitle = Color.FromArgb(0, 84, 227);
                 Win32.AppWorkspace = Color.FromArgb(128, 128, 128);
@@ -55,7 +55,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console CMD = ref TM.CommandPrompt;
+                ref Structures.Console CMD = ref TM.CommandPrompt;
                 CMD.ColorTable00 = Color.FromArgb(12, 12, 12);
                 CMD.ColorTable01 = Color.FromArgb(0, 55, 218);
                 CMD.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -83,7 +83,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS86 = ref TM.PowerShellx86;
+                ref Structures.Console PS86 = ref TM.PowerShellx86;
                 PS86.ColorTable00 = Color.FromArgb(12, 12, 12);
                 PS86.ColorTable01 = Color.FromArgb(0, 55, 218);
                 PS86.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -111,7 +111,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS64 = ref TM.PowerShellx64;
+                ref Structures.Console PS64 = ref TM.PowerShellx64;
                 PS64.ColorTable00 = Color.FromArgb(12, 12, 12);
                 PS64.ColorTable01 = Color.FromArgb(0, 55, 218);
                 PS64.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -139,7 +139,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+                ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
                 MetricsFonts.BorderWidth = 0;
                 MetricsFonts.CaptionHeight = 25;
                 MetricsFonts.CaptionWidth = 18;
@@ -165,7 +165,7 @@ namespace WinPaletter.Theme
 
             TM.Cursor_Shadow = true;
             {
-                ref Theme.Structures.Cursor Arrow = ref TM.Cursor_Arrow;
+                ref Structures.Cursor Arrow = ref TM.Cursor_Arrow;
                 Arrow.ArrowStyle = Paths.ArrowStyle.Classic;
                 Arrow.CircleStyle = Paths.CircleStyle.Classic;
                 Arrow.PrimaryColor1 = Color.White;
@@ -189,7 +189,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Help = ref TM.Cursor_Help;
+                ref Structures.Cursor Help = ref TM.Cursor_Help;
                 Help.ArrowStyle = Paths.ArrowStyle.Classic;
                 Help.CircleStyle = Paths.CircleStyle.Classic;
                 Help.PrimaryColor1 = Color.White;
@@ -213,7 +213,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor AppLoading = ref TM.Cursor_AppLoading;
+                ref Structures.Cursor AppLoading = ref TM.Cursor_AppLoading;
                 AppLoading.ArrowStyle = Paths.ArrowStyle.Classic;
                 AppLoading.CircleStyle = Paths.CircleStyle.Classic;
                 AppLoading.PrimaryColor1 = Color.White;
@@ -237,7 +237,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Busy = ref TM.Cursor_Busy;
+                ref Structures.Cursor Busy = ref TM.Cursor_Busy;
                 Busy.ArrowStyle = Paths.ArrowStyle.Classic;
                 Busy.CircleStyle = Paths.CircleStyle.Classic;
                 Busy.PrimaryColor1 = Color.White;
@@ -261,7 +261,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Up = ref TM.Cursor_Up;
+                ref Structures.Cursor Up = ref TM.Cursor_Up;
                 Up.ArrowStyle = Paths.ArrowStyle.Classic;
                 Up.CircleStyle = Paths.CircleStyle.Classic;
                 Up.PrimaryColor1 = Color.White;
@@ -285,7 +285,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor NS = ref TM.Cursor_NS;
+                ref Structures.Cursor NS = ref TM.Cursor_NS;
                 NS.ArrowStyle = Paths.ArrowStyle.Classic;
                 NS.CircleStyle = Paths.CircleStyle.Classic;
                 NS.PrimaryColor1 = Color.White;
@@ -309,7 +309,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor EW = ref TM.Cursor_EW;
+                ref Structures.Cursor EW = ref TM.Cursor_EW;
                 EW.ArrowStyle = Paths.ArrowStyle.Classic;
                 EW.CircleStyle = Paths.CircleStyle.Classic;
                 EW.PrimaryColor1 = Color.White;
@@ -333,7 +333,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor NESW = ref TM.Cursor_NESW;
+                ref Structures.Cursor NESW = ref TM.Cursor_NESW;
                 NESW.ArrowStyle = Paths.ArrowStyle.Classic;
                 NESW.CircleStyle = Paths.CircleStyle.Classic;
                 NESW.PrimaryColor1 = Color.White;
@@ -357,7 +357,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor NWSE = ref TM.Cursor_NWSE;
+                ref Structures.Cursor NWSE = ref TM.Cursor_NWSE;
                 NWSE.ArrowStyle = Paths.ArrowStyle.Classic;
                 NWSE.CircleStyle = Paths.CircleStyle.Classic;
                 NWSE.PrimaryColor1 = Color.White;
@@ -381,7 +381,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Move = ref TM.Cursor_Move;
+                ref Structures.Cursor Move = ref TM.Cursor_Move;
                 Move.ArrowStyle = Paths.ArrowStyle.Classic;
                 Move.CircleStyle = Paths.CircleStyle.Classic;
                 Move.PrimaryColor1 = Color.White;
@@ -405,7 +405,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor None = ref TM.Cursor_None;
+                ref Structures.Cursor None = ref TM.Cursor_None;
                 None.ArrowStyle = Paths.ArrowStyle.Classic;
                 None.CircleStyle = Paths.CircleStyle.Classic;
                 None.PrimaryColor1 = Color.Transparent;
@@ -429,7 +429,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Pen = ref TM.Cursor_Pen;
+                ref Structures.Cursor Pen = ref TM.Cursor_Pen;
                 Pen.ArrowStyle = Paths.ArrowStyle.Classic;
                 Pen.CircleStyle = Paths.CircleStyle.Classic;
                 Pen.PrimaryColor1 = Color.White;
@@ -453,7 +453,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor IBeam = ref TM.Cursor_IBeam;
+                ref Structures.Cursor IBeam = ref TM.Cursor_IBeam;
                 IBeam.ArrowStyle = Paths.ArrowStyle.Classic;
                 IBeam.CircleStyle = Paths.CircleStyle.Classic;
                 IBeam.PrimaryColor1 = Color.White;
@@ -477,7 +477,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Cross = ref TM.Cursor_Cross;
+                ref Structures.Cursor Cross = ref TM.Cursor_Cross;
                 Cross.ArrowStyle = Paths.ArrowStyle.Classic;
                 Cross.CircleStyle = Paths.CircleStyle.Classic;
                 Cross.PrimaryColor1 = Color.White;
@@ -501,7 +501,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Link = ref TM.Cursor_Link;
+                ref Structures.Cursor Link = ref TM.Cursor_Link;
                 Link.ArrowStyle = Paths.ArrowStyle.Classic;
                 Link.CircleStyle = Paths.CircleStyle.Classic;
                 Link.PrimaryColor1 = Color.White;
@@ -525,7 +525,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Pin = ref TM.Cursor_Pin;
+                ref Structures.Cursor Pin = ref TM.Cursor_Pin;
                 Pin.ArrowStyle = Paths.ArrowStyle.Classic;
                 Pin.CircleStyle = Paths.CircleStyle.Classic;
                 Pin.PrimaryColor1 = Color.White;
@@ -549,7 +549,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Cursor Person = ref TM.Cursor_Person;
+                ref Structures.Cursor Person = ref TM.Cursor_Person;
                 Person.ArrowStyle = Paths.ArrowStyle.Classic;
                 Person.CircleStyle = Paths.CircleStyle.Classic;
                 Person.PrimaryColor1 = Color.White;
@@ -573,7 +573,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+                ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
                 WinEffects.ShakeToMinimize = false;
                 WinEffects.BalloonNotifications = true;
                 WinEffects.PaintDesktopVersion = false;
@@ -587,7 +587,7 @@ namespace WinPaletter.Theme
             TM.Cursor_Shadow = true;
 
             {
-                ref Theme.Structures.ScreenSaver ScreenSaver = ref TM.ScreenSaver;
+                ref Structures.ScreenSaver ScreenSaver = ref TM.ScreenSaver;
                 ScreenSaver.Enabled = true;
                 ScreenSaver.IsSecure = false;
                 ScreenSaver.TimeOut = 60;
@@ -595,7 +595,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
+                ref Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "";
                 Sounds.Snd_Win_Default = PathsExt.Windows + @"\media\Windows XP Ding.wav";
                 Sounds.Snd_Win_AppGPFault = "";
@@ -687,9 +687,9 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
+                ref Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
                 Wallpaper.ImageFile = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
-                Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
+                Wallpaper.WallpaperStyle = Structures.Wallpaper.WallpaperStyles.Stretched;
             }
 
             return TM;

@@ -122,14 +122,12 @@
         /// <returns></returns>
         public static bool operator !=(Manager TM1, Manager TM2) => !(TM1 == TM2);
 
+        /// <summary>
+        /// WinPaletter theme hash code
+        /// </summary>
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return ToString();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using static WinPaletter.ProfilesList;
+using static WinPaletter.TProfile;
 
 namespace WinPaletter
 {
@@ -13,10 +13,10 @@ namespace WinPaletter
     public class WinTerminal_Converter
     {
         public bool Enabled { get; set; } = false;
-        public List<TColor> Colors { get; set; }
-        public List<ProfilesList> Profiles { get; set; }
-        public ProfilesList DefaultProf { get; set; }
-        public List<ThemesList> Themes { get; set; }
+        public List<TColors> Colors { get; set; }
+        public List<TProfile> Profiles { get; set; }
+        public TProfile DefaultProf { get; set; }
+        public List<TTheme> Themes { get; set; }
         public string Theme { get; set; } = "system";
         public bool UseAcrylicInTabRow { get; set; } = false;
 
@@ -85,10 +85,10 @@ namespace WinPaletter
                         EnumProfiles.Clear();
                         EnumThemes.Clear();
 
-                        DefaultProf = new ProfilesList();
-                        Colors = new List<TColor>();
-                        Profiles = new List<ProfilesList>();
-                        Themes = new List<ThemesList>();
+                        DefaultProf = new TProfile();
+                        Colors = new List<TColors>();
+                        Profiles = new List<TProfile>();
+                        Themes = new List<TTheme>();
 
                         foreach (string lin in Collected)
                         {
@@ -197,7 +197,7 @@ namespace WinPaletter
                         EnumProfiles = EnumProfiles.Distinct().ToList();
                         foreach (string x in EnumProfiles)
                         {
-                            var P = new ProfilesList();
+                            var P = new TProfile();
                             foreach (string lin in CollectedProfiles)
                             {
                                 if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? "") == (x.ToLower() ?? ""))
@@ -295,7 +295,7 @@ namespace WinPaletter
                         EnumColors = EnumColors.Distinct().ToList();
                         foreach (string x in EnumColors)
                         {
-                            var TC = new TColor();
+                            var TC = new TColors();
 
                             foreach (string lin in CollectedColors)
                             {
@@ -445,7 +445,7 @@ namespace WinPaletter
                         EnumThemes = EnumThemes.Distinct().ToList();
                         foreach (string x in EnumThemes)
                         {
-                            var Th = new ThemesList();
+                            var Th = new TTheme();
 
                             foreach (string lin in CollectedThemes)
                             {
@@ -488,7 +488,7 @@ namespace WinPaletter
 
                                         case var case50 when case50 == ("applicationTheme_light".ToLower() ?? ""):
                                             {
-                                                Th.ApplicationTheme_light = value;
+                                                Th.Style = value;
                                                 break;
                                             }
 
@@ -502,7 +502,7 @@ namespace WinPaletter
 
                         if (Colors.Count == 0)
                         {
-                            Colors.Add(new TColor()
+                            Colors.Add(new TColors()
                             {
                                 Name = "Campbell",
                                 Background = "FF0C0C0C".FromHEXToColor(true),
@@ -534,12 +534,12 @@ namespace WinPaletter
                 case Mode.Empty:
                     {
 
-                        Profiles = new List<ProfilesList>();
-                        Colors = new List<TColor>();
-                        DefaultProf = new ProfilesList();
-                        Themes = new List<ThemesList>();
+                        Profiles = new List<TProfile>();
+                        Colors = new List<TColors>();
+                        DefaultProf = new TProfile();
+                        Themes = new List<TTheme>();
 
-                        Colors.Add(new TColor()
+                        Colors.Add(new TColors()
                         {
                             Name = "Campbell",
                             Background = "FF0C0C0C".FromHEXToColor(true),
@@ -669,7 +669,7 @@ namespace WinPaletter
                         try
                         {
 
-                            foreach (TColor c in Colors)
+                            foreach (TColors c in Colors)
                             {
                                 var type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
@@ -696,7 +696,7 @@ namespace WinPaletter
 
                         try
                         {
-                            foreach (ProfilesList c in Profiles)
+                            foreach (TProfile c in Profiles)
                             {
                                 var type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
@@ -721,7 +721,7 @@ namespace WinPaletter
 
                         try
                         {
-                            foreach (ThemesList c in Themes)
+                            foreach (TTheme c in Themes)
                             {
                                 var type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
@@ -786,7 +786,7 @@ namespace WinPaletter
                 case "fontsbase":
                     {
                         {
-                            var temp1 = (FontsBase)Value;
+                            var temp1 = (TFont)Value;
                             return temp1.Face + "," + temp1.Size + "," + FontWeight_ReturnToString(temp1.Weight);
                         }
                     }

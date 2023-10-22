@@ -611,31 +611,31 @@ namespace WinPaletter.Theme.Structures
                 Win32UI _DefWin32;
                 if (Program.PreviewStyle == WindowStyle.W11)
                 {
-                    _DefWin32 = new Theme.Default().Windows11().Win32;
+                    _DefWin32 = Theme.Default.Windows11().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W10)
                 {
-                    _DefWin32 = new Theme.Default().Windows10().Win32;
+                    _DefWin32 = Theme.Default.Windows10().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W81)
                 {
-                    _DefWin32 = new Theme.Default().Windows81().Win32;
+                    _DefWin32 = Theme.Default.Windows81().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W7)
                 {
-                    _DefWin32 = new Theme.Default().Windows7().Win32;
+                    _DefWin32 = Theme.Default.Windows7().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.WVista)
                 {
-                    _DefWin32 = new Theme.Default().WindowsVista().Win32;
+                    _DefWin32 = Theme.Default.WindowsVista().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.WXP)
                 {
-                    _DefWin32 = new Theme.Default().WindowsXP().Win32;
+                    _DefWin32 = Theme.Default.WindowsXP().Win32;
                 }
                 else
                 {
-                    _DefWin32 = new Theme.Default().Windows11().Win32;
+                    _DefWin32 = Theme.Default.Windows11().Win32;
                 }
 
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);

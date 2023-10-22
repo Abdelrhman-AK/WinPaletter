@@ -31,20 +31,16 @@ namespace WinPaletter.Theme
         /// <param name="IgnoreExtractionThemePack">This will ignore theme resources pack extraction, useful for previewing or getting theme data quickly without data extraction.</param>
         public Manager(Source Source, string File = "", bool IgnoreExtractionThemePack = false)
         {
-
             switch (Source)
             {
                 case Source.Registry:
                     {
-
-                        using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+                        using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
                         {
                             Exceptions.ThemeLoad.Clear();
-
-                            #region Registry
                             Info.Load();
-                            Windows11.Load(new Theme.Default().Windows11().Windows11);
-                            Windows10.Load(new Theme.Default().Windows10().Windows10);
+                            Windows11.Load(_Def.Windows11);
+                            Windows10.Load(_Def.Windows10);
                             Windows81.Load(_Def.Windows81);
                             Windows7.Load(_Def.Windows7);
                             WindowsVista.Load(_Def.WindowsVista);
@@ -71,35 +67,17 @@ namespace WinPaletter.Theme
                             CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt);
                             if (Directory.Exists(PathsExt.PS86_app))
                             {
-                                try
-                                {
-                                    Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close();
-                                }
-                                catch
-                                {
-                                }
-                                PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86);
+                                try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
+                                catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86); }
                             }
-                            else
-                            {
-                                PowerShellx86 = _Def.PowerShellx86;
-                            }
+                            else { PowerShellx86 = _Def.PowerShellx86; }
+
                             if (Directory.Exists(PathsExt.PS64_app))
                             {
-                                try
-                                {
-                                    Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close();
-                                }
-                                catch
-                                {
-                                }
-                                PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64);
+                                try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close(); }
+                                catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64); }
                             }
-                            else
-                            {
-                                PowerShellx64 = _Def.PowerShellx64;
-                            }
-
+                            else { PowerShellx64 = _Def.PowerShellx64; }
 
                             #region Windows Terminal
                             Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean();
@@ -118,44 +96,20 @@ namespace WinPaletter.Theme
                                 else
                                 {
                                     if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                                    {
-                                        TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
-                                    }
-                                    else
-                                    {
-                                        TerDir = PathsExt.TerminalJSON;
-                                    }
+                                    { TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path; }
+                                    else { TerDir = PathsExt.TerminalJSON; }
 
                                     if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                                    {
-                                        TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
-                                    }
-                                    else
-                                    {
-                                        TerPreDir = PathsExt.TerminalPreviewJSON;
-                                    }
+                                    { TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path; }
+                                    else { TerPreDir = PathsExt.TerminalPreviewJSON; }
                                 }
 
+                                if (System.IO.File.Exists(TerDir)) { Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile); }
+                                else { Terminal = new WinTerminal("", WinTerminal.Mode.Empty); }
 
-                                if (System.IO.File.Exists(TerDir))
-                                {
-                                    Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
-                                }
-                                else
-                                {
-                                    Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                                }
-
-                                if (System.IO.File.Exists(TerPreDir))
-                                {
-                                    TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                                }
-                                else
-                                {
-                                    TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
-                                }
+                                if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
+                                else { TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                             }
-
                             else
                             {
                                 Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
@@ -197,39 +151,28 @@ namespace WinPaletter.Theme
                                 Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
                                 Forms.Saving_ex_list.ShowDialog();
                             }
-                            #endregion
                         }
-
                         break;
                     }
 
                 case Source.File:
                     {
-
-                        #region File
-                        using (var TMx = Theme.Default.Get())
+                        using (var TMx = Default.Get())
                         {
                             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                             {
-                                var type = field.FieldType;
-                                try
-                                {
-                                    field.SetValue(this, field.GetValue(TMx));
-                                }
-                                catch
-                                {
-                                }
+                                Type type = field.FieldType;
+                                try { field.SetValue(this, field.GetValue(TMx)); }
+                                catch { };
                             }
 
                         Start:
                             ;
 
-
-                            if (!System.IO.File.Exists(File))
-                                return;
+                            if (!System.IO.File.Exists(File)) return;
 
                             // Rough method to get theme name to create its proper resources pack folder
-                            foreach (var line in Decompress(File))
+                            foreach (string line in Decompress(File))
                             {
                                 if (line.Trim().StartsWith("\"ThemeName\":", (StringComparison)5))
                                 {
@@ -241,7 +184,7 @@ namespace WinPaletter.Theme
                             var txt = new List<string>();
                             txt.Clear();
                             string Pack = new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp";
-                            bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && _Converter.FetchFile(File) == Converter_CP.WP_Format.JSON;
+                            bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && converter.GetFormat(File) == Converter_CP.WP_Format.JSON;
                             string cache = PathsExt.ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", "").Split(Path.GetInvalidFileNameChars()));
 
                             // Extract theme resources pack
@@ -268,11 +211,9 @@ namespace WinPaletter.Theme
                                                 entry.ExtractToFile(Path.Combine(cache, entry.FullName), true);
                                             }
                                         }
-
                                         s.Close();
                                         s.Dispose();
                                     }
-
                                 }
                             }
 
@@ -286,7 +227,6 @@ namespace WinPaletter.Theme
 
                             if (IsValidJson(string.Join("\r\n", txt)))
                             {
-
                                 // Replace %WinPaletterAppData% variable with a valid AppData folder path
                                 for (int x = 0, loopTo = txt.Count - 1; x <= loopTo; x++)
                                 {
@@ -321,16 +261,12 @@ namespace WinPaletter.Theme
                                                         J[item.Key][prop.Key] = J_Original[item.Key][prop.Key];
                                                     }
                                                 }
-                                                catch
-                                                {
-                                                }
+                                                catch { }
                                             }
                                         }
                                     }
                                 }
-                                catch
-                                {
-                                }
+                                catch { }
 
                                 foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                 {
@@ -338,32 +274,23 @@ namespace WinPaletter.Theme
                                     var JSet = new JsonSerializerSettings();
 
                                     if (J[field.Name] is not null)
-                                    {
                                         field.SetValue(this, J[field.Name].ToObject(type));
-                                    }
                                 }
                             }
 
-                            else if (_Converter.FetchFile(File) == Converter_CP.WP_Format.WPTH)
+                            else if (converter.GetFormat(File) == Converter_CP.WP_Format.WPTH)
                             {
                                 if (MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", Program.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
                                 {
-                                    _Converter.Convert(File, File, Program.Settings.FileTypeManagement.CompressThemeFile, false);
+                                    converter.Convert(File, File, Program.Settings.FileTypeManagement.CompressThemeFile, false);
                                     goto Start;
                                 }
                             }
-                            else
-                            {
-                                MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            }
+                            else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
-
                         break;
                     }
-
-                    #endregion
-
             }
         }
 
@@ -447,25 +374,27 @@ namespace WinPaletter.Theme
                         // Reset to default Windows theme
                         if (ResetToDefault)
                         {
-                            Execute(() => 
-                            { using (var def = Theme.Default.Get()) 
-                                { def.LogonUI10x.NoLockScreen = false; 
-                                    def.LogonUI7.Enabled = false; 
-                                    def.Windows81.NoLockScreen = false; 
+                            Execute(() =>
+                            {
+                                using (var def = Theme.Default.Get())
+                                {
+                                    def.LogonUI10x.NoLockScreen = false;
+                                    def.LogonUI7.Enabled = false;
+                                    def.Windows81.NoLockScreen = false;
                                     def.LogonUIXP.Enabled = true;
-                                    if (!OS.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP(); 
-                                    def.CommandPrompt.Enabled = true; 
+                                    if (!OS.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP();
+                                    def.CommandPrompt.Enabled = true;
                                     def.PowerShellx86.Enabled = true;
-                                    def.PowerShellx64.Enabled = true; 
-                                    def.MetricsFonts.Enabled = true; 
-                                    def.WindowsEffects.Enabled = true; 
-                                    def.AltTab.Enabled = true; 
-                                    def.ScreenSaver.Enabled = true; 
-                                    def.Sounds.Enabled = true; 
-                                    def.AppTheme.Enabled = true; 
-                                    def.Wallpaper.Enabled = false; 
-                                    def.Save(Source.Registry); 
-                                } 
+                                    def.PowerShellx64.Enabled = true;
+                                    def.MetricsFonts.Enabled = true;
+                                    def.WindowsEffects.Enabled = true;
+                                    def.AltTab.Enabled = true;
+                                    def.ScreenSaver.Enabled = true;
+                                    def.Sounds.Enabled = true;
+                                    def.AppTheme.Enabled = true;
+                                    def.Wallpaper.Enabled = false;
+                                    def.Save(Source.Registry);
+                                }
                             }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
                         }
 

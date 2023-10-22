@@ -6,6 +6,10 @@ namespace WinPaletter.Theme
     {
         private bool disposedValue;
 
+        /// <summary>
+        /// Dispose WinPaletter theme to free up memory
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -18,7 +22,10 @@ namespace WinPaletter.Theme
             disposedValue = true;
         }
 
-        // This code added by Visual Basic to correctly implement the disposable pattern.
+
+        /// <summary>
+        /// Dispose WinPaletter theme to free up memory
+        /// </summary>
         public void Dispose()
         {
             // Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.

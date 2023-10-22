@@ -299,7 +299,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Theme\Default\DisposeSupport.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
     <Compile Include="Theme\Default\Windows7.cs" />

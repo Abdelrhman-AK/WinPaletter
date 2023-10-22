@@ -6,11 +6,24 @@ namespace WinPaletter.Theme
     {
         private bool _ErrorHappened = false;
         private readonly BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-        private readonly Converter _Converter = new Converter();
+        private readonly Converter converter = new();
+        
+        /// <summary>
+        /// Enumeration for WinPaletter themes sources
+        /// </summary>
         public enum Source
         {
+            /// <summary>
+            /// Windows Registry
+            /// </summary>
             Registry,
+            /// <summary>
+            /// WinPaletter theme file
+            /// </summary>
             File,
+            /// <summary>
+            /// Empty WinPaletter theme file
+            /// </summary>
             Empty
         }
     }

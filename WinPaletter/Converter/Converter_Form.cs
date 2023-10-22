@@ -37,7 +37,7 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            switch (_Convert.FetchFile(TextBox1.Text))
+            switch (_Convert.GetFormat(TextBox1.Text))
             {
                 case Converter_CP.WP_Format.JSON:
                     {
@@ -67,7 +67,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (!(_Convert.FetchFile(TextBox1.Text) == Converter_CP.WP_Format.Error))
+            if (!(_Convert.GetFormat(TextBox1.Text) == Converter_CP.WP_Format.Error))
             {
                 if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
                 {

@@ -2,139 +2,71 @@
 
 namespace WinPaletter.Theme
 {
-    public partial class Default 
+    public static partial class Default
     {
-        public Default()
+        /// <summary>
+        /// Alias to Get() function
+        /// </summary>
+        /// <returns>Default Windows theme, based on current Windows edition</returns>
+        public static Manager From()
         {
-
+            return Get();
         }
 
-        public static Theme.Manager Get(WindowStyle PreviewStyle)
+        /// <summary>
+        /// Alias to Get(WindowStyle) function
+        /// </summary>
+        /// <returns>Default Windows theme, based on your selection</returns>
+        public static Manager From(WindowStyle PreviewStyle)
         {
-            Theme.Manager _Def;
-
-            if (PreviewStyle == WindowStyle.W11)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows11();
-                }
-            }
-
-            else if (PreviewStyle == WindowStyle.W10)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows10();
-                }
-            }
-
-            else if (PreviewStyle == WindowStyle.W81)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows81();
-                }
-            }
-
-            else if (PreviewStyle == WindowStyle.W7)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows7();
-                }
-            }
-
-            else if (PreviewStyle == WindowStyle.WVista)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.WindowsVista();
-                }
-            }
-
-            else if (PreviewStyle == WindowStyle.WXP)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.WindowsXP();
-                }
-            }
-
-            else
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows11();
-                }
-
-            }
-
-            return _Def;
+            return Get(PreviewStyle);
         }
 
-        public static Theme.Manager Get()
+        /// <summary>
+        /// Get default Windows theme, based on your selection
+        /// </summary>
+        /// <param name="PreviewStyle">Windows edition</param>
+        /// <returns><code>WinPaletter.Theme.Manager</code></returns>
+        public static Manager Get(WindowStyle PreviewStyle)
         {
-            Theme.Manager _Def;
-
-            if (OS.W11 | OS.W12)
+            return PreviewStyle switch
             {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows11();
-                }
-            }
+                WindowStyle.W11 => Windows11(),
+                WindowStyle.W10 => Windows10(),
+                WindowStyle.W81 => Windows81(),
+                WindowStyle.W7 => Windows7(),
+                WindowStyle.WVista => WindowsVista(),
+                WindowStyle.WXP => WindowsXP(),
+                _ => Windows11(),
+            };
+        }
+
+        /// <summary>
+        /// Get default Windows theme, based on current Windows edition
+        /// </summary>
+        /// <returns><code>WinPaletter.Theme.Manager</code></returns>
+        public static Manager Get()
+        {
+            if (OS.W11 || OS.W12)
+                return Windows11();
 
             else if (OS.W10)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows10();
-                }
-            }
+                return Windows10();
 
-            else if (OS.W81)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows81();
-                }
-            }
+            else if (OS.W81 || OS.W8)
+                return Windows81();
 
             else if (OS.W7)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows7();
-                }
-            }
+                return Windows7();
 
             else if (OS.WVista)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.WindowsVista();
-                }
-            }
+                return WindowsVista();
 
             else if (OS.WXP)
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.WindowsXP();
-                }
-            }
+                return WindowsXP();
 
             else
-            {
-                using (var X = new Theme.Default())
-                {
-                    _Def = X.Windows11();
-                }
-
-            }
-
-            return _Def;
+                return Windows11();
         }
     }
 }

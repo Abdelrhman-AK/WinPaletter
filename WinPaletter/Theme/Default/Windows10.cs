@@ -2,14 +2,14 @@
 
 namespace WinPaletter.Theme
 {
-    public partial class Default
+    public static partial class Default 
     {
-        public Theme.Manager Windows10()
+        public static Manager Windows10()
         {
-            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
+            var TM = new Manager(Manager.Source.Empty);
 
             {
-                ref Theme.Structures.Info Info = ref TM.Info;
+                ref Structures.Info Info = ref TM.Info;
                 Info.ThemeName = "Windows 10 (Initial)";
                 Info.Description = "Initial; Like first time after Windows Setup";
                 Info.ThemeVersion = "1.0.0.0";
@@ -19,7 +19,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console CMD = ref TM.CommandPrompt;
+                ref Structures.Console CMD = ref TM.CommandPrompt;
                 CMD.ColorTable05 = Color.FromArgb(136, 23, 152);
                 CMD.ColorTable06 = Color.FromArgb(193, 156, 0);
                 CMD.PopupBackground = 15;
@@ -33,7 +33,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS86 = ref TM.PowerShellx86;
+                ref Structures.Console PS86 = ref TM.PowerShellx86;
                 PS86.ColorTable05 = Color.FromArgb(1, 36, 86);
                 PS86.ColorTable06 = Color.FromArgb(238, 237, 240);
                 PS86.PopupBackground = 15;
@@ -47,7 +47,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS64 = ref TM.PowerShellx64;
+                ref Structures.Console PS64 = ref TM.PowerShellx64;
                 PS64.ColorTable05 = Color.FromArgb(1, 36, 86);
                 PS64.ColorTable06 = Color.FromArgb(238, 237, 240);
                 PS64.PopupBackground = 15;
@@ -61,7 +61,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+                ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
                 MetricsFonts.BorderWidth = 1;
                 MetricsFonts.CaptionHeight = 22;
                 MetricsFonts.CaptionWidth = 22;
@@ -79,7 +79,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+                ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
                 WinEffects.ShakeToMinimize = true;
                 WinEffects.BalloonNotifications = false;
                 WinEffects.PaintDesktopVersion = false;
@@ -94,7 +94,7 @@ namespace WinPaletter.Theme
             TM.Cursor_Shadow = false;
 
             {
-                ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
+                ref Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "";
                 Sounds.Snd_Win_Default = PathsExt.Windows + @"\media\Windows Background.wav";
                 Sounds.Snd_Win_AppGPFault = "";

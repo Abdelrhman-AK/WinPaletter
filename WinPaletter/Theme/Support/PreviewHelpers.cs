@@ -6,20 +6,56 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
 
+    /// <summary>
+    /// Helpers for WinPaletter theme preview
+    /// </summary>
     public class PreviewHelpers
     {
         private static readonly int Steps = 15;
         private static readonly int Delay = 1;
 
+        /// <summary>
+        /// Style of selected Windows edition (used for theme preview)
+        /// </summary>
         public enum WindowStyle
         {
+            /// <summary>Windows 11</summary>
             W11,
+            /// <summary>Windows 10</summary>
             W10,
+            /// <summary>Windows 8.1</summary>
             W81,
+            /// <summary>Windows 7</summary>
             W7,
+            /// <summary>Windows Vista</summary>
             WVista,
+            /// <summary>Windows XP</summary>
             WXP
         }
+
+        /// <summary>
+        /// Change labels of Windows 11/10 in WinPaletter main form according to preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Style">Selected Windows edition</param>
+        /// <param name="lbl1"></param>
+        /// <param name="lbl2"></param>
+        /// <param name="lbl3"></param>
+        /// <param name="lbl4"></param>
+        /// <param name="lbl5"></param>
+        /// <param name="lbl6"></param>
+        /// <param name="lbl7"></param>
+        /// <param name="lbl8"></param>
+        /// <param name="lbl9"></param>
+        /// <param name="pic1"></param>
+        /// <param name="pic2"></param>
+        /// <param name="pic3"></param>
+        /// <param name="pic4"></param>
+        /// <param name="pic5"></param>
+        /// <param name="pic6"></param>
+        /// <param name="pic7"></param>
+        /// <param name="pic8"></param>
+        /// <param name="pic9"></param>
         public static void ApplyWin10xLegends(Theme.Manager TM, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
         {
 
@@ -320,6 +356,19 @@ namespace WinPaletter
             }
 
         }
+
+        /// <summary>
+        /// Apply colors into taskbar, start and action center in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Style">Selected Windows edition</param>
+        /// <param name="AnimateColorChange"></param>
+        /// <param name="Taskbar"></param>
+        /// <param name="Start"></param>
+        /// <param name="ActionCenter"></param>
+        /// <param name="setting_icon_preview"></param>
+        /// <param name="settings_label"></param>
+        /// <param name="Link_preview"></param>
         public static void ApplyWinElementsColors(Theme.Manager TM, WindowStyle Style, bool AnimateColorChange, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.WP.LabelAlt setting_icon_preview, UI.WP.LabelAlt settings_label, UI.WP.LabelAlt Link_preview)
         {
             if (ExplorerPatcher.IsAllowed())
@@ -1036,6 +1085,28 @@ namespace WinPaletter
             }
 
         }
+
+        /// <summary>
+        /// Apply styles into taskbar, start, action center  and windows in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Style">Selected Windows edition</param>
+        /// <param name="Taskbar"></param>
+        /// <param name="Start"></param>
+        /// <param name="ActionCenter"></param>
+        /// <param name="Window1">Active window simulation control</param>
+        /// <param name="Window2">Inactive window simulation control</param>
+        /// <param name="Settings_Container"></param>
+        /// <param name="Link_preview"></param>
+        /// <param name="ClassicTaskbar">Classic taskbar simulation control</param>
+        /// <param name="ClassicStartButton">Start button in classic taskbar simulation control</param>
+        /// <param name="ClassicAppButton1">Active app in classic taskbar simulation control</param>
+        /// <param name="ClassicAppButton2">Inctive app in classic taskbar simulation control</param>
+        /// <param name="ClassicWindow1">Active classic window simulation control</param>
+        /// <param name="ClassicWindow2">Inactive classic window simulation control</param>
+        /// <param name="WXP_VS_ReplaceColors">Use colors in Visual Styles file for Windows XP instead of registry</param>
+        /// <param name="WXP_VS_ReplaceMetrics">Use metrics in Visual Styles file for Windows XP instead of registry</param>
+        /// <param name="WXP_VS_ReplaceFonts">Use fonts in Visual Styles file for Windows XP instead of registry</param>
         public static void ApplyWinElementsStyle(Theme.Manager TM, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
         {
             Config.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
@@ -1553,6 +1624,16 @@ namespace WinPaletter
             Window2.Invalidate();
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Style">Selected Windows edition</param>
+        /// <param name="Window1">Active window simulation control</param>
+        /// <param name="Window2">Inactive window simulation control</param>
+        /// <param name="StartButton">Start button that opens start background for Windows 8.1 in main form</param>
+        /// <param name="LogonUIButton">LogonUI button that opens colors for Windows 8 LogonUI in main form</param>
         public static void ApplyWindowStyles(Theme.Manager TM, WindowStyle Style, UI.Simulation.Window Window1, UI.Simulation.Window Window2, UI.WP.Button StartButton = null, UI.WP.Button LogonUIButton = null)
         {
             Window1.Active = true;
@@ -1791,6 +1872,14 @@ namespace WinPaletter
             Window1.Invalidate();
             Window2.Invalidate();
         }
+
+        /// <summary>
+        /// Select modern or classic theme for preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Style">Selected Windows edition</param>
+        /// <param name="tabs_preview">Tabs control that has 2 tabs, first tab is modern preview and the second is classic preview</param>
+        /// <param name="WXP_Alert">AlertBox control that shows alert that WinPaletter is started with classic theme</param>
         public static void AdjustPreview_ModernOrClassic(Theme.Manager TM, WindowStyle Style, UI.WP.TablessControl tabs_preview, UI.WP.AlertBox WXP_Alert)
         {
             if (TM is not null)
@@ -1802,6 +1891,12 @@ namespace WinPaletter
                 tabs_preview.SelectedIndex = condition0 | condition1 | condition2 ? 1 : 0;
             }
         }
+
+        /// <summary>
+        /// Sets metrics for classic window in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Window">Classic window simulation control</param>
         public static void SetClassicWindowMetrics(Theme.Manager TM, UI.Retro.WindowR Window)
         {
             if (TM is not null)
@@ -1814,6 +1909,12 @@ namespace WinPaletter
                 Window.Refresh();
             }
         }
+
+        /// <summary>
+        /// Sets metrics for window in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Window">Window simulation control</param>
         public static void SetModernWindowMetrics(Theme.Manager TM, UI.Simulation.Window Window)
         {
             if (TM is not null)
@@ -1825,6 +1926,13 @@ namespace WinPaletter
                 Window.Invalidate();
             }
         }
+
+        /// <summary>
+        /// Sets colors for classic window in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Window">Classic window simulation control</param>
+        /// <param name="Active">Making Window control active or not</param>
         public static void SetClassicWindowColors(Theme.Manager TM, UI.Retro.WindowR Window, bool Active = true)
         {
             if (TM is not null)
@@ -1854,6 +1962,12 @@ namespace WinPaletter
                 Window.ColorGradient = TM.Win32.EnableGradient;
             }
         }
+
+        /// <summary>
+        /// Sets colors for classic raised panel in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Panel">PanelRaisedR classic control</param>
         public static void SetClassicPanelRaisedRColors(Theme.Manager TM, UI.Retro.PanelRaisedR Panel)
         {
             Panel.BackColor = TM.Win32.ButtonFace;
@@ -1863,6 +1977,12 @@ namespace WinPaletter
             Panel.ButtonDkShadow = TM.Win32.ButtonDkShadow;
             Panel.ForeColor = TM.Win32.TitleText;
         }
+
+        /// <summary>
+        /// Sets colors for classic raised panel in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Panel">PanelR classic control</param>
         public static void SetClassicPanelColors(Theme.Manager TM, UI.Retro.PanelR Panel)
         {
             Panel.BackColor = TM.Win32.ButtonFace;
@@ -1872,6 +1992,12 @@ namespace WinPaletter
             Panel.ButtonDkShadow = TM.Win32.ButtonDkShadow;
             Panel.ForeColor = TM.Win32.TitleText;
         }
+
+        /// <summary>
+        /// Sets colors for classic buttons in preview
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="Button">ButtonR classic control</param>
         public static void SetClassicButtonColors(Theme.Manager TM, UI.Retro.ButtonR Button)
         {
             Button.ButtonDkShadow = TM.Win32.ButtonDkShadow;
@@ -1884,6 +2010,11 @@ namespace WinPaletter
             Button.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
             Button.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
         }
+       
+        /// <summary>
+        /// Refreshes all controls and subcontrols
+        /// </summary>
+        /// <param name="Parent">Parent that has all controls and subcontrols</param>
         public static void ReValidateLivePreview(Control Parent)
         {
             Parent.Refresh();
@@ -1898,6 +2029,12 @@ namespace WinPaletter
                 }
             }
         }
+
+        /// <summary>
+        /// Apply selected Windows 8.1 start background to main form W81_start button
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="W81_start">Main form Windows 8.1 start button</param>
         public static void ApplyMetroStartToButton(Theme.Manager TM, UI.WP.Button W81_start)
         {
             switch (TM.Windows81.Start)
@@ -2010,6 +2147,12 @@ namespace WinPaletter
                     }
             }
         }
+
+        /// <summary>
+        /// Apply selected Windows 8.1 LogonUI background to main form W8_logonui button
+        /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="W8_logonui">Main form Windows 8.1 LogonUI button</param>
         public static void ApplyBackLogonUI(Theme.Manager TM, UI.WP.Button W8_logonui)
         {
 
@@ -2175,6 +2318,12 @@ namespace WinPaletter
 
 
         }
+
+        /// <summary>
+        /// Get modified wallpaper (Wallpaper Tone)
+        /// </summary>
+        /// <param name="WT">Wallpaper tone structure inside WinPaletter theme manager</param>
+        /// <returns>Bitmap</returns>
         public static Bitmap GetTintedWallpaper(Theme.Structures.WallpaperTone WT)
         {
             if (!System.IO.File.Exists(WT.Image))

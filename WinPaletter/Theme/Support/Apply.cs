@@ -12,6 +12,12 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
+        /// <summary>
+        /// Apply Windows 7/8.1 LogonUI screen
+        /// </summary>
+        /// <param name="LogonElement">Structure that contains Windows 7/8.1 LogonUI data: <b>WinPaletter.Theme.Manager.LogonUI7 or LogonUI81</b></param>
+        /// <param name="RegEntryHint">Registry subkey to store data in WinPaletter registry (HKEY_CURRENT_USER\Software\WinPaletter)</param>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_LogonUI7(Theme.Structures.LogonUI7 LogonElement, string RegEntryHint = "LogonUI", TreeView TreeView = null)
         {
 
@@ -177,6 +183,10 @@ namespace WinPaletter.Theme
             }
         }
 
+        /// <summary>
+        /// Apply Windows 8 lock screen
+        /// </summary>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_LogonUI_8(TreeView TreeView = null)
         {
 
@@ -319,6 +329,10 @@ namespace WinPaletter.Theme
 
         }
 
+        /// <summary>
+        /// Apply Command Prompt preferences
+        /// </summary>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_CommandPrompt(TreeView TreeView = null)
         {
             if (CommandPrompt.Enabled)
@@ -335,6 +349,10 @@ namespace WinPaletter.Theme
             }
         }
 
+        /// <summary>
+        /// Apply PowerShell x86 preferences
+        /// </summary>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_PowerShell86(TreeView TreeView = null)
         {
             if (PowerShellx86.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0"))
@@ -347,6 +365,10 @@ namespace WinPaletter.Theme
             }
         }
 
+        /// <summary>
+        /// Apply PowerShell x64 preferences
+        /// </summary>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_PowerShell64(TreeView TreeView = null)
         {
             if (PowerShellx64.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0"))
@@ -359,6 +381,10 @@ namespace WinPaletter.Theme
             }
         }
 
+        /// <summary>
+        /// Apply WinPaletter themed cursors
+        /// </summary>
+        /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_Cursors(TreeView TreeView = null)
         {
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;

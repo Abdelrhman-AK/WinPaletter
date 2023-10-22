@@ -6,7 +6,7 @@ namespace WinPaletter
 {
     public partial class TerminalInfo
     {
-        public ProfilesList Profile = new ProfilesList();
+        public TProfile Profile = new TProfile();
 
         public TerminalInfo()
         {

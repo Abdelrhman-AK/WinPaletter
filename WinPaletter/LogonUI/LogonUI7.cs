@@ -530,48 +530,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Theme.Manager TMx;
-            switch (Program.PreviewStyle)
-            {
-                case WindowStyle.W11:
-                    {
-                        TMx = new Theme.Default().Windows11();
-                        break;
-                    }
-                case WindowStyle.W10:
-                    {
-                        TMx = new Theme.Default().Windows10();
-                        break;
-                    }
-                case WindowStyle.W81:
-                    {
-                        TMx = new Theme.Default().Windows81();
-                        break;
-                    }
-                case WindowStyle.W7:
-                    {
-                        TMx = new Theme.Default().Windows7();
-                        break;
-                    }
-                case WindowStyle.WVista:
-                    {
-                        TMx = new Theme.Default().WindowsVista();
-                        break;
-                    }
-                case WindowStyle.WXP:
-                    {
-                        TMx = new Theme.Default().WindowsXP();
-                        break;
-                    }
-
-                default:
-                    {
-                        TMx = new Theme.Default().Windows11();
-                        break;
-                    }
-            }
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            LoadFromTM(Theme.Default.Get(Program.PreviewStyle));
         }
 
         private void Toggle1_CheckedChanged(object sender, EventArgs e)

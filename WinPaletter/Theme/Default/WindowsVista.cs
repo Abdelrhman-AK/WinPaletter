@@ -2,14 +2,14 @@
 
 namespace WinPaletter.Theme
 {
-    public partial class Default
+    public static partial class Default 
     {
-        public Theme.Manager WindowsVista()
+        public static Manager WindowsVista()
         {
-            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
+            var TM = new Manager(Manager.Source.Empty);
 
             {
-                ref Theme.Structures.Info Info = ref TM.Info;
+                ref Structures.Info Info = ref TM.Info;
                 Info.ThemeName = "Windows Vista (Initial)";
                 Info.Description = "Initial; Like first time after Windows Setup";
                 Info.ThemeVersion = "1.0.0.0";
@@ -19,7 +19,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Windows8x Win81 = ref TM.Windows81;
+                ref Structures.Windows8x Win81 = ref TM.Windows81;
                 Win81.ColorizationColor = Color.FromArgb(246, 195, 74);
                 Win81.ColorizationColorBalance = 78;
                 Win81.PersonalColors_Background = Color.FromArgb(30, 0, 84);
@@ -27,15 +27,15 @@ namespace WinPaletter.Theme
                 Win81.StartColor = Color.FromArgb(30, 0, 84);
                 Win81.AccentColor = Color.FromArgb(72, 29, 178);
                 Win81.Start = 0;
-                Win81.Theme = Theme.Structures.Windows7.Themes.Aero;
+                Win81.Theme = Structures.Windows7.Themes.Aero;
                 Win81.LogonUI = 0;
                 Win81.NoLockScreen = false;
-                Win81.LockScreenType = Theme.Structures.LogonUI7.Modes.Default;
+                Win81.LockScreenType = Structures.LogonUI7.Modes.Default;
                 Win81.LockScreenSystemID = 0;
             }
 
             {
-                ref Theme.Structures.Windows7 Win7 = ref TM.Windows7;
+                ref Structures.Windows7 Win7 = ref TM.Windows7;
                 Win7.ColorizationColor = Color.FromArgb(116, 184, 252);
                 Win7.ColorizationAfterglow = Color.FromArgb(116, 184, 252);
                 Win7.ColorizationColorBalance = 8;
@@ -44,16 +44,16 @@ namespace WinPaletter.Theme
                 Win7.ColorizationGlassReflectionIntensity = 0;
                 Win7.EnableAeroPeek = true;
                 Win7.AlwaysHibernateThumbnails = false;
-                Win7.Theme = Theme.Structures.Windows7.Themes.Aero;
+                Win7.Theme = Structures.Windows7.Themes.Aero;
             }
 
             {
-                ref Theme.Structures.WindowsVista WinVista = ref TM.WindowsVista;
+                ref Structures.WindowsVista WinVista = ref TM.WindowsVista;
                 WinVista.ColorizationColor = Color.FromArgb(64, 158, 254);
             }
 
             {
-                ref Theme.Structures.Console CMD = ref TM.CommandPrompt;
+                ref Structures.Console CMD = ref TM.CommandPrompt;
                 CMD.ColorTable00 = Color.FromArgb(0, 0, 0);
                 CMD.ColorTable01 = Color.FromArgb(0, 0, 128);
                 CMD.ColorTable02 = Color.FromArgb(0, 128, 0);
@@ -81,7 +81,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS86 = ref TM.PowerShellx86;
+                ref Structures.Console PS86 = ref TM.PowerShellx86;
                 PS86.ColorTable00 = Color.FromArgb(12, 12, 12);
                 PS86.ColorTable01 = Color.FromArgb(0, 55, 218);
                 PS86.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -109,7 +109,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.Console PS64 = ref TM.PowerShellx64;
+                ref Structures.Console PS64 = ref TM.PowerShellx64;
                 PS64.ColorTable00 = Color.FromArgb(12, 12, 12);
                 PS64.ColorTable01 = Color.FromArgb(0, 55, 218);
                 PS64.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -137,7 +137,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+                ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
                 MetricsFonts.BorderWidth = 1;
                 MetricsFonts.CaptionHeight = 19;
                 MetricsFonts.CaptionWidth = 19;
@@ -155,7 +155,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Theme.Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+                ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
                 WinEffects.ShakeToMinimize = false;
                 WinEffects.BalloonNotifications = true;
                 WinEffects.PaintDesktopVersion = false;
@@ -169,7 +169,7 @@ namespace WinPaletter.Theme
             TM.Cursor_Shadow = true;
 
             {
-                ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
+                ref Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "Default";
                 Sounds.Snd_Win_Default = PathsExt.Windows + @"\media\Windows Ding.wav";
                 Sounds.Snd_Win_AppGPFault = "";

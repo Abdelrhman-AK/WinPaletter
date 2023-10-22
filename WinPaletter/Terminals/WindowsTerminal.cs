@@ -161,9 +161,9 @@ namespace WinPaletter
                     TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
                     TerTabActive.BackColor = temp.Tab_Active;
                     TerTabInactive.BackColor = temp.Tab_Inactive;
-                    TerMode.Checked = !(temp.ApplicationTheme_light.ToLower() == "light");
-                    Terminal1.Light = !(temp.ApplicationTheme_light.ToLower() == "light");
-                    Terminal2.Light = !(temp.ApplicationTheme_light.ToLower() == "light");
+                    TerMode.Checked = !(temp.Style.ToLower() == "light");
+                    Terminal1.Light = !(temp.Style.ToLower() == "light");
+                    Terminal2.Light = !(temp.Style.ToLower() == "light");
                 }
 
             }
@@ -666,13 +666,13 @@ namespace WinPaletter
 
             {
                 var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.CursorShape = (ProfilesList.CursorShape_Enum)TerCursorStyle.SelectedIndex;
+                temp.CursorShape = (TProfile.CursorShape_Enum)TerCursorStyle.SelectedIndex;
             }
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            _Terminal.Colors.Add(new TColor() { Name = Program.Lang.Terminal_NewScheme + " #" + TerSchemes.Items.Count });
+            _Terminal.Colors.Add(new TColors() { Name = Program.Lang.Terminal_NewScheme + " #" + TerSchemes.Items.Count });
             FillTerminalSchemes(_Terminal, TerSchemes);
             TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1;
         }
@@ -1037,7 +1037,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            _Terminal.Themes.Add(new ThemesList() { Name = Program.Lang.Terminal_NewTheme + " #" + (TerThemes.Items.Count - 3) });
+            _Terminal.Themes.Add(new TTheme() { Name = Program.Lang.Terminal_NewTheme + " #" + (TerThemes.Items.Count - 3) });
             FillTerminalThemes(_Terminal, TerThemes);
             TerThemes.SelectedIndex = TerThemes.Items.Count - 1;
         }
@@ -1057,7 +1057,7 @@ namespace WinPaletter
 
             {
                 var temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp1.Font.Weight = (ProfilesList.FontWeight_Enum)TerFontWeight.SelectedIndex;
+                temp1.Font.Weight = (TProfile.FontWeight_Enum)TerFontWeight.SelectedIndex;
             }
 
         }
@@ -1077,7 +1077,7 @@ namespace WinPaletter
                     TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
                     TerTabActive.BackColor = temp.Tab_Active;
                     TerTabInactive.BackColor = temp.Tab_Inactive;
-                    TerMode.Checked = !(temp.ApplicationTheme_light.ToLower() == "light");
+                    TerMode.Checked = !(temp.Style.ToLower() == "light");
                 }
             }
 
@@ -1239,7 +1239,7 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            _Terminal.Profiles.Add(new ProfilesList() { Name = Program.Lang.Terminal_NewProfile + " #" + TerProfiles.Items.Count, ColorScheme = _Terminal.DefaultProf.ColorScheme });
+            _Terminal.Profiles.Add(new TProfile() { Name = Program.Lang.Terminal_NewProfile + " #" + TerProfiles.Items.Count, ColorScheme = _Terminal.DefaultProf.ColorScheme });
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
         }
@@ -1340,7 +1340,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex > 2)
             {
-                _Terminal.Themes[TerThemes.SelectedIndex - 3].ApplicationTheme_light = !TerMode.Checked ? "light" : "dark";
+                _Terminal.Themes[TerThemes.SelectedIndex - 3].Style = !TerMode.Checked ? "light" : "dark";
             }
 
             if (_Shown)
@@ -1578,7 +1578,7 @@ namespace WinPaletter
         private void Button17_Click(object sender, EventArgs e)
         {
 
-            var TC = new TColor()
+            var TC = new TColors()
             {
                 Name = TerSchemes.SelectedItem.ToString() + " Clone #" + TerSchemes.Items.Count,
                 Background = _Terminal.Colors[TerSchemes.SelectedIndex].Background,
@@ -1617,7 +1617,7 @@ namespace WinPaletter
                 return;
             }
 
-            var P = new ProfilesList()
+            var P = new TProfile()
             {
                 Name = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].Name + " " + Program.Lang.Terminal_Clone + " #" + TerProfiles.Items.Count,
                 BackgroundImage = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].BackgroundImage,
@@ -1648,10 +1648,10 @@ namespace WinPaletter
                 return;
             }
 
-            var Th = new ThemesList()
+            var Th = new TTheme()
             {
                 Name = _Terminal.Themes[TerThemes.SelectedIndex - 3].Name + " " + Program.Lang.Terminal_Clone + " #" + TerThemes.Items.Count,
-                ApplicationTheme_light = _Terminal.Themes[TerThemes.SelectedIndex - 3].ApplicationTheme_light,
+                Style = _Terminal.Themes[TerThemes.SelectedIndex - 3].Style,
                 Tab_Active = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Active,
                 Tab_Inactive = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Inactive,
                 Titlebar_Active = _Terminal.Themes[TerThemes.SelectedIndex - 3].Titlebar_Active,
@@ -1904,7 +1904,7 @@ namespace WinPaletter
 
                         {
                             var temp1 = _Terminal.Themes[TerThemes.SelectedIndex - 3];
-                            temp1.ApplicationTheme_light = CCatFrom.ApplicationTheme_light;
+                            temp1.Style = CCatFrom.Style;
                             temp1.Tab_Active = CCatFrom.Tab_Active;
                             temp1.Tab_Inactive = CCatFrom.Tab_Inactive;
                             temp1.Titlebar_Active = CCatFrom.Titlebar_Active;
@@ -1915,7 +1915,7 @@ namespace WinPaletter
                         TerTitlebarInactive.BackColor = CCatFrom.Titlebar_Inactive;
                         TerTabActive.BackColor = CCatFrom.Tab_Active;
                         TerTabInactive.BackColor = CCatFrom.Tab_Inactive;
-                        TerMode.Checked = !(CCatFrom.ApplicationTheme_light.ToLower() == "light");
+                        TerMode.Checked = !(CCatFrom.Style.ToLower() == "light");
 
                         break;
                     }

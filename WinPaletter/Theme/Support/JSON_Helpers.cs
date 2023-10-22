@@ -16,19 +16,10 @@ namespace WinPaletter.Theme
             foreach (var field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 JToken result;
-
-                try
-                {
-                    result = JToken.FromObject(field.GetValue(Structure));
-                }
-                catch
-                {
-                    result = default;
-                }
-
+                try { result = JToken.FromObject(field.GetValue(Structure)); }
+                catch { result = default; }
                 j.Add(field.Name, result);
             }
-
             return j;
         }
 
@@ -41,21 +32,13 @@ namespace WinPaletter.Theme
             strInput = strInput.Trim();
             if (strInput.StartsWith("{") && strInput.EndsWith("}") || strInput.StartsWith("[") && strInput.EndsWith("]")) // For object
             {
-                // For array
                 try
                 {
                     var obj = JToken.Parse(strInput);
                     return true;
                 }
-                catch (JsonReaderException jex)
-                {
-                    // Exception in parsing json
-                    return false;
-                }
-                catch // some other exception
-                {
-                    return false;
-                }
+                catch (JsonReaderException) { return false; }   // Exception in parsing json
+                catch { return false; }                         // Another exception
             }
             else
             {

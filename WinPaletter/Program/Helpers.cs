@@ -106,7 +106,7 @@ namespace WinPaletter
 
                 var _Convert = new Converter();
 
-                if (System.IO.File.Exists(Source) && !(_Convert.FetchFile(Source) == Converter_CP.WP_Format.Error))
+                if (System.IO.File.Exists(Source) && !(_Convert.GetFormat(Source) == Converter_CP.WP_Format.Error))
                 {
                     _Convert.Convert(Source, Destination, Compress == "1", OldWPTH == "1");
                 }
@@ -164,7 +164,7 @@ namespace WinPaletter
                             string Dir = FI.FullName.Replace(FI.FullName.Split('\\').Last(), "WinPaletterConversion");
                             string SaveAs = Dir + @"\" + Name + ".wpth";
 
-                            if (!(_Convert.FetchFile(f) == Converter_CP.WP_Format.Error))
+                            if (!(_Convert.GetFormat(f) == Converter_CP.WP_Format.Error))
                             {
                                 if (!System.IO.Directory.Exists(Dir))
                                     System.IO.Directory.CreateDirectory(Dir);

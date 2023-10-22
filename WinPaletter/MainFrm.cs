@@ -301,73 +301,43 @@ namespace WinPaletter
         }
         public void ApplyDefaultTMValues()
         {
-            Theme.Manager DefTM;
-
-            if (OS.W11)
+            using (Theme.Manager DefTM = Theme.Default.Get())
             {
-                DefTM = new Theme.Default().Windows11();
-            }
-            else if (OS.W10)
-            {
-                DefTM = new Theme.Default().Windows10();
-            }
-            else if (OS.W81)
-            {
-                DefTM = new Theme.Default().Windows81();
-            }
-            else if (OS.W7)
-            {
-                DefTM = new Theme.Default().Windows7();
-            }
-            else if (OS.WVista)
-            {
-                DefTM = new Theme.Default().WindowsVista();
-            }
-            else if (OS.WXP)
-            {
-                DefTM = new Theme.Default().WindowsXP();
-            }
-            else
-            {
-                DefTM = new Theme.Default().Windows11();
-            }
+                W11_ActiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Active;
+                W11_InactiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Inactive;
+                W11_Color_Index5.DefaultColor = DefTM.Windows11.StartMenu_Accent;
+                W11_Color_Index4.DefaultColor = DefTM.Windows11.Color_Index2;
+                W11_Color_Index6.DefaultColor = DefTM.Windows11.Color_Index6;
+                W11_Color_Index1.DefaultColor = DefTM.Windows11.Color_Index1;
+                W11_Color_Index2.DefaultColor = DefTM.Windows11.Color_Index4;
+                W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows11.Color_Index5;
+                W11_Color_Index0.DefaultColor = DefTM.Windows11.Color_Index0;
+                W11_Color_Index3.DefaultColor = DefTM.Windows11.Color_Index3;
+                W11_Color_Index7.DefaultColor = DefTM.Windows11.Color_Index7;
 
-            W11_ActiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Active;
-            W11_InactiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Inactive;
-            W11_Color_Index5.DefaultColor = DefTM.Windows11.StartMenu_Accent;
-            W11_Color_Index4.DefaultColor = DefTM.Windows11.Color_Index2;
-            W11_Color_Index6.DefaultColor = DefTM.Windows11.Color_Index6;
-            W11_Color_Index1.DefaultColor = DefTM.Windows11.Color_Index1;
-            W11_Color_Index2.DefaultColor = DefTM.Windows11.Color_Index4;
-            W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows11.Color_Index5;
-            W11_Color_Index0.DefaultColor = DefTM.Windows11.Color_Index0;
-            W11_Color_Index3.DefaultColor = DefTM.Windows11.Color_Index3;
-            W11_Color_Index7.DefaultColor = DefTM.Windows11.Color_Index7;
+                W10_ActiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Active;
+                W10_InactiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Inactive;
+                W10_Color_Index5.DefaultColor = DefTM.Windows10.StartMenu_Accent;
+                W10_Color_Index4.DefaultColor = DefTM.Windows10.Color_Index2;
+                W10_Color_Index6.DefaultColor = DefTM.Windows10.Color_Index6;
+                W10_Color_Index1.DefaultColor = DefTM.Windows10.Color_Index1;
+                W10_Color_Index2.DefaultColor = DefTM.Windows10.Color_Index4;
+                W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows10.Color_Index5;
+                W10_Color_Index0.DefaultColor = DefTM.Windows10.Color_Index0;
+                W10_Color_Index3.DefaultColor = DefTM.Windows10.Color_Index3;
+                W10_Color_Index7.DefaultColor = DefTM.Windows10.Color_Index7;
 
-            W10_ActiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Active;
-            W10_InactiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Inactive;
-            W10_Color_Index5.DefaultColor = DefTM.Windows10.StartMenu_Accent;
-            W10_Color_Index4.DefaultColor = DefTM.Windows10.Color_Index2;
-            W10_Color_Index6.DefaultColor = DefTM.Windows10.Color_Index6;
-            W10_Color_Index1.DefaultColor = DefTM.Windows10.Color_Index1;
-            W10_Color_Index2.DefaultColor = DefTM.Windows10.Color_Index4;
-            W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows10.Color_Index5;
-            W10_Color_Index0.DefaultColor = DefTM.Windows10.Color_Index0;
-            W10_Color_Index3.DefaultColor = DefTM.Windows10.Color_Index3;
-            W10_Color_Index7.DefaultColor = DefTM.Windows10.Color_Index7;
+                W81_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
+                W81_start_pick.DefaultColor = DefTM.Windows81.StartColor;
+                W81_accent_pick.DefaultColor = DefTM.Windows81.AccentColor;
+                W81_personalcls_background_pick.DefaultColor = DefTM.Windows81.PersonalColors_Background;
+                W81_personalcolor_accent_pick.DefaultColor = DefTM.Windows81.PersonalColors_Accent;
 
-            W81_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
-            W81_start_pick.DefaultColor = DefTM.Windows81.StartColor;
-            W81_accent_pick.DefaultColor = DefTM.Windows81.AccentColor;
-            W81_personalcls_background_pick.DefaultColor = DefTM.Windows81.PersonalColors_Background;
-            W81_personalcolor_accent_pick.DefaultColor = DefTM.Windows81.PersonalColors_Accent;
+                W7_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
+                W7_ColorizationAfterglow_pick.DefaultColor = DefTM.Windows7.ColorizationAfterglow;
 
-            W7_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
-            W7_ColorizationAfterglow_pick.DefaultColor = DefTM.Windows7.ColorizationAfterglow;
-
-            WVista_ColorizationColor_pick.DefaultColor = DefTM.WindowsVista.ColorizationColor;
-
-            DefTM.Dispose();
+                WVista_ColorizationColor_pick.DefaultColor = DefTM.WindowsVista.ColorizationColor;
+            }
         }
         public void Update_Wallpaper_Preview()
         {

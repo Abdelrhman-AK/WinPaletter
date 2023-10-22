@@ -733,7 +733,7 @@ namespace WinPaletter
                         FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
                     // Convert themes managers into StoreItems, and exclude the old formats of WPTH
-                    if (System.IO.File.Exists(Dir + @"\" + FileName) && _Converter.FetchFile(Dir + @"\" + FileName) == Converter_CP.WP_Format.JSON)
+                    if (System.IO.File.Exists(Dir + @"\" + FileName) && _Converter.GetFormat(Dir + @"\" + FileName) == Converter_CP.WP_Format.JSON)
                     {
                         try
                         {

@@ -154,7 +154,7 @@ namespace WinPaletter
 
             PaletteContainer.Controls.Clear();
 
-            foreach (Color c in TM.ListColors())
+            foreach (Color c in TM.Colors())
             {
 
                 UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
@@ -1061,32 +1061,32 @@ namespace WinPaletter
                     }
                 case 1:
                     {
-                        GetColorsFromPalette(new Theme.Default().Windows11());
+                        GetColorsFromPalette(Theme.Default.Windows11());
                         break;
                     }
                 case 2:
                     {
-                        GetColorsFromPalette(new Theme.Default().Windows10());
+                        GetColorsFromPalette(Theme.Default.Windows10());
                         break;
                     }
                 case 3:
                     {
-                        GetColorsFromPalette(new Theme.Default().Windows81());
+                        GetColorsFromPalette(Theme.Default.Windows81());
                         break;
                     }
                 case 4:
                     {
-                        GetColorsFromPalette(new Theme.Default().WindowsVista());
+                        GetColorsFromPalette(Theme.Default.WindowsVista());
                         break;
                     }
                 case 5:
                     {
-                        GetColorsFromPalette(new Theme.Default().WindowsXP());
+                        GetColorsFromPalette(Theme.Default.WindowsXP());
                         break;
                     }
                 case 6:
                     {
-                        GetColorsFromPalette(new Theme.Default().Windows7());
+                        GetColorsFromPalette(Theme.Default.Windows7());
                         break;
                     }
 

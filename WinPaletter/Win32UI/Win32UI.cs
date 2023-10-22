@@ -112,69 +112,41 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            Theme.Manager DefTM;
-
-            if (OS.W11)
+            using (Theme.Manager DefTM = Theme.Default.Get())
             {
-                DefTM = new Theme.Default().Windows11();
+                ActiveBorder_pick.DefaultColor = DefTM.Win32.ActiveBorder;
+                activetitle_pick.DefaultColor = DefTM.Win32.ActiveTitle;
+                AppWorkspace_pick.DefaultColor = DefTM.Win32.AppWorkspace;
+                background_pick.DefaultColor = DefTM.Win32.Background;
+                btnaltface_pick.DefaultColor = DefTM.Win32.ButtonAlternateFace;
+                btndkshadow_pick.DefaultColor = DefTM.Win32.ButtonDkShadow;
+                btnface_pick.DefaultColor = DefTM.Win32.ButtonFace;
+                btnhilight_pick.DefaultColor = DefTM.Win32.ButtonHilight;
+                btnlight_pick.DefaultColor = DefTM.Win32.ButtonLight;
+                btnshadow_pick.DefaultColor = DefTM.Win32.ButtonShadow;
+                btntext_pick.DefaultColor = DefTM.Win32.ButtonText;
+                GActivetitle_pick.DefaultColor = DefTM.Win32.GradientActiveTitle;
+                GInactivetitle_pick.DefaultColor = DefTM.Win32.GradientInactiveTitle;
+                GrayText_pick.DefaultColor = DefTM.Win32.GrayText;
+                hilighttext_pick.DefaultColor = DefTM.Win32.HilightText;
+                hottracking_pick.DefaultColor = DefTM.Win32.HotTrackingColor;
+                InactiveBorder_pick.DefaultColor = DefTM.Win32.InactiveBorder;
+                InactiveTitle_pick.DefaultColor = DefTM.Win32.InactiveTitle;
+                InactivetitleText_pick.DefaultColor = DefTM.Win32.InactiveTitleText;
+                InfoText_pick.DefaultColor = DefTM.Win32.InfoText;
+                InfoWindow_pick.DefaultColor = DefTM.Win32.InfoWindow;
+                menu_pick.DefaultColor = DefTM.Win32.Menu;
+                menubar_pick.DefaultColor = DefTM.Win32.MenuBar;
+                menutext_pick.DefaultColor = DefTM.Win32.MenuText;
+                Scrollbar_pick.DefaultColor = DefTM.Win32.Scrollbar;
+                TitleText_pick.DefaultColor = DefTM.Win32.TitleText;
+                Window_pick.DefaultColor = DefTM.Win32.Window;
+                Frame_pick.DefaultColor = DefTM.Win32.WindowFrame;
+                WindowText_pick.DefaultColor = DefTM.Win32.WindowText;
+                hilight_pick.DefaultColor = DefTM.Win32.Hilight;
+                menuhilight_pick.DefaultColor = DefTM.Win32.MenuHilight;
+                desktop_pick.DefaultColor = DefTM.Win32.Desktop;
             }
-            else if (OS.W10)
-            {
-                DefTM = new Theme.Default().Windows10();
-            }
-            else if (OS.W81)
-            {
-                DefTM = new Theme.Default().Windows81();
-            }
-            else if (OS.W7)
-            {
-                DefTM = new Theme.Default().Windows7();
-            }
-            else if (OS.WVista)
-            {
-                DefTM = new Theme.Default().WindowsVista();
-            }
-            else if (OS.WXP)
-            {
-                DefTM = new Theme.Default().WindowsXP();
-            }
-            else
-            {
-                DefTM = new Theme.Default().Windows11();
-            }
-
-            ActiveBorder_pick.DefaultColor = DefTM.Win32.ActiveBorder;
-            activetitle_pick.DefaultColor = DefTM.Win32.ActiveTitle;
-            AppWorkspace_pick.DefaultColor = DefTM.Win32.AppWorkspace;
-            background_pick.DefaultColor = DefTM.Win32.Background;
-            btnaltface_pick.DefaultColor = DefTM.Win32.ButtonAlternateFace;
-            btndkshadow_pick.DefaultColor = DefTM.Win32.ButtonDkShadow;
-            btnface_pick.DefaultColor = DefTM.Win32.ButtonFace;
-            btnhilight_pick.DefaultColor = DefTM.Win32.ButtonHilight;
-            btnlight_pick.DefaultColor = DefTM.Win32.ButtonLight;
-            btnshadow_pick.DefaultColor = DefTM.Win32.ButtonShadow;
-            btntext_pick.DefaultColor = DefTM.Win32.ButtonText;
-            GActivetitle_pick.DefaultColor = DefTM.Win32.GradientActiveTitle;
-            GInactivetitle_pick.DefaultColor = DefTM.Win32.GradientInactiveTitle;
-            GrayText_pick.DefaultColor = DefTM.Win32.GrayText;
-            hilighttext_pick.DefaultColor = DefTM.Win32.HilightText;
-            hottracking_pick.DefaultColor = DefTM.Win32.HotTrackingColor;
-            InactiveBorder_pick.DefaultColor = DefTM.Win32.InactiveBorder;
-            InactiveTitle_pick.DefaultColor = DefTM.Win32.InactiveTitle;
-            InactivetitleText_pick.DefaultColor = DefTM.Win32.InactiveTitleText;
-            InfoText_pick.DefaultColor = DefTM.Win32.InfoText;
-            InfoWindow_pick.DefaultColor = DefTM.Win32.InfoWindow;
-            menu_pick.DefaultColor = DefTM.Win32.Menu;
-            menubar_pick.DefaultColor = DefTM.Win32.MenuBar;
-            menutext_pick.DefaultColor = DefTM.Win32.MenuText;
-            Scrollbar_pick.DefaultColor = DefTM.Win32.Scrollbar;
-            TitleText_pick.DefaultColor = DefTM.Win32.TitleText;
-            Window_pick.DefaultColor = DefTM.Win32.Window;
-            Frame_pick.DefaultColor = DefTM.Win32.WindowFrame;
-            WindowText_pick.DefaultColor = DefTM.Win32.WindowText;
-            hilight_pick.DefaultColor = DefTM.Win32.Hilight;
-            menuhilight_pick.DefaultColor = DefTM.Win32.MenuHilight;
-            desktop_pick.DefaultColor = DefTM.Win32.Desktop;
         }
 
         public void ApplyToTM(Theme.Manager TM)

@@ -8,33 +8,51 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using static WinPaletter.ProfilesList;
+using static WinPaletter.TProfile;
 
 namespace WinPaletter
 {
-
+    /// <summary>
+    /// Class that has data of Windows Terminal settings
+    /// </summary>
     public class WinTerminal : ICloneable
     {
-
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled { get; set; } = false;
-        public List<TColor> Colors { get; set; }
-        public List<ProfilesList> Profiles { get; set; }
-        public ProfilesList DefaultProf { get; set; }
-        public List<ThemesList> Themes { get; set; }
+
+        /// <summary>List of terminal colors</summary>
+        public List<TColors> Colors { get; set; }
+
+        /// <summary>List of terminal profiles</summary>
+        public List<TProfile> Profiles { get; set; }
+
+        /// <summary>Default Windows Terminal profile</summary>
+        public TProfile DefaultProf { get; set; }
+
+        /// <summary>List of terminal themes</summary>
+        public List<TTheme> Themes { get; set; }
+
+        /// <summary>Current Windows Terminal theme</summary>
         public string Theme { get; set; } = "system";
+
+        /// <summary>Controls if Windows Terminal titlebar has acrylic effect</summary>
         public bool UseAcrylicInTabRow { get; set; } = false;
 
-
-
-        public WinTerminal(string str, Mode Mode, Version Version = Version.Stable)
+        /// <summary>
+        /// Create an instance of class has all data of Windows Terminal settings
+        /// </summary>
+        /// <param name="File">File to be opened, either JSON or WinPaletter theme file</param>
+        /// <param name="Mode">Either Windows Terminal JSON settings file or WinPaletter theme file</param>
+        /// <param name="Version">Either Stable or Preview</param>
+        public WinTerminal(string File, Mode Mode, Version Version = Version.Stable)
         {
             switch (Mode)
             {
                 case Mode.JSONFile:
                     {
-                        if (File.Exists(str))
+                        if (System.IO.File.Exists(File))
                         {
-                            var St = new StreamReader(str);
+                            var St = new StreamReader(File);
                             string JSON_String = St.ReadToEnd();
 
                             try
@@ -48,7 +66,7 @@ namespace WinPaletter
 
 
                                 #region Getting Default Profile
-                                DefaultProf = new ProfilesList();
+                                DefaultProf = new TProfile();
 
                                 if (JSonFile["profiles"] is not null)
                                 {
@@ -60,12 +78,12 @@ namespace WinPaletter
                                         if (JSonFile["profiles"]["defaults"]["backgroundImage"] is not null)
                                             DefaultProf.BackgroundImage = JSonFile["profiles"]["defaults"]["backgroundImage"].ToString();
                                         if (JSonFile["profiles"]["defaults"]["cursorShape"] is not null)
-                                            DefaultProf.CursorShape = ProfilesList.CursorShape_GetFromString(JSonFile["profiles"]["defaults"]["cursorShape"].ToString());
+                                            DefaultProf.CursorShape = TProfile.CursorShape_GetFromString(JSonFile["profiles"]["defaults"]["cursorShape"].ToString());
 
                                         if (JSonFile["profiles"]["defaults"]["font"] is not null)
                                         {
                                             if (JSonFile["profiles"]["defaults"]["font"]["weight"] is not null)
-                                                DefaultProf.Font.Weight = ProfilesList.FontWeight_GetFromString(JSonFile["profiles"]["defaults"]["font"]["weight"].ToString());
+                                                DefaultProf.Font.Weight = TProfile.FontWeight_GetFromString(JSonFile["profiles"]["defaults"]["font"]["weight"].ToString());
                                             if (JSonFile["profiles"]["defaults"]["font"]["face"] is not null)
                                                 DefaultProf.Font.Face = JSonFile["profiles"]["defaults"]["font"]["face"].ToString();
                                             if (JSonFile["profiles"]["defaults"]["font"]["size"] is not null)
@@ -97,7 +115,7 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting Profiles
-                                Profiles = new List<ProfilesList>();
+                                Profiles = new List<TProfile>();
                                 Profiles.Clear();
 
                                 if (JSonFile["profiles"] is not null)
@@ -106,7 +124,7 @@ namespace WinPaletter
                                     {
                                         foreach (var item in JSonFile["profiles"]["list"])
                                         {
-                                            var P = new ProfilesList();
+                                            var P = new TProfile();
                                             if (item["name"] is not null)
                                                 P.Name = item["name"].ToString();
                                             if (item["backgroundImage"] is not null)
@@ -153,14 +171,14 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting All Colors Schemes
-                                Colors = new List<TColor>();
+                                Colors = new List<TColors>();
                                 Colors.Clear();
 
                                 if (JSonFile["schemes"] is not null)
                                 {
                                     foreach (var item in JSonFile["schemes"])
                                     {
-                                        var TC = new TColor();
+                                        var TC = new TColors();
 
                                         if (item["background"] is not null)
                                             TC.Background = HEX2RGB(item["background"].ToString());
@@ -211,7 +229,7 @@ namespace WinPaletter
 
                                 else
                                 {
-                                    Colors.Add(new TColor()
+                                    Colors.Add(new TColors()
                                     {
                                         Name = "Campbell",
                                         Background = "FF0C0C0C".FromHEXToColor(true),
@@ -240,14 +258,14 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting All Themes
-                                Themes = new List<ThemesList>();
+                                Themes = new List<TTheme>();
                                 Themes.Clear();
 
                                 if (JSonFile["themes"] is not null)
                                 {
                                     foreach (var item in JSonFile["themes"])
                                     {
-                                        var Th = new ThemesList();
+                                        var Th = new TTheme();
                                         if (item["name"] is not null)
                                             Th.Name = item["name"].ToString();
 
@@ -270,7 +288,7 @@ namespace WinPaletter
                                         if (item["window"] is not null)
                                         {
                                             if (item["window"]["applicationTheme"] is not null)
-                                                Th.ApplicationTheme_light = item["window"]["applicationTheme"].ToString();
+                                                Th.Style = item["window"]["applicationTheme"].ToString();
                                         }
 
                                         Themes.Add(Th);
@@ -289,12 +307,12 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Profiles = new List<ProfilesList>();
-                            Colors = new List<TColor>();
-                            DefaultProf = new ProfilesList();
-                            Themes = new List<ThemesList>();
+                            Profiles = new List<TProfile>();
+                            Colors = new List<TColors>();
+                            DefaultProf = new TProfile();
+                            Themes = new List<TTheme>();
 
-                            Colors.Add(new TColor()
+                            Colors.Add(new TColors()
                             {
                                 Name = "Campbell",
                                 Background = "FF0C0C0C".FromHEXToColor(true),
@@ -325,7 +343,7 @@ namespace WinPaletter
 
                 case Mode.WinPaletterFile:
                     {
-                        using (var TBx = new Theme.Manager(WinPaletter.Theme.Manager.Source.File, str))
+                        using (var TBx = new Theme.Manager(WinPaletter.Theme.Manager.Source.File, File))
                         {
 
                             switch (Version)
@@ -363,12 +381,12 @@ namespace WinPaletter
                 case Mode.Empty:
                     {
 
-                        Profiles = new List<ProfilesList>();
-                        Colors = new List<TColor>();
-                        DefaultProf = new ProfilesList();
-                        Themes = new List<ThemesList>();
+                        Profiles = new List<TProfile>();
+                        Colors = new List<TColors>();
+                        DefaultProf = new TProfile();
+                        Themes = new List<TTheme>();
 
-                        Colors.Add(new TColor()
+                        Colors.Add(new TColors()
                         {
                             Name = "Campbell",
                             Background = "FF0C0C0C".FromHEXToColor(true),
@@ -398,20 +416,39 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Enumeration for ways by which WinPaletter can get Windows Terminal settings data
+        /// </summary>
         public enum Mode : int
         {
+            /// <summary>Default Windows Terminal settings</summary>
             Default,
+            /// <summary>Windows Terminal JSON settings file</summary>
             JSONFile,
+            /// <summary>WinPaletter theme  file</summary>
             WinPaletterFile,
+            /// <summary>Empty data that has nothing; no profiles, no themes, ...</summary>
             Empty
         }
 
+        /// <summary>
+        /// Enumeration of Windows Terminal editions
+        /// </summary>
         public enum Version : int
         {
+            /// <summary></summary>
             Stable,
+            /// <summary></summary>
             Preview
         }
 
+        /// <summary>
+        /// Save Windows Terminal settings data
+        /// </summary>
+        /// <param name="File">File into which data will be saved, either JSON or WinPaletter theme file</param>
+        /// <param name="Mode">Either Windows Terminal JSON settings file or WinPaletter theme file</param>
+        /// <param name="Version">Either Stable or Preview</param>
+        /// <returns></returns>
         public string Save(string File, Mode Mode, Version Version = Version.Stable)
         {
             switch (Mode)
@@ -713,8 +750,8 @@ namespace WinPaletter
                                 JS["tabRow"] = JS_TabRow;
 
                                 var JS_Window = new JObject();
-                                if (!string.IsNullOrEmpty(Themes[x].ApplicationTheme_light))
-                                    JS_Window["applicationTheme"] = Themes[x].ApplicationTheme_light;
+                                if (!string.IsNullOrEmpty(Themes[x].Style))
+                                    JS_Window["applicationTheme"] = Themes[x].Style;
                                 JS["window"] = JS_Window;
 
                                 ((JArray)JSonFile["themes"]).Add(JS);
@@ -737,7 +774,9 @@ namespace WinPaletter
             }
         }
 
-
+        /// <summary>
+        /// Take ownership of file to current Windows user
+        /// </summary>
         public static void TakeOwnership(string filepath)
         {
             var proc = new Process();
@@ -752,20 +791,24 @@ namespace WinPaletter
             proc.WaitForExit();
         }
 
-        public static Color HEX2RGB(string String)
+        /// <summary>
+        /// Convert HEX string into .NET RGB color structure
+        /// </summary>
+        /// <returns></returns>
+        public static Color HEX2RGB(string HEX)
         {
             try
             {
-                if (String is not null)
+                if (HEX is not null)
                 {
-                    if (String.Replace("#", "").Count() / 2d == 3d)
+                    if (HEX.Replace("#", "").Count() / 2d == 3d)
                     {
-                        return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(String.Replace("#", ""), 16)));
+                        return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(HEX.Replace("#", ""), 16)));
                     }
                     else
                     {
-                        int a = Convert.ToInt32(String.Substring(String.Count() - 2, 2), 16);
-                        return Color.FromArgb(a, Color.FromArgb(Convert.ToInt32(String.Remove(String.Count() - 2, 2).Replace("#", ""), 16)));
+                        int a = Convert.ToInt32(HEX.Substring(HEX.Count() - 2, 2), 16);
+                        return Color.FromArgb(a, Color.FromArgb(Convert.ToInt32(HEX.Remove(HEX.Count() - 2, 2).Replace("#", ""), 16)));
                     }
                 }
                 else
@@ -779,11 +822,18 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Convert .NET RGB color structure into HEX string
+        /// </summary>
+        /// <returns></returns>
         public string RGB2HEX(Color Color)
         {
             return string.Format("#{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
         }
 
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal class are equal
+        /// </summary>
         public static bool operator ==(WinTerminal First, WinTerminal Second)
         {
             bool _equal = true;
@@ -799,413 +849,601 @@ namespace WinPaletter
             return _equal;
         }
 
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal class are not equal
+        /// </summary>
         public static bool operator !=(WinTerminal First, WinTerminal Second)
         {
             return !(First == Second);
         }
 
+        /// <summary>
+        /// Clones current Windows Terminal object
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        /// <summary>
+        /// Checks if two objects of Windows Terminal class are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets current Windows Terminal object hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
-    public class TColor : IComparable, ICloneable
+    /// <summary>
+    /// Class that contains data for Windows Terminal colors
+    /// </summary>
+    public class TColors : IComparable, ICloneable
     {
-
+        /// <summary>Color profile name</summary>
         public string Name { get; set; }
+
+        /// <summary>Background color</summary>
         public Color Background { get; set; } = "FF0C0C0C".FromHEXToColor(true);
+
+        /// <summary>Foreground color</summary>
         public Color Foreground { get; set; } = "FFCCCCCC".FromHEXToColor(true);
+
+        /// <summary>Selection background color (i.e. highlight)</summary>
         public Color SelectionBackground { get; set; } = "FFFFFFFF".FromHEXToColor(true);
+
+        /// <summary>The color that should represents black color</summary>
         public Color Black { get; set; } = "FF0C0C0C".FromHEXToColor(true);
+
+        /// <summary>The color that should represents blue color</summary>
         public Color Blue { get; set; } = "FF0037DA".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright black color</summary>
         public Color BrightBlack { get; set; } = "FF767676".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright blue color</summary>
         public Color BrightBlue { get; set; } = "FF3B78FF".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright cyan color</summary>
         public Color BrightCyan { get; set; } = "FF61D6D6".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright green color</summary>
         public Color BrightGreen { get; set; } = "FF16C60C".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright purple color</summary>
         public Color BrightPurple { get; set; } = "FFB4009E".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright red color</summary>
         public Color BrightRed { get; set; } = "FFE74856".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright white color</summary>
         public Color BrightWhite { get; set; } = "FFF2F2F2".FromHEXToColor(true);
+
+        /// <summary>The color that should represents bright yellow color</summary>
         public Color BrightYellow { get; set; } = "FFF9F1A5".FromHEXToColor(true);
+
+        /// <summary>Cursor (text carret) color</summary>
         public Color CursorColor { get; set; } = "FFFFFFFF".FromHEXToColor(true);
+
+        /// <summary>The color that should represents cyan color</summary>
         public Color Cyan { get; set; } = "FF3A96DD".FromHEXToColor(true);
+
+        /// <summary>The color that should represents green color</summary>
         public Color Green { get; set; } = "FF13A10E".FromHEXToColor(true);
+
+        /// <summary>The color that should represents purple color</summary>
         public Color Purple { get; set; } = "FF881798".FromHEXToColor(true);
+
+        /// <summary>The color that should represents red color</summary>
         public Color Red { get; set; } = "FFC50F1F".FromHEXToColor(true);
+
+        /// <summary>The color that should represents white color</summary>
         public Color White { get; set; } = "FFCCCCCC".FromHEXToColor(true);
+
+        /// <summary>The color that should represents yellow color</summary>
         public Color Yellow { get; set; } = "FFC19C00".FromHEXToColor(true);
 
+        /// <summary>
+        /// Compares two Windows Terminal colors objects
+        /// </summary>
+        /// <returns>1 or 0</returns>
         public int CompareTo(object obj)
         {
-            if (this == (TColor)obj)
+            if (this == (TColors)obj)
                 return 1;
             else
                 return 0;
         }
 
-        public static bool operator ==(TColor First, TColor Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal colors class are equal
+        /// </summary>
+        public static bool operator ==(TColors First, TColors Second)
         {
             return First.Equals(Second);
         }
 
-        public static bool operator !=(TColor First, TColor Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal colors class are not equal
+        /// </summary>
+        public static bool operator !=(TColors First, TColors Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>
+        /// Clones Windows Terminal colors object
+        /// </summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        /// <summary>
+        /// Checks if two objects of Windows Terminal colors class are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets Windows Terminal colors object hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 
-    public class ThemesList : IComparable, ICloneable
+    /// <summary>
+    /// Class that contains data for Windows Terminal theme
+    /// </summary>
+    public class TTheme : IComparable, ICloneable
     {
+        /// <summary>Theme name</summary>
         public string Name { get; set; }
-        public Color Titlebar_Active { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Titlebar_Inactive { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Tab_Active { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Tab_Inactive { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public string ApplicationTheme_light { get; set; } = "dark";
 
+        /// <summary>Active titlebar color</summary>
+        public Color Titlebar_Active { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>Inactive titlebar color</summary>
+        public Color Titlebar_Inactive { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>Active tab color</summary>
+        public Color Tab_Active { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>Inactive tab color</summary>
+        public Color Tab_Inactive { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>Style can be "dark", "light" or "system"</summary>
+        public string Style { get; set; } = "dark";
+
+        /// <summary>
+        /// Compares two Windows Terminal themes objects
+        /// </summary>
+        /// <returns>1 or 0</returns>
         public int CompareTo(object obj)
         {
-            if (Equals((ThemesList)obj))
+            if (Equals((TTheme)obj))
                 return 1;
             else
                 return 0;
         }
 
-        public static bool operator ==(ThemesList First, ThemesList Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal theme class are equal
+        /// </summary>
+        public static bool operator ==(TTheme First, TTheme Second)
         {
             return First.Equals(Second);
         }
 
-        public static bool operator !=(ThemesList First, ThemesList Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal theme class are not equal
+        /// </summary>
+        public static bool operator !=(TTheme First, TTheme Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>
+        /// Clones current Windows Terminal theme object
+        /// </summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        /// <summary>
+        /// Checks if two objects of Windows Terminal theme class are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets current current Windows Terminal theme object hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 
-    public class FontsBase : ICloneable
+    /// <summary>
+    /// Class that contains data for Windows Terminal font
+    /// </summary>
+    public class TFont : ICloneable
     {
+        /// <summary>Font name</summary>
         public string Face { get; set; } = OS.W11 ? "Cascadia Mono" : "Consolas";
+
+        /// <summary>Font weight</summary>
         public FontWeight_Enum Weight { get; set; } = FontWeight_Enum.normal;
+
+        /// <summary>Font size</summary>
         public int Size { get; set; } = 12;
 
-        public static bool operator ==(FontsBase First, FontsBase Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal font class are equal
+        /// </summary>
+        public static bool operator ==(TFont First, TFont Second)
         {
             return First.Equals(Second);
         }
 
-        public static bool operator !=(FontsBase First, FontsBase Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal font class are not equal
+        /// </summary>
+        public static bool operator !=(TFont First, TFont Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>
+        /// Clones current Windows Terminal font object
+        /// </summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        /// <summary>
+        /// Checks if two objects of Windows Terminal font class are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets current current Windows Terminal font object hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
-    public class ProfilesList : IComparable, ICloneable
+    /// <summary>
+    /// Class that contains data for Windows Terminal profile
+    /// </summary>
+    public class TProfile : IComparable, ICloneable
     {
+        /// <summary>Name of Windows Terminal profile</summary>
         public string Name { get; set; }
+
+        /// <summary>Windows Terminal profile title on tab</summary>
         public string TabTitle { get; set; } = "";
+
+        /// <summary>
+        /// Icon of profile on tab
+        /// <br><b>- It can be a path to PNG file or string emoji for "Segoe Fluent Icons" font</b></br>
+        /// </summary>
         public string Icon { get; set; } = "";
+
+        /// <summary>
+        /// Command that starts the profile
+        /// <br><b>- For example: Command Prompt is launched by 'C:\Windows\System32\cmd.exe'</b></br>
+        /// </summary>
         public string Commandline { get; set; }
 
+        /// <summary>Windows Terminal profile color on tab</summary>
         public Color TabColor { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        /// <summary>Use acrylic background effect for this profile</summary>
         public bool UseAcrylic { get; set; } = false;
+
+        /// <summary>Background opacity for this profile</summary>
         public int Opacity { get; set; } = 100;
 
-        public FontsBase Font { get; set; } = new FontsBase();
+        /// <summary>Object dependent on Windows Terminal font class. This object has data of font name, size and weight.</summary>
+        public TFont Font { get; set; } = new TFont();
+
+        /// <summary>Background image path for this profile</summary>
         public string BackgroundImage { get; set; } = "";
+
+        /// <summary>Background image opacity for this profile</summary>
         public float BackgroundImageOpacity { get; set; } = 1f;
 
+        /// <summary>Selected color scheme for this profile. 
+        /// <br></br>It should be a 'Name' property for object made of TColors class
+        /// <code>
+        /// - For example:
+        /// MyProfile.ColorScheme = "Campbell"
+        /// </code>
+        /// </summary>
         public string ColorScheme { get; set; } = "Campbell";
+
+        /// <summary>Cursor (text carret) shape for this profile</summary>
         public CursorShape_Enum CursorShape { get; set; } = CursorShape_Enum.bar;
+
+        /// <summary>Cursor (text carret) height for this profile</summary>
         public int CursorHeight { get; set; } = 25;
 
+        /// <summary>
+        /// Compares two objects of Windows Terminal profiles
+        /// </summary>
+        /// <returns>1 or 0</returns>
         public int CompareTo(object obj)
         {
-            if (Equals((ProfilesList)obj))
+            if (Equals((TProfile)obj))
                 return 1;
             else
                 return 0;
         }
 
-        public static bool operator ==(ProfilesList First, ProfilesList Second)
+        /// <summary>
+        /// Operator to check if two objects of Windows Terminal profile class are equal
+        /// </summary>
+        public static bool operator ==(TProfile First, TProfile Second)
         {
             return First.Equals(Second);
         }
 
-        public static bool operator !=(ProfilesList First, ProfilesList Second)
+        /// Operator to check if two objects of Windows Terminal profile class are not equal
+        public static bool operator !=(TProfile First, TProfile Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>
+        /// Clones current Windows Terminal profile object
+        /// </summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>
+        /// Checks if two objects of Windows Terminal profile class are equal or not
+        /// </summary>
+        /// <param name="obj"></param>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Gets current current Windows Terminal profile object hash code
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         #region Helpers
+        /// <summary>
+        /// Enumeration for profile background image alignments
+        /// </summary>
         public enum BackgroundImageAlignment_Enum
         {
+            ///
             bottom,
+            ///
             bottomLeft,
+            ///
             bottomRight,
+            ///
             center,
+            ///
             left,
+            ///
             right,
+            ///
             top,
+            ///
             topLeft,
+            ///
             topRight
         }
+
+        /// <summary>
+        /// Enumeration for profile cursor (text carret) shapes
+        /// </summary>
         public enum CursorShape_Enum
         {
+            /// <summary>|</summary>
             bar,
+            /// <summary>=</summary>
             doubleUnderscore,
+            /// <summary>
+            /// ┌┐<br></br>
+            /// └┘
+            /// </summary>
             emptyBox,
+            /// <summary>▐</summary>
             filledBox,
+            /// <summary>_</summary>
             underscore,
+            /// <summary> ▄</summary>
             vintage
         }
-        public static string CursorShape_ReturnToString(CursorShape_Enum @int)
+
+        /// <summary>
+        /// Get string name of a cursor style
+        /// </summary>
+        public static string CursorShape_ReturnToString(CursorShape_Enum shape)
         {
-            switch (@int)
+            switch (shape)
             {
                 case CursorShape_Enum.bar:
-                    {
-                        return "bar";
-                    }
+                    return "bar";
 
                 case CursorShape_Enum.doubleUnderscore:
-                    {
                         return "doubleUnderscore";
-                    }
 
                 case CursorShape_Enum.emptyBox:
-                    {
                         return "emptyBox";
-                    }
 
                 case CursorShape_Enum.filledBox:
-                    {
                         return "filledBox";
-                    }
 
                 case CursorShape_Enum.underscore:
-                    {
                         return "underscore";
-                    }
 
                 case CursorShape_Enum.vintage:
-                    {
                         return "vintage";
-                    }
 
                 default:
-                    {
                         return "bar";
-                    }
-
             }
         }
+
+        /// <summary>
+        /// Get cursor shape from a string
+        /// <code>
+        /// "bar"
+        /// "doubleUnderscore"
+        /// "emptyBox"
+        /// "filledBox"
+        /// "underscore"
+        /// "vintage"
+        /// </code>
+        /// </summary>
+        /// <param name="str">string</param>
         public static CursorShape_Enum CursorShape_GetFromString(string str)
         {
-            switch (str.ToLower() ?? "")
+            return (str.ToLower() ?? "") switch
             {
-                case var @case when @case == ("bar".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.bar;
-                    }
-
-                case var case1 when case1 == ("doubleunderscore".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.doubleUnderscore;
-                    }
-
-                case var case2 when case2 == ("emptybox".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.emptyBox;
-                    }
-
-                case var case3 when case3 == ("filledbox".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.filledBox;
-                    }
-
-                case var case4 when case4 == ("underscore".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.underscore;
-                    }
-
-                case var case5 when case5 == ("vintage".ToLower() ?? ""):
-                    {
-                        return CursorShape_Enum.vintage;
-                    }
-
-                default:
-                    {
-                        return CursorShape_Enum.bar;
-                    }
-
-            }
+                "bar" => CursorShape_Enum.bar,
+                "doubleunderscore" => CursorShape_Enum.doubleUnderscore,
+                "emptybox" => CursorShape_Enum.emptyBox,
+                "filledbox" => CursorShape_Enum.filledBox,
+                "underscore" => CursorShape_Enum.underscore,
+                "vintage" => CursorShape_Enum.vintage,
+                _ => CursorShape_Enum.bar,
+            };
         }
-        public enum FontWeight_Enum   // replace _ by -
+
+        /// <summary>
+        /// Enumeration for font weights
+        /// <br><b>(!) Replace _ by - when using it as string</b></br>
+        /// </summary>
+        public enum FontWeight_Enum   
         {
+            ///
             thin,
+            ///
             extra_light,
+            ///
             light,
+            ///
             semi_light,
+            ///
             normal,
+            ///
             medium,
+            ///
             semi_bold,
+            ///
             bold,
+            ///
             extra_bold,
+            ///
             black,
+            ///
             extra_black
         }
-        public static string FontWeight_ReturnToString(FontWeight_Enum @int)
+
+        /// <summary>
+        /// Get string name of a font weight
+        /// </summary>
+        public static string FontWeight_ReturnToString(FontWeight_Enum Weight)
         {
-            switch (@int)
+            switch (Weight)
             {
                 case FontWeight_Enum.black:
-                    {
                         return "black";
-                    }
 
                 case FontWeight_Enum.bold:
-                    {
                         return "bold";
-                    }
 
                 case FontWeight_Enum.extra_black:
-                    {
                         return "extra-black";
-                    }
 
                 case FontWeight_Enum.extra_bold:
-                    {
                         return "extra-bold";
-                    }
 
                 case FontWeight_Enum.extra_light:
-                    {
                         return "extra-light";
-                    }
 
                 case FontWeight_Enum.light:
-                    {
                         return "light";
-                    }
 
                 case FontWeight_Enum.medium:
-                    {
                         return "medium";
-                    }
 
                 case FontWeight_Enum.normal:
-                    {
                         return "normal";
-                    }
 
                 case FontWeight_Enum.semi_bold:
-                    {
                         return "semi-bold";
-                    }
 
                 case FontWeight_Enum.semi_light:
-                    {
                         return "semi-light";
-                    }
 
                 case FontWeight_Enum.thin:
-                    {
                         return "thin";
-                    }
 
                 default:
-                    {
                         return "normal";
-                    }
 
             }
         }
-        public static FontWeight_Enum FontWeight_GetFromString(string str)
+
+        /// <summary>
+        /// Get font weight from a string
+        /// </summary>
+        public static FontWeight_Enum FontWeight_GetFromString(string String)
         {
-            switch (str.ToLower() ?? "")
+            return (String.ToLower() ?? "") switch
             {
-
-                case var @case when @case == ("thin".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.thin;
-                    }
-
-                case var case1 when case1 == ("extra-light".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.extra_light;
-                    }
-
-                case var case2 when case2 == ("light".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.light;
-                    }
-
-                case var case3 when case3 == ("semi-light".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.semi_light;
-                    }
-
-                case var case4 when case4 == ("medium".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.medium;
-                    }
-
-                case var case5 when case5 == ("normal".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.normal;
-                    }
-
-                case var case6 when case6 == ("semi-bold".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.semi_bold;
-                    }
-
-                case var case7 when case7 == ("bold".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.bold;
-                    }
-
-                case var case8 when case8 == ("extra-bold".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.extra_bold;
-                    }
-
-                case var case9 when case9 == ("black".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.black;
-                    }
-
-                case var case10 when case10 == ("extra-black".ToLower() ?? ""):
-                    {
-                        return FontWeight_Enum.extra_black;
-                    }
-
-                default:
-                    {
-                        return FontWeight_Enum.normal;
-                    }
-
-            }
+                "thin" => FontWeight_Enum.thin,
+                "extra-light" => FontWeight_Enum.extra_light,
+                "light" => FontWeight_Enum.light,
+                "semi-light" => FontWeight_Enum.semi_light,
+                "medium" => FontWeight_Enum.medium,
+                "normal" => FontWeight_Enum.normal,
+                "semi-bold" => FontWeight_Enum.semi_bold,
+                "bold" => FontWeight_Enum.bold,
+                "extra-bold" => FontWeight_Enum.extra_bold,
+                "black" => FontWeight_Enum.black,
+                "extra-black" => FontWeight_Enum.extra_black,
+                _ => FontWeight_Enum.normal,
+            };
         }
         #endregion
     }
