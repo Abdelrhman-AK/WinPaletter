@@ -4,14 +4,19 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
+        /// <summary>Enable using WinPaletter themed cursors.</summary>
         public bool Cursor_Enabled = false;
 
+        /// <summary>Enable using custom shadow for cursors rendered by WinPaletter (not Windows).</summary>
         public bool Cursor_Shadow = false;
 
+        /// <summary>Enable sonar (gray circle) surrounding cursor while pressing CTRL multiple times.</summary>
         public bool Cursor_Sonar = false;
 
+        /// <summary>Amount of cursor trails.</summary>
         public int Cursor_Trails = 0;
 
+        /// <summary>Structure that has data can be modified to customize 'Arrow' cursor.</summary>
         public Structures.Cursor Cursor_Arrow = new()
         {
             PrimaryColor1 = Color.White,
@@ -48,6 +53,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'AppLoading' cursor.</summary>
         public Structures.Cursor Cursor_AppLoading = new()
         {
             PrimaryColor1 = Color.White,
@@ -84,6 +90,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Busy' cursor.</summary>
         public Structures.Cursor Cursor_Busy = new()
         {
             PrimaryColor1 = Color.White,
@@ -120,6 +127,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Help' cursor.</summary>
         public Structures.Cursor Cursor_Help = new()
         {
             PrimaryColor1 = Color.White,
@@ -156,6 +164,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Move' cursor.</summary>
         public Structures.Cursor Cursor_Move = new()
         {
             PrimaryColor1 = Color.White,
@@ -192,6 +201,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'NorthSouth' cursor.</summary>
         public Structures.Cursor Cursor_NS = new()
         {
             PrimaryColor1 = Color.White,
@@ -228,6 +238,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'EastWest' cursor.</summary>
         public Structures.Cursor Cursor_EW = new()
         {
             PrimaryColor1 = Color.White,
@@ -264,6 +275,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'NorthEastSouthWest' cursor.</summary>
         public Structures.Cursor Cursor_NESW = new()
         {
             PrimaryColor1 = Color.White,
@@ -300,6 +312,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'NorthWestSouthEast' cursor.</summary>
         public Structures.Cursor Cursor_NWSE = new()
         {
             PrimaryColor1 = Color.White,
@@ -336,6 +349,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Up' cursor.</summary>
         public Structures.Cursor Cursor_Up = new()
         {
             PrimaryColor1 = Color.White,
@@ -372,6 +386,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Pen' cursor.</summary>
         public Structures.Cursor Cursor_Pen = new()
         {
             PrimaryColor1 = Color.White,
@@ -408,6 +423,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'None' cursor.</summary>
         public Structures.Cursor Cursor_None = new()
         {
             PrimaryColor1 = Color.White,
@@ -444,6 +460,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Link\Hand' cursor.</summary>
         public Structures.Cursor Cursor_Link = new()
         {
             PrimaryColor1 = Color.White,
@@ -480,6 +497,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Pin' cursor.</summary>
         public Structures.Cursor Cursor_Pin = new()
         {
             PrimaryColor1 = Color.White,
@@ -516,6 +534,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Person' cursor.</summary>
         public Structures.Cursor Cursor_Person = new()
         {
             PrimaryColor1 = Color.White,
@@ -552,6 +571,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'IBeam' cursor.</summary>
         public Structures.Cursor Cursor_IBeam = new()
         {
             PrimaryColor1 = Color.White,
@@ -588,6 +608,7 @@ namespace WinPaletter.Theme
             Shadow_OffsetY = 2
         };
 
+        /// <summary>Structure that has data can be modified to customize 'Cross' cursor.</summary>
         public Structures.Cursor Cursor_Cross = new()
         {
             PrimaryColor1 = Color.White,

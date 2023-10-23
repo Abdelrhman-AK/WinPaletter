@@ -1307,7 +1307,7 @@ namespace WinPaletter
             try
             {
                 TMx.Win32.Apply();
-                TMx.Win32.Update_UPM_DEFAULT();
+                TMx.Win32.Broadcast_UPM_ToDefUsers();
             }
             catch
             {

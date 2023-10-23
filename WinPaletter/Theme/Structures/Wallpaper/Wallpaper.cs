@@ -9,43 +9,102 @@ using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows wallpaper
+    /// </summary>
     public struct Wallpaper : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
+
+        /// <summary>
+        /// - If true, slideshow source will be a folder
+        /// <br>- If false, slideshow source will be a list of images</br>
+        /// </summary>
         public bool SlideShow_Folder_or_ImagesList;
 
+        /// <summary>Wallpaper file path</summary>
         public string ImageFile;
+
+        /// <summary>
+        /// It is how the image will be previewed in desktop
+        /// <code>
+        /// Centered
+        /// Tile
+        /// Stretched
+        /// Fit
+        /// Fill
+        /// </code>
+        /// </summary>
         public WallpaperStyles WallpaperStyle;
+
+        /// <summary>
+        /// Type of wallpaper
+        /// <code>
+        /// Picture
+        /// SolidColor
+        /// SlideShow
+        /// </code>
+        /// </summary>
         public WallpaperTypes WallpaperType;
 
+        /// <summary>Folder that has images for wallpaper slide show, (if SlideShow_Folder_or_ImagesList = true;)</summary>
         public string Wallpaper_Slideshow_ImagesRootPath;
+
+        /// <summary>
+        /// String array that has pathes of images files, (if SlideShow_Folder_or_ImagesList = false;)
+        /// <br><b><i>(!) Important note: array items (files) must be from the same folder, or slideshow won't load them.</i></b></br>
+        /// </summary>
         public string[] Wallpaper_Slideshow_Images;
+
+        /// <summary>Interval of wallpaper changing in slideshow</summary>
         public int Wallpaper_Slideshow_Interval;
+
+        /// <summary>Shuffle slideshow images (don't preview them in their order)</summary>
         public bool Wallpaper_Slideshow_Shuffle;
 
+        /// <summary>
+        /// Enumeration for the ways the wallpaper can be rendered on desktop
+        /// </summary>
         public enum WallpaperStyles : int
         {
+            ///
             Centered = 0,
+            ///
             Tile = 1,
+            ///
             Stretched = 2,
+            ///
             Fit = 6,
+            ///
             Fill = 10
         }
+
+        /// <summary>
+        /// Enumeration for wallpaper types (or sources)
+        /// </summary>
         public enum WallpaperTypes
         {
+            ///
             Picture,
+            ///
             SolidColor,
+            ///
             SlideShow
         }
 
-        public void Load(Wallpaper _DefWallpaper)
+        /// <summary>
+        /// Loads Wallpaper data from registry
+        /// </summary>
+        /// <param name="default">Default Wallpaper data structure</param>
+        public void Load(Wallpaper @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", _DefWallpaper.Enabled));
-            SlideShow_Folder_or_ImagesList = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", _DefWallpaper.SlideShow_Folder_or_ImagesList));
-            Wallpaper_Slideshow_ImagesRootPath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", _DefWallpaper.Wallpaper_Slideshow_ImagesRootPath).ToString();
-            Wallpaper_Slideshow_Images = (string[])GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", _DefWallpaper.Wallpaper_Slideshow_Images);
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", @default.Enabled));
+            SlideShow_Folder_or_ImagesList = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", @default.SlideShow_Folder_or_ImagesList));
+            Wallpaper_Slideshow_ImagesRootPath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", @default.Wallpaper_Slideshow_ImagesRootPath).ToString();
+            Wallpaper_Slideshow_Images = (string[])GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", @default.Wallpaper_Slideshow_Images);
 
-            ImageFile = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", _DefWallpaper.ImageFile).ToString();
+            ImageFile = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", @default.ImageFile).ToString();
 
             string slideshow_img = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\TranscodedWallpaper";
             string spotlight_img = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
@@ -53,7 +112,7 @@ namespace WinPaletter.Theme.Structures
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
             if (ImageFile.StartsWith(slideshow_img, (StringComparison)5) || ImageFile.StartsWith(spotlight_img, (StringComparison)5) || !File.Exists(ImageFile))
             {
-                ImageFile = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", _DefWallpaper.ImageFile).ToString();
+                ImageFile = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile).ToString();
             }
 
             if (GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0").ToString() == "1")
@@ -62,16 +121,24 @@ namespace WinPaletter.Theme.Structures
             }
             else
             {
-                WallpaperStyle = (WallpaperStyles)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", _DefWallpaper.WallpaperStyle));
+                WallpaperStyle = (WallpaperStyles)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", @default.WallpaperStyle));
             }
 
-            WallpaperType = (WallpaperTypes)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", _DefWallpaper.WallpaperType));
+            WallpaperType = (WallpaperTypes)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", @default.WallpaperType));
 
-            Wallpaper_Slideshow_Interval = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", _DefWallpaper.Wallpaper_Slideshow_Interval));
-            Wallpaper_Slideshow_Shuffle = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", _DefWallpaper.Wallpaper_Slideshow_Shuffle));
+            Wallpaper_Slideshow_Interval = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", @default.Wallpaper_Slideshow_Interval));
+            Wallpaper_Slideshow_Shuffle = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", @default.Wallpaper_Slideshow_Shuffle));
 
         }
 
+        /// <summary>
+        /// Saves Wallpaper data into registry
+        /// </summary>
+        /// <param name="SkipSettingWallpaper">
+        /// This will write some registry items and won't apply the wallpaper
+        /// <br><b>- Set it to 'true' if WallpaperTone is used</b></br>
+        /// </param>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(bool SkipSettingWallpaper = false, TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", Enabled);
@@ -189,20 +256,34 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>Operator to check if two Wallpaper structures are equal</summary>
         public static bool operator ==(Wallpaper First, Wallpaper Second)
         {
             return First.Equals(Second);
         }
 
-
+        /// <summary>Operator to check if two Wallpaper structures are not equal</summary>
         public static bool operator !=(Wallpaper First, Wallpaper Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>Clones Wallpaper structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two Wallpaper structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of Wallpaper structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

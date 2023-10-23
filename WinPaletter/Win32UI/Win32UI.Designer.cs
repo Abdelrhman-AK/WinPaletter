@@ -2243,7 +2243,7 @@ namespace WinPaletter
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.TabPage5.Size = new System.Drawing.Size(349, 300);
             this.TabPage5.TabIndex = 4;
-            this.TabPage5.Text = "Not Used";
+            this.TabPage5.Text = "Obsolete";
             // 
             // GroupBox4
             // 

@@ -38,26 +38,26 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Loads Windows 10/11 LogonUI data from registry
         /// </summary>
-        /// <param name="_DefLogonUI">Default Windows 10/11 LogonUI data structure</param>
-        public void Load(LogonUI10x _DefLogonUI)
+        /// <param name="default">Default Windows 10/11 LogonUI data structure</param>
+        public void Load(LogonUI10x @default)
         {
             if (OS.W10 | OS.W11)
             {
-                DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", _DefLogonUI.DisableAcrylicBackgroundOnLogon));
-                DisableLogonBackgroundImage = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", _DefLogonUI.DisableLogonBackgroundImage));
-                NoLockScreen = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", _DefLogonUI.NoLockScreen));
+                DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", @default.DisableAcrylicBackgroundOnLogon));
+                DisableLogonBackgroundImage = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", @default.DisableLogonBackgroundImage));
+                NoLockScreen = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", @default.NoLockScreen));
             }
 
             else
             {
-                DisableAcrylicBackgroundOnLogon = _DefLogonUI.DisableAcrylicBackgroundOnLogon;
-                DisableLogonBackgroundImage = _DefLogonUI.DisableLogonBackgroundImage;
-                NoLockScreen = _DefLogonUI.NoLockScreen;
+                DisableAcrylicBackgroundOnLogon = @default.DisableAcrylicBackgroundOnLogon;
+                DisableLogonBackgroundImage = @default.DisableLogonBackgroundImage;
+                NoLockScreen = @default.NoLockScreen;
             }
         }
 
         /// <summary>
-        /// Apply Windows 10/11 LogonUI data into registry
+        /// Saves Windows 10/11 LogonUI data into registry
         /// </summary>
         /// <param name="TreeView">TreeView used as a theme log</param>
         public void Apply(TreeView TreeView = null)

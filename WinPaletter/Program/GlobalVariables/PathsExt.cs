@@ -82,6 +82,11 @@ namespace WinPaletter.GlobalVariables
         /// Task Scheduler command process file path
         /// </summary>
         public readonly static string SchTasks = $"{System32}\\schtasks.exe";
+
+        /// <summary>
+        /// Take ownership command process file path
+        /// </summary>
+        public readonly static string TakeOwn = $"{System32}\\takeown.exe";
         #endregion
 
         #region System PE files

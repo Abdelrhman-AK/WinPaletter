@@ -5,22 +5,52 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows XP appearance
+    /// </summary>
     public struct WindowsXP : ICloneable
     {
+        /// <summary>
+        /// Theme used for Windows XP
+        /// <code>
+        /// LunaBlue
+        /// LunaOliveGreen
+        /// LunaSilver
+        /// Classic
+        /// Custom
+        /// </code>
+        /// </summary>
         public Themes Theme;
+
+        /// <summary>Visual styles file used when 'Theme' selected as 'Custom'</summary>
         public string ThemeFile;
+
+        /// <summary>Color scheme of visual styles file 'ThemeFile' when 'Theme' selected as 'Custom'</summary>
         public string ColorScheme;
 
+        /// <summary>Enumeration of Windows XP stock themes.</summary>
         public enum Themes
         {
+            /// <summary>Blue default color scheme of Luna</summary>
             LunaBlue,
+            /// <summary>Olive green color scheme of Luna</summary>
             LunaOliveGreen,
+            /// <summary>Silver color scheme of Luna</summary>
             LunaSilver,
+            /// <summary>Classic theme</summary>
             Classic,
+            /// <summary>
+            /// Use 'ThemeFile' to be the current visual styles.
+            /// <br><b>- Requires UxTheme patched Windows XP</b></br>
+            /// </summary>
             Custom
         }
 
-        public void Load(WindowsXP _DefWin)
+        /// <summary>
+        /// Loads WindowsXP data from registry
+        /// </summary>
+        /// <param name="default">Default WindowsXP data structure</param>
+        public void Load(WindowsXP @default)
         {
             if (OS.WXP)
             {
@@ -78,12 +108,16 @@ namespace WinPaletter.Theme.Structures
 
             else
             {
-                Theme = _DefWin.Theme;
-                ThemeFile = _DefWin.ThemeFile;
-                ColorScheme = _DefWin.ColorScheme;
+                Theme = @default.Theme;
+                ThemeFile = @default.ThemeFile;
+                ColorScheme = @default.ColorScheme;
             }
         }
 
+        /// <summary>
+        /// Saves WindowsXP data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             try
@@ -173,26 +207,31 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>Operator to check if two WindowsXP structures are equal</summary>
         public static bool operator ==(WindowsXP First, WindowsXP Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two WindowsXP structures are not equal</summary>
         public static bool operator !=(WindowsXP First, WindowsXP Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>Clones WindowsXP structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
 
+        /// <summary>Checks if two WindowsXP structures are equal or not</summary>
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
+        /// <summary>Get hash code of WindowsXP structure</summary>
         public override int GetHashCode()
         {
             return base.GetHashCode();

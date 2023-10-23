@@ -283,7 +283,7 @@ namespace WinPaletter
             ApplyToTM(Program.TM);
             Forms.MainFrm.ApplyColorsToElements(TMx);
             TMx.WindowsEffects.Apply();
-            TMx.Win32.Update_UPM_DEFAULT();
+            TMx.Win32.Broadcast_UPM_ToDefUsers();
             TMx.Dispose();
             Cursor = Cursors.Default;
         }

@@ -65,14 +65,14 @@ namespace WinPaletter.Theme
 
                 switch (LogonElement.Mode)
                 {
-                    case Theme.Structures.LogonUI7.Modes.Default:
+                    case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             for (int i = 5031; i <= 5043; i += +1)
                                 bmpList.Add(PE_Functions.GetPNGFromDLL(PathsExt.imageres, i, "IMAGE", Program.Computer.Screen.Bounds.Size.Width, Program.Computer.Screen.Bounds.Size.Height));
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                    case Theme.Structures.LogonUI7.Sources.CustomImage:
                         {
                             if (System.IO.File.Exists(LogonElement.ImagePath))
                             {
@@ -86,13 +86,13 @@ namespace WinPaletter.Theme
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                    case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
                             bmpList.Add((Bitmap)LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
                             using (Bitmap b = new Bitmap(Program.GetWallpaper()))
                             {
@@ -218,7 +218,7 @@ namespace WinPaletter.Theme
 
                 switch (Windows81.LockScreenType)
                 {
-                    case Theme.Structures.LogonUI7.Modes.Default:
+                    case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             string syslock = "";
 
@@ -245,7 +245,7 @@ namespace WinPaletter.Theme
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                    case Theme.Structures.LogonUI7.Sources.CustomImage:
                         {
                             if (System.IO.File.Exists(LogonUI7.ImagePath))
                             {
@@ -259,13 +259,13 @@ namespace WinPaletter.Theme
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                    case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
                             bmp = (Bitmap)LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
                             using (var b = new Bitmap(Program.GetWallpaper()))
                             {

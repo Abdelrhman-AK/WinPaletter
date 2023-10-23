@@ -5,29 +5,39 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows Vista appearance
+    /// </summary>
     public struct WindowsVista : ICloneable
     {
+        /// <summary>Main Windows color</summary>
         public Color ColorizationColor;
+
+        /// <summary>Control amount of main Windows color</summary>
         public byte Alpha;
+
+        /// <summary>
+        /// Theme used for Windows Vista
+        /// <code>
+        /// Aero
+        /// AeroOpaque
+        /// Basic
+        /// Classic
+        /// </code>
+        /// </summary>
         public Windows7.Themes Theme;
 
-        public static bool operator ==(WindowsVista First, WindowsVista Second)
-        {
-            return First.Equals(Second);
-        }
-
-        public static bool operator !=(WindowsVista First, WindowsVista Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        public void Load(WindowsVista _DefWin)
+        /// <summary>
+        /// Loads WindowsVista data from registry
+        /// </summary>
+        /// <param name="default">Default WindowsVista data structure</param>
+        public void Load(WindowsVista @default)
         {
             if (OS.WVista)
             {
                 object y;
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb());
+                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
                 ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
                 Alpha = Color.FromArgb(Convert.ToInt32(y)).A;
 
@@ -63,12 +73,16 @@ namespace WinPaletter.Theme.Structures
 
             else
             {
-                ColorizationColor = _DefWin.ColorizationColor;
-                Alpha = _DefWin.Alpha;
-                Theme = _DefWin.Theme;
+                ColorizationColor = @default.ColorizationColor;
+                Alpha = @default.Alpha;
+                Theme = @default.Theme;
             }
         }
 
+        /// <summary>
+        /// Saves WindowsVista data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             switch (Theme)
@@ -135,9 +149,34 @@ namespace WinPaletter.Theme.Structures
 
         }
 
+        /// <summary>Operator to check if two WindowsVista structures are equal</summary>
+        public static bool operator ==(WindowsVista First, WindowsVista Second)
+        {
+            return First.Equals(Second);
+        }
+
+        /// <summary>Operator to check if two WindowsVista structures are not equal</summary>
+        public static bool operator !=(WindowsVista First, WindowsVista Second)
+        {
+            return !First.Equals(Second);
+        }
+
+        /// <summary>Clones WindowsVista structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two WindowsVista structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of WindowsVista structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

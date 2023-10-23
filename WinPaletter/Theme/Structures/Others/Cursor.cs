@@ -5,41 +5,159 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for WinPaletter themed cursors
+    /// </summary>
     public struct Cursor : ICloneable
     {
+        /// <summary>Style of main arrow</summary>
         public Paths.ArrowStyle ArrowStyle;
+
+        /// <summary>Style of appwait/busy cursors</summary>
         public Paths.CircleStyle CircleStyle;
+
+        /// <summary>BackColor for cursor</summary>
         public Color PrimaryColor1;
+
+        /// <summary>
+        /// Second BackColor for cursor
+        /// <br>- Used as gradience, when PrimaryColorGradient=true;</br>
+        /// </summary>
         public Color PrimaryColor2;
+
+        /// <summary>Enable BackColor gradience for cursor</summary>
         public bool PrimaryColorGradient;
+
+        /// <summary>
+        /// BackColor gradience effect for cursor
+        /// <code>
+        /// Vertical
+        /// Horizontal
+        /// ForwardDiagonal
+        /// BackwardDiagonal
+        /// Circle (Animated with loading when cursor is appwait or busy)
+        /// </code>
+        /// </summary>
         public Paths.GradientMode PrimaryColorGradientMode;
+
+        /// <summary>Enable BackColor noise for cursor</summary>
         public bool PrimaryColorNoise;
+
+        /// <summary>Opacity of BackColor noise for cursor</summary>
         public float PrimaryColorNoiseOpacity;
+
+        /// <summary>Line color for cursor</summary>
         public Color SecondaryColor1;
+
+        /// <summary>
+        /// Second line color for cursor
+        /// <br>- Used as gradience, when SecondaryColorGradient=true;</br>
+        /// </summary>
         public Color SecondaryColor2;
+
+        /// <summary>Enable line color gradience for cursor</summary>
         public bool SecondaryColorGradient;
+
+        /// <summary>
+        /// line color gradience effect for cursor
+        /// <code>
+        /// Vertical
+        /// Horizontal
+        /// ForwardDiagonal
+        /// BackwardDiagonal
+        /// Circle (Animated with loading when cursor is appwait or busy)
+        /// </code>
+        /// </summary>
         public Paths.GradientMode SecondaryColorGradientMode;
+
+        /// <summary>Enable line noise for cursor</summary>
         public bool SecondaryColorNoise;
+
+        /// <summary>Opacity of line noise for cursor</summary>
         public float SecondaryColorNoiseOpacity;
+
+        /// <summary>BackColor of spinning circle (if cursor is appwait or busy)</summary>
         public Color LoadingCircleBack1;
+
+        /// <summary>
+        /// Second BackColor of spinning circle (if cursor is appwait or busy)
+        /// <br>- Used as gradience, when LoadingCircleBackGradient=true;</br>
+        /// </summary>
         public Color LoadingCircleBack2;
+
+        /// <summary>Enable gradience in background of spinning circle (if cursor is appwait or busy)</summary>
         public bool LoadingCircleBackGradient;
+
+        /// <summary>
+        /// Gradience in background of spinning circle (if cursor is appwait or busy)
+        /// <code>
+        /// Vertical
+        /// Horizontal
+        /// ForwardDiagonal
+        /// BackwardDiagonal
+        /// Circle (Animated with loading when cursor is appwait or busy)
+        /// </code>
+        /// </summary>
         public Paths.GradientMode LoadingCircleBackGradientMode;
+
+        /// <summary>Enable noise in background of spinning circle (if cursor is appwait or busy)</summary>
         public bool LoadingCircleBackNoise;
+
+        /// <summary>Opacity noise in background of spinning circle (if cursor is appwait or busy)</summary>
         public float LoadingCircleBackNoiseOpacity;
+
+        /// <summary>Color of rotating part of circle (if cursor is appwait or busy)</summary>
         public Color LoadingCircleHot1;
+
+        /// <summary>
+        /// Second color of rotating part of circle (if cursor is appwait or busy)
+        /// <br>- Used as gradience, when LoadingCircleHotGradient=true;</br>
+        /// </summary>
         public Color LoadingCircleHot2;
+
+        /// <summary>Enable gradience in rotating part of circle (if cursor is appwait or busy)</summary>
         public bool LoadingCircleHotGradient;
+
+        /// <summary>
+        /// Gradience in background of spinning circle (if cursor is appwait or busy)
+        /// <code>
+        /// Vertical
+        /// Horizontal
+        /// ForwardDiagonal
+        /// BackwardDiagonal
+        /// Circle (Animated with loading when cursor is appwait or busy)
+        /// </code>
+        /// </summary>
         public Paths.GradientMode LoadingCircleHotGradientMode;
+
+        /// <summary>Enable noise in rotating part of circle (if cursor is appwait or busy)</summary>
         public bool LoadingCircleHotNoise;
+
+        /// <summary>Opacity noise in rotating part of circle (if cursor is appwait or busy</summary>
         public float LoadingCircleHotNoiseOpacity;
+
+        /// <summary>Enable custom cursor shadow (rendered by WinPaletter not Windows)</summary>
         public bool Shadow_Enabled;
+
+        /// <summary>Custom cursor shadow color</summary>
         public Color Shadow_Color;
+
+        /// <summary>Custom cursor shadow blur intensity</summary>
         public int Shadow_Blur;
+
+        /// <summary>Custom cursor shadow opacity</summary>
         public float Shadow_Opacity;
+
+        /// <summary>Custom cursor shadow x offset in coordinates (location)</summary>
         public int Shadow_OffsetX;
+
+        /// <summary>Custom cursor shadow y offset in coordinates (location)</summary>
         public int Shadow_OffsetY;
 
+        /// <summary>
+        /// Loads WinPaletter themed cursors data from registry
+        /// </summary>
+        /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         public void Load(string subKey)
         {
             ArrowStyle = (Paths.ArrowStyle)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "ArrowStyle", Paths.ArrowStyle.Aero));
@@ -81,6 +199,13 @@ namespace WinPaletter.Theme.Structures
             Shadow_OffsetX = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "Shadow_OffsetX", 2));
             Shadow_OffsetY = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "Shadow_OffsetY", 2));
         }
+
+        /// <summary>
+        /// Save data of WinPaletter themed cursors into registry
+        /// </summary>
+        /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
+        /// <param name="Cursor">WinPaletter themed cursor structure</param>
+        /// <param name="TreeView">TreeView used for theme log</param>
         public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "ArrowStyle", (int)Cursor.ArrowStyle);
@@ -117,18 +242,34 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "Shadow_OffsetY", Cursor.Shadow_OffsetY);
         }
 
+        /// <summary>Operator to check if two Cursor structures are equal</summary>
         public static bool operator ==(Cursor First, Cursor Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two Cursor structures are not equal</summary>
         public static bool operator !=(Cursor First, Cursor Second)
         {
             return !First.Equals(Second);
         }
+
+        /// <summary>Clones Cursor structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two Cursor structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of Cursor structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

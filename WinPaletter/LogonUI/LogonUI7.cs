@@ -78,25 +78,25 @@ namespace WinPaletter
 
                 switch (TM.Windows81.LockScreenType)
                 {
-                    case Theme.Structures.LogonUI7.Modes.Default:
+                    case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             RadioButton1.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
                             RadioButton2.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                    case Theme.Structures.LogonUI7.Sources.CustomImage:
                         {
                             RadioButton4.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                    case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
                             RadioButton3.Checked = true;
                             break;
@@ -138,25 +138,25 @@ namespace WinPaletter
 
                 switch (TM.LogonUI7.Mode)
                 {
-                    case Theme.Structures.LogonUI7.Modes.Default:
+                    case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             RadioButton1.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.Wallpaper:
+                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
                             RadioButton2.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.CustomImage:
+                    case Theme.Structures.LogonUI7.Sources.CustomImage:
                         {
                             RadioButton4.Checked = true;
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Modes.SolidColor:
+                    case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
                             RadioButton3.Checked = true;
                             break;
@@ -201,13 +201,13 @@ namespace WinPaletter
                 TM.Windows81.NoLockScreen = !Toggle1.Checked;
 
                 if (RadioButton1.Checked)
-                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Modes.Default;
+                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Sources.Default;
                 if (RadioButton2.Checked)
-                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Modes.Wallpaper;
+                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Sources.Wallpaper;
                 if (RadioButton3.Checked)
-                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Modes.SolidColor;
+                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Sources.SolidColor;
                 if (RadioButton4.Checked)
-                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Modes.CustomImage;
+                    TM.Windows81.LockScreenType = Theme.Structures.LogonUI7.Sources.CustomImage;
 
                 TM.Windows81.LockScreenSystemID = ID;
 
@@ -232,13 +232,13 @@ namespace WinPaletter
                 TM.LogonUI7.Enabled = Toggle1.Checked;
 
                 if (RadioButton1.Checked)
-                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Modes.Default;
+                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.Default;
                 if (RadioButton2.Checked)
-                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Modes.Wallpaper;
+                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.Wallpaper;
                 if (RadioButton3.Checked)
-                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Modes.SolidColor;
+                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.SolidColor;
                 if (RadioButton4.Checked)
-                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Modes.CustomImage;
+                    TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.CustomImage;
 
                 TM.LogonUI7.ImagePath = TextBox1.Text;
                 TM.LogonUI7.Color = color_pick.BackColor;

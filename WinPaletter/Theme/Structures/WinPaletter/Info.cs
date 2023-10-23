@@ -5,26 +5,83 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for handling information about WinPaletter theme
+    /// </summary>
     public struct Info : ICloneable
     {
+        /// <summary>WinPaletter version that designed this theme</summary>
         public string AppVersion;
+
+        /// <summary>Name of current WinPaletter theme</summary>
         public string ThemeName;
+
+        /// <summary>Description of current WinPaletter theme. It can include tags.</summary>
         public string Description;
+
+        /// <summary>Make saving this theme export theme resources pack that has sounds and images used in theme and are not located in system directories.</summary>
         public bool ExportResThemePack;
+
+        /// <summary>License/credits of included sounds and images. Keep it empty if there are no license or credits or didn't use files.</summary>
         public string License;
+
+        /// <summary>WinPaletter theme version</summary>
         public string ThemeVersion;
+
+        /// <summary>Person's name that designed this theme</summary>
         public string Author;
+
+        /// <summary>Person's social media link that designed this theme</summary>
         public string AuthorSocialMediaLink;
+
+        /// <summary>Descriptive color 1. It should give the user a figure about your theme.</summary>
         public Color Color1;
+
+        /// <summary>Descriptive color 2. It should give the user a figure about your theme.</summary>
         public Color Color2;
+
+        /// <summary>Decorative pattern for your theme displayed in WinPaletter Store. It can be any value from 0 to 10</summary>
         public int Pattern;
+
+        /// <summary>
+        /// This theme is designed especially for Windows 11
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_Win11;
+
+        /// <summary>
+        /// This theme is designed especially for Windows 10
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_Win10;
+
+        /// <summary>
+        /// This theme is designed especially for Windows 8.1
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_Win81;
+
+        /// <summary>
+        /// This theme is designed especially for Windows 7
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_Win7;
+
+        /// <summary>
+        /// This theme is designed especially for Windows Vista
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_WinVista;
+
+        /// <summary>
+        /// This theme is designed especially for Windows XP
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
         public bool DesignedFor_WinXP;
 
+        /// <summary>
+        /// Loads theme info from registry
+        /// </summary>
         public void Load()
         {
             ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.CurrentMode).ToString();
@@ -49,6 +106,11 @@ namespace WinPaletter.Theme.Structures
             DesignedFor_WinVista = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", true));
             DesignedFor_WinXP = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", true));
         }
+
+        /// <summary>
+        /// Saves theme info into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String);
@@ -71,20 +133,35 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP.ToInteger(), RegistryValueKind.DWord);
         }
 
+        /// <summary>Operator to check if two Info structures are equal</summary>
         public static bool operator ==(Info First, Info Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two Info structures are not equal</summary>
         public static bool operator !=(Info First, Info Second)
         {
             return !First.Equals(Second);
         }
+
+        /// <summary>Clones Info structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
 
+        /// <summary>Checks if two Info structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of Info structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
 }

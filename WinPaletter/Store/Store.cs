@@ -176,7 +176,7 @@ namespace WinPaletter
                     {
                         using (var vs = new VisualStyleFile(PathsExt.MSTheme))
                         {
-                            TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
+                            TM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
                         }
                     }
                 }

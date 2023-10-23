@@ -6,27 +6,45 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// LogonUI structure for Windows 10/11
+    /// </summary>
     public struct LogonUIXP : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
+
+        /// <summary>Windows XP LogonUI mode</summary>
         public Modes Mode;
+
+        /// <summary>Windows XP LogonUI background color if selected 'Mode' is 'Win2000'</summary>
         public Color BackColor;
+
+        /// <summary>Controls if 'More options' button is visible if selected 'Mode' is 'Win2000'</summary>
         public bool ShowMoreOptions;
 
+        /// <summary>
+        /// Enumeration for Windows XP LogonUI modes
+        /// </summary>
         public enum Modes
         {
+            /// <summary>Classic dialog, like in Windows 2000</summary>
             Win2000,
+            /// <summary>Default welcome blue screen</summary>
             Default
         }
 
-        public void Load(LogonUIXP _DefLogonUI)
+        /// <summary>
+        /// Loads Windows XP LogonUI data from registry
+        /// </summary>
+        /// <param name="default">Default Windows XP LogonUI data structure</param>
+        public void Load(LogonUIXP @default)
         {
             if (OS.WXP)
             {
+                Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", @default.Enabled));
 
-                Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", _DefLogonUI.Enabled));
-
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", _DefLogonUI.Mode))
+                switch (GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
                 {
                     case 1:
                         {
@@ -49,21 +67,25 @@ namespace WinPaletter.Theme.Structures
                     }
                     else
                     {
-                        BackColor = _DefLogonUI.BackColor;
+                        BackColor = @default.BackColor;
                     }
                 }
 
-                ShowMoreOptions = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", _DefLogonUI.ShowMoreOptions));
+                ShowMoreOptions = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions));
             }
 
             else
             {
-                Mode = _DefLogonUI.Mode;
-                BackColor = _DefLogonUI.BackColor;
-                ShowMoreOptions = _DefLogonUI.ShowMoreOptions;
+                Mode = @default.Mode;
+                BackColor = @default.BackColor;
+                ShowMoreOptions = @default.ShowMoreOptions;
             }
         }
 
+        /// <summary>
+        /// Saves Windows XP LogonUI data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled);
@@ -76,18 +98,38 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>Operator to check if two LogonUIXP structures are equal</summary>
         public static bool operator ==(LogonUIXP First, LogonUIXP Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two LogonUIXP structures are not equal</summary>
         public static bool operator !=(LogonUIXP First, LogonUIXP Second)
         {
             return !First.Equals(Second);
         }
+
+        /// <summary>Clones LogonUIXP structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>
+        /// Checks if two LogonUIXP structures are equal or not
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Get hash code of LogonUIXP structure
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

@@ -112,68 +112,68 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console</param>
         /// <param name="Signature_Of_Enable">Name of console (for example: Terminal_CMD_Enabled). Used for getting Enabled property</param>
-        /// <param name="Defaults">Console structure that has default data</param>
-        public void Load(string RegKey, string Signature_Of_Enable, Console Defaults)
+        /// <param name="default">Console structure that has default data</param>
+        public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
             object temp;
             string RegAddress = @"HKEY_CURRENT_USER\Console" + (string.IsNullOrEmpty(RegKey) ? "" : @"\" + RegKey);
 
-            temp = GetReg(RegAddress, "ColorTable00", Defaults.ColorTable00.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb());
             ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable01", Defaults.ColorTable01.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable01", @default.ColorTable01.Reverse().ToArgb());
             ColorTable01 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable02", Defaults.ColorTable02.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable02", @default.ColorTable02.Reverse().ToArgb());
             ColorTable02 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable03", Defaults.ColorTable03.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable03", @default.ColorTable03.Reverse().ToArgb());
             ColorTable03 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable04", Defaults.ColorTable04.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable04", @default.ColorTable04.Reverse().ToArgb());
             ColorTable04 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable05", Defaults.ColorTable05.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable05", @default.ColorTable05.Reverse().ToArgb());
             ColorTable05 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable06", Defaults.ColorTable06.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable06", @default.ColorTable06.Reverse().ToArgb());
             ColorTable06 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable07", Defaults.ColorTable07.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable07", @default.ColorTable07.Reverse().ToArgb());
             ColorTable07 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable08", Defaults.ColorTable08.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable08", @default.ColorTable08.Reverse().ToArgb());
             ColorTable08 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable09", Defaults.ColorTable09.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable09", @default.ColorTable09.Reverse().ToArgb());
             ColorTable09 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable10", Defaults.ColorTable10.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable10", @default.ColorTable10.Reverse().ToArgb());
             ColorTable10 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable11", Defaults.ColorTable11.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable11", @default.ColorTable11.Reverse().ToArgb());
             ColorTable11 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable12", Defaults.ColorTable12.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable12", @default.ColorTable12.Reverse().ToArgb());
             ColorTable12 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable13", Defaults.ColorTable13.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable13", @default.ColorTable13.Reverse().ToArgb());
             ColorTable13 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable14", Defaults.ColorTable14.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable14", @default.ColorTable14.Reverse().ToArgb());
             ColorTable14 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable15", Defaults.ColorTable15.Reverse().ToArgb());
+            temp = GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb());
             ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32(Defaults.PopupBackground.ToString("X") + Defaults.PopupForeground.ToString("X"), 16));
+            temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32(@default.PopupBackground.ToString("X") + @default.PopupForeground.ToString("X"), 16));
             string d = ((int)temp).ToString("X");
             if (d.Count() == 1)
                 d = 0 + d;
             PopupBackground = Convert.ToInt32(d[0].ToString(), 16);
             PopupForeground = Convert.ToInt32(d[1].ToString(), 16);
 
-            temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32(Defaults.ScreenColorsBackground.ToString("X") + Defaults.ScreenColorsForeground.ToString("X"), 16));
+            temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32(@default.ScreenColorsBackground.ToString("X") + @default.ScreenColorsForeground.ToString("X"), 16));
             d = ((int)temp).ToString("X");
             if (d.Count() == 1)
                 d = 0 + d;
@@ -182,24 +182,24 @@ namespace WinPaletter.Theme.Structures
 
             CursorSize = Convert.ToInt32(GetReg(RegAddress, "CursorSize", 25));
 
-            temp = GetReg(RegAddress, "FaceName", Defaults.FaceName);
+            temp = GetReg(RegAddress, "FaceName", @default.FaceName);
             if (Manager.IsFontInstalled(temp.ToString()))
             {
                 FaceName = temp.ToString();
             }
             else
             {
-                FaceName = Defaults.FaceName;
+                FaceName = @default.FaceName;
             }
 
-            temp = GetReg(RegAddress, "FontFamily", !Defaults.FontRaster ? 54 : 1);
+            temp = GetReg(RegAddress, "FontFamily", !@default.FontRaster ? 54 : 1);
             FontRaster = ((int)temp == 1 | (int)temp == 0) | (int)temp == 48;
             if (FaceName.ToLower() == "terminal")
                 FontRaster = true;
 
-            temp = GetReg(RegAddress, "FontSize", Defaults.FontSize);
+            temp = GetReg(RegAddress, "FontSize", @default.FontSize);
             if ((int)temp == 0 & !FontRaster)
-                FontSize = Defaults.FontSize;
+                FontSize = @default.FontSize;
             else
                 FontSize = Convert.ToInt32(temp);
 

@@ -6,6 +6,7 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
+        /// <summary>Object derived of structure that has data about WinPaletter theme information.</summary>
         public Info Info = new()
         {
             AppVersion = Program.Version,
@@ -27,6 +28,7 @@ namespace WinPaletter.Theme
             Pattern = 1
         };
 
+        /// <summary>Object derived of structure that has data about WinPaletter theme, and it can be customized.</summary>
         public AppTheme AppTheme = new()
         {
             Enabled = false,
@@ -36,6 +38,7 @@ namespace WinPaletter.Theme
             RoundCorners = OS.WXP | OS.WVista | OS.W7 | OS.W11
         };
 
+        /// <summary>Object derived of structure that has data about Windows 11 colors and appearance, and it can be customized.</summary>
         public Windows10x Windows11 = new()
         {
             Color_Index0 = Color.FromArgb(153, 235, 255),
@@ -58,6 +61,7 @@ namespace WinPaletter.Theme
             TB_Blur = true
         };
 
+        /// <summary>Object derived of structure that has data about Windows 10 colors and appearance, and it can be customized.</summary>
         public Windows10x Windows10 = new()
         {
             Color_Index0 = Color.FromArgb(166, 216, 255),
@@ -80,6 +84,7 @@ namespace WinPaletter.Theme
             TB_Blur = true
         };
 
+        /// <summary>Object derived of structure that has data about Windows 8.1 colors and appearance, and it can be customized.</summary>
         public Windows8x Windows81 = new()
         {
             ColorizationColor = Color.FromArgb(246, 195, 74),
@@ -92,10 +97,11 @@ namespace WinPaletter.Theme
             PersonalColors_Background = Color.FromArgb(30, 0, 84),
             PersonalColors_Accent = Color.FromArgb(72, 29, 178),
             NoLockScreen = false,
-            LockScreenType = Structures.LogonUI7.Modes.Default,
+            LockScreenType = Structures.LogonUI7.Sources.Default,
             LockScreenSystemID = 0
         };
 
+        /// <summary>Object derived of structure that has data about Windows 7 colors and appearance, and it can be customized.</summary>
         public Windows7 Windows7 = new()
         {
             ColorizationColor = Color.FromArgb(116, 184, 252),
@@ -109,12 +115,14 @@ namespace WinPaletter.Theme
             Theme = Windows7.Themes.Aero
         };
 
+        /// <summary>Object derived of structure that has data about Windows Vista colors and appearance, and it can be customized.</summary>
         public WindowsVista WindowsVista = new()
         {
             ColorizationColor = Color.FromArgb(64, 158, 254),
             Theme = Windows7.Themes.Aero
         };
 
+        /// <summary>Object derived of structure that has data about Windows XP colors and appearance, and it can be customized.</summary>
         public WindowsXP WindowsXP = new()
         {
             Theme = WindowsXP.Themes.LunaBlue,
@@ -122,6 +130,7 @@ namespace WinPaletter.Theme
             ThemeFile = PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles"
         };
 
+        /// <summary>Object derived of structure that has data about classic Windows colors, and it can be customized.</summary>
         public Structures.Win32UI Win32 = new()
         {
             EnableTheming = true,
@@ -160,6 +169,7 @@ namespace WinPaletter.Theme
             Desktop = Color.FromArgb(0, 0, 0)
         };
 
+        /// <summary>Object derived of structure that has data about Windows 10/11 LogonUI appearance, and it can be customized.</summary>
         public LogonUI10x LogonUI10x = new()
         {
             DisableAcrylicBackgroundOnLogon = false,
@@ -167,10 +177,11 @@ namespace WinPaletter.Theme
             NoLockScreen = false
         };
 
+        /// <summary>Object derived of structure that has data about Windows 7 LogonUI appearance, and it can be customized.</summary>
         public Structures.LogonUI7 LogonUI7 = new()
         {
             Enabled = false,
-            Mode = Structures.LogonUI7.Modes.Default,
+            Mode = Structures.LogonUI7.Sources.Default,
             ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg",
             Color = Color.Black,
             Blur = false,
@@ -181,6 +192,7 @@ namespace WinPaletter.Theme
             Noise_Intensity = 0
         };
 
+        /// <summary>Object derived of structure that has data about Windows XP LogonUI appearance, and it can be customized.</summary>
         public Structures.LogonUIXP LogonUIXP = new()
         {
             Enabled = true,
@@ -189,6 +201,7 @@ namespace WinPaletter.Theme
             ShowMoreOptions = false
         };
 
+        /// <summary>Object derived of structure that has data about wallpaper, and it can be customized.</summary>
         public Wallpaper Wallpaper = new()
         {
             Enabled = false,
@@ -202,6 +215,11 @@ namespace WinPaletter.Theme
             SlideShow_Folder_or_ImagesList = true
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows 11 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_W11 = new()
         {
             Enabled = false,
@@ -211,6 +229,11 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows 10 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_W10 = new()
         {
             Enabled = false,
@@ -220,6 +243,11 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows 8.1 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_W81 = new()
         {
             Enabled = false,
@@ -229,6 +257,11 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows 7 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_W7 = new()
         {
             Enabled = false,
@@ -238,6 +271,11 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows Vista (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_WVista = new()
         {
             Enabled = false,
@@ -247,6 +285,11 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows XP (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
         public WallpaperTone WallpaperTone_WXP = new()
         {
             Enabled = false,
@@ -256,6 +299,7 @@ namespace WinPaletter.Theme
             L = 100
         };
 
+        /// <summary>Object derived of structure that has data about metrics and fonts, and it can be customized.</summary>
         public MetricsFonts MetricsFonts = new()
         {
             Enabled = GetWindowsScreenScalingFactor() == 100d,
@@ -286,6 +330,7 @@ namespace WinPaletter.Theme
             FontSubstitute_SegoeUI = ""
         };
 
+        /// <summary>Object derived of structure that has data about Windows effects and animations, and it can be customized.</summary>
         public WinEffects WindowsEffects = new()
         {
             Enabled = true,
@@ -329,6 +374,7 @@ namespace WinPaletter.Theme
             FullScreenStartMenu = false
         };
 
+        /// <summary>Object derived of structure that has data about screen saver, and it can be customized.</summary>
         public ScreenSaver ScreenSaver = new()
         {
             Enabled = false,
@@ -337,6 +383,7 @@ namespace WinPaletter.Theme
             TimeOut = 60
         };
 
+        /// <summary>Object derived of structure that has data about Windows sounds, and it can be customized.</summary>
         public Sounds Sounds = new()
         {
             Enabled = true,
@@ -349,6 +396,7 @@ namespace WinPaletter.Theme
             Snd_ChargerDisconnected = ""
         };
 
+        /// <summary>Object derived of structure that has data about Windows switcher (Alt+Tab) appearance, and it can be customized.</summary>
         public AltTab AltTab = new()
         {
             Enabled = true,
@@ -356,6 +404,7 @@ namespace WinPaletter.Theme
             Win10Opacity = 95
         };
 
+        /// <summary>Object derived of structure that has data about Command Prompt, and it can be customized.</summary>
         public Structures.Console CommandPrompt = new()
         {
             Enabled = false,
@@ -392,6 +441,7 @@ namespace WinPaletter.Theme
             W10_1909_WindowAlpha = 255
         };
 
+        /// <summary>Object derived of structure that has data about PowerShell x86, and it can be customized.</summary>
         public Structures.Console PowerShellx86 = new()
         {
             Enabled = false,
@@ -428,6 +478,7 @@ namespace WinPaletter.Theme
             W10_1909_WindowAlpha = 255
         };
 
+        /// <summary>Object derived of structure that has data about PowerShell x64, and it can be customized.</summary>
         public Structures.Console PowerShellx64 = new()
         {
             Enabled = false,
@@ -464,8 +515,10 @@ namespace WinPaletter.Theme
             W10_1909_WindowAlpha = 255
         };
 
+        /// <summary>Object derived of class that has data about Windows Terminal Stable, and it can be customized.</summary>
         public WinTerminal Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
 
+        /// <summary>Object derived of class that has data about Windows Terminal Preview, and it can be customized.</summary>
         public WinTerminal TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
     }
 }

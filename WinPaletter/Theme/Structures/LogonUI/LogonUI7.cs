@@ -20,7 +20,7 @@ namespace WinPaletter.Theme.Structures
         /// SolidColor
         /// </code>
         /// </summary>
-        public Modes Mode;
+        public Sources Mode;
 
         /// <summary>LogonUI background image path. Used if 'Mode' is 'CustomImage'</summary>
         public string ImagePath;
@@ -46,29 +46,32 @@ namespace WinPaletter.Theme.Structures
         /// <summary>LogonUI background noise intensity</summary>
         public int Noise_Intensity;
 
-
-        public static bool operator ==(LogonUI7 First, LogonUI7 Second)
+        /// <summary>
+        /// Enumeration for LogonUI background sources
+        /// <code>
+        /// Default
+        /// Wallpaper
+        /// CustomImage
+        /// SolidColor
+        /// </code>
+        /// </summary>
+        public enum Sources
         {
-            return First.Equals(Second);
-        }
-
-        public static bool operator !=(LogonUI7 First, LogonUI7 Second)
-        {
-            return !First.Equals(Second);
-        }
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-        public enum Modes
-        {
+            ///
             Default,
+            ///
             Wallpaper,
+            ///
             CustomImage,
+            ///
             SolidColor
         }
 
-        public void Load(LogonUI7 _DefLogonUI)
+        /// <summary>
+        /// Loads Windows 7/8.1 LogonUI data from registry
+        /// </summary>
+        /// <param name="default">Default Windows 7/8.1 LogonUI data structure</param>
+        public void Load(LogonUI7 @default)
         {
             if (OS.W7 | OS.W8 | OS.W81)
             {
@@ -87,23 +90,55 @@ namespace WinPaletter.Theme.Structures
                     bool b1 = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", false));
                     bool b2 = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", false));
                     Enabled = b1 | b2;
-                    Mode = (Modes)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", Modes.Default));
+                    Mode = (Sources)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", Sources.Default));
                 }
             }
 
             else
             {
-                Enabled = _DefLogonUI.Enabled;
-                Mode = _DefLogonUI.Mode;
-                ImagePath = _DefLogonUI.ImagePath;
-                Color = _DefLogonUI.Color;
-                Blur = _DefLogonUI.Blur;
-                Blur_Intensity = _DefLogonUI.Blur_Intensity;
-                Grayscale = _DefLogonUI.Grayscale;
-                Noise = _DefLogonUI.Noise;
-                Noise_Mode = _DefLogonUI.Noise_Mode;
-                Noise_Intensity = _DefLogonUI.Noise_Intensity;
+                Enabled = @default.Enabled;
+                Mode = @default.Mode;
+                ImagePath = @default.ImagePath;
+                Color = @default.Color;
+                Blur = @default.Blur;
+                Blur_Intensity = @default.Blur_Intensity;
+                Grayscale = @default.Grayscale;
+                Noise = @default.Noise;
+                Noise_Mode = @default.Noise_Mode;
+                Noise_Intensity = @default.Noise_Intensity;
             }
+        }
+
+        /// <summary>Operator to check if two LogonUI7 structures are equal</summary>
+        public static bool operator ==(LogonUI7 First, LogonUI7 Second)
+        {
+            return First.Equals(Second);
+        }
+
+        /// <summary>Operator to check if two LogonUI7 structures are not equal</summary>
+        public static bool operator !=(LogonUI7 First, LogonUI7 Second)
+        {
+            return !First.Equals(Second);
+        }
+
+        /// <summary>Clones LogonUI7 structure</summary>
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two LogonUI7 structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// Get hash code of LogonUI7 structure
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

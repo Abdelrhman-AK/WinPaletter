@@ -7,121 +7,266 @@ using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows effects and animations
+    /// </summary>
     public struct WinEffects : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
 
+        /// <summary>Windows animation (open app, close, minimize, maximize, ...)</summary>
         public bool WindowAnimation;
+
+        /// <summary>Shadow arround window border</summary>
         public bool WindowShadow;
+
+        /// <summary>Controls all Windows effects, including WindowAnimation and WindowShadow</summary>
         public bool WindowUIEffects;
+
+        /// <summary>Show contents of a window while dragging</summary>
         public bool ShowWinContentDrag;
+
+        /// <summary>Enable animation for controls inside window</summary>
         public bool AnimateControlsInsideWindow;
 
+        /// <summary>Enable menu show animation</summary>
         public bool MenuAnimation;
-        public MenuAnimType MenuFade;
-        public bool MenuSelectionFade;
-        public uint MenuShowDelay;            // Microsoft uses this as DWORD, which its equivalent is UInteger, not Integer
 
+        /// <summary>Menu animation type. It can be fade or scroll</summary>
+        public MenuAnimType MenuFade;
+
+        /// <summary>Fade selection after clicking on a menu item</summary>
+        public bool MenuSelectionFade;
+
+        /// <summary>
+        /// Delay menu show in milliseconds
+        /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
+        /// </summary>
+        public uint MenuShowDelay;
+
+        /// <summary>Animate combo box control</summary>
         public bool ComboBoxAnimation;
+
+        /// <summary>Smooth scrolling animation for list box</summary>
         public bool ListBoxSmoothScrolling;
 
+        /// <summary>Enable tooltip animation</summary>
         public bool TooltipAnimation;
+
+        /// <summary>Tooltip appearance animation. It can be fade or scroll</summary>
         public MenuAnimType TooltipFade;
 
+        /// <summary>Show shadow in icons labels at desktop</summary>
         public bool IconsShadow;
+
+        /// <summary>
+        /// - If true, desktop icons selection will be colored transparent rectangle
+        /// <br></br>- If false, desktop icons selection will be rectangle with dotted border
+        /// </summary>
         public bool IconsDesktopTranslSel;
 
+        /// <summary>
+        /// Make every menu item has an underline to inform the user that this menu item can be triggered by clicking on ALT+LETTER.
+        /// <br>For example: when menu item 'EȢit' with letter 'x' has an underline, clicking on ALT+X will trigger this menu item.</br>
+        /// <br>If false, 'EȢit' will be 'Exit'.</br>
+        /// </summary>
         public bool KeyboardUnderline;
-        public uint FocusRectWidth;           // Microsoft uses this as DWORD, which its equivalent is UInteger, not Integer
-        public uint FocusRectHeight;          // Microsoft uses this as DWORD, which its equivalent is UInteger, not Integer
+
+        /// <summary>
+        /// Width of dotted rectangle on focused classic button
+        /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
+        /// </summary>
+        public uint FocusRectWidth;
+
+        /// <summary>
+        /// Height of dotted rectangle on focused classic button
+        /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
+        /// </summary>
+        public uint FocusRectHeight;
+
+        /// <summary>
+        /// Width of text cursor (carret)
+        /// <br></br> For example
+        /// <br></br>   1: Hello world! ▓
+        /// <br></br>   5: Hello world! ▓▓▓▓▓
+        /// </summary>
         public uint Caret;
+
+        /// <summary>Show ballon or notification for milliseconds</summary>
         public int NotificationDuration;
+
+        /// <summary>
+        /// Shake a window from its titlebar to minimize rest windows
+        /// <br></br><b>- Targets Windows 7 and later</b>
+        /// </summary>
         public bool ShakeToMinimize;
+
+        /// <summary>Enable active window tracking feature</summary>
         public bool AWT_Enabled;
+
+        /// <summary>Active window tracking: bring window to top when mouse enters it</summary>
         public bool AWT_BringActivatedWindowToTop;
+
+        /// <summary>Active window tracking: delay bringing window to top for milliseconds</summary>
         public int AWT_Delay;
+
+        /// <summary>Move cusror to the default button when a window or a dialog appears</summary>
         public bool SnapCursorToDefButton;
 
+        /// <summary>
+        /// Enable classic context menus for Windows 11
+        /// <br></br><b>- Requires Explorer restart</b>
+        /// </summary>
         public bool Win11ClassicContextMenu;
+
+        /// <summary>
+        /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows XP and Vista) in higher editions of Windows
+        /// <br></br><b>- Targets Windows 7 and later</b>
+        /// </summary>
         public bool SysListView32;
+
+        /// <summary>
+        /// Show seconds in taskbar clock
+        /// <br></br><b>- Targets Windows 10, and 11 with Moment 3 update</b>
+        /// </summary>
         public bool ShowSecondsInSystemClock;
+
+        /// <summary>
+        /// Replace rectangle notifications by classic ballons
+        /// <br></br><b>- Targets Windows 8 and 8.1</b>
+        /// </summary>
         public bool BalloonNotifications;
+
+        /// <summary>Paint Windows edition on desktop</summary>
         public bool PaintDesktopVersion;
 
+        /// <summary>Replace Windows 11 boot solid circle by spinning dots (of Windows 8/8.1/10)</summary>
         public bool Win11BootDots;
+
+        /// <summary>
+        /// Controls Windows Explorer bar/ribbon
+        /// <br></br><b>- It is be better to be modified with ExplorerPatcher installed</b>
+        /// </summary>
         public ExplorerBar Win11ExplorerBar;
+
+        /// <summary>Disable navigation bar in open\save dialogs. Requires ExplorerPatcher</summary>
         public bool DisableNavBar;
 
+        /// <summary>Automatically hide scroll bars in modern apps (UWP/WinUI3) in Windows 10/11</summary>
         public bool AutoHideScrollBars;
+
+        /// <summary>
+        /// Full screen start menu
+        /// <br></br><b>- Targets Windows 10</b>
+        /// </summary>
         public bool FullScreenStartMenu;
+
+        /// <summary>Enable accessibility feature: color filter</summary>
         public bool ColorFilter_Enabled;
+
+        /// <summary>Color filter type</summary>
         public ColorFilters ColorFilter;
 
+        /// <summary>
+        /// Enable classic volume mixer
+        /// <br></br><b>- Targets Windows 10</b>
+        /// </summary>
         public bool ClassicVolMixer;
 
+        /// <summary>
+        /// Enumeration for Windows Explorer bar types
+        /// </summary>
         public enum ExplorerBar
         {
+            /// <summary>Restore to default type according to Windows edition.</summary>
             Default,
+            /// <summary>
+            /// Ribbon. May require ExplorerPatcher in Windows 11.
+            /// <br>It is the default type in Windows 8/8.1/10</br>
+            /// </summary>
             Ribbon,
+            /// <summary>
+            /// Bar. May require ExplorerPatcher in Windows 11.
+            /// <br>It is the default type in Windows Vista/7</br>
+            /// </summary>
             Bar
         }
 
+        /// <summary>
+        /// Enumeration for accessibility feature: color filters
+        /// </summary>
         public enum ColorFilters
         {
+            ///
             Grayscale,
+            ///
             Inverted,
+            ///
             GrayscaleInverted,
+            ///
             RedGreen_deuteranopia,
+            ///
             RedGreen_protanopia,
+            ///
             BlueYellow
         }
 
+        /// <summary>
+        /// Enumeration for menu animation types
+        /// </summary>
         public enum MenuAnimType
         {
+            /// <summary>Used in modern versions of Windows</summary>
             Fade,
+            /// <summary>Used in classic versions of Windows (Windows 9x)</summary>
             Scroll
         }
 
-        public void Load(WinEffects _DefEffects)
+        /// <summary>
+        /// Loads WinEffects data from registry
+        /// </summary>
+        /// <param name="default">Default WinEffects data structure</param>
+        public void Load(WinEffects @default)
         {
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", true));
 
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETDROPSHADOW, 0, ref WindowShadow, (int)SPIF.None) == 0)
-                WindowShadow = _DefEffects.WindowShadow;
+                WindowShadow = @default.WindowShadow;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETUIEFFECTS, 0, ref WindowUIEffects, (int)SPIF.None) == 0)
-                WindowUIEffects = _DefEffects.WindowUIEffects;
+                WindowUIEffects = @default.WindowUIEffects;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETCLIENTAREAANIMATION, 0, ref AnimateControlsInsideWindow, (int)SPIF.None) == 0)
-                AnimateControlsInsideWindow = _DefEffects.AnimateControlsInsideWindow;
+                AnimateControlsInsideWindow = @default.AnimateControlsInsideWindow;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETMENUANIMATION, 0, ref MenuAnimation, (int)SPIF.None) == 0)
-                MenuAnimation = _DefEffects.MenuAnimation;
+                MenuAnimation = @default.MenuAnimation;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETSELECTIONFADE, 0, ref MenuSelectionFade, (int)SPIF.None) == 0)
-                MenuSelectionFade = _DefEffects.MenuSelectionFade;
+                MenuSelectionFade = @default.MenuSelectionFade;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETMENUSHOWDELAY, 0, ref MenuShowDelay, (int)SPIF.None) == 0)
-                MenuShowDelay = _DefEffects.MenuShowDelay;
+                MenuShowDelay = @default.MenuShowDelay;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETCOMBOBOXANIMATION, 0, ref ComboBoxAnimation, (int)SPIF.None) == 0)
-                ComboBoxAnimation = _DefEffects.ComboBoxAnimation;
+                ComboBoxAnimation = @default.ComboBoxAnimation;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETLISTBOXSMOOTHSCROLLING, 0, ref ListBoxSmoothScrolling, (int)SPIF.None) == 0)
-                ListBoxSmoothScrolling = _DefEffects.ListBoxSmoothScrolling;
+                ListBoxSmoothScrolling = @default.ListBoxSmoothScrolling;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETTOOLTIPANIMATION, 0, ref TooltipAnimation, (int)SPIF.None) == 0)
-                TooltipAnimation = _DefEffects.TooltipAnimation;
+                TooltipAnimation = @default.TooltipAnimation;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETDRAGFULLWINDOWS, 0, ref ShowWinContentDrag, (int)SPIF.None) == 0)
-                ShowWinContentDrag = _DefEffects.ShowWinContentDrag;
+                ShowWinContentDrag = @default.ShowWinContentDrag;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETMENUUNDERLINES, 0, ref KeyboardUnderline, (int)SPIF.None) == 0)
-                KeyboardUnderline = _DefEffects.KeyboardUnderline;
+                KeyboardUnderline = @default.KeyboardUnderline;
             if (Fixer.SystemParametersInfo((int)SPI.FocusRect.GETFOCUSBORDERWIDTH, 0, ref FocusRectWidth, (int)SPIF.None) == 0)
-                FocusRectWidth = _DefEffects.FocusRectWidth;
+                FocusRectWidth = @default.FocusRectWidth;
             if (Fixer.SystemParametersInfo((int)SPI.FocusRect.GETFOCUSBORDERHEIGHT, 0, ref FocusRectHeight, (int)SPIF.None) == 0)
-                FocusRectHeight = _DefEffects.FocusRectHeight;
+                FocusRectHeight = @default.FocusRectHeight;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETCARETWIDTH, 0, ref Caret, (int)SPIF.None) == 0)
-                Caret = _DefEffects.Caret;
+                Caret = @default.Caret;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETACTIVEWINDOWTRACKING, 0, ref AWT_Enabled, (int)SPIF.None) == 0)
-                AWT_Enabled = _DefEffects.AWT_Enabled;
+                AWT_Enabled = @default.AWT_Enabled;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETACTIVEWNDTRKZORDER, 0, ref AWT_BringActivatedWindowToTop, (int)SPIF.None) == 0)
-                AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop;
+                AWT_BringActivatedWindowToTop = @default.AWT_BringActivatedWindowToTop;
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETACTIVEWNDTRKTIMEOUT, 0, ref AWT_Delay, (int)SPIF.None) == 0)
-                AWT_Delay = _DefEffects.AWT_Delay;
+                AWT_Delay = @default.AWT_Delay;
             if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETSNAPTODEFBUTTON, 0, ref SnapCursorToDefButton, (int)SPIF.None) == 0)
-                SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton;
+                SnapCursorToDefButton = @default.SnapCursorToDefButton;
 
             ANIMATIONINFO anim = new ANIMATIONINFO();
             anim.cbSize = (uint)Marshal.SizeOf(anim);
@@ -132,7 +277,7 @@ namespace WinPaletter.Theme.Structures
             }
             else
             {
-                WindowAnimation = _DefEffects.WindowAnimation;
+                WindowAnimation = @default.WindowAnimation;
             }
 
             var x = default(bool);
@@ -143,7 +288,7 @@ namespace WinPaletter.Theme.Structures
             }
             else
             {
-                MenuFade = _DefEffects.MenuFade;
+                MenuFade = @default.MenuFade;
             }
 
             if (Fixer.SystemParametersInfo((int)SPI.Effects.GETTOOLTIPFADE, 0, ref x, (int)SPIF.None) == 1)
@@ -152,18 +297,18 @@ namespace WinPaletter.Theme.Structures
             }
             else
             {
-                TooltipFade = _DefEffects.TooltipFade;
+                TooltipFade = @default.TooltipFade;
             }
 
-            IconsShadow = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", _DefEffects.IconsShadow));
-            IconsDesktopTranslSel = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", _DefEffects.IconsDesktopTranslSel));
-            NotificationDuration = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", _DefEffects.NotificationDuration));
-            ShowSecondsInSystemClock = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefEffects.ShowSecondsInSystemClock));
-            BalloonNotifications = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefEffects.BalloonNotifications));
-            PaintDesktopVersion = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefEffects.PaintDesktopVersion));
-            ClassicVolMixer = !Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !_DefEffects.ClassicVolMixer));
+            IconsShadow = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", @default.IconsShadow));
+            IconsDesktopTranslSel = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", @default.IconsDesktopTranslSel));
+            NotificationDuration = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", @default.NotificationDuration));
+            ShowSecondsInSystemClock = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", @default.ShowSecondsInSystemClock));
+            BalloonNotifications = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", @default.BalloonNotifications));
+            PaintDesktopVersion = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", @default.PaintDesktopVersion));
+            ClassicVolMixer = !Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !@default.ClassicVolMixer));
 
-            bool temp = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", !_DefEffects.ShakeToMinimize));
+            bool temp = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", !@default.ShakeToMinimize));
             ShakeToMinimize = !temp;
 
             try
@@ -179,7 +324,7 @@ namespace WinPaletter.Theme.Structures
             }
             catch
             {
-                Win11ClassicContextMenu = _DefEffects.Win11ClassicContextMenu;
+                Win11ClassicContextMenu = @default.Win11ClassicContextMenu;
             }
             finally
             {
@@ -199,7 +344,7 @@ namespace WinPaletter.Theme.Structures
             }
             catch
             {
-                SysListView32 = _DefEffects.SysListView32;
+                SysListView32 = @default.SysListView32;
             }
             finally
             {
@@ -236,7 +381,7 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            Win11ExplorerBar = (ExplorerBar)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", _DefEffects.Win11ExplorerBar));
+            Win11ExplorerBar = (ExplorerBar)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar));
 
             try
             {
@@ -251,19 +396,23 @@ namespace WinPaletter.Theme.Structures
             }
             catch
             {
-                DisableNavBar = _DefEffects.DisableNavBar;
+                DisableNavBar = @default.DisableNavBar;
             }
             finally
             {
                 Program.Computer.Registry.CurrentUser.Close();
             }
 
-            AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", _DefEffects.AutoHideScrollBars));
-            FullScreenStartMenu = Convert.ToBoolean(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", _DefEffects.FullScreenStartMenu ? 2 : 0)) == 2) ? true : false;
-            ColorFilter_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", _DefEffects.ColorFilter_Enabled));
-            ColorFilter = (ColorFilters)GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", _DefEffects.ColorFilter);
+            AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars));
+            FullScreenStartMenu = Convert.ToBoolean(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", @default.FullScreenStartMenu ? 2 : 0)) == 2) ? true : false;
+            ColorFilter_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", @default.ColorFilter_Enabled));
+            ColorFilter = (ColorFilters)GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", @default.ColorFilter);
         }
 
+        /// <summary>
+        /// Saves WinEffects data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", Enabled);
@@ -567,19 +716,34 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>Operator to check if two WinEffects structures are equal</summary>
         public static bool operator ==(WinEffects First, WinEffects Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two WinEffects structures are not equal</summary>
         public static bool operator !=(WinEffects First, WinEffects Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>Clones WinEffects structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two WinEffects structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of WinEffects structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

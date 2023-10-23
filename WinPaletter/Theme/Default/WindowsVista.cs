@@ -30,7 +30,7 @@ namespace WinPaletter.Theme
                 Win81.Theme = Structures.Windows7.Themes.Aero;
                 Win81.LogonUI = 0;
                 Win81.NoLockScreen = false;
-                Win81.LockScreenType = Structures.LogonUI7.Modes.Default;
+                Win81.LockScreenType = Structures.LogonUI7.Sources.Default;
                 Win81.LockScreenSystemID = 0;
             }
 

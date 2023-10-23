@@ -35,26 +35,26 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-                        using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
+                        using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
                         {
                             Exceptions.ThemeLoad.Clear();
                             Info.Load();
-                            Windows11.Load(_Def.Windows11);
-                            Windows10.Load(_Def.Windows10);
-                            Windows81.Load(_Def.Windows81);
-                            Windows7.Load(_Def.Windows7);
-                            WindowsVista.Load(_Def.WindowsVista);
-                            WindowsXP.Load(_Def.WindowsXP);
-                            WindowsEffects.Load(_Def.WindowsEffects);
-                            LogonUI10x.Load(_Def.LogonUI10x);
-                            LogonUI7.Load(_Def.LogonUI7);
-                            LogonUIXP.Load(_Def.LogonUIXP);
+                            Windows11.Load(@default.Windows11);
+                            Windows10.Load(@default.Windows10);
+                            Windows81.Load(@default.Windows81);
+                            Windows7.Load(@default.Windows7);
+                            WindowsVista.Load(@default.WindowsVista);
+                            WindowsXP.Load(@default.WindowsXP);
+                            WindowsEffects.Load(@default.WindowsEffects);
+                            LogonUI10x.Load(@default.LogonUI10x);
+                            LogonUI7.Load(@default.LogonUI7);
+                            LogonUIXP.Load(@default.LogonUIXP);
                             Win32.Load();
-                            MetricsFonts.Load(_Def.MetricsFonts);
-                            AltTab.Load(_Def.AltTab);
-                            ScreenSaver.Load(_Def.ScreenSaver);
-                            Sounds.Load(_Def.Sounds);
-                            AppTheme.Load(_Def.AppTheme);
+                            MetricsFonts.Load(@default.MetricsFonts);
+                            AltTab.Load(@default.AltTab);
+                            ScreenSaver.Load(@default.ScreenSaver);
+                            Sounds.Load(@default.Sounds);
+                            AppTheme.Load(@default.AppTheme);
 
                             WallpaperTone_W11.Load("Win11");
                             WallpaperTone_W10.Load("Win10");
@@ -62,22 +62,22 @@ namespace WinPaletter.Theme
                             WallpaperTone_W7.Load("Win7");
                             WallpaperTone_WVista.Load("WinVista");
                             WallpaperTone_WXP.Load("WinXP");
-                            Wallpaper.Load(_Def.Wallpaper);
+                            Wallpaper.Load(@default.Wallpaper);
 
-                            CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt);
+                            CommandPrompt.Load("", "Terminal_CMD_Enabled", @default.CommandPrompt);
                             if (Directory.Exists(PathsExt.PS86_app))
                             {
                                 try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
-                                catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86); }
+                                catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86); }
                             }
-                            else { PowerShellx86 = _Def.PowerShellx86; }
+                            else { PowerShellx86 = @default.PowerShellx86; }
 
                             if (Directory.Exists(PathsExt.PS64_app))
                             {
                                 try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close(); }
-                                catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64); }
+                                catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64); }
                             }
-                            else { PowerShellx64 = _Def.PowerShellx64; }
+                            else { PowerShellx64 = @default.PowerShellx64; }
 
                             #region Windows Terminal
                             Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean();
@@ -121,11 +121,11 @@ namespace WinPaletter.Theme
                             Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", false));
 
                             if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETCURSORSHADOW, 0, ref Cursor_Shadow, (int)SPIF.None) == 0)
-                                Cursor_Shadow = _Def.Cursor_Shadow;
+                                Cursor_Shadow = @default.Cursor_Shadow;
                             if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETMOUSETRAILS, 0, ref Cursor_Trails, (int)SPIF.None) == 0)
-                                Cursor_Trails = _Def.Cursor_Trails;
+                                Cursor_Trails = @default.Cursor_Trails;
                             if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETMOUSESONAR, 0, ref Cursor_Sonar, (int)SPIF.None) == 0)
-                                Cursor_Sonar = _Def.Cursor_Sonar;
+                                Cursor_Sonar = @default.Cursor_Sonar;
 
                             Cursor_Arrow.Load("Arrow");
                             Cursor_Help.Load("Help");
@@ -711,7 +711,7 @@ namespace WinPaletter.Theme
                         // Always make it the last operation
                         try
                         {
-                            Win32.Update_UPM_DEFAULT(ReportProgress_Detailed ? TreeView : null);
+                            Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null);
                         }
                         catch
                         {
@@ -822,7 +822,7 @@ namespace WinPaletter.Theme
                 System.IO.File.Delete(Pack);
             using (var archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
             {
-                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Modes.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Modes.CustomImage)
+                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Sources.CustomImage)
                 {
                     x = TM.LogonUI7.ImagePath;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", (StringComparison)5))

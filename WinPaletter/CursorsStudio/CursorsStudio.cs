@@ -886,7 +886,7 @@ namespace WinPaletter
             SaveToTM(TMx);
             SaveToTM(Program.TM);
             TMx.Apply_Cursors();
-            TMx.Win32.Update_UPM_DEFAULT();
+            TMx.Win32.Broadcast_UPM_ToDefUsers();
             TMx.Dispose();
             Cursor = Cursors.Default;
         }

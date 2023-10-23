@@ -11,63 +11,134 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing classic Windows colors
+    /// </summary>
     public struct Win32UI : ICloneable
     {
+        /// <summary>If disabled, classic 3D effects will be made to menus and menu items selection</summary>
         public bool EnableTheming;
+
+        /// <summary>Enable titlebar gradience</summary>
         public bool EnableGradient;
+
+        /// <summary>Color of active window border</summary>
         public Color ActiveBorder;
+
+        /// <summary>Active titlebar main color</summary>
         public Color ActiveTitle;
+
+        ///
         public Color AppWorkspace;
+
+        ///
         public Color Background;
+
+        ///
         public Color ButtonAlternateFace;
+
+        ///
         public Color ButtonDkShadow;
+
+        ///
         public Color ButtonFace;
+
+        ///
         public Color ButtonHilight;
+
+        ///
         public Color ButtonLight;
+
+        ///
         public Color ButtonShadow;
+
+        ///
         public Color ButtonText;
+
+        /// <summary>Second color for gradience in active titlebar</summary>
         public Color GradientActiveTitle;
+
+        /// <summary>Second color for gradience in inactive titlebar</summary>
         public Color GradientInactiveTitle;
+
+        /// <summary>Used in disabled items</summary>
         public Color GrayText;
+
+        ///
         public Color HilightText;
+
+        /// <summary>Color of selection rectangles and hyperlinks</summary>
         public Color HotTrackingColor;
+
+        /// <summary>Color of inactive window border</summary>
         public Color InactiveBorder;
+
+        /// <summary>Inactive titlebar main color</summary>
         public Color InactiveTitle;
+
+        /// <summary>Inactive titlebar text</summary>
         public Color InactiveTitleText;
+
+        ///
         public Color InfoText;
+
+        ///
         public Color InfoWindow;
+
+        /// <summary>Color of cascaded menu</summary>
         public Color Menu;
+
+        /// <summary>Color of menu bar</summary>
         public Color MenuBar;
+
+        ///
         public Color MenuText;
+
+        /// <summary>Obsolete: Was used in Windows 9x</summary>
         public Color Scrollbar;
+
+        /// <summary>Active titlebar text</summary>
         public Color TitleText;
+
+        ///
         public Color Window;
+
+        /// <summary>Color of rectangle surrounding a pressed button</summary>
         public Color WindowFrame;
+
+        ///
         public Color WindowText;
+
+        ///
         public Color Hilight;
+
+        ///
         public Color MenuHilight;
+
+        ///
         public Color Desktop;
 
-        public static bool operator ==(Win32UI First, Win32UI Second)
+        /// <summary>
+        /// Enumeration of sources, of which data will be loaded or saved
+        /// </summary>
+        public enum Sources
         {
-            return First.Equals(Second);
-        }
-
-        public static bool operator !=(Win32UI First, Win32UI Second)
-        {
-            return !First.Equals(Second);
-        }
-        public enum Method
-        {
+            ///
             Registry,
-            File,
+            ///
             VisualStyles
         }
-        public void Load(Method Method = Method.Registry, VisualStyleMetrics vs = default)
+
+        /// <summary>
+        /// Loads Win32UI data from registry
+        /// </summary>
+        /// <param name="source">A source of which data will be loaded</param>
+        /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
+        public void Load(Sources source = Sources.Registry, VisualStyleMetrics vs = default)
         {
-            switch (Method)
+            switch (source)
             {
-                case Method.Registry:
+                case Sources.Registry:
                     {
 
                         Fixer.SystemParametersInfo((int)SPI.Effects.GETFLATMENU, 0, ref EnableTheming, (int)SPIF.None);
@@ -268,7 +339,7 @@ namespace WinPaletter.Theme.Structures
                         break;
                     }
 
-                case Method.VisualStyles:
+                case Sources.VisualStyles:
                     {
                         EnableTheming = vs.FlatMenus;
                         // ActiveBorder = ActiveBorder
@@ -309,42 +380,110 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
-        // Never change their orders
+        /// <summary>
+        /// Enumeration in order of classic Windows items. Used in User32.SetSysColors()
+        /// <br><b><i>(!) Never change their orders</i></b></br>
+        /// </summary>
         public enum ColorsNumbers
         {
+            /// <summary>Obsolete: Was used in Windows 9x</summary>
             Scrollbar,
+
+            /// 
             Background,
+
+            /// <summary>Active titlebar main color</summary>
             ActiveTitle,
+
+            /// <summary>Inactive titlebar main color</summary>
             InactiveTitle,
+
+            /// <summary>Color of cascaded menu</summary>
             Menu,
+
+            /// 
             Window,
+
+            /// <summary>Color of rectangle surrounding a pressed button</summary>
             WindowFrame,
+
+            /// 
             MenuText,
+
+            /// 
             WindowText,
+
+            /// <summary>Active titlebar text</summary>
             TitleText,
+
+            /// <summary>Color of active window border</summary>
             ActiveBorder,
+
+            /// <summary>Color of inactive window border</summary>
             InactiveBorder,
+
+            /// 
             AppWorkspace,
+
+            /// 
             Hilight,
+
+            /// 
             HilightText,
+
+            /// 
             ButtonFace,
+
+            /// 
             ButtonShadow,
+
+            /// <summary>Used in disabled items</summary>
             GrayText,
+
+            /// 
             ButtonText,
+
+            /// <summary>Inactive titlebar text</summary>
             InactiveTitleText,
+
+            /// 
             ButtonHilight,
+
+            /// 
             ButtonDkShadow,
+
+            /// 
             ButtonLight,
+
+            /// 
             InfoText,
+
+            /// 
             InfoWindow,
+
+            /// 
             ButtonAlternateFace,
+
+            /// <summary>Color of selection rectangles and hyperlinks</summary>
             HotTrackingColor,
+
+            /// <summary>Second color for gradience in active titlebar</summary>
             GradientActiveTitle,
+
+            /// <summary>Second color for gradience in inactive titlebar</summary>
             GradientInactiveTitle,
+
+            /// 
             MenuHilight,
+
+            /// <summary>Color of menu bar</summary>
             MenuBar
         }
 
+        /// <summary>
+        /// Saves Win32UI data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             var vsFile = new System.Text.StringBuilder(260);
@@ -608,60 +747,62 @@ namespace WinPaletter.Theme.Structures
 
             else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
             {
-                Win32UI _DefWin32;
+                Win32UI @default;
                 if (Program.PreviewStyle == WindowStyle.W11)
                 {
-                    _DefWin32 = Theme.Default.Windows11().Win32;
+                    @default = Theme.Default.Windows11().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W10)
                 {
-                    _DefWin32 = Theme.Default.Windows10().Win32;
+                    @default = Theme.Default.Windows10().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W81)
                 {
-                    _DefWin32 = Theme.Default.Windows81().Win32;
+                    @default = Theme.Default.Windows81().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.W7)
                 {
-                    _DefWin32 = Theme.Default.Windows7().Win32;
+                    @default = Theme.Default.Windows7().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.WVista)
                 {
-                    _DefWin32 = Theme.Default.WindowsVista().Win32;
+                    @default = Theme.Default.WindowsVista().Win32;
                 }
                 else if (Program.PreviewStyle == WindowStyle.WXP)
                 {
-                    _DefWin32 = Theme.Default.WindowsXP().Win32;
+                    @default = Theme.Default.WindowsXP().Win32;
                 }
                 else
                 {
-                    _DefWin32 = Theme.Default.Windows11().Win32;
+                    @default = Theme.Default.Windows11().Win32;
                 }
 
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, _DefWin32.ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, _DefWin32.ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, _DefWin32.GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, _DefWin32.Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, _DefWin32.HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, _DefWin32.HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, _DefWin32.InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, _DefWin32.InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, _DefWin32.MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, _DefWin32.TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(true).ToArgb(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, @default.ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, @default.ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, @default.GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, @default.Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, @default.HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, @default.HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, @default.InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, @default.InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, @default.MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, @default.TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, @default.Window).Reverse(true).ToArgb(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, @default.WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
             }
 
             else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
             {
                 DelReg_AdministratorDeflector(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard");
             }
-
-
         }
 
-        public void Update_UPM_DEFAULT(TreeView TreeView = null)
+        /// <summary>
+        /// Broadcast user preference mask from current user to all users (and LogonUI screen)
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
+        public void Broadcast_UPM_ToDefUsers(TreeView TreeView = null)
         {
             if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
             {
@@ -671,9 +812,34 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>Operator to check if two Win32UI structures are equal</summary>
+        public static bool operator ==(Win32UI First, Win32UI Second)
+        {
+            return First.Equals(Second);
+        }
+
+        /// <summary>Operator to check if two Win32UI structures are not equal</summary>
+        public static bool operator !=(Win32UI First, Win32UI Second)
+        {
+            return !First.Equals(Second);
+        }
+
+        /// <summary>Clones Win32UI structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        /// <summary>Checks if two AltTab structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of AltTab structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

@@ -5,205 +5,421 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows sounds
+    /// </summary>
     public struct Sounds : ICloneable, IDisposable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
 
+        /// <summary>Windows default beep WAV sound file path</summary>
         public string Snd_Win_Default;
+
+        /// <summary>Windows application GP fault WAV sound file path<br>???</br></summary>
         public string Snd_Win_AppGPFault;
+
+        /// <summary>Windows CC select WAV sound file path<br>???</br></summary>
         public string Snd_Win_CCSelect;
+
+        /// <summary>Windows theme change WAV sound file path</summary>
         public string Snd_Win_ChangeTheme;
+
+        /// <summary>Window close WAV sound file path</summary>
         public string Snd_Win_Close;
+
+        /// <summary>Critical battery alarm WAV sound file path</summary>
         public string Snd_Win_CriticalBatteryAlarm;
+
+        /// <summary>Device (USB) connection WAV sound file path</summary>
         public string Snd_Win_DeviceConnect;
+
+        /// <summary>Device (USB) disconnection WAV sound file path</summary>
         public string Snd_Win_DeviceDisconnect;
+
+        /// <summary>Device (USB) failure WAV sound file path</summary>
         public string Snd_Win_DeviceFail;
+
+        /// <summary>Fax beep WAV sound file path</summary>
         public string Snd_Win_FaxBeep;
+
+        /// <summary>Low battery alarm WAV sound file path</summary>
         public string Snd_Win_LowBatteryAlarm;
+
+        /// <summary>Mail received beep WAV sound file path</summary>
         public string Snd_Win_MailBeep;
+
+        /// <summary>Window maximize WAV sound file path</summary>
         public string Snd_Win_Maximize;
+
+        /// <summary>Menu item click WAV sound file path</summary>
         public string Snd_Win_MenuCommand;
+
+        /// <summary>Menu popup WAV sound file path</summary>
         public string Snd_Win_MenuPopup;
+
+        /// <summary>Message nudge WAV sound file path</summary>
         public string Snd_Win_MessageNudge;
+
+        /// <summary>Window minimize WAV sound file path</summary>
         public string Snd_Win_Minimize;
+
+        /// <summary>Windows notification WAV sound file path</summary>
         public string Snd_Win_Notification_Default;
+
+        /// <summary>Instant message notification WAV sound file path</summary>
         public string Snd_Win_Notification_IM;
+
+        /// <summary>Windows 8 (and later) alarm 0 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm;
+
+        /// <summary>Windows 8 (and later) alarm 10 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm10;
+
+        /// <summary>Windows 8 (and later) alarm 2 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm2;
+
+        /// <summary>Windows 8 (and later) alarm 3 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm3;
+
+        /// <summary>Windows 8 (and later) alarm 4 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm4;
+
+        /// <summary>Windows 8 (and later) alarm 5 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm5;
+
+        /// <summary>Windows 8 (and later) alarm 6 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm6;
+
+        /// <summary>Windows 8 (and later) alarm 7 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm7;
+
+        /// <summary>Windows 8 (and later) alarm 8 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm8;
+
+        /// <summary>Windows 8 (and later) alarm 9 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Alarm9;
+
+        /// <summary>Windows 8 (and later) ring tone 0 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call;
+
+        /// <summary>Windows 8 (and later) ring tone 10 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call10;
+
+        /// <summary>Windows 8 (and later) ring tone 2 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call2;
+
+        /// <summary>Windows 8 (and later) ring tone 3 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call3;
+
+        /// <summary>Windows 8 (and later) ring tone 4 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call4;
+
+        /// <summary>Windows 8 (and later) ring tone 5 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call5;
+
+        /// <summary>Windows 8 (and later) ring tone 6 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call6;
+
+        /// <summary>Windows 8 (and later) ring tone 7 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call7;
+
+        /// <summary>Windows 8 (and later) ring tone 8 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call8;
+
+        /// <summary>Windows 8 (and later) ring tone 9 WAV sound file path</summary>
         public string Snd_Win_Notification_Looping_Call9;
+
+        /// <summary>Mail notification WAV sound file path</summary>
         public string Snd_Win_Notification_Mail;
+
+        /// <summary>Proximity notification WAV sound file path</summary>
         public string Snd_Win_Notification_Proximity;
+
+        /// <summary>Notification reminder WAV sound file path</summary>
         public string Snd_Win_Notification_Reminder;
+
+        /// <summary>SMS notification WAV sound file path</summary>
         public string Snd_Win_Notification_SMS;
+
+        /// <summary>Application open WAV sound file path</summary>
         public string Snd_Win_Open;
+
+        /// <summary>Print job completed WAV sound file path</summary>
         public string Snd_Win_PrintComplete;
+
+        /// <summary>Proximity connection WAV sound file path</summary>
         public string Snd_Win_ProximityConnection;
+
+        /// <summary>Window restore down WAV sound file path</summary>
         public string Snd_Win_RestoreDown;
+
+        /// <summary>Window restore up WAV sound file path</summary>
         public string Snd_Win_RestoreUp;
+
+        /// <summary>Windows Explorer/Internet Explorer band showed WAV sound file path</summary>
         public string Snd_Win_ShowBand;
+
+        /// <summary>System asterisk WAV sound file path</summary>
         public string Snd_Win_SystemAsterisk;
+
+        /// <summary>Exclamation WAV sound file path</summary>
         public string Snd_Win_SystemExclamation;
+
+        /// <summary>Windows shutdown sound (not working for Windows 8 and later)</summary>
         public string Snd_Win_SystemExit;
+
+        /// <summary>Windows start up sound (not working for Windows Vista and later)</summary>
         public string Snd_Win_SystemStart;
+
+        /// <summary>
+        /// Syntax or path of WAV file that will be patched in imageres.dll to be used as Windows start up sound
+        /// <br></br>- Targeting Windows Vista and later
+        /// <code>
+        /// Syntaxes:
+        ///  file_path:          string path of WAV file that will be patched in imageres.dll
+        ///  DEFAULT:            it will restore default sound from WinPaletter backup
+        ///  CURRENT:            will do nothing
+        ///  Empty string (""):  will disable startup sound
+        /// </code>
+        /// </summary>
         public string Snd_Imageres_SystemStart;
+
+        /// <summary>Hyperlink clicked WAV sound file path</summary>
         public string Snd_Win_SystemHand;
+
+        /// <summary>Information message WAV sound file path</summary>
         public string Snd_Win_SystemNotification;
+
+        /// <summary>Question message WAV sound file path</summary>
         public string Snd_Win_SystemQuestion;
+
+        /// <summary>Windows logoff WAV sound file path (not working for Windows 8 and later)</summary>
         public string Snd_Win_WindowsLogoff;
+
+        /// <summary>Windows logon WAV sound file path (not working for Windows 8 and later)</summary>
         public string Snd_Win_WindowsLogon;
+
+        /// <summary>User accound control (UAC) dialog WAV sound file path (for Windows Vista and later)</summary>
         public string Snd_Win_WindowsUAC;
+
+        /// <summary>Windows unlock WAV sound file path (targeting Windows 8 and later, but not working)</summary>
         public string Snd_Win_WindowsUnlock;
+
+        /// <summary>Activating document WAV sound file path</summary>
         public string Snd_Explorer_ActivatingDocument;
+
+        /// <summary>Popup blocked WAV sound file path</summary>
         public string Snd_Explorer_BlockedPopup;
+
+        /// <summary>Recycle bin eptied WAV sound file path</summary>
         public string Snd_Explorer_EmptyRecycleBin;
+
+        /// <summary>Feed discovered WAV sound file path</summary>
         public string Snd_Explorer_FeedDiscovered;
+
+        /// <summary>Menu item moved WAV sound file path</summary>
         public string Snd_Explorer_MoveMenuItem;
+
+        /// <summary>Folders navigation WAV sound file path</summary>
         public string Snd_Explorer_Navigating;
+
+        /// <summary>Security band appeared WAV sound file path</summary>
         public string Snd_Explorer_SecurityBand;
+
+        /// <summary>Search provider discovered WAV sound file path</summary>
         public string Snd_Explorer_SearchProviderDiscovered;
+
+        /// <summary>Fax error WAV sound file path</summary>
         public string Snd_Explorer_FaxError;
+
+        /// <summary>Fax line ringing WAV sound file path</summary>
         public string Snd_Explorer_FaxLineRings;
+
+        /// <summary>New fax received WAV sound file path</summary>
         public string Snd_Explorer_FaxNew;
+
+        /// <summary>Fax sent WAV sound file path</summary>
         public string Snd_Explorer_FaxSent;
+
+        /// <summary>NetMeeting application (Windows XP): person joins WAV sound file path</summary>
         public string Snd_NetMeeting_PersonJoins;
+
+        /// <summary>NetMeeting application (Windows XP): person leaved WAV sound file path</summary>
         public string Snd_NetMeeting_PersonLeaves;
+
+        /// <summary>NetMeeting application (Windows XP): receive call WAV sound file path</summary>
         public string Snd_NetMeeting_ReceiveCall;
+
+        /// <summary>NetMeeting application (Windows XP): receive request to join WAV sound file path</summary>
         public string Snd_NetMeeting_ReceiveRequestToJoin;
+
+        /// <summary>Speech recognition (Windows Vista and later): disambiguation numbers WAV sound file path</summary>
         public string Snd_SpeechRec_DisNumbersSound;
+
+        /// <summary>Speech recognition (Windows Vista and later): Hub off WAV sound file path</summary>
         public string Snd_SpeechRec_HubOffSound;
+
+        /// <summary>Speech recognition (Windows Vista and later): Hub on WAV sound file path</summary>
         public string Snd_SpeechRec_HubOnSound;
+
+        /// <summary>Speech recognition (Windows Vista and later): Hub sleep WAV sound file path</summary>
         public string Snd_SpeechRec_HubSleepSound;
+
+        /// <summary>Speech recognition (Windows Vista and later): Misrecognition WAV sound file path</summary>
         public string Snd_SpeechRec_MisrecoSound;
+
+        /// <summary>Speech recognition (Windows Vista and later): disambiguation panel WAV sound file path</summary>
         public string Snd_SpeechRec_PanelSound;
 
+        /// <summary>Windows exit WAV sound file path 
+        /// <br></br>- Targeting Windows 8 and later
+        /// <br></br>- Deflected by task creation in Task Scheduler
+        /// </summary>
         public bool Snd_Win_SystemExit_TaskMgmt;
+
+        /// <summary>Windows logoff WAV sound file path 
+        /// <br></br>- Targeting Windows 8 and later
+        /// <br></br>- Deflected by task creation in Task Scheduler
+        /// </summary>
         public bool Snd_Win_WindowsLogoff_TaskMgmt;
+
+        /// <summary>Windows logon WAV sound file path 
+        /// <br></br>- Targeting Windows 8 and later
+        /// <br></br>- Deflected by task creation in Task Scheduler
+        /// </summary>
         public bool Snd_Win_WindowsLogon_TaskMgmt;
+
+        /// <summary>Windows unlock WAV sound file path 
+        /// <br></br>- Targeting Windows 8 and later
+        /// <br></br>- Deflected by task creation in Task Scheduler
+        /// </summary>
         public bool Snd_Win_WindowsUnlock_TaskMgmt;
+
+        /// <summary>Charger connected WAV sound file path 
+        /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
+        /// <br></br>- Deflected by application that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// </summary>
         public string Snd_ChargerConnected;
+
+        /// <summary>Charger disconnected WAV sound file path 
+        /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
+        /// <br></br>- Deflected by application that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// </summary>
         public string Snd_ChargerDisconnected;
 
-        public void Load(Sounds _DefSounds)
+        /// <summary>
+        /// Loads Sounds data from registry
+        /// </summary>
+        /// <param name="default">Default Sounds data structure</param>
+        public void Load(Sounds @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled));
-            Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStart).ToString();
-            Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", _DefSounds.Snd_ChargerConnected).ToString();
-            Snd_ChargerDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", _DefSounds.Snd_ChargerDisconnected).ToString();
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", @default.Enabled));
+            Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", @default.Snd_Imageres_SystemStart).ToString();
+            Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", @default.Snd_ChargerConnected).ToString();
+            Snd_ChargerDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", @default.Snd_ChargerDisconnected).ToString();
 
-            Snd_Win_SystemExit_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", _DefSounds.Snd_Win_SystemExit_TaskMgmt));
-            Snd_Win_WindowsLogoff_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", _DefSounds.Snd_Win_WindowsLogoff_TaskMgmt));
-            Snd_Win_WindowsLogon_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", _DefSounds.Snd_Win_WindowsLogon_TaskMgmt));
-            Snd_Win_WindowsUnlock_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", _DefSounds.Snd_Win_WindowsUnlock_TaskMgmt));
+            Snd_Win_SystemExit_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", @default.Snd_Win_SystemExit_TaskMgmt));
+            Snd_Win_WindowsLogoff_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", @default.Snd_Win_WindowsLogoff_TaskMgmt));
+            Snd_Win_WindowsLogon_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", @default.Snd_Win_WindowsLogon_TaskMgmt));
+            Snd_Win_WindowsUnlock_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", @default.Snd_Win_WindowsUnlock_TaskMgmt));
 
             string Scope_Win = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current";
-            Snd_Win_Default = GetReg(string.Format(Scope_Win, ".Default"), "", _DefSounds.Snd_Win_Default).ToString();
-            Snd_Win_AppGPFault = GetReg(string.Format(Scope_Win, "AppGPFault"), "", _DefSounds.Snd_Win_AppGPFault).ToString();
-            Snd_Win_CCSelect = GetReg(string.Format(Scope_Win, "CCSelect"), "", _DefSounds.Snd_Win_CCSelect).ToString();
-            Snd_Win_ChangeTheme = GetReg(string.Format(Scope_Win, "ChangeTheme"), "", _DefSounds.Snd_Win_ChangeTheme).ToString();
-            Snd_Win_Close = GetReg(string.Format(Scope_Win, "Close"), "", _DefSounds.Snd_Win_Close).ToString();
-            Snd_Win_CriticalBatteryAlarm = GetReg(string.Format(Scope_Win, "CriticalBatteryAlarm"), "", _DefSounds.Snd_Win_CriticalBatteryAlarm).ToString();
-            Snd_Win_DeviceConnect = GetReg(string.Format(Scope_Win, "DeviceConnect"), "", _DefSounds.Snd_Win_DeviceConnect).ToString();
-            Snd_Win_DeviceDisconnect = GetReg(string.Format(Scope_Win, "DeviceDisconnect"), "", _DefSounds.Snd_Win_DeviceDisconnect).ToString();
-            Snd_Win_DeviceFail = GetReg(string.Format(Scope_Win, "DeviceFail"), "", _DefSounds.Snd_Win_DeviceFail).ToString();
-            Snd_Win_FaxBeep = GetReg(string.Format(Scope_Win, "FaxBeep"), "", _DefSounds.Snd_Win_FaxBeep).ToString();
-            Snd_Win_LowBatteryAlarm = GetReg(string.Format(Scope_Win, "LowBatteryAlarm"), "", _DefSounds.Snd_Win_LowBatteryAlarm).ToString();
-            Snd_Win_MailBeep = GetReg(string.Format(Scope_Win, "MailBeep"), "", _DefSounds.Snd_Win_MailBeep).ToString();
-            Snd_Win_Maximize = GetReg(string.Format(Scope_Win, "Maximize"), "", _DefSounds.Snd_Win_Maximize).ToString();
-            Snd_Win_MenuCommand = GetReg(string.Format(Scope_Win, "MenuCommand"), "", _DefSounds.Snd_Win_MenuCommand).ToString();
-            Snd_Win_MenuPopup = GetReg(string.Format(Scope_Win, "MenuPopup"), "", _DefSounds.Snd_Win_MenuPopup).ToString();
-            Snd_Win_MessageNudge = GetReg(string.Format(Scope_Win, "MessageNudge"), "", _DefSounds.Snd_Win_MessageNudge).ToString();
-            Snd_Win_Minimize = GetReg(string.Format(Scope_Win, "Minimize"), "", _DefSounds.Snd_Win_Minimize).ToString();
-            Snd_Win_Notification_Default = GetReg(string.Format(Scope_Win, "Notification.Default"), "", _DefSounds.Snd_Win_Notification_Default).ToString();
-            Snd_Win_Notification_IM = GetReg(string.Format(Scope_Win, "Notification.IM"), "", _DefSounds.Snd_Win_Notification_IM).ToString();
-            Snd_Win_Notification_Looping_Alarm = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm).ToString();
-            Snd_Win_Notification_Looping_Alarm2 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm2"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm2).ToString();
-            Snd_Win_Notification_Looping_Alarm3 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm3"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm3).ToString();
-            Snd_Win_Notification_Looping_Alarm4 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm4"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm4).ToString();
-            Snd_Win_Notification_Looping_Alarm5 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm5"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm5).ToString();
-            Snd_Win_Notification_Looping_Alarm6 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm6"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm6).ToString();
-            Snd_Win_Notification_Looping_Alarm7 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm7"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm7).ToString();
-            Snd_Win_Notification_Looping_Alarm8 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm8"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm8).ToString();
-            Snd_Win_Notification_Looping_Alarm9 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm9"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm9).ToString();
-            Snd_Win_Notification_Looping_Alarm10 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm10"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm10).ToString();
-            Snd_Win_Notification_Looping_Call = GetReg(string.Format(Scope_Win, "Notification.Looping.Call"), "", _DefSounds.Snd_Win_Notification_Looping_Call).ToString();
-            Snd_Win_Notification_Looping_Call2 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call2"), "", _DefSounds.Snd_Win_Notification_Looping_Call2).ToString();
-            Snd_Win_Notification_Looping_Call3 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call3"), "", _DefSounds.Snd_Win_Notification_Looping_Call3).ToString();
-            Snd_Win_Notification_Looping_Call4 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call4"), "", _DefSounds.Snd_Win_Notification_Looping_Call4).ToString();
-            Snd_Win_Notification_Looping_Call5 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call5"), "", _DefSounds.Snd_Win_Notification_Looping_Call5).ToString();
-            Snd_Win_Notification_Looping_Call6 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call6"), "", _DefSounds.Snd_Win_Notification_Looping_Call6).ToString();
-            Snd_Win_Notification_Looping_Call7 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call7"), "", _DefSounds.Snd_Win_Notification_Looping_Call7).ToString();
-            Snd_Win_Notification_Looping_Call8 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call8"), "", _DefSounds.Snd_Win_Notification_Looping_Call8).ToString();
-            Snd_Win_Notification_Looping_Call9 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call9"), "", _DefSounds.Snd_Win_Notification_Looping_Call9).ToString();
-            Snd_Win_Notification_Looping_Call10 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call10"), "", _DefSounds.Snd_Win_Notification_Looping_Call10).ToString();
-            Snd_Win_Notification_Mail = GetReg(string.Format(Scope_Win, "Notification.Mail"), "", _DefSounds.Snd_Win_Notification_Mail).ToString();
-            Snd_Win_Notification_Proximity = GetReg(string.Format(Scope_Win, "Notification.Proximity"), "", _DefSounds.Snd_Win_Notification_Proximity).ToString();
-            Snd_Win_Notification_Reminder = GetReg(string.Format(Scope_Win, "Notification.Reminder"), "", _DefSounds.Snd_Win_Notification_Reminder).ToString();
-            Snd_Win_Notification_SMS = GetReg(string.Format(Scope_Win, "Notification.SMS"), "", _DefSounds.Snd_Win_Notification_SMS).ToString();
-            Snd_Win_Open = GetReg(string.Format(Scope_Win, "Open"), "", _DefSounds.Snd_Win_Open).ToString();
-            Snd_Win_PrintComplete = GetReg(string.Format(Scope_Win, "PrintComplete"), "", _DefSounds.Snd_Win_PrintComplete).ToString();
-            Snd_Win_ProximityConnection = GetReg(string.Format(Scope_Win, "ProximityConnection"), "", _DefSounds.Snd_Win_ProximityConnection).ToString();
-            Snd_Win_RestoreDown = GetReg(string.Format(Scope_Win, "RestoreDown"), "", _DefSounds.Snd_Win_RestoreDown).ToString();
-            Snd_Win_RestoreUp = GetReg(string.Format(Scope_Win, "RestoreUp"), "", _DefSounds.Snd_Win_RestoreUp).ToString();
-            Snd_Win_ShowBand = GetReg(string.Format(Scope_Win, "ShowBand"), "", _DefSounds.Snd_Win_ShowBand).ToString();
-            Snd_Win_SystemAsterisk = GetReg(string.Format(Scope_Win, "SystemAsterisk"), "", _DefSounds.Snd_Win_SystemAsterisk).ToString();
-            Snd_Win_SystemExclamation = GetReg(string.Format(Scope_Win, "SystemExclamation"), "", _DefSounds.Snd_Win_SystemExclamation).ToString();
-            Snd_Win_SystemExit = GetReg(string.Format(Scope_Win, "SystemExit"), "", _DefSounds.Snd_Win_SystemExit).ToString();
-            Snd_Win_SystemStart = GetReg(string.Format(Scope_Win, "SystemStart"), "", _DefSounds.Snd_Win_SystemStart).ToString();
-            Snd_Win_SystemHand = GetReg(string.Format(Scope_Win, "SystemHand"), "", _DefSounds.Snd_Win_SystemHand).ToString();
-            Snd_Win_SystemNotification = GetReg(string.Format(Scope_Win, "SystemNotification"), "", _DefSounds.Snd_Win_SystemNotification).ToString();
-            Snd_Win_SystemQuestion = GetReg(string.Format(Scope_Win, "SystemQuestion"), "", _DefSounds.Snd_Win_SystemQuestion).ToString();
-            Snd_Win_WindowsLogoff = GetReg(string.Format(Scope_Win, "WindowsLogoff"), "", _DefSounds.Snd_Win_WindowsLogoff).ToString();
-            Snd_Win_WindowsLogon = GetReg(string.Format(Scope_Win, "WindowsLogon"), "", _DefSounds.Snd_Win_WindowsLogon).ToString();
-            Snd_Win_WindowsUAC = GetReg(string.Format(Scope_Win, "WindowsUAC"), "", _DefSounds.Snd_Win_WindowsUAC).ToString();
-            Snd_Win_WindowsUnlock = GetReg(string.Format(Scope_Win, "WindowsUnlock"), "", _DefSounds.Snd_Win_WindowsUnlock).ToString();
+            Snd_Win_Default = GetReg(string.Format(Scope_Win, ".Default"), "", @default.Snd_Win_Default).ToString();
+            Snd_Win_AppGPFault = GetReg(string.Format(Scope_Win, "AppGPFault"), "", @default.Snd_Win_AppGPFault).ToString();
+            Snd_Win_CCSelect = GetReg(string.Format(Scope_Win, "CCSelect"), "", @default.Snd_Win_CCSelect).ToString();
+            Snd_Win_ChangeTheme = GetReg(string.Format(Scope_Win, "ChangeTheme"), "", @default.Snd_Win_ChangeTheme).ToString();
+            Snd_Win_Close = GetReg(string.Format(Scope_Win, "Close"), "", @default.Snd_Win_Close).ToString();
+            Snd_Win_CriticalBatteryAlarm = GetReg(string.Format(Scope_Win, "CriticalBatteryAlarm"), "", @default.Snd_Win_CriticalBatteryAlarm).ToString();
+            Snd_Win_DeviceConnect = GetReg(string.Format(Scope_Win, "DeviceConnect"), "", @default.Snd_Win_DeviceConnect).ToString();
+            Snd_Win_DeviceDisconnect = GetReg(string.Format(Scope_Win, "DeviceDisconnect"), "", @default.Snd_Win_DeviceDisconnect).ToString();
+            Snd_Win_DeviceFail = GetReg(string.Format(Scope_Win, "DeviceFail"), "", @default.Snd_Win_DeviceFail).ToString();
+            Snd_Win_FaxBeep = GetReg(string.Format(Scope_Win, "FaxBeep"), "", @default.Snd_Win_FaxBeep).ToString();
+            Snd_Win_LowBatteryAlarm = GetReg(string.Format(Scope_Win, "LowBatteryAlarm"), "", @default.Snd_Win_LowBatteryAlarm).ToString();
+            Snd_Win_MailBeep = GetReg(string.Format(Scope_Win, "MailBeep"), "", @default.Snd_Win_MailBeep).ToString();
+            Snd_Win_Maximize = GetReg(string.Format(Scope_Win, "Maximize"), "", @default.Snd_Win_Maximize).ToString();
+            Snd_Win_MenuCommand = GetReg(string.Format(Scope_Win, "MenuCommand"), "", @default.Snd_Win_MenuCommand).ToString();
+            Snd_Win_MenuPopup = GetReg(string.Format(Scope_Win, "MenuPopup"), "", @default.Snd_Win_MenuPopup).ToString();
+            Snd_Win_MessageNudge = GetReg(string.Format(Scope_Win, "MessageNudge"), "", @default.Snd_Win_MessageNudge).ToString();
+            Snd_Win_Minimize = GetReg(string.Format(Scope_Win, "Minimize"), "", @default.Snd_Win_Minimize).ToString();
+            Snd_Win_Notification_Default = GetReg(string.Format(Scope_Win, "Notification.Default"), "", @default.Snd_Win_Notification_Default).ToString();
+            Snd_Win_Notification_IM = GetReg(string.Format(Scope_Win, "Notification.IM"), "", @default.Snd_Win_Notification_IM).ToString();
+            Snd_Win_Notification_Looping_Alarm = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm"), "", @default.Snd_Win_Notification_Looping_Alarm).ToString();
+            Snd_Win_Notification_Looping_Alarm2 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm2"), "", @default.Snd_Win_Notification_Looping_Alarm2).ToString();
+            Snd_Win_Notification_Looping_Alarm3 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm3"), "", @default.Snd_Win_Notification_Looping_Alarm3).ToString();
+            Snd_Win_Notification_Looping_Alarm4 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm4"), "", @default.Snd_Win_Notification_Looping_Alarm4).ToString();
+            Snd_Win_Notification_Looping_Alarm5 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm5"), "", @default.Snd_Win_Notification_Looping_Alarm5).ToString();
+            Snd_Win_Notification_Looping_Alarm6 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm6"), "", @default.Snd_Win_Notification_Looping_Alarm6).ToString();
+            Snd_Win_Notification_Looping_Alarm7 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm7"), "", @default.Snd_Win_Notification_Looping_Alarm7).ToString();
+            Snd_Win_Notification_Looping_Alarm8 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm8"), "", @default.Snd_Win_Notification_Looping_Alarm8).ToString();
+            Snd_Win_Notification_Looping_Alarm9 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm9"), "", @default.Snd_Win_Notification_Looping_Alarm9).ToString();
+            Snd_Win_Notification_Looping_Alarm10 = GetReg(string.Format(Scope_Win, "Notification.Looping.Alarm10"), "", @default.Snd_Win_Notification_Looping_Alarm10).ToString();
+            Snd_Win_Notification_Looping_Call = GetReg(string.Format(Scope_Win, "Notification.Looping.Call"), "", @default.Snd_Win_Notification_Looping_Call).ToString();
+            Snd_Win_Notification_Looping_Call2 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call2"), "", @default.Snd_Win_Notification_Looping_Call2).ToString();
+            Snd_Win_Notification_Looping_Call3 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call3"), "", @default.Snd_Win_Notification_Looping_Call3).ToString();
+            Snd_Win_Notification_Looping_Call4 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call4"), "", @default.Snd_Win_Notification_Looping_Call4).ToString();
+            Snd_Win_Notification_Looping_Call5 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call5"), "", @default.Snd_Win_Notification_Looping_Call5).ToString();
+            Snd_Win_Notification_Looping_Call6 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call6"), "", @default.Snd_Win_Notification_Looping_Call6).ToString();
+            Snd_Win_Notification_Looping_Call7 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call7"), "", @default.Snd_Win_Notification_Looping_Call7).ToString();
+            Snd_Win_Notification_Looping_Call8 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call8"), "", @default.Snd_Win_Notification_Looping_Call8).ToString();
+            Snd_Win_Notification_Looping_Call9 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call9"), "", @default.Snd_Win_Notification_Looping_Call9).ToString();
+            Snd_Win_Notification_Looping_Call10 = GetReg(string.Format(Scope_Win, "Notification.Looping.Call10"), "", @default.Snd_Win_Notification_Looping_Call10).ToString();
+            Snd_Win_Notification_Mail = GetReg(string.Format(Scope_Win, "Notification.Mail"), "", @default.Snd_Win_Notification_Mail).ToString();
+            Snd_Win_Notification_Proximity = GetReg(string.Format(Scope_Win, "Notification.Proximity"), "", @default.Snd_Win_Notification_Proximity).ToString();
+            Snd_Win_Notification_Reminder = GetReg(string.Format(Scope_Win, "Notification.Reminder"), "", @default.Snd_Win_Notification_Reminder).ToString();
+            Snd_Win_Notification_SMS = GetReg(string.Format(Scope_Win, "Notification.SMS"), "", @default.Snd_Win_Notification_SMS).ToString();
+            Snd_Win_Open = GetReg(string.Format(Scope_Win, "Open"), "", @default.Snd_Win_Open).ToString();
+            Snd_Win_PrintComplete = GetReg(string.Format(Scope_Win, "PrintComplete"), "", @default.Snd_Win_PrintComplete).ToString();
+            Snd_Win_ProximityConnection = GetReg(string.Format(Scope_Win, "ProximityConnection"), "", @default.Snd_Win_ProximityConnection).ToString();
+            Snd_Win_RestoreDown = GetReg(string.Format(Scope_Win, "RestoreDown"), "", @default.Snd_Win_RestoreDown).ToString();
+            Snd_Win_RestoreUp = GetReg(string.Format(Scope_Win, "RestoreUp"), "", @default.Snd_Win_RestoreUp).ToString();
+            Snd_Win_ShowBand = GetReg(string.Format(Scope_Win, "ShowBand"), "", @default.Snd_Win_ShowBand).ToString();
+            Snd_Win_SystemAsterisk = GetReg(string.Format(Scope_Win, "SystemAsterisk"), "", @default.Snd_Win_SystemAsterisk).ToString();
+            Snd_Win_SystemExclamation = GetReg(string.Format(Scope_Win, "SystemExclamation"), "", @default.Snd_Win_SystemExclamation).ToString();
+            Snd_Win_SystemExit = GetReg(string.Format(Scope_Win, "SystemExit"), "", @default.Snd_Win_SystemExit).ToString();
+            Snd_Win_SystemStart = GetReg(string.Format(Scope_Win, "SystemStart"), "", @default.Snd_Win_SystemStart).ToString();
+            Snd_Win_SystemHand = GetReg(string.Format(Scope_Win, "SystemHand"), "", @default.Snd_Win_SystemHand).ToString();
+            Snd_Win_SystemNotification = GetReg(string.Format(Scope_Win, "SystemNotification"), "", @default.Snd_Win_SystemNotification).ToString();
+            Snd_Win_SystemQuestion = GetReg(string.Format(Scope_Win, "SystemQuestion"), "", @default.Snd_Win_SystemQuestion).ToString();
+            Snd_Win_WindowsLogoff = GetReg(string.Format(Scope_Win, "WindowsLogoff"), "", @default.Snd_Win_WindowsLogoff).ToString();
+            Snd_Win_WindowsLogon = GetReg(string.Format(Scope_Win, "WindowsLogon"), "", @default.Snd_Win_WindowsLogon).ToString();
+            Snd_Win_WindowsUAC = GetReg(string.Format(Scope_Win, "WindowsUAC"), "", @default.Snd_Win_WindowsUAC).ToString();
+            Snd_Win_WindowsUnlock = GetReg(string.Format(Scope_Win, "WindowsUnlock"), "", @default.Snd_Win_WindowsUnlock).ToString();
 
             string Scope_Explorer = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current";
-            Snd_Explorer_ActivatingDocument = GetReg(string.Format(Scope_Explorer, "ActivatingDocument"), "", _DefSounds.Snd_Explorer_ActivatingDocument).ToString();
-            Snd_Explorer_BlockedPopup = GetReg(string.Format(Scope_Explorer, "BlockedPopup"), "", _DefSounds.Snd_Explorer_BlockedPopup).ToString();
-            Snd_Explorer_EmptyRecycleBin = GetReg(string.Format(Scope_Explorer, "EmptyRecycleBin"), "", _DefSounds.Snd_Explorer_EmptyRecycleBin).ToString();
-            Snd_Explorer_FeedDiscovered = GetReg(string.Format(Scope_Explorer, "FeedDiscovered"), "", _DefSounds.Snd_Explorer_FeedDiscovered).ToString();
-            Snd_Explorer_MoveMenuItem = GetReg(string.Format(Scope_Explorer, "MoveMenuItem"), "", _DefSounds.Snd_Explorer_MoveMenuItem).ToString();
-            Snd_Explorer_Navigating = GetReg(string.Format(Scope_Explorer, "Navigating"), "", _DefSounds.Snd_Explorer_Navigating).ToString();
-            Snd_Explorer_SecurityBand = GetReg(string.Format(Scope_Explorer, "SecurityBand"), "", _DefSounds.Snd_Explorer_SecurityBand).ToString();
-            Snd_Explorer_SearchProviderDiscovered = GetReg(string.Format(Scope_Explorer, "SearchProviderDiscovered"), "", _DefSounds.Snd_Explorer_SearchProviderDiscovered).ToString();
-            Snd_Explorer_FaxError = GetReg(string.Format(Scope_Explorer, "FaxError"), "", _DefSounds.Snd_Explorer_FaxError).ToString();
-            Snd_Explorer_FaxLineRings = GetReg(string.Format(Scope_Explorer, "FaxLineRings"), "", _DefSounds.Snd_Explorer_FaxLineRings).ToString();
-            Snd_Explorer_FaxNew = GetReg(string.Format(Scope_Explorer, "FaxNew"), "", _DefSounds.Snd_Explorer_FaxNew).ToString();
-            Snd_Explorer_FaxSent = GetReg(string.Format(Scope_Explorer, "FaxSent"), "", _DefSounds.Snd_Explorer_FaxSent).ToString();
+            Snd_Explorer_ActivatingDocument = GetReg(string.Format(Scope_Explorer, "ActivatingDocument"), "", @default.Snd_Explorer_ActivatingDocument).ToString();
+            Snd_Explorer_BlockedPopup = GetReg(string.Format(Scope_Explorer, "BlockedPopup"), "", @default.Snd_Explorer_BlockedPopup).ToString();
+            Snd_Explorer_EmptyRecycleBin = GetReg(string.Format(Scope_Explorer, "EmptyRecycleBin"), "", @default.Snd_Explorer_EmptyRecycleBin).ToString();
+            Snd_Explorer_FeedDiscovered = GetReg(string.Format(Scope_Explorer, "FeedDiscovered"), "", @default.Snd_Explorer_FeedDiscovered).ToString();
+            Snd_Explorer_MoveMenuItem = GetReg(string.Format(Scope_Explorer, "MoveMenuItem"), "", @default.Snd_Explorer_MoveMenuItem).ToString();
+            Snd_Explorer_Navigating = GetReg(string.Format(Scope_Explorer, "Navigating"), "", @default.Snd_Explorer_Navigating).ToString();
+            Snd_Explorer_SecurityBand = GetReg(string.Format(Scope_Explorer, "SecurityBand"), "", @default.Snd_Explorer_SecurityBand).ToString();
+            Snd_Explorer_SearchProviderDiscovered = GetReg(string.Format(Scope_Explorer, "SearchProviderDiscovered"), "", @default.Snd_Explorer_SearchProviderDiscovered).ToString();
+            Snd_Explorer_FaxError = GetReg(string.Format(Scope_Explorer, "FaxError"), "", @default.Snd_Explorer_FaxError).ToString();
+            Snd_Explorer_FaxLineRings = GetReg(string.Format(Scope_Explorer, "FaxLineRings"), "", @default.Snd_Explorer_FaxLineRings).ToString();
+            Snd_Explorer_FaxNew = GetReg(string.Format(Scope_Explorer, "FaxNew"), "", @default.Snd_Explorer_FaxNew).ToString();
+            Snd_Explorer_FaxSent = GetReg(string.Format(Scope_Explorer, "FaxSent"), "", @default.Snd_Explorer_FaxSent).ToString();
 
             string Scope_NetMeeting = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Current";
-            Snd_NetMeeting_PersonJoins = GetReg(string.Format(Scope_NetMeeting, "Person Joins"), "", _DefSounds.Snd_NetMeeting_PersonJoins).ToString();
-            Snd_NetMeeting_PersonLeaves = GetReg(string.Format(Scope_NetMeeting, "Person Leaves"), "", _DefSounds.Snd_NetMeeting_PersonLeaves).ToString();
-            Snd_NetMeeting_ReceiveCall = GetReg(string.Format(Scope_NetMeeting, "Receive Call"), "", _DefSounds.Snd_NetMeeting_ReceiveCall).ToString();
-            Snd_NetMeeting_ReceiveRequestToJoin = GetReg(string.Format(Scope_NetMeeting, "Receive Request to Join"), "", _DefSounds.Snd_NetMeeting_ReceiveRequestToJoin).ToString();
+            Snd_NetMeeting_PersonJoins = GetReg(string.Format(Scope_NetMeeting, "Person Joins"), "", @default.Snd_NetMeeting_PersonJoins).ToString();
+            Snd_NetMeeting_PersonLeaves = GetReg(string.Format(Scope_NetMeeting, "Person Leaves"), "", @default.Snd_NetMeeting_PersonLeaves).ToString();
+            Snd_NetMeeting_ReceiveCall = GetReg(string.Format(Scope_NetMeeting, "Receive Call"), "", @default.Snd_NetMeeting_ReceiveCall).ToString();
+            Snd_NetMeeting_ReceiveRequestToJoin = GetReg(string.Format(Scope_NetMeeting, "Receive Request to Join"), "", @default.Snd_NetMeeting_ReceiveRequestToJoin).ToString();
 
             string Scope_SpeechRec = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.current";
-            Snd_SpeechRec_DisNumbersSound = GetReg(string.Format(Scope_SpeechRec, "DisNumbersSound"), "", _DefSounds.Snd_SpeechRec_DisNumbersSound).ToString();
-            Snd_SpeechRec_HubOffSound = GetReg(string.Format(Scope_SpeechRec, "HubOffSound"), "", _DefSounds.Snd_SpeechRec_HubOffSound).ToString();
-            Snd_SpeechRec_HubOnSound = GetReg(string.Format(Scope_SpeechRec, "HubOnSound"), "", _DefSounds.Snd_SpeechRec_HubOnSound).ToString();
-            Snd_SpeechRec_HubSleepSound = GetReg(string.Format(Scope_SpeechRec, "HubSleepSound"), "", _DefSounds.Snd_SpeechRec_HubSleepSound).ToString();
-            Snd_SpeechRec_MisrecoSound = GetReg(string.Format(Scope_SpeechRec, "MisrecoSound"), "", _DefSounds.Snd_SpeechRec_MisrecoSound).ToString();
-            Snd_SpeechRec_PanelSound = GetReg(string.Format(Scope_SpeechRec, "PanelSound"), "", _DefSounds.Snd_SpeechRec_PanelSound).ToString();
+            Snd_SpeechRec_DisNumbersSound = GetReg(string.Format(Scope_SpeechRec, "DisNumbersSound"), "", @default.Snd_SpeechRec_DisNumbersSound).ToString();
+            Snd_SpeechRec_HubOffSound = GetReg(string.Format(Scope_SpeechRec, "HubOffSound"), "", @default.Snd_SpeechRec_HubOffSound).ToString();
+            Snd_SpeechRec_HubOnSound = GetReg(string.Format(Scope_SpeechRec, "HubOnSound"), "", @default.Snd_SpeechRec_HubOnSound).ToString();
+            Snd_SpeechRec_HubSleepSound = GetReg(string.Format(Scope_SpeechRec, "HubSleepSound"), "", @default.Snd_SpeechRec_HubSleepSound).ToString();
+            Snd_SpeechRec_MisrecoSound = GetReg(string.Format(Scope_SpeechRec, "MisrecoSound"), "", @default.Snd_SpeechRec_MisrecoSound).ToString();
+            Snd_SpeechRec_PanelSound = GetReg(string.Format(Scope_SpeechRec, "PanelSound"), "", @default.Snd_SpeechRec_PanelSound).ToString();
 
         }
 
+        /// <summary>
+        /// Saves Sounds data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled);
@@ -445,24 +661,44 @@ namespace WinPaletter.Theme.Structures
 
         }
 
+        /// <summary>Operator to check if two Sounds structures are equal</summary>
         public static bool operator ==(Sounds First, Sounds Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two Sounds structures are not equal</summary>
         public static bool operator !=(Sounds First, Sounds Second)
         {
             return !First.Equals(Second);
         }
+
+        /// <summary>Clones Sounds structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
 
+        /// <summary>
+        /// Dispose Sounds structure to free up memory
+        /// </summary>
         public void Dispose()
         {
             GC.Collect();
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>Checks if two Sounds structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of Sounds structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

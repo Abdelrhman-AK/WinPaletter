@@ -9,51 +9,126 @@ using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
 {
+    /// <summary>
+    /// Structure responsible for managing Windows metrics and fonts
+    /// </summary>
     public struct MetricsFonts : ICloneable
     {
+        /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled;
+
+        /// <summary>Window border width</summary>
         public int BorderWidth;
+
+        /// <summary>Titlebar (caption) height</summary>
         public int CaptionHeight;
+
+        /// <summary>Buttons in classic titlebar (caption) width</summary>
         public int CaptionWidth;
+
+        /// <summary>Horizontal spacing between desktop icons</summary>
         public int IconSpacing;
+
+        /// <summary>Vertical spacing between desktop icons</summary>
         public int IconVerticalSpacing;
+
+        /// <summary>Menu height (if it is a horizontal menu)</summary>
         public int MenuHeight;
+
+        /// <summary>Menu width (if it is a vertical menu)</summary>
         public int MenuWidth;
+
+        /// <summary>Padding width of a Window border</summary>
         public int PaddedBorderWidth;
+
+        /// <summary>Scroll bar height (if it is a horizontal scroll bar)</summary>
         public int ScrollHeight;
+
+        /// <summary>Scroll bar width (if it is a vertical scroll bar)</summary>
         public int ScrollWidth;
+
+        /// <summary>Titlebar (caption) height of a tool box window</summary>
         public int SmCaptionHeight;
+
+        /// <summary>Width of Buttons in classic titlebar (caption) of a tool box window</summary>
         public int SmCaptionWidth;
+
+        /// <summary>Size of desktop icons (i x i)</summary>
         public int DesktopIconSize;
+
+        /// <summary>
+        /// Size of shell icons (used in Windows XP)
+        /// <br>Default: <b>32</b></br>
+        /// </summary>
         public int ShellIconSize;
+
+        /// <summary>
+        /// Size of small icons (used in Windows XP)
+        /// <br>Default: <b>16</b></br>
+        /// </summary>
         public int ShellSmallIconSize;
+
+        /// <summary>Make fonts pixelated like old versions of Windows (not ClearType)</summary>
         public bool Fonts_SingleBitPP;
 
+        /// <summary>Titlebar (caption) font</summary>
         public Font CaptionFont;
+
+        /// <summary>Icons font</summary>
         public Font IconFont;
+
+        /// <summary>Menu font</summary>
         public Font MenuFont;
+
+        /// <summary>Message box font</summary>
         public Font MessageFont;
+
+        /// <summary>Titlebar (caption) font of a tool box window</summary>
         public Font SmCaptionFont;
+
+        /// <summary>Status bar (in the lower part of a window) font</summary>
         public Font StatusFont;
+
+        /// <summary>
+        /// Font name that should substitutes MSShellDlg
+        /// <br>Default value: <b>Microsoft Sans Serif</b></br>
+        /// </summary>
         public string FontSubstitute_MSShellDlg;
+
+        /// <summary>
+        /// Font name that should substitutes MSShellDlg2
+        /// <br>Default value: <b>Tahoma</b></br>
+        /// </summary>
         public string FontSubstitute_MSShellDlg2;
+
+        /// <summary>
+        /// Font name that should substitutes Segoe UI
+        /// <br><b>Has no default value, it is empty</b></br>
+        /// </summary>
         public string FontSubstitute_SegoeUI;
 
+        /// <summary>Operator to check if two MetricsFonts structures are equal</summary>
         public static bool operator ==(MetricsFonts First, MetricsFonts Second)
         {
             return First.Equals(Second);
         }
 
+        /// <summary>Operator to check if two MetricsFonts structures are not equal</summary>
         public static bool operator !=(MetricsFonts First, MetricsFonts Second)
         {
             return !First.Equals(Second);
         }
 
+        /// <summary>Clones MetricsFonts structure</summary>
         public object Clone()
         {
             return MemberwiseClone();
         }
 
+        /// <summary>
+        /// Overwrite current metrics values by values inside a visual styles file open by Devcorp advanced UxTheme wrapper
+        /// </summary>
+        /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Metrics(VisualStyleMetrics vs)
         {
             CaptionHeight = vs.Sizes.CaptionBarHeight;
@@ -63,6 +138,10 @@ namespace WinPaletter.Theme.Structures
             SmCaptionWidth = vs.Sizes.SMCaptionBarWidth;
         }
 
+        /// <summary>
+        /// Overwrite current fonts values by values inside a visual styles file open by Devcorp advanced UxTheme wrapper
+        /// </summary>
+        /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Fonts(VisualStyleMetrics vs)
         {
             CaptionFont = vs.Fonts.CaptionFont;
@@ -73,53 +152,45 @@ namespace WinPaletter.Theme.Structures
             StatusFont = vs.Fonts.StatusFont;
         }
 
-        public void Load(MetricsFonts _DefMetricsFonts)
+        /// <summary>
+        /// Loads MetricsFonts data from registry
+        /// </summary>
+        /// <param name="default">Default MetricsFonts data structure</param>
+        public void Load(MetricsFonts @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", _DefMetricsFonts.Enabled));
-            BorderWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", _DefMetricsFonts.BorderWidth * -15)) / -15;
-            CaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", _DefMetricsFonts.CaptionHeight * -15)) / -15;
-            CaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", _DefMetricsFonts.CaptionWidth * -15)) / -15;
-            IconSpacing = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", _DefMetricsFonts.IconSpacing * -15)) / -15;
-            IconVerticalSpacing = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", _DefMetricsFonts.IconVerticalSpacing * -15)) / -15;
-            MenuHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", _DefMetricsFonts.MenuHeight * -15)) / -15;
-            MenuWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", _DefMetricsFonts.MenuWidth * -15)) / -15;
-            PaddedBorderWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", _DefMetricsFonts.PaddedBorderWidth * -15)) / -15;
-            ScrollHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", _DefMetricsFonts.ScrollHeight * -15)) / -15;
-            ScrollWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", _DefMetricsFonts.ScrollWidth * -15)) / -15;
-            SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15)) / -15;
-            SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15)) / -15;
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", @default.Enabled));
+            BorderWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", @default.BorderWidth * -15)) / -15;
+            CaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", @default.CaptionHeight * -15)) / -15;
+            CaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", @default.CaptionWidth * -15)) / -15;
+            IconSpacing = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", @default.IconSpacing * -15)) / -15;
+            IconVerticalSpacing = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", @default.IconVerticalSpacing * -15)) / -15;
+            MenuHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", @default.MenuHeight * -15)) / -15;
+            MenuWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", @default.MenuWidth * -15)) / -15;
+            PaddedBorderWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", @default.PaddedBorderWidth * -15)) / -15;
+            ScrollHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", @default.ScrollHeight * -15)) / -15;
+            ScrollWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", @default.ScrollWidth * -15)) / -15;
+            SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", @default.SmCaptionHeight * -15)) / -15;
+            SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", @default.SmCaptionWidth * -15)) / -15;
 
             if (OS.WXP)
             {
-                try
-                {
-                    ShellIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize));
-                }
-                catch
-                {
-                    ShellIconSize = _DefMetricsFonts.ShellIconSize;
-                }
+                try { ShellIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", @default.ShellIconSize)); }
+                catch { ShellIconSize = @default.ShellIconSize; }
 
-                try
-                {
-                    ShellSmallIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize));
-                }
-                catch
-                {
-                    ShellSmallIconSize = _DefMetricsFonts.ShellSmallIconSize;
-                }
+                try { ShellSmallIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", @default.ShellSmallIconSize)); }
+                catch { ShellSmallIconSize = @default.ShellSmallIconSize; }
             }
 
-            DesktopIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize));
-            CaptionFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte())).ToFont();
-            IconFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", _DefMetricsFonts.IconFont.ToByte())).ToFont();
-            MenuFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", _DefMetricsFonts.MenuFont.ToByte())).ToFont();
-            MessageFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", _DefMetricsFonts.MessageFont.ToByte())).ToFont();
-            SmCaptionFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", _DefMetricsFonts.SmCaptionFont.ToByte())).ToFont();
-            StatusFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", _DefMetricsFonts.StatusFont.ToByte())).ToFont();
-            FontSubstitute_MSShellDlg = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", _DefMetricsFonts.FontSubstitute_MSShellDlg).ToString();
-            FontSubstitute_MSShellDlg2 = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2).ToString();
-            FontSubstitute_SegoeUI = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI).ToString();
+            DesktopIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", @default.DesktopIconSize));
+            CaptionFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", @default.CaptionFont.ToByte())).ToFont();
+            IconFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", @default.IconFont.ToByte())).ToFont();
+            MenuFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", @default.MenuFont.ToByte())).ToFont();
+            MessageFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", @default.MessageFont.ToByte())).ToFont();
+            SmCaptionFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", @default.SmCaptionFont.ToByte())).ToFont();
+            StatusFont = ((byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", @default.StatusFont.ToByte())).ToFont();
+            FontSubstitute_MSShellDlg = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", @default.FontSubstitute_MSShellDlg).ToString();
+            FontSubstitute_MSShellDlg2 = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", @default.FontSubstitute_MSShellDlg2).ToString();
+            FontSubstitute_SegoeUI = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", @default.FontSubstitute_SegoeUI).ToString();
 
             if (GetWindowsScreenScalingFactor() > 100d)
             {
@@ -137,6 +208,12 @@ namespace WinPaletter.Theme.Structures
             Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", OS.WXP ? 1 : 2)) != 2;
         }
 
+        /// <summary>
+        /// Fix font being small or large in high screen DPIs
+        /// </summary>
+        /// <param name="Font"></param>
+        /// <param name="Reverse">Reversed division mechanism</param>
+        /// <returns></returns>
         private Font AdjustFont(Font Font, bool Reverse)
         {
             int DPI = (int)Math.Round(GetWindowsScreenScalingFactor());
@@ -158,6 +235,10 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>
+        /// Saves MetricsFonts data into registry
+        /// </summary>
+        /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled);
@@ -332,5 +413,18 @@ namespace WinPaletter.Theme.Structures
             }
 
         }
+
+        /// <summary>Checks if two MetricsFonts structures are equal or not</summary>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>Get hash code of MetricsFonts structure</summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }
