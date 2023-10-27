@@ -289,12 +289,12 @@ namespace WinPaletter
 
                 else if (scope == Reg_scope.HKEY_USERS) { EditReg_CMD(TreeView, @"HKEY_USERS\" + Key, ValueName, Value, RegType); }
             }
-            catch (SecurityException @PermissionEx) 
+            catch (SecurityException @PermissionEx)
             {
                 try { EditReg_CMD(TreeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(TreeView, @PermissionEx, Key, ValueName, Value, RegType); }
             }
-            catch (UnauthorizedAccessException @UnauthorizedAccessEx) 
+            catch (UnauthorizedAccessException @UnauthorizedAccessEx)
             {
                 try { EditReg_CMD(TreeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(TreeView, @UnauthorizedAccessEx, Key, ValueName, Value, RegType); }

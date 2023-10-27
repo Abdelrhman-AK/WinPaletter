@@ -53,7 +53,7 @@ namespace WinPaletter
             CheckWhatsNew();
             InitializeImageLists();
             InitializeCMDWrapper();
-            InitializeWPSysEventsSounds();
+            InitializeSysEventsSounds();
             LoadThemeManager();
         }
 

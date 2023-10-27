@@ -8,38 +8,6 @@ namespace WinPaletter.GlobalVariables
     /// </summary>
     public static class PathsExt
     {
-        #region WinPaletter
-        /// <summary>
-        /// WinPaletter application data folder
-        /// </summary>
-        public readonly static string appData = System.IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName;
-
-        /// <summary>
-        /// WinPaletter elevator process file path
-        /// </summary>
-        public readonly static string WPElevator = $"{appData}\\WinPaletter.Elevator.exe";
-
-        /// <summary>
-        /// WinPaletter system events sounds invoker
-        /// </summary>
-        public readonly static string WPSysEventsSounds = $"{appData}\\WinPaletter.SysEventsSounds.exe";
-
-        /// <summary>
-        /// WinPaletter Store cache directory
-        /// </summary>
-        public readonly static string StoreCache = $"{appData}\\Store";
-
-        /// <summary>
-        /// WinPaletter themes resources pack extraction directory
-        /// </summary>
-        public readonly static string ThemeResPackCache = $"{appData}\\ThemeResPack_Cache";
-
-        /// <summary>
-        /// WinPaletter cursors directory (that cursors are rendered into)
-        /// </summary>
-        public readonly static string CursorsWP = $"{appData}\\Cursors";
-        #endregion
-
         #region System directories
         /// <summary>
         /// Windows directory
@@ -70,6 +38,68 @@ namespace WinPaletter.GlobalVariables
         /// Program files directory
         /// </summary>
         public readonly static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+        /// <summary>
+        /// Program files directory
+        /// </summary>
+        public readonly static string ProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+        #endregion
+
+        #region WinPaletter
+        /// <summary>
+        /// WinPaletter application data folder
+        /// </summary>
+        public readonly static string appData = System.IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName;
+
+        /// <summary>
+        /// WinPaletter services directory
+        /// </summary>
+        public readonly static string Services = $"{appData}\\Services";
+
+        /// <summary>
+        /// WinPaletter system events sounds services
+        /// </summary>
+        public static string ElevatorDir = $"{Services}\\Elevator";
+
+        /// <summary>
+        /// WinPaletter system events sounds services
+        /// </summary>
+        public readonly static string SysEventsSoundsDir = $"{Services}\\SysEventsSounds";
+
+        /// <summary>
+        /// WinPaletter elevator process file path
+        /// </summary>
+        public readonly static string CMDElevator = $"{ElevatorDir}\\WinPaletter.Elevator.exe";
+
+        /// <summary>
+        /// WinPaletter system events sounds services
+        /// </summary>
+        public readonly static string SysEventsSounds = $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe";
+
+        /// <summary>
+        /// WinPaletter system events sounds INI file
+        /// </summary>
+        public readonly static string SysEventsSounds_INI = $"{SysEventsSoundsDir}\\sounds.ini";
+
+        /// <summary>
+        /// WinPaletter system events sounds services
+        /// </summary>
+        public readonly static Version SysEventsSounds_Version = new("1.0.0.0");
+
+        /// <summary>
+        /// WinPaletter Store cache directory
+        /// </summary>
+        public readonly static string StoreCache = $"{appData}\\Store";
+
+        /// <summary>
+        /// WinPaletter themes resources pack extraction directory
+        /// </summary>
+        public readonly static string ThemeResPackCache = $"{appData}\\ThemeResPack_Cache";
+
+        /// <summary>
+        /// WinPaletter cursors directory (that cursors are rendered into)
+        /// </summary>
+        public readonly static string CursorsWP = $"{appData}\\Cursors";
         #endregion
 
         #region System processes

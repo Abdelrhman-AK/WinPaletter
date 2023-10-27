@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.DirectoryServices;
 using System.Drawing;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -88,7 +86,6 @@ namespace WinPaletter
                 Fonts.ConsoleLarge = new Font("Lucida Console", 10f);
             }
         }
-
 
         public static void CMD_Convert(string arg, bool KillProcessAfterConvert)
         {
@@ -352,46 +349,30 @@ namespace WinPaletter
 
         private static void InitializeCMDWrapper()
         {
-            if (!Elevated && !Settings.Miscellaneous.DontUseWPElevatorConsole)
+            if (!Elevated && !Settings.Services.DontUseWPElevatorConsole)
                 CMD_Wrapper.Start();
         }
 
-        public static void InitializeWPSysEventsSounds(bool delete = false)
+        public static void InitializeSysEventsSounds(bool ForceUpdate = false)
         {
-            List<Process> List = Elevator.ProgramsRunning(PathsExt.WPSysEventsSounds);
+            bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
+            bool condition1 = !condition0 && PathsExt.SysEventsSounds_Version > new Version(FileVersionInfo.GetVersionInfo(PathsExt.SysEventsSounds).FileVersion);
 
-            foreach (Process p in List)
-                p.Kill();
-
-            if (List.Count > 0)
-                Thread.Sleep(500);
-
-            try
+            if (ForceUpdate || condition1)
             {
-                if (System.IO.File.Exists(PathsExt.WPSysEventsSounds))
-                    System.IO.File.Delete(PathsExt.WPSysEventsSounds);
-
-                if (!delete)
-                    System.IO.File.WriteAllBytes(PathsExt.WPSysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds);
+                //Update
+                if (Settings.Services.ShowSysEventsSoundsInstaller)
+                    Forms.SysEventsSndsInstaller.Install(false);
+                else
+                    Forms.SysEventsSndsInstaller.Setup();
             }
-            catch { }
 
-            try
+            if (condition0)
             {
-                if (System.IO.File.Exists(PathsExt.WPSysEventsSounds))
-                {
-                    Process WPSysEventsSounds = new()
-                    {
-                        StartInfo = new ProcessStartInfo()
-                        {
-                            FileName = PathsExt.WPSysEventsSounds,
-                            WorkingDirectory = PathsExt.appData,
-                        }
-                    };
-                    WPSysEventsSounds.Start();
-                }
+                //Install
+                if (Settings.Services.ShowSysEventsSoundsInstaller)
+                    Forms.SysEventsSndsInstaller.Install(true);
             }
-            catch { }
         }
 
         public static void CheckWhatsNew()

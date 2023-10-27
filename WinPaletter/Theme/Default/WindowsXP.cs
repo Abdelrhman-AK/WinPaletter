@@ -2,7 +2,7 @@
 
 namespace WinPaletter.Theme
 {
-    public static partial class Default 
+    public static partial class Default
     {
         public static Manager WindowsXP()
         {
@@ -679,11 +679,6 @@ namespace WinPaletter.Theme
                 Sounds.Snd_SpeechRec_HubSleepSound = "";
                 Sounds.Snd_SpeechRec_MisrecoSound = "";
                 Sounds.Snd_SpeechRec_PanelSound = "";
-
-                Sounds.Snd_Win_SystemExit_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsLogoff_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsLogon_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsUnlock_TaskMgmt = false;
             }
 
             {

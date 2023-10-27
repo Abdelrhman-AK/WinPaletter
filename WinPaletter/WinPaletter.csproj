@@ -260,6 +260,12 @@
     <Compile Include="Classes\NativeMethods\UxTheme.cs" />
     <Compile Include="Classes\NativeMethods\Wininet.cs" />
     <Compile Include="Classes\NativeMethods\Winmm.cs" />
+    <Compile Include="Dialogs\SysEventsSndsInstaller.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SysEventsSndsInstaller.Designer.cs">
+      <DependentUpon>SysEventsSndsInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\RescueTools.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -839,6 +845,7 @@
     <Content Include="Icons\settingsfile.ico" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <None Include="Resources\WinPaletter.Elevator.exe" />
+    <None Include="Resources\Service_SysEventsSounds_Reg.txt" />
     <None Include="Resources\Start10_Light.png" />
     <None Include="Resources\Start10_Dark.png" />
     <None Include="Resources\notify_error.png" />
@@ -1040,6 +1047,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SysEventsSndsInstaller.resx">
+      <DependentUpon>SysEventsSndsInstaller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PE_Warning.resx">
       <DependentUpon>PE_Warning.cs</DependentUpon>

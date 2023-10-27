@@ -7,14 +7,13 @@ namespace WinPaletter
 {
     public class Elevator
     {
-        private static string elevator_path = $"{PathsExt.appData}\\Elevator";
 
-        private readonly Process WPElevator = new()
+        public readonly Process WPElevator = new()
         {
             StartInfo = new ProcessStartInfo()
             {
                 FileName = "cmd.exe",
-                Arguments = $"/c {PathsExt.WPElevator} {elevator_path}",
+                Arguments = $"/c {PathsExt.CMDElevator} {PathsExt.ElevatorDir}",
                 WorkingDirectory = PathsExt.appData,
                 UseShellExecute = true,
                 Verb = "runas"
@@ -23,7 +22,7 @@ namespace WinPaletter
 
         public void Start()
         {
-            List<Process> List = ProgramsRunning(PathsExt.WPElevator);
+            List<Process> List = ProgramsRunning(PathsExt.CMDElevator);
             foreach (Process p in List)
                 p.Kill();
 
@@ -31,35 +30,37 @@ namespace WinPaletter
 
             try
             {
-                if (System.IO.File.Exists(PathsExt.WPElevator))
+                if (System.IO.File.Exists(PathsExt.CMDElevator))
                 {
-                    System.IO.File.Delete(PathsExt.WPElevator);
+                    System.IO.File.Delete(PathsExt.CMDElevator);
                 }
-                System.IO.File.WriteAllBytes(PathsExt.WPElevator, Properties.Resources.WinPaletter_Elevator);
+                System.IO.File.WriteAllBytes(PathsExt.CMDElevator, Properties.Resources.WinPaletter_Elevator);
             }
             catch { }
 
-            if (!System.IO.Directory.Exists($"{elevator_path}"))
-                System.IO.Directory.CreateDirectory($"{elevator_path}");
+            if (!System.IO.Directory.Exists($"{PathsExt.ElevatorDir}"))
+                System.IO.Directory.CreateDirectory($"{PathsExt.ElevatorDir}");
 
-            System.IO.File.WriteAllText($"{elevator_path}\\command", "");
+            System.IO.File.WriteAllText($"{PathsExt.ElevatorDir}\\command", "");
 
-            WPElevator.StartInfo.WindowStyle = Program.Settings.Miscellaneous.ShowWPElevatorConsole ? ProcessWindowStyle.Normal : ProcessWindowStyle.Hidden;
-            WPElevator.StartInfo.CreateNoWindow = !Program.Settings.Miscellaneous.ShowWPElevatorConsole;
-            WPElevator.StartInfo.Arguments = $"/c {PathsExt.WPElevator} {elevator_path}";
+            WPElevator.StartInfo.WindowStyle = Program.Settings.Services.ShowWPElevatorConsole ? ProcessWindowStyle.Normal : ProcessWindowStyle.Hidden;
+            WPElevator.StartInfo.CreateNoWindow = !Program.Settings.Services.ShowWPElevatorConsole;
+            WPElevator.StartInfo.Arguments = $"/c {PathsExt.CMDElevator} {PathsExt.ElevatorDir}";
 
             WPElevator.Start();
+
+            Thread.Sleep(500);
         }
 
         public void Exit()
         {
-            foreach (Process p in ProgramsRunning(PathsExt.WPElevator))
+            foreach (Process p in ProgramsRunning(PathsExt.CMDElevator))
                 p.Kill();
         }
 
-        public void SendCommand(string command, bool DelayWait = true, bool runas = true)
+        public void SendCommand(string command, bool Wait = true, bool runas = true, bool IgnoreTimeout = false)
         {
-            if (Program.Settings.Miscellaneous.DontUseWPElevatorConsole || OS.WXP || Program.Elevated)
+            if (Program.Settings.Services.DontUseWPElevatorConsole || OS.WXP || Program.Elevated)
             {
                 using (var process = new Process()
                 {
@@ -76,31 +77,42 @@ namespace WinPaletter
                 {
                     process.Start();
 
-                    if (DelayWait)
+                    if (Wait)
                         process.WaitForExit();
                 }
             }
             else
             {
-                if (ProgramsRunning(PathsExt.WPElevator).Count() == 0)
+                if (ProgramsRunning(PathsExt.CMDElevator).Count() == 0)
                 {
                     Start();
                     Thread.Sleep(500);
                 }
 
-                if (!System.IO.Directory.Exists($"{elevator_path}"))
-                    System.IO.Directory.CreateDirectory($"{elevator_path}");
+                if (!System.IO.Directory.Exists($"{PathsExt.ElevatorDir}"))
+                    System.IO.Directory.CreateDirectory($"{PathsExt.ElevatorDir}");
 
                 try
-                { System.IO.File.WriteAllText($"{elevator_path}\\command", command); }
-                catch { }
+                {
+                    System.IO.File.WriteAllText($"{PathsExt.ElevatorDir}\\command", command);
 
-                if (DelayWait)
-                    Thread.Sleep(350);
+                    if (Wait)
+                    {
+                        Stopwatch sw = new();
+                        if (!IgnoreTimeout)
+                        {
+                            sw.Reset();
+                            sw.Start();
+                        }
+                        while (System.IO.File.Exists($"{PathsExt.ElevatorDir}\\command") && sw.ElapsedMilliseconds < 15000) { }
+                        sw.Stop();
+                    }
+                }
+                catch { }
             }
         }
 
-        public static System.Collections.Generic.List<Process> ProgramsRunning(string FullPath)
+        public static List<Process> ProgramsRunning(string FullPath)
         {
             System.Collections.Generic.List<Process> processes = new();
             string FileName = System.IO.Path.GetFileNameWithoutExtension(FullPath).ToLower();

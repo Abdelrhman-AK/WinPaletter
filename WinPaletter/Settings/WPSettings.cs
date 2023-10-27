@@ -31,6 +31,7 @@ namespace WinPaletter
             private const string REG_WindowsTerminals = REG + @"\WindowsTerminals";
             private const string REG_Store = REG + @"\Store";
             private const string REG_NerdStats = REG + @"\NerdStats";
+            private const string REG_Services = REG + @"\Services";
             private const string REG_Miscellaneous = REG + @"\Miscellaneous";
 
             public struct General
@@ -450,24 +451,42 @@ namespace WinPaletter
 
             }
 
+            public struct Services
+            {
+                public bool ShowWPElevatorConsole;
+                public bool DontUseWPElevatorConsole;
+                public bool ShowWPElevatorStartupAlert;
+                public bool ShowSysEventsSoundsInstaller;
+
+                public void Load()
+                {
+                    ShowWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Services, "ShowWPElevatorConsole", false));
+                    DontUseWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Services, "DontUseWPElevatorConsole", false));
+                    ShowWPElevatorStartupAlert = Conversions.ToBoolean(GetReg(REG_Services, "ShowWPElevatorStartupAlert", true));
+                    ShowSysEventsSoundsInstaller = Conversions.ToBoolean(GetReg(REG_Services, "ShowSysEventsSoundsInstaller", true));
+                }
+
+                public void Save()
+                {
+                    EditReg(REG_Services, "ShowWPElevatorConsole", REG_Services, RegistryValueKind.DWord);
+                    EditReg(REG_Services, "DontUseWPElevatorConsole", REG_Services, RegistryValueKind.DWord);
+                    EditReg(REG_Services, "ShowWPElevatorStartupAlert", ShowWPElevatorStartupAlert, RegistryValueKind.DWord);
+                    EditReg(REG_Services, "ShowSysEventsSoundsInstaller", ShowSysEventsSoundsInstaller, RegistryValueKind.DWord);
+                }
+            }
+
             public struct Miscellaneous
             {
                 public bool Win7LivePreview;
-                public bool ShowWPElevatorConsole;
-                public bool DontUseWPElevatorConsole;
 
                 public void Load()
                 {
                     Win7LivePreview = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "Win7LivePreview", true));
-                    ShowWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "ShowWPElevatorConsole", false));
-                    DontUseWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "DontUseWPElevatorConsole", false));
                 }
 
                 public void Save()
                 {
                     EditReg(REG_Miscellaneous, "Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord);
-                    EditReg(REG_Miscellaneous, "ShowWPElevatorConsole", ShowWPElevatorConsole, RegistryValueKind.DWord);
-                    EditReg(REG_Miscellaneous, "DontUseWPElevatorConsole", DontUseWPElevatorConsole, RegistryValueKind.DWord);
                 }
 
             }
@@ -589,11 +608,17 @@ namespace WinPaletter
             Classic_Color_Picker = false
         };
 
+        public Structures.Services Services = new()
+        {
+            DontUseWPElevatorConsole = false,
+            ShowWPElevatorConsole = false,
+            ShowSysEventsSoundsInstaller = true,
+            ShowWPElevatorStartupAlert = true
+        };
+
         public Structures.Miscellaneous Miscellaneous = new Structures.Miscellaneous()
         {
             Win7LivePreview = true,
-            ShowWPElevatorConsole = false,
-            DontUseWPElevatorConsole = false
         };
 
         public enum Mode
@@ -621,6 +646,7 @@ namespace WinPaletter
                         WindowsTerminals.Load();
                         Store.Load();
                         NerdStats.Load();
+                        Services.Load();
                         Miscellaneous.Load();
                         break;
                     }
@@ -702,6 +728,7 @@ namespace WinPaletter
                         WindowsTerminals.Save();
                         Store.Save();
                         NerdStats.Save();
+                        Services.Save();
                         Miscellaneous.Save();
                         break;
                     }

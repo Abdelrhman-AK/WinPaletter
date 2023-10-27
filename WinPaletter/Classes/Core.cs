@@ -144,68 +144,7 @@ namespace WinPaletter
             Add,
             Delete
         }
-        public static void TaskMgmt(TaskType TaskType, Actions Action, string File = "", TreeView TreeView = null)
-        {
-
-            DeleteTask(TaskType);
-
-            if (Action == Actions.Add)
-            {
-                string tmp = System.IO.Path.GetTempFileName();
-                System.IO.File.Move(tmp, System.IO.Path.ChangeExtension(tmp, ".xml"));
-                tmp = System.IO.Path.ChangeExtension(tmp, ".xml");
-
-                if (System.IO.File.Exists(tmp))
-                    FileSystem.Kill(tmp);
-
-                switch (TaskType)
-                {
-                    case TaskType.Shutdown:
-                        {
-                            string XML_Scheme = string.Format(Properties.Resources.XML_Shutdown, File);
-                            System.IO.File.WriteAllText(tmp, XML_Scheme);
-                            if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Shutdown"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Shutdown /XML """ + tmp + "\"");
-                            break;
-                        }
-
-                    case TaskType.Logoff:
-                        {
-                            string XML_Scheme = string.Format(Properties.Resources.XML_Logoff, File);
-                            System.IO.File.WriteAllText(tmp, XML_Scheme);
-                            if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Logoff"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Logoff /XML """ + tmp + "\"");
-                            break;
-                        }
-
-                    case TaskType.Logon:
-                        {
-                            string XML_Scheme = string.Format(Properties.Resources.XML_Logon, File);
-                            System.IO.File.WriteAllText(tmp, XML_Scheme);
-                            if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Logon"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Logon /XML """ + tmp + "\"");
-                            break;
-                        }
-
-                    case TaskType.Unlock:
-                        {
-                            string XML_Scheme = string.Format(Properties.Resources.XML_Unlock, File);
-                            System.IO.File.WriteAllText(tmp, XML_Scheme);
-                            if (TreeView is not null)
-                                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_CreateTask, @"WinPaletter\Unlock"), "task_add");
-                            Program.CMD_Wrapper.SendCommand(@$"{PathsExt.SchTasks} /Create /TN WinPaletter\Unlock /XML """ + tmp + "\"");
-                            break;
-                        }
-                }
-
-                if (System.IO.File.Exists(tmp))
-                    FileSystem.Kill(tmp);
-            }
-        }
-        private static void DeleteTask(TaskType TaskType, TreeView TreeView = null)
+        public static void DeleteTask(TaskType TaskType, TreeView TreeView = null)
         {
             switch (TaskType)
             {

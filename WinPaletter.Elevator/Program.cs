@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,6 +17,7 @@ namespace WinPaletter.Elevator
 
         private delegate bool EventHandler(CtrlType sig);
         static EventHandler ConsoleHandler;
+        static Process WP;
 
         enum CtrlType
         {
@@ -39,6 +41,8 @@ namespace WinPaletter.Elevator
         #endregion
 
         #region File watcher
+        static Thread th;
+
         static public void Monitor(string WorkingDirectory)
         {
             if (!System.IO.Directory.Exists(WorkingDirectory))
@@ -54,16 +58,16 @@ namespace WinPaletter.Elevator
             watcher.Filter = "command";
             watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
-            watcher.Deleted += OnChanged;
 
             // Begin watching.
             watcher.EnableRaisingEvents = true;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(DrawInConsoleBox("All commands must be console that terminate by themselves and don't require user interaction"));
+            Console.WriteLine("All commands must be console that terminate by themselves and don't require user interaction");
+            Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"- Listening to change in '{path}\\command' to execute it elevated");
+            Console.WriteLine($"Listening to change in '{path}\\command' to execute it elevated");
 
             Console.WriteLine();
             Console.ResetColor();
@@ -71,48 +75,85 @@ namespace WinPaletter.Elevator
 
         private static void OnChanged(object source, System.IO.FileSystemEventArgs e)
         {
-            Thread th = new Thread(() =>
+            if (th != null && th.IsAlive)
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Reset();
+                sw.Start();
+                while (th.IsAlive && sw.ElapsedMilliseconds < 20000) { }
+                sw.Stop();
+            }
+
+            th = new Thread(() =>
             {
                 IntPtr intPtr = IntPtr.Zero;
                 Wow64DisableWow64FsRedirection(ref intPtr);
 
-                string args = System.IO.File.ReadAllText(e.FullPath);
+                if (!System.IO.File.Exists(e.FullPath))
+                    return;
 
-                if (!string.IsNullOrWhiteSpace(args))
+                string args = "";
+
+                try
                 {
-                    try
-                    {
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write($"> Executing ");
-                        Console.ResetColor();
-                        Console.Write($"{args}");
-                        Console.WriteLine("");
+                    args = System.IO.File.ReadAllText(e.FullPath);
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"> Output: ");
-                        Console.ResetColor();
-                        int result = Interaction.Shell(args, AppWinStyle.Hide, true);
-
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write($"> Completed with code: ");
-                        Console.ResetColor();
-                        Console.Write($"{result}");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                    }
-                    catch (Exception ex)
+                    if (!string.IsNullOrWhiteSpace(args))
                     {
-                        Console.WriteLine("");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write($"> Couldn't execute ");
-                        Console.ResetColor();
-                        Console.Write($"{args}");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("");
-                        Console.Write($"{ex.Message}\r\n{ex.StackTrace}");
-                        Console.ResetColor();
-                        Console.WriteLine("");
+                        try
+                        {
+                            if (!args.ToLower().StartsWith("echo ", StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.Write($"> Executing ");
+                                Console.ResetColor();
+                                Console.Write($"{args}");
+                                Console.WriteLine("");
+
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write($"> Output: ");
+                                Console.ResetColor();
+                                int result = Interaction.Shell(args, AppWinStyle.Hide, true);
+
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write($"> Completed with code: ");
+                                Console.ResetColor();
+                                Console.Write($"{result}");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine(DrawInConsoleBox(args.Remove(0, "echo ".Count())));
+                                Console.ResetColor();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write($"> Couldn't execute ");
+                            Console.ResetColor();
+                            Console.Write($"{args}");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("");
+                            Console.Write($"{ex.Message}\r\n{ex.StackTrace}");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                        }
                     }
+
+                    try { System.IO.File.Delete(e.FullPath); } catch { }
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    DrawInConsoleBox($"{ex.Message}\r\n\r\n{ex.StackTrace}");
+                    Console.ResetColor();
+
+                    if (th != null && th.IsAlive)
+                        th.Abort();
                 }
 
                 Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -213,12 +254,19 @@ namespace WinPaletter.Elevator
             //hold the console so it doesn't run off the end
             while (!exitSystem)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(250);
             }
         }
 
         public void Start(string[] args)
         {
+            Process[] Processes = Process.GetProcessesByName("WinPaletter");
+            if (Processes.Count() > 0)
+            {
+                WP = Processes[0];
+                WP.Exited += WinPaletter_Exit;
+            }
+
             if (args.Count() > 0 && args[0] != null && !watcher.EnableRaisingEvents)
                 Monitor(args[0].Replace("\"", ""));
 
@@ -230,9 +278,14 @@ namespace WinPaletter.Elevator
             watcher.EnableRaisingEvents = false;
             watcher.Changed -= OnChanged;
             watcher.Created -= OnChanged;
-            watcher.Deleted -= OnChanged;
             watcher.Dispose();
             Wow64RevertWow64FsRedirection(IntPtr.Zero);
+        }
+
+        static void WinPaletter_Exit(object sender, EventArgs e)
+        {
+            Exit();
+            if (WP != null) { WP.Exited -= WinPaletter_Exit; }
         }
     }
 }

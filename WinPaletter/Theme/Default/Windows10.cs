@@ -2,7 +2,7 @@
 
 namespace WinPaletter.Theme
 {
-    public static partial class Default 
+    public static partial class Default
     {
         public static Manager Windows10()
         {
@@ -178,11 +178,6 @@ namespace WinPaletter.Theme
                 Sounds.Snd_SpeechRec_HubSleepSound = PathsExt.Windows + @"\media\Speech Sleep.wav";
                 Sounds.Snd_SpeechRec_MisrecoSound = PathsExt.Windows + @"\media\Speech Misrecognition.wav";
                 Sounds.Snd_SpeechRec_PanelSound = PathsExt.Windows + @"\media\Speech Disambiguation.wav";
-
-                Sounds.Snd_Win_SystemExit_TaskMgmt = true;
-                Sounds.Snd_Win_WindowsLogoff_TaskMgmt = true;
-                Sounds.Snd_Win_WindowsLogon_TaskMgmt = true;
-                Sounds.Snd_Win_WindowsUnlock_TaskMgmt = true;
             }
 
             return TM;

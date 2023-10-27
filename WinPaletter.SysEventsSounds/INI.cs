@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -11,6 +11,12 @@ namespace WinPaletter
         public string path;
         private bool disposedValue;
 
+        [DllImport("kernel32")]
+        public static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
+
+        [DllImport("kernel32")]
+        public static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
+
         public INI(string File)
         {
             path = File;
@@ -18,27 +24,26 @@ namespace WinPaletter
 
         public void Write(string Section, string Key, string Value)
         {
-            if (!System.IO.File.Exists(path))
-                System.IO.File.WriteAllText(path, "");
-
-            Kernel32.WritePrivateProfileString(Section, Key, Value, path);
+            if (!System.IO.File.Exists(path)) { return; }
+            WritePrivateProfileString(Section, Key, Value, path);
         }
 
-        public string Read(string Section, string Key, string DefaultValue = null)
+        public string Read(string Section, string Key, string DefaultValue = "")
         {
-            StringBuilder SB = new(65535);
-            int i = Kernel32.GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
+            if (!System.IO.File.Exists(path)) { return DefaultValue; }
+            StringBuilder SB = new StringBuilder(65535);
+            int i = GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
             return SB.ToString();
         }
 
         public void DeleteSection(string Section)
         {
-            Kernel32.WritePrivateProfileString(Section, null, null, path);
+            WritePrivateProfileString(Section, null, null, path);
         }
 
         public void DeleteKey(string Section, string Key)
         {
-            Kernel32.WritePrivateProfileString(Section, Key, null, path);
+            WritePrivateProfileString(Section, Key, null, path);
         }
 
         #region Clone support

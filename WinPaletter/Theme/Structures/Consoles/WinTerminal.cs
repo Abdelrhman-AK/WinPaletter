@@ -1303,22 +1303,22 @@ namespace WinPaletter
                     return "bar";
 
                 case CursorShape_Enum.doubleUnderscore:
-                        return "doubleUnderscore";
+                    return "doubleUnderscore";
 
                 case CursorShape_Enum.emptyBox:
-                        return "emptyBox";
+                    return "emptyBox";
 
                 case CursorShape_Enum.filledBox:
-                        return "filledBox";
+                    return "filledBox";
 
                 case CursorShape_Enum.underscore:
-                        return "underscore";
+                    return "underscore";
 
                 case CursorShape_Enum.vintage:
-                        return "vintage";
+                    return "vintage";
 
                 default:
-                        return "bar";
+                    return "bar";
             }
         }
 
@@ -1352,7 +1352,7 @@ namespace WinPaletter
         /// Enumeration for font weights
         /// <br><b>(!) Replace _ by - when using it as string</b></br>
         /// </summary>
-        public enum FontWeight_Enum   
+        public enum FontWeight_Enum
         {
             ///
             thin,
@@ -1386,40 +1386,40 @@ namespace WinPaletter
             switch (Weight)
             {
                 case FontWeight_Enum.black:
-                        return "black";
+                    return "black";
 
                 case FontWeight_Enum.bold:
-                        return "bold";
+                    return "bold";
 
                 case FontWeight_Enum.extra_black:
-                        return "extra-black";
+                    return "extra-black";
 
                 case FontWeight_Enum.extra_bold:
-                        return "extra-bold";
+                    return "extra-bold";
 
                 case FontWeight_Enum.extra_light:
-                        return "extra-light";
+                    return "extra-light";
 
                 case FontWeight_Enum.light:
-                        return "light";
+                    return "light";
 
                 case FontWeight_Enum.medium:
-                        return "medium";
+                    return "medium";
 
                 case FontWeight_Enum.normal:
-                        return "normal";
+                    return "normal";
 
                 case FontWeight_Enum.semi_bold:
-                        return "semi-bold";
+                    return "semi-bold";
 
                 case FontWeight_Enum.semi_light:
-                        return "semi-light";
+                    return "semi-light";
 
                 case FontWeight_Enum.thin:
-                        return "thin";
+                    return "thin";
 
                 default:
-                        return "normal";
+                    return "normal";
 
             }
         }

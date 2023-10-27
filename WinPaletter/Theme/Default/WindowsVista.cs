@@ -2,7 +2,7 @@
 
 namespace WinPaletter.Theme
 {
-    public static partial class Default 
+    public static partial class Default
     {
         public static Manager WindowsVista()
         {
@@ -253,11 +253,6 @@ namespace WinPaletter.Theme
                 Sounds.Snd_SpeechRec_HubSleepSound = PathsExt.Windows + @"\media\Speech Sleep.wav";
                 Sounds.Snd_SpeechRec_MisrecoSound = PathsExt.Windows + @"\media\Speech Misrecognition.wav";
                 Sounds.Snd_SpeechRec_PanelSound = PathsExt.Windows + @"\media\Speech Disambiguation.wav";
-
-                Sounds.Snd_Win_SystemExit_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsLogoff_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsLogon_TaskMgmt = false;
-                Sounds.Snd_Win_WindowsUnlock_TaskMgmt = false;
             }
 
             return TM;

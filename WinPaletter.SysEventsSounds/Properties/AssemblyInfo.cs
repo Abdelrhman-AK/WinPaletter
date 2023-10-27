@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleApp1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WinPaletter.SysEventsSounds")]
+[assembly: AssemblyDescription("Service by WinPaletter that listens to system events in background, and plays a sound if a specific event received")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleApp1")]
+[assembly: AssemblyCompany("Abdelrhman-AK")]
+[assembly: AssemblyProduct("WinPaletter.SysEventsSounds")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Abdelrhman-AK")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("43f6f6ce-490b-44d6-aa60-5ef94dd7ef57")]
+[assembly: Guid("c1e51d35-a55a-4cf5-abfc-74c2ddc7dd7b")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -342,7 +342,7 @@ namespace WinPaletter.Theme
 
             return CL;
         }
-        
+
         /// <summary>
         /// Checks if a font is installed or not (from its name)
         /// </summary>

@@ -196,8 +196,9 @@ namespace WinPaletter
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
             CheckBox4.Checked = Sets.Store.ShowTips;
 
-            checkBox19.Checked = Sets.Miscellaneous.DontUseWPElevatorConsole;
-            checkBox39.Checked = Sets.Miscellaneous.ShowWPElevatorConsole;
+            checkBox19.Checked = Sets.Services.DontUseWPElevatorConsole;
+            checkBox39.Checked = Sets.Services.ShowWPElevatorConsole;
+            checkBox40.Checked = Sets.Services.ShowWPElevatorStartupAlert;
 
         }
         public void SaveSettings()
@@ -411,10 +412,13 @@ namespace WinPaletter
 
             if (VL0.Checked)
                 Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.None;
+
             if (VL1.Checked)
                 Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Basic;
+
             if (VL2.Checked)
                 Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+
             Sets.ThemeLog.CountDown = CheckBox18.Checked;
             Sets.ThemeLog.CountDown_Seconds = NumericUpDown1.Value;
             Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked;
@@ -431,41 +435,55 @@ namespace WinPaletter
                 Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton8.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+
             if (RadioButton10.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton9.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+
             if (RadioButton7.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
+
             Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT = CheckBox25.Checked;
+
             if (RadioButton12.Checked)
                 Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton14.Checked)
                 Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton16.Checked)
                 Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton18.Checked)
                 Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton20.Checked)
                 Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
                 Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             if (RadioButton22.Checked)
                 Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+
             if (RadioButton23.Checked)
                 Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+
             if (RadioButton21.Checked)
                 Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
             Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox36.Checked;
             Sets.ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked;
@@ -479,8 +497,9 @@ namespace WinPaletter
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
             Sets.Store.ShowTips = CheckBox4.Checked;
 
-            Sets.Miscellaneous.DontUseWPElevatorConsole = checkBox19.Checked;
-            Sets.Miscellaneous.ShowWPElevatorConsole = checkBox39.Checked;
+            Sets.Services.DontUseWPElevatorConsole = checkBox19.Checked;
+            Sets.Services.ShowWPElevatorConsole = checkBox39.Checked;
+            Sets.Services.ShowWPElevatorStartupAlert = checkBox40.Checked;
 
             Sets.Save(Mode, File);
         }
@@ -652,9 +671,11 @@ namespace WinPaletter
                 if (Settings.Store.ShowTips != CheckBox4.Checked)
                     Changed = true;
 
-                if (Settings.Miscellaneous.DontUseWPElevatorConsole != checkBox19.Checked)
+                if (Settings.Services.DontUseWPElevatorConsole != checkBox19.Checked)
                     Changed = true;
-                if (Settings.Miscellaneous.ShowWPElevatorConsole != checkBox39.Checked)
+                if (Settings.Services.ShowWPElevatorConsole != checkBox39.Checked)
+                    Changed = true;
+                if (Settings.Services.ShowWPElevatorStartupAlert != checkBox40.Checked)
                     Changed = true;
 
             }
@@ -986,6 +1007,16 @@ namespace WinPaletter
             {
             }
             Label43.Text = CalcThemesResCache().SizeString();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            Forms.SysEventsSndsInstaller.Install(true);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Forms.SysEventsSndsInstaller.Uninstall();
         }
     }
 }

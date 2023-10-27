@@ -38,11 +38,22 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sounds_Editor));
             this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.Button10 = new WinPaletter.UI.WP.Button();
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.Button8 = new WinPaletter.UI.WP.Button();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox88 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox92 = new System.Windows.Forms.PictureBox();
+            this.button266 = new WinPaletter.UI.WP.Button();
+            this.button267 = new WinPaletter.UI.WP.Button();
+            this.button268 = new WinPaletter.UI.WP.Button();
+            this.textBox86 = new WinPaletter.UI.WP.TextBox();
+            this.label87 = new System.Windows.Forms.Label();
+            this.pictureBox87 = new System.Windows.Forms.PictureBox();
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.Separator3 = new WinPaletter.UI.WP.SeparatorH();
             this.GroupBox85 = new WinPaletter.UI.WP.GroupBox();
@@ -67,7 +78,7 @@ namespace WinPaletter
             this.Label5 = new System.Windows.Forms.Label();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
             this.GroupBox3 = new WinPaletter.UI.WP.GroupBox();
-            this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox90 = new System.Windows.Forms.PictureBox();
             this.Button15 = new WinPaletter.UI.WP.Button();
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
@@ -75,7 +86,7 @@ namespace WinPaletter
             this.Label3 = new System.Windows.Forms.Label();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
             this.GroupBox6 = new WinPaletter.UI.WP.GroupBox();
-            this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox91 = new System.Windows.Forms.PictureBox();
             this.Button25 = new WinPaletter.UI.WP.Button();
             this.Button26 = new WinPaletter.UI.WP.Button();
             this.Button27 = new WinPaletter.UI.WP.Button();
@@ -83,7 +94,7 @@ namespace WinPaletter
             this.Label6 = new System.Windows.Forms.Label();
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
             this.GroupBox4 = new WinPaletter.UI.WP.GroupBox();
-            this.CheckBox2 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox89 = new System.Windows.Forms.PictureBox();
             this.Button16 = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.Button14 = new WinPaletter.UI.WP.Button();
@@ -91,7 +102,7 @@ namespace WinPaletter
             this.Label4 = new System.Windows.Forms.Label();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
             this.GroupBox2 = new WinPaletter.UI.WP.GroupBox();
-            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox88 = new System.Windows.Forms.PictureBox();
             this.Button17 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button4 = new WinPaletter.UI.WP.Button();
@@ -214,9 +225,17 @@ namespace WinPaletter
             this.Label17 = new System.Windows.Forms.Label();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.TabPage7 = new System.Windows.Forms.TabPage();
+            this.groupBox87 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox94 = new System.Windows.Forms.PictureBox();
+            this.button263 = new WinPaletter.UI.WP.Button();
+            this.button264 = new WinPaletter.UI.WP.Button();
+            this.button265 = new WinPaletter.UI.WP.Button();
+            this.textBox85 = new WinPaletter.UI.WP.TextBox();
+            this.label89 = new System.Windows.Forms.Label();
+            this.pictureBox86 = new System.Windows.Forms.PictureBox();
             this.GroupBox86 = new WinPaletter.UI.WP.GroupBox();
-            this.Label87 = new System.Windows.Forms.Label();
             this.Button260 = new WinPaletter.UI.WP.Button();
+            this.pictureBox93 = new System.Windows.Forms.PictureBox();
             this.Button261 = new WinPaletter.UI.WP.Button();
             this.Button262 = new WinPaletter.UI.WP.Button();
             this.TextBox84 = new WinPaletter.UI.WP.TextBox();
@@ -666,18 +685,11 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.SoundsEnabled = new WinPaletter.UI.WP.Toggle();
             this.checker_img = new System.Windows.Forms.PictureBox();
-            this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox87 = new WinPaletter.UI.WP.GroupBox();
-            this.label88 = new System.Windows.Forms.Label();
-            this.button263 = new WinPaletter.UI.WP.Button();
-            this.button264 = new WinPaletter.UI.WP.Button();
-            this.button265 = new WinPaletter.UI.WP.Button();
-            this.textBox85 = new WinPaletter.UI.WP.TextBox();
-            this.label89 = new System.Windows.Forms.Label();
-            this.pictureBox86 = new System.Windows.Forms.PictureBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
+            this.groupBox88.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox92)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox87)).BeginInit();
             this.GroupBox85.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox84)).BeginInit();
             this.GroupBox65.SuspendLayout();
@@ -685,12 +697,16 @@ namespace WinPaletter
             this.GroupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
             this.GroupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox90)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             this.GroupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             this.GroupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox89)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             this.GroupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox88)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
@@ -727,7 +743,11 @@ namespace WinPaletter
             this.GroupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
             this.TabPage7.SuspendLayout();
+            this.groupBox87.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox94)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox86)).BeginInit();
             this.GroupBox86.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox93)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox85)).BeginInit();
             this.GroupBox53.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox52)).BeginInit();
@@ -861,8 +881,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox67)).BeginInit();
             this.GroupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).BeginInit();
-            this.groupBox87.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox86)).BeginInit();
             this.SuspendLayout();
             // 
             // OpenFileDialog2
@@ -875,6 +893,31 @@ namespace WinPaletter
             this.OpenFileDialog1.DefaultExt = "wpt";
             this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
+            // BackgroundWorker1
+            // 
+            this.BackgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // OpenThemeDialog
+            // 
+            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*";
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = ((System.Drawing.Image)(resources.GetObject("alertBox1.Image")));
+            this.alertBox1.Location = new System.Drawing.Point(12, 439);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(909, 80);
+            this.alertBox1.TabIndex = 214;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = resources.GetString("alertBox1.Text");
+            // 
             // Button10
             // 
             this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -885,7 +928,7 @@ namespace WinPaletter
             this.Button10.Image = ((System.Drawing.Image)(resources.GetObject("Button10.Image")));
             this.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button10.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(81)))), ((int)(((byte)(110)))));
-            this.Button10.Location = new System.Drawing.Point(620, 494);
+            this.Button10.Location = new System.Drawing.Point(620, 525);
             this.Button10.Name = "Button10";
             this.Button10.Size = new System.Drawing.Size(115, 34);
             this.Button10.TabIndex = 213;
@@ -902,7 +945,7 @@ namespace WinPaletter
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
             this.Button7.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.Button7.Location = new System.Drawing.Point(534, 494);
+            this.Button7.Location = new System.Drawing.Point(534, 525);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(80, 34);
             this.Button7.TabIndex = 212;
@@ -920,7 +963,7 @@ namespace WinPaletter
             this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
             this.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(20)))), ((int)(((byte)(64)))));
-            this.Button8.Location = new System.Drawing.Point(741, 494);
+            this.Button8.Location = new System.Drawing.Point(741, 525);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(180, 34);
             this.Button8.TabIndex = 211;
@@ -954,13 +997,14 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(909, 431);
+            this.TabControl1.Size = new System.Drawing.Size(909, 376);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 203;
             // 
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.TabPage1.Controls.Add(this.groupBox88);
             this.TabPage1.Controls.Add(this.Separator1);
             this.TabPage1.Controls.Add(this.Separator3);
             this.TabPage1.Controls.Add(this.GroupBox85);
@@ -973,16 +1017,133 @@ namespace WinPaletter
             this.TabPage1.Controls.Add(this.GroupBox1);
             this.TabPage1.Location = new System.Drawing.Point(144, 4);
             this.TabPage1.Name = "TabPage1";
-            this.TabPage1.Size = new System.Drawing.Size(761, 423);
+            this.TabPage1.Size = new System.Drawing.Size(761, 368);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Main events";
+            // 
+            // groupBox88
+            // 
+            this.groupBox88.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox88.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.groupBox88.Controls.Add(this.pictureBox92);
+            this.groupBox88.Controls.Add(this.button266);
+            this.groupBox88.Controls.Add(this.button267);
+            this.groupBox88.Controls.Add(this.button268);
+            this.groupBox88.Controls.Add(this.textBox86);
+            this.groupBox88.Controls.Add(this.label87);
+            this.groupBox88.Controls.Add(this.pictureBox87);
+            this.groupBox88.Location = new System.Drawing.Point(4, 273);
+            this.groupBox88.Name = "groupBox88";
+            this.groupBox88.Size = new System.Drawing.Size(754, 30);
+            this.groupBox88.TabIndex = 13;
+            // 
+            // pictureBox92
+            // 
+            this.pictureBox92.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox92.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox92.Image")));
+            this.pictureBox92.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox92.Name = "pictureBox92";
+            this.pictureBox92.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox92.TabIndex = 118;
+            this.pictureBox92.TabStop = false;
+            // 
+            // button266
+            // 
+            this.button266.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button266.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.button266.DrawOnGlass = false;
+            this.button266.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button266.ForeColor = System.Drawing.Color.White;
+            this.button266.Image = global::WinPaletter.Properties.Resources.Sound_Stop;
+            this.button266.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(3)))), ((int)(((byte)(34)))));
+            this.button266.Location = new System.Drawing.Point(639, 3);
+            this.button266.Name = "button266";
+            this.button266.Size = new System.Drawing.Size(36, 24);
+            this.button266.TabIndex = 115;
+            this.button266.Tag = "2";
+            this.button266.UseVisualStyleBackColor = false;
+            // 
+            // button267
+            // 
+            this.button267.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button267.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.button267.DrawOnGlass = false;
+            this.button267.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button267.ForeColor = System.Drawing.Color.White;
+            this.button267.Image = global::WinPaletter.Properties.Resources.Sound_Play;
+            this.button267.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(45)))), ((int)(((byte)(77)))));
+            this.button267.Location = new System.Drawing.Point(677, 3);
+            this.button267.Name = "button267";
+            this.button267.Size = new System.Drawing.Size(36, 24);
+            this.button267.TabIndex = 114;
+            this.button267.Tag = "1";
+            this.button267.UseVisualStyleBackColor = false;
+            // 
+            // button268
+            // 
+            this.button268.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button268.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.button268.DrawOnGlass = false;
+            this.button268.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button268.ForeColor = System.Drawing.Color.White;
+            this.button268.Image = ((System.Drawing.Image)(resources.GetObject("button268.Image")));
+            this.button268.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(125)))), ((int)(((byte)(25)))));
+            this.button268.Location = new System.Drawing.Point(715, 3);
+            this.button268.Name = "button268";
+            this.button268.Size = new System.Drawing.Size(36, 24);
+            this.button268.TabIndex = 113;
+            this.button268.Tag = "3";
+            this.button268.UseVisualStyleBackColor = false;
+            // 
+            // textBox86
+            // 
+            this.textBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox86.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.textBox86.DrawOnGlass = false;
+            this.textBox86.ForeColor = System.Drawing.Color.White;
+            this.textBox86.Location = new System.Drawing.Point(175, 3);
+            this.textBox86.MaxLength = 32767;
+            this.textBox86.Multiline = false;
+            this.textBox86.Name = "textBox86";
+            this.textBox86.ReadOnly = false;
+            this.textBox86.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox86.SelectedText = "";
+            this.textBox86.SelectionLength = 0;
+            this.textBox86.SelectionStart = 0;
+            this.textBox86.Size = new System.Drawing.Size(460, 24);
+            this.textBox86.TabIndex = 1;
+            this.textBox86.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox86.UseSystemPasswordChar = false;
+            this.textBox86.WordWrap = true;
+            // 
+            // label87
+            // 
+            this.label87.BackColor = System.Drawing.Color.Transparent;
+            this.label87.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label87.Location = new System.Drawing.Point(60, 4);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(109, 22);
+            this.label87.TabIndex = 112;
+            this.label87.Text = "Lock:";
+            this.label87.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox87
+            // 
+            this.pictureBox87.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox87.Image")));
+            this.pictureBox87.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox87.Name = "pictureBox87";
+            this.pictureBox87.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox87.TabIndex = 1;
+            this.pictureBox87.TabStop = false;
             // 
             // Separator1
             // 
             this.Separator1.AlternativeLook = false;
             this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Separator1.Location = new System.Drawing.Point(4, 383);
+            this.Separator1.Location = new System.Drawing.Point(4, 309);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(754, 1);
             this.Separator1.TabIndex = 12;
@@ -1060,7 +1221,7 @@ namespace WinPaletter
             this.GroupBox65.Controls.Add(this.TextBox64);
             this.GroupBox65.Controls.Add(this.Label65);
             this.GroupBox65.Controls.Add(this.PictureBox64);
-            this.GroupBox65.Location = new System.Drawing.Point(4, 390);
+            this.GroupBox65.Location = new System.Drawing.Point(4, 316);
             this.GroupBox65.Name = "GroupBox65";
             this.GroupBox65.Size = new System.Drawing.Size(754, 30);
             this.GroupBox65.TabIndex = 7;
@@ -1337,32 +1498,27 @@ namespace WinPaletter
             this.GroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.GroupBox3.Controls.Add(this.CheckBox3);
+            this.GroupBox3.Controls.Add(this.pictureBox90);
             this.GroupBox3.Controls.Add(this.Button15);
             this.GroupBox3.Controls.Add(this.Button5);
             this.GroupBox3.Controls.Add(this.Button6);
             this.GroupBox3.Controls.Add(this.TextBox5);
             this.GroupBox3.Controls.Add(this.Label3);
             this.GroupBox3.Controls.Add(this.PictureBox3);
-            this.GroupBox3.Location = new System.Drawing.Point(4, 259);
+            this.GroupBox3.Location = new System.Drawing.Point(4, 205);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(754, 57);
+            this.GroupBox3.Size = new System.Drawing.Size(754, 30);
             this.GroupBox3.TabIndex = 3;
             // 
-            // CheckBox3
+            // pictureBox90
             // 
-            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.CheckBox3.Checked = false;
-            this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox3.ForeColor = System.Drawing.Color.White;
-            this.CheckBox3.Location = new System.Drawing.Point(3, 31);
-            this.CheckBox3.Name = "CheckBox3";
-            this.CheckBox3.Size = new System.Drawing.Size(748, 22);
-            this.CheckBox3.TabIndex = 118;
-            this.CheckBox3.Text = "Deflect if you are using Windows 8 and later (by creating a task in Task Schedule" +
-    "r)";
+            this.pictureBox90.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox90.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox90.Image")));
+            this.pictureBox90.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox90.Name = "pictureBox90";
+            this.pictureBox90.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox90.TabIndex = 118;
+            this.pictureBox90.TabStop = false;
             // 
             // Button15
             // 
@@ -1438,9 +1594,9 @@ namespace WinPaletter
             // 
             this.Label3.BackColor = System.Drawing.Color.Transparent;
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.Location = new System.Drawing.Point(33, 4);
+            this.Label3.Location = new System.Drawing.Point(60, 4);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(101, 22);
+            this.Label3.Size = new System.Drawing.Size(109, 22);
             this.Label3.TabIndex = 112;
             this.Label3.Text = "Logon:";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1459,32 +1615,27 @@ namespace WinPaletter
             this.GroupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.GroupBox6.Controls.Add(this.CheckBox4);
+            this.GroupBox6.Controls.Add(this.pictureBox91);
             this.GroupBox6.Controls.Add(this.Button25);
             this.GroupBox6.Controls.Add(this.Button26);
             this.GroupBox6.Controls.Add(this.Button27);
             this.GroupBox6.Controls.Add(this.TextBox6);
             this.GroupBox6.Controls.Add(this.Label6);
             this.GroupBox6.Controls.Add(this.PictureBox6);
-            this.GroupBox6.Location = new System.Drawing.Point(4, 320);
+            this.GroupBox6.Location = new System.Drawing.Point(4, 239);
             this.GroupBox6.Name = "GroupBox6";
-            this.GroupBox6.Size = new System.Drawing.Size(754, 57);
+            this.GroupBox6.Size = new System.Drawing.Size(754, 30);
             this.GroupBox6.TabIndex = 6;
             // 
-            // CheckBox4
+            // pictureBox91
             // 
-            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.CheckBox4.Checked = false;
-            this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox4.ForeColor = System.Drawing.Color.White;
-            this.CheckBox4.Location = new System.Drawing.Point(3, 31);
-            this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(748, 22);
-            this.CheckBox4.TabIndex = 119;
-            this.CheckBox4.Text = "Deflect if you are using Windows 8 and later (by creating a task in Task Schedule" +
-    "r)";
+            this.pictureBox91.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox91.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox91.Image")));
+            this.pictureBox91.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox91.Name = "pictureBox91";
+            this.pictureBox91.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox91.TabIndex = 118;
+            this.pictureBox91.TabStop = false;
             // 
             // Button25
             // 
@@ -1560,9 +1711,9 @@ namespace WinPaletter
             // 
             this.Label6.BackColor = System.Drawing.Color.Transparent;
             this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(33, 4);
+            this.Label6.Location = new System.Drawing.Point(60, 4);
             this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(101, 22);
+            this.Label6.Size = new System.Drawing.Size(109, 22);
             this.Label6.TabIndex = 112;
             this.Label6.Text = "Unlock:";
             this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1581,32 +1732,27 @@ namespace WinPaletter
             this.GroupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.GroupBox4.Controls.Add(this.CheckBox2);
+            this.GroupBox4.Controls.Add(this.pictureBox89);
             this.GroupBox4.Controls.Add(this.Button16);
             this.GroupBox4.Controls.Add(this.Button13);
             this.GroupBox4.Controls.Add(this.Button14);
             this.GroupBox4.Controls.Add(this.TextBox4);
             this.GroupBox4.Controls.Add(this.Label4);
             this.GroupBox4.Controls.Add(this.PictureBox4);
-            this.GroupBox4.Location = new System.Drawing.Point(4, 198);
+            this.GroupBox4.Location = new System.Drawing.Point(4, 171);
             this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(754, 57);
+            this.GroupBox4.Size = new System.Drawing.Size(754, 30);
             this.GroupBox4.TabIndex = 2;
             // 
-            // CheckBox2
+            // pictureBox89
             // 
-            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.CheckBox2.Checked = false;
-            this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox2.ForeColor = System.Drawing.Color.White;
-            this.CheckBox2.Location = new System.Drawing.Point(3, 31);
-            this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.Size = new System.Drawing.Size(748, 22);
-            this.CheckBox2.TabIndex = 118;
-            this.CheckBox2.Text = "Deflect if you are using Windows 8 and later (by creating a task in Task Schedule" +
-    "r)";
+            this.pictureBox89.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox89.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox89.Image")));
+            this.pictureBox89.Location = new System.Drawing.Point(30, 2);
+            this.pictureBox89.Name = "pictureBox89";
+            this.pictureBox89.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox89.TabIndex = 118;
+            this.pictureBox89.TabStop = false;
             // 
             // Button16
             // 
@@ -1682,9 +1828,9 @@ namespace WinPaletter
             // 
             this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(33, 4);
+            this.Label4.Location = new System.Drawing.Point(60, 4);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(101, 22);
+            this.Label4.Size = new System.Drawing.Size(109, 22);
             this.Label4.TabIndex = 112;
             this.Label4.Text = "Logoff:";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1703,7 +1849,7 @@ namespace WinPaletter
             this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.GroupBox2.Controls.Add(this.CheckBox1);
+            this.GroupBox2.Controls.Add(this.pictureBox88);
             this.GroupBox2.Controls.Add(this.Button17);
             this.GroupBox2.Controls.Add(this.Button3);
             this.GroupBox2.Controls.Add(this.Button4);
@@ -1712,23 +1858,18 @@ namespace WinPaletter
             this.GroupBox2.Controls.Add(this.PictureBox2);
             this.GroupBox2.Location = new System.Drawing.Point(4, 137);
             this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(754, 57);
+            this.GroupBox2.Size = new System.Drawing.Size(754, 30);
             this.GroupBox2.TabIndex = 1;
             // 
-            // CheckBox1
+            // pictureBox88
             // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.CheckBox1.Checked = false;
-            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(3, 31);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(748, 22);
-            this.CheckBox1.TabIndex = 117;
-            this.CheckBox1.Text = "Deflect if you are using Windows 8 and later (by creating a task in Task Schedule" +
-    "r)";
+            this.pictureBox88.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox88.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox88.Image")));
+            this.pictureBox88.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox88.Name = "pictureBox88";
+            this.pictureBox88.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox88.TabIndex = 117;
+            this.pictureBox88.TabStop = false;
             // 
             // Button17
             // 
@@ -1804,9 +1945,9 @@ namespace WinPaletter
             // 
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(33, 4);
+            this.Label2.Location = new System.Drawing.Point(60, 4);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(101, 22);
+            this.Label2.Size = new System.Drawing.Size(109, 22);
             this.Label2.TabIndex = 112;
             this.Label2.Text = "Shutdown:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1943,7 +2084,7 @@ namespace WinPaletter
             this.TabPage2.Controls.Add(this.GroupBox7);
             this.TabPage2.Location = new System.Drawing.Point(144, 4);
             this.TabPage2.Name = "TabPage2";
-            this.TabPage2.Size = new System.Drawing.Size(761, 423);
+            this.TabPage2.Size = new System.Drawing.Size(761, 368);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Dialogs";
             // 
@@ -2738,7 +2879,7 @@ namespace WinPaletter
             this.TabPage3.Controls.Add(this.GroupBox17);
             this.TabPage3.Location = new System.Drawing.Point(144, 4);
             this.TabPage3.Name = "TabPage3";
-            this.TabPage3.Size = new System.Drawing.Size(761, 423);
+            this.TabPage3.Size = new System.Drawing.Size(761, 368);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Window & menus";
             // 
@@ -3656,17 +3797,134 @@ namespace WinPaletter
             this.TabPage7.Controls.Add(this.GroupBox46);
             this.TabPage7.Location = new System.Drawing.Point(144, 4);
             this.TabPage7.Name = "TabPage7";
-            this.TabPage7.Size = new System.Drawing.Size(761, 423);
+            this.TabPage7.Size = new System.Drawing.Size(761, 368);
             this.TabPage7.TabIndex = 6;
             this.TabPage7.Text = "Devices";
+            // 
+            // groupBox87
+            // 
+            this.groupBox87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox87.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox87.Controls.Add(this.pictureBox94);
+            this.groupBox87.Controls.Add(this.button263);
+            this.groupBox87.Controls.Add(this.button264);
+            this.groupBox87.Controls.Add(this.button265);
+            this.groupBox87.Controls.Add(this.textBox85);
+            this.groupBox87.Controls.Add(this.label89);
+            this.groupBox87.Controls.Add(this.pictureBox86);
+            this.groupBox87.Location = new System.Drawing.Point(4, 139);
+            this.groupBox87.Name = "groupBox87";
+            this.groupBox87.Size = new System.Drawing.Size(754, 30);
+            this.groupBox87.TabIndex = 119;
+            // 
+            // pictureBox94
+            // 
+            this.pictureBox94.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox94.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox94.Image")));
+            this.pictureBox94.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox94.Name = "pictureBox94";
+            this.pictureBox94.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox94.TabIndex = 121;
+            this.pictureBox94.TabStop = false;
+            // 
+            // button263
+            // 
+            this.button263.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button263.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.button263.DrawOnGlass = false;
+            this.button263.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button263.ForeColor = System.Drawing.Color.White;
+            this.button263.Image = global::WinPaletter.Properties.Resources.Sound_Stop;
+            this.button263.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(3)))), ((int)(((byte)(34)))));
+            this.button263.Location = new System.Drawing.Point(639, 3);
+            this.button263.Name = "button263";
+            this.button263.Size = new System.Drawing.Size(36, 24);
+            this.button263.TabIndex = 115;
+            this.button263.Tag = "2";
+            this.button263.UseVisualStyleBackColor = false;
+            // 
+            // button264
+            // 
+            this.button264.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button264.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.button264.DrawOnGlass = false;
+            this.button264.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button264.ForeColor = System.Drawing.Color.White;
+            this.button264.Image = global::WinPaletter.Properties.Resources.Sound_Play;
+            this.button264.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(45)))), ((int)(((byte)(77)))));
+            this.button264.Location = new System.Drawing.Point(677, 3);
+            this.button264.Name = "button264";
+            this.button264.Size = new System.Drawing.Size(36, 24);
+            this.button264.TabIndex = 114;
+            this.button264.Tag = "1";
+            this.button264.UseVisualStyleBackColor = false;
+            // 
+            // button265
+            // 
+            this.button265.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button265.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.button265.DrawOnGlass = false;
+            this.button265.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button265.ForeColor = System.Drawing.Color.White;
+            this.button265.Image = ((System.Drawing.Image)(resources.GetObject("button265.Image")));
+            this.button265.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(125)))), ((int)(((byte)(25)))));
+            this.button265.Location = new System.Drawing.Point(715, 3);
+            this.button265.Name = "button265";
+            this.button265.Size = new System.Drawing.Size(36, 24);
+            this.button265.TabIndex = 113;
+            this.button265.Tag = "3";
+            this.button265.UseVisualStyleBackColor = false;
+            // 
+            // textBox85
+            // 
+            this.textBox85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox85.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.textBox85.DrawOnGlass = false;
+            this.textBox85.ForeColor = System.Drawing.Color.White;
+            this.textBox85.Location = new System.Drawing.Point(201, 3);
+            this.textBox85.MaxLength = 32767;
+            this.textBox85.Multiline = false;
+            this.textBox85.Name = "textBox85";
+            this.textBox85.ReadOnly = false;
+            this.textBox85.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox85.SelectedText = "";
+            this.textBox85.SelectionLength = 0;
+            this.textBox85.SelectionStart = 0;
+            this.textBox85.Size = new System.Drawing.Size(434, 24);
+            this.textBox85.TabIndex = 1;
+            this.textBox85.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox85.UseSystemPasswordChar = false;
+            this.textBox85.WordWrap = true;
+            // 
+            // label89
+            // 
+            this.label89.BackColor = System.Drawing.Color.Transparent;
+            this.label89.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label89.Location = new System.Drawing.Point(60, 4);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(135, 22);
+            this.label89.TabIndex = 112;
+            this.label89.Text = "Charger disconnected:";
+            this.label89.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox86
+            // 
+            this.pictureBox86.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox86.Image")));
+            this.pictureBox86.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox86.Name = "pictureBox86";
+            this.pictureBox86.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox86.TabIndex = 1;
+            this.pictureBox86.TabStop = false;
             // 
             // GroupBox86
             // 
             this.GroupBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox86.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox86.Controls.Add(this.Label87);
             this.GroupBox86.Controls.Add(this.Button260);
+            this.GroupBox86.Controls.Add(this.pictureBox93);
             this.GroupBox86.Controls.Add(this.Button261);
             this.GroupBox86.Controls.Add(this.Button262);
             this.GroupBox86.Controls.Add(this.TextBox84);
@@ -3674,20 +3932,8 @@ namespace WinPaletter
             this.GroupBox86.Controls.Add(this.PictureBox85);
             this.GroupBox86.Location = new System.Drawing.Point(4, 105);
             this.GroupBox86.Name = "GroupBox86";
-            this.GroupBox86.Size = new System.Drawing.Size(754, 55);
+            this.GroupBox86.Size = new System.Drawing.Size(754, 30);
             this.GroupBox86.TabIndex = 118;
-            // 
-            // Label87
-            // 
-            this.Label87.BackColor = System.Drawing.Color.Transparent;
-            this.Label87.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label87.Location = new System.Drawing.Point(4, 30);
-            this.Label87.Name = "Label87";
-            this.Label87.Size = new System.Drawing.Size(748, 20);
-            this.Label87.TabIndex = 116;
-            this.Label87.Text = "*This item is made by launching a console app in background (with Windows startup" +
-    ") that listens to charging events";
-            this.Label87.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Button260
             // 
@@ -3704,6 +3950,16 @@ namespace WinPaletter
             this.Button260.TabIndex = 115;
             this.Button260.Tag = "2";
             this.Button260.UseVisualStyleBackColor = false;
+            // 
+            // pictureBox93
+            // 
+            this.pictureBox93.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox93.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox93.Image")));
+            this.pictureBox93.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox93.Name = "pictureBox93";
+            this.pictureBox93.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox93.TabIndex = 120;
+            this.pictureBox93.TabStop = false;
             // 
             // Button261
             // 
@@ -3744,7 +4000,7 @@ namespace WinPaletter
             this.TextBox84.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox84.DrawOnGlass = false;
             this.TextBox84.ForeColor = System.Drawing.Color.White;
-            this.TextBox84.Location = new System.Drawing.Point(174, 3);
+            this.TextBox84.Location = new System.Drawing.Point(201, 3);
             this.TextBox84.MaxLength = 32767;
             this.TextBox84.Multiline = false;
             this.TextBox84.Name = "TextBox84";
@@ -3753,7 +4009,7 @@ namespace WinPaletter
             this.TextBox84.SelectedText = "";
             this.TextBox84.SelectionLength = 0;
             this.TextBox84.SelectionStart = 0;
-            this.TextBox84.Size = new System.Drawing.Size(461, 24);
+            this.TextBox84.Size = new System.Drawing.Size(434, 24);
             this.TextBox84.TabIndex = 1;
             this.TextBox84.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox84.UseSystemPasswordChar = false;
@@ -3763,7 +4019,7 @@ namespace WinPaletter
             // 
             this.Label86.BackColor = System.Drawing.Color.Transparent;
             this.Label86.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label86.Location = new System.Drawing.Point(33, 4);
+            this.Label86.Location = new System.Drawing.Point(60, 4);
             this.Label86.Name = "Label86";
             this.Label86.Size = new System.Drawing.Size(135, 22);
             this.Label86.TabIndex = 112;
@@ -3790,7 +4046,7 @@ namespace WinPaletter
             this.GroupBox53.Controls.Add(this.TextBox52);
             this.GroupBox53.Controls.Add(this.Label53);
             this.GroupBox53.Controls.Add(this.PictureBox52);
-            this.GroupBox53.Location = new System.Drawing.Point(4, 323);
+            this.GroupBox53.Location = new System.Drawing.Point(4, 275);
             this.GroupBox53.Name = "GroupBox53";
             this.GroupBox53.Size = new System.Drawing.Size(754, 30);
             this.GroupBox53.TabIndex = 117;
@@ -3853,7 +4109,7 @@ namespace WinPaletter
             this.TextBox52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox52.DrawOnGlass = false;
             this.TextBox52.ForeColor = System.Drawing.Color.White;
-            this.TextBox52.Location = new System.Drawing.Point(174, 3);
+            this.TextBox52.Location = new System.Drawing.Point(201, 3);
             this.TextBox52.MaxLength = 32767;
             this.TextBox52.Multiline = false;
             this.TextBox52.Name = "TextBox52";
@@ -3862,7 +4118,7 @@ namespace WinPaletter
             this.TextBox52.SelectedText = "";
             this.TextBox52.SelectionLength = 0;
             this.TextBox52.SelectionStart = 0;
-            this.TextBox52.Size = new System.Drawing.Size(461, 24);
+            this.TextBox52.Size = new System.Drawing.Size(434, 24);
             this.TextBox52.TabIndex = 1;
             this.TextBox52.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox52.UseSystemPasswordChar = false;
@@ -3901,7 +4157,7 @@ namespace WinPaletter
             this.GroupBox51.Controls.Add(this.TextBox50);
             this.GroupBox51.Controls.Add(this.Label51);
             this.GroupBox51.Controls.Add(this.PictureBox50);
-            this.GroupBox51.Location = new System.Drawing.Point(4, 289);
+            this.GroupBox51.Location = new System.Drawing.Point(4, 241);
             this.GroupBox51.Name = "GroupBox51";
             this.GroupBox51.Size = new System.Drawing.Size(754, 30);
             this.GroupBox51.TabIndex = 52;
@@ -3964,7 +4220,7 @@ namespace WinPaletter
             this.TextBox50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox50.DrawOnGlass = false;
             this.TextBox50.ForeColor = System.Drawing.Color.White;
-            this.TextBox50.Location = new System.Drawing.Point(174, 3);
+            this.TextBox50.Location = new System.Drawing.Point(201, 3);
             this.TextBox50.MaxLength = 32767;
             this.TextBox50.Multiline = false;
             this.TextBox50.Name = "TextBox50";
@@ -3973,7 +4229,7 @@ namespace WinPaletter
             this.TextBox50.SelectedText = "";
             this.TextBox50.SelectionLength = 0;
             this.TextBox50.SelectionStart = 0;
-            this.TextBox50.Size = new System.Drawing.Size(461, 24);
+            this.TextBox50.Size = new System.Drawing.Size(434, 24);
             this.TextBox50.TabIndex = 1;
             this.TextBox50.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox50.UseSystemPasswordChar = false;
@@ -4012,7 +4268,7 @@ namespace WinPaletter
             this.GroupBox50.Controls.Add(this.TextBox49);
             this.GroupBox50.Controls.Add(this.Label50);
             this.GroupBox50.Controls.Add(this.PictureBox49);
-            this.GroupBox50.Location = new System.Drawing.Point(4, 255);
+            this.GroupBox50.Location = new System.Drawing.Point(4, 207);
             this.GroupBox50.Name = "GroupBox50";
             this.GroupBox50.Size = new System.Drawing.Size(754, 30);
             this.GroupBox50.TabIndex = 51;
@@ -4075,7 +4331,7 @@ namespace WinPaletter
             this.TextBox49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox49.DrawOnGlass = false;
             this.TextBox49.ForeColor = System.Drawing.Color.White;
-            this.TextBox49.Location = new System.Drawing.Point(174, 3);
+            this.TextBox49.Location = new System.Drawing.Point(201, 3);
             this.TextBox49.MaxLength = 32767;
             this.TextBox49.Multiline = false;
             this.TextBox49.Name = "TextBox49";
@@ -4084,7 +4340,7 @@ namespace WinPaletter
             this.TextBox49.SelectedText = "";
             this.TextBox49.SelectionLength = 0;
             this.TextBox49.SelectionStart = 0;
-            this.TextBox49.Size = new System.Drawing.Size(461, 24);
+            this.TextBox49.Size = new System.Drawing.Size(434, 24);
             this.TextBox49.TabIndex = 1;
             this.TextBox49.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox49.UseSystemPasswordChar = false;
@@ -4123,7 +4379,7 @@ namespace WinPaletter
             this.GroupBox49.Controls.Add(this.TextBox48);
             this.GroupBox49.Controls.Add(this.Label49);
             this.GroupBox49.Controls.Add(this.PictureBox48);
-            this.GroupBox49.Location = new System.Drawing.Point(4, 221);
+            this.GroupBox49.Location = new System.Drawing.Point(4, 173);
             this.GroupBox49.Name = "GroupBox49";
             this.GroupBox49.Size = new System.Drawing.Size(754, 30);
             this.GroupBox49.TabIndex = 50;
@@ -4186,7 +4442,7 @@ namespace WinPaletter
             this.TextBox48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox48.DrawOnGlass = false;
             this.TextBox48.ForeColor = System.Drawing.Color.White;
-            this.TextBox48.Location = new System.Drawing.Point(174, 3);
+            this.TextBox48.Location = new System.Drawing.Point(201, 3);
             this.TextBox48.MaxLength = 32767;
             this.TextBox48.Multiline = false;
             this.TextBox48.Name = "TextBox48";
@@ -4195,7 +4451,7 @@ namespace WinPaletter
             this.TextBox48.SelectedText = "";
             this.TextBox48.SelectionLength = 0;
             this.TextBox48.SelectionStart = 0;
-            this.TextBox48.Size = new System.Drawing.Size(461, 24);
+            this.TextBox48.Size = new System.Drawing.Size(434, 24);
             this.TextBox48.TabIndex = 1;
             this.TextBox48.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox48.UseSystemPasswordChar = false;
@@ -4297,7 +4553,7 @@ namespace WinPaletter
             this.TextBox47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox47.DrawOnGlass = false;
             this.TextBox47.ForeColor = System.Drawing.Color.White;
-            this.TextBox47.Location = new System.Drawing.Point(174, 3);
+            this.TextBox47.Location = new System.Drawing.Point(201, 3);
             this.TextBox47.MaxLength = 32767;
             this.TextBox47.Multiline = false;
             this.TextBox47.Name = "TextBox47";
@@ -4306,7 +4562,7 @@ namespace WinPaletter
             this.TextBox47.SelectedText = "";
             this.TextBox47.SelectionLength = 0;
             this.TextBox47.SelectionStart = 0;
-            this.TextBox47.Size = new System.Drawing.Size(461, 24);
+            this.TextBox47.Size = new System.Drawing.Size(434, 24);
             this.TextBox47.TabIndex = 1;
             this.TextBox47.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox47.UseSystemPasswordChar = false;
@@ -4408,7 +4664,7 @@ namespace WinPaletter
             this.TextBox46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox46.DrawOnGlass = false;
             this.TextBox46.ForeColor = System.Drawing.Color.White;
-            this.TextBox46.Location = new System.Drawing.Point(174, 3);
+            this.TextBox46.Location = new System.Drawing.Point(201, 3);
             this.TextBox46.MaxLength = 32767;
             this.TextBox46.Multiline = false;
             this.TextBox46.Name = "TextBox46";
@@ -4417,7 +4673,7 @@ namespace WinPaletter
             this.TextBox46.SelectedText = "";
             this.TextBox46.SelectionLength = 0;
             this.TextBox46.SelectionStart = 0;
-            this.TextBox46.Size = new System.Drawing.Size(461, 24);
+            this.TextBox46.Size = new System.Drawing.Size(434, 24);
             this.TextBox46.TabIndex = 1;
             this.TextBox46.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox46.UseSystemPasswordChar = false;
@@ -4519,7 +4775,7 @@ namespace WinPaletter
             this.TextBox45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox45.DrawOnGlass = false;
             this.TextBox45.ForeColor = System.Drawing.Color.White;
-            this.TextBox45.Location = new System.Drawing.Point(174, 3);
+            this.TextBox45.Location = new System.Drawing.Point(201, 3);
             this.TextBox45.MaxLength = 32767;
             this.TextBox45.Multiline = false;
             this.TextBox45.Name = "TextBox45";
@@ -4528,7 +4784,7 @@ namespace WinPaletter
             this.TextBox45.SelectedText = "";
             this.TextBox45.SelectionLength = 0;
             this.TextBox45.SelectionStart = 0;
-            this.TextBox45.Size = new System.Drawing.Size(461, 24);
+            this.TextBox45.Size = new System.Drawing.Size(434, 24);
             this.TextBox45.TabIndex = 1;
             this.TextBox45.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox45.UseSystemPasswordChar = false;
@@ -4566,7 +4822,7 @@ namespace WinPaletter
             this.TabPage11.Controls.Add(this.GroupBox52);
             this.TabPage11.Location = new System.Drawing.Point(144, 4);
             this.TabPage11.Name = "TabPage11";
-            this.TabPage11.Size = new System.Drawing.Size(761, 423);
+            this.TabPage11.Size = new System.Drawing.Size(761, 368);
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Fax";
             // 
@@ -5139,7 +5395,7 @@ namespace WinPaletter
             this.TabPage8.Controls.Add(this.GroupBox63);
             this.TabPage8.Location = new System.Drawing.Point(144, 4);
             this.TabPage8.Name = "TabPage8";
-            this.TabPage8.Size = new System.Drawing.Size(761, 423);
+            this.TabPage8.Size = new System.Drawing.Size(761, 368);
             this.TabPage8.TabIndex = 7;
             this.TabPage8.Text = "Explorer events";
             // 
@@ -6156,7 +6412,7 @@ namespace WinPaletter
             this.TabPage4.Controls.Add(this.GroupBox24);
             this.TabPage4.Location = new System.Drawing.Point(144, 4);
             this.TabPage4.Name = "TabPage4";
-            this.TabPage4.Size = new System.Drawing.Size(761, 423);
+            this.TabPage4.Size = new System.Drawing.Size(761, 368);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Notifications";
             // 
@@ -7174,7 +7430,7 @@ namespace WinPaletter
             this.TabPage5.Controls.Add(this.GroupBox32);
             this.TabPage5.Location = new System.Drawing.Point(144, 4);
             this.TabPage5.Name = "TabPage5";
-            this.TabPage5.Size = new System.Drawing.Size(761, 423);
+            this.TabPage5.Size = new System.Drawing.Size(761, 368);
             this.TabPage5.TabIndex = 4;
             this.TabPage5.Text = "Alarms";
             // 
@@ -8303,7 +8559,7 @@ namespace WinPaletter
             this.TabPage6.Controls.Add(this.GroupBox45);
             this.TabPage6.Location = new System.Drawing.Point(144, 4);
             this.TabPage6.Name = "TabPage6";
-            this.TabPage6.Size = new System.Drawing.Size(761, 423);
+            this.TabPage6.Size = new System.Drawing.Size(761, 368);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Ringtones";
             // 
@@ -9428,7 +9684,7 @@ namespace WinPaletter
             this.TabPage10.Controls.Add(this.GroupBox75);
             this.TabPage10.Location = new System.Drawing.Point(144, 4);
             this.TabPage10.Name = "TabPage10";
-            this.TabPage10.Size = new System.Drawing.Size(761, 423);
+            this.TabPage10.Size = new System.Drawing.Size(761, 368);
             this.TabPage10.TabIndex = 9;
             this.TabPage10.Text = "Speech recognition";
             // 
@@ -10108,7 +10364,7 @@ namespace WinPaletter
             this.TabPage12.Controls.Add(this.GroupBox84);
             this.TabPage12.Location = new System.Drawing.Point(144, 4);
             this.TabPage12.Name = "TabPage12";
-            this.TabPage12.Size = new System.Drawing.Size(761, 423);
+            this.TabPage12.Size = new System.Drawing.Size(761, 368);
             this.TabPage12.TabIndex = 11;
             this.TabPage12.Text = "NetMeeting";
             // 
@@ -10580,7 +10836,7 @@ namespace WinPaletter
             this.TabPage9.Controls.Add(this.GroupBox68);
             this.TabPage9.Location = new System.Drawing.Point(144, 4);
             this.TabPage9.Name = "TabPage9";
-            this.TabPage9.Size = new System.Drawing.Size(761, 423);
+            this.TabPage9.Size = new System.Drawing.Size(761, 368);
             this.TabPage9.TabIndex = 8;
             this.TabPage9.Text = "Others";
             // 
@@ -10814,139 +11070,13 @@ namespace WinPaletter
             this.checker_img.TabIndex = 83;
             this.checker_img.TabStop = false;
             // 
-            // BackgroundWorker1
-            // 
-            this.BackgroundWorker1.WorkerSupportsCancellation = true;
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*";
-            // 
-            // groupBox87
-            // 
-            this.groupBox87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox87.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox87.Controls.Add(this.label88);
-            this.groupBox87.Controls.Add(this.button263);
-            this.groupBox87.Controls.Add(this.button264);
-            this.groupBox87.Controls.Add(this.button265);
-            this.groupBox87.Controls.Add(this.textBox85);
-            this.groupBox87.Controls.Add(this.label89);
-            this.groupBox87.Controls.Add(this.pictureBox86);
-            this.groupBox87.Location = new System.Drawing.Point(4, 163);
-            this.groupBox87.Name = "groupBox87";
-            this.groupBox87.Size = new System.Drawing.Size(754, 55);
-            this.groupBox87.TabIndex = 119;
-            // 
-            // label88
-            // 
-            this.label88.BackColor = System.Drawing.Color.Transparent;
-            this.label88.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label88.Location = new System.Drawing.Point(4, 30);
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(748, 20);
-            this.label88.TabIndex = 116;
-            this.label88.Text = "*This item is made by launching a console app in background (with Windows startup" +
-    ") that listens to charging events";
-            this.label88.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button263
-            // 
-            this.button263.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button263.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.button263.DrawOnGlass = false;
-            this.button263.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button263.ForeColor = System.Drawing.Color.White;
-            this.button263.Image = global::WinPaletter.Properties.Resources.Sound_Stop;
-            this.button263.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(3)))), ((int)(((byte)(34)))));
-            this.button263.Location = new System.Drawing.Point(639, 3);
-            this.button263.Name = "button263";
-            this.button263.Size = new System.Drawing.Size(36, 24);
-            this.button263.TabIndex = 115;
-            this.button263.Tag = "2";
-            this.button263.UseVisualStyleBackColor = false;
-            // 
-            // button264
-            // 
-            this.button264.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button264.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.button264.DrawOnGlass = false;
-            this.button264.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button264.ForeColor = System.Drawing.Color.White;
-            this.button264.Image = global::WinPaletter.Properties.Resources.Sound_Play;
-            this.button264.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(45)))), ((int)(((byte)(77)))));
-            this.button264.Location = new System.Drawing.Point(677, 3);
-            this.button264.Name = "button264";
-            this.button264.Size = new System.Drawing.Size(36, 24);
-            this.button264.TabIndex = 114;
-            this.button264.Tag = "1";
-            this.button264.UseVisualStyleBackColor = false;
-            // 
-            // button265
-            // 
-            this.button265.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button265.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.button265.DrawOnGlass = false;
-            this.button265.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button265.ForeColor = System.Drawing.Color.White;
-            this.button265.Image = ((System.Drawing.Image)(resources.GetObject("button265.Image")));
-            this.button265.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(125)))), ((int)(((byte)(25)))));
-            this.button265.Location = new System.Drawing.Point(715, 3);
-            this.button265.Name = "button265";
-            this.button265.Size = new System.Drawing.Size(36, 24);
-            this.button265.TabIndex = 113;
-            this.button265.Tag = "3";
-            this.button265.UseVisualStyleBackColor = false;
-            // 
-            // textBox85
-            // 
-            this.textBox85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox85.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.textBox85.DrawOnGlass = false;
-            this.textBox85.ForeColor = System.Drawing.Color.White;
-            this.textBox85.Location = new System.Drawing.Point(174, 3);
-            this.textBox85.MaxLength = 32767;
-            this.textBox85.Multiline = false;
-            this.textBox85.Name = "textBox85";
-            this.textBox85.ReadOnly = false;
-            this.textBox85.Scrollbars = System.Windows.Forms.ScrollBars.None;
-            this.textBox85.SelectedText = "";
-            this.textBox85.SelectionLength = 0;
-            this.textBox85.SelectionStart = 0;
-            this.textBox85.Size = new System.Drawing.Size(461, 24);
-            this.textBox85.TabIndex = 1;
-            this.textBox85.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textBox85.UseSystemPasswordChar = false;
-            this.textBox85.WordWrap = true;
-            // 
-            // label89
-            // 
-            this.label89.BackColor = System.Drawing.Color.Transparent;
-            this.label89.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label89.Location = new System.Drawing.Point(33, 4);
-            this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(135, 22);
-            this.label89.TabIndex = 112;
-            this.label89.Text = "Charger disconnected:";
-            this.label89.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox86
-            // 
-            this.pictureBox86.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox86.Image")));
-            this.pictureBox86.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox86.Name = "pictureBox86";
-            this.pictureBox86.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox86.TabIndex = 1;
-            this.pictureBox86.TabStop = false;
-            // 
             // Sounds_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(933, 540);
+            this.ClientSize = new System.Drawing.Size(933, 571);
+            this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.Button10);
             this.Controls.Add(this.Button7);
             this.Controls.Add(this.Button8);
@@ -10968,6 +11098,9 @@ namespace WinPaletter
             this.Load += new System.EventHandler(this.Sounds_Editor_Load);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
+            this.groupBox88.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox92)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox87)).EndInit();
             this.GroupBox85.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox84)).EndInit();
             this.GroupBox65.ResumeLayout(false);
@@ -10975,12 +11108,16 @@ namespace WinPaletter
             this.GroupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
             this.GroupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox90)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             this.GroupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
             this.GroupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox89)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
             this.GroupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox88)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             this.GroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
@@ -11017,7 +11154,11 @@ namespace WinPaletter
             this.GroupBox17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();
             this.TabPage7.ResumeLayout(false);
+            this.groupBox87.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox94)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox86)).EndInit();
             this.GroupBox86.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox93)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox85)).EndInit();
             this.GroupBox53.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox52)).EndInit();
@@ -11151,8 +11292,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox67)).EndInit();
             this.GroupBox12.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).EndInit();
-            this.groupBox87.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox86)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -11777,9 +11916,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox35_SFC;
         internal UI.WP.SeparatorH Separator3;
         internal UI.WP.SeparatorH Separator1;
-        internal UI.WP.CheckBox CheckBox2;
-        internal UI.WP.CheckBox CheckBox1;
-        internal UI.WP.CheckBox CheckBox3;
         internal UI.WP.GroupBox GroupBox86;
         internal UI.WP.Button Button260;
         internal UI.WP.Button Button261;
@@ -11787,15 +11923,27 @@ namespace WinPaletter
         internal UI.WP.TextBox TextBox84;
         internal Label Label86;
         internal PictureBox PictureBox85;
-        internal UI.WP.CheckBox CheckBox4;
-        internal Label Label87;
         internal UI.WP.GroupBox groupBox87;
-        internal Label label88;
         internal UI.WP.Button button263;
         internal UI.WP.Button button264;
         internal UI.WP.Button button265;
         internal UI.WP.TextBox textBox85;
         internal Label label89;
         internal PictureBox pictureBox86;
+        internal UI.WP.GroupBox groupBox88;
+        internal UI.WP.Button button266;
+        internal UI.WP.Button button267;
+        internal UI.WP.Button button268;
+        internal UI.WP.TextBox textBox86;
+        internal Label label87;
+        internal PictureBox pictureBox87;
+        internal PictureBox pictureBox92;
+        internal PictureBox pictureBox90;
+        internal PictureBox pictureBox91;
+        internal PictureBox pictureBox89;
+        internal PictureBox pictureBox88;
+        internal PictureBox pictureBox94;
+        internal PictureBox pictureBox93;
+        internal UI.WP.AlertBox alertBox1;
     }
 }

@@ -2010,7 +2010,7 @@ namespace WinPaletter
             Button.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
             Button.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
         }
-       
+
         /// <summary>
         /// Refreshes all controls and subcontrols
         /// </summary>

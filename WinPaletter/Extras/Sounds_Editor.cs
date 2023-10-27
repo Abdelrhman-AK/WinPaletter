@@ -374,111 +374,102 @@ namespace WinPaletter
             TextBox72.Text = Sounds.Snd_SpeechRec_HubOnSound;
             TextBox71.Text = Sounds.Snd_SpeechRec_HubSleepSound;
 
-            CheckBox1.Checked = Sounds.Snd_Win_SystemExit_TaskMgmt;
-            CheckBox2.Checked = Sounds.Snd_Win_WindowsLogoff_TaskMgmt;
-            CheckBox3.Checked = Sounds.Snd_Win_WindowsLogon_TaskMgmt;
-            CheckBox4.Checked = Sounds.Snd_Win_WindowsUnlock_TaskMgmt;
-
             TextBox84.Text = Sounds.Snd_ChargerConnected;
             textBox85.Text = Sounds.Snd_ChargerDisconnected;
+            textBox86.Text = Sounds.Snd_Win_WindowsLock;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            {
-                ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
-                Sounds.Enabled = SoundsEnabled.Checked;
-                Sounds.Snd_Win_SystemStart = TextBox1.Text;
-                Sounds.Snd_Imageres_SystemStart = TextBox2.Text;
-                Sounds.Snd_Win_SystemExit = TextBox3.Text;
-                Sounds.Snd_Win_WindowsLogoff = TextBox4.Text;
-                Sounds.Snd_Win_WindowsLogon = TextBox5.Text;
-                Sounds.Snd_Win_WindowsUnlock = TextBox6.Text;
-                Sounds.Snd_Win_ChangeTheme = TextBox64.Text;
-                Sounds.Snd_Win_SystemQuestion = TextBox7.Text;
-                Sounds.Snd_Win_SystemExclamation = TextBox8.Text;
-                Sounds.Snd_Win_SystemAsterisk = TextBox9.Text;
-                Sounds.Snd_Win_SystemHand = TextBox66.Text;
-                Sounds.Snd_Win_SystemNotification = TextBox10.Text;
-                Sounds.Snd_Win_WindowsUAC = TextBox11.Text;
-                Sounds.Snd_Win_Open = TextBox16.Text;
-                Sounds.Snd_Win_Close = TextBox15.Text;
-                Sounds.Snd_Win_Maximize = TextBox14.Text;
-                Sounds.Snd_Win_Minimize = TextBox13.Text;
-                Sounds.Snd_Win_RestoreDown = TextBox12.Text;
-                Sounds.Snd_Win_RestoreUp = TextBox17.Text;
-                Sounds.Snd_Win_MenuPopup = TextBox53.Text;
-                Sounds.Snd_Win_MenuCommand = TextBox54.Text;
-                Sounds.Snd_Win_Default = TextBox55.Text;
-                Sounds.Snd_Win_Notification_Default = TextBox23.Text;
-                Sounds.Snd_Win_Notification_IM = TextBox22.Text;
-                Sounds.Snd_Win_MessageNudge = TextBox21.Text;
-                Sounds.Snd_Win_Notification_Mail = TextBox20.Text;
-                Sounds.Snd_Win_MailBeep = TextBox65.Text;
-                Sounds.Snd_Win_Notification_Proximity = TextBox19.Text;
-                Sounds.Snd_Win_Notification_Reminder = TextBox18.Text;
-                Sounds.Snd_Win_Notification_SMS = TextBox24.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm = TextBox31.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm2 = TextBox30.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm3 = TextBox29.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm4 = TextBox28.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm5 = TextBox27.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm6 = TextBox26.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm7 = TextBox25.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm8 = TextBox34.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm9 = TextBox33.Text;
-                Sounds.Snd_Win_Notification_Looping_Alarm10 = TextBox32.Text;
-                Sounds.Snd_Win_Notification_Looping_Call = TextBox44.Text;
-                Sounds.Snd_Win_Notification_Looping_Call2 = TextBox43.Text;
-                Sounds.Snd_Win_Notification_Looping_Call3 = TextBox42.Text;
-                Sounds.Snd_Win_Notification_Looping_Call4 = TextBox41.Text;
-                Sounds.Snd_Win_Notification_Looping_Call5 = TextBox40.Text;
-                Sounds.Snd_Win_Notification_Looping_Call6 = TextBox39.Text;
-                Sounds.Snd_Win_Notification_Looping_Call7 = TextBox38.Text;
-                Sounds.Snd_Win_Notification_Looping_Call8 = TextBox37.Text;
-                Sounds.Snd_Win_Notification_Looping_Call9 = TextBox36.Text;
-                Sounds.Snd_Win_Notification_Looping_Call10 = TextBox35.Text;
-                Sounds.Snd_Win_DeviceConnect = TextBox45.Text;
-                Sounds.Snd_Win_DeviceDisconnect = TextBox46.Text;
-                Sounds.Snd_Win_DeviceFail = TextBox47.Text;
-                Sounds.Snd_Win_LowBatteryAlarm = TextBox48.Text;
-                Sounds.Snd_Win_CriticalBatteryAlarm = TextBox49.Text;
-                Sounds.Snd_Win_PrintComplete = TextBox50.Text;
-                Sounds.Snd_Win_FaxBeep = TextBox51.Text;
-                Sounds.Snd_Win_ProximityConnection = TextBox52.Text;
-                Sounds.Snd_Explorer_Navigating = TextBox62.Text;
-                Sounds.Snd_Explorer_EmptyRecycleBin = TextBox61.Text;
-                Sounds.Snd_Explorer_MoveMenuItem = TextBox56.Text;
-                Sounds.Snd_Explorer_ActivatingDocument = TextBox60.Text;
-                Sounds.Snd_Win_ShowBand = TextBox63.Text;
-                Sounds.Snd_Explorer_SecurityBand = TextBox59.Text;
-                Sounds.Snd_Explorer_BlockedPopup = TextBox58.Text;
-                Sounds.Snd_Explorer_FeedDiscovered = TextBox57.Text;
-                Sounds.Snd_Win_AppGPFault = TextBox68.Text;
-                Sounds.Snd_Win_CCSelect = TextBox67.Text;
-                Sounds.Snd_Explorer_SearchProviderDiscovered = TextBox75.Text;
-                Sounds.Snd_Explorer_FaxNew = TextBox76.Text;
-                Sounds.Snd_Explorer_FaxSent = TextBox77.Text;
-                Sounds.Snd_Explorer_FaxLineRings = TextBox79.Text;
-                Sounds.Snd_Explorer_FaxError = TextBox78.Text;
-                Sounds.Snd_NetMeeting_PersonJoins = TextBox83.Text;
-                Sounds.Snd_NetMeeting_PersonLeaves = TextBox82.Text;
-                Sounds.Snd_NetMeeting_ReceiveCall = TextBox80.Text;
-                Sounds.Snd_NetMeeting_ReceiveRequestToJoin = TextBox81.Text;
-                Sounds.Snd_SpeechRec_DisNumbersSound = TextBox70.Text;
-                Sounds.Snd_SpeechRec_PanelSound = TextBox74.Text;
-                Sounds.Snd_SpeechRec_MisrecoSound = TextBox69.Text;
-                Sounds.Snd_SpeechRec_HubOffSound = TextBox73.Text;
-                Sounds.Snd_SpeechRec_HubOnSound = TextBox72.Text;
-                Sounds.Snd_SpeechRec_HubSleepSound = TextBox71.Text;
+            ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
+            Sounds.Enabled = SoundsEnabled.Checked;
+            Sounds.Snd_Win_SystemStart = TextBox1.Text;
+            Sounds.Snd_Imageres_SystemStart = TextBox2.Text;
+            Sounds.Snd_Win_SystemExit = TextBox3.Text;
+            Sounds.Snd_Win_WindowsLogoff = TextBox4.Text;
+            Sounds.Snd_Win_WindowsLogon = TextBox5.Text;
+            Sounds.Snd_Win_WindowsUnlock = TextBox6.Text;
+            Sounds.Snd_Win_ChangeTheme = TextBox64.Text;
+            Sounds.Snd_Win_SystemQuestion = TextBox7.Text;
+            Sounds.Snd_Win_SystemExclamation = TextBox8.Text;
+            Sounds.Snd_Win_SystemAsterisk = TextBox9.Text;
+            Sounds.Snd_Win_SystemHand = TextBox66.Text;
+            Sounds.Snd_Win_SystemNotification = TextBox10.Text;
+            Sounds.Snd_Win_WindowsUAC = TextBox11.Text;
+            Sounds.Snd_Win_Open = TextBox16.Text;
+            Sounds.Snd_Win_Close = TextBox15.Text;
+            Sounds.Snd_Win_Maximize = TextBox14.Text;
+            Sounds.Snd_Win_Minimize = TextBox13.Text;
+            Sounds.Snd_Win_RestoreDown = TextBox12.Text;
+            Sounds.Snd_Win_RestoreUp = TextBox17.Text;
+            Sounds.Snd_Win_MenuPopup = TextBox53.Text;
+            Sounds.Snd_Win_MenuCommand = TextBox54.Text;
+            Sounds.Snd_Win_Default = TextBox55.Text;
+            Sounds.Snd_Win_Notification_Default = TextBox23.Text;
+            Sounds.Snd_Win_Notification_IM = TextBox22.Text;
+            Sounds.Snd_Win_MessageNudge = TextBox21.Text;
+            Sounds.Snd_Win_Notification_Mail = TextBox20.Text;
+            Sounds.Snd_Win_MailBeep = TextBox65.Text;
+            Sounds.Snd_Win_Notification_Proximity = TextBox19.Text;
+            Sounds.Snd_Win_Notification_Reminder = TextBox18.Text;
+            Sounds.Snd_Win_Notification_SMS = TextBox24.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm = TextBox31.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm2 = TextBox30.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm3 = TextBox29.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm4 = TextBox28.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm5 = TextBox27.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm6 = TextBox26.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm7 = TextBox25.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm8 = TextBox34.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm9 = TextBox33.Text;
+            Sounds.Snd_Win_Notification_Looping_Alarm10 = TextBox32.Text;
+            Sounds.Snd_Win_Notification_Looping_Call = TextBox44.Text;
+            Sounds.Snd_Win_Notification_Looping_Call2 = TextBox43.Text;
+            Sounds.Snd_Win_Notification_Looping_Call3 = TextBox42.Text;
+            Sounds.Snd_Win_Notification_Looping_Call4 = TextBox41.Text;
+            Sounds.Snd_Win_Notification_Looping_Call5 = TextBox40.Text;
+            Sounds.Snd_Win_Notification_Looping_Call6 = TextBox39.Text;
+            Sounds.Snd_Win_Notification_Looping_Call7 = TextBox38.Text;
+            Sounds.Snd_Win_Notification_Looping_Call8 = TextBox37.Text;
+            Sounds.Snd_Win_Notification_Looping_Call9 = TextBox36.Text;
+            Sounds.Snd_Win_Notification_Looping_Call10 = TextBox35.Text;
+            Sounds.Snd_Win_DeviceConnect = TextBox45.Text;
+            Sounds.Snd_Win_DeviceDisconnect = TextBox46.Text;
+            Sounds.Snd_Win_DeviceFail = TextBox47.Text;
+            Sounds.Snd_Win_LowBatteryAlarm = TextBox48.Text;
+            Sounds.Snd_Win_CriticalBatteryAlarm = TextBox49.Text;
+            Sounds.Snd_Win_PrintComplete = TextBox50.Text;
+            Sounds.Snd_Win_FaxBeep = TextBox51.Text;
+            Sounds.Snd_Win_ProximityConnection = TextBox52.Text;
+            Sounds.Snd_Explorer_Navigating = TextBox62.Text;
+            Sounds.Snd_Explorer_EmptyRecycleBin = TextBox61.Text;
+            Sounds.Snd_Explorer_MoveMenuItem = TextBox56.Text;
+            Sounds.Snd_Explorer_ActivatingDocument = TextBox60.Text;
+            Sounds.Snd_Win_ShowBand = TextBox63.Text;
+            Sounds.Snd_Explorer_SecurityBand = TextBox59.Text;
+            Sounds.Snd_Explorer_BlockedPopup = TextBox58.Text;
+            Sounds.Snd_Explorer_FeedDiscovered = TextBox57.Text;
+            Sounds.Snd_Win_AppGPFault = TextBox68.Text;
+            Sounds.Snd_Win_CCSelect = TextBox67.Text;
+            Sounds.Snd_Explorer_SearchProviderDiscovered = TextBox75.Text;
+            Sounds.Snd_Explorer_FaxNew = TextBox76.Text;
+            Sounds.Snd_Explorer_FaxSent = TextBox77.Text;
+            Sounds.Snd_Explorer_FaxLineRings = TextBox79.Text;
+            Sounds.Snd_Explorer_FaxError = TextBox78.Text;
+            Sounds.Snd_NetMeeting_PersonJoins = TextBox83.Text;
+            Sounds.Snd_NetMeeting_PersonLeaves = TextBox82.Text;
+            Sounds.Snd_NetMeeting_ReceiveCall = TextBox80.Text;
+            Sounds.Snd_NetMeeting_ReceiveRequestToJoin = TextBox81.Text;
+            Sounds.Snd_SpeechRec_DisNumbersSound = TextBox70.Text;
+            Sounds.Snd_SpeechRec_PanelSound = TextBox74.Text;
+            Sounds.Snd_SpeechRec_MisrecoSound = TextBox69.Text;
+            Sounds.Snd_SpeechRec_HubOffSound = TextBox73.Text;
+            Sounds.Snd_SpeechRec_HubOnSound = TextBox72.Text;
+            Sounds.Snd_SpeechRec_HubSleepSound = TextBox71.Text;
 
-                Sounds.Snd_Win_SystemExit_TaskMgmt = CheckBox1.Checked;
-                Sounds.Snd_Win_WindowsLogoff_TaskMgmt = CheckBox2.Checked;
-                Sounds.Snd_Win_WindowsLogon_TaskMgmt = CheckBox3.Checked;
-                Sounds.Snd_Win_WindowsUnlock_TaskMgmt = CheckBox4.Checked;
-                Sounds.Snd_ChargerConnected = TextBox84.Text;
-                Sounds.Snd_ChargerDisconnected = textBox85.Text;
-            }
+            Sounds.Snd_ChargerConnected = TextBox84.Text;
+            Sounds.Snd_ChargerDisconnected = textBox85.Text;
+            Sounds.Snd_Win_WindowsLock = textBox86.Text;
         }
 
         private void ScrSvrEnabled_CheckedChanged(object sender, EventArgs e)
@@ -565,7 +556,6 @@ namespace WinPaletter
                 }
             }
         }
-
 
         public void GetFromClassicThemeFile(string File, Theme.Structures.Sounds _DefaultSounds)
         {

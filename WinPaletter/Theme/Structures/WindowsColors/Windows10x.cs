@@ -100,16 +100,16 @@ namespace WinPaletter.Theme.Structures
                 byte[] x;
                 object y;
 
-                byte[] DefColorsBytes = new[] 
-                    { 
-                        @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, (byte)255, 
-                        @default.Color_Index1.R, @default.Color_Index1.G, @default.Color_Index1.B, (byte)255, 
+                byte[] DefColorsBytes = new[]
+                    {
+                        @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, (byte)255,
+                        @default.Color_Index1.R, @default.Color_Index1.G, @default.Color_Index1.B, (byte)255,
                         @default.Color_Index2.R, @default.Color_Index2.G, @default.Color_Index2.B, (byte)255,
-                        @default.Color_Index3.R, @default.Color_Index3.G, @default.Color_Index3.B, (byte)255, 
-                        @default.Color_Index4.R, @default.Color_Index4.G, @default.Color_Index4.B, (byte)255, 
-                        @default.Color_Index5.R, @default.Color_Index5.G, @default.Color_Index5.B, (byte)255, 
-                        @default.Color_Index6.R, @default.Color_Index6.G, @default.Color_Index6.B, (byte)255, 
-                        @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, (byte)255 
+                        @default.Color_Index3.R, @default.Color_Index3.G, @default.Color_Index3.B, (byte)255,
+                        @default.Color_Index4.R, @default.Color_Index4.G, @default.Color_Index4.B, (byte)255,
+                        @default.Color_Index5.R, @default.Color_Index5.G, @default.Color_Index5.B, (byte)255,
+                        @default.Color_Index6.R, @default.Color_Index6.G, @default.Color_Index6.B, (byte)255,
+                        @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, (byte)255
                     };
 
                 x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);

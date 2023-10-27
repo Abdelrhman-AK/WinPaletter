@@ -388,12 +388,9 @@ namespace WinPaletter.Theme
         {
             Enabled = true,
             Snd_Imageres_SystemStart = OS.W11 ? "Default" : "",
-            Snd_Win_SystemExit_TaskMgmt = !OS.WXP & !OS.WVista & !OS.W7,
-            Snd_Win_WindowsLogoff_TaskMgmt = !OS.WXP & !OS.WVista & !OS.W7,
-            Snd_Win_WindowsLogon_TaskMgmt = !OS.WXP & !OS.WVista & !OS.W7,
-            Snd_Win_WindowsUnlock_TaskMgmt = !OS.WXP & !OS.WVista & !OS.W7,
             Snd_ChargerConnected = "",
-            Snd_ChargerDisconnected = ""
+            Snd_ChargerDisconnected = "",
+            Snd_Win_WindowsLock = ""
         };
 
         /// <summary>Object derived of structure that has data about Windows switcher (Alt+Tab) appearance, and it can be customized.</summary>

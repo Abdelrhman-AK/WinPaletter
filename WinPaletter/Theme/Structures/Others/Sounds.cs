@@ -272,39 +272,21 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Speech recognition (Windows Vista and later): disambiguation panel WAV sound file path</summary>
         public string Snd_SpeechRec_PanelSound;
 
-        /// <summary>Windows exit WAV sound file path 
-        /// <br></br>- Targeting Windows 8 and later
-        /// <br></br>- Deflected by task creation in Task Scheduler
-        /// </summary>
-        public bool Snd_Win_SystemExit_TaskMgmt;
-
-        /// <summary>Windows logoff WAV sound file path 
-        /// <br></br>- Targeting Windows 8 and later
-        /// <br></br>- Deflected by task creation in Task Scheduler
-        /// </summary>
-        public bool Snd_Win_WindowsLogoff_TaskMgmt;
-
-        /// <summary>Windows logon WAV sound file path 
-        /// <br></br>- Targeting Windows 8 and later
-        /// <br></br>- Deflected by task creation in Task Scheduler
-        /// </summary>
-        public bool Snd_Win_WindowsLogon_TaskMgmt;
-
         /// <summary>Windows unlock WAV sound file path 
         /// <br></br>- Targeting Windows 8 and later
-        /// <br></br>- Deflected by task creation in Task Scheduler
+        /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public bool Snd_Win_WindowsUnlock_TaskMgmt;
+        public string Snd_Win_WindowsLock;
 
         /// <summary>Charger connected WAV sound file path 
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
-        /// <br></br>- Deflected by application that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
         public string Snd_ChargerConnected;
 
         /// <summary>Charger disconnected WAV sound file path 
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
-        /// <br></br>- Deflected by application that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
         public string Snd_ChargerDisconnected;
 
@@ -318,11 +300,7 @@ namespace WinPaletter.Theme.Structures
             Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", @default.Snd_Imageres_SystemStart).ToString();
             Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", @default.Snd_ChargerConnected).ToString();
             Snd_ChargerDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", @default.Snd_ChargerDisconnected).ToString();
-
-            Snd_Win_SystemExit_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", @default.Snd_Win_SystemExit_TaskMgmt));
-            Snd_Win_WindowsLogoff_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", @default.Snd_Win_WindowsLogoff_TaskMgmt));
-            Snd_Win_WindowsLogon_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", @default.Snd_Win_WindowsLogon_TaskMgmt));
-            Snd_Win_WindowsUnlock_TaskMgmt = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", @default.Snd_Win_WindowsUnlock_TaskMgmt));
+            Snd_Win_WindowsLock = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", @default.Snd_Win_WindowsLock).ToString();
 
             string Scope_Win = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current";
             Snd_Win_Default = GetReg(string.Format(Scope_Win, ".Default"), "", @default.Snd_Win_Default).ToString();
@@ -426,11 +404,12 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", Snd_ChargerDisconnected, RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", Snd_Win_WindowsLock, RegistryValueKind.String);
 
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", Snd_Win_SystemExit_TaskMgmt);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", Snd_Win_WindowsLogoff_TaskMgmt);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", Snd_Win_WindowsLogon_TaskMgmt);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", Snd_Win_WindowsUnlock_TaskMgmt);
+            if (System.IO.File.Exists(PathsExt.SysEventsSounds_INI))
+            {
+                System.IO.File.Delete(PathsExt.SysEventsSounds_INI);
+            }
 
             if (Enabled)
             {
@@ -498,60 +477,11 @@ namespace WinPaletter.Theme.Structures
 
                 if (OS.W8 | OS.W81 | OS.W10 | OS.W11 | OS.W12)
                 {
-                    if (Snd_Win_SystemExit_TaskMgmt && File.Exists(Snd_Win_SystemExit) && Path.GetExtension(Snd_Win_SystemExit).ToUpper() == ".WAV")
-                    {
-                        TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit, TreeView);
-                    }
-                    else
-                    {
-                        TaskMgmt(TaskType.Shutdown, Actions.Delete, "", TreeView);
-                    }
-
-                    if (Snd_Win_WindowsLogoff_TaskMgmt && File.Exists(Snd_Win_WindowsLogoff) && Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper() == ".WAV")
-                    {
-                        TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff, TreeView);
-                    }
-                    else
-                    {
-                        TaskMgmt(TaskType.Logoff, Actions.Delete, "", TreeView);
-                    }
-
-                    if (Snd_Win_WindowsLogon_TaskMgmt && File.Exists(Snd_Win_WindowsLogon) && Path.GetExtension(Snd_Win_WindowsLogon).ToUpper() == ".WAV")
-                    {
-                        TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon, TreeView);
-                    }
-                    else
-                    {
-                        TaskMgmt(TaskType.Logon, Actions.Delete, "", TreeView);
-                    }
-
-                    if (Snd_Win_WindowsUnlock_TaskMgmt && File.Exists(Snd_Win_WindowsUnlock) && Path.GetExtension(Snd_Win_WindowsUnlock).ToUpper() == ".WAV")
-                    {
-                        TaskMgmt(TaskType.Unlock, Actions.Add, Snd_Win_WindowsUnlock, TreeView);
-                    }
-                    else
-                    {
-                        TaskMgmt(TaskType.Unlock, Actions.Delete, "", TreeView);
-                    }
-                }
-
-                TaskMgmt(TaskType.ChargerConnected, Actions.Delete, "", TreeView);
-                bool ChargerCondition = (File.Exists(Snd_ChargerConnected) && Path.GetExtension(Snd_ChargerConnected).ToUpper() == ".WAV") ||
-                    (File.Exists(Snd_ChargerDisconnected) && Path.GetExtension(Snd_ChargerDisconnected).ToUpper() == ".WAV") ;
-
-                if (ChargerCondition)
-                {
-                    Program.InitializeWPSysEventsSounds();
-                    EditReg(TreeView, "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "WinPaletter system events sounds", PathsExt.WPSysEventsSounds, RegistryValueKind.String);
-                }
-                else
-                {
-                    Program.InitializeWPSysEventsSounds(true);
-                    using (RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
-                    {
-                        rk.DeleteValue("WinPaletter system events sounds", false);
-                        rk.Close();
-                    }
+                    DeleteTask(TaskType.Shutdown, TreeView);
+                    DeleteTask(TaskType.Logoff, TreeView);
+                    DeleteTask(TaskType.Logon, TreeView);
+                    DeleteTask(TaskType.Unlock, TreeView);
+                    DeleteTask(TaskType.ChargerConnected, TreeView);
                 }
 
                 string[] Scope_Win = new[] { @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified" };
@@ -657,8 +587,18 @@ namespace WinPaletter.Theme.Structures
                     EditReg(TreeView, string.Format(Scope, "PanelSound"), "", Snd_SpeechRec_PanelSound, RegistryValueKind.String);
                 }
 
-            }
+                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir))
+                    System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir);
 
+                INI ini = new(PathsExt.SysEventsSounds_INI);
+                ini.Write("Power", "Snd_ChargerConnected", Snd_ChargerConnected);
+                ini.Write("Power", "Snd_ChargerDisconnected", Snd_ChargerDisconnected);
+                ini.Write("Windows", "Logoff", Snd_Win_WindowsLogoff);
+                ini.Write("Windows", "Logon", Snd_Win_WindowsLogon);
+                ini.Write("Windows", "Lock", Snd_Win_WindowsLock);
+                ini.Write("Windows", "Unlock", Snd_Win_WindowsUnlock);
+                ini.Write("Windows", "Exit", Snd_Win_SystemExit);
+            }
         }
 
         /// <summary>Operator to check if two Sounds structures are equal</summary>

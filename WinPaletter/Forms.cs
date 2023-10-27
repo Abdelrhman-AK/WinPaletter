@@ -124,6 +124,23 @@ namespace WinPaletter
             }
         }
 
+        private static SysEventsSndsInstaller _SysEventsSndsInstaller;
+        public static SysEventsSndsInstaller SysEventsSndsInstaller
+        {
+            get
+            {
+                _SysEventsSndsInstaller = CreateInstance(_SysEventsSndsInstaller);
+                return _SysEventsSndsInstaller;
+            }
+            set
+            {
+                if (value == _SysEventsSndsInstaller)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _SysEventsSndsInstaller);
+            }
+        }
 
         private static ThemeLog _ThemeLog;
         public static ThemeLog ThemeLog
