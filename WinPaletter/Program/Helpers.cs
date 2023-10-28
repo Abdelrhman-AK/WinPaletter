@@ -5,13 +5,49 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
     internal partial class Program
     {
+        public static void SendCommand(string command, bool Wait = true)
+        {
+            using (var process = new Process()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = command.Split(' ')[0],
+                    Verb = OS.WXP ? "" : "runas",
+                    Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : "",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                    UseShellExecute = true
+                }
+            })
+            {
+                process.Start();
+                process.WaitForExit();
+            }
+        }
+
+        public static List<Process> ProgramsRunning(string FullPath)
+        {
+            List<Process> processes = new();
+            string FileName = System.IO.Path.GetFileNameWithoutExtension(FullPath).ToLower();
+
+            foreach (Process p in Process.GetProcessesByName(FileName))
+            {
+                if (FullPath.ToLower() == NativeMethods.Kernel32.GetProcessFilename(p).ToLower())
+                    processes.Add(p);
+            }
+
+            return processes;
+        }
+
         private static void LoadThemeManager()
         {
             if (OS.W11)
@@ -347,12 +383,6 @@ namespace WinPaletter
             }
         }
 
-        private static void InitializeCMDWrapper()
-        {
-            if (!Elevated && !Settings.Services.DontUseWPElevatorConsole)
-                CMD_Wrapper.Start();
-        }
-
         public static void InitializeSysEventsSounds(bool ForceUpdate = false)
         {
             bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
@@ -361,7 +391,7 @@ namespace WinPaletter
             if (ForceUpdate || condition1)
             {
                 //Update
-                if (Settings.Services.ShowSysEventsSoundsInstaller)
+                if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
                     Forms.SysEventsSndsInstaller.Install(false);
                 else
                     Forms.SysEventsSndsInstaller.Setup();
@@ -370,7 +400,7 @@ namespace WinPaletter
             if (condition0)
             {
                 //Install
-                if (Settings.Services.ShowSysEventsSoundsInstaller)
+                if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
                     Forms.SysEventsSndsInstaller.Install(true);
             }
         }
@@ -397,6 +427,124 @@ namespace WinPaletter
             {
                 ShowWhatsNew = false;
             }
+        }
+
+        public static void RefreshDWM(Theme.Manager TM)
+        {
+            try
+            {
+                if (Users.UserSID == Users.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
+                {
+                    DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
+
+                    if (OS.W8 || OS.W81)
+                    {
+                        temp.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
+                        temp.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
+                    }
+
+                    else if (OS.W7)
+                    {
+                        temp.clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb();
+                        temp.nIntensity = (uint)TM.Windows7.ColorizationColorBalance;
+
+                        temp.clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb();
+                        temp.clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance;
+
+                        temp.clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance;
+                        temp.clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity;
+                        temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                    }
+
+                    else if (OS.WVista)
+                    {
+                        temp.clrColor = (uint)Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
+                        temp.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                    }
+
+                    DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                }
+            }
+            catch { }
+        }
+
+        public static void RestartExplorer(TreeView TreeView = null)
+        {
+            {
+                try
+                {
+                    if (TreeView is not null)
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.KillingExplorer), "info");
+                    var sw = new Stopwatch();
+                    sw.Reset();
+                    sw.Start();
+
+                    Program.ExplorerKiller.Start();
+                    Program.ExplorerKiller.WaitForExit();
+                    Program.Explorer_exe.Start();
+
+                    sw.Stop();
+                    if (TreeView is not null)
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)), "time");
+                    sw.Reset();
+                }
+                catch (Exception ex)
+                {
+                    if (TreeView is not null)
+                    {
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.ErrorExplorerRestart), "error");
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                    }
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether any network connection is available
+        /// </summary>
+        /// <returns>
+        ///    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsNetworkAvailable()
+        {
+            return Wininet.CheckNet();
+        }
+
+        public static bool Ping(string url)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Timeout = 60000;
+                request.AllowAutoRedirect = false;
+                request.Method = "HEAD";
+
+                using (var response = request.GetResponse())
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static double GetWindowsScreenScalingFactor(bool percentage = true)
+        {
+            var GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
+            var DeviceContextHandle = GraphicsObject.GetHdc();
+            int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
+            int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
+            double ScreenScalingFactor = Math.Round(PhysicalScreenHeight / (double)LogicalScreenHeight, 2);
+
+            if (percentage)
+                ScreenScalingFactor *= 100.0d;
+
+            GraphicsObject.ReleaseHdc(DeviceContextHandle);
+            GraphicsObject.Dispose();
+            return ScreenScalingFactor;
         }
     }
 }

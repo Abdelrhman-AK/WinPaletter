@@ -112,51 +112,51 @@ namespace WinPaletter
                     {
                         string line_processed;
 
-                        if (line.StartsWith("*Win_11_", (StringComparison)5))
+                        if (line.StartsWith("*Win_11_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*Win_11_".Count());
 
-                        else if (line.StartsWith("*Win_10_", (StringComparison)5))
+                        else if (line.StartsWith("*Win_10_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*Win_10_".Count());
 
                         else
                             line_processed = line.Remove(0, "*Win_11_".Count());
 
-                        if (line_processed.StartsWith("Color_Index0= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index0= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index0 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index0= ".Count())));
-                        if (line_processed.StartsWith("Color_Index1= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index1= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index1 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index1= ".Count())));
-                        if (line_processed.StartsWith("Color_Index2= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index2= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index2 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index2= ".Count())));
-                        if (line_processed.StartsWith("Color_Index3= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index3= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index3 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index3= ".Count())));
-                        if (line_processed.StartsWith("Color_Index4= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index4= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index4 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index4= ".Count())));
-                        if (line_processed.StartsWith("Color_Index5= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index5= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index5 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index5= ".Count())));
-                        if (line_processed.StartsWith("Color_Index6= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index6= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index6 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index6= ".Count())));
-                        if (line_processed.StartsWith("Color_Index7= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Color_Index7= ", StringComparison.OrdinalIgnoreCase))
                             Color_Index7 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Color_Index7= ".Count())));
-                        if (line_processed.StartsWith("WinMode_Light= ", (StringComparison)5))
+                        if (line_processed.StartsWith("WinMode_Light= ", StringComparison.OrdinalIgnoreCase))
                             WinMode_Light = Conversions.ToBoolean(line_processed.Remove(0, "WinMode_Light= ".Count()));
-                        if (line_processed.StartsWith("AppMode_Light= ", (StringComparison)5))
+                        if (line_processed.StartsWith("AppMode_Light= ", StringComparison.OrdinalIgnoreCase))
                             AppMode_Light = Conversions.ToBoolean(line_processed.Remove(0, "AppMode_Light= ".Count()));
-                        if (line_processed.StartsWith("Transparency= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Transparency= ", StringComparison.OrdinalIgnoreCase))
                             Transparency = Conversions.ToBoolean(line_processed.Remove(0, "Transparency= ".Count()));
-                        if (line_processed.StartsWith("IncreaseTBTransparency= ", (StringComparison)5))
+                        if (line_processed.StartsWith("IncreaseTBTransparency= ", StringComparison.OrdinalIgnoreCase))
                             IncreaseTBTransparency = Conversions.ToBoolean(line_processed.Remove(0, "IncreaseTBTransparency= ".Count()));
-                        if (line_processed.StartsWith("TB_Blur= ", (StringComparison)5))
+                        if (line_processed.StartsWith("TB_Blur= ", StringComparison.OrdinalIgnoreCase))
                             TB_Blur = Conversions.ToBoolean(line_processed.Remove(0, "TB_Blur= ".Count()));
-                        if (line_processed.StartsWith("Titlebar_Active= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Titlebar_Active= ", StringComparison.OrdinalIgnoreCase))
                             Titlebar_Active = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Titlebar_Active= ".Count())));
-                        if (line_processed.StartsWith("Titlebar_Inactive= ", (StringComparison)5))
+                        if (line_processed.StartsWith("Titlebar_Inactive= ", StringComparison.OrdinalIgnoreCase))
                             Titlebar_Inactive = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Titlebar_Inactive= ".Count())));
-                        if (line_processed.StartsWith("StartMenu_Accent= ", (StringComparison)5))
+                        if (line_processed.StartsWith("StartMenu_Accent= ", StringComparison.OrdinalIgnoreCase))
                             StartMenu_Accent = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "StartMenu_Accent= ".Count())));
-                        if (line_processed.StartsWith("ApplyAccentonTitlebars= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ApplyAccentonTitlebars= ", StringComparison.OrdinalIgnoreCase))
                             ApplyAccentOnTitlebars = Conversions.ToBoolean(line_processed.Remove(0, "ApplyAccentonTitlebars= ".Count()));
 
-                        if (line.StartsWith("AccentOnStartTBAC= ", (StringComparison)5))
+                        if (line.StartsWith("AccentOnStartTBAC= ", StringComparison.OrdinalIgnoreCase))
                         {
                             switch (line.Remove(0, "AccentOnStartTBAC= ".Count()).ToLower() ?? "")
                             {
@@ -249,29 +249,29 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*Metro_ColorizationColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_ColorizationColor= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Metro_ColorizationColor= ".Count())));
-                        if (line.StartsWith("*Metro_ColorizationColorBalance= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_ColorizationColorBalance= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationColorBalance = Conversions.ToInteger(line.Remove(0, "*Metro_ColorizationColorBalance= ".Count()));
-                        if (line.StartsWith("*Metro_PersonalColors_Background= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_PersonalColors_Background= ", StringComparison.OrdinalIgnoreCase))
                             PersonalColors_Background = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Metro_PersonalColors_Background= ".Count())));
-                        if (line.StartsWith("*Metro_PersonalColors_Accent= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_PersonalColors_Accent= ", StringComparison.OrdinalIgnoreCase))
                             PersonalColors_Accent = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Metro_PersonalColors_Accent= ".Count())));
-                        if (line.StartsWith("*Metro_StartColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_StartColor= ", StringComparison.OrdinalIgnoreCase))
                             StartColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Metro_StartColor= ".Count())));
-                        if (line.StartsWith("*Metro_AccentColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_AccentColor= ", StringComparison.OrdinalIgnoreCase))
                             AccentColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Metro_AccentColor= ".Count())));
-                        if (line.StartsWith("*Metro_Start= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_Start= ", StringComparison.OrdinalIgnoreCase))
                             Start = Conversions.ToInteger(line.Remove(0, "*Metro_Start= ".Count()));
-                        if (line.StartsWith("*Metro_Theme= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_Theme= ", StringComparison.OrdinalIgnoreCase))
                             Theme = (Windows7.Themes)Conversions.ToInteger(line.Remove(0, "*Metro_Theme= ".Count()));
-                        if (line.StartsWith("*Metro_LogonUI= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_LogonUI= ", StringComparison.OrdinalIgnoreCase))
                             LogonUI = Conversions.ToInteger(line.Remove(0, "*Metro_LogonUI= ".Count()));
-                        if (line.StartsWith("*Metro_NoLockScreen= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_NoLockScreen= ", StringComparison.OrdinalIgnoreCase))
                             NoLockScreen = Conversions.ToBoolean(line.Remove(0, "*Metro_NoLockScreen= ".Count()));
-                        if (line.StartsWith("*Metro_LockScreenType= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_LockScreenType= ", StringComparison.OrdinalIgnoreCase))
                             LockScreenType = (LogonUI7.Modes)Conversions.ToInteger(line.Remove(0, "*Metro_LockScreenType= ".Count()));
-                        if (line.StartsWith("*Metro_LockScreenSystemID= ", (StringComparison)5))
+                        if (line.StartsWith("*Metro_LockScreenSystemID= ", StringComparison.OrdinalIgnoreCase))
                             LockScreenSystemID = Conversions.ToInteger(line.Remove(0, "*Metro_LockScreenSystemID= ".Count()));
                     }
                 }
@@ -320,23 +320,23 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*Aero_ColorizationColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationColor= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationColor= ".Count())));
-                        if (line.StartsWith("*Aero_ColorizationAfterglow= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationAfterglow= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationAfterglow = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationAfterglow= ".Count())));
-                        if (line.StartsWith("*Aero_ColorizationColorBalance= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationColorBalance= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationColorBalance = Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationColorBalance= ".Count()));
-                        if (line.StartsWith("*Aero_ColorizationAfterglowBalance= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationAfterglowBalance= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationAfterglowBalance = Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count()));
-                        if (line.StartsWith("*Aero_ColorizationBlurBalance= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationBlurBalance= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationBlurBalance = Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationBlurBalance= ".Count()));
-                        if (line.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationGlassReflectionIntensity = Conversions.ToInteger(line.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count()));
-                        if (line.StartsWith("*Aero_EnableAeroPeek= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_EnableAeroPeek= ", StringComparison.OrdinalIgnoreCase))
                             EnableAeroPeek = Conversions.ToBoolean(line.Remove(0, "*Aero_EnableAeroPeek= ".Count()));
-                        if (line.StartsWith("*Aero_AlwaysHibernateThumbnails= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_AlwaysHibernateThumbnails= ", StringComparison.OrdinalIgnoreCase))
                             AlwaysHibernateThumbnails = Conversions.ToBoolean(line.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count()));
-                        if (line.StartsWith("*Aero_Theme= ", (StringComparison)5))
+                        if (line.StartsWith("*Aero_Theme= ", StringComparison.OrdinalIgnoreCase))
                             Theme = (Themes)Conversions.ToInteger(line.Remove(0, "*Aero_Theme= ".Count()));
                     }
                 }
@@ -375,11 +375,11 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*Vista_ColorizationColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Vista_ColorizationColor= ", StringComparison.OrdinalIgnoreCase))
                             ColorizationColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Vista_ColorizationColor= ".Count())));
-                        if (line.StartsWith("*Vista_Alpha= ", (StringComparison)5))
+                        if (line.StartsWith("*Vista_Alpha= ", StringComparison.OrdinalIgnoreCase))
                             Alpha = Conversions.ToByte(line.Remove(0, "*Vista_Alpha= ".Count()));
-                        if (line.StartsWith("*Vista_Theme= ", (StringComparison)5))
+                        if (line.StartsWith("*Vista_Theme= ", StringComparison.OrdinalIgnoreCase))
                             Theme = (Windows7.Themes)Conversions.ToInteger(line.Remove(0, "*Vista_Theme= ".Count()));
                     }
                 }
@@ -417,11 +417,11 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*WinXP_Theme= ", (StringComparison)5))
+                        if (line.StartsWith("*WinXP_Theme= ", StringComparison.OrdinalIgnoreCase))
                             Theme = (Themes)Conversions.ToInteger(line.Remove(0, "*WinXP_Theme= ".Count()));
-                        if (line.StartsWith("*WinXP_ThemeFile= ", (StringComparison)5))
+                        if (line.StartsWith("*WinXP_ThemeFile= ", StringComparison.OrdinalIgnoreCase))
                             ThemeFile = line.Remove(0, "*WinXP_ThemeFile= ".Count());
-                        if (line.StartsWith("*WinXP_ColorScheme= ", (StringComparison)5))
+                        if (line.StartsWith("*WinXP_ColorScheme= ", StringComparison.OrdinalIgnoreCase))
                             ColorScheme = line.Remove(0, "*WinXP_ColorScheme= ".Count());
                     }
                 }
@@ -521,73 +521,73 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*Win32UI_EnableTheming= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_EnableTheming= ", StringComparison.OrdinalIgnoreCase))
                             EnableTheming = Conversions.ToBoolean(line.Remove(0, "*Win32UI_EnableTheming= ".Count()));
-                        if (line.StartsWith("*Win32UI_EnableGradient= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_EnableGradient= ", StringComparison.OrdinalIgnoreCase))
                             EnableGradient = Conversions.ToBoolean(line.Remove(0, "*Win32UI_EnableGradient= ".Count()));
-                        if (line.StartsWith("*Win32UI_ActiveBorder= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ActiveBorder= ", StringComparison.OrdinalIgnoreCase))
                             ActiveBorder = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ActiveBorder= ".Count())));
-                        if (line.StartsWith("*Win32UI_ActiveTitle= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ActiveTitle= ", StringComparison.OrdinalIgnoreCase))
                             ActiveTitle = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ActiveTitle= ".Count())));
-                        if (line.StartsWith("*Win32UI_AppWorkspace= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_AppWorkspace= ", StringComparison.OrdinalIgnoreCase))
                             AppWorkspace = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_AppWorkspace= ".Count())));
-                        if (line.StartsWith("*Win32UI_Background= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Background= ", StringComparison.OrdinalIgnoreCase))
                             Background = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Background= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonAlternateFace= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonAlternateFace= ", StringComparison.OrdinalIgnoreCase))
                             ButtonAlternateFace = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonDkShadow= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonDkShadow= ", StringComparison.OrdinalIgnoreCase))
                             ButtonDkShadow = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonDkShadow= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonFace= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonFace= ", StringComparison.OrdinalIgnoreCase))
                             ButtonFace = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonFace= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonHilight= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonHilight= ", StringComparison.OrdinalIgnoreCase))
                             ButtonHilight = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonHilight= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonLight= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonLight= ", StringComparison.OrdinalIgnoreCase))
                             ButtonLight = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonLight= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonShadow= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonShadow= ", StringComparison.OrdinalIgnoreCase))
                             ButtonShadow = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonShadow= ".Count())));
-                        if (line.StartsWith("*Win32UI_ButtonText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_ButtonText= ", StringComparison.OrdinalIgnoreCase))
                             ButtonText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_ButtonText= ".Count())));
-                        if (line.StartsWith("*Win32UI_GradientActiveTitle= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_GradientActiveTitle= ", StringComparison.OrdinalIgnoreCase))
                             GradientActiveTitle = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_GradientActiveTitle= ".Count())));
-                        if (line.StartsWith("*Win32UI_GradientInactiveTitle= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_GradientInactiveTitle= ", StringComparison.OrdinalIgnoreCase))
                             GradientInactiveTitle = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count())));
-                        if (line.StartsWith("*Win32UI_GrayText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_GrayText= ", StringComparison.OrdinalIgnoreCase))
                             GrayText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_GrayText= ".Count())));
-                        if (line.StartsWith("*Win32UI_HilightText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_HilightText= ", StringComparison.OrdinalIgnoreCase))
                             HilightText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_HilightText= ".Count())));
-                        if (line.StartsWith("*Win32UI_HotTrackingColor= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_HotTrackingColor= ", StringComparison.OrdinalIgnoreCase))
                             HotTrackingColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_HotTrackingColor= ".Count())));
-                        if (line.StartsWith("*Win32UI_InactiveBorder= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_InactiveBorder= ", StringComparison.OrdinalIgnoreCase))
                             InactiveBorder = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_InactiveBorder= ".Count())));
-                        if (line.StartsWith("*Win32UI_InactiveTitle= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_InactiveTitle= ", StringComparison.OrdinalIgnoreCase))
                             InactiveTitle = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_InactiveTitle= ".Count())));
-                        if (line.StartsWith("*Win32UI_InactiveTitleText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_InactiveTitleText= ", StringComparison.OrdinalIgnoreCase))
                             InactiveTitleText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_InactiveTitleText= ".Count())));
-                        if (line.StartsWith("*Win32UI_InfoText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_InfoText= ", StringComparison.OrdinalIgnoreCase))
                             InfoText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_InfoText= ".Count())));
-                        if (line.StartsWith("*Win32UI_InfoWindow= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_InfoWindow= ", StringComparison.OrdinalIgnoreCase))
                             InfoWindow = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_InfoWindow= ".Count())));
-                        if (line.StartsWith("*Win32UI_Menu= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Menu= ", StringComparison.OrdinalIgnoreCase))
                             Menu = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Menu= ".Count())));
-                        if (line.StartsWith("*Win32UI_MenuBar= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_MenuBar= ", StringComparison.OrdinalIgnoreCase))
                             MenuBar = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_MenuBar= ".Count())));
-                        if (line.StartsWith("*Win32UI_MenuText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_MenuText= ", StringComparison.OrdinalIgnoreCase))
                             MenuText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_MenuText= ".Count())));
-                        if (line.StartsWith("*Win32UI_Scrollbar= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Scrollbar= ", StringComparison.OrdinalIgnoreCase))
                             Scrollbar = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Scrollbar= ".Count())));
-                        if (line.StartsWith("*Win32UI_TitleText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_TitleText= ", StringComparison.OrdinalIgnoreCase))
                             TitleText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_TitleText= ".Count())));
-                        if (line.StartsWith("*Win32UI_Window= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Window= ", StringComparison.OrdinalIgnoreCase))
                             Window = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Window= ".Count())));
-                        if (line.StartsWith("*Win32UI_WindowFrame= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_WindowFrame= ", StringComparison.OrdinalIgnoreCase))
                             WindowFrame = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_WindowFrame= ".Count())));
-                        if (line.StartsWith("*Win32UI_WindowText= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_WindowText= ", StringComparison.OrdinalIgnoreCase))
                             WindowText = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_WindowText= ".Count())));
-                        if (line.StartsWith("*Win32UI_Hilight= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Hilight= ", StringComparison.OrdinalIgnoreCase))
                             Hilight = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Hilight= ".Count())));
-                        if (line.StartsWith("*Win32UI_MenuHilight= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_MenuHilight= ", StringComparison.OrdinalIgnoreCase))
                             MenuHilight = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_MenuHilight= ".Count())));
-                        if (line.StartsWith("*Win32UI_Desktop= ", (StringComparison)5))
+                        if (line.StartsWith("*Win32UI_Desktop= ", StringComparison.OrdinalIgnoreCase))
                             Desktop = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Win32UI_Desktop= ".Count())));
                     }
                 }
@@ -707,71 +707,71 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*WinEffects_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             Enabled = Conversions.ToBoolean(line.Remove(0, "*WinEffects_Enabled= ".Count()));
-                        if (line.StartsWith("*WinEffects_WindowAnimation= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_WindowAnimation= ", StringComparison.OrdinalIgnoreCase))
                             WindowAnimation = Conversions.ToBoolean(line.Remove(0, "*WinEffects_WindowAnimation= ".Count()));
-                        if (line.StartsWith("*WinEffects_WindowShadow= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_WindowShadow= ", StringComparison.OrdinalIgnoreCase))
                             WindowShadow = Conversions.ToBoolean(line.Remove(0, "*WinEffects_WindowShadow= ".Count()));
-                        if (line.StartsWith("*WinEffects_WindowUIEffects= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_WindowUIEffects= ", StringComparison.OrdinalIgnoreCase))
                             WindowUIEffects = Conversions.ToBoolean(line.Remove(0, "*WinEffects_WindowUIEffects= ".Count()));
-                        if (line.StartsWith("*WinEffects_MenuAnimation= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_MenuAnimation= ", StringComparison.OrdinalIgnoreCase))
                             MenuAnimation = Conversions.ToBoolean(line.Remove(0, "*WinEffects_MenuAnimation= ".Count()));
-                        if (line.StartsWith("*WinEffects_MenuFade= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_MenuFade= ", StringComparison.OrdinalIgnoreCase))
                             MenuFade = (MenuAnimType)Conversions.ToInteger(line.Remove(0, "*WinEffects_MenuFade= ".Count()));
-                        if (line.StartsWith("*WinEffects_MenuShowDelay= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_MenuShowDelay= ", StringComparison.OrdinalIgnoreCase))
                             MenuShowDelay = Conversions.ToUInteger(line.Remove(0, "*WinEffects_MenuShowDelay= ".Count()));
-                        if (line.StartsWith("*WinEffects_MenuSelectionFade= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_MenuSelectionFade= ", StringComparison.OrdinalIgnoreCase))
                             MenuSelectionFade = Conversions.ToBoolean(line.Remove(0, "*WinEffects_MenuSelectionFade= ".Count()));
-                        if (line.StartsWith("*WinEffects_ComboBoxAnimation= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_ComboBoxAnimation= ", StringComparison.OrdinalIgnoreCase))
                             ComboBoxAnimation = Conversions.ToBoolean(line.Remove(0, "*WinEffects_ComboBoxAnimation= ".Count()));
-                        if (line.StartsWith("*WinEffects_ListboxSmoothScrolling= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_ListboxSmoothScrolling= ", StringComparison.OrdinalIgnoreCase))
                             ListBoxSmoothScrolling = Conversions.ToBoolean(line.Remove(0, "*WinEffects_ListboxSmoothScrolling= ".Count()));
-                        if (line.StartsWith("*WinEffects_TooltipAnimation= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_TooltipAnimation= ", StringComparison.OrdinalIgnoreCase))
                             TooltipAnimation = Conversions.ToBoolean(line.Remove(0, "*WinEffects_TooltipAnimation= ".Count()));
-                        if (line.StartsWith("*WinEffects_TooltipFade= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_TooltipFade= ", StringComparison.OrdinalIgnoreCase))
                             TooltipFade = (MenuAnimType)Conversions.ToInteger(line.Remove(0, "*WinEffects_TooltipFade= ".Count()));
-                        if (line.StartsWith("*WinEffects_IconsShadow= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_IconsShadow= ", StringComparison.OrdinalIgnoreCase))
                             IconsShadow = Conversions.ToBoolean(line.Remove(0, "*WinEffects_IconsShadow= ".Count()));
-                        if (line.StartsWith("*WinEffects_IconsDesktopTranslSel= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_IconsDesktopTranslSel= ", StringComparison.OrdinalIgnoreCase))
                             IconsDesktopTranslSel = Conversions.ToBoolean(line.Remove(0, "*WinEffects_IconsDesktopTranslSel= ".Count()));
-                        if (line.StartsWith("*WinEffects_ShowWinContentDrag= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_ShowWinContentDrag= ", StringComparison.OrdinalIgnoreCase))
                             ShowWinContentDrag = Conversions.ToBoolean(line.Remove(0, "*WinEffects_ShowWinContentDrag= ".Count()));
-                        if (line.StartsWith("*WinEffects_KeyboardUnderline= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_KeyboardUnderline= ", StringComparison.OrdinalIgnoreCase))
                             KeyboardUnderline = Conversions.ToBoolean(line.Remove(0, "*WinEffects_KeyboardUnderline= ".Count()));
-                        if (line.StartsWith("*WinEffects_FocusRectWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_FocusRectWidth= ", StringComparison.OrdinalIgnoreCase))
                             FocusRectWidth = Conversions.ToUInteger(line.Remove(0, "*WinEffects_FocusRectWidth= ".Count()));
-                        if (line.StartsWith("*WinEffects_FocusRectHeight= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_FocusRectHeight= ", StringComparison.OrdinalIgnoreCase))
                             FocusRectHeight = Conversions.ToUInteger(line.Remove(0, "*WinEffects_FocusRectHeight= ".Count()));
-                        if (line.StartsWith("*WinEffects_Caret= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_Caret= ", StringComparison.OrdinalIgnoreCase))
                             Caret = Conversions.ToUInteger(line.Remove(0, "*WinEffects_Caret= ".Count()));
-                        if (line.StartsWith("*WinEffects_NotificationDuration= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_NotificationDuration= ", StringComparison.OrdinalIgnoreCase))
                             NotificationDuration = Conversions.ToInteger(line.Remove(0, "*WinEffects_NotificationDuration= ".Count()));
-                        if (line.StartsWith("*WinEffects_ShakeToMinimize= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_ShakeToMinimize= ", StringComparison.OrdinalIgnoreCase))
                             ShakeToMinimize = Conversions.ToBoolean(line.Remove(0, "*WinEffects_ShakeToMinimize= ".Count()));
-                        if (line.StartsWith("*WinEffects_AWT_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_AWT_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             AWT_Enabled = Conversions.ToBoolean(line.Remove(0, "*WinEffects_AWT_Enabled= ".Count()));
-                        if (line.StartsWith("*WinEffects_AWT_BringActivatedWindowToTop= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_AWT_BringActivatedWindowToTop= ", StringComparison.OrdinalIgnoreCase))
                             AWT_BringActivatedWindowToTop = Conversions.ToBoolean(line.Remove(0, "*WinEffects_AWT_BringActivatedWindowToTop= ".Count()));
-                        if (line.StartsWith("*WinEffects_AWT_Delay= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_AWT_Delay= ", StringComparison.OrdinalIgnoreCase))
                             AWT_Delay = Conversions.ToInteger(line.Remove(0, "*WinEffects_AWT_Delay= ".Count()));
-                        if (line.StartsWith("*WinEffects_SnapCursorToDefButton= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_SnapCursorToDefButton= ", StringComparison.OrdinalIgnoreCase))
                             SnapCursorToDefButton = Conversions.ToBoolean(line.Remove(0, "*WinEffects_SnapCursorToDefButton= ".Count()));
-                        if (line.StartsWith("*WinEffects_Win11ClassicContextMenu= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_Win11ClassicContextMenu= ", StringComparison.OrdinalIgnoreCase))
                             Win11ClassicContextMenu = Conversions.ToBoolean(line.Remove(0, "*WinEffects_Win11ClassicContextMenu= ".Count()));
-                        if (line.StartsWith("*WinEffects_SysListView32= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_SysListView32= ", StringComparison.OrdinalIgnoreCase))
                             SysListView32 = Conversions.ToBoolean(line.Remove(0, "*WinEffects_SysListView32= ".Count()));
-                        if (line.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", StringComparison.OrdinalIgnoreCase))
                             ShowSecondsInSystemClock = Conversions.ToBoolean(line.Remove(0, "*WinEffects_ShowSecondsInSystemClock= ".Count()));
-                        if (line.StartsWith("*WinEffects_BalloonNotifications= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_BalloonNotifications= ", StringComparison.OrdinalIgnoreCase))
                             BalloonNotifications = Conversions.ToBoolean(line.Remove(0, "*WinEffects_BalloonNotifications= ".Count()));
-                        if (line.StartsWith("*WinEffects_PaintDesktopVersion= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_PaintDesktopVersion= ", StringComparison.OrdinalIgnoreCase))
                             PaintDesktopVersion = Conversions.ToBoolean(line.Remove(0, "*WinEffects_PaintDesktopVersion= ".Count()));
-                        if (line.StartsWith("*WinEffects_Win11BootDots= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_Win11BootDots= ", StringComparison.OrdinalIgnoreCase))
                             Win11BootDots = Conversions.ToBoolean(line.Remove(0, "*WinEffects_Win11BootDots= ".Count()));
-                        if (line.StartsWith("*WinEffects_Win11ExplorerBar= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_Win11ExplorerBar= ", StringComparison.OrdinalIgnoreCase))
                             Win11ExplorerBar = (ExplorerBar)Conversions.ToInteger(line.Remove(0, "*WinEffects_Win11ExplorerBar= ".Count()));
-                        if (line.StartsWith("*WinEffects_DisableNavBar= ", (StringComparison)5))
+                        if (line.StartsWith("*WinEffects_DisableNavBar= ", StringComparison.OrdinalIgnoreCase))
                             DisableNavBar = Conversions.ToBoolean(line.Remove(0, "*WinEffects_DisableNavBar= ".Count()));
                     }
                 }
@@ -792,15 +792,15 @@ namespace WinPaletter
 
                         foreach (string lin in Lines)
                         {
-                            if (lin.StartsWith("Enabled= ", (StringComparison)5))
+                            if (lin.StartsWith("Enabled= ", StringComparison.OrdinalIgnoreCase))
                                 Enabled = Conversions.ToBoolean(lin.Remove(0, "Enabled= ".Count()));
-                            if (lin.StartsWith("Image= ", (StringComparison)5))
+                            if (lin.StartsWith("Image= ", StringComparison.OrdinalIgnoreCase))
                                 Image = lin.Remove(0, "Image= ".Count());
-                            if (lin.StartsWith("H= ", (StringComparison)5))
+                            if (lin.StartsWith("H= ", StringComparison.OrdinalIgnoreCase))
                                 H = Conversions.ToInteger(lin.Remove(0, "H= ".Count()));
-                            if (lin.StartsWith("S= ", (StringComparison)5))
+                            if (lin.StartsWith("S= ", StringComparison.OrdinalIgnoreCase))
                                 S = Conversions.ToInteger(lin.Remove(0, "S= ".Count()));
-                            if (lin.StartsWith("L= ", (StringComparison)5))
+                            if (lin.StartsWith("L= ", StringComparison.OrdinalIgnoreCase))
                                 L = Conversions.ToInteger(lin.Remove(0, "L= ".Count()));
                         }
                     }
@@ -908,43 +908,43 @@ namespace WinPaletter
 
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*MetricsFonts_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*MetricsFonts_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             Enabled = Conversions.ToBoolean(line.Remove(0, "*MetricsFonts_Enabled= ".Count()));
-                        if (line.StartsWith("*Metrics_BorderWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_BorderWidth= ", StringComparison.OrdinalIgnoreCase))
                             BorderWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_BorderWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_CaptionHeight= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_CaptionHeight= ", StringComparison.OrdinalIgnoreCase))
                             CaptionHeight = Conversions.ToInteger(line.Remove(0, "*Metrics_CaptionHeight= ".Count()));
-                        if (line.StartsWith("*Metrics_CaptionWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_CaptionWidth= ", StringComparison.OrdinalIgnoreCase))
                             CaptionWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_CaptionWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_IconSpacing= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_IconSpacing= ", StringComparison.OrdinalIgnoreCase))
                             IconSpacing = Conversions.ToInteger(line.Remove(0, "*Metrics_IconSpacing= ".Count()));
-                        if (line.StartsWith("*Metrics_IconVerticalSpacing= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_IconVerticalSpacing= ", StringComparison.OrdinalIgnoreCase))
                             IconVerticalSpacing = Conversions.ToInteger(line.Remove(0, "*Metrics_IconVerticalSpacing= ".Count()));
-                        if (line.StartsWith("*Metrics_MenuHeight= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_MenuHeight= ", StringComparison.OrdinalIgnoreCase))
                             MenuHeight = Conversions.ToInteger(line.Remove(0, "*Metrics_MenuHeight= ".Count()));
-                        if (line.StartsWith("*Metrics_MenuWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_MenuWidth= ", StringComparison.OrdinalIgnoreCase))
                             MenuWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_MenuWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_PaddedBorderWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_PaddedBorderWidth= ", StringComparison.OrdinalIgnoreCase))
                             PaddedBorderWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_PaddedBorderWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_ScrollHeight= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_ScrollHeight= ", StringComparison.OrdinalIgnoreCase))
                             ScrollHeight = Conversions.ToInteger(line.Remove(0, "*Metrics_ScrollHeight= ".Count()));
-                        if (line.StartsWith("*Metrics_ScrollWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_ScrollWidth= ", StringComparison.OrdinalIgnoreCase))
                             ScrollWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_ScrollWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_SmCaptionHeight= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_SmCaptionHeight= ", StringComparison.OrdinalIgnoreCase))
                             SmCaptionHeight = Conversions.ToInteger(line.Remove(0, "*Metrics_SmCaptionHeight= ".Count()));
-                        if (line.StartsWith("*Metrics_SmCaptionWidth= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_SmCaptionWidth= ", StringComparison.OrdinalIgnoreCase))
                             SmCaptionWidth = Conversions.ToInteger(line.Remove(0, "*Metrics_SmCaptionWidth= ".Count()));
-                        if (line.StartsWith("*Metrics_DesktopIconSize= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_DesktopIconSize= ", StringComparison.OrdinalIgnoreCase))
                             DesktopIconSize = Conversions.ToInteger(line.Remove(0, "*Metrics_DesktopIconSize= ".Count()));
-                        if (line.StartsWith("*Metrics_ShellIconSize= ", (StringComparison)5))
+                        if (line.StartsWith("*Metrics_ShellIconSize= ", StringComparison.OrdinalIgnoreCase))
                             ShellIconSize = Conversions.ToInteger(line.Remove(0, "*Metrics_ShellIconSize= ".Count()));
-                        if (line.StartsWith("*Fonts_", (StringComparison)5))
+                        if (line.StartsWith("*Fonts_", StringComparison.OrdinalIgnoreCase))
                             fonts.Add(line.Remove(0, "*Fonts_".Count()));
-                        if (line.StartsWith("*FontSubstitute_MSShellDlg= ", (StringComparison)5))
+                        if (line.StartsWith("*FontSubstitute_MSShellDlg= ", StringComparison.OrdinalIgnoreCase))
                             FontSubstitute_MSShellDlg = line.Remove(0, "*FontSubstitute_MSShellDlg= ".Count());
-                        if (line.StartsWith("*FontSubstitute_MSShellDlg2= ", (StringComparison)5))
+                        if (line.StartsWith("*FontSubstitute_MSShellDlg2= ", StringComparison.OrdinalIgnoreCase))
                             FontSubstitute_MSShellDlg2 = line.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count());
-                        if (line.StartsWith("*FontSubstitute_SegoeUI= ", (StringComparison)5))
+                        if (line.StartsWith("*FontSubstitute_SegoeUI= ", StringComparison.OrdinalIgnoreCase))
                             FontSubstitute_SegoeUI = line.Remove(0, "*FontSubstitute_SegoeUI= ".Count());
                     }
 
@@ -1159,11 +1159,11 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*AltTab_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*AltTab_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             Enabled = Conversions.ToBoolean(line.Remove(0, "*AltTab_Enabled= ".Count()));
-                        if (line.StartsWith("*AltTab_Style= ", (StringComparison)5))
+                        if (line.StartsWith("*AltTab_Style= ", StringComparison.OrdinalIgnoreCase))
                             Style = (Styles)Conversions.ToInteger(line.Remove(0, "*AltTab_Style= ".Count()));
-                        if (line.StartsWith("*AltTab_Win10Opacity= ", (StringComparison)5))
+                        if (line.StartsWith("*AltTab_Win10Opacity= ", StringComparison.OrdinalIgnoreCase))
                             Win10Opacity = Conversions.ToInteger(line.Remove(0, "*AltTab_Win10Opacity= ".Count()));
                     }
                 }
@@ -1192,11 +1192,11 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ", StringComparison.OrdinalIgnoreCase))
                             DisableAcrylicBackgroundOnLogon = Conversions.ToBoolean(line.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count()));
-                        if (line.StartsWith("*LogonUI_DisableLogonBackgroundImage= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI_DisableLogonBackgroundImage= ", StringComparison.OrdinalIgnoreCase))
                             DisableLogonBackgroundImage = Conversions.ToBoolean(line.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count()));
-                        if (line.StartsWith("*LogonUI_NoLockScreen= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI_NoLockScreen= ", StringComparison.OrdinalIgnoreCase))
                             NoLockScreen = Conversions.ToBoolean(line.Remove(0, "*LogonUI_NoLockScreen= ".Count()));
                     }
                 }
@@ -1253,25 +1253,25 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*LogonUI7_Color= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Color= ", StringComparison.OrdinalIgnoreCase))
                             Color = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*LogonUI7_Color= ".Count())));
-                        if (line.StartsWith("*LogonUI7_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             Enabled = Conversions.ToBoolean(line.Remove(0, "*LogonUI7_Enabled= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Mode= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Mode= ", StringComparison.OrdinalIgnoreCase))
                             Mode = (Modes)Conversions.ToInteger(line.Remove(0, "*LogonUI7_Mode= ".Count()));
-                        if (line.StartsWith("*LogonUI7_ImagePath= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_ImagePath= ", StringComparison.OrdinalIgnoreCase))
                             ImagePath = line.Remove(0, "*LogonUI7_ImagePath= ".Count());
-                        if (line.StartsWith("*LogonUI7_Blur= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Blur= ", StringComparison.OrdinalIgnoreCase))
                             Blur = Conversions.ToBoolean(line.Remove(0, "*LogonUI7_Blur= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Blur_Intensity= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Blur_Intensity= ", StringComparison.OrdinalIgnoreCase))
                             Blur_Intensity = Conversions.ToInteger(line.Remove(0, "*LogonUI7_Blur_Intensity= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Grayscale= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Grayscale= ", StringComparison.OrdinalIgnoreCase))
                             Grayscale = Conversions.ToBoolean(line.Remove(0, "*LogonUI7_Grayscale= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Noise= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Noise= ", StringComparison.OrdinalIgnoreCase))
                             Noise = Conversions.ToBoolean(line.Remove(0, "*LogonUI7_Noise= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Noise_Mode= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Noise_Mode= ", StringComparison.OrdinalIgnoreCase))
                             Noise_Mode = (NoiseMode)Conversions.ToInteger(line.Remove(0, "*LogonUI7_Noise_Mode= ".Count()));
-                        if (line.StartsWith("*LogonUI7_Noise_Intensity= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUI7_Noise_Intensity= ", StringComparison.OrdinalIgnoreCase))
                             Noise_Intensity = Conversions.ToInteger(line.Remove(0, "*LogonUI7_Noise_Intensity= ".Count()));
                     }
                 }
@@ -1308,13 +1308,13 @@ namespace WinPaletter
                 {
                     foreach (string line in Lines)
                     {
-                        if (line.StartsWith("*LogonUIXP_Enabled= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUIXP_Enabled= ", StringComparison.OrdinalIgnoreCase))
                             Enabled = Conversions.ToBoolean(line.Remove(0, "*LogonUIXP_Enabled= ".Count()));
-                        if (line.StartsWith("*LogonUIXP_Mode= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUIXP_Mode= ", StringComparison.OrdinalIgnoreCase))
                             Mode = Conversions.ToDouble(line.Remove(0, "*LogonUIXP_Mode= ".Count())) == 1d ? Modes.Default : Modes.Win2000;
-                        if (line.StartsWith("*LogonUIXP_BackColor= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUIXP_BackColor= ", StringComparison.OrdinalIgnoreCase))
                             BackColor = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*LogonUIXP_BackColor= ".Count())));
-                        if (line.StartsWith("*LogonUIXP_ShowMoreOptions= ", (StringComparison)5))
+                        if (line.StartsWith("*LogonUIXP_ShowMoreOptions= ", StringComparison.OrdinalIgnoreCase))
                             ShowMoreOptions = Conversions.ToBoolean(line.Remove(0, "*LogonUIXP_ShowMoreOptions= ".Count()));
                     }
                 }
@@ -1405,74 +1405,74 @@ namespace WinPaletter
                     {
                         string line_processed = "";
 
-                        if (line.StartsWith("*CMD_", (StringComparison)5))
+                        if (line.StartsWith("*CMD_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*CMD_".Count());
-                        else if (line.StartsWith("*PS_32_", (StringComparison)5))
+                        else if (line.StartsWith("*PS_32_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*PS_32_".Count());
-                        else if (line.StartsWith("*PS_64_", (StringComparison)5))
+                        else if (line.StartsWith("*PS_64_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*PS_64_".Count());
 
-                        if (line_processed.StartsWith("ColorTable00= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable00= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable00 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable00= ".Count())));
-                        if (line_processed.StartsWith("ColorTable01= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable01= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable01 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable01= ".Count())));
-                        if (line_processed.StartsWith("ColorTable02= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable02= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable02 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable02= ".Count())));
-                        if (line_processed.StartsWith("ColorTable03= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable03= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable03 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable03= ".Count())));
-                        if (line_processed.StartsWith("ColorTable04= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable04= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable04 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable04= ".Count())));
-                        if (line_processed.StartsWith("ColorTable05= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable05= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable05 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable05= ".Count())));
-                        if (line_processed.StartsWith("ColorTable06= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable06= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable06 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable06= ".Count())));
-                        if (line_processed.StartsWith("ColorTable07= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable07= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable07 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable07= ".Count())));
-                        if (line_processed.StartsWith("ColorTable08= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable08= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable08 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable08= ".Count())));
-                        if (line_processed.StartsWith("ColorTable09= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable09= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable09 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable09= ".Count())));
-                        if (line_processed.StartsWith("ColorTable10= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable10= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable10 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable10= ".Count())));
-                        if (line_processed.StartsWith("ColorTable11= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable11= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable11 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable11= ".Count())));
-                        if (line_processed.StartsWith("ColorTable12= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable12= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable12 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable12= ".Count())));
-                        if (line_processed.StartsWith("ColorTable13= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable13= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable13 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable13= ".Count())));
-                        if (line_processed.StartsWith("ColorTable14= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable14= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable14 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable14= ".Count())));
-                        if (line_processed.StartsWith("ColorTable15= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ColorTable15= ", StringComparison.OrdinalIgnoreCase))
                             ColorTable15 = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "ColorTable15= ".Count())));
-                        if (line_processed.StartsWith("PopupForeground= ", (StringComparison)5))
+                        if (line_processed.StartsWith("PopupForeground= ", StringComparison.OrdinalIgnoreCase))
                             PopupForeground = Conversions.ToInteger(line_processed.ToLower().Remove(0, "PopupForeground= ".Count()));
-                        if (line_processed.StartsWith("PopupBackground= ", (StringComparison)5))
+                        if (line_processed.StartsWith("PopupBackground= ", StringComparison.OrdinalIgnoreCase))
                             PopupBackground = Conversions.ToInteger(line_processed.ToLower().Remove(0, "PopupBackground= ".Count()));
-                        if (line_processed.StartsWith("ScreenColorsForeground= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ScreenColorsForeground= ", StringComparison.OrdinalIgnoreCase))
                             ScreenColorsForeground = Conversions.ToInteger(line_processed.ToLower().Remove(0, "ScreenColorsForeground= ".Count()));
-                        if (line_processed.StartsWith("ScreenColorsBackground= ", (StringComparison)5))
+                        if (line_processed.StartsWith("ScreenColorsBackground= ", StringComparison.OrdinalIgnoreCase))
                             ScreenColorsBackground = Conversions.ToInteger(line_processed.ToLower().Remove(0, "ScreenColorsBackground= ".Count()));
-                        if (line_processed.StartsWith("CursorSize= ", (StringComparison)5))
+                        if (line_processed.StartsWith("CursorSize= ", StringComparison.OrdinalIgnoreCase))
                             CursorSize = Conversions.ToInteger(line_processed.ToLower().Remove(0, "CursorSize= ".Count()));
-                        if (line_processed.StartsWith("FaceName= ", (StringComparison)5))
+                        if (line_processed.StartsWith("FaceName= ", StringComparison.OrdinalIgnoreCase))
                             FaceName = line_processed.ToLower().Remove(0, "FaceName= ".Count());
-                        if (line_processed.StartsWith("FontRaster= ", (StringComparison)5))
+                        if (line_processed.StartsWith("FontRaster= ", StringComparison.OrdinalIgnoreCase))
                             FontRaster = Conversions.ToBoolean(line_processed.ToLower().Remove(0, "FontRaster= ".Count()));
-                        if (line_processed.StartsWith("FontSize= ", (StringComparison)5))
+                        if (line_processed.StartsWith("FontSize= ", StringComparison.OrdinalIgnoreCase))
                             FontSize = Conversions.ToInteger(line_processed.ToLower().Remove(0, "FontSize= ".Count()));
-                        if (line_processed.StartsWith("FontWeight= ", (StringComparison)5))
+                        if (line_processed.StartsWith("FontWeight= ", StringComparison.OrdinalIgnoreCase))
                             FontWeight = Conversions.ToInteger(line_processed.ToLower().Remove(0, "FontWeight= ".Count()));
-                        if (line_processed.StartsWith("1909_CursorType= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_CursorType= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_CursorType = Conversions.ToInteger(line_processed.ToLower().Remove(0, "1909_CursorType= ".Count()));
-                        if (line_processed.StartsWith("1909_CursorColor= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_CursorColor= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_CursorColor = Color.FromArgb(Conversions.ToInteger(line_processed.ToLower().Remove(0, "1909_CursorColor= ".Count())));
-                        if (line_processed.StartsWith("1909_ForceV2= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_ForceV2= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_ForceV2 = Conversions.ToBoolean(line_processed.ToLower().Remove(0, "1909_ForceV2= ".Count()));
-                        if (line_processed.StartsWith("1909_lin.ToLowereSelection= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_lin.ToLowereSelection= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_LineSelection = Conversions.ToBoolean(line_processed.ToLower().Remove(0, "1909_lin.ToLowereSelection= ".Count()));
-                        if (line_processed.StartsWith("1909_TerminalScrollin.ToLowerg= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_TerminalScrollin.ToLowerg= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_TerminalScrolling = Conversions.ToBoolean(line_processed.ToLower().Remove(0, "1909_TerminalScrollin.ToLowerg= ".Count()));
-                        if (line_processed.StartsWith("1909_WindowAlpha= ", (StringComparison)5))
+                        if (line_processed.StartsWith("1909_WindowAlpha= ", StringComparison.OrdinalIgnoreCase))
                             W10_1909_WindowAlpha = Conversions.ToInteger(line_processed.ToLower().Remove(0, "1909_WindowAlpha= ".Count()));
                     }
 
@@ -1654,104 +1654,104 @@ namespace WinPaletter
                         foreach (string line in Lines)
                         {
                             string line_processed = "";
-                            if (line.StartsWith("*Cursor_Arrow_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Arrow_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Arrow_".Count());
-                            if (line.StartsWith("*Cursor_Help_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Help_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Help_".Count());
-                            if (line.StartsWith("*Cursor_AppLoading_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_AppLoading_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_AppLoading_".Count());
-                            if (line.StartsWith("*Cursor_Busy_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Busy_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Busy_".Count());
-                            if (line.StartsWith("*Cursor_Move_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Move_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Move_".Count());
-                            if (line.StartsWith("*Cursor_NS_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_NS_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_NS_".Count());
-                            if (line.StartsWith("*Cursor_EW_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_EW_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_EW_".Count());
-                            if (line.StartsWith("*Cursor_NESW_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_NESW_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_NESW_".Count());
-                            if (line.StartsWith("*Cursor_NWSE_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_NWSE_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_NWSE_".Count());
-                            if (line.StartsWith("*Cursor_Up_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Up_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Up_".Count());
-                            if (line.StartsWith("*Cursor_Pen_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Pen_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Pen_".Count());
-                            if (line.StartsWith("*Cursor_None_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_None_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_None_".Count());
-                            if (line.StartsWith("*Cursor_Link_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Link_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Link_".Count());
-                            if (line.StartsWith("*Cursor_Pin_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Pin_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Pin_".Count());
-                            if (line.StartsWith("*Cursor_Person_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Person_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Person_".Count());
-                            if (line.StartsWith("*Cursor_IBeam_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_IBeam_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_IBeam_".Count());
-                            if (line.StartsWith("*Cursor_Cross_", (StringComparison)5))
+                            if (line.StartsWith("*Cursor_Cross_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Cross_".Count());
 
-                            if (line_processed.StartsWith("ArrowStyle= ", (StringComparison)5))
+                            if (line_processed.StartsWith("ArrowStyle= ", StringComparison.OrdinalIgnoreCase))
                                 ArrowStyle = (ArrowStyles)Conversions.ToInteger(line_processed.Remove(0, "ArrowStyle= ".Count()));
-                            if (line_processed.StartsWith("CircleStyle= ", (StringComparison)5))
+                            if (line_processed.StartsWith("CircleStyle= ", StringComparison.OrdinalIgnoreCase))
                                 CircleStyle = (CircleStyles)Conversions.ToInteger(line_processed.Remove(0, "CircleStyle= ".Count()));
-                            if (line_processed.StartsWith("PrimaryColor1= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColor1= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColor1 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "PrimaryColor1= ".Count())));
-                            if (line_processed.StartsWith("PrimaryColor2= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColor2= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColor2 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "PrimaryColor2= ".Count())));
-                            if (line_processed.StartsWith("PrimaryColorGradient= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColorGradient= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColorGradient = Conversions.ToBoolean(line_processed.Remove(0, "PrimaryColorGradient= ".Count()));
-                            if (line_processed.StartsWith("PrimaryColorGradientMode= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColorGradientMode= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColorGradientMode = ReturnGradientModeFromString(line_processed.Remove(0, "PrimaryColorGradientMode= ".Count()));
-                            if (line_processed.StartsWith("PrimaryColorNoise= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColorNoise= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColorNoise = Conversions.ToBoolean(line_processed.Remove(0, "PrimaryColorNoise= ".Count()));
-                            if (line_processed.StartsWith("PrimaryColorNoiseOpacity= ", (StringComparison)5))
+                            if (line_processed.StartsWith("PrimaryColorNoiseOpacity= ", StringComparison.OrdinalIgnoreCase))
                                 PrimaryColorNoiseOpacity = Conversions.ToSingle(line_processed.Remove(0, "PrimaryColorNoiseOpacity= ".Count()));
-                            if (line_processed.StartsWith("SecondaryColor1= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColor1= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColor1 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "SecondaryColor1= ".Count())));
-                            if (line_processed.StartsWith("SecondaryColor2= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColor2= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColor2 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "SecondaryColor2= ".Count())));
-                            if (line_processed.StartsWith("SecondaryColorGradient= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColorGradient= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColorGradient = Conversions.ToBoolean(line_processed.Remove(0, "SecondaryColorGradient= ".Count()));
-                            if (line_processed.StartsWith("SecondaryColorGradientMode= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColorGradientMode= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColorGradientMode = ReturnGradientModeFromString(line_processed.Remove(0, "SecondaryColorGradientMode= ".Count()));
-                            if (line_processed.StartsWith("SecondaryColorNoise= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColorNoise= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColorNoise = Conversions.ToBoolean(line_processed.Remove(0, "SecondaryColorNoise= ".Count()));
-                            if (line_processed.StartsWith("SecondaryColorNoiseOpacity= ", (StringComparison)5))
+                            if (line_processed.StartsWith("SecondaryColorNoiseOpacity= ", StringComparison.OrdinalIgnoreCase))
                                 SecondaryColorNoiseOpacity = Conversions.ToSingle(line_processed.Remove(0, "SecondaryColorNoiseOpacity= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleBack1= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBack1= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBack1 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "LoadingCircleBack1= ".Count())));
-                            if (line_processed.StartsWith("LoadingCircleBack2= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBack2= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBack2 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "LoadingCircleBack2= ".Count())));
-                            if (line_processed.StartsWith("LoadingCircleBackGradient= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBackGradient= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBackGradient = Conversions.ToBoolean(line_processed.Remove(0, "LoadingCircleBackGradient= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleBackGradientMode= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBackGradientMode= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBackGradientMode = ReturnGradientModeFromString(line_processed.Remove(0, "LoadingCircleBackGradientMode= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleBackNoise= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBackNoise= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBackNoise = Conversions.ToBoolean(line_processed.Remove(0, "LoadingCircleBackNoise= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleBackNoiseOpacity= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleBackNoiseOpacity= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleBackNoiseOpacity = Conversions.ToSingle(line_processed.Remove(0, "LoadingCircleBackNoiseOpacity= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleHot1= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHot1= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHot1 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "LoadingCircleHot1= ".Count())));
-                            if (line_processed.StartsWith("LoadingCircleHot2= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHot2= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHot2 = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "LoadingCircleHot2= ".Count())));
-                            if (line_processed.StartsWith("LoadingCircleHotGradient= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHotGradient= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHotGradient = Conversions.ToBoolean(line_processed.Remove(0, "LoadingCircleHotGradient= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleHotGradientMode= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHotGradientMode= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHotGradientMode = ReturnGradientModeFromString(line_processed.Remove(0, "LoadingCircleHotGradientMode= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleHotNoise= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHotNoise= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHotNoise = Conversions.ToBoolean(line_processed.Remove(0, "LoadingCircleHotNoise= ".Count()));
-                            if (line_processed.StartsWith("LoadingCircleHotNoiseOpacity= ", (StringComparison)5))
+                            if (line_processed.StartsWith("LoadingCircleHotNoiseOpacity= ", StringComparison.OrdinalIgnoreCase))
                                 LoadingCircleHotNoiseOpacity = Conversions.ToSingle(line_processed.Remove(0, "LoadingCircleHotNoiseOpacity= ".Count()));
-                            if (line_processed.StartsWith("Shadow_Enabled= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_Enabled= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_Enabled = Conversions.ToBoolean(line_processed.Remove(0, "Shadow_Enabled= ".Count()));
-                            if (line_processed.StartsWith("Shadow_Color= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_Color= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_Color = Color.FromArgb(Conversions.ToInteger(line_processed.Remove(0, "Shadow_Color= ".Count())));
-                            if (line_processed.StartsWith("Shadow_Blur= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_Blur= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_Blur = Conversions.ToInteger(line_processed.Remove(0, "Shadow_Blur= ".Count()));
-                            if (line_processed.StartsWith("Shadow_Opacity= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_Opacity= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_Opacity = (float)(Conversions.ToDouble(line_processed.Remove(0, "Shadow_Opacity= ".Count())) / 100d);
-                            if (line_processed.StartsWith("Shadow_OffsetX= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_OffsetX= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_OffsetX = Conversions.ToInteger(line_processed.Remove(0, "Shadow_OffsetX= ".Count()));
-                            if (line_processed.StartsWith("Shadow_OffsetY= ", (StringComparison)5))
+                            if (line_processed.StartsWith("Shadow_OffsetY= ", StringComparison.OrdinalIgnoreCase))
                                 Shadow_OffsetY = Conversions.ToInteger(line_processed.Remove(0, "Shadow_OffsetY= ".Count()));
                         }
 
@@ -2824,7 +2824,7 @@ namespace WinPaletter
         {
             string txt = string.Join("\r\n", Decompress(File));
             bool JSON = IsValidJson(txt);
-            bool WPTH = txt.StartsWith("<WinPaletter - ", (StringComparison)5);
+            bool WPTH = txt.StartsWith("<WinPaletter - ", StringComparison.OrdinalIgnoreCase);
 
             if (JSON)
             {
@@ -2897,7 +2897,7 @@ namespace WinPaletter
             bool OldWPTH = false;
             foreach (string line in txt)
             {
-                if (line.StartsWith("*Created from App Version= ", (StringComparison)5))
+                if (line.StartsWith("*Created from App Version= ", StringComparison.OrdinalIgnoreCase))
                 {
                     Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count());
                     OldWPTH = Info.AppVersion.CompareTo("1.0.6.9") == -1;
@@ -2907,20 +2907,20 @@ namespace WinPaletter
 
             foreach (string lin in txt)
             {
-                if (lin.StartsWith("*Palette Name= ", (StringComparison)5))
+                if (lin.StartsWith("*Palette Name= ", StringComparison.OrdinalIgnoreCase))
                     Info.ThemeName = lin.Remove(0, "*Palette Name= ".Count());
-                if (lin.StartsWith("*Palette Description= ", (StringComparison)5))
+                if (lin.StartsWith("*Palette Description= ", StringComparison.OrdinalIgnoreCase))
                     Info.Description = lin.Remove(0, "*Palette Description= ".Count()).Replace("<br>", "\r\n");
-                if (lin.StartsWith("*Palette File Version= ", (StringComparison)5))
+                if (lin.StartsWith("*Palette File Version= ", StringComparison.OrdinalIgnoreCase))
                     Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count());
-                if (lin.StartsWith("*Author= ", (StringComparison)5))
+                if (lin.StartsWith("*Author= ", StringComparison.OrdinalIgnoreCase))
                     Info.Author = lin.Remove(0, "*Author= ".Count());
-                if (lin.StartsWith("*AuthorSocialMediaLink= ", (StringComparison)5))
+                if (lin.StartsWith("*AuthorSocialMediaLink= ", StringComparison.OrdinalIgnoreCase))
                     Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count());
             }
 
-            Windows11.FromListOfString(txt.Where(l => l.StartsWith("*Win_11", (StringComparison)5)));
-            Windows10.FromListOfString(txt.Where(l => l.StartsWith("*Win_10", (StringComparison)5)));
+            Windows11.FromListOfString(txt.Where(l => l.StartsWith("*Win_11", StringComparison.OrdinalIgnoreCase)));
+            Windows10.FromListOfString(txt.Where(l => l.StartsWith("*Win_10", StringComparison.OrdinalIgnoreCase)));
 
             #region Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9
             if (OldWPTH)
@@ -2929,98 +2929,98 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (line.StartsWith("*WinMode_Light= ", (StringComparison)5))
+                        if (line.StartsWith("*WinMode_Light= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.WinMode_Light = Conversions.ToBoolean(line.Remove(0, "*WinMode_Light= ".Count()));
                             Windows10.WinMode_Light = Windows11.WinMode_Light;
                         }
 
-                        if (line.StartsWith("*AppMode_Light= ", (StringComparison)5))
+                        if (line.StartsWith("*AppMode_Light= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.AppMode_Light = Conversions.ToBoolean(line.Remove(0, "*AppMode_Light= ".Count()));
                             Windows10.AppMode_Light = Windows11.AppMode_Light;
                         }
 
 
-                        if (line.StartsWith("*Transparency= ", (StringComparison)5))
+                        if (line.StartsWith("*Transparency= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Transparency = Conversions.ToBoolean(line.Remove(0, "*Transparency= ".Count()));
                             Windows10.Transparency = Windows11.Transparency;
                         }
 
-                        if (line.StartsWith("*AccentColorOnTitlebarAndBorders= ", (StringComparison)5))
+                        if (line.StartsWith("*AccentColorOnTitlebarAndBorders= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.ApplyAccentOnTitlebars = Conversions.ToBoolean(line.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count()));
                             Windows10.ApplyAccentOnTitlebars = Windows11.ApplyAccentOnTitlebars;
                         }
 
-                        if (line.StartsWith("*Titlebar_Active= ", (StringComparison)5))
+                        if (line.StartsWith("*Titlebar_Active= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Titlebar_Active = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Titlebar_Active= ".Count())));
                             Windows10.Titlebar_Active = Windows11.Titlebar_Active;
                         }
 
-                        if (line.StartsWith("*Titlebar_Inactive= ", (StringComparison)5))
+                        if (line.StartsWith("*Titlebar_Inactive= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Titlebar_Inactive = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Titlebar_Inactive= ".Count())));
                             Windows10.Titlebar_Inactive = Windows11.Titlebar_Inactive;
                         }
 
-                        if (line.StartsWith("*ActionCenter_AppsLinks= ", (StringComparison)5))
+                        if (line.StartsWith("*ActionCenter_AppsLinks= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index0 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*ActionCenter_AppsLinks= ".Count())));
                             Windows10.Color_Index0 = Windows11.Color_Index0;
                         }
 
-                        if (line.StartsWith("*Taskbar_Icon_Underline= ", (StringComparison)5))
+                        if (line.StartsWith("*Taskbar_Icon_Underline= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index1 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Taskbar_Icon_Underline= ".Count())));
                             Windows10.Color_Index1 = Windows11.Color_Index1;
                         }
 
-                        if (line.StartsWith("*StartButton_Hover= ", (StringComparison)5))
+                        if (line.StartsWith("*StartButton_Hover= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index2 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*StartButton_Hover= ".Count())));
                             Windows10.Color_Index2 = Windows11.Color_Index2;
                         }
 
-                        if (line.StartsWith("*SettingsIconsAndLinks= ", (StringComparison)5))
+                        if (line.StartsWith("*SettingsIconsAndLinks= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index3 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*SettingsIconsAndLinks= ".Count())));
                             Windows10.Color_Index3 = Windows11.Color_Index3;
                         }
 
-                        if (line.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ", (StringComparison)5))
+                        if (line.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index4 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count())));
                             Windows10.Color_Index4 = Windows11.Color_Index4;
                         }
 
-                        if (line.StartsWith("*StartListFolders_TaskbarFront= ", (StringComparison)5))
+                        if (line.StartsWith("*StartListFolders_TaskbarFront= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index5 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*StartListFolders_TaskbarFront= ".Count())));
                             Windows10.Color_Index5 = Windows11.Color_Index5;
                         }
 
-                        if (line.StartsWith("*Taskbar_Background= ", (StringComparison)5))
+                        if (line.StartsWith("*Taskbar_Background= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index6 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Taskbar_Background= ".Count())));
                             Windows10.Color_Index6 = Windows11.Color_Index6;
                         }
 
-                        if (line.StartsWith("*StartMenu_Accent= ", (StringComparison)5))
+                        if (line.StartsWith("*StartMenu_Accent= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.StartMenu_Accent = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*StartMenu_Accent= ".Count())));
                             Windows10.StartMenu_Accent = Windows11.StartMenu_Accent;
                         }
 
-                        if (line.StartsWith("*Undefined= ", (StringComparison)5))
+                        if (line.StartsWith("*Undefined= ", StringComparison.OrdinalIgnoreCase))
                         {
                             Windows11.Color_Index7 = Color.FromArgb(Conversions.ToInteger(line.Remove(0, "*Undefined= ".Count())));
                             Windows10.Color_Index7 = Windows11.Color_Index7;
                         }
 
-                        if (line.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ", (StringComparison)5))
+                        if (line.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ", StringComparison.OrdinalIgnoreCase))
                         {
                             switch (line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count()).ToLower() ?? "")
                             {
@@ -3080,106 +3080,106 @@ namespace WinPaletter
             }
             #endregion
 
-            Windows8.FromListOfString(txt.Where(l => l.StartsWith("*Metro", (StringComparison)5)));
-            Windows7.FromListOfString(txt.Where(l => l.StartsWith("*Aero", (StringComparison)5)));
-            WindowsVista.FromListOfString(txt.Where(l => l.StartsWith("*Vista", (StringComparison)5)));
-            WindowsXP.FromListOfString(txt.Where(l => l.StartsWith("*WinXP", (StringComparison)5)));
-            LogonUI10x.FromListOfString(txt.Where(l => l.StartsWith("*LogonUI_", (StringComparison)5)));
-            LogonUI7.FromListOfString(txt.Where(l => l.StartsWith("*LogonUI7_", (StringComparison)5)));
-            LogonUIXP.FromListOfString(txt.Where(l => l.StartsWith("*LogonUIXP_", (StringComparison)5)));
-            Win32.FromListOfString(txt.Where(l => l.StartsWith("*Win32UI", (StringComparison)5)));
-            WindowsEffects.FromListOfString(txt.Where(l => l.StartsWith("*WinEffects", (StringComparison)5)));
+            Windows8.FromListOfString(txt.Where(l => l.StartsWith("*Metro", StringComparison.OrdinalIgnoreCase)));
+            Windows7.FromListOfString(txt.Where(l => l.StartsWith("*Aero", StringComparison.OrdinalIgnoreCase)));
+            WindowsVista.FromListOfString(txt.Where(l => l.StartsWith("*Vista", StringComparison.OrdinalIgnoreCase)));
+            WindowsXP.FromListOfString(txt.Where(l => l.StartsWith("*WinXP", StringComparison.OrdinalIgnoreCase)));
+            LogonUI10x.FromListOfString(txt.Where(l => l.StartsWith("*LogonUI_", StringComparison.OrdinalIgnoreCase)));
+            LogonUI7.FromListOfString(txt.Where(l => l.StartsWith("*LogonUI7_", StringComparison.OrdinalIgnoreCase)));
+            LogonUIXP.FromListOfString(txt.Where(l => l.StartsWith("*LogonUIXP_", StringComparison.OrdinalIgnoreCase)));
+            Win32.FromListOfString(txt.Where(l => l.StartsWith("*Win32UI", StringComparison.OrdinalIgnoreCase)));
+            WindowsEffects.FromListOfString(txt.Where(l => l.StartsWith("*WinEffects", StringComparison.OrdinalIgnoreCase)));
 
-            MetricsFonts.FromListOfString(txt.Where(l => l.StartsWith("*Metrics", (StringComparison)5) || l.StartsWith("*Fonts_", (StringComparison)5) || l.StartsWith("*FontSubstitute_", (StringComparison)5)));
+            MetricsFonts.FromListOfString(txt.Where(l => l.StartsWith("*Metrics", StringComparison.OrdinalIgnoreCase) || l.StartsWith("*Fonts_", StringComparison.OrdinalIgnoreCase) || l.StartsWith("*FontSubstitute_", StringComparison.OrdinalIgnoreCase)));
 
 
-            AltTab.FromListOfString(txt.Where(l => l.StartsWith("*AltTab", (StringComparison)5)));
+            AltTab.FromListOfString(txt.Where(l => l.StartsWith("*AltTab", StringComparison.OrdinalIgnoreCase)));
 
             try
             {
-                CommandPrompt.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_CMD_Enabled", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Terminal_CMD_Enabled= ".Count()));
+                CommandPrompt.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_CMD_Enabled", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Terminal_CMD_Enabled= ".Count()));
             }
             catch
             {
             }
             try
             {
-                PowerShellx86.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_PS_32_Enabled", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Terminal_PS_32_Enabled= ".Count()));
+                PowerShellx86.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_PS_32_Enabled", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Terminal_PS_32_Enabled= ".Count()));
             }
             catch
             {
             }
             try
             {
-                PowerShellx64.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_PS_64_Enabled", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Terminal_PS_64_Enabled= ".Count()));
+                PowerShellx64.Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Terminal_PS_64_Enabled", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Terminal_PS_64_Enabled= ".Count()));
             }
             catch
             {
             }
 
-            CommandPrompt.FromListOfString(txt.Where(l => l.StartsWith("*CMD_", (StringComparison)5)));
-            PowerShellx86.FromListOfString(txt.Where(l => l.StartsWith("*PS_32_", (StringComparison)5)));
-            PowerShellx64.FromListOfString(txt.Where(l => l.StartsWith("*PS_64_", (StringComparison)5)));
+            CommandPrompt.FromListOfString(txt.Where(l => l.StartsWith("*CMD_", StringComparison.OrdinalIgnoreCase)));
+            PowerShellx86.FromListOfString(txt.Where(l => l.StartsWith("*PS_32_", StringComparison.OrdinalIgnoreCase)));
+            PowerShellx64.FromListOfString(txt.Where(l => l.StartsWith("*PS_64_", StringComparison.OrdinalIgnoreCase)));
 
             string str_stable, str_preview;
-            str_stable = string.Join("\r\n", txt.Where(l => l.StartsWith("terminal.", (StringComparison)5)));
-            str_preview = string.Join("\r\n", txt.Where(l => l.StartsWith("terminalpreview.", (StringComparison)5)));
+            str_stable = string.Join("\r\n", txt.Where(l => l.StartsWith("terminal.", StringComparison.OrdinalIgnoreCase)));
+            str_preview = string.Join("\r\n", txt.Where(l => l.StartsWith("terminalpreview.", StringComparison.OrdinalIgnoreCase)));
             Terminal = new WinTerminal_Converter(str_stable, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Stable);
             TerminalPreview = new WinTerminal_Converter(str_preview, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Preview);
 
-            WallpaperTone_W11.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win11_", (StringComparison)5)));
-            WallpaperTone_W10.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win10_", (StringComparison)5)));
-            WallpaperTone_W8.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win8.1_", (StringComparison)5)));
-            WallpaperTone_W7.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win7_", (StringComparison)5)));
-            WallpaperTone_WVista.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_WinVista_", (StringComparison)5)));
-            WallpaperTone_WXP.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_WinXP_", (StringComparison)5)));
+            WallpaperTone_W11.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win11_", StringComparison.OrdinalIgnoreCase)));
+            WallpaperTone_W10.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win10_", StringComparison.OrdinalIgnoreCase)));
+            WallpaperTone_W8.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win8.1_", StringComparison.OrdinalIgnoreCase)));
+            WallpaperTone_W7.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win7_", StringComparison.OrdinalIgnoreCase)));
+            WallpaperTone_WVista.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_WinVista_", StringComparison.OrdinalIgnoreCase)));
+            WallpaperTone_WXP.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_WinXP_", StringComparison.OrdinalIgnoreCase)));
 
             try
             {
-                Cursor_Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Enabled", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Cursor_Enabled= ".Count()));
+                Cursor_Enabled = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Enabled", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Cursor_Enabled= ".Count()));
             }
             catch
             {
             }
             try
             {
-                Cursor_Shadow = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Shadow", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Cursor_Shadow= ".Count()));
+                Cursor_Shadow = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Shadow", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Cursor_Shadow= ".Count()));
             }
             catch
             {
             }
             try
             {
-                Cursor_Trails = Conversions.ToInteger(txt.Where(l => l.StartsWith("*Cursor_Trails", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Cursor_Trails= ".Count()));
+                Cursor_Trails = Conversions.ToInteger(txt.Where(l => l.StartsWith("*Cursor_Trails", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Cursor_Trails= ".Count()));
             }
             catch
             {
             }
             try
             {
-                Cursor_Sonar = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Sonar", (StringComparison)5)).ElementAtOrDefault(0).Remove(0, "*Cursor_Sonar= ".Count()));
+                Cursor_Sonar = Conversions.ToBoolean(txt.Where(l => l.StartsWith("*Cursor_Sonar", StringComparison.OrdinalIgnoreCase)).ElementAtOrDefault(0).Remove(0, "*Cursor_Sonar= ".Count()));
             }
             catch
             {
             }
 
-            Cursor_Arrow.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Arrow_", (StringComparison)5)));
-            Cursor_Help.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Help_", (StringComparison)5)));
-            Cursor_AppLoading.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_AppLoading_", (StringComparison)5)));
-            Cursor_Busy.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Busy_", (StringComparison)5)));
-            Cursor_Move.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Move_", (StringComparison)5)));
-            Cursor_NS.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NS_", (StringComparison)5)));
-            Cursor_EW.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_EW_", (StringComparison)5)));
-            Cursor_NESW.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NESW_", (StringComparison)5)));
-            Cursor_NWSE.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NWSE_", (StringComparison)5)));
-            Cursor_Up.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Up_", (StringComparison)5)));
-            Cursor_Pen.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Pen_", (StringComparison)5)));
-            Cursor_None.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_None_", (StringComparison)5)));
-            Cursor_Link.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Link_", (StringComparison)5)));
-            Cursor_Pin.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Pin_", (StringComparison)5)));
-            Cursor_Person.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Person_", (StringComparison)5)));
-            Cursor_IBeam.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_IBeam_", (StringComparison)5)));
-            Cursor_Cross.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Cross_", (StringComparison)5)));
+            Cursor_Arrow.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Arrow_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Help.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Help_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_AppLoading.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_AppLoading_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Busy.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Busy_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Move.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Move_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_NS.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NS_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_EW.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_EW_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_NESW.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NESW_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_NWSE.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_NWSE_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Up.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Up_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Pen.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Pen_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_None.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_None_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Link.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Link_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Pin.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Pin_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Person.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Person_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_IBeam.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_IBeam_", StringComparison.OrdinalIgnoreCase)));
+            Cursor_Cross.FromListOfString(txt.Where(l => l.StartsWith("*Cursor_Cross_", StringComparison.OrdinalIgnoreCase)));
         }
 
         public string ToString(bool OldWPTH1069)

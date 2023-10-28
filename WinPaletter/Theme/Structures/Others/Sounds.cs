@@ -477,11 +477,11 @@ namespace WinPaletter.Theme.Structures
 
                 if (OS.W8 | OS.W81 | OS.W10 | OS.W11 | OS.W12)
                 {
-                    DeleteTask(TaskType.Shutdown, TreeView);
-                    DeleteTask(TaskType.Logoff, TreeView);
-                    DeleteTask(TaskType.Logon, TreeView);
-                    DeleteTask(TaskType.Unlock, TreeView);
-                    DeleteTask(TaskType.ChargerConnected, TreeView);
+                    Tasks.Delete(Tasks.TaskType.Shutdown, TreeView);
+                    Tasks.Delete(Tasks.TaskType.Logoff, TreeView);
+                    Tasks.Delete(Tasks.TaskType.Logon, TreeView);
+                    Tasks.Delete(Tasks.TaskType.Unlock, TreeView);
+                    Tasks.Delete(Tasks.TaskType.ChargerConnected, TreeView);
                 }
 
                 string[] Scope_Win = new[] { @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified" };

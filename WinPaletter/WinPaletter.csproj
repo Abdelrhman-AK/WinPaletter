@@ -144,6 +144,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
@@ -176,6 +177,7 @@
     <Reference Include="System.Security">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess">
       <Private>False</Private>
     </Reference>
@@ -243,23 +245,22 @@
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Assemblies\AnimatedCursors\BitmapOps.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\EOANIWriter.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurLoader.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\OffsetStream.cs" />
-    <Compile Include="Classes\Assemblies\AnimatedCursors\StreamOps.cs" />
-    <Compile Include="Classes\Elevator.cs" />
-    <Compile Include="Classes\NativeMethods\Dnsapi.cs" />
-    <Compile Include="Classes\NativeMethods\DWMAPI.cs" />
-    <Compile Include="Classes\NativeMethods\GDI32.cs" />
-    <Compile Include="Classes\NativeMethods\Kernel32.cs" />
-    <Compile Include="Classes\NativeMethods\Shell32.cs" />
-    <Compile Include="Classes\NativeMethods\User32.cs" />
-    <Compile Include="Classes\NativeMethods\UxTheme.cs" />
-    <Compile Include="Classes\NativeMethods\Wininet.cs" />
-    <Compile Include="Classes\NativeMethods\Winmm.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\BitmapOps.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\EOANIWriter.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\EOIcoCurLoader.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\OffsetStream.cs" />
+    <Compile Include="Program\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Program\NativeMethods\Dnsapi.cs" />
+    <Compile Include="Program\NativeMethods\DWMAPI.cs" />
+    <Compile Include="Program\NativeMethods\GDI32.cs" />
+    <Compile Include="Program\NativeMethods\Kernel32.cs" />
+    <Compile Include="Program\NativeMethods\Shell32.cs" />
+    <Compile Include="Program\NativeMethods\User32.cs" />
+    <Compile Include="Program\NativeMethods\UxTheme.cs" />
+    <Compile Include="Program\NativeMethods\Wininet.cs" />
+    <Compile Include="Program\NativeMethods\Winmm.cs" />
     <Compile Include="Dialogs\SysEventsSndsInstaller.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,7 +279,16 @@
     <Compile Include="Dialogs\ThemeLog.Designer.cs">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\UserSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UserSelect.Designer.cs">
+      <DependentUpon>UserSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms.cs" />
+    <Compile Include="Program\Classes\FormDWMEffects.cs" />
+    <Compile Include="Program\Classes\RGBComparer.cs" />
+    <Compile Include="Program\Classes\Visual.cs" />
     <Compile Include="Program\GlobalVariables\ColorClipboard.cs" />
     <Compile Include="Program\GlobalVariables\Exceptions.cs" />
     <Compile Include="Program\GlobalVariables\Fonts.cs" />
@@ -289,11 +299,13 @@
     <Compile Include="Program\AssemblyLoader.cs" />
     <Compile Include="Program\ExceptionsHandler.cs" />
     <Compile Include="Program\FileAssoc.cs" />
+    <Compile Include="Program\Users.cs" />
     <Compile Include="Program\Helpers.cs" />
     <Compile Include="Program\Invoker.cs" />
     <Compile Include="Program\PreferencesMonitor.cs" />
+    <Compile Include="Program\Tasks.cs" />
     <Compile Include="Program\Uninstaller.cs" />
-    <Compile Include="Program\Variables.cs" />
+    <Compile Include="Program\GlobalVariables\Variables.cs" />
     <Compile Include="GUI\Style\DefaultColors.cs" />
     <Compile Include="GUI\Style\Dialogs\InputBox.cs" />
     <Compile Include="GUI\Style\Dialogs\MsgBox.cs" />
@@ -360,8 +372,8 @@
     <Compile Include="Dialogs\PE_Warning.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\Bitmap_Mgr.cs" />
-    <Compile Include="Classes\INI.cs" />
+    <Compile Include="Program\Classes\Bitmap_Mgr.cs" />
+    <Compile Include="Program\Classes\INI.cs" />
     <Compile Include="Converter\Converter_CP.cs" />
     <Compile Include="Converter\Converter_Form.Designer.cs">
       <DependentUpon>Converter_Form.cs</DependentUpon>
@@ -390,13 +402,12 @@
     <Compile Include="Dialogs\BugReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\PE.cs" />
-    <Compile Include="Classes\ExplorerPatcher.cs" />
-    <Compile Include="Classes\MemoryFonts.cs" />
-    <Compile Include="Classes\NativeMethods\NativeMethods.cs" />
-    <Compile Include="Classes\Reg_IO.cs" />
-    <Compile Include="Classes\TypesExtensions.cs" />
-    <Compile Include="Classes\Core.cs" />
+    <Compile Include="Program\Classes\PE.cs" />
+    <Compile Include="Program\Classes\ExplorerPatcher.cs" />
+    <Compile Include="Program\Classes\MemoryFonts.cs" />
+    <Compile Include="Program\NativeMethods\NativeMethods.cs" />
+    <Compile Include="Program\Classes\Reg_IO.cs" />
+    <Compile Include="Program\Classes\TypesExtensions.cs" />
     <Compile Include="Extras\ApplicationThemer.Designer.cs">
       <DependentUpon>ApplicationThemer.cs</DependentUpon>
     </Compile>
@@ -1063,6 +1074,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UserSelect.resx">
+      <DependentUpon>UserSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.cs</DependentUpon>

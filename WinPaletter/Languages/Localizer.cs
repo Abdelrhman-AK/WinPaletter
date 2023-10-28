@@ -141,9 +141,8 @@ namespace WinPaletter
         public string WP_Theme_FileType { get; set; } = "WinPaletter Theme File";
         public string WP_Settings_FileType { get; set; } = "WinPaletter Settings File";
         public string WP_ResourcesPack_FileType { get; set; } = "WinPaletter Theme Resources Pack";
-        public string RT_UseWinUpdate { get; set; } = "Do you want to use Windows Update if repair is required?";
+        public string RT_UseWinUpdate { get; set; } = "Do you want to use the online source for repair?";
         public string RT_UseInstallWIM { get; set; } = "If you pressed no, an open file dialog will appear to select install.wim/install.esd file that will be repair source.";
-
 
         public string TM_ApplyingTheme { get; set; } = "Applying theme: {0}";
         public string TM_CloseOnApplying0 { get; set; } = "WinPaletter is still applying the theme. Do you want to close it anyway?";
@@ -285,7 +284,6 @@ namespace WinPaletter
         public string Verbose_RegAdd { get; set; } = "{0} > {1} = {2}, RegistryValueKind = {3}";
         public string Verbose_RegSkipped { get; set; } = "Skipped: {0}";
         public string Verbose_RegDelete { get; set; } = "Deleting: {0}";
-        public string Verbose_CreateTask { get; set; } = "Creating task {0} in Task Scheduler";
         public string Verbose_DeleteTask { get; set; } = "Deleting task {0} from Task Scheduler";
         public string Verbose_PE_GettingAccess { get; set; } = "Trying to get authorized access to change '{0}' access/permissions";
         public string Verbose_PE_GetAccessToChangeResources { get; set; } = "Trying to get authorized access to change '{0}' resources";
@@ -427,6 +425,10 @@ namespace WinPaletter
         public string SvcInstaller_InstallCompleted { get; set; } = "Service installation is completed";
         public string SvcInstaller_UninstallCompleted { get; set; } = "Service uninstallation is completed";
         public string SvcInstaller_MissingInstallutil { get; set; } = "Couldn't find installutil.exe in .NET Framework directory. Try reinstalling or repairing .NET Framework and try again.";
+
+        public string UserSwitch_Computer { get; set; } = "Computer";
+        public string UserSwitch_TypeAdministrator { get; set; } = "Type: Administrator";
+        public string UserSwitch_TypeLocalUser { get; set; } = "Type: Local user";
 
         public string ColorItem_Copy { get; set; } = "Copy color into dropped item";
         public string ColorItem_Copy_Invert { get; set; } = "Copy color into dropped item as inverted";

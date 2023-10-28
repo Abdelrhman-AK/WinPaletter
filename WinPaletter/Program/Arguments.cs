@@ -34,18 +34,18 @@ namespace WinPaletter
                     break;
                 }
 
-                else if (arg.StartsWith("/convert:", (StringComparison)5))
+                else if (arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase))
                 {
                     CMD_Convert(arg, true);
                 }
 
-                else if (arg.StartsWith("/convert-list:", (StringComparison)5))
+                else if (arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
                 {
                     CMD_Convert_List(arg, true);
 
                 }
 
-                else if (!arg.StartsWith("/apply:", (StringComparison)5) & !arg.StartsWith("/edit:", (StringComparison)5) & !arg.StartsWith("/convert:", (StringComparison)5) & !arg.StartsWith("/convert-list:", (StringComparison)5))
+                else if (!arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
                 {
                     if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
                     {
@@ -75,7 +75,7 @@ namespace WinPaletter
                     }
                 }
 
-                else if (arg.StartsWith("/apply:", (StringComparison)5))
+                else if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
                 {
                     string File = arg.Remove(0, "/apply:".Count());
                     File = File.Replace("\"", "");
@@ -90,7 +90,7 @@ namespace WinPaletter
                     }
                 }
 
-                else if (arg.StartsWith("/edit:", (StringComparison)5))
+                else if (arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase))
                 {
                     string File = arg.Remove(0, "/edit:".Count());
                     File = File.Replace("\"", "");
@@ -123,17 +123,17 @@ namespace WinPaletter
                             Uninstall_Quiet();
                         }
 
-                        else if (arg.StartsWith("/convert:", (StringComparison)5))
+                        else if (arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase))
                         {
                             CMD_Convert(arg, false);
                         }
 
-                        else if (arg.StartsWith("/convert-list:", (StringComparison)5))
+                        else if (arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
                         {
                             CMD_Convert_List(arg, false);
                         }
 
-                        else if (!arg.StartsWith("/apply:", (StringComparison)5) & !arg.StartsWith("/edit:", (StringComparison)5))
+                        else if (!arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase))
                         {
                             if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
                             {
@@ -162,7 +162,7 @@ namespace WinPaletter
 
                         else
                         {
-                            if (arg.StartsWith("/apply:", (StringComparison)5))
+                            if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
                             {
                                 string File = arg.Remove(0, "/apply:".Count());
                                 File = File.Replace("\"", "");
@@ -175,7 +175,7 @@ namespace WinPaletter
                                 }
                             }
 
-                            if (arg.StartsWith("/edit:", (StringComparison)5))
+                            if (arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase))
                             {
                                 string File = arg.Remove(0, "/edit:".Count());
                                 File = File.Replace("\"", "");

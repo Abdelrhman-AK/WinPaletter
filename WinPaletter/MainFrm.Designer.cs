@@ -680,6 +680,7 @@ namespace WinPaletter
             this.Select_WXP.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_WXP.ForeColor = System.Drawing.Color.White;
             this.Select_WXP.Image = null;
+            this.Select_WXP.ImageWithText = false;
             this.Select_WXP.Location = new System.Drawing.Point(133, 359);
             this.Select_WXP.Name = "Select_WXP";
             this.Select_WXP.ShowText = false;
@@ -696,6 +697,7 @@ namespace WinPaletter
             this.Select_WVista.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_WVista.ForeColor = System.Drawing.Color.White;
             this.Select_WVista.Image = null;
+            this.Select_WVista.ImageWithText = false;
             this.Select_WVista.Location = new System.Drawing.Point(179, 359);
             this.Select_WVista.Name = "Select_WVista";
             this.Select_WVista.ShowText = false;
@@ -1157,6 +1159,7 @@ namespace WinPaletter
             this.Select_W7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W7.ForeColor = System.Drawing.Color.White;
             this.Select_W7.Image = null;
+            this.Select_W7.ImageWithText = false;
             this.Select_W7.Location = new System.Drawing.Point(225, 359);
             this.Select_W7.Name = "Select_W7";
             this.Select_W7.ShowText = false;
@@ -1189,6 +1192,7 @@ namespace WinPaletter
             this.Select_W81.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W81.ForeColor = System.Drawing.Color.White;
             this.Select_W81.Image = null;
+            this.Select_W81.ImageWithText = false;
             this.Select_W81.Location = new System.Drawing.Point(271, 359);
             this.Select_W81.Name = "Select_W81";
             this.Select_W81.ShowText = false;
@@ -1224,6 +1228,7 @@ namespace WinPaletter
             this.Select_W10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W10.ForeColor = System.Drawing.Color.White;
             this.Select_W10.Image = null;
+            this.Select_W10.ImageWithText = false;
             this.Select_W10.Location = new System.Drawing.Point(317, 359);
             this.Select_W10.Name = "Select_W10";
             this.Select_W10.ShowText = false;
@@ -1257,6 +1262,7 @@ namespace WinPaletter
             this.Select_W11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W11.ForeColor = System.Drawing.Color.White;
             this.Select_W11.Image = null;
+            this.Select_W11.ImageWithText = false;
             this.Select_W11.Location = new System.Drawing.Point(363, 359);
             this.Select_W11.Name = "Select_W11";
             this.Select_W11.ShowText = false;
@@ -2091,6 +2097,7 @@ namespace WinPaletter
             this.W11_Accent_Taskbar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W11_Accent_Taskbar.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_Taskbar.Image = null;
+            this.W11_Accent_Taskbar.ImageWithText = false;
             this.W11_Accent_Taskbar.Location = new System.Drawing.Point(248, 3);
             this.W11_Accent_Taskbar.Name = "W11_Accent_Taskbar";
             this.W11_Accent_Taskbar.ShowText = true;
@@ -2108,6 +2115,7 @@ namespace WinPaletter
             this.W11_Accent_StartTaskbar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W11_Accent_StartTaskbar.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_StartTaskbar.Image = null;
+            this.W11_Accent_StartTaskbar.ImageWithText = false;
             this.W11_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 3);
             this.W11_Accent_StartTaskbar.Name = "W11_Accent_StartTaskbar";
             this.W11_Accent_StartTaskbar.ShowText = true;
@@ -2125,6 +2133,7 @@ namespace WinPaletter
             this.W11_Accent_None.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W11_Accent_None.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_None.Image = null;
+            this.W11_Accent_None.ImageWithText = false;
             this.W11_Accent_None.Location = new System.Drawing.Point(181, 3);
             this.W11_Accent_None.Name = "W11_Accent_None";
             this.W11_Accent_None.ShowText = true;
@@ -3332,6 +3341,7 @@ namespace WinPaletter
             this.W10_Accent_Taskbar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W10_Accent_Taskbar.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_Taskbar.Image = null;
+            this.W10_Accent_Taskbar.ImageWithText = false;
             this.W10_Accent_Taskbar.Location = new System.Drawing.Point(248, 3);
             this.W10_Accent_Taskbar.Name = "W10_Accent_Taskbar";
             this.W10_Accent_Taskbar.ShowText = true;
@@ -3349,6 +3359,7 @@ namespace WinPaletter
             this.W10_Accent_StartTaskbar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W10_Accent_StartTaskbar.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_StartTaskbar.Image = null;
+            this.W10_Accent_StartTaskbar.ImageWithText = false;
             this.W10_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 3);
             this.W10_Accent_StartTaskbar.Name = "W10_Accent_StartTaskbar";
             this.W10_Accent_StartTaskbar.ShowText = true;
@@ -3366,6 +3377,7 @@ namespace WinPaletter
             this.W10_Accent_None.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W10_Accent_None.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_None.Image = null;
+            this.W10_Accent_None.ImageWithText = false;
             this.W10_Accent_None.Location = new System.Drawing.Point(182, 3);
             this.W10_Accent_None.Name = "W10_Accent_None";
             this.W10_Accent_None.ShowText = true;
@@ -3890,6 +3902,7 @@ namespace WinPaletter
             this.W81_theme_aerolite.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W81_theme_aerolite.ForeColor = System.Drawing.Color.White;
             this.W81_theme_aerolite.Image = ((System.Drawing.Image)(resources.GetObject("W81_theme_aerolite.Image")));
+            this.W81_theme_aerolite.ImageWithText = false;
             this.W81_theme_aerolite.Location = new System.Drawing.Point(183, 39);
             this.W81_theme_aerolite.Name = "W81_theme_aerolite";
             this.W81_theme_aerolite.ShowText = false;
@@ -3928,6 +3941,7 @@ namespace WinPaletter
             this.W81_theme_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W81_theme_aero.ForeColor = System.Drawing.Color.White;
             this.W81_theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("W81_theme_aero.Image")));
+            this.W81_theme_aero.ImageWithText = false;
             this.W81_theme_aero.Location = new System.Drawing.Point(113, 39);
             this.W81_theme_aero.Name = "W81_theme_aero";
             this.W81_theme_aero.ShowText = false;
@@ -4370,6 +4384,7 @@ namespace WinPaletter
             this.W7_theme_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W7_theme_aero.ForeColor = System.Drawing.Color.White;
             this.W7_theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("W7_theme_aero.Image")));
+            this.W7_theme_aero.ImageWithText = false;
             this.W7_theme_aero.Location = new System.Drawing.Point(79, 40);
             this.W7_theme_aero.Name = "W7_theme_aero";
             this.W7_theme_aero.ShowText = false;
@@ -4397,6 +4412,7 @@ namespace WinPaletter
             this.W7_theme_classic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W7_theme_classic.ForeColor = System.Drawing.Color.White;
             this.W7_theme_classic.Image = ((System.Drawing.Image)(resources.GetObject("W7_theme_classic.Image")));
+            this.W7_theme_classic.ImageWithText = false;
             this.W7_theme_classic.Location = new System.Drawing.Point(370, 40);
             this.W7_theme_classic.Name = "W7_theme_classic";
             this.W7_theme_classic.ShowText = false;
@@ -4423,6 +4439,7 @@ namespace WinPaletter
             this.W7_theme_basic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W7_theme_basic.ForeColor = System.Drawing.Color.White;
             this.W7_theme_basic.Image = ((System.Drawing.Image)(resources.GetObject("W7_theme_basic.Image")));
+            this.W7_theme_basic.ImageWithText = false;
             this.W7_theme_basic.Location = new System.Drawing.Point(274, 40);
             this.W7_theme_basic.Name = "W7_theme_basic";
             this.W7_theme_basic.ShowText = false;
@@ -4449,6 +4466,7 @@ namespace WinPaletter
             this.W7_theme_aeroopaque.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.W7_theme_aeroopaque.ForeColor = System.Drawing.Color.White;
             this.W7_theme_aeroopaque.Image = ((System.Drawing.Image)(resources.GetObject("W7_theme_aeroopaque.Image")));
+            this.W7_theme_aeroopaque.ImageWithText = false;
             this.W7_theme_aeroopaque.Location = new System.Drawing.Point(175, 40);
             this.W7_theme_aeroopaque.Name = "W7_theme_aeroopaque";
             this.W7_theme_aeroopaque.ShowText = false;
@@ -5121,6 +5139,7 @@ namespace WinPaletter
             this.WVista_theme_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WVista_theme_aero.ForeColor = System.Drawing.Color.White;
             this.WVista_theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("WVista_theme_aero.Image")));
+            this.WVista_theme_aero.ImageWithText = false;
             this.WVista_theme_aero.Location = new System.Drawing.Point(79, 44);
             this.WVista_theme_aero.Name = "WVista_theme_aero";
             this.WVista_theme_aero.ShowText = false;
@@ -5148,6 +5167,7 @@ namespace WinPaletter
             this.WVista_theme_classic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WVista_theme_classic.ForeColor = System.Drawing.Color.White;
             this.WVista_theme_classic.Image = ((System.Drawing.Image)(resources.GetObject("WVista_theme_classic.Image")));
+            this.WVista_theme_classic.ImageWithText = false;
             this.WVista_theme_classic.Location = new System.Drawing.Point(370, 44);
             this.WVista_theme_classic.Name = "WVista_theme_classic";
             this.WVista_theme_classic.ShowText = false;
@@ -5174,6 +5194,7 @@ namespace WinPaletter
             this.WVista_theme_basic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WVista_theme_basic.ForeColor = System.Drawing.Color.White;
             this.WVista_theme_basic.Image = ((System.Drawing.Image)(resources.GetObject("WVista_theme_basic.Image")));
+            this.WVista_theme_basic.ImageWithText = false;
             this.WVista_theme_basic.Location = new System.Drawing.Point(274, 44);
             this.WVista_theme_basic.Name = "WVista_theme_basic";
             this.WVista_theme_basic.ShowText = false;
@@ -5200,6 +5221,7 @@ namespace WinPaletter
             this.WVista_theme_aeroopaque.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WVista_theme_aeroopaque.ForeColor = System.Drawing.Color.White;
             this.WVista_theme_aeroopaque.Image = ((System.Drawing.Image)(resources.GetObject("WVista_theme_aeroopaque.Image")));
+            this.WVista_theme_aeroopaque.ImageWithText = false;
             this.WVista_theme_aeroopaque.Location = new System.Drawing.Point(175, 44);
             this.WVista_theme_aeroopaque.Name = "WVista_theme_aeroopaque";
             this.WVista_theme_aeroopaque.ShowText = false;
@@ -5521,6 +5543,7 @@ namespace WinPaletter
             this.WXP_CustomTheme.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_CustomTheme.ForeColor = System.Drawing.Color.White;
             this.WXP_CustomTheme.Image = ((System.Drawing.Image)(resources.GetObject("WXP_CustomTheme.Image")));
+            this.WXP_CustomTheme.ImageWithText = false;
             this.WXP_CustomTheme.Location = new System.Drawing.Point(328, 47);
             this.WXP_CustomTheme.Name = "WXP_CustomTheme";
             this.WXP_CustomTheme.ShowText = false;
@@ -5535,6 +5558,7 @@ namespace WinPaletter
             this.WXP_Classic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_Classic.ForeColor = System.Drawing.Color.White;
             this.WXP_Classic.Image = ((System.Drawing.Image)(resources.GetObject("WXP_Classic.Image")));
+            this.WXP_Classic.ImageWithText = false;
             this.WXP_Classic.Location = new System.Drawing.Point(420, 47);
             this.WXP_Classic.Name = "WXP_Classic";
             this.WXP_Classic.ShowText = false;
@@ -5584,6 +5608,7 @@ namespace WinPaletter
             this.WXP_Luna_Blue.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_Luna_Blue.ForeColor = System.Drawing.Color.White;
             this.WXP_Luna_Blue.Image = ((System.Drawing.Image)(resources.GetObject("WXP_Luna_Blue.Image")));
+            this.WXP_Luna_Blue.ImageWithText = false;
             this.WXP_Luna_Blue.Location = new System.Drawing.Point(35, 47);
             this.WXP_Luna_Blue.Name = "WXP_Luna_Blue";
             this.WXP_Luna_Blue.ShowText = false;
@@ -5623,6 +5648,7 @@ namespace WinPaletter
             this.WXP_Luna_Silver.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_Luna_Silver.ForeColor = System.Drawing.Color.White;
             this.WXP_Luna_Silver.Image = ((System.Drawing.Image)(resources.GetObject("WXP_Luna_Silver.Image")));
+            this.WXP_Luna_Silver.ImageWithText = false;
             this.WXP_Luna_Silver.Location = new System.Drawing.Point(230, 47);
             this.WXP_Luna_Silver.Name = "WXP_Luna_Silver";
             this.WXP_Luna_Silver.ShowText = false;
@@ -5649,6 +5675,7 @@ namespace WinPaletter
             this.WXP_Luna_OliveGreen.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_Luna_OliveGreen.ForeColor = System.Drawing.Color.White;
             this.WXP_Luna_OliveGreen.Image = ((System.Drawing.Image)(resources.GetObject("WXP_Luna_OliveGreen.Image")));
+            this.WXP_Luna_OliveGreen.ImageWithText = false;
             this.WXP_Luna_OliveGreen.Location = new System.Drawing.Point(131, 47);
             this.WXP_Luna_OliveGreen.Name = "WXP_Luna_OliveGreen";
             this.WXP_Luna_OliveGreen.ShowText = false;

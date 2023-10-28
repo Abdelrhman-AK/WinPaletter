@@ -63,7 +63,7 @@ namespace WinPaletter
         {
             RegistryKey R = null;
 
-            if (Key.StartsWith(@"Computer\", (StringComparison)5))
+            if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
@@ -73,31 +73,31 @@ namespace WinPaletter
 
             var scope = default(Reg_scope);
 
-            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
+            if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
             {
                 scope = Reg_scope.HKEY_CURRENT_USER;
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
             {
                 scope = Reg_scope.HKEY_USERS;
                 Key = Key.Remove(0, @"HKEY_USERS\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
             {
                 scope = Reg_scope.HKEY_LOCAL_MACHINE;
                 Key = Key.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
             {
                 scope = Reg_scope.HKEY_CLASSES_ROOT;
                 Key = Key.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
             }
 
-            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
             {
                 scope = Reg_scope.HKEY_CURRENT_CONFIG;
                 Key = Key.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
@@ -107,53 +107,50 @@ namespace WinPaletter
             {
                 case Reg_scope.HKEY_CURRENT_USER:
                     {
-                        R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
-                        if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
-                            R.CreateSubKey(Key, true);
+                        try
+                        {
+                            R = Users.UserSID != Users.AdminSID_GrantedUAC
+                                ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.UserSID)
+                                : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                        }
+                        catch
+                        {
+                            R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                        }
                         break;
                     }
 
                 case Reg_scope.HKEY_CURRENT_CONFIG:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32);
-                        if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
-                            R.CreateSubKey(Key, true);
                         break;
                     }
 
                 case Reg_scope.HKEY_CLASSES_ROOT:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32);
-                        if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
-                            R.CreateSubKey(Key, true);
                         break;
                     }
 
                 case Reg_scope.HKEY_LOCAL_MACHINE:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
-                        if (Program.Elevated)
-                        {
-                            if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
-                                R.CreateSubKey(Key, true);
-                        }
-
                         break;
                     }
 
                 case Reg_scope.HKEY_USERS:
                     {
                         R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
-                        if (Program.Elevated)
-                        {
-                            if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
-                                R.CreateSubKey(Key, true);
-                        }
-
                         break;
                     }
-
             }
+
+            try
+            {
+                if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
+                    R.CreateSubKey(Key, true);
+            }
+            catch { }
 
             // Skips setting to registry if the values are the same
             object ToCheck = GetReg(Key_BeforeModification, ValueName, null);
@@ -331,21 +328,26 @@ namespace WinPaletter
         {
             string regTemplate;
 
-            if (Key.StartsWith(@"Computer\", (StringComparison)5))
+            if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase))
                 Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
 
             string _Value;
-            if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
-                Key = "HKCU" + Key.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
+                Key = (Users.UserSID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.UserSID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+
+            if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
-            if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
                 Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
                 Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /v = Value Name
@@ -428,7 +430,7 @@ namespace WinPaletter
 
             try
             {
-                Program.CMD_Wrapper.SendCommand($"reg {string.Format(regTemplate, Key, ValueName, _Value)}");
+                Program.SendCommand($"reg {string.Format(regTemplate, Key, ValueName, _Value)}");
             }
             catch (Exception ex)
             {
@@ -532,44 +534,53 @@ namespace WinPaletter
             object Result = null;
             RegistryKey R = null;
 
-            if (Key.StartsWith(@"Computer\", (StringComparison)5))
+            if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase))
                 Key = Key.Remove(0, @"Computer\".Count());
 
-            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
+            if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
             {
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
-                R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                try
+                {
+                    R = Users.UserSID != Users.AdminSID_GrantedUAC
+                        ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.UserSID)
+                        : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                }
+                catch
+                {
+                    R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                }
             }
 
-            else if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
             {
                 Key = Key.Remove(0, @"HKEY_USERS\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32);
             }
 
-            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
             {
                 Key = Key.Remove(0, @"HKEY_LOCAL_MACHINE\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default);
             }
 
-            else if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
             {
                 Key = Key.Remove(0, @"HKEY_CLASSES_ROOT\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32);
             }
 
-            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
+            else if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
             {
                 Key = Key.Remove(0, @"HKEY_CURRENT_CONFIG\".Count());
                 R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32);
-
             }
 
             try
             {
-                if (R.OpenSubKey(Key, (RegistryKeyPermissionCheck)Conversions.ToInteger(false), RegistryRights.ReadKey) is not null)
-                    Result = R.OpenSubKey(Key, (RegistryKeyPermissionCheck)Conversions.ToInteger(false), RegistryRights.ReadKey).GetValue(ValueName, DefaultValue);
+                if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey) is not null)
+                    Result = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey).GetValue(ValueName, DefaultValue);
+
                 try
                 {
                     if (R is not null)
@@ -583,6 +594,7 @@ namespace WinPaletter
                 {
                 }
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
+
             }
             catch (Exception ex)
             {
@@ -613,20 +625,24 @@ namespace WinPaletter
         public static void DelReg_AdministratorDeflector(string Key, string ValueName)
         {
             string regTemplate;
-            if (Key.StartsWith("HKEY_LOCAL_MACHINE", (StringComparison)5))
+            if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
-            if (Key.StartsWith("HKEY_CURRENT_USER", (StringComparison)5))
-                Key = "HKCU" + Key.Remove(0, "HKEY_CURRENT_USER".Count());
-            if (Key.StartsWith("HKEY_USERS", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
+                Key = (Users.UserSID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.UserSID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+
+            if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
-            if (Key.StartsWith("HKEY_CLASSES_ROOT", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
                 Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
-            if (Key.StartsWith("HKEY_CURRENT_CONFIG", (StringComparison)5))
+
+            if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
                 Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
 
             // /f = Disable prompt
             regTemplate = @"delete ""{0}\{1}"" /f";
-            Program.CMD_Wrapper.SendCommand($"reg {string.Format(regTemplate, Key, ValueName)}");
+            Program.SendCommand($"reg {string.Format(regTemplate, Key, ValueName)}");
         }
 
         /// <summary>
@@ -686,7 +702,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.CMD_Wrapper.SendCommand($"{PathsExt.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
+                Program.SendCommand($"{PathsExt.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
 
                 try
                 {
@@ -710,7 +726,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.CMD_Wrapper.SendCommand($"{PathsExt.System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
+                Program.SendCommand($"{PathsExt.System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
 
                 try
                 {
@@ -733,7 +749,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(source))
             {
-                Program.CMD_Wrapper.SendCommand($"{PathsExt.CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
+                Program.SendCommand($"{PathsExt.CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
             }
         }
     }

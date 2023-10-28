@@ -47,7 +47,7 @@ namespace WinPaletter
                             {
                                 case Version.Stable:
                                     {
-                                        if (lin.StartsWith("terminal.", (StringComparison)5) & !lin.StartsWith("terminalpreview.", (StringComparison)5))
+                                        if (lin.StartsWith("terminal.", StringComparison.OrdinalIgnoreCase) & !lin.StartsWith("terminalpreview.", StringComparison.OrdinalIgnoreCase))
                                         {
                                             Collected.Add(lin.Remove(0, "terminal.".Count()));
                                         }
@@ -57,7 +57,7 @@ namespace WinPaletter
 
                                 case Version.Preview:
                                     {
-                                        if (lin.StartsWith("terminalpreview.", (StringComparison)5) & !lin.StartsWith("terminal.", (StringComparison)5))
+                                        if (lin.StartsWith("terminalpreview.", StringComparison.OrdinalIgnoreCase) & !lin.StartsWith("terminal.", StringComparison.OrdinalIgnoreCase))
                                         {
                                             Collected.Add(lin.Remove(0, "terminalpreview.".Count()));
                                         }
@@ -92,20 +92,20 @@ namespace WinPaletter
 
                         foreach (string lin in Collected)
                         {
-                            if (lin.StartsWith("theme= ", (StringComparison)5))
+                            if (lin.StartsWith("theme= ", StringComparison.OrdinalIgnoreCase))
                                 Theme = lin.Remove(0, "theme= ".Count());
-                            if (lin.StartsWith("useacrylicintabrow= ", (StringComparison)5))
+                            if (lin.StartsWith("useacrylicintabrow= ", StringComparison.OrdinalIgnoreCase))
                                 UseAcrylicInTabRow = Conversions.ToBoolean(lin.Remove(0, "useAcrylicInTabRow= ".Count()));
-                            if (lin.StartsWith("enabled= ", (StringComparison)5))
+                            if (lin.StartsWith("enabled= ", StringComparison.OrdinalIgnoreCase))
                                 Enabled = Conversions.ToBoolean(lin.Remove(0, "enabled= ".Count()));
 
-                            if (lin.StartsWith("default.", (StringComparison)5))
+                            if (lin.StartsWith("default.", StringComparison.OrdinalIgnoreCase))
                                 Defs.Add(lin.Remove(0, "default.".Count()));
-                            if (lin.StartsWith("schemes.", (StringComparison)5))
+                            if (lin.StartsWith("schemes.", StringComparison.OrdinalIgnoreCase))
                                 CollectedColors.Add(lin.Remove(0, "schemes.".Count()));
-                            if (lin.StartsWith("profiles.", (StringComparison)5))
+                            if (lin.StartsWith("profiles.", StringComparison.OrdinalIgnoreCase))
                                 CollectedProfiles.Add(lin.Remove(0, "profiles.".Count()));
-                            if (lin.StartsWith("themes.", (StringComparison)5))
+                            if (lin.StartsWith("themes.", StringComparison.OrdinalIgnoreCase))
                                 CollectedThemes.Add(lin.Remove(0, "themes.".Count()));
                         }
 

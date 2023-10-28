@@ -40,7 +40,7 @@ namespace WinPaletter
             Button1.Enabled = true;
             Button2.Enabled = true;
             CheckBox1.Enabled = true;
-            CheckBox1.Checked = Program.Settings.Services.ShowSysEventsSoundsInstaller;
+            CheckBox1.Checked = Program.Settings.UsersServices.ShowSysEventsSoundsInstaller;
 
             Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Hand);
 
@@ -71,9 +71,9 @@ namespace WinPaletter
             CheckBox1.Enabled = false;
 
             textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Stopping, SvcName) + "\r\n");
-            Program.CMD_Wrapper.SendCommand("net stop WinPaletter.SystemEventsSounds");
+            Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
-            List<Process> Processes = Elevator.ProgramsRunning(PathsExt.SysEventsSounds);
+            List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
             try
@@ -95,13 +95,13 @@ namespace WinPaletter
                     string installutil = installutils.ElementAt(0);
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName) + "\r\n");
-                    Program.CMD_Wrapper.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"", true, true, true);
+                    Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Installing, SvcName) + "\r\n");
-                    Program.CMD_Wrapper.SendCommand($"\"{installutil}\" \"{PathsExt.SysEventsSounds}\"", true, true, true);
+                    Program.SendCommand($"\"{installutil}\" \"{PathsExt.SysEventsSounds}\"");
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Starting, SvcName) + "\r\n");
-                    Program.CMD_Wrapper.SendCommand("net start WinPaletter.SystemEventsSounds");
+                    Program.SendCommand("net start WinPaletter.SystemEventsSounds");
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_InstallCompleted, SvcName) + "\r\n");
 
@@ -126,9 +126,9 @@ namespace WinPaletter
             CheckBox1.Enabled = false;
 
             textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Stopping, SvcName) + "\r\n");
-            Program.CMD_Wrapper.SendCommand("net stop WinPaletter.SystemEventsSounds");
+            Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
-            List<Process> Processes = Elevator.ProgramsRunning(PathsExt.SysEventsSounds);
+            List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
             try
@@ -148,7 +148,7 @@ namespace WinPaletter
                     string installutil = installutils.ElementAt(0);
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName) + "\r\n");
-                    Program.CMD_Wrapper.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"", true, true, true);
+                    Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName) + "\r\n");
 
@@ -166,8 +166,8 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Program.Settings.Services.ShowSysEventsSoundsInstaller = CheckBox1.Checked;
-            Program.Settings.Services.Save();
+            Program.Settings.UsersServices.ShowSysEventsSoundsInstaller = CheckBox1.Checked;
+            Program.Settings.UsersServices.Save();
             Task.Run(Setup);
         }
 
@@ -195,8 +195,8 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Program.Settings.Services.ShowSysEventsSoundsInstaller = CheckBox1.Checked;
-            Program.Settings.Services.Save();
+            Program.Settings.UsersServices.ShowSysEventsSoundsInstaller = CheckBox1.Checked;
+            Program.Settings.UsersServices.Save();
             Close();
         }
     }

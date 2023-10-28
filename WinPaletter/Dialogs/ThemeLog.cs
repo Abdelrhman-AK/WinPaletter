@@ -93,8 +93,10 @@ namespace WinPaletter.Dialogs
 
                 // New method of restarting explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+                {
                     Program.ExplorerKiller.Start();
-                Program.ExplorerKiller.WaitForExit();
+                    Program.ExplorerKiller.WaitForExit();
+                }
 
                 try
                 {
@@ -103,7 +105,7 @@ namespace WinPaletter.Dialogs
                     if (LogEnabled)
                         Theme.Manager.AddNode(TreeView1, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_AllDone), "info");
 
-                    if (TM.MetricsFonts.Enabled & GetWindowsScreenScalingFactor() > 100d)
+                    if (TM.MetricsFonts.Enabled & Program.GetWindowsScreenScalingFactor() > 100d)
                         Theme.Manager.AddNode(TreeView1, string.Format("{0}", Program.Lang.TM_MetricsHighDPIAlert), "info");
 
                     if (AdditionalStoreTips)

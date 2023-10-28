@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Security.Principal;
 using System.Threading;
@@ -61,11 +62,6 @@ namespace WinPaletter
         public static Theme.Manager TM, TM_Original, TM_FirstTime;
 
         /// <summary>
-        /// WinPaletter commands elevator (to make UAC dialog appears for once)
-        /// </summary>
-        public static Elevator CMD_Wrapper = new();
-
-        /// <summary>
         /// Process that kills (stops by force) Windows explorer
         /// </summary>
         public static readonly Process ExplorerKiller = new()
@@ -88,10 +84,7 @@ namespace WinPaletter
             StartInfo = new ProcessStartInfo()
             {
                 FileName = PathsExt.explorer,
-                Arguments = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 ? "/NoUACCheck" : "",
-                //Verb = !OS.W81 & !OS.W8 & !OS.WXP ? "runas" : "",
                 WindowStyle = ProcessWindowStyle.Normal,
-                UseShellExecute = true
             }
         };
 
@@ -134,5 +127,7 @@ namespace WinPaletter
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
         public static AnimatorNS.Animator Animator;
+
+        public static List<string> LoadedNTUSER_DAT = new();
     }
 }

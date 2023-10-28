@@ -185,9 +185,7 @@ namespace WinPaletter.Theme.Structures
 
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);

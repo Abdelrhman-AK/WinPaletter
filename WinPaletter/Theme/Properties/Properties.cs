@@ -302,7 +302,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about metrics and fonts, and it can be customized.</summary>
         public MetricsFonts MetricsFonts = new()
         {
-            Enabled = GetWindowsScreenScalingFactor() == 100d,
+            Enabled = Program.GetWindowsScreenScalingFactor() == 100d,
             BorderWidth = 1,
             CaptionHeight = 22,
             CaptionWidth = 22,

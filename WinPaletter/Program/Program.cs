@@ -37,12 +37,26 @@ namespace WinPaletter
             if (OS.W7 | OS.WVista | OS.WXP)
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
+            string PreviousUser = Users.UserSID;
+
             DeleteUpdateResiduals();
             GetMemoryFonts();
+
             FetchDarkMode();
             ApplyStyle();
             LoadLanguage();
             CheckIfLicenseChecked();
+
+            Users.Login();
+            if (PreviousUser != Users.UserSID)
+            {
+                // Re-run all previous voids to load new user data
+                FetchDarkMode();
+                ApplyStyle();
+                LoadLanguage();
+                CheckIfLicenseChecked();
+            }
+
             ExecuteArgs();
             StartWallpaperMonitor();
             AssociateFiles();
@@ -52,7 +66,6 @@ namespace WinPaletter
             CreateUninstaller();
             CheckWhatsNew();
             InitializeImageLists();
-            InitializeCMDWrapper();
             InitializeSysEventsSounds();
             LoadThemeManager();
         }
@@ -79,7 +92,10 @@ namespace WinPaletter
 
             DeleteUpdateResiduals();
 
-            CMD_Wrapper.Exit();
+            foreach (string SID in LoadedNTUSER_DAT)
+            {
+                SendCommand($"reg unload HKU\\{SID}");
+            }
 
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;

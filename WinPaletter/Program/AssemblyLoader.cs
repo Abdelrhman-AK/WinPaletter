@@ -16,7 +16,7 @@ namespace WinPaletter
         {
             Name = new AssemblyName(Name).Name;
 
-            if (Name.StartsWith("WinPaletter.resources", (StringComparison)5))
+            if (Name.StartsWith("WinPaletter.resources", StringComparison.OrdinalIgnoreCase))
                 return null;
 
             byte[] b = null;
@@ -25,7 +25,7 @@ namespace WinPaletter
             {
                 using (var zip = new ZipArchive(ms))
                 {
-                    if (zip.Entries.Any(entry => entry.Name.EndsWith(Name + ".dll", (StringComparison)5)))
+                    if (zip.Entries.Any(entry => entry.Name.EndsWith(Name + ".dll", StringComparison.OrdinalIgnoreCase)))
                     {
                         using (var _as = new System.IO.MemoryStream())
                         {

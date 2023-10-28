@@ -445,7 +445,7 @@ namespace WinPaletter
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (IsNetworkAvailable())
+            if (Program.IsNetworkAvailable())
             {
                 try
                 {
@@ -785,7 +785,7 @@ namespace WinPaletter
                             {
                                 e.Cancel = false;
                                 if ((OS.W7 | OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
-                                    RefreshDWM(Program.TM_Original);
+                                    Program.RefreshDWM(Program.TM_Original);
                                 base.OnFormClosing(e);
                                 break;
                             }
@@ -2865,7 +2865,7 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            RestartExplorer();
+            Program.RestartExplorer();
         }
 
         private void Button20_Click(object sender, EventArgs e)

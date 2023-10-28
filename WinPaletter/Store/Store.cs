@@ -603,14 +603,14 @@ namespace WinPaletter
             {
                 string var = "";
 
-                if (!DB.StartsWith("https://", (StringComparison)5))
+                if (!DB.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                     var = "https://" + DB;
                 else
                     var = DB;
 
                 Status_lbl.SetText(string.Format(Program.Lang.Store_Ping, var));
 
-                if (Ping(var))
+                if (Program.Ping(var))
                 {
                     repos_list.Add(var);
                 }
@@ -900,7 +900,7 @@ namespace WinPaletter
             if (Program.Settings.Store.Online_or_Offline)
             {
 
-                if (!IsNetworkAvailable())
+                if (!Program.IsNetworkAvailable())
                 {
                     Status_lbl.SetText(Program.Lang.Store_NoNetwork);
 
@@ -1599,7 +1599,7 @@ namespace WinPaletter
 
         private void RestartExplorer_Click(object sender, EventArgs e)
         {
-            Core.RestartExplorer();
+            Program.RestartExplorer();
         }
 
         #endregion

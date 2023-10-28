@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace WinPaletter.NativeMethods
 {
@@ -11,6 +13,32 @@ namespace WinPaletter.NativeMethods
         public static extern int SHDefExtractIconW([MarshalAs(UnmanagedType.LPTStr)] string pszIconFile, int iIndex, uint uFlags, ref IntPtr phiconLarge, ref IntPtr phiconSmall, uint nIconSize);
         [DllImport("Shell32.dll", SetLastError = false)]
         public static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
+
+        [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
+        public static extern void GetUserTilePath(
+          string username,
+          UInt32 whatever, // 0x80000000
+          StringBuilder picpath, int maxLength);
+
+        public static string GetUserTilePath(string username)
+        {   // username: use null for current user
+            var sb = new StringBuilder(1000);
+            GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
+            return sb.ToString();
+        }
+
+        public static Image GetUserAccountPicture(string username)
+        {
+            string file = GetUserTilePath(username);
+            if (System.IO.File.Exists(file))
+            {
+                return Image.FromFile(file);
+            }
+            else
+            {
+                return (Image)Color.Black.ToBitmap(new Size(128, 128));
+            }
+        }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHSTOCKICONINFO

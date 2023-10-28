@@ -34,7 +34,7 @@ namespace WinPaletter.Dialogs
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Core.RestartExplorer();
+            Program.RestartExplorer();
         }
 
         private void button6_Click(object sender, EventArgs e)

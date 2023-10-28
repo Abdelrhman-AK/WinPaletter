@@ -1,4 +1,5 @@
 ﻿using System;
+using Application = System.Windows.Forms.Application;
 
 namespace WinPaletter.GlobalVariables
 {
@@ -27,12 +28,12 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// User profile directory
         /// </summary>
-        public readonly static string UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        public static string UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         /// <summary>
         /// Local app data directory
         /// </summary>
-        public readonly static string LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         /// <summary>
         /// Program files directory
@@ -49,37 +50,27 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter application data folder
         /// </summary>
-        public readonly static string appData = System.IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName;
+        public static string appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
 
         /// <summary>
         /// WinPaletter services directory
         /// </summary>
-        public readonly static string Services = $"{appData}\\Services";
+        public static string Services { get { return $"{System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName}\\Services"; } }
 
         /// <summary>
         /// WinPaletter system events sounds services
         /// </summary>
-        public static string ElevatorDir = $"{Services}\\Elevator";
+        public static string SysEventsSoundsDir { get { return $"{Services}\\SysEventsSounds"; } }
 
         /// <summary>
         /// WinPaletter system events sounds services
         /// </summary>
-        public readonly static string SysEventsSoundsDir = $"{Services}\\SysEventsSounds";
-
-        /// <summary>
-        /// WinPaletter elevator process file path
-        /// </summary>
-        public readonly static string CMDElevator = $"{ElevatorDir}\\WinPaletter.Elevator.exe";
-
-        /// <summary>
-        /// WinPaletter system events sounds services
-        /// </summary>
-        public readonly static string SysEventsSounds = $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe";
+        public static string SysEventsSounds { get { return $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe"; } }
 
         /// <summary>
         /// WinPaletter system events sounds INI file
         /// </summary>
-        public readonly static string SysEventsSounds_INI = $"{SysEventsSoundsDir}\\sounds.ini";
+        public static string SysEventsSounds_INI { get { return $"{SysEventsSoundsDir}\\sounds.ini"; } }
 
         /// <summary>
         /// WinPaletter system events sounds services
@@ -89,17 +80,17 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter Store cache directory
         /// </summary>
-        public readonly static string StoreCache = $"{appData}\\Store";
+        public static string StoreCache { get { return $"{appData}\\Store"; } }
 
         /// <summary>
         /// WinPaletter themes resources pack extraction directory
         /// </summary>
-        public readonly static string ThemeResPackCache = $"{appData}\\ThemeResPack_Cache";
+        public static string ThemeResPackCache { get { return $"{appData}\\ThemeResPack_Cache"; } }
 
         /// <summary>
         /// WinPaletter cursors directory (that cursors are rendered into)
         /// </summary>
-        public readonly static string CursorsWP = $"{appData}\\Cursors";
+        public static string CursorsWP { get { return $"{appData}\\Cursors"; } }
         #endregion
 
         #region System processes
@@ -130,7 +121,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Temporary theme file (for preview)
         /// </summary>
-        public static string MSTheme = $"{appData}\\VisualStyles\\Luna\\luna.theme";
+        public static string MSTheme { get { return $"{appData}\\VisualStyles\\Luna\\luna.theme"; } set { MSTheme = value; } }
         #endregion
 
         #region Consoles\Terminals
@@ -162,12 +153,12 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Microsoft Terminal JSON settings file
         /// </summary>
-        public readonly static string TerminalJSON = $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json";
+        public static string TerminalJSON { get { return $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json"; } }
 
         /// <summary>
         /// Microsoft Terminal Preview JSON settings file
         /// </summary>
-        public readonly static string TerminalPreviewJSON = $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json";
+        public static string TerminalPreviewJSON { get { return $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json"; } }
         #endregion
     }
 }

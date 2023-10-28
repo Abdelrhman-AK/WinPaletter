@@ -217,6 +217,25 @@ namespace WinPaletter
         }
 
 
+        private static UserSelect _UserSelect;
+        public static UserSelect UserSelect
+        {
+            get
+            {
+                _UserSelect = CreateInstance(_UserSelect);
+                return _UserSelect;
+            }
+            set
+            {
+                if (value == _UserSelect)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _UserSelect);
+            }
+        }
+
+
         private static LicenseForm _LicenseForm;
         public static LicenseForm LicenseForm
         {

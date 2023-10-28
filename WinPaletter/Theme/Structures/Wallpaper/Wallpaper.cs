@@ -110,7 +110,7 @@ namespace WinPaletter.Theme.Structures
             string spotlight_img = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
 
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
-            if (ImageFile.StartsWith(slideshow_img, (StringComparison)5) || ImageFile.StartsWith(spotlight_img, (StringComparison)5) || !File.Exists(ImageFile))
+            if (ImageFile.StartsWith(slideshow_img, StringComparison.OrdinalIgnoreCase) || ImageFile.StartsWith(spotlight_img, StringComparison.OrdinalIgnoreCase) || !File.Exists(ImageFile))
             {
                 ImageFile = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile).ToString();
             }
@@ -182,7 +182,7 @@ namespace WinPaletter.Theme.Structures
 
                     else if (WallpaperType == WallpaperTypes.Picture)
                     {
-                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(PathsExt.Windows + @"\Web", (StringComparison)5))
+                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             using (var bmp = new Bitmap(Bitmap_Mgr.Load(ImageFile)))
                             {

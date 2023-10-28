@@ -18,6 +18,7 @@ namespace WinPaletter
         public class Structures
         {
 
+            #region paths
             private const string REG = @"HKEY_CURRENT_USER\Software\WinPaletter\Settings";
             private const string REG_General = REG + @"\General";
             private const string REG_General_MainForm = REG_General + @"\MainForm";
@@ -31,8 +32,9 @@ namespace WinPaletter
             private const string REG_WindowsTerminals = REG + @"\WindowsTerminals";
             private const string REG_Store = REG + @"\Store";
             private const string REG_NerdStats = REG + @"\NerdStats";
-            private const string REG_Services = REG + @"\Services";
+            private const string REG_UsersServices = REG + @"\UsersServices";
             private const string REG_Miscellaneous = REG + @"\Miscellaneous";
+            #endregion
 
             public struct General
             {
@@ -451,27 +453,24 @@ namespace WinPaletter
 
             }
 
-            public struct Services
+            public struct UsersServices
             {
-                public bool ShowWPElevatorConsole;
-                public bool DontUseWPElevatorConsole;
-                public bool ShowWPElevatorStartupAlert;
+                public bool RemeberLastUser;
+                public string LastUserSID;
                 public bool ShowSysEventsSoundsInstaller;
 
                 public void Load()
                 {
-                    ShowWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Services, "ShowWPElevatorConsole", false));
-                    DontUseWPElevatorConsole = Conversions.ToBoolean(GetReg(REG_Services, "DontUseWPElevatorConsole", false));
-                    ShowWPElevatorStartupAlert = Conversions.ToBoolean(GetReg(REG_Services, "ShowWPElevatorStartupAlert", true));
-                    ShowSysEventsSoundsInstaller = Conversions.ToBoolean(GetReg(REG_Services, "ShowSysEventsSoundsInstaller", true));
+                    RemeberLastUser = Conversions.ToBoolean(GetReg(REG_UsersServices, "RemeberLastUser", false));
+                    LastUserSID = GetReg(REG_UsersServices, "LastUserSID", "").ToString();
+                    ShowSysEventsSoundsInstaller = Conversions.ToBoolean(GetReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", true));
                 }
 
                 public void Save()
                 {
-                    EditReg(REG_Services, "ShowWPElevatorConsole", REG_Services, RegistryValueKind.DWord);
-                    EditReg(REG_Services, "DontUseWPElevatorConsole", REG_Services, RegistryValueKind.DWord);
-                    EditReg(REG_Services, "ShowWPElevatorStartupAlert", ShowWPElevatorStartupAlert, RegistryValueKind.DWord);
-                    EditReg(REG_Services, "ShowSysEventsSoundsInstaller", ShowSysEventsSoundsInstaller, RegistryValueKind.DWord);
+                    EditReg(REG_UsersServices, "RemeberLastUser", RemeberLastUser, RegistryValueKind.DWord);
+                    EditReg(REG_UsersServices, "LastUserSID", LastUserSID, RegistryValueKind.String);
+                    EditReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", ShowSysEventsSoundsInstaller, RegistryValueKind.DWord);
                 }
             }
 
@@ -608,12 +607,11 @@ namespace WinPaletter
             Classic_Color_Picker = false
         };
 
-        public Structures.Services Services = new()
+        public Structures.UsersServices UsersServices = new()
         {
-            DontUseWPElevatorConsole = false,
-            ShowWPElevatorConsole = false,
             ShowSysEventsSoundsInstaller = true,
-            ShowWPElevatorStartupAlert = true
+            RemeberLastUser = false,
+            LastUserSID = ""
         };
 
         public Structures.Miscellaneous Miscellaneous = new Structures.Miscellaneous()
@@ -646,7 +644,7 @@ namespace WinPaletter
                         WindowsTerminals.Load();
                         Store.Load();
                         NerdStats.Load();
-                        Services.Load();
+                        UsersServices.Load();
                         Miscellaneous.Load();
                         break;
                     }
@@ -728,7 +726,7 @@ namespace WinPaletter
                         WindowsTerminals.Save();
                         Store.Save();
                         NerdStats.Save();
-                        Services.Save();
+                        UsersServices.Save();
                         Miscellaneous.Save();
                         break;
                     }

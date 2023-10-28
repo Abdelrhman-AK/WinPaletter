@@ -196,9 +196,7 @@ namespace WinPaletter
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
             CheckBox4.Checked = Sets.Store.ShowTips;
 
-            checkBox19.Checked = Sets.Services.DontUseWPElevatorConsole;
-            checkBox39.Checked = Sets.Services.ShowWPElevatorConsole;
-            checkBox40.Checked = Sets.Services.ShowWPElevatorStartupAlert;
+            checkBox19.Checked = Sets.UsersServices.RemeberLastUser;
 
         }
         public void SaveSettings()
@@ -497,9 +495,7 @@ namespace WinPaletter
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
             Sets.Store.ShowTips = CheckBox4.Checked;
 
-            Sets.Services.DontUseWPElevatorConsole = checkBox19.Checked;
-            Sets.Services.ShowWPElevatorConsole = checkBox39.Checked;
-            Sets.Services.ShowWPElevatorStartupAlert = checkBox40.Checked;
+            Sets.UsersServices.RemeberLastUser = checkBox19.Checked;
 
             Sets.Save(Mode, File);
         }
@@ -671,13 +667,8 @@ namespace WinPaletter
                 if (Settings.Store.ShowTips != CheckBox4.Checked)
                     Changed = true;
 
-                if (Settings.Services.DontUseWPElevatorConsole != checkBox19.Checked)
+                if (Settings.UsersServices.RemeberLastUser != checkBox19.Checked)
                     Changed = true;
-                if (Settings.Services.ShowWPElevatorConsole != checkBox39.Checked)
-                    Changed = true;
-                if (Settings.Services.ShowWPElevatorStartupAlert != checkBox40.Checked)
-                    Changed = true;
-
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
@@ -1017,6 +1008,12 @@ namespace WinPaletter
         private void button21_Click(object sender, EventArgs e)
         {
             Forms.SysEventsSndsInstaller.Uninstall();
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            Users.Login(true);
+            Read(Program.Settings);
         }
     }
 }

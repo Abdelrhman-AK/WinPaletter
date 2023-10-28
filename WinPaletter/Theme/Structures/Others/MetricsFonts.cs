@@ -192,7 +192,7 @@ namespace WinPaletter.Theme.Structures
             FontSubstitute_MSShellDlg2 = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", @default.FontSubstitute_MSShellDlg2).ToString();
             FontSubstitute_SegoeUI = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", @default.FontSubstitute_SegoeUI).ToString();
 
-            if (GetWindowsScreenScalingFactor() > 100d)
+            if (Program.GetWindowsScreenScalingFactor() > 100d)
             {
                 CaptionFont = AdjustFont(CaptionFont, false);
                 IconFont = AdjustFont(IconFont, false);
@@ -216,7 +216,7 @@ namespace WinPaletter.Theme.Structures
         /// <returns></returns>
         private Font AdjustFont(Font Font, bool Reverse)
         {
-            int DPI = (int)Math.Round(GetWindowsScreenScalingFactor());
+            int DPI = (int)Math.Round(Program.GetWindowsScreenScalingFactor());
             if (DPI > 0)
             {
                 float font_size = (float)((double)Font.Size * (!Reverse ? 100d / DPI : DPI / 100d));
@@ -254,7 +254,7 @@ namespace WinPaletter.Theme.Structures
                 // StatusFont = AdjustFont(StatusFont, True)
                 // End If
 
-                int OldDPI = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", GetWindowsScreenScalingFactor()));
+                int OldDPI = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor()));
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 
                 var lfCaptionFont = new LogFont();

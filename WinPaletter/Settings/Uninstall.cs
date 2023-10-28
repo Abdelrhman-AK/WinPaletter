@@ -85,7 +85,7 @@ namespace WinPaletter
                     TMx.Save(Theme.Manager.Source.Registry);
 
                     if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                        RestartExplorer();
+                        Program.RestartExplorer();
 
                     TMx.Dispose();
                 }
@@ -96,7 +96,7 @@ namespace WinPaletter
                 {
                     _Def.Save(Theme.Manager.Source.Registry);
                     if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                        RestartExplorer();
+                        Program.RestartExplorer();
                 }
             }
 

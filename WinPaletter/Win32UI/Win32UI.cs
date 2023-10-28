@@ -942,20 +942,20 @@ namespace WinPaletter
             foreach (string x in SelectedThemeList)
             {
 
-                if (x.StartsWith("activetitle=", (StringComparison)5))
+                if (x.StartsWith("activetitle=", StringComparison.OrdinalIgnoreCase))
                 {
                     activetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientActive)
                         GActivetitle_pick.BackColor = activetitle_pick.BackColor;
                 }
 
-                if (x.StartsWith("gradientactivetitle=", (StringComparison)5))
+                if (x.StartsWith("gradientactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
                     GActivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientActive = true;
                 }
 
-                if (x.StartsWith("inactivetitle=", (StringComparison)5))
+                if (x.StartsWith("inactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
                     InactiveTitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     if (!FoundGradientInactive)
@@ -963,68 +963,68 @@ namespace WinPaletter
 
                 }
 
-                if (x.StartsWith("gradientinactivetitle=", (StringComparison)5))
+                if (x.StartsWith("gradientinactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
                     GInactivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
                     FoundGradientInactive = true;
                 }
 
-                if (x.StartsWith("background=", (StringComparison)5))
+                if (x.StartsWith("background=", StringComparison.OrdinalIgnoreCase))
                     background_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilight=", (StringComparison)5))
+                if (x.StartsWith("hilight=", StringComparison.OrdinalIgnoreCase))
                     hilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilighttext=", (StringComparison)5))
+                if (x.StartsWith("hilighttext=", StringComparison.OrdinalIgnoreCase))
                     hilighttext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("titletext=", (StringComparison)5))
+                if (x.StartsWith("titletext=", StringComparison.OrdinalIgnoreCase))
                     TitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("window=", (StringComparison)5))
+                if (x.StartsWith("window=", StringComparison.OrdinalIgnoreCase))
                     Window_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowtext=", (StringComparison)5))
+                if (x.StartsWith("windowtext=", StringComparison.OrdinalIgnoreCase))
                     WindowText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("scrollbar=", (StringComparison)5))
+                if (x.StartsWith("scrollbar=", StringComparison.OrdinalIgnoreCase))
                     Scrollbar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menu=", (StringComparison)5))
+                if (x.StartsWith("menu=", StringComparison.OrdinalIgnoreCase))
                     menu_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowframe=", (StringComparison)5))
+                if (x.StartsWith("windowframe=", StringComparison.OrdinalIgnoreCase))
                     Frame_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menutext=", (StringComparison)5))
+                if (x.StartsWith("menutext=", StringComparison.OrdinalIgnoreCase))
                     menutext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("activeborder=", (StringComparison)5))
+                if (x.StartsWith("activeborder=", StringComparison.OrdinalIgnoreCase))
                     ActiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactiveborder=", (StringComparison)5))
+                if (x.StartsWith("inactiveborder=", StringComparison.OrdinalIgnoreCase))
                     InactiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("appworkspace=", (StringComparison)5))
+                if (x.StartsWith("appworkspace=", StringComparison.OrdinalIgnoreCase))
                     AppWorkspace_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonface=", (StringComparison)5))
+                if (x.StartsWith("buttonface=", StringComparison.OrdinalIgnoreCase))
                     btnface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonshadow=", (StringComparison)5))
+                if (x.StartsWith("buttonshadow=", StringComparison.OrdinalIgnoreCase))
                     btnshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("graytext=", (StringComparison)5))
+                if (x.StartsWith("graytext=", StringComparison.OrdinalIgnoreCase))
                     GrayText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttontext=", (StringComparison)5))
+                if (x.StartsWith("buttontext=", StringComparison.OrdinalIgnoreCase))
                     btntext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactivetitletext=", (StringComparison)5))
+                if (x.StartsWith("inactivetitletext=", StringComparison.OrdinalIgnoreCase))
                     InactivetitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonhilight=", (StringComparison)5))
+                if (x.StartsWith("buttonhilight=", StringComparison.OrdinalIgnoreCase))
                     btnhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttondkshadow=", (StringComparison)5))
+                if (x.StartsWith("buttondkshadow=", StringComparison.OrdinalIgnoreCase))
                     btndkshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonlight=", (StringComparison)5))
+                if (x.StartsWith("buttonlight=", StringComparison.OrdinalIgnoreCase))
                     btnlight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infotext=", (StringComparison)5))
+                if (x.StartsWith("infotext=", StringComparison.OrdinalIgnoreCase))
                     InfoText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infowindow=", (StringComparison)5))
+                if (x.StartsWith("infowindow=", StringComparison.OrdinalIgnoreCase))
                     InfoWindow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hottrackingcolor=", (StringComparison)5))
+                if (x.StartsWith("hottrackingcolor=", StringComparison.OrdinalIgnoreCase))
                     hottracking_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
 
-                if (x.StartsWith("buttonalternateface=", (StringComparison)5))
+                if (x.StartsWith("buttonalternateface=", StringComparison.OrdinalIgnoreCase))
                     btnaltface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menubar=", (StringComparison)5))
+                if (x.StartsWith("menubar=", StringComparison.OrdinalIgnoreCase))
                     menubar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menuhilight=", (StringComparison)5))
+                if (x.StartsWith("menuhilight=", StringComparison.OrdinalIgnoreCase))
                     menuhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("desktop=", (StringComparison)5))
+                if (x.StartsWith("desktop=", StringComparison.OrdinalIgnoreCase))
                     desktop_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
             }
 

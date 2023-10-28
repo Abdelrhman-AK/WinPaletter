@@ -1693,7 +1693,7 @@ namespace WinPaletter
                         #region Win8.1
                         if ((OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(TM);
+                            Program.RefreshDWM(TM);
                         }
 
                         if (StartButton is not null)
@@ -1731,7 +1731,7 @@ namespace WinPaletter
                         #region Win7
                         if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(TM);
+                            Program.RefreshDWM(TM);
                         }
 
                         Window1.Shadow = TM.WindowsEffects.WindowShadow;
@@ -1799,7 +1799,7 @@ namespace WinPaletter
                         #region WinVista
                         if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(TM);
+                            Program.RefreshDWM(TM);
                         }
 
                         Window1.Shadow = TM.WindowsEffects.WindowShadow;

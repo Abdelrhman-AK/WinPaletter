@@ -79,7 +79,7 @@ namespace WinPaletter
 
                 try
                 {
-                    if (IsNetworkAvailable())
+                    if (Program.IsNetworkAvailable())
                     {
                         Label17.SetText(Program.Lang.Checking);
 

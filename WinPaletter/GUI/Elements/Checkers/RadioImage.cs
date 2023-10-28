@@ -77,6 +77,8 @@ namespace WinPaletter.UI.WP
         public Image Image { get; set; }
         public bool ShowText { get; set; } = false;
 
+        public bool ImageWithText { get; set; } = false;
+
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -286,11 +288,6 @@ namespace WinPaletter.UI.WP
                 var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
                 var TextRect = new Rectangle(5, 5, Width - 10, Height - 10);
 
-                var CenterRect = new Rectangle();
-
-                if (Image is not null)
-                    CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - Image.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - Image.Height) / 2d), Image.Width, Image.Height);
-
                 var bkC = _Checked ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
                 var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
 
@@ -315,14 +312,51 @@ namespace WinPaletter.UI.WP
                     G.DrawRoundedRect_LikeW11(P, MainRect);
                 }
 
-                if (Image is not null)
-                    G.DrawImage(Image, CenterRect);
-
-                if (ShowText)
+                if (!ImageWithText)
                 {
+                    var CenterRect = new Rectangle();
+
+                    if (Image is not null)
+                        CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - Image.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - Image.Height) / 2d), Image.Width, Image.Height);
+
+                    if (Image is not null)
+                        G.DrawImage(Image, CenterRect);
+
+                    if (ShowText)
+                    {
+                        using (var br = new SolidBrush(ForeColor))
+                        {
+                            G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat());
+                        }
+                    }
+                }
+                else
+                {
+                    int imgX = default, imgY = default;
+
+                    try
+                    {
+                        if (Image is not null)
+                        {
+                            imgX = (int)Math.Round((Width - Image.Width) / 2d);
+                            imgY = (int)Math.Round((Height - Image.Height) / 2d);
+                        }
+                    }
+                    catch { }
+
+                    var Rec = new Rectangle(imgY, imgY, Image.Width, Image.Height);
+                    int Bo = imgY + Image.Width + imgY - 5;
+                    var RecText = new Rectangle(Bo, imgY, Width - Bo, Image.Height);
+                    var u = Rectangle.Union(Rec, RecText);
+                    int innerSpace = RecText.Left - Rec.Right;
+
+                    Rec.X = u.Left;
+                    RecText.X = u.Left + Rec.Width + innerSpace;
+
+                    G.DrawImage((Bitmap)Image.Clone(), Rec);
                     using (var br = new SolidBrush(ForeColor))
                     {
-                        G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat());
+                        G.DrawString(Text, Font, br, RecText, TextAlign.ToStringFormat());
                     }
                 }
             }
