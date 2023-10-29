@@ -288,7 +288,7 @@ namespace WinPaletter
         /// <summary>
         /// Get image From Color
         /// </summary>
-        public static object ToBitmap(this Color Color, Size Size)
+        public static Bitmap ToBitmap(this Color Color, Size Size)
         {
             var b = new Bitmap(Size.Width, Size.Height);
             var g = Graphics.FromImage(b);

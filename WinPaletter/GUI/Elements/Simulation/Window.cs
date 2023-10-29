@@ -333,6 +333,7 @@ namespace WinPaletter.UI.Simulation
                 Text = Window.Text;
             }
 
+            AdjustPadding();
             ProcessBack();
             Refresh();
         }
@@ -356,12 +357,11 @@ namespace WinPaletter.UI.Simulation
 
             if (Preview == Preview_Enum.W7Aero | Preview == Preview_Enum.W7Opaque | Preview == Preview_Enum.W7Basic | Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite | Preview == Preview_Enum.WXP)
             {
-
                 i = FreeMargin + (!(Preview == Preview_Enum.WXP) ? _Metrics_PaddedBorderWidth : 0) + _Metrics_BorderWidth;
                 iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight;
 
                 i += 4;
-                iTop += 3;
+                iTop += 3 + ((Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite) ? 1 : 0);
             }
             else
             {

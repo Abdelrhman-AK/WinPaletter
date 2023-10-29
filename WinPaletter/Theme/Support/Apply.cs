@@ -94,7 +94,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
-                            using (Bitmap b = new Bitmap(Program.GetWallpaper()))
+                            using (Bitmap b = new Bitmap(Program.GetWallpaperFromRegistry()))
                             {
                                 bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
                             }
@@ -267,7 +267,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
-                            using (var b = new Bitmap(Program.GetWallpaper()))
+                            using (var b = new Bitmap(Program.GetWallpaperFromRegistry()))
                             {
                                 bmp = (Bitmap)b.Clone();
                             }

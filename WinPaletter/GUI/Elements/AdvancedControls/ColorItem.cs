@@ -832,6 +832,7 @@ namespace WinPaletter.UI.Controllers
                         CF = ColorsExtensions.ColorFormat.Dec;
 
                     string S = TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255));
+
                     Font F;
 
                     if (!Program.Settings.NerdStats.UseWindowsMonospacedFont)
@@ -863,7 +864,6 @@ namespace WinPaletter.UI.Controllers
                             G.DrawString("▼", F, br, new Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), ContentAlignment.MiddleRight.ToStringFormat());
                         }
                     }
-
                 }
             }
 

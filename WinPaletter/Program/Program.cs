@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using static WinPaletter.Users;
 
 namespace WinPaletter
 {
@@ -18,6 +19,7 @@ namespace WinPaletter
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
             Application.ApplicationExit += OnExit;
+            Users.UserChange += OnUserChange;
 
             if (!IsSecondInstance())
             {
@@ -30,6 +32,7 @@ namespace WinPaletter
             }
         }
 
+
         static void InitializeApplication()
         {
             Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
@@ -37,36 +40,35 @@ namespace WinPaletter
             if (OS.W7 | OS.WVista | OS.WXP)
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-            string PreviousUser = Users.UserSID;
+            string PreviousUser = Users.SID;
 
             DeleteUpdateResiduals();
             GetMemoryFonts();
+            InitializeImageLists();
 
             FetchDarkMode();
             ApplyStyle();
             LoadLanguage();
             CheckIfLicenseChecked();
 
+            DetectIfWPStartedWithClassicTheme();
+            ExtractLuna();
+
             Users.Login();
-            if (PreviousUser != Users.UserSID)
+            if (PreviousUser == Users.SID)
             {
-                // Re-run all previous voids to load new user data
-                FetchDarkMode();
-                ApplyStyle();
-                LoadLanguage();
-                CheckIfLicenseChecked();
+                // User didn't change, so do rest voids that depends on data on current user
+                // Never forger to add voids into void OnUserChange(), so it gets new data for current user
+                AssociateFiles();
+                StartWallpaperMonitor();
+
+                BackupWindowsStartupSound();
+                CreateUninstaller();
+                CheckWhatsNew();
+                InitializeSysEventsSounds();
             }
 
             ExecuteArgs();
-            StartWallpaperMonitor();
-            AssociateFiles();
-            DetectIfWPStartedWithClassicTheme();
-            ExtractLuna();
-            BackupWindowsStartupSound();
-            CreateUninstaller();
-            CheckWhatsNew();
-            InitializeImageLists();
-            InitializeSysEventsSounds();
             LoadThemeManager();
         }
 
@@ -92,14 +94,10 @@ namespace WinPaletter
 
             DeleteUpdateResiduals();
 
-            foreach (string SID in LoadedNTUSER_DAT)
-            {
-                SendCommand($"reg unload HKU\\{SID}");
-            }
-
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
+            Users.UserChange -= OnUserChange;
 
             try
             {
@@ -113,6 +111,40 @@ namespace WinPaletter
             }
 
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
+        }
+
+        public static void OnUserChange(UserChangeEventArgs e)
+        {
+            switch (e.Timing)
+            {
+                case UserChangeEventArgs.Timings.BeforeChange:
+                    {
+                        Settings.Save(WPSettings.Mode.Registry);
+                        break;
+                    }
+
+                case UserChangeEventArgs.Timings.AfterChange:
+                    {
+                        Users.UpdatePathsFromSID(Users.SID);
+
+                        Program.Settings = new(WPSettings.Mode.Registry);
+
+                        FetchDarkMode();
+                        ApplyStyle();
+                        LoadLanguage();
+                        CheckIfLicenseChecked();
+
+                        AssociateFiles();
+                        StartWallpaperMonitor();
+
+                        BackupWindowsStartupSound();
+                        CreateUninstaller();
+                        CheckWhatsNew();
+                        InitializeSysEventsSounds();
+
+                        break;
+                    }
+            }
         }
 
         private static bool IsSecondInstance()

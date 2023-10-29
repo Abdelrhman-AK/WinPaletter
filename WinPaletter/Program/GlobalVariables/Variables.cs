@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Security.Principal;
 using System.Threading;
@@ -127,7 +126,5 @@ namespace WinPaletter
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
         public static AnimatorNS.Animator Animator;
-
-        public static List<string> LoadedNTUSER_DAT = new();
     }
 }

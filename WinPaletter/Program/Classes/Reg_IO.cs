@@ -109,8 +109,8 @@ namespace WinPaletter
                     {
                         try
                         {
-                            R = Users.UserSID != Users.AdminSID_GrantedUAC
-                                ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.UserSID)
+                            R = Users.SID != Users.AdminSID_GrantedUAC
+                                ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.SID)
                                 : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
                         }
                         catch
@@ -339,7 +339,7 @@ namespace WinPaletter
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (Users.UserSID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.UserSID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = (Users.SID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
@@ -542,14 +542,21 @@ namespace WinPaletter
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
                 try
                 {
-                    R = Users.UserSID != Users.AdminSID_GrantedUAC
-                        ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.UserSID)
+                    R = Users.SID != Users.AdminSID_GrantedUAC
+                        ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.SID)
                         : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
                 }
                 catch
                 {
                     R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
                 }
+            }
+
+            //Deflection to HKEY_CURRENT_USER (that opened WinPaletter not the real current user) if value starts with #USR:
+            else if (Key.StartsWith("HKEY_REAL_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
+            {
+                Key = Key.Remove(0, @"HKEY_REAL_CURRENT_USER\".Count());
+                R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
             }
 
             else if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
@@ -580,7 +587,6 @@ namespace WinPaletter
             {
                 if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey) is not null)
                     Result = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey).GetValue(ValueName, DefaultValue);
-
                 try
                 {
                     if (R is not null)
@@ -590,9 +596,13 @@ namespace WinPaletter
                         R.Dispose();
                     }
                 }
-                catch
+                catch { }
+
+                if (Result != null && Result.ToString().StartsWith("#USR:", StringComparison.OrdinalIgnoreCase))
                 {
+                    Result = GetReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", "")}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
                 }
+
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
 
             }
@@ -629,7 +639,7 @@ namespace WinPaletter
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (Users.UserSID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.UserSID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = (Users.SID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());

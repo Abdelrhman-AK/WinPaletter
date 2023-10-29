@@ -287,7 +287,7 @@ namespace WinPaletter
 
             else if (RadioButton2.Checked)
             {
-                using (var b = new Bitmap(Program.GetWallpaper()))
+                using (var b = new Bitmap(Program.GetWallpaperFromRegistry()))
                 {
                     bmpX = (Bitmap)b.Clone();
                 }

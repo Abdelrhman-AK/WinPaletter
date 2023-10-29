@@ -12,93 +12,181 @@ namespace WinPaletter
     /// <summary>
     /// Class for handling multiple users for WinPaletter
     /// </summary>
-    public static class Users
+    public class Users
     {
+        #region Events
         /// <summary>
-        /// Current selected user SID for WinPaletter, to be operated on it (read\write registry)
+        /// EventArgs that have data of user change event
         /// </summary>
-        public static string UserSID = WindowsIdentity.GetCurrent().User.Value;
+        public class UserChangeEventArgs : EventArgs
+        {
+            /// <summary>
+            /// User SID that invoked the event
+            /// </summary>
+            public string SID { get; set; }
+
+            /// <summary>
+            /// Know if event raised before or after switching user
+            /// </summary>
+            public Timings Timing { get; set; }
+
+            /// <summary>
+            /// Date and time of raising event
+            /// </summary>
+            public DateTime SwitchTime { get { return DateTime.Now; } }
+
+            /// <summary>
+            /// Name of user who invoked the event
+            /// </summary>
+            public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').Last(); ; } }
+
+            /// <summary>
+            /// Name of computer hosting users
+            /// </summary>
+            public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').First(); ; } }
+
+            /// <summary>
+            /// Return if user that invoked the event is Administrator or not
+            /// </summary>
+            public bool Administrator { get { return IsAdmin(SID); } }
+
+            /// <summary>
+            /// Path of user profile picture that invoked the event
+            /// </summary>
+            public string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+
+            /// <summary>
+            /// Get path of user profile
+            /// <br>- For example: C:\Users\...</br>
+            /// </summary>
+            public string UserProfilePath { get { return GetUserProfilePath(SID); } }
+
+            /// <summary>
+            /// Enumeration for user switch timing (event raised before or after switching user)
+            /// </summary>
+            public enum Timings
+            {
+                BeforeChange,
+                AfterChange
+            }
+        }
+
+        public delegate void UserChangeEventHandler(UserChangeEventArgs e);
+
+        public static event UserChangeEventHandler UserChange;
+        #endregion
+
+        #region Security identifiers
+
+        private static string _SID = WindowsIdentity.GetCurrent().User.Value;
+        /// <summary>
+        /// Current selected user security identifier for WinPaletter, to be operated on it (read\write registry)
+        /// </summary>
+        public static string SID
+        {
+            get
+            {
+                return _SID;
+            }
+            set
+            {
+                bool changed = false;
+                if (UserChange != null && _SID != value)
+                {
+                    changed = true;
+                    UserChange(new UserChangeEventArgs() { SID = _SID, Timing = UserChangeEventArgs.Timings.BeforeChange });
+                }
+                _SID = value;
+                if (changed && UserChange != null)
+                {
+                    UserChange(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
+                }
+            }
+        }
 
         /// <summary>
-        /// Administrator user SID that opened WinPaletter after granting UAC dialog
+        /// Administrator user security identifier that opened WinPaletter after granting UAC dialog
         /// </summary>
         public readonly static string AdminSID_GrantedUAC = WindowsIdentity.GetCurrent().User.Value;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Name of current user
+        /// </summary>
+        public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').Last(); ; } }
 
         /// <summary>
-        /// Domain\Username format (For example: DESKTOP0985\User)
+        /// Name of computer hosting current user
         /// </summary>
-        public static string Domain_UserName = "";
+        public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').First(); ; } }
 
         /// <summary>
-        /// Change current active user for WinPaletter if there are multiple Windows profiles
+        /// Return if current user is Administrator or not
         /// </summary>
-        public static void Login(bool ForceShow = false)
+        public bool Administrator { get { return IsAdmin(SID); } }
+
+        /// <summary>
+        /// Path of current user profile picture
+        /// </summary>
+        public string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+
+        /// <summary>
+        /// Get path of current user profile
+        /// <br>- For example: C:\Users\...</br>
+        /// </summary>
+        public string UserProfilePath { get { return GetUserProfilePath(SID); } }
+        #endregion
+
+        #region Voids
+        public static Dictionary<string, string> GetUsers(bool includeSystemProfiles = false)
         {
-            Dictionary<string, string> UsersList = new();
+            Dictionary<string, string> result = new();
             SelectQuery query = new("Win32_UserProfile");
             ManagementObjectSearcher searcher = new(query);
-            Program.LoadedNTUSER_DAT.Clear();
 
             foreach (ManagementObject sid in searcher.Get().Cast<ManagementObject>())
             {
                 try
                 {
                     string username = new SecurityIdentifier(sid["SID"].ToString()).Translate(typeof(NTAccount)).ToString();
-
-                    bool condition_base = !username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
-                    bool condition_DAT_Loaded = condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid["SID"].ToString());
+                    bool condition_base = includeSystemProfiles | !username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
+                    bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid["SID"].ToString()));
                     bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists(Users.GetUserProfilePath(sid["SID"].ToString()) + "\\NTUSER.DAT");
 
                     if (condition_DAT_Unloaded)
                     {
                         Program.SendCommand($"reg load HKU\\{sid["SID"]} \"{Users.GetUserProfilePath(sid["SID"].ToString())}\\NTUSER.DAT\"");
-                        Program.LoadedNTUSER_DAT.Add(sid["SID"].ToString());
                     }
 
                     if (condition_DAT_Loaded || condition_DAT_Unloaded)
                     {
-                        UsersList.Add(sid["SID"].ToString(), username.Split('\"').Last());
+                        result.Add(sid["SID"].ToString(), username);
                     }
+
                 }
                 catch { }
             }
 
+            return result;
+        }
+        /// <summary>
+        /// Change current active user for WinPaletter if there are multiple Windows profiles
+        /// </summary>
+        public static void Login(bool ForceShow = false)
+        {
+            Dictionary<string, string> UsersList = GetUsers();
+
             // Save settings into current user before reloading settings for new user
             Program.Settings.Save(WPSettings.Mode.Registry);
 
-            bool result;
-
-            // Show login dialog by force (for settings)
-            if (ForceShow) { result = Forms.UserSelect.PickUser(UsersList) == DialogResult.OK; }
-
-            // Found more than 1 user, show login dialog
-            else if (UsersList.Count > 1)
-            {
-                // If not remember last user, show login dialog
-                if (!Program.Settings.UsersServices.RemeberLastUser) { result = Forms.UserSelect.PickUser(UsersList) == DialogResult.OK; }
-
-                // If remember last user, don't show login dialog and load SID from saved SID
-                else if (UsersList.Keys.Contains(Program.Settings.UsersServices.LastUserSID))
-                {
-                    Users.UserSID = Program.Settings.UsersServices.LastUserSID;
-                    result = true;
-                }
-
-                // If remember last user, show login dialog if SID is not saved in registry
-                else { result = Forms.UserSelect.PickUser(UsersList) == DialogResult.OK; }
-            }
+            if (ForceShow || UsersList.Count > 1) { Forms.UserSelect.PickUser(UsersList); }
 
             // If one user if found, there is no need to login, use current windows identity
             else if (UsersList.Count == 1 || UsersList.Count == 0)
             {
-                Users.UserSID = WindowsIdentity.GetCurrent().User.Value;
-                result = false;
+                Users.SID = WindowsIdentity.GetCurrent().User.Value;
             }
-
-            else { result = false; }
-
-            // Reload settings for current selected user
-            if (result == true) { if (Users.UserSID != Users.AdminSID_GrantedUAC) { Program.Settings = new(WPSettings.Mode.Registry); } }
         }
 
         /// <summary>
@@ -118,9 +206,7 @@ namespace WinPaletter
                     return null;
                 }
 
-                var profilePath = key.GetValue("ProfileImagePath") as string;
-
-                return profilePath;
+                return Environment.ExpandEnvironmentVariables(key.GetValue("ProfileImagePath").ToString());
             }
             catch
             {
@@ -128,6 +214,7 @@ namespace WinPaletter
                 return null;
             }
         }
+
 
         /// <summary>
         /// Update WinPaletter paths variables from user SID
@@ -146,6 +233,10 @@ namespace WinPaletter
                 PathsExt.LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 PathsExt.appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
             }
+
+            if (!System.IO.Directory.Exists(PathsExt.UserProfile)) { System.IO.Directory.CreateDirectory(PathsExt.UserProfile); }
+            if (!System.IO.Directory.Exists(PathsExt.LocalAppData)) { System.IO.Directory.CreateDirectory(PathsExt.LocalAppData); }
+            if (!System.IO.Directory.Exists(PathsExt.appData)) { System.IO.Directory.CreateDirectory(PathsExt.appData); }
         }
 
         /// <summary>
@@ -164,7 +255,14 @@ namespace WinPaletter
 
             if (User is null)
             {
-                throw new Exception(string.Format("User with SID '{0}' not found.", SID));
+                if (SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20")
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new Exception(string.Format("User with SID '{0}' not found.", SID));
+                }
             }
 
             bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
@@ -175,12 +273,6 @@ namespace WinPaletter
 
             return IsAdmin;
         }
-
-        /// <summary>
-        /// Determines if selected user is Administrator or not
-        /// </summary>
-        /// <returns><c>true</c> if user is an Administrator, <c>false</c> otherwise.</returns>
-        public static bool IsAdmin() { return IsAdmin(UserSID); }
-
+        #endregion
     }
 }

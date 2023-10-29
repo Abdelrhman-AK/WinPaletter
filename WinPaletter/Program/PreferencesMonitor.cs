@@ -13,12 +13,14 @@ namespace WinPaletter
     {
         private static ManagementEventWatcher WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4;
 
+
         private static readonly MethodInvoker UpdateDarkModeInvoker = new(() =>
         {
             FetchDarkMode();
             if (Settings.Appearance.AutoDarkMode)
                 ApplyStyle();
         });
+
         private static MethodInvoker UpdateWallpaperInvoker()
         {
             Bitmap wall = FetchSuitableWallpaper(TM, PreviewStyle);
@@ -35,15 +37,17 @@ namespace WinPaletter
             Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
             return null;
         }
-        private static void FetchStockWallpaper()
+
+        private static void UpdateWallpaperForPreview()
         {
-            using (var wall_New = new Bitmap((Bitmap)GetWallpaper().Clone()))
+            using (var wall_New = new Bitmap((Bitmap)GetWallpaperFromRegistry().Clone()))
             {
 
                 Wallpaper_Unscaled = (Bitmap)wall_New.Clone();
                 Wallpaper = (Bitmap)wall_New.GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, null, IntPtr.Zero);
             }
         }
+
         public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle PreviewConfig)
         {
             using (PictureBox picbox = new() { Size = Forms.MainFrm.pnl_preview.Size, BackColor = TM.Win32.Background })
@@ -52,7 +56,7 @@ namespace WinPaletter
 
                 if (!TM.Wallpaper.Enabled)
                 {
-                    FetchStockWallpaper();
+                    UpdateWallpaperForPreview();
                     Wall = Wallpaper;
                 }
                 else
@@ -122,7 +126,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            FetchStockWallpaper();
+                            UpdateWallpaperForPreview();
                             Wall = Wallpaper;
                         }
                     }
@@ -147,7 +151,7 @@ namespace WinPaletter
 
                             else
                             {
-                                FetchStockWallpaper();
+                                UpdateWallpaperForPreview();
                                 Wall = Wallpaper;
                             }
                         }
@@ -158,13 +162,13 @@ namespace WinPaletter
                         }
                         else
                         {
-                            FetchStockWallpaper();
+                            UpdateWallpaperForPreview();
                             Wall = Wallpaper;
                         }
                     }
                     else
                     {
-                        FetchStockWallpaper();
+                        UpdateWallpaperForPreview();
                         Wall = Wallpaper;
                     }
                 }
@@ -218,7 +222,8 @@ namespace WinPaletter
                 return picbox.ToBitmap();
             }
         }
-        public static Bitmap GetWallpaper()
+
+        public static Bitmap GetWallpaperFromRegistry()
         {
             string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString();
             int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
@@ -229,9 +234,10 @@ namespace WinPaletter
             }
             else
             {
-                return (Bitmap)(GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0").ToString().FromWin32RegToColor().ToBitmap(Computer.Screen.Bounds.Size));
+                return GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0").ToString().FromWin32RegToColor().ToBitmap(Computer.Screen.Bounds.Size);
             }
         }
+
         public static void WallpaperType_Changed(object sender, EventArrivedEventArgs e)
         {
             int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
@@ -249,6 +255,7 @@ namespace WinPaletter
                 Wallpaper_Changed();
             }
         }
+
         public static void Monitor()
         {
             var currentUser = WindowsIdentity.GetCurrent();
@@ -301,6 +308,7 @@ namespace WinPaletter
             }
 
         }
+
         public static void OldWinPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
         {
             if (OS.WXP && e.Category == UserPreferenceCategory.General)
@@ -310,18 +318,22 @@ namespace WinPaletter
             else if (e.Category == UserPreferenceCategory.Desktop | e.Category == UserPreferenceCategory.Color)
                 Wallpaper_Changed();
         }
+
         public static void DarkMode_Changed_EventHandler(object sender, EventArgs e)
         {
             DarkMode_Changed();
         }
+
         public static void DarkMode_Changed()
         {
             Invoke(UpdateDarkModeInvoker);
         }
+
         public static void Wallpaper_Changed_EventHandler(object sender, EventArgs e)
         {
             Wallpaper_Changed();
         }
+
         public static void Wallpaper_Changed()
         {
             Invoke(UpdateWallpaperInvoker);

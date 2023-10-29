@@ -121,7 +121,22 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Temporary theme file (for preview)
         /// </summary>
-        public static string MSTheme { get { return $"{appData}\\VisualStyles\\Luna\\luna.theme"; } set { MSTheme = value; } }
+        public static string MSTheme = $"{appData}\\VisualStyles\\Luna\\luna.theme";
+
+        /// <summary>
+        /// Temporary theme directory (for preview)
+        /// </summary>
+        public static string MSTheme_Luna_theme { get { return $"{appData}\\VisualStyles\\Luna\\Luna.theme"; } }
+
+        /// <summary>
+        /// Temporary theme directory (for preview)
+        /// </summary>
+        public static string MSTheme_Dir { get { return $"{appData}\\VisualStyles\\Luna"; } }
+
+        /// <summary>
+        /// Extracted Luna.zip
+        /// </summary>
+        public static string MSTheme_ZIP { get { return $"{appData}\\VisualStyles\\Luna\\Luna.zip"; } }
         #endregion
 
         #region Consoles\Terminals

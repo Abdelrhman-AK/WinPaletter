@@ -1259,24 +1259,24 @@ namespace WinPaletter
                         {
                             case Theme.Structures.WindowsXP.Themes.LunaBlue:
                                 {
-                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
                                     Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
                                 {
-                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
                                     Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
 
                             case Theme.Structures.WindowsXP.Themes.LunaSilver:
                                 {
-                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
                                     Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }
@@ -1291,8 +1291,8 @@ namespace WinPaletter
                                         }
                                         else if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".msstyles")
                                         {
-                                            PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
-                                            System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
+                                            PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
+                                            System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
                                         }
                                     }
                                     Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
@@ -1301,8 +1301,8 @@ namespace WinPaletter
 
                             case Theme.Structures.WindowsXP.Themes.Classic:
                                 {
-                                    PathsExt.MSTheme = PathsExt.appData + @"\VisualStyles\Luna\luna.theme";
-                                    System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
                                     Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
                                     break;
                                 }

@@ -224,7 +224,7 @@ namespace WinPaletter
             }
         }
 
-        private static void LoadLanguage()
+        public static void LoadLanguage()
         {
             if (Settings.Language.Enabled)
             {
@@ -239,7 +239,7 @@ namespace WinPaletter
             }
         }
 
-        private static void CheckIfLicenseChecked()
+        public static void CheckIfLicenseChecked()
         {
             if (!Settings.General.LicenseAccepted)
             {
@@ -338,10 +338,14 @@ namespace WinPaletter
         {
             try
             {
-                if (!System.IO.Directory.Exists(PathsExt.appData + @"\VisualStyles\Luna"))
-                    System.IO.Directory.CreateDirectory(PathsExt.appData + @"\VisualStyles\Luna");
-                System.IO.File.WriteAllBytes(PathsExt.appData + @"\VisualStyles\Luna\Luna.zip", Properties.Resources.luna);
-                using (System.IO.FileStream s = new(PathsExt.appData + @"\VisualStyles\Luna\Luna.zip", System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                if (!System.IO.Directory.Exists(PathsExt.MSTheme_Dir))
+                {
+                    System.IO.Directory.CreateDirectory(PathsExt.MSTheme_Dir);
+                }
+
+                System.IO.File.WriteAllBytes(PathsExt.MSTheme_ZIP, Properties.Resources.luna);
+
+                using (System.IO.FileStream s = new(PathsExt.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
                     using (var z = new System.IO.Compression.ZipArchive(s, System.IO.Compression.ZipArchiveMode.Read))
                     {
@@ -349,17 +353,20 @@ namespace WinPaletter
                         {
                             if (entry.FullName.Contains(@"\"))
                             {
-                                string dest = System.IO.Path.Combine(PathsExt.appData + @"\VisualStyles\Luna", entry.FullName);
+                                string dest = System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName);
                                 string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), "");
+
                                 if (!System.IO.Directory.Exists(dest_dir))
+                                {
                                     System.IO.Directory.CreateDirectory(dest_dir);
+                                }
                             }
-                            entry.ExtractToFile(System.IO.Path.Combine(PathsExt.appData + @"\VisualStyles\Luna", entry.FullName), true);
+                            entry.ExtractToFile(System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName), true);
                         }
                     }
                     s.Close();
                 }
-                System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
             }
             catch (Exception ex)
             {
@@ -433,7 +440,7 @@ namespace WinPaletter
         {
             try
             {
-                if (Users.UserSID == Users.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
+                if (Users.SID == Users.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
                 {
                     DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
 

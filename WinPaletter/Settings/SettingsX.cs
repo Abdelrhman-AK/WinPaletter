@@ -195,9 +195,6 @@ namespace WinPaletter
             CheckBox27.Checked = Sets.Store.Search_AuthorsNames;
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
             CheckBox4.Checked = Sets.Store.ShowTips;
-
-            checkBox19.Checked = Sets.UsersServices.RemeberLastUser;
-
         }
         public void SaveSettings()
         {
@@ -495,8 +492,6 @@ namespace WinPaletter
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
             Sets.Store.ShowTips = CheckBox4.Checked;
 
-            Sets.UsersServices.RemeberLastUser = checkBox19.Checked;
-
             Sets.Save(Mode, File);
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -665,9 +660,6 @@ namespace WinPaletter
                 if (Settings.Store.Offline_SubFolders != CheckBox29.Checked)
                     Changed = true;
                 if (Settings.Store.ShowTips != CheckBox4.Checked)
-                    Changed = true;
-
-                if (Settings.UsersServices.RemeberLastUser != checkBox19.Checked)
                     Changed = true;
             }
 
@@ -1012,8 +1004,8 @@ namespace WinPaletter
 
         private void button22_Click(object sender, EventArgs e)
         {
+            Close();
             Users.Login(true);
-            Read(Program.Settings);
         }
     }
 }

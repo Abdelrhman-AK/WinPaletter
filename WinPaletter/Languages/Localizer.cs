@@ -429,6 +429,7 @@ namespace WinPaletter
         public string UserSwitch_Computer { get; set; } = "Computer";
         public string UserSwitch_TypeAdministrator { get; set; } = "Type: Administrator";
         public string UserSwitch_TypeLocalUser { get; set; } = "Type: Local user";
+        public string UserSwitch_TypeSystem { get; set; } = "Type: System profile";
 
         public string ColorItem_Copy { get; set; } = "Copy color into dropped item";
         public string ColorItem_Copy_Invert { get; set; } = "Copy color into dropped item as inverted";

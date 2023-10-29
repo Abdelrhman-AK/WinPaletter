@@ -13,8 +13,15 @@ namespace WinPaletter.Dialogs
         {
             InitializeComponent();
             this.FormClosing += UserSelect_FormClosing;
+            this.Shown += UserSelect_Shown;
         }
 
+        private void UserSelect_Shown(object sender, EventArgs e)
+        {
+            shown = true;
+        }
+
+        private bool shown = false;
         private Dictionary<string, string> _UsersList = new();
 
         private void UserSelect_FormClosing(object sender, FormClosingEventArgs e)
@@ -24,11 +31,12 @@ namespace WinPaletter.Dialogs
 
         private void UserSelect_Load(object sender, EventArgs e)
         {
+            shown = false;
             Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
             ApplyStyle(this);
+            checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
-            checkBox1.Checked = Program.Settings.UsersServices.RemeberLastUser;
 
             try { Forms.BK.Close(); } catch { }
             try { Forms.BK.Show(); } catch { }
@@ -36,7 +44,7 @@ namespace WinPaletter.Dialogs
             BringToFront();
         }
 
-        public DialogResult PickUser(Dictionary<string, string> UsersList)
+        private void ListUsers(Dictionary<string, string> UsersList)
         {
             _UsersList = UsersList;
 
@@ -46,23 +54,51 @@ namespace WinPaletter.Dialogs
             }
             flowLayoutPanel1.Controls.Clear();
 
+            flowLayoutPanel1.Visible = false;
+
+            RadioImage[] radios = new RadioImage[_UsersList.Count];
+
             foreach (KeyValuePair<string, string> user in _UsersList)
             {
+                string Scheme = $"{user.Value.Split('\\').Last()}";
+
+                if (user.Key.ToUpper() == "S-1-5-18") { Scheme += " (Default users settings)"; }
+
+                Scheme += "\r\n" + $"{Program.Lang.UserSwitch_Computer}: {user.Value.Split('\\').First()}";
+
+                if (user.Key.ToUpper() != "S-1-5-18" && user.Key.ToUpper() != "S-1-5-19" && user.Key.ToUpper() != "S-1-5-20")
+                {
+                    Scheme += "\r\n" + $"{(Users.IsAdmin(user.Key) ? Program.Lang.UserSwitch_TypeAdministrator : Program.Lang.UserSwitch_TypeLocalUser)}";
+                }
+                else
+                {
+                    Scheme += "\r\n" + $"{Program.Lang.UserSwitch_TypeSystem}";
+                }
+
                 RadioImage radio = new()
                 {
                     ImageWithText = true,
                     ShowText = true,
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Checked = user.Key == Users.UserSID,
+                    Checked = user.Key == Users.SID,
                     Size = new Size(250, 70),
                     Tag = user.Key,
                     Image = NativeMethods.Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
-                    Text = $"{user.Value.Split('\\').Last()}\r\n{Program.Lang.UserSwitch_Computer}: {user.Value.Split('\\').First()}\r\n{(Users.IsAdmin(user.Key) ? Program.Lang.UserSwitch_TypeAdministrator : Program.Lang.UserSwitch_TypeLocalUser)}"
+                    Text = Scheme,
+                    ForeColor = this.ForeColor
                 };
 
-                flowLayoutPanel1.Controls.Add(radio);
+                radios = (radios ?? Enumerable.Empty<RadioImage>()).Concat(new[] { radio }).ToArray();
             }
 
+            flowLayoutPanel1.Controls.AddRange(radios);
+
+            flowLayoutPanel1.Visible = true;
+        }
+
+        public DialogResult PickUser(Dictionary<string, string> UsersList)
+        {
+            ListUsers(UsersList);
             return this.ShowDialog();
         }
 
@@ -72,16 +108,10 @@ namespace WinPaletter.Dialogs
             {
                 if (radio.Checked)
                 {
-                    Users.Domain_UserName = _UsersList[radio.Tag.ToString()];
-                    Program.Settings.UsersServices.LastUserSID = radio.Tag.ToString();
-                    Users.UserSID = radio.Tag.ToString();
-                    Users.UpdatePathsFromSID(Users.UserSID);
+                    Users.SID = radio.Tag.ToString();
                     break;
                 }
             }
-
-            Program.Settings.UsersServices.RemeberLastUser = checkBox1.Checked;
-            Program.Settings.UsersServices.Save();
 
             DialogResult = DialogResult.OK;
             Close();
@@ -90,6 +120,21 @@ namespace WinPaletter.Dialogs
         private void Button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender)
+        {
+            if (shown)
+            {
+                if (checkBox1.Checked)
+                {
+                    ListUsers(Users.GetUsers(true));
+                }
+                else
+                {
+                    ListUsers(Users.GetUsers(false));
+                }
+            }
         }
     }
 }

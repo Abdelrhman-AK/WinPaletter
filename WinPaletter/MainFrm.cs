@@ -2636,6 +2636,12 @@ namespace WinPaletter
             else if (System.IO.Path.GetExtension(WXP_VS_textbox.Text) == ".msstyles")
             {
                 theme = PathsExt.appData + @"\VisualStyles\Luna\custom.theme";
+
+                if (!System.IO.Directory.Exists(PathsExt.MSTheme_Dir))
+                {
+                    System.IO.Directory.CreateDirectory(PathsExt.MSTheme_Dir);
+                }
+
                 System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\custom.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, "\r\n"));
 
             }
@@ -2792,7 +2798,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            Forms.SettingsX.ShowDialog();
+            Forms.SettingsX.Show();
         }
 
         private void Button4_Click_1(object sender, EventArgs e)

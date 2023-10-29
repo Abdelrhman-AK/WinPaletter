@@ -455,21 +455,15 @@ namespace WinPaletter
 
             public struct UsersServices
             {
-                public bool RemeberLastUser;
-                public string LastUserSID;
                 public bool ShowSysEventsSoundsInstaller;
 
                 public void Load()
                 {
-                    RemeberLastUser = Conversions.ToBoolean(GetReg(REG_UsersServices, "RemeberLastUser", false));
-                    LastUserSID = GetReg(REG_UsersServices, "LastUserSID", "").ToString();
                     ShowSysEventsSoundsInstaller = Conversions.ToBoolean(GetReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", true));
                 }
 
                 public void Save()
                 {
-                    EditReg(REG_UsersServices, "RemeberLastUser", RemeberLastUser, RegistryValueKind.DWord);
-                    EditReg(REG_UsersServices, "LastUserSID", LastUserSID, RegistryValueKind.String);
                     EditReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", ShowSysEventsSoundsInstaller, RegistryValueKind.DWord);
                 }
             }
@@ -610,8 +604,6 @@ namespace WinPaletter
         public Structures.UsersServices UsersServices = new()
         {
             ShowSysEventsSoundsInstaller = true,
-            RemeberLastUser = false,
-            LastUserSID = ""
         };
 
         public Structures.Miscellaneous Miscellaneous = new Structures.Miscellaneous()

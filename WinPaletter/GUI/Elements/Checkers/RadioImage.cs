@@ -346,7 +346,7 @@ namespace WinPaletter.UI.WP
 
                     var Rec = new Rectangle(imgY, imgY, Image.Width, Image.Height);
                     int Bo = imgY + Image.Width + imgY - 5;
-                    var RecText = new Rectangle(Bo, imgY, Width - Bo, Image.Height);
+                    var RecText = new Rectangle(Bo, 5, Width - Bo, Height - 10);
                     var u = Rectangle.Union(Rec, RecText);
                     int innerSpace = RecText.Left - Rec.Right;
 
