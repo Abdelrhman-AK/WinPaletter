@@ -20,11 +20,15 @@ namespace WinPaletter.NativeMethods
         public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref Rect pRect, ref DttOpts pOptions);
+        public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref RECT pRect, ref DttOpts pOptions);
 
         /// <summary>
-        /// Set The WindowR's Theme Attributes
+        /// Set The Window's Theme Attributes
         /// </summary>
+        /// <param name="hWnd">The Handle to the Window</param>
+        /// <param name="wtype">What Type of Attributes</param>
+        /// <param name="attributes">The Attributes to Add/Remove</param>
+        /// <param name="size">The Size of the Attributes Struct</param>
         /// <returns>If The Call Was Successful or Not</returns>
         [DllImport("UxTheme.dll")]
         public static extern int SetWindowThemeAttribute(IntPtr hWnd, WindowThemeAttributeType wtype, ref WTA_OPTIONS attributes, uint size);
@@ -95,59 +99,86 @@ namespace WinPaletter.NativeMethods
             DTT_COMPOSITED = 8192
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Rect
+        [StructLayout(LayoutKind.Explicit)]
+        public struct RECT
         {
-            public Rect(int left, int top, int right, int bottom)
+            // Fields
+            [FieldOffset(12)]
+            public int bottom;
+            [FieldOffset(0)]
+            public int left;
+            [FieldOffset(8)]
+            public int right;
+            [FieldOffset(4)]
+            public int top;
+
+            // Methods
+            public RECT(Rectangle rect)
             {
-                Left = left;
-                Top = top;
-                Right = right;
-                Bottom = bottom;
+                this.left = rect.Left;
+                this.top = rect.Top;
+                this.right = rect.Right;
+                this.bottom = rect.Bottom;
             }
 
-            public Rect(Rectangle rect)
+            public RECT(int left, int top, int right, int bottom)
             {
-                Left = rect.X;
-                Top = rect.Y;
-                Right = rect.Right;
-                Bottom = rect.Bottom;
+                this.left = left;
+                this.top = top;
+                this.right = right;
+                this.bottom = bottom;
             }
 
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
+            public void Set()
+            {
+                this.left = this.top = this.right = this.bottom = 0;
+            }
+
+            public void Set(Rectangle rect)
+            {
+                this.left = rect.Left;
+                this.top = rect.Top;
+                this.right = rect.Right;
+                this.bottom = rect.Bottom;
+            }
+
+            public void Set(int left, int top, int right, int bottom)
+            {
+                this.left = left;
+                this.top = top;
+                this.right = right;
+                this.bottom = bottom;
+            }
+
+            public Rectangle ToRectangle()
+            {
+                return new Rectangle(this.left, this.top, this.right - this.left, this.bottom - this.top);
+            }
+
+            // Properties
+            public int Height
+            {
+                get
+                {
+                    return (this.bottom - this.top);
+                }
+            }
+
+            public Size Size
+            {
+                get
+                {
+                    return new Size(this.Width, this.Height);
+                }
+            }
 
             public int Width
             {
                 get
                 {
-                    return Right - Left;
-                }
-                set
-                {
-                    Right = Left + value;
+                    return (this.right - this.left);
                 }
             }
-
-            public int Height
-            {
-                get
-                {
-                    return Bottom - Top;
-                }
-                set
-                {
-                    Bottom = Top + value;
-                }
-            }
-
-            public Rectangle ToRectangle()
-            {
-                return new Rectangle(Left, Top, Right - Left, Bottom - Top);
-            }
-
         }
 
         /// <summary>

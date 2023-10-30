@@ -19,11 +19,19 @@ namespace WinPaletter
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
             Application.ApplicationExit += OnExit;
-            Users.UserChange += OnUserChange;
+            Users.UserChange += OnUserSwitch;
 
             if (!IsSecondInstance())
             {
-                InitializeApplication();
+                if (OS.W7 | OS.WVista | OS.WXP)
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                DeleteUpdateResiduals();
+                GetMemoryFonts();
+                InitializeImageLists();
+
+                InitializeApplication(true);
+
                 Application.Run(Forms.MainFrm);
             }
             else
@@ -33,40 +41,33 @@ namespace WinPaletter
         }
 
 
-        static void InitializeApplication()
+        static void InitializeApplication(bool ShowLoginDialog)
         {
             Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
 
-            if (OS.W7 | OS.WVista | OS.WXP)
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
-            string PreviousUser = Users.SID;
-
-            DeleteUpdateResiduals();
-            GetMemoryFonts();
-            InitializeImageLists();
-
+            // Important to load proper style and language before showing login dialog
             FetchDarkMode();
             ApplyStyle();
             LoadLanguage();
-            CheckIfLicenseChecked();
 
+            if (ShowLoginDialog) 
+            { 
+                Users.Login();
+                return;
+            }
+
+            // Data of following methods depends on current selected user
             DetectIfWPStartedWithClassicTheme();
             ExtractLuna();
 
-            Users.Login();
-            if (PreviousUser == Users.SID)
-            {
-                // User didn't change, so do rest voids that depends on data on current user
-                // Never forger to add voids into void OnUserChange(), so it gets new data for current user
-                AssociateFiles();
-                StartWallpaperMonitor();
+            CheckIfLicenseChecked();
+            AssociateFiles();
+            StartWallpaperMonitor();
 
-                BackupWindowsStartupSound();
-                CreateUninstaller();
-                CheckWhatsNew();
-                InitializeSysEventsSounds();
-            }
+            BackupWindowsStartupSound();
+            CreateUninstaller();
+            CheckWhatsNew();
+            InitializeSysEventsSounds();
 
             ExecuteArgs();
             LoadThemeManager();
@@ -97,7 +98,7 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
-            Users.UserChange -= OnUserChange;
+            Users.UserChange -= OnUserSwitch;
 
             try
             {
@@ -113,7 +114,7 @@ namespace WinPaletter
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 
-        public static void OnUserChange(UserChangeEventArgs e)
+        public static void OnUserSwitch(UserChangeEventArgs e)
         {
             switch (e.Timing)
             {
@@ -125,22 +126,22 @@ namespace WinPaletter
 
                 case UserChangeEventArgs.Timings.AfterChange:
                     {
-                        Users.UpdatePathsFromSID(Users.SID);
+                        bool MainFormIsOpened = Application.OpenForms[Forms.MainFrm.Name] is not null;
 
+                        Users.UpdatePathsFromSID(Users.SID);
                         Program.Settings = new(WPSettings.Mode.Registry);
 
-                        FetchDarkMode();
-                        ApplyStyle();
-                        LoadLanguage();
-                        CheckIfLicenseChecked();
+                        if (MainFormIsOpened)
+                        {
+                            if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (TM != TM_Original))
+                            {
+                                Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                            }
+                        }
 
-                        AssociateFiles();
-                        StartWallpaperMonitor();
+                        InitializeApplication(false);
 
-                        BackupWindowsStartupSound();
-                        CreateUninstaller();
-                        CheckWhatsNew();
-                        InitializeSysEventsSounds();
+                        if (MainFormIsOpened) { Forms.MainFrm.LoadData(); }
 
                         break;
                     }

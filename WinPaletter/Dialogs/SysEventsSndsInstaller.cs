@@ -131,14 +131,6 @@ namespace WinPaletter
             List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
-            try
-            {
-                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir); }
-                if (System.IO.File.Exists(PathsExt.SysEventsSounds))
-                    System.IO.File.Delete(PathsExt.SysEventsSounds);
-            }
-            catch { }
-
             if (System.IO.File.Exists(PathsExt.SysEventsSounds))
             {
                 IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
@@ -160,6 +152,14 @@ namespace WinPaletter
                     MsgBox(Program.Lang.SvcInstaller_MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
+            try
+            {
+                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir); }
+                if (System.IO.File.Exists(PathsExt.SysEventsSounds))
+                    System.IO.File.Delete(PathsExt.SysEventsSounds);
+            }
+            catch { }
 
             DialogResult = DialogResult.OK;
         }

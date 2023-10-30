@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
@@ -15,7 +14,7 @@ namespace WinPaletter.Theme
             ExportResThemePack = false,
             License = "",
             ThemeVersion = "1.0.0.0",
-            Author = Environment.UserName,
+            Author = Users.UserName,
             AuthorSocialMediaLink = "",
             Color1 = Color.FromArgb(0, 102, 204),
             Color2 = Color.FromArgb(122, 9, 9),

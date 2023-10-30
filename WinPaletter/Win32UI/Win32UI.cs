@@ -1309,9 +1309,7 @@ namespace WinPaletter
                 TMx.Win32.Apply();
                 TMx.Win32.Broadcast_UPM_ToDefUsers();
             }
-            catch
-            {
-            }
+            catch { }
             TMx.Dispose();
             Cursor = Cursors.Default;
         }

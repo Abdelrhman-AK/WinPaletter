@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class Uninstall
     {
         public Uninstall()
@@ -52,24 +51,30 @@ namespace WinPaletter
 
             if (CheckBox2.Checked)
             {
-                if (System.IO.Directory.Exists(PathsExt.appData))
+                Forms.SysEventsSndsInstaller.Uninstall();
+
+                try
                 {
-                    System.IO.Directory.Delete(PathsExt.appData, true);
-                    if (!OS.WXP)
+                    if (System.IO.Directory.Exists(PathsExt.appData))
                     {
-                        Theme.Manager.ResetCursorsToAero();
-                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                            Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
-                    }
+                        System.IO.Directory.Delete(PathsExt.appData, true);
+                        if (!OS.WXP)
+                        {
+                            Theme.Manager.ResetCursorsToAero();
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                                Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
+                        }
 
-                    else
-                    {
-                        Theme.Manager.ResetCursorsToNone_XP();
-                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                            Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
+                        else
+                        {
+                            Theme.Manager.ResetCursorsToNone_XP();
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                                Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
+                        }
                     }
                 }
+                catch { }
             }
 
             if (RadioImage1.Checked)

@@ -35,245 +35,247 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            Color_From = new Panel();
-            Color_From.BackColorChanged += new EventHandler(Color_From_BackColorChanged);
-            Label6 = new Label();
-            Label7 = new Label();
-            Label9 = new Label();
-            Label8 = new Label();
-            Label17 = new Label();
-            Label19 = new Label();
-            Label15 = new Label();
-            Label20 = new Label();
-            Label1 = new Label();
-            Label18 = new Label();
-            Label14 = new Label();
-            Color_To = new Panel();
-            Color_To.BackColorChanged += new EventHandler(Color_To_BackColorChanged);
-            Label10 = new Label();
-            Label13 = new Label();
-            Label11 = new Label();
-            Label12 = new Label();
-            Color_From.SuspendLayout();
-            Color_To.SuspendLayout();
-            SuspendLayout();
+            this.Color_From = new System.Windows.Forms.Panel();
+            this.Label6 = new System.Windows.Forms.Label();
+            this.Label7 = new System.Windows.Forms.Label();
+            this.Label9 = new System.Windows.Forms.Label();
+            this.Label8 = new System.Windows.Forms.Label();
+            this.Label17 = new System.Windows.Forms.Label();
+            this.Label19 = new System.Windows.Forms.Label();
+            this.Label15 = new System.Windows.Forms.Label();
+            this.Label20 = new System.Windows.Forms.Label();
+            this.Label1 = new System.Windows.Forms.Label();
+            this.Label18 = new System.Windows.Forms.Label();
+            this.Label14 = new System.Windows.Forms.Label();
+            this.Color_To = new System.Windows.Forms.Panel();
+            this.Label10 = new System.Windows.Forms.Label();
+            this.Label13 = new System.Windows.Forms.Label();
+            this.Label11 = new System.Windows.Forms.Label();
+            this.Label12 = new System.Windows.Forms.Label();
+            this.Color_From.SuspendLayout();
+            this.Color_To.SuspendLayout();
+            this.SuspendLayout();
             // 
             // Color_From
             // 
-            Color_From.BorderStyle = BorderStyle.FixedSingle;
-            Color_From.Controls.Add(Label6);
-            Color_From.Controls.Add(Label7);
-            Color_From.Controls.Add(Label9);
-            Color_From.Controls.Add(Label8);
-            Color_From.Location = new Point(60, 56);
-            Color_From.Name = "Color_From";
-            Color_From.Size = new Size(109, 84);
-            Color_From.TabIndex = 33;
+            this.Color_From.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Color_From.Controls.Add(this.Label6);
+            this.Color_From.Controls.Add(this.Label7);
+            this.Color_From.Controls.Add(this.Label9);
+            this.Color_From.Controls.Add(this.Label8);
+            this.Color_From.Location = new System.Drawing.Point(60, 56);
+            this.Color_From.Name = "Color_From";
+            this.Color_From.Size = new System.Drawing.Size(109, 84);
+            this.Color_From.TabIndex = 33;
+            this.Color_From.BackColorChanged += new System.EventHandler(this.Color_From_BackColorChanged);
             // 
             // Label6
             // 
-            Label6.BackColor = Color.Transparent;
-            Label6.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label6.Location = new Point(1, 2);
-            Label6.Name = "Label6";
-            Label6.Size = new Size(105, 14);
-            Label6.TabIndex = 23;
-            Label6.Text = "0";
-            Label6.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label6.BackColor = System.Drawing.Color.Transparent;
+            this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label6.Location = new System.Drawing.Point(1, 2);
+            this.Label6.Name = "Label6";
+            this.Label6.Size = new System.Drawing.Size(105, 14);
+            this.Label6.TabIndex = 23;
+            this.Label6.Text = "0";
+            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label7
             // 
-            Label7.BackColor = Color.Transparent;
-            Label7.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label7.Location = new Point(1, 23);
-            Label7.Name = "Label7";
-            Label7.Size = new Size(105, 14);
-            Label7.TabIndex = 24;
-            Label7.Text = "0";
-            Label7.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label7.BackColor = System.Drawing.Color.Transparent;
+            this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label7.Location = new System.Drawing.Point(1, 23);
+            this.Label7.Name = "Label7";
+            this.Label7.Size = new System.Drawing.Size(105, 14);
+            this.Label7.TabIndex = 24;
+            this.Label7.Text = "0";
+            this.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label9
             // 
-            Label9.BackColor = Color.Transparent;
-            Label9.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label9.Location = new Point(1, 65);
-            Label9.Name = "Label9";
-            Label9.Size = new Size(105, 14);
-            Label9.TabIndex = 26;
-            Label9.Text = "0";
-            Label9.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label9.BackColor = System.Drawing.Color.Transparent;
+            this.Label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label9.Location = new System.Drawing.Point(1, 65);
+            this.Label9.Name = "Label9";
+            this.Label9.Size = new System.Drawing.Size(105, 14);
+            this.Label9.TabIndex = 26;
+            this.Label9.Text = "0";
+            this.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label8
             // 
-            Label8.BackColor = Color.Transparent;
-            Label8.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label8.Location = new Point(1, 44);
-            Label8.Name = "Label8";
-            Label8.Size = new Size(105, 14);
-            Label8.TabIndex = 25;
-            Label8.Text = "0";
-            Label8.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label8.BackColor = System.Drawing.Color.Transparent;
+            this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label8.Location = new System.Drawing.Point(1, 44);
+            this.Label8.Name = "Label8";
+            this.Label8.Size = new System.Drawing.Size(105, 14);
+            this.Label8.TabIndex = 25;
+            this.Label8.Text = "0";
+            this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label17
             // 
-            Label17.BackColor = Color.Transparent;
-            Label17.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label17.Location = new Point(1, 119);
-            Label17.Name = "Label17";
-            Label17.Size = new Size(55, 21);
-            Label17.TabIndex = 30;
-            Label17.Text = "Decimal";
-            Label17.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label17.BackColor = System.Drawing.Color.Transparent;
+            this.Label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label17.Location = new System.Drawing.Point(1, 119);
+            this.Label17.Name = "Label17";
+            this.Label17.Size = new System.Drawing.Size(55, 21);
+            this.Label17.TabIndex = 30;
+            this.Label17.Text = "Decimal";
+            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label19
             // 
-            Label19.BackColor = Color.Transparent;
-            Label19.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label19.Location = new Point(2, 58);
-            Label19.Name = "Label19";
-            Label19.Size = new Size(55, 21);
-            Label19.TabIndex = 27;
-            Label19.Text = "RGB";
-            Label19.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label19.BackColor = System.Drawing.Color.Transparent;
+            this.Label19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label19.Location = new System.Drawing.Point(2, 58);
+            this.Label19.Name = "Label19";
+            this.Label19.Size = new System.Drawing.Size(55, 21);
+            this.Label19.TabIndex = 27;
+            this.Label19.Text = "RGB";
+            this.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label15
             // 
-            Label15.BackColor = Color.Transparent;
-            Label15.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label15.Location = new Point(169, 31);
-            Label15.Name = "Label15";
-            Label15.Size = new Size(109, 22);
-            Label15.TabIndex = 32;
-            Label15.Text = "To";
-            Label15.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label15.BackColor = System.Drawing.Color.Transparent;
+            this.Label15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label15.Location = new System.Drawing.Point(169, 31);
+            this.Label15.Name = "Label15";
+            this.Label15.Size = new System.Drawing.Size(109, 22);
+            this.Label15.TabIndex = 32;
+            this.Label15.Text = "To";
+            this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label20
             // 
-            Label20.BackColor = Color.Transparent;
-            Label20.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label20.Location = new Point(2, 78);
-            Label20.Name = "Label20";
-            Label20.Size = new Size(55, 21);
-            Label20.TabIndex = 28;
-            Label20.Text = "HEX";
-            Label20.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label20.BackColor = System.Drawing.Color.Transparent;
+            this.Label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label20.Location = new System.Drawing.Point(2, 78);
+            this.Label20.Name = "Label20";
+            this.Label20.Size = new System.Drawing.Size(55, 21);
+            this.Label20.TabIndex = 28;
+            this.Label20.Text = "HEX";
+            this.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label1
             // 
-            Label1.BackColor = Color.FromArgb(150, 25, 25, 25);
-            Label1.Dock = DockStyle.Top;
-            Label1.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label1.Location = new Point(1, 1);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(275, 30);
-            Label1.TabIndex = 18;
-            Label1.Text = "0";
-            Label1.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.Label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.Location = new System.Drawing.Point(1, 1);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(275, 30);
+            this.Label1.TabIndex = 18;
+            this.Label1.Text = "0";
+            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label18
             // 
-            Label18.BackColor = Color.Transparent;
-            Label18.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label18.Location = new Point(2, 99);
-            Label18.Name = "Label18";
-            Label18.Size = new Size(55, 21);
-            Label18.TabIndex = 29;
-            Label18.Text = "HSL";
-            Label18.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label18.BackColor = System.Drawing.Color.Transparent;
+            this.Label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label18.Location = new System.Drawing.Point(2, 99);
+            this.Label18.Name = "Label18";
+            this.Label18.Size = new System.Drawing.Size(55, 21);
+            this.Label18.TabIndex = 29;
+            this.Label18.Text = "HSL";
+            this.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label14
             // 
-            Label14.BackColor = Color.Transparent;
-            Label14.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label14.Location = new Point(60, 31);
-            Label14.Name = "Label14";
-            Label14.Size = new Size(109, 22);
-            Label14.TabIndex = 32;
-            Label14.Text = "From";
-            Label14.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label14.BackColor = System.Drawing.Color.Transparent;
+            this.Label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label14.Location = new System.Drawing.Point(60, 31);
+            this.Label14.Name = "Label14";
+            this.Label14.Size = new System.Drawing.Size(109, 22);
+            this.Label14.TabIndex = 32;
+            this.Label14.Text = "From";
+            this.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Color_To
             // 
-            Color_To.BorderStyle = BorderStyle.FixedSingle;
-            Color_To.Controls.Add(Label10);
-            Color_To.Controls.Add(Label13);
-            Color_To.Controls.Add(Label11);
-            Color_To.Controls.Add(Label12);
-            Color_To.Location = new Point(168, 56);
-            Color_To.Name = "Color_To";
-            Color_To.Size = new Size(109, 84);
-            Color_To.TabIndex = 34;
+            this.Color_To.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Color_To.Controls.Add(this.Label10);
+            this.Color_To.Controls.Add(this.Label13);
+            this.Color_To.Controls.Add(this.Label11);
+            this.Color_To.Controls.Add(this.Label12);
+            this.Color_To.Location = new System.Drawing.Point(168, 56);
+            this.Color_To.Name = "Color_To";
+            this.Color_To.Size = new System.Drawing.Size(109, 84);
+            this.Color_To.TabIndex = 34;
+            this.Color_To.BackColorChanged += new System.EventHandler(this.Color_To_BackColorChanged);
             // 
             // Label10
             // 
-            Label10.BackColor = Color.Transparent;
-            Label10.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label10.Location = new Point(1, 65);
-            Label10.Name = "Label10";
-            Label10.Size = new Size(105, 14);
-            Label10.TabIndex = 30;
-            Label10.Text = "0";
-            Label10.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label10.BackColor = System.Drawing.Color.Transparent;
+            this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label10.Location = new System.Drawing.Point(1, 65);
+            this.Label10.Name = "Label10";
+            this.Label10.Size = new System.Drawing.Size(105, 14);
+            this.Label10.TabIndex = 30;
+            this.Label10.Text = "0";
+            this.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label13
             // 
-            Label13.BackColor = Color.Transparent;
-            Label13.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label13.Location = new Point(1, 2);
-            Label13.Name = "Label13";
-            Label13.Size = new Size(105, 14);
-            Label13.TabIndex = 27;
-            Label13.Text = "0";
-            Label13.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label13.BackColor = System.Drawing.Color.Transparent;
+            this.Label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label13.Location = new System.Drawing.Point(1, 2);
+            this.Label13.Name = "Label13";
+            this.Label13.Size = new System.Drawing.Size(105, 14);
+            this.Label13.TabIndex = 27;
+            this.Label13.Text = "0";
+            this.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label11
             // 
-            Label11.BackColor = Color.Transparent;
-            Label11.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label11.Location = new Point(1, 44);
-            Label11.Name = "Label11";
-            Label11.Size = new Size(105, 14);
-            Label11.TabIndex = 29;
-            Label11.Text = "0";
-            Label11.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label11.BackColor = System.Drawing.Color.Transparent;
+            this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label11.Location = new System.Drawing.Point(1, 44);
+            this.Label11.Name = "Label11";
+            this.Label11.Size = new System.Drawing.Size(105, 14);
+            this.Label11.TabIndex = 29;
+            this.Label11.Text = "0";
+            this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label12
             // 
-            Label12.BackColor = Color.Transparent;
-            Label12.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label12.Location = new Point(1, 23);
-            Label12.Name = "Label12";
-            Label12.Size = new Size(105, 14);
-            Label12.TabIndex = 28;
-            Label12.Text = "0";
-            Label12.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label12.BackColor = System.Drawing.Color.Transparent;
+            this.Label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label12.Location = new System.Drawing.Point(1, 23);
+            this.Label12.Name = "Label12";
+            this.Label12.Size = new System.Drawing.Size(105, 14);
+            this.Label12.TabIndex = 28;
+            this.Label12.Text = "0";
+            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ColorInfoDragDrop
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(277, 140);
-            Controls.Add(Label1);
-            Controls.Add(Color_From);
-            Controls.Add(Label17);
-            Controls.Add(Label19);
-            Controls.Add(Color_To);
-            Controls.Add(Label15);
-            Controls.Add(Label14);
-            Controls.Add(Label20);
-            Controls.Add(Label18);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
-            Name = "ColorInfoDragDrop";
-            Padding = new Padding(1);
-            StartPosition = FormStartPosition.Manual;
-            Color_From.ResumeLayout(false);
-            Color_To.ResumeLayout(false);
-            Load += new EventHandler(ColorInfoDragDrop_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(277, 140);
+            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.Color_From);
+            this.Controls.Add(this.Label17);
+            this.Controls.Add(this.Label19);
+            this.Controls.Add(this.Color_To);
+            this.Controls.Add(this.Label15);
+            this.Controls.Add(this.Label14);
+            this.Controls.Add(this.Label20);
+            this.Controls.Add(this.Label18);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Name = "ColorInfoDragDrop";
+            this.Padding = new System.Windows.Forms.Padding(1);
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Load += new System.EventHandler(this.ColorInfoDragDrop_Load);
+            this.Color_From.ResumeLayout(false);
+            this.Color_To.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
         internal Label Label1;

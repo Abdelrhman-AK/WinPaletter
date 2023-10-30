@@ -1,6 +1,6 @@
-﻿namespace WinPaletter.Dialogs
+﻿namespace WinPaletter
 {
-    partial class UserSelect
+    partial class UserSwitch
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserSelect));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserSwitch));
             this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
@@ -52,7 +52,7 @@
             this.checkBox1.ForeColor = System.Drawing.Color.White;
             this.checkBox1.Location = new System.Drawing.Point(12, 369);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(400, 24);
+            this.checkBox1.Size = new System.Drawing.Size(490, 24);
             this.checkBox1.TabIndex = 138;
             this.checkBox1.Text = "Show system profiles (EXPERIMENTAL - DO IT AT YOUR OWN RISK!)";
             this.checkBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox1_CheckedChanged);
@@ -93,7 +93,7 @@
             // 
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 7);
+            this.PictureBox1.Location = new System.Drawing.Point(7, 7);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(35, 35);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -106,9 +106,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.title.BackColor = System.Drawing.Color.Transparent;
             this.title.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title.Location = new System.Drawing.Point(47, 7);
+            this.title.Location = new System.Drawing.Point(48, 7);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(766, 35);
+            this.title.Size = new System.Drawing.Size(765, 35);
             this.title.TabIndex = 85;
             this.title.Text = "Please select a Windows user on whose registry, WinPaletter should get and set da" +
     "ta.";
@@ -164,16 +164,16 @@
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(83)))), ((int)(((byte)(55)))));
+            this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(54)))), ((int)(((byte)(73)))));
             this.Button1.Location = new System.Drawing.Point(698, 364);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
             this.Button1.TabIndex = 129;
-            this.Button1.Text = "Select";
+            this.Button1.Text = "Switch";
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // UserSelect
+            // UserSwitch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -187,15 +187,16 @@
             this.Controls.Add(this.Button1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(841, 449);
-            this.Name = "UserSelect";
+            this.Name = "UserSwitch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Select a user";
+            this.Text = "User switch";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.UserSelect_Load);
+            this.Load += new System.EventHandler(this.UserSwitch_Load);
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -279,11 +279,11 @@
     <Compile Include="Dialogs\ThemeLog.Designer.cs">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\UserSelect.cs">
+    <Compile Include="Dialogs\UserSwitch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\UserSelect.Designer.cs">
-      <DependentUpon>UserSelect.cs</DependentUpon>
+    <Compile Include="Dialogs\UserSwitch.Designer.cs">
+      <DependentUpon>UserSwitch.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms.cs" />
     <Compile Include="Program\Classes\FormDWMEffects.cs" />
@@ -1075,8 +1075,8 @@
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\UserSelect.resx">
-      <DependentUpon>UserSelect.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\UserSwitch.resx">
+      <DependentUpon>UserSwitch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.cs</DependentUpon>

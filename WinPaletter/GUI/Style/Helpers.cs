@@ -149,35 +149,38 @@ namespace WinPaletter.UI.Style
                 // ####################### For all open forms
                 try
                 {
-                    foreach (Form OFORM in Application.OpenForms)
+                    foreach (Form form in Application.OpenForms)
                     {
-                        bool FormWasVisible = OFORM.Visible;
-                        if (FormWasVisible)
-                            OFORM.Visible = false;
-                        OFORM.SuspendLayout();
-                        OFORM.BackColor = BackColor;
-
-                        if (!IgnoreTitleBar)
-                            DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode);
-
-                        ApplyStyleToSubControls(OFORM, DarkMode);
-
-                        if (OS.W11)
+                        if (form != Forms.BK)
                         {
-                            int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                            DWMAPI.DwmSetWindowAttribute(OFORM.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-                        }
-                        if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-                        {
-                            int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                            DWMAPI.DwmSetWindowAttribute(OFORM.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-                        }
+                            bool FormWasVisible = form.Visible;
+                            if (FormWasVisible)
+                                form.Visible = false;
+                            form.SuspendLayout();
+                            form.BackColor = BackColor;
 
-                        if (FormWasVisible)
-                            OFORM.Visible = true;
+                            if (!IgnoreTitleBar)
+                                DLLFunc.DarkTitlebar(form.Handle, DarkMode);
 
-                        OFORM.ResumeLayout();
-                        OFORM.Refresh();
+                            ApplyStyleToSubControls(form, DarkMode);
+
+                            if (OS.W11)
+                            {
+                                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
+                                DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                            }
+                            if (CustomR && !Program.Settings.Appearance.RoundedCorners)
+                            {
+                                int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                                DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                            }
+
+                            if (FormWasVisible)
+                                form.Visible = true;
+
+                            form.ResumeLayout();
+                            form.Refresh();
+                        }
                     }
                 }
                 catch { }

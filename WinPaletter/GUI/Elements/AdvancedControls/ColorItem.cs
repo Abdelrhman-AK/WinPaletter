@@ -71,6 +71,7 @@ namespace WinPaletter.UI.Controllers
         #region Drag and drop
         private bool SwapNotCopy = false;
         private bool InitializeDrag = false;
+        private Point mousePosition_beforeDrag, mousePosition_afterDrag;
         private AfterDropEffects AfterDropEffect = AfterDropEffects.None;
         private bool DragDefaultColor = false;
         private Color DraggedColor;
@@ -91,14 +92,13 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            mousePosition_afterDrag = MousePosition;
 
-            if (InitializeDrag)
+            if (InitializeDrag && mousePosition_beforeDrag != mousePosition_afterDrag)
             {
                 DragDefaultColor = CanRaiseEventsForDefColorDot();
                 DoDragDrop(this, DragDropEffects.Copy);
             }
-
-            InitializeDrag = false;
 
             if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
             {
@@ -503,6 +503,7 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            mousePosition_beforeDrag = MousePosition;
             InitializeDrag = Program.Settings.NerdStats.DragAndDrop;
             State = MouseState.Down;
             Timer1.Enabled = true;

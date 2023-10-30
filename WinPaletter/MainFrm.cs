@@ -24,7 +24,6 @@ namespace WinPaletter
         private int ChannelFixer;
         private List<string> Updates_ls = new List<string>();
         public bool LoggingOff = false;
-        private readonly Converter _Converter = new Converter();
 
         public MainFrm()
         {
@@ -538,6 +537,7 @@ namespace WinPaletter
             Select_W7.Image = Properties.Resources.Native7;
             Select_WVista.Image = Properties.Resources.NativeVista;
             Select_WXP.Image = Properties.Resources.NativeXP;
+
             if (!Program.Elevated)
                 apply_btn.Image = Properties.Resources.WP_Admin;
 
@@ -593,11 +593,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             this.DoubleBuffer();
-            UpdateLegends();
-            ApplyColorsToElements(Program.TM);
-            ApplyStylesToElements(Program.TM);
-            LoadFromTM(Program.TM);
-            ApplyDefaultTMValues();
+            LoadData();
 
             WXP_Alert2.Size = WXP_Alert2.Parent.Size - new Size(40, 40);
             WXP_Alert2.Location = new Point(20, 20);
@@ -605,14 +601,19 @@ namespace WinPaletter
             Visible = true;
 
             BetaBadge.Visible = Program.IsBeta;
-            if (Program.IsBeta)
-            {
-                status_lbl.Width = BetaBadge.Left - 5 - status_lbl.Left;
-            }
-            else
-            {
-                status_lbl.Width = BetaBadge.Right - status_lbl.Left;
-            }
+
+
+        }
+
+        public void LoadData()
+        {
+            UpdateLegends();
+            ApplyColorsToElements(Program.TM);
+            ApplyStylesToElements(Program.TM);
+            LoadFromTM(Program.TM);
+            ApplyDefaultTMValues();
+            userButton.Tag = Users.UserName;
+            userButton.Image = Users.ProfilePicture.Resize(38, 38);
         }
 
         private void MainFrm_Shown(object sender, EventArgs e)
@@ -809,7 +810,6 @@ namespace WinPaletter
                 base.OnFormClosing(e);
             }
         }
-
 
         #region Windows 11
         private void W11_pick_DragDrop(object sender, DragEventArgs e)
@@ -3156,6 +3156,11 @@ namespace WinPaletter
         private void button8_Click(object sender, EventArgs e)
         {
             Forms.RescueTools.Show();
+        }
+
+        private void userButton_Click(object sender, EventArgs e)
+        {
+            Users.Login(true);
         }
 
         private void Button30_Click_1(object sender, EventArgs e)

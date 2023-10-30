@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.Drawing;
 using System.Linq;
 using System.Management;
 using System.Security.Principal;
@@ -38,12 +39,12 @@ namespace WinPaletter
             /// <summary>
             /// Name of user who invoked the event
             /// </summary>
-            public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').Last(); ; } }
+            public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last(); ; } }
 
             /// <summary>
             /// Name of computer hosting users
             /// </summary>
-            public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').First(); ; } }
+            public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
 
             /// <summary>
             /// Return if user that invoked the event is Administrator or not
@@ -78,7 +79,7 @@ namespace WinPaletter
 
         #region Security identifiers
 
-        private static string _SID = WindowsIdentity.GetCurrent().User.Value;
+        private static string _SID;
         /// <summary>
         /// Current selected user security identifier for WinPaletter, to be operated on it (read\write registry)
         /// </summary>
@@ -114,54 +115,77 @@ namespace WinPaletter
         /// <summary>
         /// Name of current user
         /// </summary>
-        public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').Last(); ; } }
+        public static string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last(); ; } }
 
         /// <summary>
         /// Name of computer hosting current user
         /// </summary>
-        public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\"').First(); ; } }
+        public static string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
 
         /// <summary>
         /// Return if current user is Administrator or not
         /// </summary>
-        public bool Administrator { get { return IsAdmin(SID); } }
+        public static bool Administrator { get { return IsAdmin(SID); } }
 
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+        public static string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+
+        /// <summary>
+        /// Path of current user profile picture
+        /// </summary>
+        public static Bitmap ProfilePicture 
+        { 
+            get
+            { 
+                return (Bitmap)NativeMethods.Shell32.GetUserAccountPicture(UserName); 
+            } 
+        }
 
         /// <summary>
         /// Get path of current user profile
         /// <br>- For example: C:\Users\...</br>
         /// </summary>
-        public string UserProfilePath { get { return GetUserProfilePath(SID); } }
+        public static string UserProfilePath { get { return GetUserProfilePath(SID); } }
         #endregion
 
         #region Voids
         public static Dictionary<string, string> GetUsers(bool includeSystemProfiles = false)
         {
             Dictionary<string, string> result = new();
-            SelectQuery query = new("Win32_UserProfile");
-            ManagementObjectSearcher searcher = new(query);
+            List<string> FoundSIDs = new();
 
-            foreach (ManagementObject sid in searcher.Get().Cast<ManagementObject>())
+            if (!OS.WXP)
+            {
+                SelectQuery query = new("Win32_UserProfile");
+                ManagementObjectSearcher searcher = new(query);
+                ManagementObjectCollection managementObjects = searcher.Get();
+
+                foreach (ManagementObject SID in managementObjects) { FoundSIDs.Add(SID["SID"].ToString()); }
+            }
+            else
+            {
+                foreach (string SID in Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList").GetSubKeyNames()) { FoundSIDs.Add(SID); }
+            }
+
+            foreach (string sid in FoundSIDs)
             {
                 try
                 {
-                    string username = new SecurityIdentifier(sid["SID"].ToString()).Translate(typeof(NTAccount)).ToString();
+                    string username = new SecurityIdentifier(sid).Translate(typeof(NTAccount)).ToString();
                     bool condition_base = includeSystemProfiles | !username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
-                    bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid["SID"].ToString()));
-                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists(Users.GetUserProfilePath(sid["SID"].ToString()) + "\\NTUSER.DAT");
+                    bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
+                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists(Users.GetUserProfilePath(sid) + "\\NTUSER.DAT");
 
                     if (condition_DAT_Unloaded)
                     {
-                        Program.SendCommand($"reg load HKU\\{sid["SID"]} \"{Users.GetUserProfilePath(sid["SID"].ToString())}\\NTUSER.DAT\"");
+                        Program.SendCommand($"reg load HKU\\{sid} \"{Users.GetUserProfilePath(sid)}\\NTUSER.DAT\"");
                     }
 
                     if (condition_DAT_Loaded || condition_DAT_Unloaded)
                     {
-                        result.Add(sid["SID"].ToString(), username);
+                        result.Add(sid, username);
                     }
 
                 }
@@ -180,7 +204,7 @@ namespace WinPaletter
             // Save settings into current user before reloading settings for new user
             Program.Settings.Save(WPSettings.Mode.Registry);
 
-            if (ForceShow || UsersList.Count > 1) { Forms.UserSelect.PickUser(UsersList); }
+            if (ForceShow || UsersList.Count > 1) { Forms.UserSwitch.PickUser(UsersList); }
 
             // If one user if found, there is no need to login, use current windows identity
             else if (UsersList.Count == 1 || UsersList.Count == 0)
@@ -215,7 +239,6 @@ namespace WinPaletter
             }
         }
 
-
         /// <summary>
         /// Update WinPaletter paths variables from user SID
         /// </summary>
@@ -223,9 +246,20 @@ namespace WinPaletter
         {
             if (SID != null)
             {
+
                 PathsExt.UserProfile = $"{GetUserProfilePath(SID)}";
-                PathsExt.LocalAppData = $"{PathsExt.UserProfile}\\AppData\\Local";
-                PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
+
+                if (!OS.WXP)
+                {
+                    PathsExt.LocalAppData = $"{PathsExt.UserProfile}\\AppData\\Local";
+                    PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
+                }
+                else
+                {
+                    PathsExt.LocalAppData = $"{PathsExt.UserProfile}\\Local Settings\\Application Data";
+                    PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
+                }
+
             }
             else
             {

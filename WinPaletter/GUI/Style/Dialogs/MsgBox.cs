@@ -94,22 +94,21 @@ namespace WinPaletter.UI.Style
             {
                 if (!OS.WXP)
                 {
-                    TD = new TaskDialog()
+                    TD = new()
                     {
                         EnableHyperlinks = true,
                         RightToLeft = Program.Lang.RightToLeft,
                         ButtonStyle = TaskDialogButtonStyle.Standard,
                         Content = ConvertToLink((SubMessage ?? "").ToString()),
                         FooterIcon = FooterIcon,
-                        CenterParent = true
+                        CenterParent = true,
+                        WindowTitle = (DialogTitle ?? Application.ProductName).ToString(),
+                        MainInstruction = (Message ?? "").ToString(),
+                        CollapsedControlText = (ExpandedText ?? "").ToString(),
+                        ExpandedControlText = (CollapsedText ?? "").ToString(),
+                        ExpandedInformation = ConvertToLink((ExpandedDetails ?? "").ToString()),
+                        Footer = ConvertToLink((Footer ?? "").ToString())
                     };
-
-                    TD.WindowTitle = (DialogTitle ?? Application.ProductName).ToString();
-                    TD.MainInstruction = (Message ?? "").ToString();
-                    TD.CollapsedControlText = (ExpandedText ?? "").ToString();
-                    TD.ExpandedControlText = (CollapsedText ?? "").ToString();
-                    TD.ExpandedInformation = ConvertToLink((ExpandedDetails ?? "").ToString());
-                    TD.Footer = ConvertToLink((Footer ?? "").ToString());
 
                     if (FooterCustomIcon is null)
                         FooterCustomIcon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);

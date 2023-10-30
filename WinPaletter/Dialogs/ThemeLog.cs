@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace WinPaletter.Dialogs
@@ -15,7 +16,7 @@ namespace WinPaletter.Dialogs
         public ThemeLog()
         {
             InitializeComponent();
-            this.FormClosing += ThemeLog_Closing;
+            FormClosing += ThemeLog_Closing;
         }
 
         private void ThemeLog_Load(object sender, EventArgs e)

@@ -355,14 +355,21 @@ namespace WinPaletter.UI.Simulation
             TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(Font.Name, 9f, Font.Style)).Height);
             TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
 
-            if (Preview == Preview_Enum.W7Aero | Preview == Preview_Enum.W7Opaque | Preview == Preview_Enum.W7Basic | Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite | Preview == Preview_Enum.WXP)
+            if (Preview == Preview_Enum.WXP)
             {
-                i = FreeMargin + (!(Preview == Preview_Enum.WXP) ? _Metrics_PaddedBorderWidth : 0) + _Metrics_BorderWidth;
+                i = FreeMargin + _Metrics_BorderWidth + 4;
+                iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight;
+            }
+
+            else if (Preview == Preview_Enum.W7Aero | Preview == Preview_Enum.W7Opaque | Preview == Preview_Enum.W7Basic | Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
+            {
+                i = FreeMargin + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
                 iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight;
 
                 i += 4;
                 iTop += 3 + ((Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite) ? 1 : 0);
             }
+
             else
             {
                 i = FreeMargin;
@@ -1326,7 +1333,7 @@ namespace WinPaletter.UI.Simulation
                 var sm = G.SmoothingMode;
                 G.SmoothingMode = SmoothingMode.HighSpeed;
 
-                TitlebarRect = new Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + 5);
+                TitlebarRect = new Rectangle(Rect.X, Rect.Y, Rect.Width + 1, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + 5);
 
                 var innerRect = new Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Rect.Width - 2, Rect.Height - TitlebarRect.Height - 1);
 
@@ -1338,10 +1345,10 @@ namespace WinPaletter.UI.Simulation
                 Program.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
 
                 var LE = new Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Math.Max(4, Metrics_BorderWidth) + 2);
-                var RE = new Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth) - 1, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2);
-                var BE = new Rectangle(Rect.X, Rect.Y + Rect.Height - Math.Max(4, Metrics_BorderWidth), Rect.Width - 1, Math.Max(4, Metrics_BorderWidth) + 1);
+                var RE = new Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth), Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2);
+                var BE = new Rectangle(Rect.X, Rect.Y + Rect.Height - Math.Max(4, Metrics_BorderWidth), Rect.Width, Math.Max(4, Metrics_BorderWidth) + 1);
                 int CloseBtn_W = TitleTextH_Sum + _Metrics_CaptionHeight - 4;
-                var CB = new Rectangle(Rect.X + Rect.Width - CloseBtn_W - RE.Width - 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W);
+                var CB = new Rectangle(Rect.X + Rect.Width - CloseBtn_W - RE.Width - 1, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W);
 
                 if (!ToolWindow)
                 {

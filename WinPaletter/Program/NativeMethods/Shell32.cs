@@ -21,15 +21,26 @@ namespace WinPaletter.NativeMethods
           StringBuilder picpath, int maxLength);
 
         public static string GetUserTilePath(string username)
-        {   // username: use null for current user
-            var sb = new StringBuilder(1000);
-            GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
-            return sb.ToString();
+        {   
+            if (!OS.WXP)
+            {
+                // username: use null for current user
+                var sb = new StringBuilder(1000);
+                GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
+                return sb.ToString();
+            }
+            else
+            {
+                string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\{username}.bmp";
+                string @default = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\Default Pictures\\chess.bmp";
+                return System.IO.File.Exists(file) ? file : @default ;
+            }
         }
 
         public static Image GetUserAccountPicture(string username)
         {
             string file = GetUserTilePath(username);
+
             if (System.IO.File.Exists(file))
             {
                 return Image.FromFile(file);

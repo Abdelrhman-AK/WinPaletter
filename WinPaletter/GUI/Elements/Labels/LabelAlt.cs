@@ -32,64 +32,66 @@ namespace WinPaletter.UI.WP
 
             if (TextAlign == ContentAlignment.BottomCenter)
             {
-                format = format | TextFormatFlags.HorizontalCenter;
-                format = format | TextFormatFlags.Bottom;
+                format |= TextFormatFlags.HorizontalCenter;
+                format |= TextFormatFlags.Bottom;
             }
 
             else if (TextAlign == ContentAlignment.BottomRight)
             {
-                format = format | TextFormatFlags.Right;
-                format = format | TextFormatFlags.Bottom;
+                format |= TextFormatFlags.Right;
+                format |= TextFormatFlags.Bottom;
             }
 
             else if (TextAlign == ContentAlignment.BottomLeft)
             {
-                format = format | TextFormatFlags.Left;
-                format = format | TextFormatFlags.Bottom;
+                format |= TextFormatFlags.Left;
+                format |= TextFormatFlags.Bottom;
             }
 
             else if (TextAlign == ContentAlignment.MiddleCenter)
             {
-                format = format | TextFormatFlags.HorizontalCenter;
-                format = format | TextFormatFlags.VerticalCenter;
+                format |= TextFormatFlags.HorizontalCenter;
+                format |= TextFormatFlags.VerticalCenter;
             }
 
             else if (TextAlign == ContentAlignment.MiddleRight)
             {
-                format = format | TextFormatFlags.Right;
-                format = format | TextFormatFlags.VerticalCenter;
+                format |= TextFormatFlags.Right;
+                format |= TextFormatFlags.VerticalCenter;
             }
 
             else if (TextAlign == ContentAlignment.MiddleLeft)
             {
-                format = format | TextFormatFlags.Left;
-                format = format | TextFormatFlags.VerticalCenter;
+                format |= TextFormatFlags.Left;
+                format |= TextFormatFlags.VerticalCenter;
             }
 
             else if (TextAlign == ContentAlignment.TopCenter)
             {
-                format = format | TextFormatFlags.HorizontalCenter;
-                format = format | TextFormatFlags.Top;
+                format |= TextFormatFlags.HorizontalCenter;
+                format |= TextFormatFlags.Top;
             }
 
             else if (TextAlign == ContentAlignment.TopRight)
             {
-                format = format | TextFormatFlags.Right;
-                format = format | TextFormatFlags.Top;
+                format |= TextFormatFlags.Right;
+                format |= TextFormatFlags.Top;
             }
 
             else if (TextAlign == ContentAlignment.TopLeft)
             {
-                format = format | TextFormatFlags.Left;
-                format = format | TextFormatFlags.Top;
+                format |= TextFormatFlags.Left;
+                format |= TextFormatFlags.Top;
             }
 
             if (!Text.Contains("\r\n"))
-                format = format | TextFormatFlags.SingleLine;
+                format |= TextFormatFlags.SingleLine;
+
             if (AutoEllipsis)
-                format = format | TextFormatFlags.EndEllipsis;
+                format |= TextFormatFlags.EndEllipsis;
+
             if (RightToLeft == RightToLeft.Yes)
-                format = format | TextFormatFlags.RightToLeft;
+                format |= TextFormatFlags.RightToLeft;
 
             return format;
         }
@@ -132,7 +134,7 @@ namespace WinPaletter.UI.WP
             // Draw
             try
             {
-                var Rectangle = new NativeMethods.UxTheme.Rect(Padding.Left, Padding.Top, width - Padding.Right, height - Padding.Bottom);  // Set full bounds with padding
+                var Rectangle = new NativeMethods.UxTheme.RECT(Padding.Left, Padding.Top, width - Padding.Right, height - Padding.Bottom);  // Set full bounds with padding
                 var ActiveTitlebarRenderer = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
                 NativeMethods.UxTheme.DrawThemeTextEx(ActiveTitlebarRenderer.Handle, _textHdc, 0, 0, Text, -1, (int)ReturnFormatFlags(), ref Rectangle, ref Options);
             }

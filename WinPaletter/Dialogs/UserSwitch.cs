@@ -5,18 +5,18 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
 
-namespace WinPaletter.Dialogs
+namespace WinPaletter
 {
-    public partial class UserSelect : Form
+    public partial class UserSwitch : Form
     {
-        public UserSelect()
+        public UserSwitch()
         {
             InitializeComponent();
-            this.FormClosing += UserSelect_FormClosing;
-            this.Shown += UserSelect_Shown;
+            this.FormClosed += UserSwitch_FormClosed;
+            this.Shown += UserSwitch_Shown;
         }
 
-        private void UserSelect_Shown(object sender, EventArgs e)
+        private void UserSwitch_Shown(object sender, EventArgs e)
         {
             shown = true;
         }
@@ -24,15 +24,17 @@ namespace WinPaletter.Dialogs
         private bool shown = false;
         private Dictionary<string, string> _UsersList = new();
 
-        private void UserSelect_FormClosing(object sender, FormClosingEventArgs e)
+        private void UserSwitch_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (Users.SID == null)
+                Users.SID = Users.AdminSID_GrantedUAC;
+
             try { Forms.BK.Close(); } catch { }
         }
 
-        private void UserSelect_Load(object sender, EventArgs e)
+        private void UserSwitch_Load(object sender, EventArgs e)
         {
             shown = false;
-            Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
             ApplyStyle(this);
             checkBox1.Checked = false;
@@ -50,6 +52,7 @@ namespace WinPaletter.Dialogs
 
             foreach (RadioImage radio in flowLayoutPanel1.Controls.OfType<RadioImage>())
             {
+                radio.DoubleClick -= Radio_DoubleClick;
                 radio.Dispose();
             }
             flowLayoutPanel1.Controls.Clear();
@@ -80,13 +83,15 @@ namespace WinPaletter.Dialogs
                     ImageWithText = true,
                     ShowText = true,
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Checked = user.Key == Users.SID,
+                    Checked = (Users.SID != null) ? user.Key == Users.SID : user.Key == Users.AdminSID_GrantedUAC,
                     Size = new Size(250, 70),
                     Tag = user.Key,
                     Image = NativeMethods.Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
                     Text = Scheme,
                     ForeColor = this.ForeColor
                 };
+
+                radio.DoubleClick += Radio_DoubleClick;
 
                 radios = (radios ?? Enumerable.Empty<RadioImage>()).Concat(new[] { radio }).ToArray();
             }
@@ -96,10 +101,20 @@ namespace WinPaletter.Dialogs
             flowLayoutPanel1.Visible = true;
         }
 
-        public DialogResult PickUser(Dictionary<string, string> UsersList)
+        private void Radio_DoubleClick(object sender, EventArgs e)
+        {
+            Button1.PerformClick();
+        }
+
+        /// <summary>
+        /// Show a dialog with users and switch into the selected one
+        /// </summary>
+        /// <param name="UsersList"><c>Dictionary(String, String)</c>: Key is SID, value is Domain\Username</param>
+        /// <returns></returns>
+        public void PickUser(Dictionary<string, string> UsersList)
         {
             ListUsers(UsersList);
-            return this.ShowDialog();
+            this.ShowDialog();
         }
 
         private void Button1_Click(object sender, EventArgs e)

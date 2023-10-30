@@ -447,6 +447,7 @@ namespace WinPaletter
         {
             if (TreeView is null)
                 return;
+
             if (Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
                 string v0 = ValueName;

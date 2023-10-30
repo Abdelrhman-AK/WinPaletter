@@ -8,7 +8,7 @@ namespace WinPaletter
 {
     internal partial class Forms
     {
-        private static string ex_msg = "Property can only be set to nothing";
+        private readonly static string ex_msg = "Property can only be set to nothing";
 
 
         private static ColorInfoDragDrop _ColorInfoDragDrop;
@@ -124,6 +124,7 @@ namespace WinPaletter
             }
         }
 
+
         private static SysEventsSndsInstaller _SysEventsSndsInstaller;
         public static SysEventsSndsInstaller SysEventsSndsInstaller
         {
@@ -141,6 +142,7 @@ namespace WinPaletter
                 DisposeInstance(ref _SysEventsSndsInstaller);
             }
         }
+
 
         private static ThemeLog _ThemeLog;
         public static ThemeLog ThemeLog
@@ -178,6 +180,7 @@ namespace WinPaletter
                 DisposeInstance(ref _RescueTools);
             }
         }
+
 
         private static BugReport _BugReport;
         public static BugReport BugReport
@@ -217,21 +220,21 @@ namespace WinPaletter
         }
 
 
-        private static UserSelect _UserSelect;
-        public static UserSelect UserSelect
+        private static UserSwitch _UserSwitch;
+        public static UserSwitch UserSwitch
         {
             get
             {
-                _UserSelect = CreateInstance(_UserSelect);
-                return _UserSelect;
+                _UserSwitch = CreateInstance(_UserSwitch);
+                return _UserSwitch;
             }
             set
             {
-                if (value == _UserSelect)
+                if (value == _UserSwitch)
                     return;
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _UserSelect);
+                DisposeInstance(ref _UserSwitch);
             }
         }
 
@@ -310,6 +313,7 @@ namespace WinPaletter
                 DisposeInstance(ref _AltTabEditor);
             }
         }
+
 
         private static ApplicationThemer _ApplicationThemer;
         public static ApplicationThemer ApplicationThemer
