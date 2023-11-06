@@ -245,6 +245,36 @@
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\UserPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UserPassword.Designer.cs">
+      <DependentUpon>UserPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Languages.cs" />
+    <Compile Include="Languages\Localizer\Strings\Features\Consoles.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Tips.cs" />
+    <Compile Include="Languages\Localizer\Strings\LanguageInfo.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Tips.cs" />
+    <Compile Include="Languages\Localizer\Strings\Features\WinTerminals.cs" />
+    <Compile Include="Languages\Localizer\Strings\Features\W10xLegends.cs" />
+    <Compile Include="Languages\Localizer\Strings\Features\Store.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\ColorPicker.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Converter.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Users.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Services.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Advanced.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Updates.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\PE.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\OldMSTheme.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Checking.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Skipping.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Errors.cs" />
+    <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Applying.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Messages.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\WindowsEditions.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\General.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BitmapOps.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\EOANIWriter.cs" />
@@ -252,12 +282,28 @@
     <Compile Include="Program\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\OffsetStream.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Program\NativeMethods\advapi.cs" />
     <Compile Include="Program\NativeMethods\Dnsapi.cs" />
     <Compile Include="Program\NativeMethods\DWMAPI.cs" />
     <Compile Include="Program\NativeMethods\GDI32.cs" />
     <Compile Include="Program\NativeMethods\Kernel32.cs" />
     <Compile Include="Program\NativeMethods\Shell32.cs" />
+    <Compile Include="Program\TypesExtensions\Bitmaps.cs" />
+    <Compile Include="Program\TypesExtensions\ByteArray.cs" />
+    <Compile Include="Program\TypesExtensions\Colors.cs" />
+    <Compile Include="Program\TypesExtensions\ComboBoxes.cs" />
+    <Compile Include="Program\TypesExtensions\Controls.cs" />
+    <Compile Include="Program\TypesExtensions\Graphics.cs" />
+    <Compile Include="Program\TypesExtensions\Icons.cs" />
+    <Compile Include="Program\TypesExtensions\Integers.cs" />
+    <Compile Include="Program\TypesExtensions\StringFormats.cs" />
+    <Compile Include="Program\TypesExtensions\StringLists.cs" />
+    <Compile Include="Program\TypesExtensions\Strings.cs" />
+    <Compile Include="Program\TypesExtensions\TreeViews.cs" />
+    <Compile Include="Program\Users\SetSystemCursor.cs" />
     <Compile Include="Program\NativeMethods\User32.cs" />
+    <Compile Include="Program\Users\SystemParametersInfo.cs" />
+    <Compile Include="Program\Users\UxTheme.cs" />
     <Compile Include="Program\NativeMethods\UxTheme.cs" />
     <Compile Include="Program\NativeMethods\Wininet.cs" />
     <Compile Include="Program\NativeMethods\Winmm.cs" />
@@ -299,7 +345,8 @@
     <Compile Include="Program\AssemblyLoader.cs" />
     <Compile Include="Program\ExceptionsHandler.cs" />
     <Compile Include="Program\FileAssoc.cs" />
-    <Compile Include="Program\Users.cs" />
+    <Compile Include="Program\SingleInstanceApplication.cs" />
+    <Compile Include="Program\Users\User.cs" />
     <Compile Include="Program\Helpers.cs" />
     <Compile Include="Program\Invoker.cs" />
     <Compile Include="Program\PreferencesMonitor.cs" />
@@ -407,7 +454,6 @@
     <Compile Include="Program\Classes\MemoryFonts.cs" />
     <Compile Include="Program\NativeMethods\NativeMethods.cs" />
     <Compile Include="Program\Classes\Reg_IO.cs" />
-    <Compile Include="Program\Classes\TypesExtensions.cs" />
     <Compile Include="Extras\ApplicationThemer.Designer.cs">
       <DependentUpon>ApplicationThemer.cs</DependentUpon>
     </Compile>
@@ -639,7 +685,7 @@
     <Compile Include="Languages\Lang_JSON_Update.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Languages\Localizer.cs" />
+    <Compile Include="Languages\Localizer\Localizer.cs" />
     <Compile Include="Dialogs\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
@@ -855,7 +901,6 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
-    <None Include="Resources\WinPaletter.Elevator.exe" />
     <None Include="Resources\Service_SysEventsSounds_Reg.txt" />
     <None Include="Resources\Start10_Light.png" />
     <None Include="Resources\Start10_Dark.png" />
@@ -1074,6 +1119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UserPassword.resx">
+      <DependentUpon>UserPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>

@@ -11,6 +11,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme.Structures;
@@ -35,122 +36,127 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-                        using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
+                        using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
                         {
-                            Exceptions.ThemeLoad.Clear();
-                            Info.Load();
-                            Windows11.Load(@default.Windows11);
-                            Windows10.Load(@default.Windows10);
-                            Windows81.Load(@default.Windows81);
-                            Windows7.Load(@default.Windows7);
-                            WindowsVista.Load(@default.WindowsVista);
-                            WindowsXP.Load(@default.WindowsXP);
-                            WindowsEffects.Load(@default.WindowsEffects);
-                            LogonUI10x.Load(@default.LogonUI10x);
-                            LogonUI7.Load(@default.LogonUI7);
-                            LogonUIXP.Load(@default.LogonUIXP);
-                            Win32.Load();
-                            MetricsFonts.Load(@default.MetricsFonts);
-                            AltTab.Load(@default.AltTab);
-                            ScreenSaver.Load(@default.ScreenSaver);
-                            Sounds.Load(@default.Sounds);
-                            AppTheme.Load(@default.AppTheme);
-
-                            WallpaperTone_W11.Load("Win11");
-                            WallpaperTone_W10.Load("Win10");
-                            WallpaperTone_W81.Load("Win8.1");
-                            WallpaperTone_W7.Load("Win7");
-                            WallpaperTone_WVista.Load("WinVista");
-                            WallpaperTone_WXP.Load("WinXP");
-                            Wallpaper.Load(@default.Wallpaper);
-
-                            CommandPrompt.Load("", "Terminal_CMD_Enabled", @default.CommandPrompt);
-                            if (Directory.Exists(PathsExt.PS86_app))
+                            using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
                             {
-                                try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
-                                catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86); }
-                            }
-                            else { PowerShellx86 = @default.PowerShellx86; }
+                                Exceptions.ThemeLoad.Clear();
+                                Info.Load();
+                                Windows11.Load(@default.Windows11);
+                                Windows10.Load(@default.Windows10);
+                                Windows81.Load(@default.Windows81);
+                                Windows7.Load(@default.Windows7);
+                                WindowsVista.Load(@default.WindowsVista);
+                                WindowsXP.Load(@default.WindowsXP);
+                                WindowsEffects.Load(@default.WindowsEffects);
+                                LogonUI10x.Load(@default.LogonUI10x);
+                                LogonUI7.Load(@default.LogonUI7);
+                                LogonUIXP.Load(@default.LogonUIXP);
+                                Win32.Load();
+                                MetricsFonts.Load(@default.MetricsFonts);
+                                AltTab.Load(@default.AltTab);
+                                ScreenSaver.Load(@default.ScreenSaver);
+                                Sounds.Load(@default.Sounds);
+                                AppTheme.Load(@default.AppTheme);
 
-                            if (Directory.Exists(PathsExt.PS64_app))
-                            {
-                                try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close(); }
-                                catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64); }
-                            }
-                            else { PowerShellx64 = @default.PowerShellx64; }
+                                WallpaperTone_W11.Load("Win11");
+                                WallpaperTone_W10.Load("Win10");
+                                WallpaperTone_W81.Load("Win8.1");
+                                WallpaperTone_W7.Load("Win7");
+                                WallpaperTone_WVista.Load("WinVista");
+                                WallpaperTone_WXP.Load("WinXP");
+                                Wallpaper.Load(@default.Wallpaper);
 
-                            #region Windows Terminal
-                            Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean();
-                            TerminalPreview.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)).ToBoolean();
-
-                            if (OS.W10 | OS.W11)
-                            {
-                                string TerDir;
-                                string TerPreDir;
-
-                                if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                                CommandPrompt.Load("", "Terminal_CMD_Enabled", @default.CommandPrompt);
+                                if (Directory.Exists(PathsExt.PS86_app))
                                 {
-                                    TerDir = PathsExt.TerminalJSON;
-                                    TerPreDir = PathsExt.TerminalPreviewJSON;
+                                    try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
+                                    catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86); }
+                                }
+                                else { PowerShellx86 = @default.PowerShellx86; }
+
+                                if (Directory.Exists(PathsExt.PS64_app))
+                                {
+                                    try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close(); }
+                                    catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64); }
+                                }
+                                else { PowerShellx64 = @default.PowerShellx64; }
+
+                                #region Windows Terminal
+                                Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)) == 1;
+                                TerminalPreview.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)) == 1;
+
+                                if (OS.W10 | OS.W11)
+                                {
+                                    string TerDir;
+                                    string TerPreDir;
+
+                                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                                    {
+                                        TerDir = PathsExt.TerminalJSON;
+                                        TerPreDir = PathsExt.TerminalPreviewJSON;
+                                    }
+                                    else
+                                    {
+                                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                        { TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path; }
+                                        else { TerDir = PathsExt.TerminalJSON; }
+
+                                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                                        { TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path; }
+                                        else { TerPreDir = PathsExt.TerminalPreviewJSON; }
+                                    }
+
+                                    if (System.IO.File.Exists(TerDir)) { Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile); }
+                                    else { Terminal = new WinTerminal("", WinTerminal.Mode.Empty); }
+
+                                    if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
+                                    else { TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
                                 else
                                 {
-                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                                    { TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path; }
-                                    else { TerDir = PathsExt.TerminalJSON; }
-
-                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                                    { TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path; }
-                                    else { TerPreDir = PathsExt.TerminalPreviewJSON; }
+                                    Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                                    TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                                 }
+                                #endregion
 
-                                if (System.IO.File.Exists(TerDir)) { Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile); }
-                                else { Terminal = new WinTerminal("", WinTerminal.Mode.Empty); }
+                                #region Cursors
+                                Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", false));
 
-                                if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
-                                else { TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
+                                if (!SystemParametersInfo((int)SPI.Cursors.GETCURSORSHADOW, 0, ref Cursor_Shadow, SPIF.None))
+                                    Cursor_Shadow = @default.Cursor_Shadow;
+                                if (!SystemParametersInfo((int)SPI.Cursors.GETMOUSETRAILS, 0, ref Cursor_Trails, SPIF.None))
+                                    Cursor_Trails = @default.Cursor_Trails;
+                                if (!SystemParametersInfo((int)SPI.Cursors.GETMOUSESONAR, 0, ref Cursor_Sonar, SPIF.None))
+                                    Cursor_Sonar = @default.Cursor_Sonar;
+
+                                Cursor_Arrow.Load("Arrow");
+                                Cursor_Help.Load("Help");
+                                Cursor_AppLoading.Load("AppLoading");
+                                Cursor_Busy.Load("Busy");
+                                Cursor_Move.Load("Move");
+                                Cursor_NS.Load("NS");
+                                Cursor_EW.Load("EW");
+                                Cursor_NESW.Load("NESW");
+                                Cursor_NWSE.Load("NWSE");
+                                Cursor_Up.Load("Up");
+                                Cursor_Pen.Load("Pen");
+                                Cursor_None.Load("None");
+                                Cursor_Link.Load("Link");
+                                Cursor_Pin.Load("Pin");
+                                Cursor_Person.Load("Person");
+                                Cursor_IBeam.Load("IBeam");
+                                Cursor_Cross.Load("Cross");
+                                #endregion
+
+                                if (Exceptions.ThemeLoad.Count > 0)
+                                {
+                                    Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
+                                    Forms.Saving_ex_list.ShowDialog();
+                                }
                             }
-                            else
-                            {
-                                Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                                TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
-                            }
-                            #endregion
 
-                            #region Cursors
-                            Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", false));
-
-                            if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETCURSORSHADOW, 0, ref Cursor_Shadow, (int)SPIF.None) == 0)
-                                Cursor_Shadow = @default.Cursor_Shadow;
-                            if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETMOUSETRAILS, 0, ref Cursor_Trails, (int)SPIF.None) == 0)
-                                Cursor_Trails = @default.Cursor_Trails;
-                            if (Fixer.SystemParametersInfo((int)SPI.Cursors.GETMOUSESONAR, 0, ref Cursor_Sonar, (int)SPIF.None) == 0)
-                                Cursor_Sonar = @default.Cursor_Sonar;
-
-                            Cursor_Arrow.Load("Arrow");
-                            Cursor_Help.Load("Help");
-                            Cursor_AppLoading.Load("AppLoading");
-                            Cursor_Busy.Load("Busy");
-                            Cursor_Move.Load("Move");
-                            Cursor_NS.Load("NS");
-                            Cursor_EW.Load("EW");
-                            Cursor_NESW.Load("NESW");
-                            Cursor_NWSE.Load("NWSE");
-                            Cursor_Up.Load("Up");
-                            Cursor_Pen.Load("Pen");
-                            Cursor_None.Load("None");
-                            Cursor_Link.Load("Link");
-                            Cursor_Pin.Load("Pin");
-                            Cursor_Person.Load("Person");
-                            Cursor_IBeam.Load("IBeam");
-                            Cursor_Cross.Load("Cross");
-                            #endregion
-
-                            if (Exceptions.ThemeLoad.Count > 0)
-                            {
-                                Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
-                                Forms.Saving_ex_list.ShowDialog();
-                            }
+                            impersonationContext.Undo();
                         }
                         break;
                     }
@@ -307,435 +313,435 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-
-                        #region Registry
-                        bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-                        bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
-
-                        _ErrorHappened = false;
-
-                        var sw_all = new Stopwatch();
-                        sw_all.Reset();
-                        sw_all.Start();
-
-
-                        if (ReportProgress)
+                        using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
                         {
-                            Exceptions.ThemeApply.Clear();
-                            TreeView.Visible = false;
-                            TreeView.Nodes.Clear();
-                            TreeView.Visible = true;
-                            string OS_str;
-                            if (OS.W11)
-                            {
-                                OS_str = Program.Lang.OS_Win11;
-                            }
-                            else if (OS.W10)
-                            {
-                                OS_str = Program.Lang.OS_Win10;
-                            }
-                            else if (OS.W8)
-                            {
-                                OS_str = Program.Lang.OS_Win8;
-                            }
-                            else if (OS.W81)
-                            {
-                                OS_str = Program.Lang.OS_Win81;
-                            }
-                            else if (OS.W7)
-                            {
-                                OS_str = Program.Lang.OS_Win7;
-                            }
-                            else if (OS.WVista)
-                            {
-                                OS_str = Program.Lang.OS_WinVista;
-                            }
-                            else if (OS.WXP)
-                            {
-                                OS_str = Program.Lang.OS_WinXP;
-                            }
-                            else
-                            {
-                                OS_str = Program.Lang.OS_WinUndefined;
-                            }
+                            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+                            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-                            AddNode(TreeView, string.Format("{0}", string.Format(Program.Lang.TM_ApplyFrom, OS_str)), "info");
+                            _ErrorHappened = false;
 
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_Started), "info");
-
-                            if (!Program.Elevated)
-                            {
-                                AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg0), "admin");
-                                AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg1), "admin");
-                            }
-
-                        }
-
-                        // Reset to default Windows theme
-                        if (ResetToDefault)
-                        {
-                            Execute(() =>
-                            {
-                                using (var def = Theme.Default.Get())
-                                {
-                                    def.LogonUI10x.NoLockScreen = false;
-                                    def.LogonUI7.Enabled = false;
-                                    def.Windows81.NoLockScreen = false;
-                                    def.LogonUIXP.Enabled = true;
-                                    if (!OS.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP();
-                                    def.CommandPrompt.Enabled = true;
-                                    def.PowerShellx86.Enabled = true;
-                                    def.PowerShellx64.Enabled = true;
-                                    def.MetricsFonts.Enabled = true;
-                                    def.WindowsEffects.Enabled = true;
-                                    def.AltTab.Enabled = true;
-                                    def.ScreenSaver.Enabled = true;
-                                    def.Sounds.Enabled = true;
-                                    def.AppTheme.Enabled = true;
-                                    def.Wallpaper.Enabled = false;
-                                    def.Save(Source.Registry);
-                                }
-                            }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        // Theme info
-                        Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
-
-                        // WinPaletter application theme
-                        Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_Applying_AppTheme, Program.Lang.TM_Error_AppTheme, Program.Lang.TM_Time, sw_all, !AppTheme.Enabled, Program.Lang.TM_Skip_AppTheme, true);
-
-                        // Wallpaper
-                        // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
-                        this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Wallpaper, Program.Lang.TM_Error_Wallpaper, Program.Lang.TM_Time, sw_all, !Wallpaper.Enabled, Program.Lang.TM_Skip_Wallpaper);
-
-                        if (OS.W11)
-                        {
-                            this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
-
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI11, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        if (OS.W10)
-                        {
-                            this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
-
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        if (OS.W8 || OS.W81)
-                        {
-                            this.Execute(new MethodInvoker(() =>
-                                    {
-                                        Windows81.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        Program.RefreshDWM(this);
-                                    }), TreeView, Program.Lang.TM_Applying_Win81, Program.Lang.TM_W81_Error, Program.Lang.TM_Time, sw_all);
-
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI8, Program.Lang.TM_LogonUI8_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        if (OS.W7)
-                        {
-                            this.Execute(new MethodInvoker(() =>
-                                    {
-                                        Windows7.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        Program.RefreshDWM(this);
-                                    }), TreeView, Program.Lang.TM_Applying_Win7, Program.Lang.TM_W7_Error, Program.Lang.TM_Time, sw_all);
-
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI7, Program.Lang.TM_LogonUI7_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        if (OS.WVista)
-                        {
-                            this.Execute(new MethodInvoker(() =>
-                                    {
-                                        WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        Program.RefreshDWM(this);
-                                    }), TreeView, Program.Lang.TM_Applying_WinVista, Program.Lang.TM_WVista_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        if (OS.WXP)
-                        {
-                            this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinXP, Program.Lang.TM_WXP_Error, Program.Lang.TM_Time, sw_all);
-
-                            this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUIXP, Program.Lang.TM_LogonUIXP_Error, Program.Lang.TM_Time, sw_all);
-                        }
-
-                        // Win32UI
-                        this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win32UI, Program.Lang.TM_WIN32UI_Error, Program.Lang.TM_Time, sw_all);
-
-                        // WindowsEffects
-                        this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinEffects, Program.Lang.TM_WinEffects_Error, Program.Lang.TM_Time, sw_all);
-
-                        // Metrics\Fonts
-                        this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Metrics, Program.Lang.TM_Error_Metrics, Program.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, Program.Lang.TM_Skip_Metrics);
-
-                        // AltTab
-                        this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_AltTab, Program.Lang.TM_Error_AltTab, Program.Lang.TM_Time, sw_all, !AltTab.Enabled, Program.Lang.TM_Skip_AltTab, true);
-
-                        // WallpaperTone
-                        this.Execute(new MethodInvoker(() =>
-                                {
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", ReportProgress_Detailed ? TreeView : null);
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", ReportProgress_Detailed ? TreeView : null);
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", ReportProgress_Detailed ? TreeView : null);
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", ReportProgress_Detailed ? TreeView : null);
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", ReportProgress_Detailed ? TreeView : null);
-                                    WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", ReportProgress_Detailed ? TreeView : null);
-
-                                    if (Wallpaper.Enabled)
-                                    {
-                                        if (OS.W11 & WallpaperTone_W11.Enabled)
-                                            WallpaperTone_W11.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (OS.W10 & WallpaperTone_W10.Enabled)
-                                            WallpaperTone_W10.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (OS.W81 & WallpaperTone_W81.Enabled)
-                                            WallpaperTone_W81.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (OS.W7 & WallpaperTone_W7.Enabled)
-                                            WallpaperTone_W7.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (OS.WVista & WallpaperTone_WVista.Enabled)
-                                            WallpaperTone_WVista.Apply(ReportProgress_Detailed ? TreeView : null);
-                                        if (OS.WXP & WallpaperTone_WXP.Enabled)
-                                            WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
-                                    }
-
-                                }), TreeView, Program.Lang.TM_Applying_WallpaperTone, Program.Lang.TM_WallpaperTone_Error, Program.Lang.TM_Time, sw_all);
-
-                        #region Consoles
-                        EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
-                        EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled);
-                        EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled);
-                        EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
-                        EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
-
-                        this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_CMD, Program.Lang.TM_CMD_Error, Program.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, Program.Lang.TM_Skip_CMD);
-
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS32, Program.Lang.TM_PS32_Error, Program.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, Program.Lang.TM_Skip_PS32);
-
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS64, Program.Lang.TM_PS64_Error, Program.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, Program.Lang.TM_Skip_PS64);
-                        #endregion
-
-                        #region Windows Terminal
-                        var sw = new Stopwatch();
-                        sw.Reset();
-                        sw.Start();
-                        if (OS.W10 | OS.W11)
-                        {
+                            var sw_all = new Stopwatch();
+                            sw_all.Reset();
+                            sw_all.Start();
 
                             if (ReportProgress)
                             {
-                                if (Terminal.Enabled & TerminalPreview.Enabled)
+                                Exceptions.ThemeApply.Clear();
+                                TreeView.Visible = false;
+                                TreeView.Nodes.Clear();
+                                TreeView.Visible = true;
+                                string OS_str;
+                                if (OS.W11)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_Terminals), "info");
+                                    OS_str = Program.Lang.OS_Win11;
                                 }
-
-                                else if (Terminal.Enabled)
+                                else if (OS.W10)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalStable), "info");
+                                    OS_str = Program.Lang.OS_Win10;
                                 }
-
-                                else if (TerminalPreview.Enabled)
+                                else if (OS.W8)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalPreview), "info");
+                                    OS_str = Program.Lang.OS_Win8;
                                 }
-
+                                else if (OS.W81)
+                                {
+                                    OS_str = Program.Lang.OS_Win81;
+                                }
+                                else if (OS.W7)
+                                {
+                                    OS_str = Program.Lang.OS_Win7;
+                                }
+                                else if (OS.WVista)
+                                {
+                                    OS_str = Program.Lang.OS_WinVista;
+                                }
+                                else if (OS.WXP)
+                                {
+                                    OS_str = Program.Lang.OS_WinXP;
+                                }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals), "skip");
+                                    OS_str = Program.Lang.OS_WinUndefined;
+                                }
 
+                                AddNode(TreeView, string.Format("{0}", string.Format(Program.Lang.TM_ApplyFrom, OS_str)), "info");
+
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_Started), "info");
+
+                                if (!Program.Elevated)
+                                {
+                                    AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg0), "admin");
+                                    AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg1), "admin");
                                 }
 
                             }
 
-                            string TerDir;
-                            string TerPreDir;
-
-                            if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                            // Reset to default Windows theme
+                            if (ResetToDefault)
                             {
-                                TerDir = PathsExt.TerminalJSON;
-                                TerPreDir = PathsExt.TerminalPreviewJSON;
-                            }
-                            else
-                            {
-                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                Execute(() =>
                                 {
-                                    TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                    using (var def = Theme.Default.Get())
+                                    {
+                                        def.LogonUI10x.NoLockScreen = false;
+                                        def.LogonUI7.Enabled = false;
+                                        def.Windows81.NoLockScreen = false;
+                                        def.LogonUIXP.Enabled = true;
+                                        if (!OS.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP();
+                                        def.CommandPrompt.Enabled = true;
+                                        def.PowerShellx86.Enabled = true;
+                                        def.PowerShellx64.Enabled = true;
+                                        def.MetricsFonts.Enabled = true;
+                                        def.WindowsEffects.Enabled = true;
+                                        def.AltTab.Enabled = true;
+                                        def.ScreenSaver.Enabled = true;
+                                        def.Sounds.Enabled = true;
+                                        def.AppTheme.Enabled = true;
+                                        def.Wallpaper.Enabled = false;
+                                        def.Save(Source.Registry);
+                                    }
+                                }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            // Theme info
+                            Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
+
+                            // WinPaletter application theme
+                            Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_Applying_AppTheme, Program.Lang.TM_Error_AppTheme, Program.Lang.TM_Time, sw_all, !AppTheme.Enabled, Program.Lang.TM_Skip_AppTheme, true);
+
+                            // Wallpaper
+                            // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
+                            this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Wallpaper, Program.Lang.TM_Error_Wallpaper, Program.Lang.TM_Time, sw_all, !Wallpaper.Enabled, Program.Lang.TM_Skip_Wallpaper);
+
+                            if (OS.W11)
+                            {
+                                this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI11, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            if (OS.W10)
+                            {
+                                this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            if (OS.W8 || OS.W81)
+                            {
+                                this.Execute(new MethodInvoker(() =>
+                                {
+                                    Windows81.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    Program.RefreshDWM(this);
+                                }), TreeView, Program.Lang.TM_Applying_Win81, Program.Lang.TM_W81_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI8, Program.Lang.TM_LogonUI8_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            if (OS.W7)
+                            {
+                                this.Execute(new MethodInvoker(() =>
+                                {
+                                    Windows7.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    Program.RefreshDWM(this);
+                                }), TreeView, Program.Lang.TM_Applying_Win7, Program.Lang.TM_W7_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI7, Program.Lang.TM_LogonUI7_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            if (OS.WVista)
+                            {
+                                this.Execute(new MethodInvoker(() =>
+                                {
+                                    WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    Program.RefreshDWM(this);
+                                }), TreeView, Program.Lang.TM_Applying_WinVista, Program.Lang.TM_WVista_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            if (OS.WXP)
+                            {
+                                this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinXP, Program.Lang.TM_WXP_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUIXP, Program.Lang.TM_LogonUIXP_Error, Program.Lang.TM_Time, sw_all);
+                            }
+
+                            // Win32UI
+                            this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win32UI, Program.Lang.TM_WIN32UI_Error, Program.Lang.TM_Time, sw_all);
+
+                            // WindowsEffects
+                            this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinEffects, Program.Lang.TM_WinEffects_Error, Program.Lang.TM_Time, sw_all);
+
+                            // Metrics\Fonts
+                            this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Metrics, Program.Lang.TM_Error_Metrics, Program.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, Program.Lang.TM_Skip_Metrics);
+
+                            // AltTab
+                            this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_AltTab, Program.Lang.TM_Error_AltTab, Program.Lang.TM_Time, sw_all, !AltTab.Enabled, Program.Lang.TM_Skip_AltTab, true);
+
+                            // WallpaperTone
+                            this.Execute(new MethodInvoker(() =>
+                            {
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", ReportProgress_Detailed ? TreeView : null);
+
+                                if (Wallpaper.Enabled)
+                                {
+                                    if (OS.W11 & WallpaperTone_W11.Enabled)
+                                        WallpaperTone_W11.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    if (OS.W10 & WallpaperTone_W10.Enabled)
+                                        WallpaperTone_W10.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    if (OS.W81 & WallpaperTone_W81.Enabled)
+                                        WallpaperTone_W81.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    if (OS.W7 & WallpaperTone_W7.Enabled)
+                                        WallpaperTone_W7.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    if (OS.WVista & WallpaperTone_WVista.Enabled)
+                                        WallpaperTone_WVista.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    if (OS.WXP & WallpaperTone_WXP.Enabled)
+                                        WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
                                 }
-                                else
+
+                            }), TreeView, Program.Lang.TM_Applying_WallpaperTone, Program.Lang.TM_WallpaperTone_Error, Program.Lang.TM_Time, sw_all);
+
+                            #region Consoles
+                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
+                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled);
+                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled);
+                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
+                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
+
+                            this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_CMD, Program.Lang.TM_CMD_Error, Program.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, Program.Lang.TM_Skip_CMD);
+
+                            this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS32, Program.Lang.TM_PS32_Error, Program.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, Program.Lang.TM_Skip_PS32);
+
+                            this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS64, Program.Lang.TM_PS64_Error, Program.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, Program.Lang.TM_Skip_PS64);
+                            #endregion
+
+                            #region Windows Terminal
+                            var sw = new Stopwatch();
+                            sw.Reset();
+                            sw.Start();
+                            if (OS.W10 | OS.W11)
+                            {
+
+                                if (ReportProgress)
+                                {
+                                    if (Terminal.Enabled & TerminalPreview.Enabled)
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_Terminals), "info");
+                                    }
+
+                                    else if (Terminal.Enabled)
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview), "skip");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalStable), "info");
+                                    }
+
+                                    else if (TerminalPreview.Enabled)
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable), "skip");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalPreview), "info");
+                                    }
+
+                                    else
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals), "skip");
+
+                                    }
+
+                                }
+
+                                string TerDir;
+                                string TerPreDir;
+
+                                if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                 {
                                     TerDir = PathsExt.TerminalJSON;
-                                }
-
-                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                                {
-                                    TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
-                                }
-                                else
-                                {
                                     TerPreDir = PathsExt.TerminalPreviewJSON;
                                 }
-                            }
-
-                            if (Terminal.Enabled)
-                            {
-                                if (System.IO.File.Exists(TerDir))
-                                {
-
-                                    try
-                                    {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalStable), "info");
-                                        Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
-                                        if (ReportProgress)
-                                            AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        sw.Stop();
-                                        sw_all.Stop();
-                                        _ErrorHappened = true;
-                                        if (ReportProgress)
-                                        {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalStable), "error");
-                                            AddException(Program.Lang.TM_Error_TerminalStable, ex);
-                                        }
-                                        else
-                                        {
-                                            Forms.BugReport.ThrowError(ex);
-                                        }
-
-                                        sw.Start();
-                                        sw_all.Start();
-                                    }
-                                }
-
-
-                                else if (!Program.Settings.WindowsTerminals.Path_Deflection)
-                                {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
-                                }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
-
-                                }
-                            }
-
-                            if (TerminalPreview.Enabled)
-                            {
-                                if (System.IO.File.Exists(TerPreDir))
-                                {
-
-                                    try
+                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalPreview), "info");
-                                        TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                                        if (ReportProgress)
-                                            AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                        TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                     }
-                                    catch (Exception ex)
+                                    else
                                     {
-                                        sw.Stop();
-                                        sw_all.Stop();
-                                        _ErrorHappened = true;
-                                        if (ReportProgress)
-                                        {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalPreview), "error");
-                                            AddException(Program.Lang.TM_Error_TerminalPreview, ex);
-                                        }
-                                        else
-                                        {
-                                            Forms.BugReport.ThrowError(ex);
-                                        }
+                                        TerDir = PathsExt.TerminalJSON;
+                                    }
 
-                                        sw.Start();
-                                        sw_all.Start();
+                                    if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                                    {
+                                        TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
+                                    }
+                                    else
+                                    {
+                                        TerPreDir = PathsExt.TerminalPreviewJSON;
                                     }
                                 }
 
-                                else if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                                if (Terminal.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
+                                    if (System.IO.File.Exists(TerDir))
+                                    {
+
+                                        try
+                                        {
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalStable), "info");
+                                            Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
+                                            if (ReportProgress)
+                                                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            sw.Stop();
+                                            sw_all.Stop();
+                                            _ErrorHappened = true;
+                                            if (ReportProgress)
+                                            {
+                                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalStable), "error");
+                                                AddException(Program.Lang.TM_Error_TerminalStable, ex);
+                                            }
+                                            else
+                                            {
+                                                Forms.BugReport.ThrowError(ex);
+                                            }
+
+                                            sw.Start();
+                                            sw_all.Start();
+                                        }
+                                    }
+
+
+                                    else if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
+                                    }
+                                    else
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
+
+                                    }
                                 }
-                                else
+
+                                if (TerminalPreview.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
+                                    if (System.IO.File.Exists(TerPreDir))
+                                    {
+
+                                        try
+                                        {
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalPreview), "info");
+                                            TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                                            if (ReportProgress)
+                                                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            sw.Stop();
+                                            sw_all.Stop();
+                                            _ErrorHappened = true;
+                                            if (ReportProgress)
+                                            {
+                                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalPreview), "error");
+                                                AddException(Program.Lang.TM_Error_TerminalPreview, ex);
+                                            }
+                                            else
+                                            {
+                                                Forms.BugReport.ThrowError(ex);
+                                            }
+
+                                            sw.Start();
+                                            sw_all.Start();
+                                        }
+                                    }
+
+                                    else if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
+                                    }
+                                    else
+                                    {
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
+                                    }
                                 }
                             }
-                        }
 
-                        else
-                        {
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals_NotSupported), "skip");
-                        }
-                        sw.Stop();
-                        #endregion
-
-                        // ScreenSaver
-                        this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_ScreenSaver, Program.Lang.TM_Error_ScreenSaver, Program.Lang.TM_Time, sw_all);
-
-                        // Sounds
-                        this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Sounds, Program.Lang.TM_Error_Sounds, Program.Lang.TM_Time, sw_all, !Sounds.Enabled, Program.Lang.TM_Skip_Sounds);
-
-                        // Cursors
-                        this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
-
-                        // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
-                        if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                        {
-                            this.Execute(new MethodInvoker(() =>
-                                    {
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String);
-                                    }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
-                        }
-
-                        else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
-                        {
-
-                            this.Execute(new MethodInvoker(() =>
-                                    {
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
-                                        EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String);
-                                    }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
-
-                        }
-
-                        // Update User Preference Mask for HKEY_USERS\.DEFAULT
-                        // Always make it the last operation
-                        try
-                        {
-                            Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null);
-                        }
-                        catch
-                        {
-                        }
-
-                        if (ReportProgress_Detailed)
-                            AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(\"Environment\")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll");
-                        User32.SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, (uint)MSG_TIMEOUT, out RESULT);
-
-                        if (ReportProgress)
-                        {
-                            if (!_ErrorHappened)
-                            {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
-                            }
                             else
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals_NotSupported), "skip");
                             }
-                        }
+                            sw.Stop();
+                            #endregion
 
-                        sw_all.Reset();
-                        sw_all.Stop();
+                            // ScreenSaver
+                            this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_ScreenSaver, Program.Lang.TM_Error_ScreenSaver, Program.Lang.TM_Time, sw_all);
+
+                            // Sounds
+                            this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Sounds, Program.Lang.TM_Error_Sounds, Program.Lang.TM_Time, sw_all, !Sounds.Enabled, Program.Lang.TM_Skip_Sounds);
+
+                            // Cursors
+                            this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
+
+                            // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
+                            if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            {
+                                this.Execute(new MethodInvoker(() =>
+                                {
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String);
+                                }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
+                            }
+
+                            else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+                            {
+
+                                this.Execute(new MethodInvoker(() =>
+                                {
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String);
+                                }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
+
+                            }
+
+                            // Update User Preference Mask for HKEY_USERS\.DEFAULT
+                            // Always make it the last operation
+                            try
+                            {
+                                Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null);
+                            }
+                            catch
+                            {
+                            }
+
+                            if (ReportProgress_Detailed)
+                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(\"Environment\")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll");
+                            User32.SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, (uint)MSG_TIMEOUT, out RESULT);
+
+                            if (ReportProgress)
+                            {
+                                if (!_ErrorHappened)
+                                {
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
+                                }
+                                else
+                                {
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
+                                }
+                            }
+
+                            sw_all.Reset();
+                            sw_all.Stop();
+                            impersonationContext.Undo();
+                        }
                         break;
                     }
-                #endregion
 
                 case Source.File:
                     {

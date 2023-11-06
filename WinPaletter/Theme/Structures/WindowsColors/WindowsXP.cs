@@ -54,11 +54,10 @@ namespace WinPaletter.Theme.Structures
         {
             if (OS.WXP)
             {
-                var vsFile = new System.Text.StringBuilder(260);
-                var colorName = new System.Text.StringBuilder(260);
-                var sizeName = new System.Text.StringBuilder(260);
-
-                UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260);
+                Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
+                string vsFile = ThemeTuple.Item1;
+                string colorName = ThemeTuple.Item2;
+                string sizeName = ThemeTuple.Item3;
 
                 if ((vsFile.ToString().ToLower() ?? "") == (PathsExt.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? ""))
                 {
@@ -127,12 +126,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaBlue:
                         {
                             UxTheme.EnableTheming(1);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
-
                             UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0), "dll");
 
                             Program.StartedWithClassicTheme = false;
                             break;
@@ -141,12 +135,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaOliveGreen:
                         {
                             UxTheme.EnableTheming(1);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
-
                             UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0), "dll");
                             Program.StartedWithClassicTheme = false;
                             break;
                         }
@@ -154,12 +143,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaSilver:
                         {
                             UxTheme.EnableTheming(1);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
-
                             UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0), "dll");
                             Program.StartedWithClassicTheme = false;
                             break;
                         }
@@ -167,8 +151,6 @@ namespace WinPaletter.Theme.Structures
                     case Themes.Classic:
                         {
                             UxTheme.EnableTheming(0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 0), "dll");
                             Program.StartedWithClassicTheme = true;
                             break;
                         }
@@ -179,13 +161,9 @@ namespace WinPaletter.Theme.Structures
                             if (System.IO.File.Exists(ThemeFile) && System.IO.Path.GetExtension(ThemeFile) == ".theme" | System.IO.Path.GetExtension(ThemeFile) == ".msstyles")
                             {
                                 UxTheme.EnableTheming(1);
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
 
                                 UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0);
                                 Program.StartedWithClassicTheme = false;
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", ThemeFile, ColorScheme, "NormalSize", 0), "dll");
                             }
 
                             break;
@@ -193,14 +171,10 @@ namespace WinPaletter.Theme.Structures
 
                 }
 
-                var vsFile = new System.Text.StringBuilder(260);
-                var colorName = new System.Text.StringBuilder(260);
-                var sizeName = new System.Text.StringBuilder(260);
+                Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
 
-                UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260);
-
-                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", vsFile.ToString(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", colorName.ToString(), RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", ThemeTuple.Item1, RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ThemeTuple.Item2, RegistryValueKind.String);
             }
             catch
             {

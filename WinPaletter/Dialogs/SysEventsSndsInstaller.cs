@@ -42,7 +42,7 @@ namespace WinPaletter
             CheckBox1.Enabled = true;
             CheckBox1.Checked = Program.Settings.UsersServices.ShowSysEventsSoundsInstaller;
 
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Hand);
+            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep);
 
             textBox2.Select();
             textBox2.Focus();
@@ -105,7 +105,7 @@ namespace WinPaletter
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_InstallCompleted, SvcName) + "\r\n");
 
-                    Thread.Sleep(2500);
+                    Thread.Sleep(1000);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace WinPaletter
 
                     textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName) + "\r\n");
 
-                    Thread.Sleep(2500);
+                    Thread.Sleep(1000);
                 }
                 else
                 {

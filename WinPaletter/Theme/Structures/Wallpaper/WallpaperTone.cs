@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
@@ -111,9 +110,7 @@ namespace WinPaletter.Theme.Structures
                 ImgF.Image.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
             }
 
-            if (TreeView is not null)
-                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString(), 0, path, SPIF.UpdateINIFile.ToString()), "dll");
-            User32.SystemParametersInfo((int)SPI.Desktop.SETDESKWALLPAPER, 0, path, (int)SPIF.UpdateINIFile);
+            SystemParametersInfo(TreeView, (int)SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
 

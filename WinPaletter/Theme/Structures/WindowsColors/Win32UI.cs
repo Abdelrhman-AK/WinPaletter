@@ -141,8 +141,8 @@ namespace WinPaletter.Theme.Structures
                 case Sources.Registry:
                     {
 
-                        Fixer.SystemParametersInfo((int)SPI.Effects.GETFLATMENU, 0, ref EnableTheming, (int)SPIF.None);
-                        Fixer.SystemParametersInfo((int)SPI.Titlebars.GETGRADIENTCAPTIONS, 0, ref EnableGradient, (int)SPIF.None);
+                        SystemParametersInfo((int)SPI.Effects.GETFLATMENU, 0, ref EnableTheming, SPIF.None);
+                        SystemParametersInfo((int)SPI.Titlebars.GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.None);
 
                         {
                             var temp = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209");
@@ -486,11 +486,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            var vsFile = new System.Text.StringBuilder(260);
-            var colorName = new System.Text.StringBuilder(260);
-            var sizeName = new System.Text.StringBuilder(260);
-            UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260);
-            bool isClassic = string.IsNullOrEmpty(vsFile.ToString());
+            bool isClassic = string.IsNullOrEmpty(UxTheme.GetCurrentVS().Item1);
 
             // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
             var fl = new List<Form>();
@@ -609,8 +605,8 @@ namespace WinPaletter.Theme.Structures
 
             SetSysColors(C1.Count, C1.ToArray(), C2.ToArray());
 
-            SystemParametersInfo((int)SPI.Effects.SETFLATMENU, 0, EnableTheming, (int)SPIF.UpdateINIFile);
-            SystemParametersInfo((int)SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient, (int)SPIF.UpdateINIFile);
+            SystemParametersInfo(TreeView, (int)SPI.Effects.SETFLATMENU, 0, EnableTheming, SPIF.UpdateINIFile);
+            SystemParametersInfo(TreeView, (int)SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.UpdateINIFile);
 
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);

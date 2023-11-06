@@ -21,7 +21,7 @@ namespace WinPaletter.NativeMethods
           StringBuilder picpath, int maxLength);
 
         public static string GetUserTilePath(string username)
-        {   
+        {
             if (!OS.WXP)
             {
                 // username: use null for current user
@@ -33,7 +33,7 @@ namespace WinPaletter.NativeMethods
             {
                 string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\{username}.bmp";
                 string @default = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\Default Pictures\\chess.bmp";
-                return System.IO.File.Exists(file) ? file : @default ;
+                return System.IO.File.Exists(file) ? file : @default;
             }
         }
 

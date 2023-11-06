@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace WinPaletter.NativeMethods
 {
-    public class UxTheme
+    public partial class UxTheme
     {
-        [DllImport("UxTheme.DLL", BestFitMapping = false, CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode, EntryPoint = "#65")]
-        public static extern int SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved);
-
-        [DllImport("uxtheme", ExactSpelling = true)]
-        public static extern int EnableTheming(int fEnable);
-
-        [DllImport("uxtheme", CharSet = CharSet.Unicode)]
-        public static extern int GetCurrentThemeName(StringBuilder stringThemeName, int lengthThemeName, StringBuilder stringColorName, int lengthColorName, StringBuilder stringSizeName, int lengthSizeName);
-
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 

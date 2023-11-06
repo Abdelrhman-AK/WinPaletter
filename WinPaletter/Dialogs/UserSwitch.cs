@@ -26,8 +26,8 @@ namespace WinPaletter
 
         private void UserSwitch_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (Users.SID == null)
-                Users.SID = Users.AdminSID_GrantedUAC;
+            if (User.SID == null)
+                User.SID = User.AdminSID_GrantedUAC;
 
             try { Forms.BK.Close(); } catch { }
         }
@@ -71,7 +71,7 @@ namespace WinPaletter
 
                 if (user.Key.ToUpper() != "S-1-5-18" && user.Key.ToUpper() != "S-1-5-19" && user.Key.ToUpper() != "S-1-5-20")
                 {
-                    Scheme += "\r\n" + $"{(Users.IsAdmin(user.Key) ? Program.Lang.UserSwitch_TypeAdministrator : Program.Lang.UserSwitch_TypeLocalUser)}";
+                    Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Lang.UserSwitch_TypeAdministrator : Program.Lang.UserSwitch_TypeLocalUser)}";
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace WinPaletter
                     ImageWithText = true,
                     ShowText = true,
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Checked = (Users.SID != null) ? user.Key == Users.SID : user.Key == Users.AdminSID_GrantedUAC,
+                    Checked = (User.SID != null) ? user.Key == User.SID : user.Key == User.AdminSID_GrantedUAC,
                     Size = new Size(250, 70),
                     Tag = user.Key,
                     Image = NativeMethods.Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
@@ -123,8 +123,32 @@ namespace WinPaletter
             {
                 if (radio.Checked)
                 {
-                    Users.SID = radio.Tag.ToString();
-                    break;
+                    if (radio.Tag.ToString() == "S-1-5-18" || radio.Tag.ToString() == "S-1-5-19" || radio.Tag.ToString() == "S-1-5-20")
+                    {
+                        DialogResult msgResult = MsgBox(Program.Lang.UserSwitch_SYSTEM_Alert0, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, Program.Lang.UserSwitch_SYSTEM_Alert1);
+
+                        if (msgResult == DialogResult.Yes)
+                        {
+                            User.SID = radio.Tag.ToString();
+                            break;
+                        }
+
+                        else if (msgResult == DialogResult.No)
+                        {
+                            User.SID = User.AdminSID_GrantedUAC;
+                            break;
+                        }
+
+                        else if (msgResult == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        User.SID = radio.Tag.ToString();
+                        break;
+                    }
                 }
             }
 
@@ -143,11 +167,11 @@ namespace WinPaletter
             {
                 if (checkBox1.Checked)
                 {
-                    ListUsers(Users.GetUsers(true));
+                    ListUsers(User.GetUsers(true));
                 }
                 else
                 {
-                    ListUsers(Users.GetUsers(false));
+                    ListUsers(User.GetUsers(false));
                 }
             }
         }

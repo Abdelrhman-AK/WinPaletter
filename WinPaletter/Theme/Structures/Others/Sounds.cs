@@ -406,10 +406,8 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", Snd_ChargerDisconnected, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", Snd_Win_WindowsLock, RegistryValueKind.String);
 
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds_INI))
-            {
-                System.IO.File.Delete(PathsExt.SysEventsSounds_INI);
-            }
+            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Local_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Local_INI); }
+            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Global_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Global_INI); }
 
             if (Enabled)
             {
@@ -435,8 +433,8 @@ namespace WinPaletter.Theme.Structures
 
                 else if (!(Snd_Imageres_SystemStart.Trim().ToUpper() == "CURRENT"))
                 {
-                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W11).ToInteger());
-                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W11).ToInteger());
+                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W11) ? 1 : 0);
+                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W11) ? 1 : 0);
                 }
 
                 else
@@ -590,14 +588,18 @@ namespace WinPaletter.Theme.Structures
                 if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir))
                     System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir);
 
-                INI ini = new(PathsExt.SysEventsSounds_INI);
-                ini.Write("Power", "Snd_ChargerConnected", Snd_ChargerConnected);
-                ini.Write("Power", "Snd_ChargerDisconnected", Snd_ChargerDisconnected);
-                ini.Write("Windows", "Logoff", Snd_Win_WindowsLogoff);
-                ini.Write("Windows", "Logon", Snd_Win_WindowsLogon);
-                ini.Write("Windows", "Lock", Snd_Win_WindowsLock);
-                ini.Write("Windows", "Unlock", Snd_Win_WindowsUnlock);
-                ini.Write("Windows", "Exit", Snd_Win_SystemExit);
+                INI[] INIs = new INI[] { new(PathsExt.SysEventsSounds_Local_INI), new(PathsExt.SysEventsSounds_Global_INI) };
+
+                foreach (INI ini in INIs)
+                {
+                    ini.Write("Power", "Snd_ChargerConnected", Snd_ChargerConnected);
+                    ini.Write("Power", "Snd_ChargerDisconnected", Snd_ChargerDisconnected);
+                    ini.Write("Windows", "Logoff", Snd_Win_WindowsLogoff);
+                    ini.Write("Windows", "Logon", Snd_Win_WindowsLogon);
+                    ini.Write("Windows", "Lock", Snd_Win_WindowsLock);
+                    ini.Write("Windows", "Unlock", Snd_Win_WindowsUnlock);
+                    ini.Write("Windows", "Exit", Snd_Win_SystemExit);
+                }
             }
         }
 

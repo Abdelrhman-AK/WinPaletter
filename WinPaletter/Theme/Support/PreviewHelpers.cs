@@ -58,7 +58,6 @@ namespace WinPaletter
         /// <param name="pic9"></param>
         public static void ApplyWin10xLegends(Theme.Manager TM, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
         {
-
             if (ExplorerPatcher.IsAllowed())
                 Program.EP = new ExplorerPatcher();
 
@@ -66,7 +65,6 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        #region Win11
                         lbl6.Text = Program.Lang.TM_11_SomePressedButtons;
                         lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win11);
                         lbl8.Text = Program.Lang.TM_Undefined;
@@ -179,10 +177,8 @@ namespace WinPaletter
                         break;
                     }
 
-                #endregion
                 case WindowStyle.W10:
                     {
-                        #region Win10
                         lbl9.Text = Program.Lang.TM_Undefined;
 
                         switch (!TM.Windows10.WinMode_Light)
@@ -352,9 +348,7 @@ namespace WinPaletter
 
                         break;
                     }
-                    #endregion
             }
-
         }
 
         /// <summary>

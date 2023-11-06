@@ -239,6 +239,25 @@ namespace WinPaletter
         }
 
 
+        private static UserPassword _UserPassword;
+        public static UserPassword UserPassword
+        {
+            get
+            {
+                _UserPassword = CreateInstance(_UserPassword);
+                return _UserPassword;
+            }
+            set
+            {
+                if (value == _UserPassword)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _UserPassword);
+            }
+        }
+
+
         private static LicenseForm _LicenseForm;
         public static LicenseForm LicenseForm
         {

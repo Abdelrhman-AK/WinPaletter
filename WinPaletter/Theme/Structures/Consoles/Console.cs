@@ -217,7 +217,7 @@ namespace WinPaletter.Theme.Structures
                 W10_1909_WindowAlpha = Convert.ToInt32(GetReg(RegAddress, "WindowAlpha", 255));
             }
 
-            Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)).ToBoolean();
+            Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
 
         }
 
@@ -284,9 +284,9 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
                 EditReg(TreeView, RegAddress, "CursorType", Console.W10_1909_CursorType);
                 EditReg(TreeView, RegAddress, "WindowAlpha", Console.W10_1909_WindowAlpha);
-                EditReg(TreeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2.ToInteger());
-                EditReg(TreeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection.ToInteger());
-                EditReg(TreeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling.ToInteger());
+                EditReg(TreeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2 ? 1 : 0);
+                EditReg(TreeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection ? 1 : 0);
+                EditReg(TreeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling ? 1 : 0);
             }
 
             EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);

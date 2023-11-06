@@ -156,6 +156,9 @@
         YnyoSKNKRZoV835jiqz0YYo0tmeit0Yy/l8MhnfpLjeUlq/b3QAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="alertBox2.Text" xml:space="preserve">
+    <value>Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPalette retains their previous state and is unaffected by the theme.</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAEBAAAAEAIABoBAAAJgAAACAgAAABACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAADAE

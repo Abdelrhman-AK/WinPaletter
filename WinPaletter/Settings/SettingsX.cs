@@ -338,7 +338,7 @@ namespace WinPaletter
                 if (CheckBox8.Checked)
                 {
                     Program.Lang = new Localizer();
-                    Program.Lang.LoadLanguageFromJSON(Program.Settings.Language.File);
+                    Program.Lang.Load(Program.Settings.Language.File);
                     foreach (Form f in Application.OpenForms)
                         f.LoadLanguage();
                     Forms.MainFrm.UpdateLegends();
@@ -1005,7 +1005,7 @@ namespace WinPaletter
         private void button22_Click(object sender, EventArgs e)
         {
             Close();
-            Users.Login(true);
+            User.Login(true);
         }
     }
 }

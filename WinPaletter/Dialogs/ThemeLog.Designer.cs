@@ -92,7 +92,7 @@
             this.Button25.ForeColor = System.Drawing.Color.White;
             this.Button25.Image = ((System.Drawing.Image)(resources.GetObject("Button25.Image")));
             this.Button25.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(107)))), ((int)(((byte)(111)))));
+            this.Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(3)))), ((int)(((byte)(12)))));
             this.Button25.Location = new System.Drawing.Point(350, 565);
             this.Button25.Name = "Button25";
             this.Button25.Size = new System.Drawing.Size(120, 34);

@@ -47,7 +47,6 @@ namespace WinPaletter
                     else
                     {
                         Form.DrawMica(Margins, MicaStyle.Mica);
-
                     }
                 }
 
@@ -56,22 +55,12 @@ namespace WinPaletter
                     Form.DrawAcrylic(Border);
                 }
 
-                else if ((OS.W7 | OS.WVista) && CompositionEnabled)
+                else if ((OS.W81 | OS.W8 | OS.W7 | OS.WVista) && CompositionEnabled)
                 {
                     Form.DrawAero(Margins);
                 }
-
-                else
-                {
-                    Form.DrawTransparentGray();
-
-                }
             }
-            catch
-            {
-                Form.DrawTransparentGray();
-
-            }
+            catch { }
 
         }
 
@@ -175,10 +164,10 @@ namespace WinPaletter
 
         public static void DrawTransparentGray(this Form Form, bool NoWindowBorders = true)
         {
-            Form.BackColor = Color.FromArgb(5, 5, 5);
-            Form.Opacity = 0.5d;
             if (NoWindowBorders)
                 Form.FormBorderStyle = FormBorderStyle.None;
+            Form.BackColor = Color.FromArgb(5, 5, 5);
+            Form.Opacity = 0.5d;
         }
 
         /// <summary>

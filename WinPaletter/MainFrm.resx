@@ -129,9 +129,6 @@
   <metadata name="SaveFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>462, 11</value>
   </metadata>
-  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>599, 11</value>
-  </metadata>
   <metadata name="SaveFileDialog3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>688, 11</value>
   </metadata>
@@ -1432,6 +1429,24 @@
         AuZbRR2tcHkVrL8x/gB9k/+IwvH2nJYHC8eHkeMmtwsNtzELzAZ4zG2/cpsdOPyE20ee4nZuf0TdQ8cI
         QRfpdsbVDVV/EjiF+rJ7vaF3quYWXtv3tgH8pgI2NvbglVf2XGSO4zhl/huHHkENUMzhtLS0/wJPLQsb
         gbPKhgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="pictureBox36.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAtJJREFUSEvt
+        VktrFEEQXjW+Dl40uDOdHDwIPuJBjSAo+EKvCh4CKqj4BwQRhICSo17i46DMdK8xqJdV0YsgigdR8OJR
+        UUlCZrrjAyOK+LgscfyqUzOzCdlldtYNCH5QbHd/1fV191R3beE/6sJ7Mb/QF7Vxr+D6+oQjw8OONDtW
+        XhpayMN/H64MpaPMWe6ir6PEfP0NvzeFF2xkujk4vj6KgMq2lT7pSvPaEsAU4dQmYIOdyixlt3zALrsp
+        mFMa2ym80dXov2Gq4CpzAdwj2DhsygIcqYdcGaxh1+zA5BGh9DFun0eg05aYCeVonuOb7fB7EAuzfaHF
+        slc2kCgmVoSv9/JQJjh+2IN5P2NxIfVwx+DYMqZrw/XNoaLS66iNSfuECjZYogEUPbMZor9icUpKpmoD
+        yVSCcwUrP8dDuUDXLBXWEx3+2HqmakPIcA+ce7mbG4jxsErc3oxZQVEGu6qEP9sHaFaAbCfBWHzGx6Wz
+        3yzG63PXVaFPE3g4N5AjXUKaMgQ/JMLSPKcxocKt1qm9NL7EVfpp7IDX6VbTx9IXzcWVHEhjJnavq/xq
+        waSo1M+mkRF2frtp8Siagyt5OYmJE7WiBOEHW7BDD0fwOBU2gR1r9NWZCZPfWcHurBgYXcSjKfjSxzv+
+        SEfFVGtB9RSCXxNxpbcx1XrQ05YIS/2Eh3MDMXqFH+7mbm3EJTAWR2IcYCoX6NlFnEqmtxpi12Jh2A+3
+        pDcxlRm0ASow1Lb3WZmDlqiH4pXh5fi+o1Xi35Hh+5nOBCqlmFeJ63lmOFfDtZiYJpq18L5NuDqvGv6P
+        ncFd7ac2iWLXw5ZoBFSTITgyVdzaJxj+7piL7EpJ9FaU3q3iooAcCbuZygfhvW9HkBsI9hs2fQET7EbC
+        L5G9p6hN9dxR4RFLNAtKMCzgOgSSSlMtPJm9xuNuC4DvS6UNQj2uHx7nUSoIbbNXa/9NFAp/AE1YEnwb
+        SE1HAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="PictureBox38.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

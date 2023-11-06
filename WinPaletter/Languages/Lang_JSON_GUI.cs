@@ -42,7 +42,7 @@ namespace WinPaletter
         public void OpenFile()
         {
             Lang = new Localizer();
-            Lang.LoadLanguageFromJSON(LangFile);
+            Lang.Load(LangFile);
 
             Label9.Text = LangFile;
 

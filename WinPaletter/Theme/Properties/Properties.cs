@@ -14,7 +14,7 @@ namespace WinPaletter.Theme
             ExportResThemePack = false,
             License = "",
             ThemeVersion = "1.0.0.0",
-            Author = Users.UserName,
+            Author = User.UserName,
             AuthorSocialMediaLink = "",
             Color1 = Color.FromArgb(0, 102, 204),
             Color2 = Color.FromArgb(122, 9, 9),

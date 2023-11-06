@@ -42,7 +42,6 @@ namespace WinPaletter
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.Timer1 = new System.Windows.Forms.Timer(this.components);
             this.SaveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
@@ -385,12 +384,13 @@ namespace WinPaletter
             this.WVista_theme_aeroopaque = new WinPaletter.UI.WP.RadioImage();
             this.Label75 = new System.Windows.Forms.Label();
             this.TabPage9 = new System.Windows.Forms.TabPage();
-            this.WXP_Alert1 = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox51 = new WinPaletter.UI.WP.GroupBox();
             this.Label76 = new System.Windows.Forms.Label();
-            this.WXP_VS_ReplaceFonts = new WinPaletter.UI.WP.CheckBox();
-            this.WXP_VS_ReplaceMetrics = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox36 = new System.Windows.Forms.PictureBox();
             this.WXP_VS_ReplaceColors = new WinPaletter.UI.WP.CheckBox();
-            this.WXP_Alert3 = new WinPaletter.UI.WP.AlertBox();
+            this.WXP_VS_ReplaceMetrics = new WinPaletter.UI.WP.CheckBox();
+            this.WXP_VS_ReplaceFonts = new WinPaletter.UI.WP.CheckBox();
+            this.WXP_Alert1 = new WinPaletter.UI.WP.AlertBox();
             this.GroupBox48 = new WinPaletter.UI.WP.GroupBox();
             this.WXP_VS_ColorsList = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox38 = new System.Windows.Forms.PictureBox();
@@ -565,6 +565,8 @@ namespace WinPaletter
             this.GroupBox49.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).BeginInit();
             this.TabPage9.SuspendLayout();
+            this.groupBox51.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).BeginInit();
             this.GroupBox48.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox38)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).BeginInit();
@@ -1012,6 +1014,7 @@ namespace WinPaletter
             // Select_WXP
             // 
             this.Select_WXP.AllowDrop = true;
+            this.Select_WXP.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_WXP.Checked = false;
             this.Select_WXP.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_WXP.ForeColor = System.Drawing.Color.White;
@@ -1029,6 +1032,7 @@ namespace WinPaletter
             // Select_WVista
             // 
             this.Select_WVista.AllowDrop = true;
+            this.Select_WVista.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_WVista.Checked = false;
             this.Select_WVista.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_WVista.ForeColor = System.Drawing.Color.White;
@@ -1491,6 +1495,7 @@ namespace WinPaletter
             // Select_W7
             // 
             this.Select_W7.AllowDrop = true;
+            this.Select_W7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_W7.Checked = false;
             this.Select_W7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W7.ForeColor = System.Drawing.Color.White;
@@ -1524,6 +1529,7 @@ namespace WinPaletter
             // Select_W81
             // 
             this.Select_W81.AllowDrop = true;
+            this.Select_W81.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_W81.Checked = false;
             this.Select_W81.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W81.ForeColor = System.Drawing.Color.White;
@@ -1560,6 +1566,7 @@ namespace WinPaletter
             // Select_W10
             // 
             this.Select_W10.AllowDrop = true;
+            this.Select_W10.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_W10.Checked = false;
             this.Select_W10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W10.ForeColor = System.Drawing.Color.White;
@@ -1594,6 +1601,7 @@ namespace WinPaletter
             // Select_W11
             // 
             this.Select_W11.AllowDrop = true;
+            this.Select_W11.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Select_W11.Checked = false;
             this.Select_W11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Select_W11.ForeColor = System.Drawing.Color.White;
@@ -2515,7 +2523,7 @@ namespace WinPaletter
             this.GroupBox4.Location = new System.Drawing.Point(3, 41);
             this.GroupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(262, 28);
+            this.GroupBox4.Size = new System.Drawing.Size(256, 28);
             this.GroupBox4.TabIndex = 10;
             // 
             // PictureBox2
@@ -2539,7 +2547,7 @@ namespace WinPaletter
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label2.Location = new System.Drawing.Point(30, 4);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(177, 20);
+            this.Label2.Size = new System.Drawing.Size(171, 20);
             this.Label2.TabIndex = 7;
             this.Label2.Text = "Windows mode";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2550,7 +2558,7 @@ namespace WinPaletter
             this.W11_WinMode_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W11_WinMode_Toggle.Checked = false;
             this.W11_WinMode_Toggle.DarkLight_Toggler = true;
-            this.W11_WinMode_Toggle.Location = new System.Drawing.Point(218, 4);
+            this.W11_WinMode_Toggle.Location = new System.Drawing.Point(212, 4);
             this.W11_WinMode_Toggle.Name = "W11_WinMode_Toggle";
             this.W11_WinMode_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W11_WinMode_Toggle.TabIndex = 8;
@@ -2614,10 +2622,10 @@ namespace WinPaletter
             this.GroupBox24.Controls.Add(this.PictureBox20);
             this.GroupBox24.Controls.Add(this.W11_AppMode_Toggle);
             this.GroupBox24.Controls.Add(this.Label7);
-            this.GroupBox24.Location = new System.Drawing.Point(267, 41);
+            this.GroupBox24.Location = new System.Drawing.Point(261, 41);
             this.GroupBox24.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox24.Name = "GroupBox24";
-            this.GroupBox24.Size = new System.Drawing.Size(250, 28);
+            this.GroupBox24.Size = new System.Drawing.Size(256, 28);
             this.GroupBox24.TabIndex = 8;
             // 
             // PictureBox20
@@ -2637,7 +2645,7 @@ namespace WinPaletter
             this.W11_AppMode_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W11_AppMode_Toggle.Checked = false;
             this.W11_AppMode_Toggle.DarkLight_Toggler = true;
-            this.W11_AppMode_Toggle.Location = new System.Drawing.Point(206, 4);
+            this.W11_AppMode_Toggle.Location = new System.Drawing.Point(212, 4);
             this.W11_AppMode_Toggle.Name = "W11_AppMode_Toggle";
             this.W11_AppMode_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W11_AppMode_Toggle.TabIndex = 11;
@@ -2652,7 +2660,7 @@ namespace WinPaletter
             this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label7.Location = new System.Drawing.Point(30, 4);
             this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(163, 20);
+            this.Label7.Size = new System.Drawing.Size(169, 20);
             this.Label7.TabIndex = 10;
             this.Label7.Text = "App mode";
             this.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3592,10 +3600,10 @@ namespace WinPaletter
             this.GroupBox23.Controls.Add(this.W10_TBTransparency_Toggle);
             this.GroupBox23.Controls.Add(this.PictureBox15);
             this.GroupBox23.Controls.Add(this.Label22);
-            this.GroupBox23.Location = new System.Drawing.Point(267, 71);
+            this.GroupBox23.Location = new System.Drawing.Point(261, 71);
             this.GroupBox23.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox23.Name = "GroupBox23";
-            this.GroupBox23.Size = new System.Drawing.Size(250, 28);
+            this.GroupBox23.Size = new System.Drawing.Size(256, 28);
             this.GroupBox23.TabIndex = 17;
             // 
             // W10_TBTransparency_Toggle
@@ -3604,7 +3612,7 @@ namespace WinPaletter
             this.W10_TBTransparency_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W10_TBTransparency_Toggle.Checked = false;
             this.W10_TBTransparency_Toggle.DarkLight_Toggler = false;
-            this.W10_TBTransparency_Toggle.Location = new System.Drawing.Point(206, 4);
+            this.W10_TBTransparency_Toggle.Location = new System.Drawing.Point(212, 4);
             this.W10_TBTransparency_Toggle.Name = "W10_TBTransparency_Toggle";
             this.W10_TBTransparency_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W10_TBTransparency_Toggle.TabIndex = 16;
@@ -3630,7 +3638,7 @@ namespace WinPaletter
             this.Label22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label22.Location = new System.Drawing.Point(30, 4);
             this.Label22.Name = "Label22";
-            this.Label22.Size = new System.Drawing.Size(171, 20);
+            this.Label22.Size = new System.Drawing.Size(177, 20);
             this.Label22.TabIndex = 13;
             this.Label22.Text = "Increase taskbar transparency";
             this.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3759,7 +3767,7 @@ namespace WinPaletter
             this.GroupBox40.Location = new System.Drawing.Point(3, 41);
             this.GroupBox40.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox40.Name = "GroupBox40";
-            this.GroupBox40.Size = new System.Drawing.Size(262, 28);
+            this.GroupBox40.Size = new System.Drawing.Size(256, 28);
             this.GroupBox40.TabIndex = 10;
             // 
             // PictureBox22
@@ -3783,7 +3791,7 @@ namespace WinPaletter
             this.Label53.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label53.Location = new System.Drawing.Point(30, 4);
             this.Label53.Name = "Label53";
-            this.Label53.Size = new System.Drawing.Size(177, 20);
+            this.Label53.Size = new System.Drawing.Size(171, 20);
             this.Label53.TabIndex = 7;
             this.Label53.Text = "Windows mode";
             this.Label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3794,7 +3802,7 @@ namespace WinPaletter
             this.W10_WinMode_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W10_WinMode_Toggle.Checked = false;
             this.W10_WinMode_Toggle.DarkLight_Toggler = true;
-            this.W10_WinMode_Toggle.Location = new System.Drawing.Point(218, 4);
+            this.W10_WinMode_Toggle.Location = new System.Drawing.Point(212, 4);
             this.W10_WinMode_Toggle.Name = "W10_WinMode_Toggle";
             this.W10_WinMode_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W10_WinMode_Toggle.TabIndex = 8;
@@ -3812,7 +3820,7 @@ namespace WinPaletter
             this.GroupBox42.Location = new System.Drawing.Point(3, 71);
             this.GroupBox42.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox42.Name = "GroupBox42";
-            this.GroupBox42.Size = new System.Drawing.Size(262, 28);
+            this.GroupBox42.Size = new System.Drawing.Size(256, 28);
             this.GroupBox42.TabIndex = 9;
             // 
             // W10_TB_Blur
@@ -3821,7 +3829,7 @@ namespace WinPaletter
             this.W10_TB_Blur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W10_TB_Blur.Checked = true;
             this.W10_TB_Blur.DarkLight_Toggler = false;
-            this.W10_TB_Blur.Location = new System.Drawing.Point(219, 4);
+            this.W10_TB_Blur.Location = new System.Drawing.Point(213, 4);
             this.W10_TB_Blur.Name = "W10_TB_Blur";
             this.W10_TB_Blur.Size = new System.Drawing.Size(40, 20);
             this.W10_TB_Blur.TabIndex = 16;
@@ -3833,7 +3841,7 @@ namespace WinPaletter
             this.W10_Transparency_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W10_Transparency_Toggle.Checked = false;
             this.W10_Transparency_Toggle.DarkLight_Toggler = false;
-            this.W10_Transparency_Toggle.Location = new System.Drawing.Point(176, 4);
+            this.W10_Transparency_Toggle.Location = new System.Drawing.Point(170, 4);
             this.W10_Transparency_Toggle.Name = "W10_Transparency_Toggle";
             this.W10_Transparency_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W10_Transparency_Toggle.TabIndex = 16;
@@ -3859,7 +3867,7 @@ namespace WinPaletter
             this.Label54.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label54.Location = new System.Drawing.Point(30, 4);
             this.Label54.Name = "Label54";
-            this.Label54.Size = new System.Drawing.Size(140, 20);
+            this.Label54.Size = new System.Drawing.Size(134, 20);
             this.Label54.TabIndex = 13;
             this.Label54.Text = "Transparency, TB blur";
             this.Label54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3871,10 +3879,10 @@ namespace WinPaletter
             this.GroupBox43.Controls.Add(this.PictureBox27);
             this.GroupBox43.Controls.Add(this.W10_AppMode_Toggle);
             this.GroupBox43.Controls.Add(this.Label55);
-            this.GroupBox43.Location = new System.Drawing.Point(267, 41);
+            this.GroupBox43.Location = new System.Drawing.Point(261, 41);
             this.GroupBox43.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox43.Name = "GroupBox43";
-            this.GroupBox43.Size = new System.Drawing.Size(250, 28);
+            this.GroupBox43.Size = new System.Drawing.Size(256, 28);
             this.GroupBox43.TabIndex = 8;
             // 
             // PictureBox27
@@ -3894,7 +3902,7 @@ namespace WinPaletter
             this.W10_AppMode_Toggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.W10_AppMode_Toggle.Checked = false;
             this.W10_AppMode_Toggle.DarkLight_Toggler = true;
-            this.W10_AppMode_Toggle.Location = new System.Drawing.Point(206, 4);
+            this.W10_AppMode_Toggle.Location = new System.Drawing.Point(212, 4);
             this.W10_AppMode_Toggle.Name = "W10_AppMode_Toggle";
             this.W10_AppMode_Toggle.Size = new System.Drawing.Size(40, 20);
             this.W10_AppMode_Toggle.TabIndex = 11;
@@ -3909,7 +3917,7 @@ namespace WinPaletter
             this.Label55.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label55.Location = new System.Drawing.Point(30, 4);
             this.Label55.Name = "Label55";
-            this.Label55.Size = new System.Drawing.Size(163, 20);
+            this.Label55.Size = new System.Drawing.Size(169, 20);
             this.Label55.TabIndex = 10;
             this.Label55.Text = "App mode";
             this.Label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -5581,12 +5589,8 @@ namespace WinPaletter
             // TabPage9
             // 
             this.TabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage9.Controls.Add(this.groupBox51);
             this.TabPage9.Controls.Add(this.WXP_Alert1);
-            this.TabPage9.Controls.Add(this.Label76);
-            this.TabPage9.Controls.Add(this.WXP_VS_ReplaceFonts);
-            this.TabPage9.Controls.Add(this.WXP_VS_ReplaceMetrics);
-            this.TabPage9.Controls.Add(this.WXP_VS_ReplaceColors);
-            this.TabPage9.Controls.Add(this.WXP_Alert3);
             this.TabPage9.Controls.Add(this.GroupBox48);
             this.TabPage9.Controls.Add(this.GroupBox47);
             this.TabPage9.Location = new System.Drawing.Point(4, 24);
@@ -5594,6 +5598,83 @@ namespace WinPaletter
             this.TabPage9.Size = new System.Drawing.Size(529, 517);
             this.TabPage9.TabIndex = 6;
             this.TabPage9.Text = "WXP";
+            // 
+            // groupBox51
+            // 
+            this.groupBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox51.Controls.Add(this.Label76);
+            this.groupBox51.Controls.Add(this.pictureBox36);
+            this.groupBox51.Controls.Add(this.WXP_VS_ReplaceColors);
+            this.groupBox51.Controls.Add(this.WXP_VS_ReplaceMetrics);
+            this.groupBox51.Controls.Add(this.WXP_VS_ReplaceFonts);
+            this.groupBox51.Location = new System.Drawing.Point(3, 260);
+            this.groupBox51.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox51.Name = "groupBox51";
+            this.groupBox51.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox51.Size = new System.Drawing.Size(519, 80);
+            this.groupBox51.TabIndex = 54;
+            // 
+            // Label76
+            // 
+            this.Label76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label76.BackColor = System.Drawing.Color.Transparent;
+            this.Label76.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.Label76.Location = new System.Drawing.Point(44, 4);
+            this.Label76.Name = "Label76";
+            this.Label76.Size = new System.Drawing.Size(471, 35);
+            this.Label76.TabIndex = 55;
+            this.Label76.Text = "Make choosing any theme overwrites:";
+            this.Label76.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox36
+            // 
+            this.pictureBox36.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox36.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox36.Image")));
+            this.pictureBox36.Location = new System.Drawing.Point(3, 4);
+            this.pictureBox36.Name = "pictureBox36";
+            this.pictureBox36.Size = new System.Drawing.Size(35, 35);
+            this.pictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox36.TabIndex = 52;
+            this.pictureBox36.TabStop = false;
+            // 
+            // WXP_VS_ReplaceColors
+            // 
+            this.WXP_VS_ReplaceColors.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.WXP_VS_ReplaceColors.Checked = false;
+            this.WXP_VS_ReplaceColors.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.WXP_VS_ReplaceColors.ForeColor = System.Drawing.Color.White;
+            this.WXP_VS_ReplaceColors.Location = new System.Drawing.Point(12, 46);
+            this.WXP_VS_ReplaceColors.Name = "WXP_VS_ReplaceColors";
+            this.WXP_VS_ReplaceColors.Size = new System.Drawing.Size(150, 23);
+            this.WXP_VS_ReplaceColors.TabIndex = 49;
+            this.WXP_VS_ReplaceColors.Text = "Colors in classic colors";
+            // 
+            // WXP_VS_ReplaceMetrics
+            // 
+            this.WXP_VS_ReplaceMetrics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.WXP_VS_ReplaceMetrics.Checked = false;
+            this.WXP_VS_ReplaceMetrics.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.WXP_VS_ReplaceMetrics.ForeColor = System.Drawing.Color.White;
+            this.WXP_VS_ReplaceMetrics.Location = new System.Drawing.Point(194, 46);
+            this.WXP_VS_ReplaceMetrics.Name = "WXP_VS_ReplaceMetrics";
+            this.WXP_VS_ReplaceMetrics.Size = new System.Drawing.Size(150, 23);
+            this.WXP_VS_ReplaceMetrics.TabIndex = 50;
+            this.WXP_VS_ReplaceMetrics.Text = "Metrics values";
+            // 
+            // WXP_VS_ReplaceFonts
+            // 
+            this.WXP_VS_ReplaceFonts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.WXP_VS_ReplaceFonts.Checked = false;
+            this.WXP_VS_ReplaceFonts.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.WXP_VS_ReplaceFonts.ForeColor = System.Drawing.Color.White;
+            this.WXP_VS_ReplaceFonts.Location = new System.Drawing.Point(374, 45);
+            this.WXP_VS_ReplaceFonts.Name = "WXP_VS_ReplaceFonts";
+            this.WXP_VS_ReplaceFonts.Size = new System.Drawing.Size(129, 23);
+            this.WXP_VS_ReplaceFonts.TabIndex = 51;
+            this.WXP_VS_ReplaceFonts.Text = "System fonts";
             // 
             // WXP_Alert1
             // 
@@ -5605,79 +5686,12 @@ namespace WinPaletter
             this.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.WXP_Alert1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_Alert1.Image = null;
-            this.WXP_Alert1.Location = new System.Drawing.Point(3, 419);
+            this.WXP_Alert1.Location = new System.Drawing.Point(3, 485);
             this.WXP_Alert1.Name = "WXP_Alert1";
-            this.WXP_Alert1.Size = new System.Drawing.Size(519, 28);
+            this.WXP_Alert1.Size = new System.Drawing.Size(519, 29);
             this.WXP_Alert1.TabIndex = 53;
             this.WXP_Alert1.TabStop = false;
             this.WXP_Alert1.Text = "External theme\\visual styles require a UX-theme-patched Windows";
-            // 
-            // Label76
-            // 
-            this.Label76.AutoEllipsis = true;
-            this.Label76.BackColor = System.Drawing.Color.Transparent;
-            this.Label76.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label76.Location = new System.Drawing.Point(10, 265);
-            this.Label76.Name = "Label76";
-            this.Label76.Size = new System.Drawing.Size(513, 20);
-            this.Label76.TabIndex = 52;
-            this.Label76.Text = "Make choosing any theme overwrites:";
-            this.Label76.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // WXP_VS_ReplaceFonts
-            // 
-            this.WXP_VS_ReplaceFonts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.WXP_VS_ReplaceFonts.Checked = false;
-            this.WXP_VS_ReplaceFonts.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.WXP_VS_ReplaceFonts.ForeColor = System.Drawing.Color.White;
-            this.WXP_VS_ReplaceFonts.Location = new System.Drawing.Point(381, 289);
-            this.WXP_VS_ReplaceFonts.Name = "WXP_VS_ReplaceFonts";
-            this.WXP_VS_ReplaceFonts.Size = new System.Drawing.Size(129, 23);
-            this.WXP_VS_ReplaceFonts.TabIndex = 51;
-            this.WXP_VS_ReplaceFonts.Text = "System fonts";
-            // 
-            // WXP_VS_ReplaceMetrics
-            // 
-            this.WXP_VS_ReplaceMetrics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.WXP_VS_ReplaceMetrics.Checked = false;
-            this.WXP_VS_ReplaceMetrics.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.WXP_VS_ReplaceMetrics.ForeColor = System.Drawing.Color.White;
-            this.WXP_VS_ReplaceMetrics.Location = new System.Drawing.Point(215, 290);
-            this.WXP_VS_ReplaceMetrics.Name = "WXP_VS_ReplaceMetrics";
-            this.WXP_VS_ReplaceMetrics.Size = new System.Drawing.Size(150, 23);
-            this.WXP_VS_ReplaceMetrics.TabIndex = 50;
-            this.WXP_VS_ReplaceMetrics.Text = "Metrics values";
-            // 
-            // WXP_VS_ReplaceColors
-            // 
-            this.WXP_VS_ReplaceColors.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.WXP_VS_ReplaceColors.Checked = false;
-            this.WXP_VS_ReplaceColors.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.WXP_VS_ReplaceColors.ForeColor = System.Drawing.Color.White;
-            this.WXP_VS_ReplaceColors.Location = new System.Drawing.Point(19, 290);
-            this.WXP_VS_ReplaceColors.Name = "WXP_VS_ReplaceColors";
-            this.WXP_VS_ReplaceColors.Size = new System.Drawing.Size(150, 23);
-            this.WXP_VS_ReplaceColors.TabIndex = 49;
-            this.WXP_VS_ReplaceColors.Text = "Colors in classic colors";
-            // 
-            // WXP_Alert3
-            // 
-            this.WXP_Alert3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.WXP_Alert3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.WXP_Alert3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.WXP_Alert3.CenterText = false;
-            this.WXP_Alert3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.WXP_Alert3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.WXP_Alert3.Image = null;
-            this.WXP_Alert3.Location = new System.Drawing.Point(3, 450);
-            this.WXP_Alert3.Name = "WXP_Alert3";
-            this.WXP_Alert3.Size = new System.Drawing.Size(519, 64);
-            this.WXP_Alert3.TabIndex = 48;
-            this.WXP_Alert3.TabStop = false;
-            this.WXP_Alert3.Text = "WinPaletter on Windows XP maybe unstable, you might always face crashes on applyi" +
-    "ng an external theme or face other errors.\r\nPlease read its documentation at Git" +
-    "Hub.";
             // 
             // GroupBox48
             // 
@@ -6336,7 +6350,7 @@ namespace WinPaletter
             // 
             this.status_lbl.BackColor = System.Drawing.Color.Transparent;
             this.status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.status_lbl.Location = new System.Drawing.Point(711, 5);
+            this.status_lbl.Location = new System.Drawing.Point(713, 5);
             this.status_lbl.Name = "status_lbl";
             this.status_lbl.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.status_lbl.Size = new System.Drawing.Size(295, 50);
@@ -6536,6 +6550,8 @@ namespace WinPaletter
             this.GroupBox49.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).EndInit();
             this.TabPage9.ResumeLayout(false);
+            this.groupBox51.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).EndInit();
             this.GroupBox48.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox38)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).EndInit();
@@ -6844,7 +6860,6 @@ namespace WinPaletter
         internal UI.WP.RadioImage Select_W81;
         internal UI.WP.RadioImage Select_W10;
         internal UI.WP.RadioImage Select_W11;
-        internal Timer Timer1;
         internal SaveFileDialog SaveFileDialog3;
         internal UI.WP.Button W81_ColorizationBalance_val;
         internal UI.WP.Button W7_ColorizationGlassReflectionIntensity_val;
@@ -6907,9 +6922,7 @@ namespace WinPaletter
         internal UI.WP.Button WVista_ColorizationColorBalance_val;
         internal UI.WP.Trackbar WVista_ColorizationColorBalance_bar;
         internal UI.Controllers.ColorItem WVista_ColorizationColor_pick;
-        internal UI.WP.AlertBox WXP_Alert3;
         internal UI.WP.CheckBox WXP_VS_ReplaceColors;
-        internal Label Label76;
         internal UI.WP.CheckBox WXP_VS_ReplaceFonts;
         internal UI.WP.CheckBox WXP_VS_ReplaceMetrics;
         internal UI.WP.GroupBox GroupBox50;
@@ -6943,5 +6956,8 @@ namespace WinPaletter
         internal UI.WP.Button userButton;
         internal Label status_lbl;
         internal UI.WP.GroupBox MainToolbar;
+        internal Label Label76;
+        internal UI.WP.GroupBox groupBox51;
+        internal PictureBox pictureBox36;
     }
 }

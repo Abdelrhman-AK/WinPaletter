@@ -1,8 +1,6 @@
 ﻿using Ressy;
 using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -144,62 +142,14 @@ namespace WinPaletter
 
         public static void PreparePrivileges()
         {
-            if (!Privileges.EnablePrivilege("SeTakeOwnershipPrivilege", false))
+            if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false))
                 throw new Exception("Failed to get SeTakeOwnershipPrivilege");
-            if (!Privileges.EnablePrivilege("SeSecurityPrivilege", false))
+            if (!NativeMethods.advapi.EnablePrivilege("SeSecurityPrivilege", false))
                 throw new Exception("Failed to get SeSecurityPrivilege");
-            if (!Privileges.EnablePrivilege("SeRestorePrivilege", false))
+            if (!NativeMethods.advapi.EnablePrivilege("SeRestorePrivilege", false))
                 throw new Exception("Failed to get SeRestorePrivilege");
-            if (!Privileges.EnablePrivilege("SeBackupPrivilege", false))
+            if (!NativeMethods.advapi.EnablePrivilege("SeBackupPrivilege", false))
                 throw new Exception("Failed to get SeBackupPrivilege");
-        }
-
-    }
-
-    internal static class Privileges
-    {
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        internal struct TokPriv1Luid
-        {
-            public int Count;
-
-            public long Luid;
-
-            public int Attr;
-        }
-
-        internal const int SE_PRIVILEGE_ENABLED = 2;
-
-        internal const int SE_PRIVILEGE_DISABLED = 0;
-
-        internal const int TOKEN_QUERY = 8;
-
-        internal const int TOKEN_ADJUST_PRIVILEGES = 32;
-
-        [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall, ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
-
-        [DllImport("dll")]
-        private static extern int GetCurrentProcess();
-
-        [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
-        private static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);
-
-        public static bool EnablePrivilege(string privilege, bool disable)
-        {
-            long value = Process.GetCurrentProcess().Handle.ToInt32();
-            var h = new IntPtr(value);
-            var phtok = IntPtr.Zero;
-            bool flag = OpenProcessToken(h, 40, ref phtok);
-            TokPriv1Luid newst = default;
-            newst.Count = 1;
-            newst.Luid = 0L;
-            newst.Attr = disable ? 0 : 2;
-            flag = LookupPrivilegeValue(null, privilege, ref newst.Luid);
-            return AdjustTokenPrivileges(phtok, disall: false, ref newst, 0, IntPtr.Zero, IntPtr.Zero);
         }
     }
 

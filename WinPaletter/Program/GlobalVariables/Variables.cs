@@ -1,18 +1,26 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Security.Principal;
-using System.Threading;
 
 namespace WinPaletter
 {
     internal partial class Program
     {
-        private static Mutex mutex = null;
-
         /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
         public readonly static string Version = System.Windows.Forms.Application.ProductVersion;
+
+        /// <summary>
+        /// WinPaletter executable file path
+        /// </summary>
+        public readonly static string AppFile = Assembly.GetExecutingAssembly().Location;
+
+        /// <summary>
+        /// WinPaletter executable file size in bytes
+        /// </summary>
+        public readonly static long Length = new System.IO.FileInfo(AppFile).Length;
 
         /// <summary>
         /// Get if Application is started as administrator or not

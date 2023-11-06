@@ -204,7 +204,7 @@ namespace WinPaletter.Theme.Structures
 
 
             bool temp = false;
-            Fixer.SystemParametersInfo((int)SPI.Fonts.GETFONTSMOOTHING, default, ref temp, (int)SPIF.None);
+            SystemParametersInfo((int)SPI.Fonts.GETFONTSMOOTHING, default, ref temp, SPIF.None);
             Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", OS.WXP ? 1 : 2)) != 2;
         }
 
@@ -273,9 +273,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
 
-                if (TreeView is not null)
-                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Fonts.SETFONTSMOOTHING.ToString(), !Fonts_SingleBitPP, "null", SPIF.UpdateINIFile.ToString()), "dll");
-                SystemParametersInfo((int)SPI.Fonts.SETFONTSMOOTHING, !Fonts_SingleBitPP, default, (int)SPIF.UpdateINIFile);
+                SystemParametersInfo(TreeView, (int)SPI.Fonts.SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.UpdateINIFile);
 
                 if (!Program.Settings.ThemeApplyingBehavior.DelayMetrics)
                 {
@@ -284,7 +282,7 @@ namespace WinPaletter.Theme.Structures
                     ICONMETRICS ICO = new ICONMETRICS();
                     ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
-                    SystemParametersInfo((int)SPI.Icons.GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.None);
+                    SystemParametersInfo(TreeView, (int)SPI.Icons.GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.None);
 
                     {
                         NCM.lfCaptionFont = lfCaptionFont;
@@ -311,13 +309,8 @@ namespace WinPaletter.Theme.Structures
                         ICO.lfFont = lfIconFont;
                     }
 
-                    if (TreeView is not null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Metrics.SETNONCLIENTMETRICS.ToString(), Marshal.SizeOf(NCM), NCM.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
-                    SystemParametersInfo((int)SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.UpdateINIFile);
-
-                    if (TreeView is not null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Icons.SETICONMETRICS.ToString(), Marshal.SizeOf(ICO), ICO.ToString(), SPIF.UpdateINIFile.ToString()), "dll");
-                    SystemParametersInfo((int)SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.UpdateINIFile);
+                    SystemParametersInfo(TreeView, (int)SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.UpdateINIFile);
+                    SystemParametersInfo(TreeView, (int)SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.UpdateINIFile);
                 }
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte(), RegistryValueKind.Binary);

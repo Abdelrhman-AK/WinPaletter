@@ -330,15 +330,6 @@ namespace WinPaletter.UI.Style
                 }
             }
 
-            else if (ctrl is TreeView)
-            {
-                {
-                    var temp2 = (TreeView)ctrl;
-                    temp2.BackColor = ctrl.Parent.BackColor;
-                    temp2.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
-            }
-
             else if (ctrl is ListView)
             {
                 {

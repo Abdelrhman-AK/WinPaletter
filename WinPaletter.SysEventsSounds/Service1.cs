@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.ServiceProcess;
 using System.Text;
 using System.Windows.Forms;
@@ -13,13 +14,13 @@ namespace WinPaletter.SysEventsSounds
     public partial class Service1 : ServiceBase
     {
         #region Variables
-        readonly string SoundsINI = $"{new System.IO.FileInfo(Assembly.GetEntryAssembly().Location).Directory}\\sounds.ini";
+        static string GlobalSoundsINI = $"{new System.IO.FileInfo(Assembly.GetEntryAssembly().Location).Directory}\\sounds.ini";
+        static string LocalSoundsINI = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{Application.CompanyName}\\WinPaletter\\sounds.ini";
         private INI ini;
-
         bool ShuttingDown = false;
         bool unlockPlayed = false;
         bool logoffPlayed = false;
-
+        bool chargerConnectedPlayed = false;
         #endregion
 
         #region Main
@@ -38,8 +39,14 @@ namespace WinPaletter.SysEventsSounds
         {
             logoffPlayed = false;
             unlockPlayed = false;
+            chargerConnectedPlayed = false;
+
+            UpdatePaths();
+
             StartReceiveEventsWatcher();
             SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+
+            base.OnStart(args);
         }
 
         protected override void OnStop()
@@ -47,8 +54,15 @@ namespace WinPaletter.SysEventsSounds
             logoffPlayed = false;
             unlockPlayed = false;
             ShuttingDown = true;
-            ini = new INI(SoundsINI);
+            chargerConnectedPlayed = false;
+
+            UpdatePaths();
+            ini = new INI(LocalSoundsINI);
             Play(ini.Read("Windows", "Exit", ""));
+
+            //SystemEvents.PowerModeChanged -= PowerModeChanged;
+            SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+
             base.OnStop();
         }
 
@@ -57,6 +71,8 @@ namespace WinPaletter.SysEventsSounds
             logoffPlayed = false;
             unlockPlayed = false;
             ShuttingDown = true;
+            chargerConnectedPlayed = false;
+
             base.OnShutdown();
         }
         #endregion
@@ -116,20 +132,32 @@ namespace WinPaletter.SysEventsSounds
         #region System events handlers
         protected override bool OnPowerEvent(PowerBroadcastStatus powerStatus)
         {
-            if (powerStatus == PowerBroadcastStatus.PowerStatusChange && SystemInformation.PowerStatus.PowerLineStatus == PowerLineStatus.Online)
+            if (powerStatus == PowerBroadcastStatus.PowerStatusChange) { ChargerSounds(); }
+            return base.OnPowerEvent(powerStatus);
+        }
+
+        void ChargerSounds()
+        {
+            if (SystemInformation.PowerStatus.PowerLineStatus == PowerLineStatus.Online)
             {
-                //Charger connected
-                ini = new INI(SoundsINI);
-                Play(ini.Read("Power", "Snd_ChargerConnected", ""));
+                if (!chargerConnectedPlayed)
+                {
+                    //Charger connected, and make a lock by chargerConnectedPlayed to avoid double sound playing bug
+                    chargerConnectedPlayed = true;
+                    UpdatePaths();
+                    ini = new INI(LocalSoundsINI);
+                    Play(ini.Read("Power", "Snd_ChargerConnected", ""));
+                }
+
             }
-            else if (powerStatus == PowerBroadcastStatus.PowerStatusChange)
+            else if (SystemInformation.PowerStatus.PowerLineStatus == PowerLineStatus.Offline)
             {
                 //Charger disconnected
-                ini = new INI(SoundsINI);
+                UpdatePaths();
+                ini = new INI(LocalSoundsINI);
                 Play(ini.Read("Power", "Snd_ChargerDisconnected", ""));
+                chargerConnectedPlayed = false;
             }
-
-            return base.OnPowerEvent(powerStatus);
         }
 
         protected override void OnSessionChange(SessionChangeDescription changeDescription)
@@ -141,7 +169,9 @@ namespace WinPaletter.SysEventsSounds
 
             bool oldSystems = OS.WXP || OS.WVista || OS.W7;
 
-            ini = new INI(SoundsINI);
+            UpdatePaths();
+
+            ini = isSystem ? new INI(GlobalSoundsINI) : new INI(LocalSoundsINI);
 
             switch (changeDescription.Reason)
             {
@@ -187,7 +217,10 @@ namespace WinPaletter.SysEventsSounds
             logoffPlayed = false;
             unlockPlayed = false;
             ShuttingDown = true;
-            ini = new INI(SoundsINI);
+            chargerConnectedPlayed = false;
+
+            UpdatePaths();
+            ini = new INI(LocalSoundsINI);
             Play(ini.Read("Windows", "Exit", ""));
         }
 
@@ -198,7 +231,10 @@ namespace WinPaletter.SysEventsSounds
                 logoffPlayed = false;
                 unlockPlayed = false;
                 ShuttingDown = true;
-                ini = new INI(SoundsINI);
+                chargerConnectedPlayed = false;
+
+                UpdatePaths();
+                ini = new INI(LocalSoundsINI);
                 Play(ini.Read("Windows", "Exit", ""));
             }
         }
@@ -207,8 +243,12 @@ namespace WinPaletter.SysEventsSounds
         #region Helpers
         [DllImport("Wtsapi32.dll")]
         private static extern bool WTSQuerySessionInformation(System.IntPtr hServer, int sessionId, WtsInfoClass wtsInfoClass, out System.IntPtr ppBuffer, out int pBytesReturned);
+
         [DllImport("Wtsapi32.dll")]
         private static extern void WTSFreeMemory(System.IntPtr pointer);
+
+        [DllImport("kernel32.dll")]
+        static extern uint WTSGetActiveConsoleSessionId();
 
         private enum WtsInfoClass
         {
@@ -216,10 +256,12 @@ namespace WinPaletter.SysEventsSounds
             WTSDomainName = 7,
         }
 
-        private static string GetUsername(int sessionId, bool prependDomain = true)
+        private static string GetUsername(int sessionId, bool prependDomain = false)
         {
+            IntPtr buffer;
+            int strLen;
             string username = "SYSTEM";
-            if (WTSQuerySessionInformation(IntPtr.Zero, sessionId, WtsInfoClass.WTSUserName, out IntPtr buffer, out int strLen) && strLen > 1)
+            if (WTSQuerySessionInformation(IntPtr.Zero, sessionId, WtsInfoClass.WTSUserName, out buffer, out strLen) && strLen > 1)
             {
                 username = Marshal.PtrToStringAnsi(buffer);
                 WTSFreeMemory(buffer);
@@ -233,6 +275,28 @@ namespace WinPaletter.SysEventsSounds
                 }
             }
             return username;
+        }
+
+        [DllImport("wtsapi32.dll")]
+        public static extern bool WTSQueryUserToken(uint sessionId, out IntPtr phToken);
+
+        static void UpdatePaths()
+        {
+            uint sessionId = WTSGetActiveConsoleSessionId(); // Get the session ID from your source
+            IntPtr userToken;
+
+            if (WTSQueryUserToken(sessionId, out userToken))
+            {
+                WindowsIdentity windowsIdentity = new WindowsIdentity(userToken);
+                using (WindowsImpersonationContext wic = windowsIdentity.Impersonate())
+                {
+                    LocalSoundsINI = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{Application.CompanyName}\\WinPaletter\\sounds.ini";
+                }
+            }
+            else
+            {
+                LocalSoundsINI = GlobalSoundsINI;
+            }
         }
 
         private void StartReceiveEventsWatcher()

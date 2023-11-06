@@ -1,9 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Win32;
 using System;
+using System.Linq;
 using System.Net;
-using System.Threading;
+using System.Security.Principal;
 using System.Windows.Forms;
-using static WinPaletter.Users;
 
 namespace WinPaletter
 {
@@ -19,58 +20,55 @@ namespace WinPaletter
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
             Application.ApplicationExit += OnExit;
-            Users.UserChange += OnUserSwitch;
+            User.UserSwitch += User.OnUserSwitch;
 
-            if (!IsSecondInstance())
-            {
-                if (OS.W7 | OS.WVista | OS.WXP)
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            if (OS.W7 | OS.WVista | OS.WXP)
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-                DeleteUpdateResiduals();
-                GetMemoryFonts();
-                InitializeImageLists();
+            DeleteUpdateResiduals();
+            GetMemoryFonts();
+            InitializeImageLists();
 
-                InitializeApplication(true);
+            InitializeApplication(true);
 
-                Application.Run(Forms.MainFrm);
-            }
-            else
-            {
-                ExecuteArgs_ProgramStarted(args);
-            }
+            SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
         }
 
-
-        static void InitializeApplication(bool ShowLoginDialog)
+        public static void InitializeApplication(bool ShowLoginDialog)
         {
-            Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
+            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            {
+                Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
 
-            // Important to load proper style and language before showing login dialog
-            FetchDarkMode();
-            ApplyStyle();
-            LoadLanguage();
+                // Important to load proper style and language before showing login dialog
+                FetchDarkMode();
+                ApplyStyle();
+                LoadLanguage();
 
-            if (ShowLoginDialog) 
-            { 
-                Users.Login();
-                return;
+                if (ShowLoginDialog)
+                {
+                    User.Login();
+                    return;
+                }
+
+                // Data of following methods depends on current selected user
+                DetectIfWPStartedWithClassicTheme();
+                ExtractLuna();
+
+                CheckIfLicenseChecked();
+                AssociateFiles();
+                StartWallpaperMonitor();
+
+                BackupWindowsStartupSound();
+                CreateUninstaller();
+                CheckWhatsNew();
+                InitializeSysEventsSounds();
+
+                ExecuteArgs();
+                LoadThemeManager();
+
+                impersonationContext.Undo();
             }
-
-            // Data of following methods depends on current selected user
-            DetectIfWPStartedWithClassicTheme();
-            ExtractLuna();
-
-            CheckIfLicenseChecked();
-            AssociateFiles();
-            StartWallpaperMonitor();
-
-            BackupWindowsStartupSound();
-            CreateUninstaller();
-            CheckWhatsNew();
-            InitializeSysEventsSounds();
-
-            ExecuteArgs();
-            LoadThemeManager();
         }
 
         private static void OnExit(object sender, EventArgs e)
@@ -98,7 +96,7 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
-            Users.UserChange -= OnUserSwitch;
+            User.UserSwitch -= User.OnUserSwitch;
 
             try
             {
@@ -114,44 +112,13 @@ namespace WinPaletter
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 
-        public static void OnUserSwitch(UserChangeEventArgs e)
+        public static void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e)
         {
-            switch (e.Timing)
+            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
             {
-                case UserChangeEventArgs.Timings.BeforeChange:
-                    {
-                        Settings.Save(WPSettings.Mode.Registry);
-                        break;
-                    }
-
-                case UserChangeEventArgs.Timings.AfterChange:
-                    {
-                        bool MainFormIsOpened = Application.OpenForms[Forms.MainFrm.Name] is not null;
-
-                        Users.UpdatePathsFromSID(Users.SID);
-                        Program.Settings = new(WPSettings.Mode.Registry);
-
-                        if (MainFormIsOpened)
-                        {
-                            if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (TM != TM_Original))
-                            {
-                                Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
-                            }
-                        }
-
-                        InitializeApplication(false);
-
-                        if (MainFormIsOpened) { Forms.MainFrm.LoadData(); }
-
-                        break;
-                    }
+                ExecuteArgs_ProgramStarted(e.CommandLine.Skip(1).ToArray());
+                impersonationContext.Undo();
             }
-        }
-
-        private static bool IsSecondInstance()
-        {
-            mutex = new Mutex(true, Application.ProductName, out bool createdNew);
-            return !createdNew;
         }
 
         public static void BringApplicationToFront()

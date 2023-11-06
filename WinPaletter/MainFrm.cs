@@ -612,8 +612,8 @@ namespace WinPaletter
             ApplyStylesToElements(Program.TM);
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
-            userButton.Tag = Users.UserName;
-            userButton.Image = Users.ProfilePicture.Resize(38, 38);
+            userButton.Tag = User.UserName;
+            userButton.Image = User.ProfilePicture.Resize(38, 38);
         }
 
         private void MainFrm_Shown(object sender, EventArgs e)
@@ -3160,7 +3160,7 @@ namespace WinPaletter
 
         private void userButton_Click(object sender, EventArgs e)
         {
-            Users.Login(true);
+            User.Login(true);
         }
 
         private void Button30_Click_1(object sender, EventArgs e)

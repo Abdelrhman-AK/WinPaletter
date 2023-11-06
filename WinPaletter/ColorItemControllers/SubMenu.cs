@@ -76,7 +76,6 @@ namespace WinPaletter
         }
         #endregion
 
-
         public Color ShowMenu(UI.Controllers.ColorItem ColorItem, bool EnableDelete = false)
         {
             Button5.Visible = EnableDelete;

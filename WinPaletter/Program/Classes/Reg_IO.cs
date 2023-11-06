@@ -109,8 +109,8 @@ namespace WinPaletter
                     {
                         try
                         {
-                            R = Users.SID != Users.AdminSID_GrantedUAC
-                                ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.SID)
+                            R = User.SID != User.AdminSID_GrantedUAC
+                                ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(User.SID)
                                 : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
                         }
                         catch
@@ -339,7 +339,7 @@ namespace WinPaletter
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (Users.SID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = (User.SID != User.AdminSID_GrantedUAC ? "HKU" + "\\" + User.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
@@ -456,7 +456,7 @@ namespace WinPaletter
                 string v3;
                 if (Value is bool)
                 {
-                    v1 = Conversions.ToBoolean(Value).ToInteger().ToString();
+                    v1 = (Conversions.ToBoolean(Value) ? 1 : 0).ToString();
                 }
                 else if (Value is byte[])
                 {
@@ -494,7 +494,7 @@ namespace WinPaletter
                 string v1;
                 if (Value is bool)
                 {
-                    v1 = Conversions.ToBoolean(Value).ToInteger().ToString();
+                    v1 = (Conversions.ToBoolean(Value) ? 1 : 0).ToString();
                 }
                 else if (Value is byte[])
                 {
@@ -543,8 +543,8 @@ namespace WinPaletter
                 Key = Key.Remove(0, @"HKEY_CURRENT_USER\".Count());
                 try
                 {
-                    R = Users.SID != Users.AdminSID_GrantedUAC
-                        ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(Users.SID)
+                    R = User.SID != User.AdminSID_GrantedUAC
+                        ? RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).OpenSubKey(User.SID)
                         : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
                 }
                 catch
@@ -640,7 +640,7 @@ namespace WinPaletter
                 Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (Users.SID != Users.AdminSID_GrantedUAC ? "HKU" + "\\" + Users.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = (User.SID != User.AdminSID_GrantedUAC ? "HKU" + "\\" + User.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
                 Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());

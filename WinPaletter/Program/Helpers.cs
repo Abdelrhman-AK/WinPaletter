@@ -230,7 +230,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    Lang.LoadLanguageFromJSON(Settings.Language.File);
+                    Lang.Load(Settings.Language.File);
                 }
                 catch (Exception ex)
                 {
@@ -327,11 +327,7 @@ namespace WinPaletter
 
         private static void DetectIfWPStartedWithClassicTheme()
         {
-            System.Text.StringBuilder vsFile = new(260);
-            System.Text.StringBuilder colorName = new(260);
-            System.Text.StringBuilder sizeName = new(260);
-            NativeMethods.UxTheme.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
-            StartedWithClassicTheme = string.IsNullOrEmpty(vsFile.ToString());
+            StartedWithClassicTheme = string.IsNullOrEmpty(UxTheme.GetCurrentVS().Item1);
         }
 
         private static void ExtractLuna()
@@ -393,7 +389,7 @@ namespace WinPaletter
         public static void InitializeSysEventsSounds(bool ForceUpdate = false)
         {
             bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
-            bool condition1 = !condition0 && PathsExt.SysEventsSounds_Version > new Version(FileVersionInfo.GetVersionInfo(PathsExt.SysEventsSounds).FileVersion);
+            bool condition1 = !condition0 && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds));
 
             if (ForceUpdate || condition1)
             {
@@ -440,7 +436,7 @@ namespace WinPaletter
         {
             try
             {
-                if (Users.SID == Users.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
+                if (User.SID == User.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
                 {
                     DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
 

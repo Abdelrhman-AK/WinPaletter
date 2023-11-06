@@ -53,44 +53,57 @@ namespace WinPaletter.GlobalVariables
         public static string appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
 
         /// <summary>
+        /// WinPaletter application data folder
+        /// </summary>
+        public static string ProgramFilesData
+        {
+            get
+            {
+                string dir = $"{ProgramFiles}\\{Application.ProductName}\\Data";
+                if (!System.IO.Directory.Exists(dir)) { System.IO.Directory.CreateDirectory(dir); }
+                return dir;
+            }
+        }
+
+        /// <summary>
         /// WinPaletter services directory
         /// </summary>
-        public static string Services { get { return $"{System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName}\\Services"; } }
+        public static string Services => $"{ProgramFilesData}\\Services";
 
         /// <summary>
         /// WinPaletter system events sounds services
         /// </summary>
-        public static string SysEventsSoundsDir { get { return $"{Services}\\SysEventsSounds"; } }
+        public static string SysEventsSoundsDir => $"{Services}\\SysEventsSounds";
 
         /// <summary>
         /// WinPaletter system events sounds services
         /// </summary>
-        public static string SysEventsSounds { get { return $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe"; } }
+        public static string SysEventsSounds => $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe";
 
         /// <summary>
         /// WinPaletter system events sounds INI file
         /// </summary>
-        public static string SysEventsSounds_INI { get { return $"{SysEventsSoundsDir}\\sounds.ini"; } }
+        public static string SysEventsSounds_Local_INI => $"{appData}\\sounds.ini";
 
         /// <summary>
-        /// WinPaletter system events sounds services
+        /// WinPaletter system events sounds INI file
         /// </summary>
-        public readonly static Version SysEventsSounds_Version = new("1.0.0.0");
+        public static string SysEventsSounds_Global_INI => $"{SysEventsSoundsDir}\\sounds.ini";
 
         /// <summary>
         /// WinPaletter Store cache directory
         /// </summary>
-        public static string StoreCache { get { return $"{appData}\\Store"; } }
+        public static string StoreCache => $"{ProgramFilesData}\\Store";
 
         /// <summary>
         /// WinPaletter themes resources pack extraction directory
         /// </summary>
-        public static string ThemeResPackCache { get { return $"{appData}\\ThemeResPack_Cache"; } }
+        public static string ThemeResPackCache => $"{ProgramFilesData}\\ThemeResPack_Cache";
 
         /// <summary>
         /// WinPaletter cursors directory (that cursors are rendered into)
         /// </summary>
-        public static string CursorsWP { get { return $"{appData}\\Cursors"; } }
+        public static string CursorsWP => $"{appData}\\Cursors";
         #endregion
 
         #region System processes
@@ -126,17 +139,17 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme_Luna_theme { get { return $"{appData}\\VisualStyles\\Luna\\Luna.theme"; } }
+        public static string MSTheme_Luna_theme => $"{appData}\\VisualStyles\\Luna\\Luna.theme";
 
         /// <summary>
         /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme_Dir { get { return $"{appData}\\VisualStyles\\Luna"; } }
+        public static string MSTheme_Dir => $"{appData}\\VisualStyles\\Luna";
 
         /// <summary>
         /// Extracted Luna.zip
         /// </summary>
-        public static string MSTheme_ZIP { get { return $"{appData}\\VisualStyles\\Luna\\Luna.zip"; } }
+        public static string MSTheme_ZIP => $"{appData}\\VisualStyles\\Luna\\Luna.zip";
         #endregion
 
         #region Consoles\Terminals
@@ -168,12 +181,12 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Microsoft Terminal JSON settings file
         /// </summary>
-        public static string TerminalJSON { get { return $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json"; } }
+        public static string TerminalJSON => $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json";
 
         /// <summary>
         /// Microsoft Terminal Preview JSON settings file
         /// </summary>
-        public static string TerminalPreviewJSON { get { return $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json"; } }
+        public static string TerminalPreviewJSON => $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json";
         #endregion
     }
 }

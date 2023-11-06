@@ -75,8 +75,7 @@ namespace WinPaletter.Theme.Structures
             {
                 object y;
 
-                var stringThemeName = new System.Text.StringBuilder(260);
-                UxTheme.GetCurrentThemeName(stringThemeName, 260, null, 0, null, 0);
+                var stringThemeName = UxTheme.GetCurrentVS().Item1;
 
                 if (stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" | string.IsNullOrWhiteSpace(stringThemeName.ToString()))
                 {
@@ -143,25 +142,14 @@ namespace WinPaletter.Theme.Structures
                     case Windows7.Themes.Aero:
                         {
                             UxTheme.EnableTheming(1);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
-
                             UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll");
                             break;
                         }
 
                     case Windows7.Themes.AeroLite:
                         {
                             UxTheme.EnableTheming(1);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll");
-
                             UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", PathsExt.Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0), "dll");
-
                             try
                             {
                                 Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);

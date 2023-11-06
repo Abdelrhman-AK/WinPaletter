@@ -446,104 +446,73 @@ namespace WinPaletter.Theme
 
             string x = string.Format(@"{0}\{1}", Path, "AppLoading_1x.ani");
             EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
-
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
             x = string.Format(@"{0}\{1}", Path, "Arrow.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
             x = string.Format(@"{0}\{1}", Path, "Cross.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
 
             x = string.Format(@"{0}\{1}", Path, "Link.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
 
             x = string.Format(@"{0}\{1}", Path, "Help.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
 
             x = string.Format(@"{0}\{1}", Path, "IBeam.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
             x = string.Format(@"{0}\{1}", Path, "None.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
 
             x = string.Format(@"{0}\{1}", Path, "Pen.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
-            // SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
+            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
             x = string.Format(@"{0}\{1}", Path, "Person.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
-            // SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             x = string.Format(@"{0}\{1}", Path, "Pin.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
-            // SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             x = string.Format(@"{0}\{1}", Path, "Move.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
             x = string.Format(@"{0}\{1}", Path, "NESW.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
             x = string.Format(@"{0}\{1}", Path, "NS.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
             x = string.Format(@"{0}\{1}", Path, "NWSE.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
             x = string.Format(@"{0}\{1}", Path, "EW.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
             x = string.Format(@"{0}\{1}", Path, "Up.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
             x = string.Format(@"{0}\{1}", Path, "Busy_1x.ani");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
-            SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
-            if (TreeView is not null)
-                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
-            SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+            SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
         }
 
         /// <summary>
@@ -577,151 +546,119 @@ namespace WinPaletter.Theme
                 EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_arrow.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
                 }
 
                 x = string.Format("");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_link.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_helpsel.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
                 }
 
                 x = string.Format("");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_unavail.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_pen.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
-                // If IO.System.IO.File.Exists(X) then SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
+                // If IO.System.IO.File.Exists(X) then SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
                 x = string.Format(@"{0}\{1}", path, "aero_person.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
-                // If IO.System.IO.File.Exists(X) then SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+                // If IO.System.IO.File.Exists(X) then SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
                 x = string.Format(@"{0}\{1}", path, "aero_pin.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
-                // If IO.System.IO.File.Exists(X) then SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+                // If IO.System.IO.File.Exists(X) then SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
                 x = string.Format(@"{0}\{1}", path, "aero_move.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_nesw.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_ns.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_nwse.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_ew.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_up.cur");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
                 }
 
                 x = string.Format(@"{0}\{1}", path, "aero_busy.ani");
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
-                    if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
-                    SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
+                    SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
                 }
 
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
-                SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+                SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
             }
 
             catch (Exception ex)
             {
-
                 if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
-
             }
 
         }
@@ -760,78 +697,48 @@ namespace WinPaletter.Theme
 
                 string x = "";
                 EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NORMAL);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_CROSS.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_CROSS);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HAND.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HAND);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_HELP.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_HELP);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_IBEAM);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_NO.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_NO);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEALL);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENESW);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENS);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_SIZEWE);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_UP.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_UP);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, OCR_SYSTEM_CURSORS.OCR_WAIT.ToString()), "dll");
-                SetSystemCursor(LoadCursorFromFile(x), (int)OCR_SYSTEM_CURSORS.OCR_WAIT);
+                SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
-                if (TreeView is not null)
-                    AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString(), 0, 0, SPIF.UpdateINIFile.ToString()), "dll");
-                SystemParametersInfo((int)SPI.Cursors.SETCURSORS, 0, 0, (int)(SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+                SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
             }
 
             catch (Exception ex)
