@@ -95,6 +95,7 @@
       <HintPath>packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CustomMarshalers" />
     <Reference Include="Cyotek.Windows.Forms.ColorPicker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.1.7.2\lib\net35\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
@@ -189,6 +190,7 @@
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -207,6 +209,7 @@
     <Reference Include="WindowsBase">
       <Private>False</Private>
     </Reference>
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -332,7 +335,7 @@
       <DependentUpon>UserSwitch.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms.cs" />
-    <Compile Include="Program\Classes\FormDWMEffects.cs" />
+    <Compile Include="Program\Classes\DWM.cs" />
     <Compile Include="Program\Classes\RGBComparer.cs" />
     <Compile Include="Program\Classes\Visual.cs" />
     <Compile Include="Program\GlobalVariables\ColorClipboard.cs" />

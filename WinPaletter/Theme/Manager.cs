@@ -36,7 +36,7 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-                        using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
                             using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
                             {
@@ -156,7 +156,7 @@ namespace WinPaletter.Theme
                                 }
                             }
 
-                            impersonationContext.Undo();
+                            wic.Undo();
                         }
                         break;
                     }
@@ -313,7 +313,7 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-                        using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
                             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
                             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
@@ -738,7 +738,7 @@ namespace WinPaletter.Theme
 
                             sw_all.Reset();
                             sw_all.Stop();
-                            impersonationContext.Undo();
+                            wic.Undo();
                         }
                         break;
                     }

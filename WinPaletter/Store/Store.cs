@@ -1382,7 +1382,6 @@ namespace WinPaletter
                 else
                 {
                     this.DrawMica(Pd);
-
                 }
             }
 

@@ -82,14 +82,12 @@ namespace WinPaletter
             themename_lbl.Text = string.Format("{0} ({1})", TM.Info.ThemeName, TM.Info.ThemeVersion);
             author_lbl.Text = string.Format("{0} {1}", Program.Lang.By, TM.Info.Author);
 
-            {
-                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                Appearance.CustomColors = TM.AppTheme.Enabled;
-                Appearance.BackColor = TM.AppTheme.BackColor;
-                Appearance.AccentColor = TM.AppTheme.AccentColor;
-                Appearance.CustomTheme = TM.AppTheme.DarkMode;
-                Appearance.RoundedCorners = TM.AppTheme.RoundCorners;
-            }
+            ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
+            Appearance.CustomColors = TM.AppTheme.Enabled;
+            Appearance.BackColor = TM.AppTheme.BackColor;
+            Appearance.AccentColor = TM.AppTheme.AccentColor;
+            Appearance.CustomTheme = TM.AppTheme.DarkMode;
+            Appearance.RoundedCorners = TM.AppTheme.RoundCorners;
             ApplyStyle(this);
 
             W11_WinMode_Toggle.Checked = !TM.Windows11.WinMode_Light;

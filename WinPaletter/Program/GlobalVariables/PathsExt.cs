@@ -55,15 +55,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter application data folder
         /// </summary>
-        public static string ProgramFilesData
-        {
-            get
-            {
-                string dir = $"{ProgramFiles}\\{Application.ProductName}\\Data";
-                if (!System.IO.Directory.Exists(dir)) { System.IO.Directory.CreateDirectory(dir); }
-                return dir;
-            }
-        }
+        public static string ProgramFilesData => $"{ProgramFiles}\\{Application.ProductName}\\Data";
 
         /// <summary>
         /// WinPaletter services directory
@@ -98,7 +90,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter themes resources pack extraction directory
         /// </summary>
-        public static string ThemeResPackCache => $"{ProgramFilesData}\\ThemeResPack_Cache";
+        public static string ThemeResPackCache => $"{appData}\\ThemeResPack_Cache";
 
         /// <summary>
         /// WinPaletter cursors directory (that cursors are rendered into)

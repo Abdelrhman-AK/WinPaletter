@@ -24,7 +24,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -36,7 +36,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", pszFilename, pszColor, pszSize, 0, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -49,7 +49,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool EnableTheming(int fEnable, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -61,7 +61,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", fEnable, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -82,7 +82,7 @@ namespace WinPaletter.NativeMethods
         /// </code></returns>
         public static Tuple<string, string, string> GetCurrentVS()
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 StringBuilder vsFile = new(260);
                 StringBuilder colorName = new(260);
@@ -94,7 +94,7 @@ namespace WinPaletter.NativeMethods
                     advapi.RevertToSelf();
                 }
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return new Tuple<string, string, string>(vsFile.ToString(), colorName.ToString(), sizeName.ToString());
             }
         }

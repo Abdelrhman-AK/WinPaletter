@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace WinPaletter.NativeMethods
 {
@@ -33,6 +32,21 @@ namespace WinPaletter.NativeMethods
 
         [DllImport("user32.dll", EntryPoint = "LoadCursorFromFileA")]
         public static extern IntPtr LoadCursorFromFile(string lpFileName);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("gdi32.dll")]
+        public static extern int SetBkColor(IntPtr hDC, int crColor);
+
+        [DllImport("gdi32.dll")]
+        public static extern int SetTextColor(IntPtr hDC, int crColor);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct AccentPolicy
@@ -141,65 +155,26 @@ namespace WinPaletter.NativeMethods
         public static int MSG_TIMEOUT = 5000;
         public static UIntPtr RESULT;
 
-        public delegate bool Win32Callback(IntPtr hwnd, IntPtr lParam);
+        [DllImport("user32.dll")]
+        private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
 
-        [DllImport("user32.Dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool EnumChildWindows(IntPtr parentHandle, Win32Callback callback, IntPtr lParam);
+        private delegate bool EnumChildProc(IntPtr hWnd, IntPtr lParam);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static public extern IntPtr GetClassName(IntPtr hWnd, System.Text.StringBuilder lpClassName, int nMaxCount);
-
-        private static bool EnumWindow(IntPtr handle, IntPtr pointer)
+        public static List<IntPtr> GetChildWindowHandles(System.Windows.Forms.IWin32Window win32Window)
         {
-            GCHandle gch = GCHandle.FromIntPtr(pointer);
-            List<IntPtr> list = gch.Target as List<IntPtr>;
-            if (list == null)
-                throw new InvalidCastException("GCHandle Target could not be cast as List<IntPtr>");
-            list.Add(handle);
-            return true;
-        }
+            List<IntPtr> childHandles = new List<IntPtr>();
 
-        public static List<IntPtr> GetChildWindows(IntPtr parent)
-        {
-            List<IntPtr> result = new List<IntPtr>();
-            GCHandle listHandle = GCHandle.Alloc(result);
-            try
+            IntPtr hWndParent = win32Window.Handle;
+
+            EnumChildProc childProc = (hWnd, lParam) =>
             {
-                Win32Callback childProc = new Win32Callback(EnumWindow);
-                EnumChildWindows(parent, childProc, GCHandle.ToIntPtr(listHandle));
-            }
-            finally
-            {
-                if (listHandle.IsAllocated)
-                    listHandle.Free();
-            }
-            return result;
-        }
+                childHandles.Add(hWnd);
+                return true;
+            };
 
-        public static string GetWinClass(IntPtr hwnd)
-        {
-            if (hwnd == IntPtr.Zero)
-                return null;
-            StringBuilder classname = new StringBuilder(100);
-            IntPtr result = GetClassName(hwnd, classname, classname.Capacity);
-            if (result != IntPtr.Zero)
-                return classname.ToString();
-            return null;
-        }
+            EnumChildWindows(hWndParent, childProc, IntPtr.Zero);
 
-        public static IEnumerable<IntPtr> EnumAllWindows(IntPtr hwnd, string childClassName)
-        {
-            List<IntPtr> children = GetChildWindows(hwnd);
-            if (children == null)
-                yield break;
-            foreach (IntPtr child in children)
-            {
-                if (GetWinClass(child) == childClassName)
-                    yield return child;
-                foreach (var childchild in EnumAllWindows(child, childClassName))
-                    yield return childchild;
-            }
+            return childHandles;
         }
     }
 }

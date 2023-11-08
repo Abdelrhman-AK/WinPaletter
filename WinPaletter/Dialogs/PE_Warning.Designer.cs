@@ -143,7 +143,6 @@ namespace WinPaletter
             // AnimatedBox1
             // 
             this.AnimatedBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
-            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
             this.AnimatedBox1.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
             this.AnimatedBox1.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(191)))), ((int)(((byte)(10)))));
             this.AnimatedBox1.Controls.Add(this.PictureBox1);

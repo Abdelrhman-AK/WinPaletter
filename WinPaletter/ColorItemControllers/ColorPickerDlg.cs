@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Simulation;
@@ -871,48 +873,42 @@ namespace WinPaletter
         #region DWM Windows 7 Live Preview
         public static void UpdateDWMPreview(Color Color1, Color Color2)
         {
-            try
+            Task.Run(() =>
             {
-                if (DWMAPI.IsCompositionEnabled())
+                try
                 {
-                    var DCP = new DWMAPI.DWM_COLORIZATION_PARAMS()
+                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                     {
-                        clrColor = (uint)Color1.ToArgb(),
-                        clrAfterGlow = (uint)Color2.ToArgb()
-                    };
+                        if (DWMAPI.IsCompositionEnabled())
+                        {
+                            var DCP = new DWMAPI.DWM_COLORIZATION_PARAMS()
+                            {
+                                clrColor = (uint)Color1.ToArgb(),
+                                clrAfterGlow = (uint)Color2.ToArgb()
+                            };
 
-                    if (Program.PreviewStyle == WindowStyle.W81)
-                    {
-                        DCP.nIntensity = (uint)Program.TM.Windows81.ColorizationColorBalance;
+                            if (Program.PreviewStyle == WindowStyle.W81)
+                            {
+                                DCP.nIntensity = (uint)Program.TM.Windows81.ColorizationColorBalance;
+                                DWMAPI.DwmSetColorizationParameters(ref DCP, false);
+                            }
+
+                            else if (Program.PreviewStyle == WindowStyle.W7)
+                            {
+                                DCP.nIntensity = (uint)Program.TM.Windows7.ColorizationColorBalance;
+
+                                DCP.clrAfterGlowBalance = (uint)Program.TM.Windows7.ColorizationAfterglowBalance;
+                                DCP.clrBlurBalance = (uint)Program.TM.Windows7.ColorizationBlurBalance;
+                                DCP.clrGlassReflectionIntensity = (uint)Program.TM.Windows7.ColorizationGlassReflectionIntensity;
+                                DCP.fOpaque = Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                                DWMAPI.DwmSetColorizationParameters(ref DCP, false);
+                            }
+                        }
+                        wic.Undo();
                     }
-
-                    else if (Program.PreviewStyle == WindowStyle.W7)
-                    {
-                        DCP.nIntensity = (uint)Program.TM.Windows7.ColorizationColorBalance;
-
-                        DCP.clrAfterGlowBalance = (uint)Program.TM.Windows7.ColorizationAfterglowBalance;
-                        DCP.clrBlurBalance = (uint)Program.TM.Windows7.ColorizationBlurBalance;
-                        DCP.clrGlassReflectionIntensity = (uint)Program.TM.Windows7.ColorizationGlassReflectionIntensity;
-                        DCP.fOpaque = Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
-                    }
-
-                    else if (Program.PreviewStyle == WindowStyle.WVista)
-                    {
-                        DCP.clrColor = (uint)Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
-                        DCP.clrAfterGlowBalance = (uint)Color.FromArgb(Program.TM.WindowsVista.Alpha, Program.TM.WindowsVista.ColorizationColor).ToArgb();
-
-                        // DCP.nIntensity = My.Manager.WindowsVista.ColorizationColorBalance
-                        // DCP.clrBlurBalance = My.Manager.WindowsVista.ColorizationBlurBalance
-                        // DCP.clrGlassReflectionIntensity = My.Manager.WindowsVista.ColorizationGlassReflectionIntensity
-                        DCP.fOpaque = Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
-                    }
-
-                    DWMAPI.DwmSetColorizationParameters(ref DCP, false);
                 }
-            }
-            catch
-            {
-            }
+                catch { }
+            });
         }
         #endregion
 

@@ -45,9 +45,7 @@ namespace WinPaletter
                     PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav"));
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
             if (CheckBox2.Checked)
             {
@@ -57,7 +55,6 @@ namespace WinPaletter
                 {
                     if (System.IO.Directory.Exists(PathsExt.appData))
                     {
-                        System.IO.Directory.Delete(PathsExt.appData, true);
                         if (!OS.WXP)
                         {
                             Theme.Manager.ResetCursorsToAero();
@@ -72,9 +69,18 @@ namespace WinPaletter
                                 Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                         }
+
+                        try { System.IO.Directory.Delete(PathsExt.appData, true); }
+                        catch { }
                     }
                 }
                 catch { }
+
+                if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
+                {
+                    try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); }
+                    catch { }
+                }
             }
 
             if (RadioImage1.Checked)
@@ -109,7 +115,9 @@ namespace WinPaletter
             string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
             Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
 
+
             Close();
+
             using (var Prc = Process.GetCurrentProcess())
             {
                 Prc.Kill();

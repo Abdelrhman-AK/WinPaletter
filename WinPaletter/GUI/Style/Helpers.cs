@@ -225,11 +225,16 @@ namespace WinPaletter.UI.Style
 
         public static void ApplyStyle(IntPtr Handle)
         {
-            //var ctrl_theme = Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
             bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors &&
-                !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
+                          !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
 
             DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
+
+            //SetControlTheme(Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            //IntPtr hDC = User32.GetDC(Handle);
+            //User32.SetBkColor(hDC, BackColor.ToArgb() & 0x00FFFFFF);
+            //User32.SetTextColor(hDC, (DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
+            //User32.ReleaseDC(Handle, hDC);
 
             if (OS.W11)
             {
@@ -296,13 +301,15 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is UI.WP.Button)
             {
+                var temp = (UI.WP.Button)ctrl;
+                temp.BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.03d));
+                if (temp.DrawOnGlass)
                 {
-                    var temp = (UI.WP.Button)ctrl;
-                    temp.BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.03d));
-                    if (temp.DrawOnGlass)
+                    try
                     {
                         temp.ForeColor = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(System.Windows.Forms.VisualStyles.ColorProperty.TextColor).Invert();
                     }
+                    catch { }
                 }
             }
 
@@ -411,7 +418,7 @@ namespace WinPaletter.UI.Style
             }
 
             if (ctrl.FindForm().Visible)
-                ctrl.Refresh();
+                ctrl.Update();
         }
 
         public enum CtrlTheme

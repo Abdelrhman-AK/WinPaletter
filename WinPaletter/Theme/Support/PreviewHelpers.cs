@@ -1643,7 +1643,6 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        #region Win11
                         Window1.AccentColor_Enabled = TM.Windows11.ApplyAccentOnTitlebars;
                         Window2.AccentColor_Enabled = TM.Windows11.ApplyAccentOnTitlebars;
 
@@ -1661,10 +1660,8 @@ namespace WinPaletter
                         break;
                     }
 
-                #endregion
                 case WindowStyle.W10:
                     {
-                        #region Win10
                         Window1.AccentColor_Enabled = TM.Windows10.ApplyAccentOnTitlebars;
                         Window2.AccentColor_Enabled = TM.Windows10.ApplyAccentOnTitlebars;
 
@@ -1681,11 +1678,10 @@ namespace WinPaletter
                         Window2.Shadow = TM.WindowsEffects.WindowShadow;
                         break;
                     }
-                #endregion
+
                 case WindowStyle.W81:
                     {
-                        #region Win8.1
-                        if ((OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+                        if ((OS.W8 || OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             Program.RefreshDWM(TM);
                         }
@@ -1719,11 +1715,9 @@ namespace WinPaletter
                         break;
                     }
 
-                #endregion
                 case WindowStyle.W7:
                     {
-                        #region Win7
-                        if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
+                        if (OS.W7 & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             Program.RefreshDWM(TM);
                         }
@@ -1787,10 +1781,9 @@ namespace WinPaletter
 
                         break;
                     }
-                #endregion
+
                 case WindowStyle.WVista:
                     {
-                        #region WinVista
                         if (OS.WVista & Program.Settings.Miscellaneous.Win7LivePreview)
                         {
                             Program.RefreshDWM(TM);
@@ -1856,8 +1849,6 @@ namespace WinPaletter
 
                         break;
                     }
-                    #endregion
-
             }
 
             Window1.SuspendRefresh = false;

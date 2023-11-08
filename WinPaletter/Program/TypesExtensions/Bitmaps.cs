@@ -465,14 +465,10 @@ namespace WinPaletter.TypesExtensions
         public static Bitmap ToCircle(this Bitmap bitmap, bool DrawBorder = true)
         {
             Bitmap dstImage = new(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            Rectangle Rect = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
 
             using (Graphics g = Graphics.FromImage(dstImage))
             {
-                PointF center = new(bitmap.Width / 2, bitmap.Height / 2);
-
-                RectangleF r = new(center.X - bitmap.Width / 2, center.Y - bitmap.Width / 2,
-                                             (bitmap.Height / 2) * 2, (bitmap.Height / 2) * 2);
-
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 g.Clear(Color.Transparent);
@@ -480,9 +476,9 @@ namespace WinPaletter.TypesExtensions
                 // adds the new ellipse & draws the image again 
                 using (GraphicsPath path = new())
                 {
-                    path.AddEllipse(r);
+                    path.AddEllipse(Rect);
                     g.SetClip(path);
-                    g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+                    g.DrawImage(bitmap, Rect);
                     g.ResetClip();
                 }
 
@@ -490,7 +486,7 @@ namespace WinPaletter.TypesExtensions
                 {
                     using (Pen p = new(Color.FromArgb(128, 128, 128)))
                     {
-                        g.DrawEllipse(p, r);
+                        g.DrawEllipse(p, Rect);
                     }
                 }
 

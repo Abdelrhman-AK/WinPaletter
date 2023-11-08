@@ -162,9 +162,8 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
-            this.AnimatedBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
-            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
-            this.AnimatedBox1.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(93)))), ((int)(((byte)(4)))));
+            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AnimatedBox1.Color1 = System.Drawing.Color.MidnightBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.MidnightBlue;
             this.AnimatedBox1.Controls.Add(this.PictureBox1);
             this.AnimatedBox1.Controls.Add(this.title);
@@ -172,7 +171,7 @@ namespace WinPaletter
             this.AnimatedBox1.Location = new System.Drawing.Point(0, 0);
             this.AnimatedBox1.Name = "AnimatedBox1";
             this.AnimatedBox1.Size = new System.Drawing.Size(874, 48);
-            this.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors;
+            this.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors;
             this.AnimatedBox1.TabIndex = 121;
             // 
             // PictureBox1

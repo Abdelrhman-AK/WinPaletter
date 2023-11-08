@@ -170,7 +170,6 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
-            AnimatedBox1.Color = Color.DodgerBlue;
             AnimatedBox1.Color1 = Color.DodgerBlue;
             AnimatedBox1.Color2 = Color.Crimson;
             AnimatedBox1.Controls.Add(PictureBox1);

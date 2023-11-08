@@ -160,7 +160,6 @@
             // 
             // animatedBox1
             // 
-            this.animatedBox1.Color = System.Drawing.Color.DodgerBlue;
             this.animatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.animatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.animatedBox1.Controls.Add(this.PictureBox36);

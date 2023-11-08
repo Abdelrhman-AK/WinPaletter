@@ -38,7 +38,6 @@
             this.button4 = new WinPaletter.UI.WP.Button();
             this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
             this.button5 = new WinPaletter.UI.WP.Button();
-            this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -48,7 +47,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureBox1.Location = new System.Drawing.Point(160, 75);
+            this.pictureBox1.Location = new System.Drawing.Point(161, 82);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -64,7 +63,7 @@
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(115)))), ((int)(((byte)(141)))));
-            this.button1.Location = new System.Drawing.Point(607, 166);
+            this.button1.Location = new System.Drawing.Point(608, 173);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(32, 26);
             this.button1.TabIndex = 89;
@@ -78,7 +77,7 @@
             this.textBox1.DrawOnGlass = true;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.textBox1.Location = new System.Drawing.Point(323, 166);
+            this.textBox1.Location = new System.Drawing.Point(324, 173);
             this.textBox1.MaxLength = 32767;
             this.textBox1.Multiline = false;
             this.textBox1.Name = "textBox1";
@@ -98,7 +97,7 @@
             this.labelAlt1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelAlt1.DrawOnGlass = true;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(321, 103);
+            this.labelAlt1.Location = new System.Drawing.Point(322, 110);
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(318, 30);
             this.labelAlt1.TabIndex = 87;
@@ -130,7 +129,7 @@
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
             this.button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(103)))), ((int)(((byte)(115)))));
-            this.button3.Location = new System.Drawing.Point(569, 166);
+            this.button3.Location = new System.Drawing.Point(570, 173);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(32, 26);
             this.button3.TabIndex = 91;
@@ -158,7 +157,7 @@
             this.labelAlt3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelAlt3.DrawOnGlass = true;
             this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt3.Location = new System.Drawing.Point(324, 133);
+            this.labelAlt3.Location = new System.Drawing.Point(325, 140);
             this.labelAlt3.Name = "labelAlt3";
             this.labelAlt3.Size = new System.Drawing.Size(315, 30);
             this.labelAlt3.TabIndex = 93;
@@ -182,29 +181,17 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // separatorH1
-            // 
-            this.separatorH1.AlternativeLook = false;
-            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH1.Location = new System.Drawing.Point(12, 448);
-            this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(776, 1);
-            this.separatorH1.TabIndex = 96;
-            this.separatorH1.TabStop = false;
-            this.separatorH1.Text = "separatorH1";
-            // 
             // alertBox2
             // 
             this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
             this.alertBox2.CenterText = false;
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(12, 300);
+            this.alertBox2.Location = new System.Drawing.Point(12, 293);
             this.alertBox2.Name = "alertBox2";
             this.alertBox2.Size = new System.Drawing.Size(776, 140);
             this.alertBox2.TabIndex = 97;
@@ -218,15 +205,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.alertBox2);
             this.panel1.Controls.Add(this.labelAlt1);
-            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.labelAlt3);
+            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(800, 291);
+            this.panel1.Size = new System.Drawing.Size(800, 445);
             this.panel1.TabIndex = 99;
             // 
             // UserPassword
@@ -238,8 +226,6 @@
             this.ClientSize = new System.Drawing.Size(800, 500);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.alertBox2);
-            this.Controls.Add(this.separatorH1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
@@ -271,7 +257,6 @@
         private UI.WP.Button button4;
         private UI.WP.LabelAlt labelAlt3;
         private UI.WP.Button button5;
-        private UI.WP.SeparatorH separatorH1;
         private UI.WP.AlertBox alertBox2;
         private System.Windows.Forms.Panel panel1;
     }

@@ -238,6 +238,11 @@ namespace WinPaletter.UI.Style
             }
         }
 
+        private static void Dialog_Opened(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private static DialogResult Msgbox_Classic(object Message, object SubMessage, object ExpandedDetails, object Footer, object DialogTitle, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information)
         {
             string SM = !string.IsNullOrWhiteSpace((SubMessage ?? "").ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : "";
@@ -343,14 +348,15 @@ namespace WinPaletter.UI.Style
 
         }
 
-
         private static void TD_Created(object sender, EventArgs e)
         {
-            ApplyStyle(((IWin32Window)sender).Handle);
+            IntPtr hWnd = ((IWin32Window)sender).Handle;
 
-            foreach (IntPtr i in User32.GetChildWindows(((IWin32Window)sender).Handle))
+            ApplyStyle(hWnd);
+
+            foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(((IWin32Window)sender)))
             {
-                ApplyStyle(i);
+                ApplyStyle(ChildHwnd);
             }
         }
         #endregion

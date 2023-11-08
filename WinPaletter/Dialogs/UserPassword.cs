@@ -45,6 +45,7 @@ namespace WinPaletter.Dialogs
             ApplyStyle(this);
             panel1.BackColor = Color.Black;
             FormBorderStyle = FormBorderStyle.FixedSingle;
+
             int r = button2.Right;
             button2.Text = string.Format(Program.Lang.UserSwitch_LoginAs, new SecurityIdentifier(User.AdminSID_GrantedUAC).Translate(typeof(NTAccount)).ToString().Split('\\').Last());
             button2.Width = (int)button2.Text.Measure(button2.Font).Width + 20;
@@ -53,7 +54,9 @@ namespace WinPaletter.Dialogs
             try { Forms.BK.Close(); } catch { }
             try { Forms.BK.Show(); } catch { }
 
-            this.DrawDWMEffect(new Padding(0, panel1.Bottom, 0, 0));
+            this.DropEffect(new Padding(0, panel1.Height, 0, 0), true, DWM.FormStyle.Tabbed);
+
+            Refresh();
         }
 
         public Tuple<DialogResult, string> GetPassword(string SID)
@@ -87,55 +90,55 @@ namespace WinPaletter.Dialogs
             }
             catch (User.LogonFailureException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.LogonInvalidParameters ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (UnauthorizedAccessException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.NoTokenException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.LogonTypeNotGrantedException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.AccountRestrictionException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.InvalidLogonHoursException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.PasswordExpiredException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.AccountDisabledException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.AccountLockedOutException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.NoSuchUserException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.NoLogonServersException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
             catch (User.PasswordMustChangeException ex)
             {
-                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(ex.Message.Split(':')[0], MessageBoxButtons.OK, MessageBoxIcon.Error, ex.Message.Split(':')[1].Trim());
             }
         }
 

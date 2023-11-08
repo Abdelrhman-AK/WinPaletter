@@ -446,7 +446,6 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
-            this.AnimatedBox1.Color = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.AnimatedBox1.Controls.Add(this.LinkLabel14);

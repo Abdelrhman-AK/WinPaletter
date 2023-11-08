@@ -76,20 +76,23 @@ namespace WinPaletter.Dialogs
             {
                 bool LogEnabled = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None;
 
-                animatedBox1.Color = TM.Info.Color1;
                 animatedBox1.Color1 = TM.Info.Color1;
                 animatedBox1.Color2 = TM.Info.Color2;
 
                 TreeView1.Nodes.Clear();
 
-                log_lbl.Text = string.Format(Program.Lang.TM_ApplyingTheme, TM.Info.ThemeName);
+                log_lbl.SetText(string.Format(Program.Lang.TM_ApplyingTheme, TM.Info.ThemeName));
 
                 Cursor = Cursors.WaitCursor;
 
-                Button8.Visible = false;
-                Button14.Visible = false;
-                Button22.Visible = false;
-                Button25.Visible = false;
+                //Invoking is important to access controls from different thread
+                Invoke(new Action(() =>
+                {
+                    Button8.Visible = false;
+                    Button14.Visible = false;
+                    Button22.Visible = false;
+                    Button25.Visible = false;
+                }));
 
                 // New method of restarting explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
@@ -121,23 +124,32 @@ namespace WinPaletter.Dialogs
 
                 Cursor = Cursors.Default;
 
-                log_lbl.Visible = true;
-                Button8.Visible = true;
-                Button22.Visible = true;
-                Button25.Visible = true;
+                //Invoking is important to access controls from different thread
+                Invoke(new Action(() =>
+                {
+                    log_lbl.Visible = true;
+                    Button8.Visible = true;
+                    Button22.Visible = true;
+                    Button25.Visible = true;
+                }));
 
                 if (Exceptions.ThemeApply.Count != 0)
                 {
-                    log_lbl.Text = Program.Lang.TM_ErrorHappened;
-                    Button14.Visible = true;
+                    log_lbl.SetText(Program.Lang.TM_ErrorHappened);
+
+                    //Invoking is important to access controls from different thread
+                    Invoke(new Action(() =>
+                    {
+                        Button14.Visible = true;
+                    }));
                 }
                 else if (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
                 {
-                    log_lbl.Text = string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds);
+                    log_lbl.SetText(string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds));
                     elapsedSecs = 1;
 
                     //Invoking is important to access timer from different thread
-                    this.Invoke(new Action(() =>
+                    Invoke(new Action(() =>
                     {
                         timer1.Enabled = true;
                         timer1.Start();
@@ -145,7 +157,7 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    log_lbl.Text = Program.Lang.TM_LogTimerFinished;
+                    log_lbl.SetText(Program.Lang.TM_LogTimerFinished);
                 }
 
                 //New method of restarting explorer

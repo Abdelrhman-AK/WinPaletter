@@ -80,7 +80,6 @@ namespace WinPaletter
             // AnimatedBox1
             // 
             AnimatedBox1.BackColor = Color.Maroon;
-            AnimatedBox1.Color = Color.FromArgb(40, 0, 0);
             AnimatedBox1.Color1 = Color.FromArgb(40, 0, 0);
             AnimatedBox1.Color2 = Color.FromArgb(185, 1, 1);
             AnimatedBox1.Controls.Add(Label3);

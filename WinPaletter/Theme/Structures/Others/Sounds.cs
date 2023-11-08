@@ -451,7 +451,7 @@ namespace WinPaletter.Theme.Structures
                         byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                         byte[] TargetSoundBytes = File.ReadAllBytes(Snd_Imageres_SystemStart);
 
-                        if (!CurrentSoundBytes.Equals(TargetSoundBytes))
+                        if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                         {
                             PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
@@ -462,7 +462,7 @@ namespace WinPaletter.Theme.Structures
                         byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                         byte[] OriginalSoundBytes = File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav");
 
-                        if (!CurrentSoundBytes.Equals(OriginalSoundBytes))
+                        if (!CurrentSoundBytes.Equals_Method2(OriginalSoundBytes))
                         {
                             PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, OriginalSoundBytes);
                         }

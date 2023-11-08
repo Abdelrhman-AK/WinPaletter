@@ -388,7 +388,7 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_Cursors(TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
                 bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
@@ -432,16 +432,8 @@ namespace WinPaletter.Theme
                     {
                         this.Execute(new MethodInvoker(() =>
                         {
-                            if (TreeView is not null)
-                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORSHADOW.ToString(), 0, Cursor_Shadow, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile);
-
-                            if (TreeView is not null)
-                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSESONAR.ToString(), 0, Cursor_Sonar, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo(TreeView, (int)SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile);
-
-                            if (TreeView is not null)
-                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSETRAILS.ToString(), 0, Cursor_Trails, SPIF.UpdateINIFile.ToString()), "dll");
                             SystemParametersInfo(TreeView, (int)SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile);
 
                             ApplyCursorsToReg("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
@@ -472,10 +464,9 @@ namespace WinPaletter.Theme
                         ResetCursorsToNone_XP("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
                         if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
-
                     }
                 }
-                impersonationContext.Undo();
+                wic.Undo();
             }
         }
     }

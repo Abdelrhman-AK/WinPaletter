@@ -49,7 +49,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref NONCLIENTMETRICS lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -61,7 +61,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -73,7 +73,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref ICONMETRICS lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -85,7 +85,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -97,7 +97,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref ANIMATIONINFO lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -109,7 +109,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -121,7 +121,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref bool lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -135,7 +135,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -147,7 +147,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref int lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -159,7 +159,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -171,7 +171,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, ref uint lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -183,7 +183,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -195,7 +195,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, int lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -207,7 +207,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -219,7 +219,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, uint lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -231,7 +231,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -243,7 +243,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, uint uParam, int lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -255,7 +255,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -267,7 +267,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, string lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -279,7 +279,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -291,7 +291,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, int uParam, bool lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -303,7 +303,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -315,7 +315,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SystemParametersInfo(int uAction, bool uParam, int lpvParam, SPIF fuWinIni, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -327,7 +327,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction, uParam, lpvParam, fuWinIni, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }

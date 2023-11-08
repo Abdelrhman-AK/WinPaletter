@@ -7,6 +7,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -311,9 +313,9 @@ namespace WinPaletter
                     if (!System.IO.Directory.Exists(PathsExt.appData))
                         System.IO.Directory.CreateDirectory(PathsExt.appData);
 
-                    System.IO.File.WriteAllBytes(PathsExt.appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
-                    System.IO.File.WriteAllBytes(PathsExt.appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
-                    System.IO.File.WriteAllBytes(PathsExt.appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
+                    WriteIfChangedOrNotExists(PathsExt.appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
+                    WriteIfChangedOrNotExists(PathsExt.appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
+                    WriteIfChangedOrNotExists(PathsExt.appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
 
                     CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, PathsExt.appData + @"\fileextension.ico", Assembly.GetExecutingAssembly().Location);
                     CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, PathsExt.appData + @"\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
@@ -322,6 +324,18 @@ namespace WinPaletter
             }
             catch
             {
+            }
+        }
+
+        private static void WriteIfChangedOrNotExists(string file, byte[] data)
+        {
+            if (!System.IO.File.Exists(file))
+            {
+                System.IO.File.WriteAllBytes(file, data);
+            }
+            else if (!System.IO.File.ReadAllBytes(file).Equals_Method2(data))
+            {
+                System.IO.File.WriteAllBytes(file, data);
             }
         }
 
@@ -339,7 +353,7 @@ namespace WinPaletter
                     System.IO.Directory.CreateDirectory(PathsExt.MSTheme_Dir);
                 }
 
-                System.IO.File.WriteAllBytes(PathsExt.MSTheme_ZIP, Properties.Resources.luna);
+                WriteIfChangedOrNotExists(PathsExt.MSTheme_ZIP, Properties.Resources.luna);
 
                 using (System.IO.FileStream s = new(PathsExt.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
@@ -434,41 +448,53 @@ namespace WinPaletter
 
         public static void RefreshDWM(Theme.Manager TM)
         {
-            try
+            Task.Run(() =>
             {
-                if (User.SID == User.AdminSID_GrantedUAC && DWMAPI.IsCompositionEnabled())
+                try
                 {
-                    DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
-
-                    if (OS.W8 || OS.W81)
+                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                     {
-                        temp.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
-                        temp.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
+                        if (DWMAPI.IsCompositionEnabled())
+                        {
+                            if (OS.W8 || OS.W81)
+                            {
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
+                                temp.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
+                                temp.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
+                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                            }
+
+                            else if (OS.W7)
+                            {
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
+                                temp.clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb();
+                                temp.nIntensity = (uint)TM.Windows7.ColorizationColorBalance;
+
+                                temp.clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb();
+                                temp.clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance;
+
+                                temp.clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance;
+                                temp.clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity;
+                                temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                            }
+
+                            else if (OS.WVista)
+                            {
+                                const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
+                                uint color = (uint)Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
+                                IntPtr handle = IntPtr.Zero;
+                                while ((handle = User32.FindWindow(null, null)) != IntPtr.Zero)
+                                {
+                                    User32.SendMessage(handle, WM_DWMCOLORIZATIONCOLORCHANGED, IntPtr.Zero, (IntPtr)color);
+                                }
+                            }
+                        }
+                        wic.Undo();
                     }
-
-                    else if (OS.W7)
-                    {
-                        temp.clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb();
-                        temp.nIntensity = (uint)TM.Windows7.ColorizationColorBalance;
-
-                        temp.clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb();
-                        temp.clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance;
-
-                        temp.clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity;
-                        temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
-                    }
-
-                    else if (OS.WVista)
-                    {
-                        temp.clrColor = (uint)Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
-                        temp.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
-                    }
-
-                    DWMAPI.DwmSetColorizationParameters(ref temp, false);
                 }
-            }
-            catch { }
+                catch { }
+            });
         }
 
         public static void RestartExplorer(TreeView TreeView = null)
@@ -536,18 +562,23 @@ namespace WinPaletter
 
         public static double GetWindowsScreenScalingFactor(bool percentage = true)
         {
-            var GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
-            var DeviceContextHandle = GraphicsObject.GetHdc();
-            int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
-            int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
-            double ScreenScalingFactor = Math.Round(PhysicalScreenHeight / (double)LogicalScreenHeight, 2);
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            {
+                var GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
+                var DeviceContextHandle = GraphicsObject.GetHdc();
+                int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
+                int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
+                double ScreenScalingFactor = Math.Round(PhysicalScreenHeight / (double)LogicalScreenHeight, 2);
 
-            if (percentage)
-                ScreenScalingFactor *= 100.0d;
+                if (percentage)
+                    ScreenScalingFactor *= 100.0d;
 
-            GraphicsObject.ReleaseHdc(DeviceContextHandle);
-            GraphicsObject.Dispose();
-            return ScreenScalingFactor;
+                GraphicsObject.ReleaseHdc(DeviceContextHandle);
+                GraphicsObject.Dispose();
+
+                wic.Undo();
+                return ScreenScalingFactor;
+            }
         }
     }
 }

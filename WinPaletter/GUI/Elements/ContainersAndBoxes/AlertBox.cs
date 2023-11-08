@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -15,12 +14,13 @@ namespace WinPaletter.UI.WP
         public AlertBox()
         {
             TabStop = false;
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 9f);
             Size = new Size(200, 40);
             CenterText = false;
             CustomColor = Color.FromArgb(0, 81, 210);
+            BackColor = Color.Transparent;
         }
 
         #region Variables
@@ -74,6 +74,22 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
@@ -84,13 +100,14 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
             bool RTL = (int)RightToLeft == 1;
-            bool DM = Program.Style.DarkMode;
+            bool DarkMode = Program.Style.DarkMode;
+            BackColor = Color.Transparent;
 
             switch (_alertStyle)
             {
                 case Style.Simple:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(60, 60, 60);
                             innerColor = Color.FromArgb(50, 50, 50);
@@ -98,9 +115,9 @@ namespace WinPaletter.UI.WP
                         }
                         else
                         {
-                            borderColor = Color.FromArgb(190, 190, 190);
-                            innerColor = Color.FromArgb(150, 150, 150);
-                            textColor = Color.FromArgb(250, 250, 250);
+                            borderColor = Color.FromArgb(210, 210, 210);
+                            innerColor = Color.FromArgb(200, 200, 200);
+                            textColor = Color.FromArgb(50, 50, 50);
                         }
 
                         break;
@@ -108,7 +125,7 @@ namespace WinPaletter.UI.WP
 
                 case Style.Success:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(60, 98, 79);
                             innerColor = Color.FromArgb(60, 85, 79);
@@ -126,7 +143,7 @@ namespace WinPaletter.UI.WP
 
                 case Style.Notice:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(70, 91, 107);
                             innerColor = Color.FromArgb(70, 91, 94);
@@ -144,7 +161,7 @@ namespace WinPaletter.UI.WP
 
                 case Style.Warning:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(202, 41, 56);
                             innerColor = Color.FromArgb(125, 20, 30);
@@ -152,8 +169,8 @@ namespace WinPaletter.UI.WP
                         }
                         else
                         {
-                            borderColor = Color.FromArgb(200, 171, 171);
-                            innerColor = Color.FromArgb(150, 75, 75);
+                            borderColor = Color.FromArgb(255, 100, 100);
+                            innerColor = Color.FromArgb(216, 73, 73);
                             textColor = Color.FromArgb(255, 175, 175);
                         }
 
@@ -162,7 +179,7 @@ namespace WinPaletter.UI.WP
 
                 case Style.Information:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(133, 133, 71);
                             innerColor = Color.FromArgb(120, 120, 71);
@@ -181,7 +198,7 @@ namespace WinPaletter.UI.WP
 
                 case Style.Indigo:
                     {
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = Color.FromArgb(65, 0, 170);
                             innerColor = Color.FromArgb(60, 0, 140);
@@ -200,7 +217,7 @@ namespace WinPaletter.UI.WP
                 case Style.Custom:
                     {
 
-                        if (DM)
+                        if (DarkMode)
                         {
                             borderColor = CustomColor.CB(0.03f);
                             innerColor = CustomColor.CB(0.01f);
@@ -222,7 +239,7 @@ namespace WinPaletter.UI.WP
                         {
                             var cc = Image.AverageColor();
 
-                            if (DM)
+                            if (DarkMode)
                             {
                                 borderColor = cc.Light(0.01f);
                                 innerColor = cc.Dark(0.05f);
@@ -236,7 +253,7 @@ namespace WinPaletter.UI.WP
                             }
                         }
 
-                        else if (DM)
+                        else if (DarkMode)
                         {
                             borderColor = CustomColor.CB(0.03f);
                             innerColor = CustomColor.CB(0.01f);
@@ -254,10 +271,6 @@ namespace WinPaletter.UI.WP
 
             }
 
-            G.Clear(this.GetParentColor());
-
-            BackColor = innerColor;
-
             using (var br = new SolidBrush(innerColor))
             {
                 G.FillRoundedRect(br, new Rectangle(0, 0, Width - 1, Height - 1));
@@ -267,7 +280,6 @@ namespace WinPaletter.UI.WP
                 G.DrawRoundedRect_LikeW11(P, new Rectangle(0, 0, Width - 1, Height - 1));
             }
 
-            int textY = (int)Math.Round((Height - Text.Measure(Font).Height) / 2f);
             int TextX = 5;
 
             if (Image is not null)

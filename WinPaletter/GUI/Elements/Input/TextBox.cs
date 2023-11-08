@@ -13,7 +13,6 @@ namespace WinPaletter.UI.WP
     [DefaultEvent("TextChanged")]
     public class TextBox : Control
     {
-
         public TextBox()
         {
             Timer = new Timer() { Enabled = false, Interval = 1 };
@@ -33,7 +32,7 @@ namespace WinPaletter.UI.WP
                 UseSystemPasswordChar = _UseSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(1, 0),
-                Width = Width - 3,
+                Width = this.Width - 3,
                 Cursor = Cursors.IBeam,
                 ScrollBars = Scrollbars,
                 WordWrap = WordWrap
@@ -56,6 +55,7 @@ namespace WinPaletter.UI.WP
                 TB.BackColor = Color.FromArgb(55, 55, 55);
             else
                 TB.BackColor = Color.FromArgb(225, 225, 225);
+
             HandleCreated += TextBox_HandleCreated;
             HandleDestroyed += TextBox_HandleDestroyed;
             Timer.Tick += Timer_Tick;
@@ -63,7 +63,7 @@ namespace WinPaletter.UI.WP
 
         #region Variables
 
-        private System.Windows.Forms.TextBox _TB;
+        public System.Windows.Forms.TextBox _TB;
 
         private System.Windows.Forms.TextBox TB
         {
@@ -544,7 +544,6 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Animator
-
         private int alpha;
         private readonly int Factor = 20;
         private Timer Timer;
@@ -729,5 +728,4 @@ namespace WinPaletter.UI.WP
         }
 
     }
-
 }

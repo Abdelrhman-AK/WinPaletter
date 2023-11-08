@@ -9,39 +9,94 @@ namespace WinPaletter.UI.WP
 
     [Description("AnimatedBox with two colors for WinPaletter UI")]
     [DefaultEvent("Click")]
-    public class AnimatedBox : Panel
+    public class AnimatedBox : ContainerControl
     {
-
         public AnimatedBox()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             Text = "";
+            BackColor = Color.Transparent;
+            SetColors();
             HandleCreated += AnimatedBox_HandleCreated;
             HandleDestroyed += AnimatedBox_HandleDestroyed;
             Timer.Tick += Timer_Tick;
+            ControlAdded += AnimatedBox_ControlAdded;
         }
 
         #region Variables
-
-        private Color LineColor;
-        private float _Angle = 0f;
+        private Color LineColor = Color.FromArgb(120, 150, 150, 150);
         private Color C1, C2;
+        private float _Angle = 0f;
         private bool _Focused = true;
-        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.7d));
-
+        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.9d));
         public enum Styles
         {
             SwapColors,
             MixedColors
         }
-
         #endregion
 
         #region Properties
-        public Color Color1 { get; set; } = Color.DodgerBlue;
-        public Color Color2 { get; set; } = Color.Crimson;
-        public Color Color { get; set; } = Color.DodgerBlue;
+
+        private Color _Color1 = Color.DodgerBlue;
+        public Color Color1
+        {
+            get
+            {
+                return _Color1;
+            }
+            set
+            {
+                _Color1 = value;
+                SetColors();
+            }
+        }
+
+        private Color _Color2 = Color.Crimson;
+        public Color Color2
+        {
+            get
+            {
+                return _Color2;
+            }
+            set
+            {
+                _Color2 = value;
+                SetColors();
+            }
+        }
+
+        private Color _Color = default;
+
+        [Browsable(false)]
+        public Color Color
+        {
+            get
+            {
+                if (_Color == default)
+                {
+                    return C1;
+                }
+                else
+                {
+                    return _Color;
+                }
+            }
+
+            set
+            {
+                _Color = value;
+                SetColors();
+            }
+        }
+
+        private void SetColors()
+        {
+            this.C1 = Program.Style.DarkMode ? Color1.Dark(0.15f) : Color1.Light(0.6f);
+            this.C2 = Program.Style.DarkMode ? Color2.Dark(0.15f) : Color2.Light(0.6f);
+        }
+
         public Styles Style { get; set; } = Styles.SwapColors;
 
         [Browsable(true)]
@@ -51,50 +106,48 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = "";
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Animator
-        private Timer Timer = new Timer() { Enabled = false, Interval = 1 };
+        private readonly Timer Timer = new() { Enabled = false, Interval = 25 };
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (!DesignMode)
             {
-
-                if (_Angle + 1.5d > 360d)
+                if (_Angle + 2f > 360f)
                 {
                     _Angle = 0f;
 
                     if (Style == Styles.SwapColors)
                     {
-                        Color Cx1, Cx2;
-
-                        if (Program.Style.DarkMode)
+                        if (Color == C1 | Color == Color1)
                         {
-                            Cx1 = Color1.Dark(0.15f);
-                            Cx2 = Color2.Dark(0.15f);
+                            System.Threading.Tasks.Task.Run(() => { Visual.FadeColor(this, "Color", Color, C2, 10, 1); });
                         }
                         else
                         {
-                            Cx1 = Color1.Light(0.6f);
-                            Cx2 = Color2.Light(0.6f);
+                            System.Threading.Tasks.Task.Run(() => { Visual.FadeColor(this, "Color", Color, C1, 10, 1); });
                         }
-
-                        if (Color == Cx1 | Color == Color1)
-                        {
-                            Visual.FadeColor(this, "Color", Color, Cx2, 10, 1);
-                        }
-                        else
-                        {
-                            Visual.FadeColor(this, "Color", Color, Cx1, 10, 1);
-                        }
-
                     }
                 }
 
-                else
-                {
-                    _Angle = (float)(_Angle + 1.5d);
-                }
+                else { _Angle += 2f; }
 
                 Refresh();
             }
@@ -107,30 +160,22 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events
-
         private void AnimatedBox_HandleCreated(object sender, EventArgs e)
         {
             if (!DesignMode)
             {
+                try { FindForm().Activated += Form_GotFocus; }
+                catch { }
+
+                try { FindForm().Shown += Form_Shown; }
+                catch { }
+
+                try { FindForm().Deactivate += Form_LostFocus; }
+                catch { }
+
                 Timer.Enabled = true;
                 Timer.Start();
-
-                try
-                {
-                    FindForm().Activated += Form_GotFocus;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    FindForm().Deactivate += Form_LostFocus;
-                }
-                catch
-                {
-                }
             }
-
             else
             {
                 Timer.Enabled = false;
@@ -142,26 +187,29 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                try
-                {
-                    FindForm().Activated -= Form_GotFocus;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    FindForm().Deactivate -= Form_LostFocus;
-                }
-                catch
-                {
-                }
+                try { FindForm().Activated -= Form_GotFocus; }
+                catch { }
+
+                try { FindForm().Shown -= Form_Shown; }
+                catch { }
+
+                try { FindForm().Deactivate -= Form_LostFocus; }
+                catch { }
             }
         }
 
         public void Form_GotFocus(object sender, EventArgs e)
         {
             _Focused = true;
+            Timer.Enabled = true;
+            Timer.Start();
+            Invalidate();
+        }
+
+        public void Form_Shown(object sender, EventArgs e)
+        {
+            _Focused = true;
+            SetColors();
             Timer.Enabled = true;
             Timer.Start();
             Invalidate();
@@ -175,64 +223,32 @@ namespace WinPaletter.UI.WP
             Invalidate();
         }
 
+        private void AnimatedBox_ControlAdded(object sender, ControlEventArgs e)
+        {
+            e.Control.DoubleBuffer();
+        }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            var G = e.Graphics;
-            DoubleBuffered = true;
-
-            G.SmoothingMode = SmoothingMode.AntiAlias;
-
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
-
-            G.Clear(this.GetParentColor());
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.HighSpeed;
+            Rectangle Rect = new(0, 0, Width, Height);
+            Rectangle BorderRect = new(Rect.X, Rect.Y, Rect.Width - 1, Rect.Height - 1);
 
             if (!DesignMode && _Focused)
             {
+                Color Cx2 = Style == Styles.SwapColors ? BackColor : C2;
 
-                if (Style == Styles.SwapColors)
+                using (LinearGradientBrush l = new(Rect, Color, Cx2, _Angle, false))
                 {
-                    if (Program.Style.DarkMode)
-                    {
-                        C1 = Color.Dark(0.15f);
-                    }
-                    else
-                    {
-                        C1 = Color.Light(0.6f);
-                    }
-
-                    C2 = this.GetParentColor();
-                }
-                else if (Style == Styles.MixedColors)
-                {
-
-                    if (Program.Style.DarkMode)
-                    {
-                        C1 = Color1.Dark(0.15f);
-                        C2 = Color2.Dark(0.15f);
-                    }
-                    else
-                    {
-                        C1 = Color1.Light(0.6f);
-                        C2 = Color2.Light(0.6f);
-                    }
-
-                }
-
-                using (var l = new LinearGradientBrush(Rect, C1, C2, _Angle, false))
-                {
-
-                    LineColor = Color.FromArgb(120, 150, 150, 150);
-
                     if (Dock == DockStyle.None)
                     {
                         G.FillRoundedRect(l, Rect);
                         G.FillRoundedRect(Noise, Rect);
-                        using (var P = new Pen(LineColor))
+                        using (Pen P = new(LineColor))
                         {
-                            G.DrawRoundedRect(P, Rect);
+                            G.DrawRoundedRect(P, BorderRect);
                         }
                     }
                     else
@@ -241,11 +257,10 @@ namespace WinPaletter.UI.WP
                         G.FillRectangle(Noise, Rect);
                     }
                 }
-
             }
 
+            base.OnPaint(e);
         }
-
     }
 
 }

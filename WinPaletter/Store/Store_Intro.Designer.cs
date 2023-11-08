@@ -175,7 +175,6 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
-            AnimatedBox1.Color = Color.FromArgb(21, 115, 182);
             AnimatedBox1.Color1 = Color.FromArgb(21, 115, 182);
             AnimatedBox1.Color2 = Color.FromArgb(192, 3, 28);
             AnimatedBox1.Controls.Add(Label2);
@@ -478,7 +477,6 @@ namespace WinPaletter
             // 
             // AnimatedBox2
             // 
-            AnimatedBox2.Color = Color.FromArgb(21, 115, 182);
             AnimatedBox2.Color1 = Color.FromArgb(21, 115, 182);
             AnimatedBox2.Color2 = Color.FromArgb(192, 3, 28);
             AnimatedBox2.Controls.Add(Label11);

@@ -42,6 +42,7 @@ namespace WinPaletter
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
             this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
             this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
@@ -326,12 +327,12 @@ namespace WinPaletter
             this.CheckBox31 = new WinPaletter.UI.WP.CheckBox();
             this.ComboBox3 = new WinPaletter.UI.WP.ComboBox();
             this.CheckBox10 = new WinPaletter.UI.WP.CheckBox();
-            this.label58 = new System.Windows.Forms.Label();
-            this.pictureBox76 = new System.Windows.Forms.PictureBox();
-            this.button22 = new WinPaletter.UI.WP.Button();
             this.tabPage22 = new System.Windows.Forms.TabPage();
+            this.label58 = new System.Windows.Forms.Label();
             this.pictureBox74 = new System.Windows.Forms.PictureBox();
             this.pictureBox75 = new System.Windows.Forms.PictureBox();
+            this.pictureBox76 = new System.Windows.Forms.PictureBox();
+            this.button22 = new WinPaletter.UI.WP.Button();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.button13 = new WinPaletter.UI.WP.Button();
             this.label28 = new System.Windows.Forms.Label();
@@ -353,7 +354,6 @@ namespace WinPaletter
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Label17 = new System.Windows.Forms.Label();
-            this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
@@ -458,10 +458,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox27)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox43)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox76)).BeginInit();
             this.tabPage22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox74)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox75)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox76)).BeginInit();
             this.TabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
@@ -576,7 +576,7 @@ namespace WinPaletter
             this.AlertBox17.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
             this.AlertBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
+            this.AlertBox17.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox17.CenterText = true;
             this.AlertBox17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox17.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -688,7 +688,7 @@ namespace WinPaletter
             // AlertBox4
             // 
             this.AlertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Success;
-            this.AlertBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(79)))));
+            this.AlertBox4.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox4.CenterText = true;
             this.AlertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -4301,6 +4301,27 @@ namespace WinPaletter
             this.CheckBox10.TabIndex = 24;
             this.CheckBox10.Text = "Show color info on a color palette item";
             // 
+            // tabPage22
+            // 
+            this.tabPage22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage22.Controls.Add(this.label58);
+            this.tabPage22.Controls.Add(this.pictureBox74);
+            this.tabPage22.Controls.Add(this.pictureBox75);
+            this.tabPage22.Controls.Add(this.pictureBox76);
+            this.tabPage22.Controls.Add(this.button22);
+            this.tabPage22.Controls.Add(this.separatorH1);
+            this.tabPage22.Controls.Add(this.button13);
+            this.tabPage22.Controls.Add(this.label28);
+            this.tabPage22.Controls.Add(this.label29);
+            this.tabPage22.Controls.Add(this.button21);
+            this.tabPage22.Controls.Add(this.alertBox24);
+            this.tabPage22.Location = new System.Drawing.Point(199, 4);
+            this.tabPage22.Name = "tabPage22";
+            this.tabPage22.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage22.Size = new System.Drawing.Size(823, 478);
+            this.tabPage22.TabIndex = 13;
+            this.tabPage22.Text = "Users and services";
+            // 
             // label58
             // 
             this.label58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -4312,6 +4333,26 @@ namespace WinPaletter
             this.label58.TabIndex = 81;
             this.label58.Text = "Options for users";
             this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox74
+            // 
+            this.pictureBox74.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox74.Image")));
+            this.pictureBox74.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox74.Name = "pictureBox74";
+            this.pictureBox74.Size = new System.Drawing.Size(35, 35);
+            this.pictureBox74.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox74.TabIndex = 21;
+            this.pictureBox74.TabStop = false;
+            // 
+            // pictureBox75
+            // 
+            this.pictureBox75.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox75.Image")));
+            this.pictureBox75.Location = new System.Drawing.Point(17, 124);
+            this.pictureBox75.Name = "pictureBox75";
+            this.pictureBox75.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox75.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox75.TabIndex = 67;
+            this.pictureBox75.TabStop = false;
             // 
             // pictureBox76
             // 
@@ -4339,47 +4380,6 @@ namespace WinPaletter
             this.button22.Text = "Switch user";
             this.button22.UseVisualStyleBackColor = false;
             this.button22.Click += new System.EventHandler(this.button22_Click);
-            // 
-            // tabPage22
-            // 
-            this.tabPage22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage22.Controls.Add(this.label58);
-            this.tabPage22.Controls.Add(this.pictureBox74);
-            this.tabPage22.Controls.Add(this.pictureBox75);
-            this.tabPage22.Controls.Add(this.pictureBox76);
-            this.tabPage22.Controls.Add(this.button22);
-            this.tabPage22.Controls.Add(this.separatorH1);
-            this.tabPage22.Controls.Add(this.button13);
-            this.tabPage22.Controls.Add(this.label28);
-            this.tabPage22.Controls.Add(this.label29);
-            this.tabPage22.Controls.Add(this.button21);
-            this.tabPage22.Controls.Add(this.alertBox24);
-            this.tabPage22.Location = new System.Drawing.Point(199, 4);
-            this.tabPage22.Name = "tabPage22";
-            this.tabPage22.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage22.Size = new System.Drawing.Size(823, 478);
-            this.tabPage22.TabIndex = 13;
-            this.tabPage22.Text = "Users and services";
-            // 
-            // pictureBox74
-            // 
-            this.pictureBox74.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox74.Image")));
-            this.pictureBox74.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox74.Name = "pictureBox74";
-            this.pictureBox74.Size = new System.Drawing.Size(35, 35);
-            this.pictureBox74.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox74.TabIndex = 21;
-            this.pictureBox74.TabStop = false;
-            // 
-            // pictureBox75
-            // 
-            this.pictureBox75.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox75.Image")));
-            this.pictureBox75.Location = new System.Drawing.Point(17, 124);
-            this.pictureBox75.Name = "pictureBox75";
-            this.pictureBox75.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox75.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox75.TabIndex = 67;
-            this.pictureBox75.TabStop = false;
             // 
             // separatorH1
             // 
@@ -4649,7 +4649,8 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
-            this.AnimatedBox1.Color = System.Drawing.Color.DodgerBlue;
+            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(162)))));
             this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.AnimatedBox1.Controls.Add(this.PictureBox1);
@@ -4678,6 +4679,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label17.BackColor = System.Drawing.Color.Transparent;
             this.Label17.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label17.ForeColor = System.Drawing.Color.White;
             this.Label17.Location = new System.Drawing.Point(65, 10);
             this.Label17.Name = "Label17";
             this.Label17.Size = new System.Drawing.Size(962, 48);
@@ -4818,10 +4820,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox27)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox43)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox76)).EndInit();
             this.tabPage22.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox74)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox75)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox76)).EndInit();
             this.TabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).EndInit();

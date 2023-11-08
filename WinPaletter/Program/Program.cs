@@ -36,9 +36,11 @@ namespace WinPaletter
 
         public static void InitializeApplication(bool ShowLoginDialog)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
+
+                if (!System.IO.Directory.Exists(PathsExt.ProgramFilesData)) { System.IO.Directory.CreateDirectory(PathsExt.ProgramFilesData); }
 
                 // Important to load proper style and language before showing login dialog
                 FetchDarkMode();
@@ -67,7 +69,7 @@ namespace WinPaletter
                 ExecuteArgs();
                 LoadThemeManager();
 
-                impersonationContext.Undo();
+                wic.Undo();
             }
         }
 
@@ -114,10 +116,10 @@ namespace WinPaletter
 
         public static void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 ExecuteArgs_ProgramStarted(e.CommandLine.Skip(1).ToArray());
-                impersonationContext.Undo();
+                wic.Undo();
             }
         }
 

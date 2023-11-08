@@ -51,7 +51,6 @@ namespace WinPaletter
 
             var c = PictureBox1.Image.AverageColor();
 
-            AnimatedBox1.Color = c;
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = c;
 

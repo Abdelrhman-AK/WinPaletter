@@ -29,10 +29,9 @@ namespace WinPaletter
             CheckForIllegalCrossThreadCalls = false;
 
             var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
-            AnimatedBox1.BackColor = c;
-            AnimatedBox1.Color = c;
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = Program.Style.Colors.Core;
+
             textBox1.Text = "";
             textBox1.Font = Fonts.ConsoleMedium;
             textBox2.Font = Fonts.ConsoleMedium;

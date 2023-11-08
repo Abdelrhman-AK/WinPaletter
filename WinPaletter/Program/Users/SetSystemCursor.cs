@@ -15,7 +15,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SetSystemCursor(string file, OCR_SYSTEM_CURSORS id, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -27,7 +27,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", file, id, result), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }
@@ -38,7 +38,7 @@ namespace WinPaletter.NativeMethods
 
         public static bool SetSystemCursor(IntPtr hcur, int id, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 bool result = false;
                 if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
@@ -50,7 +50,7 @@ namespace WinPaletter.NativeMethods
                 if (TreeView != null)
                     Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", hcur.ToInt32(), OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString()), "dll");
 
-                impersonationContext.Undo();
+                wic.Undo();
                 return result;
             }
         }

@@ -93,7 +93,7 @@ namespace WinPaletter
                     {
                         Cursor.Current = Cursors.WaitCursor;
 
-                        using (WindowsImpersonationContext impersonationContext = User.Identity.Impersonate())
+                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
                             bool MainFormIsOpened = Application.OpenForms[Forms.MainFrm.Name] is not null;
 
@@ -129,7 +129,7 @@ namespace WinPaletter
 
                             Cursor.Current = Cursors.Default;
 
-                            impersonationContext.Undo();
+                            wic.Undo();
                         }
                         break;
                     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace WinPaletter.NativeMethods
@@ -28,29 +27,20 @@ namespace WinPaletter.NativeMethods
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmEnableBlurBehindWindow(IntPtr hWnd, DWM_BLURBEHIND pBlurBehind);
 
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, MARGINS pMargins);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern bool DwmIsCompositionEnabled();
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmIsCompositionEnabled(out bool isEnabled);
 
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmEnableComposition(bool bEnable);
 
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmEnableComposition(int fEnable);
+
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmGetColorizationColor(out int pcrColorization, [MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
 
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern IntPtr DwmRegisterThumbnail(IntPtr dest, IntPtr source);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmUnregisterThumbnail(IntPtr hThumbnail);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmUpdateThumbnailProperties(IntPtr hThumbnail, DWM_THUMBNAIL_PROPERTIES props);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmQueryThumbnailSourceSize(IntPtr hThumbnail, out Size size);
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetColorizationColor(ref int pcrColorization, ref int pfOpaqueBlend);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
@@ -65,37 +55,7 @@ namespace WinPaletter.NativeMethods
         public static extern void DwmSetColorizationParameters(ref DWM_COLORIZATION_PARAMS parameters, bool unknown);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmDefWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, out IntPtr result);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmEnableComposition(int fEnable);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmEnableMMCSS(int fEnableMMCSS);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetColorizationColor(ref int pcrColorization, ref int pfOpaqueBlend);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetCompositionTimingInfo(IntPtr hwnd, ref DWM_TIMING_INFO pTimingInfo);
-
-        [DllImport("dwmapi.dll")]
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, IntPtr pvAttribute, int cbAttribute);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmIsCompositionEnabled(ref int pfEnabled);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmModifyPreviousDxFrameDuration(IntPtr hwnd, int cRefreshes, int fRelative);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmQueryThumbnailSourceSize(IntPtr hThumbnail, ref SIZE pSize);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmRegisterThumbnail(IntPtr hwndDestination, IntPtr hwndSource, ref SIZE pMinimizedSize, ref IntPtr phThumbnailId);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmSetDxFrameDuration(IntPtr hwnd, int cRefreshes);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmSetPresentParameters(IntPtr hwnd, ref DWM_PRESENT_PARAMETERS pPresentParams);
@@ -103,52 +63,35 @@ namespace WinPaletter.NativeMethods
         [DllImport("dwmapi.dll")]
         public static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, IntPtr pvAttribute, int cbAttribute);
 
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmUpdateThumbnailProperties(IntPtr hThumbnailId, ref DWM_THUMBNAIL_PROPERTIES ptnProperties);
-
         public static bool IsCompositionEnabled()
         {
-            try { return Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled(); }
+            try
+            {
+                DwmIsCompositionEnabled(out bool isEnabled);
+                return Environment.OSVersion.Version.Major >= 6 && isEnabled;
+            }
             catch { return false; }
         }
         #endregion
 
-        #region Classes
+        #region Structures
         [StructLayout(LayoutKind.Sequential)]
-        public class DWM_THUMBNAIL_PROPERTIES
+        public struct DWM_BLURBEHIND
         {
             public uint dwFlags;
-            public RECT rcDestination;
-            public RECT rcSource;
-            public byte opacity;
-            [MarshalAs(UnmanagedType.Bool)]
-            public bool fVisible;
-            [MarshalAs(UnmanagedType.Bool)]
-            public bool fSourceClientAreaOnly;
-            public const uint DWM_TNP_RECTDESTINATION = 0x00000001;
-            public const uint DWM_TNP_RECTSOURCE = 0x00000002;
-            public const uint DWM_TNP_OPACITY = 0x00000004;
-            public const uint DWM_TNP_VISIBLE = 0x00000008;
-            public const uint DWM_TNP_SOURCECLIENTAREAONLY = 0x00000010;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public class DWM_BLURBEHIND
-        {
-            public uint dwFlags;
-            [MarshalAs(UnmanagedType.Bool)]
             public bool fEnable;
-            public IntPtr hRegionBlur;
-            [MarshalAs(UnmanagedType.Bool)]
+            public IntPtr hRgnBlur;
             public bool fTransitionOnMaximized;
 
-            public const uint DWM_BB_ENABLE = 0x00000001;
-            public const uint DWM_BB_BLURREGION = 0x00000002;
-            public const uint DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004;
+            public DWM_BLURBEHIND(bool enable)
+            {
+                dwFlags = 0x00000003; // DWM_BB_ENABLE | DWM_BB_BLURREGION
+                fEnable = enable ? true : false;
+                hRgnBlur = IntPtr.Zero;
+                fTransitionOnMaximized = false;
+            }
         }
-        #endregion
 
-        #region Structures
         [StructLayout(LayoutKind.Sequential)]
         public struct MARGINS
         {
@@ -177,13 +120,6 @@ namespace WinPaletter.NativeMethods
             }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct SIZE
-        {
-            public int cx;
-            public int cy;
-        }
-
         public struct DWM_COLORIZATION_PARAMS
         {
             public uint clrColor;
@@ -206,28 +142,6 @@ namespace WinPaletter.NativeMethods
             public UNSIGNED_RATIO rateSource;
             public int cRefreshesPerFrame;
             public DWM_SOURCE_FRAME_SAMPLING eSampling;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct DWM_TIMING_INFO
-        {
-            public int cbSize;
-            public UNSIGNED_RATIO rateRefresh;
-            public UNSIGNED_RATIO rateCompose;
-            public long qpcVBlank;
-            public long cRefresh;
-            public long qpcCompose;
-            public long cFrame;
-            public long cRefreshFrame;
-            public long cRefreshConfirmed;
-            public int cFlipsOutstanding;
-            public long cFrameCurrent;
-            public long cFramesAvailable;
-            public long cFrameCleared;
-            public long cFramesReceived;
-            public long cFramesDisplayed;
-            public long cFramesDropped;
-            public long cFramesMissed;
         }
         #endregion
 
@@ -256,26 +170,6 @@ namespace WinPaletter.NativeMethods
             DWM_SOURCE_FRAME_SAMPLING_POINT,
             DWM_SOURCE_FRAME_SAMPLING_COVERAGE,
             DWM_SOURCE_FRAME_SAMPLING_LAST
-        }
-
-        public enum DWMNCRENDERINGPOLICY
-        {
-            DWMNCRP_USEWINDOWSTYLE,
-            DWMNCRP_DISABLED,
-            DWMNCRP_ENABLED
-        }
-
-        public enum DWMWINDOWATTRIBUTE
-        {
-            DWMWA_ALLOW_NCPAINT = 4,
-            DWMWA_CAPTION_BUTTON_BOUNDS = 5,
-            DWMWA_FLIP3D_POLICY = 8,
-            DWMWA_FORCE_ICONIC_REPRESENTATION = 7,
-            DWMWA_LAST = 9,
-            DWMWA_NCRENDERING_ENABLED = 1,
-            DWMWA_NCRENDERING_POLICY = 2,
-            DWMWA_NONCLIENT_RTL_LAYOUT = 6,
-            DWMWA_TRANSITIONS_FORCEDISABLED = 3
         }
         #endregion
     }

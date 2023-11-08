@@ -14,7 +14,8 @@ namespace WinPaletter
 
             if (!System.IO.Directory.Exists(PathsExt.appData))
                 System.IO.Directory.CreateDirectory(PathsExt.appData);
-            System.IO.File.WriteAllBytes(PathsExt.appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
+
+            WriteIfChangedOrNotExists(PathsExt.appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
 
             EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
             EditReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
@@ -47,13 +48,10 @@ namespace WinPaletter
                     PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav"));
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
             if (System.IO.Directory.Exists(PathsExt.appData))
             {
-                System.IO.Directory.Delete(PathsExt.appData, true);
                 if (!OS.WXP)
                 {
                     Theme.Manager.ResetCursorsToAero();
@@ -68,6 +66,15 @@ namespace WinPaletter
                         Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                 }
+
+                try { System.IO.Directory.Delete(PathsExt.appData, true); }
+                catch { }
+            }
+
+            if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
+            {
+                try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); }
+                catch { }
             }
 
             string guidText = Application.ProductName;
