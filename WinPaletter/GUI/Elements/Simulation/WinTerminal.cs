@@ -303,7 +303,7 @@ namespace WinPaletter.UI.Simulation
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
 
-                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = RoundedSemiRectangle(Rectangle, Radius))
                     {
@@ -471,7 +471,7 @@ namespace WinPaletter.UI.Simulation
 
             if (UseAcrylicOnTitlebar & !DesignMode)
             {
-                if (GetRoundedCorners())
+                if (Program.Style.RoundedCorners)
                 {
                     FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
                     FillSemiRect(G, Noise, Rect_Titlebar);
@@ -484,7 +484,7 @@ namespace WinPaletter.UI.Simulation
 
                 if (!Light)
                 {
-                    if (GetRoundedCorners())
+                    if (Program.Style.RoundedCorners)
                     {
                         using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
                         {
@@ -499,7 +499,7 @@ namespace WinPaletter.UI.Simulation
                         }
                     }
                 }
-                else if (GetRoundedCorners())
+                else if (Program.Style.RoundedCorners)
                 {
                     using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
                     {
@@ -518,7 +518,7 @@ namespace WinPaletter.UI.Simulation
 
             if (!UseAcrylicOnTitlebar)
             {
-                if (GetRoundedCorners())
+                if (Program.Style.RoundedCorners)
                 {
                     using (var br = new SolidBrush(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
                     {

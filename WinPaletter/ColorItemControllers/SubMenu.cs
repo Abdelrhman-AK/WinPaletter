@@ -51,7 +51,7 @@ namespace WinPaletter
                         int val = 2;
                         if (DWMAPI.IsCompositionEnabled())
                         {
-                            DWMAPI.DwmSetWindowAttribute(Handle, GetRoundedCorners() ? 2 : 1, ref val, 4);
+                            DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
                             DWMAPI.MARGINS bla = new();
                             {
                                 bla.bottomHeight = 1;

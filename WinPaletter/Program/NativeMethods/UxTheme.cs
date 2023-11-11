@@ -4,13 +4,21 @@ using System.Runtime.InteropServices;
 
 namespace WinPaletter.NativeMethods
 {
+    /// <summary>
+    /// Provides partial class implementation for interacting with the User Experience (UX) Theme APIs.
+    /// This partial class may contain additional members related to UxTheme functionality.
+    /// </summary>
     public partial class UxTheme
     {
+        /// <summary>
+        /// Sets the theme for a specified window.
+        /// </summary>
+        /// <param name="hwnd">A handle to the window for which to set the theme.</param>
+        /// <param name="pszSubAppName">A pointer to a string that contains the name of the application.</param>
+        /// <param name="pszSubIdList">A pointer to a string that contains a semicolon-separated list of CLSID names for classes.</param>
+        /// <returns>Returns zero if successful; otherwise, returns a non-zero error code.</returns>
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
-
-        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref RECT pRect, ref DttOpts pOptions);
 
         /// <summary>
         /// Set The Window's Theme Attributes
@@ -46,63 +54,190 @@ namespace WinPaletter.NativeMethods
         [StructLayout(LayoutKind.Sequential)]
         public struct WTA_OPTIONS
         {
+            /// <summary>
+            /// Flags specifying which attributes to add or remove.
+            /// </summary>
             public uint Flags;
+
+            /// <summary>
+            /// Mask specifying which attributes to modify.
+            /// </summary>
             public uint Mask;
         }
 
+        /// <summary>
+        /// Options for drawing themed text.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct DttOpts
         {
+            /// <summary>
+            /// The size of the structure.
+            /// </summary>
             public int dwSize;
+
+            /// <summary>
+            /// Flags specifying which options to apply.
+            /// </summary>
             public DttOptsFlags dwFlags;
+
+            /// <summary>
+            /// The color of the text.
+            /// </summary>
             public int crText;
+
+            /// <summary>
+            /// The color of the border.
+            /// </summary>
             public int crBorder;
+
+            /// <summary>
+            /// The color of the shadow.
+            /// </summary>
             public int crShadow;
+
+            /// <summary>
+            /// The type of text shadow.
+            /// </summary>
             public int iTextShadowType;
+
+            /// <summary>
+            /// The offset of the shadow.
+            /// </summary>
             public Point ptShadowOffset;
+
+            /// <summary>
+            /// The size of the border.
+            /// </summary>
             public int iBorderSize;
+
+            /// <summary>
+            /// The font property ID.
+            /// </summary>
             public int iFontPropId;
+
+            /// <summary>
+            /// The color property ID.
+            /// </summary>
             public int iColorPropId;
+
+            /// <summary>
+            /// The state ID.
+            /// </summary>
             public int iStateId;
+
+            /// <summary>
+            /// Indicates whether to apply overlay.
+            /// </summary>
             public bool fApplyOverlay;
+
+            /// <summary>
+            /// The size of the glow.
+            /// </summary>
             public int iGlowSize;
+
+            /// <summary>
+            /// Callback function for drawing text.
+            /// </summary>
             public int pfnDrawTextCallback;
+
+            /// <summary>
+            /// User-defined parameter for the callback function.
+            /// </summary>
             public IntPtr lParam;
         }
 
+        /// <summary>
+        /// Flags for specifying drawing options when using themed text.
+        /// </summary>
         [Flags]
         public enum DttOptsFlags : int
         {
+            /// <summary>
+            /// Use the text color specified in the crText member.
+            /// </summary>
             DTT_TEXTCOLOR = 1,
+
+            /// <summary>
+            /// Use the border color specified in the crBorder member.
+            /// </summary>
             DTT_BORDERCOLOR = 2,
+
+            /// <summary>
+            /// Use the shadow color specified in the crShadow member.
+            /// </summary>
             DTT_SHADOWCOLOR = 4,
+
+            /// <summary>
+            /// Use the shadow type specified in the iTextShadowType member.
+            /// </summary>
             DTT_SHADOWTYPE = 8,
+
+            /// <summary>
+            /// Use the shadow offset specified in the ptShadowOffset member.
+            /// </summary>
             DTT_SHADOWOFFSET = 16,
+
+            /// <summary>
+            /// Use the border size specified in the iBorderSize member.
+            /// </summary>
             DTT_BORDERSIZE = 32,
-            // DTT_FONTPROP = 64,		commented values are currently unused
-            // DTT_COLORPROP = 128,
-            // DTT_STATEID = 256,
+
+            /// <summary>
+            /// Calculate the rectangle size without writing the text.
+            /// </summary>
             DTT_CALCRECT = 512,
+
+            /// <summary>
+            /// Apply an overlay to the text.
+            /// </summary>
             DTT_APPLYOVERLAY = 1024,
+
+            /// <summary>
+            /// Use the glow size specified in the iGlowSize member.
+            /// </summary>
             DTT_GLOWSIZE = 2048,
-            // DTT_CALLBACK = 4096,
+
+            /// <summary>
+            /// Draw the text as a composited operation.
+            /// </summary>
             DTT_COMPOSITED = 8192
         }
 
+        /// <summary>
+        /// Rectangle structure for specifying coordinates and dimensions.
+        /// </summary>
         [StructLayout(LayoutKind.Explicit)]
         public struct RECT
         {
-            // Fields
-            [FieldOffset(12)]
-            public int bottom;
+            /// <summary>
+            /// Left coordinate of the rectangle.
+            /// </summary>
             [FieldOffset(0)]
             public int left;
-            [FieldOffset(8)]
-            public int right;
+
+            /// <summary>
+            /// Top coordinate of the rectangle.
+            /// </summary>
             [FieldOffset(4)]
             public int top;
 
-            // Methods
+            /// <summary>
+            /// Right coordinate of the rectangle.
+            /// </summary>
+            [FieldOffset(8)]
+            public int right;
+
+            /// <summary>
+            /// Bottom coordinate of the rectangle.
+            /// </summary>
+            [FieldOffset(12)]
+            public int bottom;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="RECT"/> structure.
+            /// </summary>
+            /// <param name="rect">A <see cref="Rectangle"/> specifying coordinates and dimensions.</param>
             public RECT(Rectangle rect)
             {
                 this.left = rect.Left;
@@ -111,71 +246,24 @@ namespace WinPaletter.NativeMethods
                 this.bottom = rect.Bottom;
             }
 
-            public RECT(int left, int top, int right, int bottom)
-            {
-                this.left = left;
-                this.top = top;
-                this.right = right;
-                this.bottom = bottom;
-            }
-
-            public void Set()
-            {
-                this.left = this.top = this.right = this.bottom = 0;
-            }
-
-            public void Set(Rectangle rect)
-            {
-                this.left = rect.Left;
-                this.top = rect.Top;
-                this.right = rect.Right;
-                this.bottom = rect.Bottom;
-            }
-
-            public void Set(int left, int top, int right, int bottom)
-            {
-                this.left = left;
-                this.top = top;
-                this.right = right;
-                this.bottom = bottom;
-            }
-
+            /// <summary>
+            /// Converts the RECT structure to a <see cref="Rectangle"/>.
+            /// </summary>
+            /// <returns>A <see cref="Rectangle"/> representing the coordinates and dimensions of the RECT structure.</returns>
             public Rectangle ToRectangle()
             {
                 return new Rectangle(this.left, this.top, this.right - this.left, this.bottom - this.top);
             }
-
-            // Properties
-            public int Height
-            {
-                get
-                {
-                    return (this.bottom - this.top);
-                }
-            }
-
-            public Size Size
-            {
-                get
-                {
-                    return new Size(this.Width, this.Height);
-                }
-            }
-
-            public int Width
-            {
-                get
-                {
-                    return (this.right - this.left);
-                }
-            }
         }
 
         /// <summary>
-        /// What Type of Attributes? (Only One is Currently Defined)
+        /// Specifies the type of window theme attribute.
         /// </summary>
         public enum WindowThemeAttributeType
         {
+            /// <summary>
+            /// Non-client area attributes.
+            /// </summary>
             WTA_NONCLIENT = 1
         }
     }

@@ -141,8 +141,8 @@ namespace WinPaletter.Theme.Structures
                 case Sources.Registry:
                     {
 
-                        SystemParametersInfo((int)SPI.Effects.GETFLATMENU, 0, ref EnableTheming, SPIF.None);
-                        SystemParametersInfo((int)SPI.Titlebars.GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.None);
+                        SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref EnableTheming, SPIF.SPIF_NONE);
+                        SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.SPIF_NONE);
 
                         {
                             var temp = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209");
@@ -605,8 +605,8 @@ namespace WinPaletter.Theme.Structures
 
             SetSysColors(C1.Count, C1.ToArray(), C2.ToArray());
 
-            SystemParametersInfo(TreeView, (int)SPI.Effects.SETFLATMENU, 0, EnableTheming, SPIF.UpdateINIFile);
-            SystemParametersInfo(TreeView, (int)SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.UpdateINIFile);
+            SystemParametersInfo(TreeView, SPI.SPI_SETFLATMENU, 0, EnableTheming, SPIF.SPIF_UPDATEINIFILE);
+            SystemParametersInfo(TreeView, SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.SPIF_UPDATEINIFILE);
 
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);

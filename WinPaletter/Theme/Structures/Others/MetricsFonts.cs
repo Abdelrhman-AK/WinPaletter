@@ -126,7 +126,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Overwrite current metrics values by values inside a visual styles file open by Devcorp advanced UxTheme wrapper
+        /// Overwrite current metrics values by values inside a visual styles file opened by Devcorp advanced UxTheme wrapper
         /// </summary>
         /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Metrics(VisualStyleMetrics vs)
@@ -139,7 +139,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Overwrite current fonts values by values inside a visual styles file open by Devcorp advanced UxTheme wrapper
+        /// Overwrite current fonts values by values inside a visual styles file opened by Devcorp advanced UxTheme wrapper
         /// </summary>
         /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Fonts(VisualStyleMetrics vs)
@@ -202,9 +202,8 @@ namespace WinPaletter.Theme.Structures
                 StatusFont = AdjustFont(StatusFont, false);
             }
 
-
             bool temp = false;
-            SystemParametersInfo((int)SPI.Fonts.GETFONTSMOOTHING, default, ref temp, SPIF.None);
+            SystemParametersInfo(SPI.SPI_GETFONTSMOOTHING, default, ref temp, SPIF.SPIF_NONE);
             Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", OS.WXP ? 1 : 2)) != 2;
         }
 
@@ -273,7 +272,7 @@ namespace WinPaletter.Theme.Structures
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
 
-                SystemParametersInfo(TreeView, (int)SPI.Fonts.SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.UpdateINIFile);
+                SystemParametersInfo(TreeView, SPI.SPI_SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.SPIF_UPDATEINIFILE);
 
                 if (!Program.Settings.ThemeApplyingBehavior.DelayMetrics)
                 {
@@ -282,7 +281,7 @@ namespace WinPaletter.Theme.Structures
                     ICONMETRICS ICO = new ICONMETRICS();
                     ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
-                    SystemParametersInfo(TreeView, (int)SPI.Icons.GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.None);
+                    SystemParametersInfo(TreeView, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
 
                     {
                         NCM.lfCaptionFont = lfCaptionFont;
@@ -309,8 +308,8 @@ namespace WinPaletter.Theme.Structures
                         ICO.lfFont = lfIconFont;
                     }
 
-                    SystemParametersInfo(TreeView, (int)SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.UpdateINIFile);
-                    SystemParametersInfo(TreeView, (int)SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.UpdateINIFile);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_UPDATEINIFILE);
                 }
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte(), RegistryValueKind.Binary);

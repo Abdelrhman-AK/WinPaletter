@@ -28,7 +28,6 @@ namespace WinPaletter
             BackupSettings = new WPSettings(WPSettings.Mode.Registry);
             this.LoadLanguage();
             ApplyStyle(this);
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
             AdjustPreview();
             CloseAndApply = false;
@@ -41,7 +40,6 @@ namespace WinPaletter
 
         private void ApplicationThemer_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             if (!CloseAndApply) // Restore previous settings
             {
                 {
@@ -54,7 +52,8 @@ namespace WinPaletter
                     appearance.Save();
                 }
 
-                FetchDarkMode();
+                GetDarkMode();
+                GetRoundedCorners();
                 ApplyStyle();
             }
 
@@ -76,14 +75,11 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            {
-                ref Theme.Structures.AppTheme AppTheme = ref TM.AppTheme;
-                AppTheme.Enabled = AppThemeEnabled.Checked;
-                AppTheme.DarkMode = appearance_dark.Checked;
-                AppTheme.RoundCorners = RoundedCorners.Checked;
-                AppTheme.BackColor = BackColorPick.BackColor;
-                AppTheme.AccentColor = AccentColor.BackColor;
-            }
+            TM.AppTheme.Enabled = AppThemeEnabled.Checked;
+            TM.AppTheme.DarkMode = appearance_dark.Checked;
+            TM.AppTheme.RoundCorners = RoundedCorners.Checked;
+            TM.AppTheme.BackColor = BackColorPick.BackColor;
+            TM.AppTheme.AccentColor = AccentColor.BackColor;
         }
 
         public void AdjustPreview()

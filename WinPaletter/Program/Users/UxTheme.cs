@@ -1,12 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using WinPaletter.Theme;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.NativeMethods
 {
+    /// <summary>
+    /// Provides partial class implementation for interacting with the User Experience (UX) Theme APIs.
+    /// This partial class may contain additional members related to UxTheme functionality.
+    /// </summary>
     public partial class UxTheme
     {
         private partial class PrivateFunctions
@@ -21,56 +27,184 @@ namespace WinPaletter.NativeMethods
             public static extern int GetCurrentThemeName(StringBuilder stringThemeName, int lengthThemeName, StringBuilder stringColorName, int lengthColorName, StringBuilder stringSizeName, int lengthSizeName);
         }
 
-
-        public static bool SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved, TreeView TreeView = null)
+        static void Verboser_SetSystemVisualStyle(TreeView TreeView, bool result, string pszFilename, string pszColor, string pszSize, int dwReserved)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            if (!result)
             {
-                bool result = false;
-                if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
+                int Error = Marshal.GetLastWin32Error();
+
+                if (Error != 0)
                 {
-                    result = PrivateFunctions.SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved) == 1;
-                    advapi.RevertToSelf();
+                    Win32Exception ex = new(Error);
+
+                    if (TreeView != null)
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, $"ERROR {Error}: " + ex.Message), "dll");
+
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
+
+                    return;
                 }
-
-                if (TreeView != null)
-                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "UxTheme", pszFilename, pszColor, pszSize, 0, result), "dll");
-
-                wic.Undo();
-                return result;
             }
+
+            if (TreeView != null)
+                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
         }
 
+        static void Verboser_EnableTheming(TreeView TreeView, bool result, int fEnable)
+        {
+            if (!result)
+            {
+                int Error = Marshal.GetLastWin32Error();
+
+                if (Error != 0)
+                {
+                    Win32Exception ex = new(Error);
+
+                    if (TreeView != null)
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: " + ex.Message), "dll");
+
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
+
+                    return;
+                }
+            }
+
+            if (TreeView != null)
+                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, result.ToString().ToLower()), "dll");
+        }
+
+        static void Verboser_GetCurrentThemeName(TreeView TreeView, bool result, string themename, string colorname, string sizename)
+        {
+            if (!result)
+            {
+                int Error = Marshal.GetLastWin32Error();
+
+                if (Error != 0)
+                {
+                    Win32Exception ex = new(Error);
+
+                    if (TreeView != null)
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", "", $"ERROR {Error}: " + ex.Message), "dll");
+
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
+
+                    return;
+                }
+            }
+
+            if (TreeView != null)
+                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", "", $"\"{themename}\", {colorname}, {sizename}"), "dll");
+        }
+
+        /// <summary>
+        /// Sets the system visual style using specified parameters and handles UAC elevation if necessary.
+        /// </summary>
+        /// <param name="pszFilename">The filename of the visual style.</param>
+        /// <param name="pszColor">The color of the visual style.</param>
+        /// <param name="pszSize">The size of the visual style.</param>
+        /// <param name="dwReserved">Reserved parameter for future use.</param>
+        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <returns>True if the operation is successful, otherwise false.</returns>
+        public static bool SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved, TreeView TreeView = null)
+        {
+            bool result = false;
+
+            // Check if the user has administrator privileges
+            if (User.SID == User.AdminSID_GrantedUAC)
+            {
+                // Set the system visual style directly if the user is an administrator
+                result = PrivateFunctions.SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved) == 1;
+            }
+            else
+            {
+                // If not an administrator, impersonate the user and attempt to set the system visual style
+                bool advapi_switched = false;
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+
+                    // Set the system visual style while impersonating the user
+                    result = PrivateFunctions.SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved) == 1;
+
+                    // Revert impersonation and undo changes
+                    if (advapi_switched) { advapi.RevertToSelf(); }
+
+                    wic.Undo();
+                }
+            }
+
+            // Log details of the operation using Verboser_SetSystemVisualStyle function
+            Verboser_SetSystemVisualStyle(TreeView, result, pszFilename, pszColor, pszSize, dwReserved);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Calls the SetSystemVisualStyle function with parameters reordered for convenience.
+        /// </summary>
+        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="pszFilename">The filename of the visual style.</param>
+        /// <param name="pszColor">The color of the visual style.</param>
+        /// <param name="pszSize">The size of the visual style.</param>
+        /// <param name="dwReserved">Reserved parameter for future use.</param>
+        /// <returns>True if the operation is successful, otherwise false.</returns>
         public static bool SetSystemVisualStyle(TreeView TreeView, string pszFilename, string pszColor, string pszSize, int dwReserved)
         {
             return SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved, TreeView);
         }
 
-
+        /// <summary>
+        /// Enables or disables theming based on the specified flag, handling UAC elevation if required.
+        /// </summary>
+        /// <param name="fEnable">The flag indicating whether theming should be enabled (1) or disabled (0).</param>
+        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <returns>True if the operation is successful, otherwise false.</returns>
         public static bool EnableTheming(int fEnable, TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            bool result = false;
+
+            // Check if the user has administrator privileges
+            if (User.SID == User.AdminSID_GrantedUAC)
             {
-                bool result = false;
-                if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
-                {
-                    result = PrivateFunctions.EnableTheming(fEnable) == 1;
-                    advapi.RevertToSelf();
-                }
-
-                if (TreeView != null)
-                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", fEnable, result), "dll");
-
-                wic.Undo();
-                return result;
+                // Enable or disable theming directly if the user is an administrator
+                result = PrivateFunctions.EnableTheming(fEnable) == 1;
             }
+            else
+            {
+                // If not an administrator, impersonate the user and attempt to enable or disable theming
+                bool advapi_switched = false;
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+
+                    // Enable or disable theming while impersonating the user
+                    result = PrivateFunctions.EnableTheming(fEnable) == 1;
+
+                    // Revert impersonation and undo changes
+                    if (advapi_switched) { advapi.RevertToSelf(); }
+
+                    wic.Undo();
+                }
+            }
+
+            // Log details of the operation using Verboser_EnableTheming function
+            Verboser_EnableTheming(TreeView, result, fEnable);
+
+            return result;
         }
 
+        /// <summary>
+        /// Calls the EnableTheming function with parameters reordered for convenience.
+        /// </summary>
+        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="fEnable">The flag indicating whether theming should be enabled (1) or disabled (0).</param>
+        /// <returns>True if the operation is successful, otherwise false.</returns>
         public static bool EnableTheming(TreeView TreeView, int fEnable)
         {
             return EnableTheming(fEnable, TreeView);
         }
-
 
         /// <summary>
         /// Get current applied visual styles data
@@ -80,22 +214,45 @@ namespace WinPaletter.NativeMethods
         /// Item2: Color name
         /// Item3: Size name
         /// </code></returns>
-        public static Tuple<string, string, string> GetCurrentVS()
+        public static Tuple<string, string, string> GetCurrentVS(TreeView TreeView = null)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            bool result = false;
+            StringBuilder vsFile = new(260);
+            StringBuilder colorName = new(260);
+            StringBuilder sizeName = new(260);
+
+            if (User.SID == User.AdminSID_GrantedUAC)
             {
-                StringBuilder vsFile = new(260);
-                StringBuilder colorName = new(260);
-                StringBuilder sizeName = new(260);
+                PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
+                result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && System.IO.File.Exists(vsFile.ToString());
+            }
 
-                if (User.SID == User.AdminSID_GrantedUAC || advapi.ImpersonateLoggedOnUser(User.Token))
+            else
+            {
+                bool advapi_switched = false;
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
-                    PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
-                    advapi.RevertToSelf();
-                }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
-                wic.Undo();
+                    PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
+                    result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && System.IO.File.Exists(vsFile.ToString());
+
+                    if (advapi_switched) { advapi.RevertToSelf(); }
+
+                    wic.Undo();
+                }
+            }
+
+            Verboser_GetCurrentThemeName(TreeView, result, vsFile.ToString(), colorName.ToString(), sizeName.ToString());
+
+            if (result)
+            {
                 return new Tuple<string, string, string>(vsFile.ToString(), colorName.ToString(), sizeName.ToString());
+            }
+            else
+            {
+                return new Tuple<string, string, string>("", "", "");
             }
         }
     }

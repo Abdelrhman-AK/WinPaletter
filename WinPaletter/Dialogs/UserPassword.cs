@@ -54,7 +54,7 @@ namespace WinPaletter.Dialogs
             try { Forms.BK.Close(); } catch { }
             try { Forms.BK.Show(); } catch { }
 
-            this.DropEffect(new Padding(0, panel1.Height, 0, 0), true, DWM.FormStyle.Tabbed);
+            this.DropEffect(new Padding(0, 0, 0, panel1.Height), true, DWM.FormStyle.Tabbed);
 
             Refresh();
         }

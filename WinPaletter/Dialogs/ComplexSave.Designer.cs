@@ -82,7 +82,7 @@ namespace WinPaletter
             this.Label17.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label17.Location = new System.Drawing.Point(50, 12);
             this.Label17.Name = "Label17";
-            this.Label17.Size = new System.Drawing.Size(414, 35);
+            this.Label17.Size = new System.Drawing.Size(423, 35);
             this.Label17.TabIndex = 1;
             this.Label17.Text = "Current theme has been changed. Choose what you want.";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -100,51 +100,57 @@ namespace WinPaletter
             this.GroupBox1.Location = new System.Drawing.Point(12, 65);
             this.GroupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(452, 165);
+            this.GroupBox1.Size = new System.Drawing.Size(461, 165);
             this.GroupBox1.TabIndex = 3;
             this.GroupBox1.Text = "GroupBox1";
             // 
             // RadioImage3
             // 
+            this.RadioImage3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage3.Checked = true;
             this.RadioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage3.Image")));
             this.RadioImage3.ImageWithText = true;
-            this.RadioImage3.Location = new System.Drawing.Point(18, 123);
+            this.RadioImage3.Location = new System.Drawing.Point(3, 125);
             this.RadioImage3.Name = "RadioImage3";
             this.RadioImage3.ShowText = true;
-            this.RadioImage3.Size = new System.Drawing.Size(429, 35);
+            this.RadioImage3.Size = new System.Drawing.Size(455, 35);
             this.RadioImage3.TabIndex = 9;
             this.RadioImage3.Text = "Don\'t save";
             this.RadioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RadioImage2
             // 
+            this.RadioImage2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage2.Checked = false;
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage2.Image")));
             this.RadioImage2.ImageWithText = true;
-            this.RadioImage2.Location = new System.Drawing.Point(18, 82);
+            this.RadioImage2.Location = new System.Drawing.Point(3, 84);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.ShowText = true;
-            this.RadioImage2.Size = new System.Drawing.Size(429, 35);
+            this.RadioImage2.Size = new System.Drawing.Size(455, 35);
             this.RadioImage2.TabIndex = 7;
             this.RadioImage2.Text = "Save as ...";
             this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RadioImage1
             // 
+            this.RadioImage1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage1.Checked = false;
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage1.Image")));
             this.RadioImage1.ImageWithText = true;
-            this.RadioImage1.Location = new System.Drawing.Point(18, 41);
+            this.RadioImage1.Location = new System.Drawing.Point(3, 43);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.ShowText = true;
-            this.RadioImage1.Size = new System.Drawing.Size(429, 35);
+            this.RadioImage1.Size = new System.Drawing.Size(455, 35);
             this.RadioImage1.TabIndex = 5;
             this.RadioImage1.Text = "Save";
             this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -166,7 +172,7 @@ namespace WinPaletter
             this.Label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(44, 3);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(405, 35);
+            this.Label1.Size = new System.Drawing.Size(414, 35);
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Theme file";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -185,66 +191,74 @@ namespace WinPaletter
             this.GroupBox2.Location = new System.Drawing.Point(12, 236);
             this.GroupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(452, 205);
+            this.GroupBox2.Size = new System.Drawing.Size(461, 205);
             this.GroupBox2.TabIndex = 4;
             this.GroupBox2.Text = "GroupBox2";
             // 
             // RadioImage7
             // 
+            this.RadioImage7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage7.Checked = false;
             this.RadioImage7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage7.ForeColor = System.Drawing.Color.White;
             this.RadioImage7.Image = null;
             this.RadioImage7.ImageWithText = true;
-            this.RadioImage7.Location = new System.Drawing.Point(15, 123);
+            this.RadioImage7.Location = new System.Drawing.Point(3, 125);
             this.RadioImage7.Name = "RadioImage7";
             this.RadioImage7.ShowText = true;
-            this.RadioImage7.Size = new System.Drawing.Size(432, 35);
+            this.RadioImage7.Size = new System.Drawing.Size(455, 35);
             this.RadioImage7.TabIndex = 17;
             this.RadioImage7.Text = "Default Windows";
             this.RadioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RadioImage4
             // 
+            this.RadioImage4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage4.Checked = false;
             this.RadioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage4.ForeColor = System.Drawing.Color.White;
             this.RadioImage4.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage4.Image")));
             this.RadioImage4.ImageWithText = true;
-            this.RadioImage4.Location = new System.Drawing.Point(15, 164);
+            this.RadioImage4.Location = new System.Drawing.Point(3, 166);
             this.RadioImage4.Name = "RadioImage4";
             this.RadioImage4.ShowText = true;
-            this.RadioImage4.Size = new System.Drawing.Size(432, 35);
+            this.RadioImage4.Size = new System.Drawing.Size(455, 35);
             this.RadioImage4.TabIndex = 15;
             this.RadioImage4.Text = "Don\'t apply";
             this.RadioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RadioImage5
             // 
+            this.RadioImage5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage5.Checked = false;
             this.RadioImage5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage5.ForeColor = System.Drawing.Color.White;
             this.RadioImage5.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage5.Image")));
             this.RadioImage5.ImageWithText = true;
-            this.RadioImage5.Location = new System.Drawing.Point(15, 82);
+            this.RadioImage5.Location = new System.Drawing.Point(3, 84);
             this.RadioImage5.Name = "RadioImage5";
             this.RadioImage5.ShowText = true;
-            this.RadioImage5.Size = new System.Drawing.Size(432, 35);
+            this.RadioImage5.Size = new System.Drawing.Size(455, 35);
             this.RadioImage5.TabIndex = 13;
             this.RadioImage5.Text = "First theme (undo applied changes)";
             this.RadioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RadioImage6
             // 
+            this.RadioImage6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioImage6.Checked = true;
             this.RadioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage6.ForeColor = System.Drawing.Color.White;
             this.RadioImage6.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage6.Image")));
             this.RadioImage6.ImageWithText = true;
-            this.RadioImage6.Location = new System.Drawing.Point(15, 41);
+            this.RadioImage6.Location = new System.Drawing.Point(3, 43);
             this.RadioImage6.Name = "RadioImage6";
             this.RadioImage6.ShowText = true;
-            this.RadioImage6.Size = new System.Drawing.Size(432, 35);
+            this.RadioImage6.Size = new System.Drawing.Size(455, 35);
             this.RadioImage6.TabIndex = 11;
             this.RadioImage6.Text = "Current theme";
             this.RadioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -266,7 +280,7 @@ namespace WinPaletter
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(44, 3);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(405, 35);
+            this.Label2.Size = new System.Drawing.Size(414, 35);
             this.Label2.TabIndex = 0;
             this.Label2.Text = "Apply";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -280,7 +294,7 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
             this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button1.Location = new System.Drawing.Point(382, 453);
+            this.Button1.Location = new System.Drawing.Point(391, 453);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
             this.Button1.TabIndex = 5;
@@ -297,7 +311,7 @@ namespace WinPaletter
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
             this.Button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.Button2.Location = new System.Drawing.Point(296, 453);
+            this.Button2.Location = new System.Drawing.Point(305, 453);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 6;
@@ -314,7 +328,7 @@ namespace WinPaletter
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
             this.Button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.Button3.Location = new System.Drawing.Point(210, 453);
+            this.Button3.Location = new System.Drawing.Point(219, 453);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(80, 34);
             this.Button3.TabIndex = 7;
@@ -337,6 +351,8 @@ namespace WinPaletter
             // 
             // AnimatedBox1
             // 
+            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(162)))));
             this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.AnimatedBox1.Controls.Add(this.PictureBox1);
@@ -344,7 +360,7 @@ namespace WinPaletter
             this.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.AnimatedBox1.Location = new System.Drawing.Point(0, 0);
             this.AnimatedBox1.Name = "AnimatedBox1";
-            this.AnimatedBox1.Size = new System.Drawing.Size(475, 59);
+            this.AnimatedBox1.Size = new System.Drawing.Size(484, 59);
             this.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors;
             this.AnimatedBox1.TabIndex = 10;
             this.AnimatedBox1.Text = "AnimatedBox1";
@@ -355,7 +371,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(475, 499);
+            this.ClientSize = new System.Drawing.Size(484, 499);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.CheckBox2);
             this.Controls.Add(this.Button3);

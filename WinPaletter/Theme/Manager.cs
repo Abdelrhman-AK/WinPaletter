@@ -123,11 +123,13 @@ namespace WinPaletter.Theme
                                 #region Cursors
                                 Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", false));
 
-                                if (!SystemParametersInfo((int)SPI.Cursors.GETCURSORSHADOW, 0, ref Cursor_Shadow, SPIF.None))
+                                if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Cursor_Shadow, SPIF.SPIF_NONE))
                                     Cursor_Shadow = @default.Cursor_Shadow;
-                                if (!SystemParametersInfo((int)SPI.Cursors.GETMOUSETRAILS, 0, ref Cursor_Trails, SPIF.None))
+
+                                if (!SystemParametersInfo(SPI.SPI_GETMOUSETRAILS, 0, ref Cursor_Trails, SPIF.SPIF_NONE))
                                     Cursor_Trails = @default.Cursor_Trails;
-                                if (!SystemParametersInfo((int)SPI.Cursors.GETMOUSESONAR, 0, ref Cursor_Sonar, SPIF.None))
+
+                                if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref Cursor_Sonar, SPIF.SPIF_NONE))
                                     Cursor_Sonar = @default.Cursor_Sonar;
 
                                 Cursor_Arrow.Load("Arrow");
@@ -720,9 +722,13 @@ namespace WinPaletter.Theme
                             {
                             }
 
-                            if (ReportProgress_Detailed)
-                                AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(\"Environment\")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll");
-                            User32.SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, (uint)MSG_TIMEOUT, out RESULT);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_THEMECHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, UIntPtr.Zero, IntPtr.Zero);
+                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_WININICHANGE, UIntPtr.Zero, IntPtr.Zero);
 
                             if (ReportProgress)
                             {

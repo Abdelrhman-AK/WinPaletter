@@ -478,11 +478,11 @@ namespace WinPaletter.Theme
 
             x = string.Format(@"{0}\{1}", Path, "Person.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
-            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
             x = string.Format(@"{0}\{1}", Path, "Pin.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
-            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_
 
             x = string.Format(@"{0}\{1}", Path, "Move.cur");
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
@@ -512,7 +512,7 @@ namespace WinPaletter.Theme
             EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
-            SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+            SystemParametersInfo(TreeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
         }
 
         /// <summary>
@@ -652,7 +652,7 @@ namespace WinPaletter.Theme
                     SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
                 }
 
-                SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+                SystemParametersInfo(TreeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
             }
 
             catch (Exception ex)
@@ -738,7 +738,7 @@ namespace WinPaletter.Theme
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
-                SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORS, 0, 0, (SPIF.UpdateINIFile | SPIF.UpdateINIFile));
+                SystemParametersInfo(TreeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
             }
 
             catch (Exception ex)

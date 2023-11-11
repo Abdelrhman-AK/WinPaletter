@@ -16,7 +16,7 @@ namespace WinPaletter
 
         private static readonly MethodInvoker UpdateDarkModeInvoker = new(() =>
         {
-            FetchDarkMode();
+            GetDarkMode();
             if (Settings.Appearance.AutoDarkMode)
                 ApplyStyle();
         });

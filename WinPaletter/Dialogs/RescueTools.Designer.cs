@@ -73,7 +73,7 @@
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
             this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button1.Location = new System.Drawing.Point(5, 45);
+            this.button1.Location = new System.Drawing.Point(5, 46);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(294, 32);
             this.button1.TabIndex = 0;
@@ -129,7 +129,7 @@
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = null;
             this.button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button3.Location = new System.Drawing.Point(5, 121);
+            this.button3.Location = new System.Drawing.Point(5, 122);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(294, 32);
             this.button3.TabIndex = 2;
@@ -147,11 +147,11 @@
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
             this.button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button2.Location = new System.Drawing.Point(5, 83);
+            this.button2.Location = new System.Drawing.Point(5, 84);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(294, 32);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Kill Explorer";
+            this.button2.Text = "Force stop (kill) Explorer";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -221,7 +221,7 @@
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
             this.button5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button5.Location = new System.Drawing.Point(5, 83);
+            this.button5.Location = new System.Drawing.Point(5, 84);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(294, 32);
             this.button5.TabIndex = 1;
@@ -239,7 +239,7 @@
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = null;
             this.button6.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button6.Location = new System.Drawing.Point(5, 45);
+            this.button6.Location = new System.Drawing.Point(5, 46);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(294, 32);
             this.button6.TabIndex = 0;
@@ -296,7 +296,7 @@
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
             this.button7.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button7.Location = new System.Drawing.Point(5, 121);
+            this.button7.Location = new System.Drawing.Point(5, 122);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(294, 32);
             this.button7.TabIndex = 2;
@@ -314,11 +314,11 @@
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
             this.button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button8.Location = new System.Drawing.Point(5, 43);
+            this.button8.Location = new System.Drawing.Point(5, 44);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(294, 32);
             this.button8.TabIndex = 1;
-            this.button8.Text = "Return to first theme (launched in current session)";
+            this.button8.Text = "Return first theme (launched in current session)";
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
@@ -332,11 +332,11 @@
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
             this.button9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button9.Location = new System.Drawing.Point(5, 83);
+            this.button9.Location = new System.Drawing.Point(5, 84);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(294, 32);
             this.button9.TabIndex = 0;
-            this.button9.Text = "Return to native Windows theme";
+            this.button9.Text = "Return native Windows theme";
             this.button9.UseVisualStyleBackColor = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
@@ -388,7 +388,7 @@
             this.button10.ForeColor = System.Drawing.Color.White;
             this.button10.Image = null;
             this.button10.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button10.Location = new System.Drawing.Point(5, 121);
+            this.button10.Location = new System.Drawing.Point(5, 122);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(294, 32);
             this.button10.TabIndex = 2;
@@ -406,11 +406,11 @@
             this.button11.ForeColor = System.Drawing.Color.White;
             this.button11.Image = null;
             this.button11.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button11.Location = new System.Drawing.Point(5, 83);
+            this.button11.Location = new System.Drawing.Point(5, 84);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(294, 32);
             this.button11.TabIndex = 1;
-            this.button11.Text = "Scan system file (sfc) on all system files";
+            this.button11.Text = "Scan all system files (sfc)";
             this.button11.UseVisualStyleBackColor = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
@@ -424,7 +424,7 @@
             this.button12.ForeColor = System.Drawing.Color.White;
             this.button12.Image = null;
             this.button12.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button12.Location = new System.Drawing.Point(5, 45);
+            this.button12.Location = new System.Drawing.Point(5, 46);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(294, 32);
             this.button12.TabIndex = 0;

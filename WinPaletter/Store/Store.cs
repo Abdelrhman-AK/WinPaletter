@@ -1504,7 +1504,8 @@ namespace WinPaletter
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
                 Program.Settings = new WPSettings(WPSettings.Mode.Registry);
-                FetchDarkMode();
+                GetRoundedCorners();
+                GetDarkMode();
                 ApplyStyle(this, true);
             }
 

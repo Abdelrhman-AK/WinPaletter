@@ -43,7 +43,8 @@ namespace WinPaletter
                 if (!System.IO.Directory.Exists(PathsExt.ProgramFilesData)) { System.IO.Directory.CreateDirectory(PathsExt.ProgramFilesData); }
 
                 // Important to load proper style and language before showing login dialog
-                FetchDarkMode();
+                GetRoundedCorners();
+                GetDarkMode();
                 ApplyStyle();
                 LoadLanguage();
 

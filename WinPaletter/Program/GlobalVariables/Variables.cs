@@ -41,7 +41,7 @@ namespace WinPaletter
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.Accent, DefaultColors.BackColorDark, true);
+        public static Config Style = new(DefaultColors.Accent, DefaultColors.BackColorDark, true, true);
 
         /// <summary>
         /// A class that represents WinPaletter's Settings

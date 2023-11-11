@@ -10,110 +10,171 @@ namespace WinPaletter.NativeMethods
     public class DLLFunc
     {
         #region User32\Shell32
+        /// <summary>
+        /// Combines low and high values to create an icon size value.
+        /// </summary>
+        /// <param name="low">The low word representing the large icon size.</param>
+        /// <param name="high">The high word representing the small icon size.</param>
+        /// <returns>Combined icon size value.</returns>
         private static int MAKEICONSIZE(int low, int high)
         {
+            // Shift the high word to the left by 16 bits and combine with low word using bitwise OR.
             return high << 16 | low & 0xFFFF;
         }
+
+        /// <summary>
+        /// Extracts a small icon from a file.
+        /// </summary>
+        /// <param name="Path">The path of the file.</param>
+        /// <param name="IconIndex">Optional index of the icon in the file. Default is 0.</param>
+        /// <returns>An Icon object representing the extracted small icon.</returns>
         public static object ExtractSmallIcon(string Path, int IconIndex = 0)
         {
+            // Create a null Icon object.
             Icon ico = null;
-            // Make the nIconSize value (See the Msdn documents). The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
+
+            // Make the nIconSize value (See the Msdn documents). 
+            // The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
             // The largest size for an icon is 256.
             uint LargeAndSmallSize = (uint)MAKEICONSIZE(256, 16);
 
+            // Initialize handles for large and small icons.
             var hLrgIcon = IntPtr.Zero;
             var hSmlIcon = IntPtr.Zero;
 
+            // Call the SHDefExtractIconW function to extract icons.
             int result = Shell32.SHDefExtractIconW(Path, IconIndex, 0U, ref hLrgIcon, ref hSmlIcon, LargeAndSmallSize);
 
+            // Check if the extraction was successful (result == 0).
             if (result == 0)
             {
+                // Dispose the existing Icon if not null.
                 if (ico is not null)
                     ico.Dispose();
 
-                // if the large and/or small icons where created in the unmanaged memory successfully then create
-                // a clone of them in the managed icons and delete the icons in the unmanaged memory.
-
+                // If the small icon was created in unmanaged memory, clone it to managed memory and then delete the unmanaged icon.
                 if (hSmlIcon != IntPtr.Zero)
                 {
                     ico = (Icon)Icon.FromHandle(hSmlIcon).Clone();
                     User32.DestroyIcon(hSmlIcon);
                 }
-
             }
 
+            // Return the extracted small icon.
             return ico;
         }
+
+        /// <summary>
+        /// Gets a system icon using Shell32.SHSTOCKICONID and Shell32.SHGSI values.
+        /// </summary>
+        /// <param name="_Icon">The SHSTOCKICONID representing the desired system icon.</param>
+        /// <param name="_Type">The SHGSI value specifying the type of system icon to retrieve.</param>
+        /// <returns>An Icon object representing the system icon.</returns>
         public static Icon GetSystemIcon(Shell32.SHSTOCKICONID _Icon, Shell32.SHGSI _Type)
         {
             try
             {
+                // Initialize a SHSTOCKICONINFO structure.
                 var sii = new Shell32.SHSTOCKICONINFO() { cbSize = (uint)Marshal.SizeOf(typeof(Shell32.SHSTOCKICONINFO)) };
+
+                // Call SHGetStockIconInfo to get system icon information.
                 Shell32.SHGetStockIconInfo(_Icon, _Type, ref sii);
+
+                // Check if the icon handle is not null and not zero.
                 if (sii.hIcon != null && sii.hIcon != IntPtr.Zero)
                 {
+                    // Return an Icon object created from the icon handle.
                     return Icon.FromHandle(sii.hIcon);
                 }
                 else
                 {
+                    // Return null if the icon handle is null or zero.
                     return null;
                 }
             }
             catch
             {
+                // Return null in case of any exceptions.
                 return null;
             }
         }
-
         #endregion
 
         #region DWMAPI
-        public static void DarkTitlebar(IntPtr hWnd, bool DarkMode)
+        /// <summary>
+        /// Applies or removes dark mode for the titlebar of a specified window.
+        /// </summary>
+        /// <param name="hWnd">The handle of the window.</param>
+        /// <param name="darkMode">True to apply dark mode, false to remove dark mode.</param>
+        public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
         {
+            // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8 || OS.W81)
                 return;
 
-            int argattrValue = DarkMode ? 1 : 0;
-            DWMAPI.DwmSetWindowAttribute(hWnd, 20, ref argattrValue, Marshal.SizeOf<int>());
+            int attributeValue = darkMode ? 1 : 0;
 
-            int argattrValue1 = DarkMode ? 1 : 0;
-            DWMAPI.DwmSetWindowAttribute(hWnd, 19, ref argattrValue1, Marshal.SizeOf<int>());
+            // Set the dark mode attribute for the titlebar
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMATTRIB.USE_IMMERSIVE_DARK_MODE, ref attributeValue, Marshal.SizeOf<int>());
+
+            // Set the dark mode attribute for the border
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMATTRIB.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
         }
         #endregion
 
         #region UxTheme
-        public static void RemoveFormTitlebarTextAndIcon(IntPtr Handle)
+        /// <summary>
+        /// Removes the titlebar text and icon from a specified form.
+        /// </summary>
+        /// <param name="handle">The handle of the form.</param>
+        public static void RemoveFormTitlebarTextAndIcon(IntPtr handle)
         {
-            var ops = new UxTheme.WTA_OPTIONS()
+            // Set the non-client rendering options to remove the titlebar text and icon
+            var options = new UxTheme.WTA_OPTIONS()
             {
                 Flags = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON,
                 Mask = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON
             };
 
-            UxTheme.SetWindowThemeAttribute(Handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ref ops, (uint)Marshal.SizeOf(ops));
+            UxTheme.SetWindowThemeAttribute(handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ref options, (uint)Marshal.SizeOf(options));
         }
-
         #endregion
 
         #region Winmm
-        public static void PlayAudio(string File)
+        /// <summary>
+        /// Plays an audio file.
+        /// </summary>
+        /// <param name="file">The path to the audio file.</param>
+        public static void PlayAudio(string file)
         {
-            if (System.IO.File.Exists(File))
+            if (System.IO.File.Exists(file))
             {
-                Winmm.mciSendString("close myWAV", null, 0, (IntPtr)0);
-                Winmm.mciSendString("open \"" + File + "\" type mpegvideo alias myWAV", null, 0, (IntPtr)0);
-                Winmm.mciSendString("play myWAV", null, 0, (IntPtr)0);
-                int Volume = 1000; // Sets it to use entire range of volume control
-                Winmm.mciSendString("setaudio myWAV volume to " + Volume.ToString(), null, 0, (IntPtr)0);
+                // Close any existing audio player
+                Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);
+
+                // Open the specified audio file
+                Winmm.mciSendString("open \"" + file + "\" type mpegvideo alias myWAV", null, 0, IntPtr.Zero);
+
+                // Play the audio file
+                Winmm.mciSendString("play myWAV", null, 0, IntPtr.Zero);
+
+                // Set the volume to maximum
+                int volume = 1000; // Sets it to use the entire range of volume control
+                Winmm.mciSendString("setaudio myWAV volume to " + volume.ToString(), null, 0, IntPtr.Zero);
             }
         }
 
+        /// <summary>
+        /// Stops playing the currently playing audio.
+        /// </summary>
         public static void StopAudio()
         {
+            // Seek to the start of the audio file
             Winmm.mciSendString("seek myWAV to start", null, 0, IntPtr.Zero);
+
+            // Stop playing the audio file
             Winmm.mciSendString("stop myWAV", null, 0, IntPtr.Zero);
         }
         #endregion
-
     }
 }

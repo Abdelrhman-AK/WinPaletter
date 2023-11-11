@@ -53,6 +53,7 @@ namespace WinPaletter.TypesExtensions
             {
                 if (GlowSize <= 0)
                     GlowSize = 1;
+
                 if (GlowFade <= 0)
                     GlowFade = 1;
 
@@ -81,7 +82,6 @@ namespace WinPaletter.TypesExtensions
 
         public static void DrawAeroEffect(this Graphics G, Rectangle Rect, Bitmap BackgroundBlurred, Color Color1, decimal ColorBalance, Color Color2, decimal GlowBalance, decimal alpha, int Radius, bool RoundedCorners)
         {
-
             if (RoundedCorners)
             {
                 if (BackgroundBlurred is not null)
@@ -141,13 +141,13 @@ namespace WinPaletter.TypesExtensions
             try
             {
                 if (Radius == -1)
-                    Radius = 5;
+                    Radius = Program.Style.Radius;
 
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = Rectangle.Round(Radius))
                     {
@@ -169,12 +169,12 @@ namespace WinPaletter.TypesExtensions
             try
             {
                 if (Radius == -1)
-                    Radius = 5;
+                    Radius = Program.Style.Radius;
 
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
 
-                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
+                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
                     using (var path = Rectangle.Round(Radius))
                     {
@@ -194,24 +194,24 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        public static GraphicsPath Round(this Rectangle r, int radius)
+        public static GraphicsPath Round(this Rectangle r, int Radius)
         {
             try
             {
                 var path = new GraphicsPath();
-                int d = radius * 2;
+                Radius *= 2;
 
-                path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
-                path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
+                path.AddLine(r.Left + Radius, r.Top, r.Right - Radius, r.Top);
+                path.AddArc(Rectangle.FromLTRB(r.Right - Radius, r.Top, r.Right, r.Top + Radius), -90, 90f);
 
-                path.AddLine(r.Right, r.Top + d, r.Right, r.Bottom - d);
-                path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Bottom - d, r.Right, r.Bottom), 0f, 90f);
+                path.AddLine(r.Right, r.Top + Radius, r.Right, r.Bottom - Radius);
+                path.AddArc(Rectangle.FromLTRB(r.Right - Radius, r.Bottom - Radius, r.Right, r.Bottom), 0f, 90f);
 
-                path.AddLine(r.Right - d, r.Bottom, r.Left + d, r.Bottom);
-                path.AddArc(Rectangle.FromLTRB(r.Left, r.Bottom - d, r.Left + d, r.Bottom), 90f, 90f);
+                path.AddLine(r.Right - Radius, r.Bottom, r.Left + Radius, r.Bottom);
+                path.AddArc(Rectangle.FromLTRB(r.Left, r.Bottom - Radius, r.Left + Radius, r.Bottom), 90f, 90f);
 
-                path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
-                path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
+                path.AddLine(r.Left, r.Bottom - Radius, r.Left, r.Top + Radius);
+                path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + Radius, r.Top + Radius), 180f, 90f);
 
                 path.CloseFigure();
                 return path;
@@ -222,25 +222,26 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        public static void DrawRoundedRect(this Graphics Graphics, Pen Pen, Rectangle Rectangle, int Radius_willbe_x2 = -1, bool ForcedRoundCorner = false)
+        public static void DrawRoundedRect(this Graphics Graphics, Pen Pen, Rectangle Rectangle, int Radius = -1, bool ForcedRoundCorner = false)
         {
             try
             {
-                if (Radius_willbe_x2 == -1)
-                    Radius_willbe_x2 = 5;
-                Radius_willbe_x2 *= 2;
+                if (Radius == -1)
+                    Radius = Program.Style.Radius;
+
+                Radius *= 2;
 
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                if ((GetRoundedCorners() | ForcedRoundCorner) & Radius_willbe_x2 > 0)
+                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
-                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y, Radius_willbe_x2, Radius_willbe_x2, 180, 90);
-                    Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius_willbe_x2 / 2d), Rectangle.Y, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius_willbe_x2 / 2d), Rectangle.Y);
-                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius_willbe_x2, Rectangle.Y, Radius_willbe_x2, Radius_willbe_x2, 270, 90);
-                    Graphics.DrawLine(Pen, Rectangle.X, (int)Math.Round(Rectangle.Y + Radius_willbe_x2 / 2d), Rectangle.X, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius_willbe_x2 / 2d));
-                    Graphics.DrawLine(Pen, Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Radius_willbe_x2 / 2d), Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius_willbe_x2 / 2d));
-                    Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius_willbe_x2 / 2d), Rectangle.Y + Rectangle.Height, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius_willbe_x2 / 2d), Rectangle.Y + Rectangle.Height);
-                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y + Rectangle.Height - Radius_willbe_x2, Radius_willbe_x2, Radius_willbe_x2, 90, 90);
-                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius_willbe_x2, Rectangle.Y + Rectangle.Height - Radius_willbe_x2, Radius_willbe_x2, Radius_willbe_x2, 0, 90);
+                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y, Radius, Radius, 180, 90);
+                    Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y);
+                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y, Radius, Radius, 270, 90);
+                    Graphics.DrawLine(Pen, Rectangle.X, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2d));
+                    Graphics.DrawLine(Pen, Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2d));
+                    Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y + Rectangle.Height, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y + Rectangle.Height);
+                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 90, 90);
+                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 0, 90);
                 }
                 else
                 {
@@ -259,8 +260,12 @@ namespace WinPaletter.TypesExtensions
                 bool Dark = Program.Style.DarkMode;
 
                 if (Radius == -1)
-                    Radius = 5;
+                    Radius = Program.Style.Radius;
+
                 Radius *= 2;
+
+                bool Rounded = (Program.Style.RoundedCorners || ForcedRoundCorner) && Radius > 0;
+
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
                 using (var Pen = new Pen(PenX.Color, PenX.Width) { DashStyle = PenX.DashStyle, DashOffset = PenX.DashOffset })
@@ -271,13 +276,13 @@ namespace WinPaletter.TypesExtensions
 
                         if (Dark)
                         {
-                            Pen.Color = PenX.Color.CB(0.1f);
+                            Pen.Color = PenX.Color.CB(0.04f);
                             Pen2.Color = PenX.Color;
                         }
                         else
                         {
-                            Pen.Color = PenX.Color.CB((float)-0.02d);
-                            Pen2.Color = PenX.Color.CB((float)-0.05d);
+                            Pen.Color = PenX.Color;
+                            Pen2.Color = PenX.Color.CB(-0.12f);
                         }
 
                         LinearGradientBrush G;
@@ -286,20 +291,22 @@ namespace WinPaletter.TypesExtensions
                         if (Dark)
                         {
                             G = new LinearGradientBrush(Rectangle, CColor, Pen.Color, 180f);
-                            var cblend = new ColorBlend(3)
+                            var cblend = new ColorBlend(5)
                             {
-                                Colors = new Color[3] { CColor, Pen.Color, CColor },
-                                Positions = new float[3] { 0f, 0.5f, 1.0f }
+                                Colors = new Color[5] { CColor, Pen.Color, Pen.Color, Pen.Color, CColor },
+                                Positions = Rounded ? 
+                                new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f } : 
+                                new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f }
                             };
                             G.InterpolationColors = cblend;
                         }
                         else
                         {
                             G = new LinearGradientBrush(Rectangle, Pen.Color, CColor, 180f);
-                            var cblend = new ColorBlend(3)
+                            var cblend = new ColorBlend(5)
                             {
-                                Colors = new Color[3] { Pen.Color, CColor, Pen.Color },
-                                Positions = new float[3] { 0f, 0.5f, 1.0f }
+                                Colors = new Color[5] { Pen.Color, CColor, CColor, CColor, Pen.Color },
+                                Positions = new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f }
                             };
                             G.InterpolationColors = cblend;
                         }
@@ -307,67 +314,114 @@ namespace WinPaletter.TypesExtensions
                         using (var PenG = new Pen(G, PenX.Width) { DashStyle = PenX.DashStyle, DashOffset = PenX.DashOffset })
                         {
 
-                            if ((GetRoundedCorners() | ForcedRoundCorner) & Radius > 0)
-                            {
+                            Point P_T1 = new((int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y);
+                            Point P_T2 = new((int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y);
 
-                                if (Dark)
+                            Point P_B1 = new((int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y + Rectangle.Height);
+                            Point P_B2 = new((int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y + Rectangle.Height);
+
+                            Point P_LB = new(Rectangle.X, Rectangle.Y + Rectangle.Height);
+                            Point P_RB = new(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Height);
+
+                            Point P_LT = new(Rectangle.X, Rectangle.Y);
+                            Point P_RT = new(Rectangle.X + Rectangle.Width, Rectangle.Y);
+
+                            Point P_L1 = new(Rectangle.X, (int)Math.Round(Rectangle.Y + Radius / 2d));
+                            Point P_L2 = new(Rectangle.X, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
+
+                            Point P_R1 = new(Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Radius / 2d));
+                            Point P_R2 = new(Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
+
+                            if (Dark)
+                            {
+                                Graphics.DrawLine(Pen2, P_B1, P_B2);
+
+                                if (Rounded)
                                 {
-                                    Graphics.DrawLine(Pen2, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y + Rectangle.Height, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y + Rectangle.Height);
                                     Graphics.DrawArc(Pen2, Rectangle.X, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 90, 90);
                                     Graphics.DrawArc(Pen2, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 0, 90);
-
-                                    SidePen = Pen2;
-
-                                    Graphics.DrawLine(SidePen, Rectangle.X, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
-                                    Graphics.DrawLine(SidePen, Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
-
-                                    Graphics.DrawArc(PenG, Rectangle.X, Rectangle.Y, Radius, Radius, 180, 90);
-                                    Graphics.DrawArc(PenG, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y, Radius, Radius, 270, 90);
-                                    Graphics.DrawLine(PenG, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y);
                                 }
-
                                 else
                                 {
-                                    Graphics.DrawLine(PenG, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y + Rectangle.Height, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y + Rectangle.Height);
-                                    Graphics.DrawArc(PenG, Rectangle.X, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 90, 90);
-                                    Graphics.DrawArc(PenG, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 0, 90);
+                                    Graphics.DrawLine(Pen2, P_B1, P_LB);
+                                    Graphics.DrawLine(Pen2, P_LB, P_L1);
 
-                                    SidePen = Pen;
-
-                                    Graphics.DrawLine(SidePen, Rectangle.X, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
-                                    Graphics.DrawLine(SidePen, Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Radius / 2d), Rectangle.X + Rectangle.Width, (int)Math.Round(Rectangle.Y + Rectangle.Height - Radius / 2.5d));
-
-                                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y, Radius, Radius, 180, 90);
-                                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y, Radius, Radius, 270, 90);
-                                    Graphics.DrawLine(Pen, (int)Math.Round(Rectangle.X + Radius / 2d), Rectangle.Y, (int)Math.Round(Rectangle.X + Rectangle.Width - Radius / 2d), Rectangle.Y);
+                                    Graphics.DrawLine(Pen2, P_B2, P_RB);
+                                    Graphics.DrawLine(Pen2, P_RB, P_R1);
                                 }
+
+                                SidePen = Pen2;
+
+                                Graphics.DrawLine(SidePen, P_L1, P_L2);
+                                
+                                Graphics.DrawLine(SidePen, P_R1, P_R2);
+
+                                if (Rounded)
+                                {
+                                    Graphics.DrawArc(PenG, Rectangle.X, Rectangle.Y, Radius, Radius, 180, 90);
+                                    Graphics.DrawArc(PenG, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y, Radius, Radius, 270, 90);
+                                }
+                                else
+                                {
+                                    Graphics.DrawLine(Pen, P_T1, P_LT);
+                                    Graphics.DrawLine(SidePen, P_LT, P_L1);
+
+                                    Graphics.DrawLine(Pen, P_T2, P_RT);
+                                    Graphics.DrawLine(SidePen, P_RT, P_R1);
+                                }
+
+                                Graphics.DrawLine(PenG, P_T1, P_T2);
                             }
 
                             else
                             {
+                                Graphics.DrawLine(Pen2, P_B1, P_B2);
 
-                                if (Dark)
+                                if (Rounded)
                                 {
-                                    Pen.Color = PenX.Color.CB(0.05f);
+                                    Graphics.DrawArc(PenG, Rectangle.X, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 90, 90);
+                                    Graphics.DrawArc(PenG, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y + Rectangle.Height - Radius, Radius, Radius, 0, 90);
                                 }
                                 else
                                 {
-                                    Pen.Color = PenX.Color.CB((float)-0.02d);
+                                    Graphics.DrawLine(Pen2, P_B1, P_LB);
+                                    Graphics.DrawLine(SidePen, P_LB, P_L1);
+
+                                    Graphics.DrawLine(Pen2, P_B2, P_RB);
+                                    Graphics.DrawLine(SidePen, P_RB, P_R1);
                                 }
 
-                                Graphics.DrawRectangle(Pen, Rectangle);
+                                SidePen = Pen;
 
+                                Graphics.DrawLine(SidePen, P_L1, P_L2);
+
+                                Graphics.DrawLine(SidePen, P_R1, P_R2);
+
+                                if (Rounded)
+                                {
+                                    Graphics.DrawArc(Pen, Rectangle.X, Rectangle.Y, Radius, Radius, 180, 90);
+                                    Graphics.DrawArc(Pen, Rectangle.X + Rectangle.Width - Radius, Rectangle.Y, Radius, Radius, 270, 90);
+                                }
+                                else
+                                {
+                                    Graphics.DrawLine(Pen, P_T1, P_LT);
+                                    Graphics.DrawLine(Pen, P_LT, P_L1);
+
+                                    Graphics.DrawLine(Pen, P_T2, P_RT);
+                                    Graphics.DrawLine(Pen, P_RT, P_R1);
+                                }
+
+                                Graphics.DrawLine(Pen, P_T1, P_T2);
                             }
-
-                            SidePen.Dispose();
                         }
+
+                        SidePen.Dispose();
                     }
                 }
             }
             catch
             {
             }
-
         }
     }
 }

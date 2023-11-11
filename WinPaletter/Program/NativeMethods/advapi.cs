@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace WinPaletter.NativeMethods
 {
+    /// <summary>
+    /// Provides P/Invoke declarations for functions in the advapi32.dll library.
+    /// </summary>
     public class advapi
     {
         #region Users
@@ -42,8 +48,21 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public const int LOGON32_LOGON_NEW_CREDENTIALS = 9;
 
+        /// <summary>
+        /// Represents the default logon provider constant.
+        /// </summary>
         public const int LOGON32_PROVIDER_DEFAULT = 0;
 
+        /// <summary>
+        /// Logs a user on to the system.
+        /// </summary>
+        /// <param name="pszUserName">The name of the user.</param>
+        /// <param name="pszDomain">The domain or server whose account database contains the account.</param>
+        /// <param name="pszPassword">The plaintext password for the user account.</param>
+        /// <param name="dwLogonType">The type of logon operation.</param>
+        /// <param name="dwLogonProvider">The logon provider.</param>
+        /// <param name="phToken">A handle to the newly created access token.</param>
+        /// <returns>True if the function succeeds; otherwise, false.</returns>
         [DllImport("advapi32.dll", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool LogonUser(
@@ -54,10 +73,19 @@ namespace WinPaletter.NativeMethods
               int dwLogonProvider,
               ref IntPtr phToken);
 
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        /// <summary>
+        /// Impersonates a logged-on user.
+        /// </summary>
+        /// <param name="hToken">A handle to a primary or impersonation access token.</param>
+        /// <returns>True if the function succeeds; otherwise, false.</returns>
+        [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool ImpersonateLoggedOnUser(IntPtr hToken);
 
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        /// <summary>
+        /// Ends the impersonation of a client.
+        /// </summary>
+        /// <returns>True if the function succeeds; otherwise, false.</returns>
+        [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool RevertToSelf();
         #endregion
 

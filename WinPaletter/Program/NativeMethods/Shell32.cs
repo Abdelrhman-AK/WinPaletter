@@ -5,26 +5,63 @@ using System.Text;
 
 namespace WinPaletter.NativeMethods
 {
+    /// <summary>
+    /// Provides P/Invoke declarations for Shell32 (Windows Shell) functions.
+    /// </summary>
     public class Shell32
     {
+        /// <summary>
+        /// Notifies the system of an event that an application has performed.
+        /// </summary>
+        /// <param name="wEventId">The event that has occurred.</param>
+        /// <param name="uFlags">Flags that indicate the meaning of the dwItem1 and dwItem2 parameters.</param>
+        /// <param name="dwItem1">First event-dependent value.</param>
+        /// <param name="dwItem2">Second event-dependent value.</param>
         [DllImport("shell32.dll")]
         public static extern void SHChangeNotify(int wEventId, int uFlags, int dwItem1, int dwItem2);
+
+        /// <summary>
+        /// Retrieves the index and handles of stock icons.
+        /// </summary>
+        /// <param name="pszIconFile">The path of the file that contains the icon.</param>
+        /// <param name="iIndex">The index of the icon in the file.</param>
+        /// <param name="uFlags">A combination of flags that specify which information to retrieve.</param>
+        /// <param name="phiconLarge">A pointer to the handle of the large icon.</param>
+        /// <param name="phiconSmall">A pointer to the handle of the small icon.</param>
+        /// <param name="nIconSize">The size of the icon.</param>
+        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
         [DllImport("Shell32.dll", EntryPoint = "SHDefExtractIconW")]
         public static extern int SHDefExtractIconW([MarshalAs(UnmanagedType.LPTStr)] string pszIconFile, int iIndex, uint uFlags, ref IntPtr phiconLarge, ref IntPtr phiconSmall, uint nIconSize);
-        [DllImport("Shell32.dll", SetLastError = false)]
+
+        /// <summary>
+        /// Retrieves information about a stock icon.
+        /// </summary>
+        /// <param name="siid">The identifier of the stock icon.</param>
+        /// <param name="uFlags">A combination of flags that specify which information to retrieve.</param>
+        /// <param name="psii">A pointer to a SHSTOCKICONINFO structure that receives the icon information.</param>
+        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
+        [DllImport("shell32.dll", SetLastError = false)]
         public static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
 
+        /// <summary>
+        /// Retrieves the path to the user's account picture.
+        /// </summary>
+        /// <param name="username">The username of the user. Use null for the current user.</param>
+        /// <param name="whatever">Reserved. Must be 0x80000000.</param>
+        /// <param name="picpath">A StringBuilder that receives the path to the user's account picture.</param>
+        /// <param name="maxLength">The maximum length of the buffer pointed to by picpath.</param>
         [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern void GetUserTilePath(
-          string username,
-          UInt32 whatever, // 0x80000000
-          StringBuilder picpath, int maxLength);
+        public static extern void GetUserTilePath(string username, UInt32 whatever, StringBuilder picpath, int maxLength);
 
+        /// <summary>
+        /// Gets the path to the user's account picture.
+        /// </summary>
+        /// <param name="username">The username of the user. Use null for the current user.</param>
+        /// <returns>The path to the user's account picture.</returns>
         public static string GetUserTilePath(string username)
         {
             if (!OS.WXP)
             {
-                // username: use null for current user
                 var sb = new StringBuilder(1000);
                 GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
                 return sb.ToString();
@@ -37,6 +74,11 @@ namespace WinPaletter.NativeMethods
             }
         }
 
+        /// <summary>
+        /// Gets the user's account picture as an Image.
+        /// </summary>
+        /// <param name="username">The username of the user. Use null for the current user.</param>
+        /// <returns>The user's account picture as an Image.</returns>
         public static Image GetUserAccountPicture(string username)
         {
             string file = GetUserTilePath(username);
@@ -51,16 +93,42 @@ namespace WinPaletter.NativeMethods
             }
         }
 
+        /// <summary>
+        /// Struct that contains information about a stock icon.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHSTOCKICONINFO
         {
+            /// <summary>
+            /// The size of this structure.
+            /// </summary>
             public uint cbSize;
+
+            /// <summary>
+            /// A handle to the icon.
+            /// </summary>
             public IntPtr hIcon;
+
+            /// <summary>
+            /// The system icon index.
+            /// </summary>
             public int iSysIconIndex;
+
+            /// <summary>
+            /// The icon index.
+            /// </summary>
             public int iIcon;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)]
+
+            /// <summary>
+            /// The path to the icon file.
+            /// </summary>
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ShellConstants.MAX_PATH)]
             public string szPath;
         }
+
+        /// <summary>
+        /// Represents identifiers for stock icons used by the Shell.
+        /// </summary>
         public enum SHSTOCKICONID
         {
             /// <summary>
@@ -395,102 +463,12 @@ namespace WinPaletter.NativeMethods
 
             /// <summary>
             /// High definition DVD media In the HD DVD format.
-            /// </summary>
-            MEDIAHDDVD = 89,
-
-            /// <summary>
-            /// High definition DVD media In the Blu-ray Disc™ format.
-            /// </summary>
-            MEDIABLURAY = 90,
-
-            /// <summary>
-            /// Video CD (VCD) media.
-            /// </summary>
-            MEDIAVCD = 91,
-
-            /// <summary>
-            /// DVD+R media.
-            /// </summary>
-            MEDIADVDPLUSR = 92,
-
-            /// <summary>
-            /// DVD+RW media.
-            /// </summary>
-            MEDIADVDPLUSRW = 93,
-
-            /// <summary>
-            /// A desktop computer.
-            /// </summary>
-            DESKTOPPC = 94,
-
-            /// <summary>
-            /// A mobile computer (laptop).
-            /// </summary>
-            MOBILEPC = 95,
-
-            /// <summary>
-            /// The User Accounts Control PanelR item.
-            /// </summary>
-            USERS = 96,
-
-            /// <summary>
-            /// Smart media.
-            /// </summary>
-            MEDIASMARTMEDIA = 97,
-
-            /// <summary>
-            /// CompactFlash media.
-            /// </summary>
-            MEDIACOMPACTFLASH = 98,
-
-            /// <summary>
-            /// A cell phone.
-            /// </summary>
-            DEVICECELLPHONE = 99,
-
-            /// <summary>
-            /// A digital camera.
-            /// </summary>
-            DEVICECAMERA = 100,
-
-            /// <summary>
-            /// A digital video camera.
-            /// </summary>
-            DEVICEVIDEOCAMERA = 101,
-
-            /// <summary>
-            /// An audio player.
-            /// </summary>
-            DEVICEAUDIOPLAYER = 102,
-
-            /// <summary>
-            /// Connect To network.
-            /// </summary>
-            NETWORKCONNECT = 103,
-
-            /// <summary>
-            /// The Network And Internet Control PanelR item.
-            /// </summary>
-            INTERNET = 104,
-
-            /// <summary>
-            /// A compressed file With a .zip file name extension.
-            /// </summary>
-            ZIPFILE = 105,
-
-            /// <summary>
-            /// The Additional Options Control PanelR item.
-            /// </summary>
-            SETTINGS = 106,
-
-            /// <summary>
-            /// High definition DVD drive (any type - HD DVD-ROM HD DVD-R HD-DVD-RAM) that uses the HD DVD format.
             /// Windows Vista With Service Pack 1 (SP1) And later. 
             /// </summary>
             DRIVEHDDVD = 132,
 
             /// <summary>
-            /// High definition DVD drive (any type - BD-ROM BD-R BD-RE) that uses the Blu-ray Disc format.
+            /// High definition DVD media In the Blu-ray Disc™ format.
             /// Windows Vista With Service Pack 1 (SP1) And later. 
             /// </summary>
             DRIVEBD = 133,
@@ -542,21 +520,73 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             MAX_ICONS = 174
         }
+
+        /// <summary>
+        /// Flags used to specify which attributes to retrieve in the <see cref="SHSTOCKICONINFO"/> structure.
+        /// </summary>
         [Flags]
         public enum SHGSI
         {
+            /// <summary>
+            /// Retrieves the icon location.
+            /// </summary>
             ICONLOCATION = 0,
+
+            /// <summary>
+            /// Retrieves the icon.
+            /// </summary>
             ICON = 0x100,
+
+            /// <summary>
+            /// Retrieves the system icon index.
+            /// </summary>
             SYSICONINDEX = 0x4000,
+
+            /// <summary>
+            /// Retrieves the link overlay.
+            /// </summary>
             LINKOVERLAY = 0x8000,
+
+            /// <summary>
+            /// Retrieves the selected state.
+            /// </summary>
             SELECTED = 0x10000,
+
+            /// <summary>
+            /// Retrieves the large icon.
+            /// </summary>
             LARGEICON = 0x0,
+
+            /// <summary>
+            /// Retrieves the small icon.
+            /// </summary>
             SMALLICON = 0x1,
+
+            /// <summary>
+            /// Retrieves the shell icon size.
+            /// </summary>
             SHELLICONSIZE = 0x4
         }
 
-        public const int MAX_PATH = 260;
-        public const int SHCNE_ASSOCCHANGED = 0x8000000;
-        public const int SHCNF_IDLIST = 0;
+        /// <summary>
+        /// Represents constants used in shell operations.
+        /// </summary>
+        public static class ShellConstants
+        {
+            /// <summary>
+            /// Maximum path length.
+            /// </summary>
+            public const int MAX_PATH = 260;
+
+            /// <summary>
+            /// Shell change event associated with changes in file associations.
+            /// </summary>
+            public const int SHCNE_ASSOCCHANGED = 0x8000000;
+
+            /// <summary>
+            /// Identifier list flag used in shell notifications.
+            /// </summary>
+            public const int SHCNF_IDLIST = 0;
+        }
     }
 }

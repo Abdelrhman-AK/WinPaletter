@@ -110,7 +110,7 @@ namespace WinPaletter.Theme.Structures
                 ImgF.Image.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
             }
 
-            SystemParametersInfo(TreeView, (int)SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile);
+            SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
 

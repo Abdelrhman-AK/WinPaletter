@@ -1088,7 +1088,7 @@ namespace WinPaletter
             this.WXP_Alert2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
             this.WXP_Alert2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
+            this.WXP_Alert2.BackColor = System.Drawing.Color.Transparent;
             this.WXP_Alert2.CenterText = true;
             this.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.WXP_Alert2.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -2442,10 +2442,10 @@ namespace WinPaletter
             this.W11_Accent_Taskbar.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_Taskbar.Image = null;
             this.W11_Accent_Taskbar.ImageWithText = false;
-            this.W11_Accent_Taskbar.Location = new System.Drawing.Point(248, 3);
+            this.W11_Accent_Taskbar.Location = new System.Drawing.Point(248, 2);
             this.W11_Accent_Taskbar.Name = "W11_Accent_Taskbar";
             this.W11_Accent_Taskbar.ShowText = true;
-            this.W11_Accent_Taskbar.Size = new System.Drawing.Size(76, 23);
+            this.W11_Accent_Taskbar.Size = new System.Drawing.Size(76, 25);
             this.W11_Accent_Taskbar.TabIndex = 23;
             this.W11_Accent_Taskbar.Text = "Taskbar";
             this.W11_Accent_Taskbar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2460,10 +2460,10 @@ namespace WinPaletter
             this.W11_Accent_StartTaskbar.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_StartTaskbar.Image = null;
             this.W11_Accent_StartTaskbar.ImageWithText = false;
-            this.W11_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 3);
+            this.W11_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 2);
             this.W11_Accent_StartTaskbar.Name = "W11_Accent_StartTaskbar";
             this.W11_Accent_StartTaskbar.ShowText = true;
-            this.W11_Accent_StartTaskbar.Size = new System.Drawing.Size(186, 23);
+            this.W11_Accent_StartTaskbar.Size = new System.Drawing.Size(186, 25);
             this.W11_Accent_StartTaskbar.TabIndex = 22;
             this.W11_Accent_StartTaskbar.Text = "Start, taskbar & action Center";
             this.W11_Accent_StartTaskbar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2478,10 +2478,10 @@ namespace WinPaletter
             this.W11_Accent_None.ForeColor = System.Drawing.Color.White;
             this.W11_Accent_None.Image = null;
             this.W11_Accent_None.ImageWithText = false;
-            this.W11_Accent_None.Location = new System.Drawing.Point(181, 3);
+            this.W11_Accent_None.Location = new System.Drawing.Point(181, 2);
             this.W11_Accent_None.Name = "W11_Accent_None";
             this.W11_Accent_None.ShowText = true;
-            this.W11_Accent_None.Size = new System.Drawing.Size(66, 23);
+            this.W11_Accent_None.Size = new System.Drawing.Size(66, 25);
             this.W11_Accent_None.TabIndex = 21;
             this.W11_Accent_None.Text = "Nothing";
             this.W11_Accent_None.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3669,9 +3669,9 @@ namespace WinPaletter
             this.W10_Button25.ForeColor = System.Drawing.Color.White;
             this.W10_Button25.Image = null;
             this.W10_Button25.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.W10_Button25.Location = new System.Drawing.Point(160, 3);
+            this.W10_Button25.Location = new System.Drawing.Point(160, 2);
             this.W10_Button25.Name = "W10_Button25";
-            this.W10_Button25.Size = new System.Drawing.Size(20, 23);
+            this.W10_Button25.Size = new System.Drawing.Size(20, 25);
             this.W10_Button25.TabIndex = 28;
             this.W10_Button25.Text = "?";
             this.W10_Button25.UseVisualStyleBackColor = false;
@@ -3686,10 +3686,10 @@ namespace WinPaletter
             this.W10_Accent_Taskbar.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_Taskbar.Image = null;
             this.W10_Accent_Taskbar.ImageWithText = false;
-            this.W10_Accent_Taskbar.Location = new System.Drawing.Point(248, 3);
+            this.W10_Accent_Taskbar.Location = new System.Drawing.Point(248, 2);
             this.W10_Accent_Taskbar.Name = "W10_Accent_Taskbar";
             this.W10_Accent_Taskbar.ShowText = true;
-            this.W10_Accent_Taskbar.Size = new System.Drawing.Size(76, 23);
+            this.W10_Accent_Taskbar.Size = new System.Drawing.Size(76, 25);
             this.W10_Accent_Taskbar.TabIndex = 23;
             this.W10_Accent_Taskbar.Text = "Taskbar";
             this.W10_Accent_Taskbar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3704,10 +3704,10 @@ namespace WinPaletter
             this.W10_Accent_StartTaskbar.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_StartTaskbar.Image = null;
             this.W10_Accent_StartTaskbar.ImageWithText = false;
-            this.W10_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 3);
+            this.W10_Accent_StartTaskbar.Location = new System.Drawing.Point(325, 2);
             this.W10_Accent_StartTaskbar.Name = "W10_Accent_StartTaskbar";
             this.W10_Accent_StartTaskbar.ShowText = true;
-            this.W10_Accent_StartTaskbar.Size = new System.Drawing.Size(186, 23);
+            this.W10_Accent_StartTaskbar.Size = new System.Drawing.Size(186, 25);
             this.W10_Accent_StartTaskbar.TabIndex = 22;
             this.W10_Accent_StartTaskbar.Text = "Start, taskbar & action Center";
             this.W10_Accent_StartTaskbar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3722,10 +3722,10 @@ namespace WinPaletter
             this.W10_Accent_None.ForeColor = System.Drawing.Color.White;
             this.W10_Accent_None.Image = null;
             this.W10_Accent_None.ImageWithText = false;
-            this.W10_Accent_None.Location = new System.Drawing.Point(182, 3);
+            this.W10_Accent_None.Location = new System.Drawing.Point(182, 2);
             this.W10_Accent_None.Name = "W10_Accent_None";
             this.W10_Accent_None.ShowText = true;
-            this.W10_Accent_None.Size = new System.Drawing.Size(64, 23);
+            this.W10_Accent_None.Size = new System.Drawing.Size(64, 25);
             this.W10_Accent_None.TabIndex = 21;
             this.W10_Accent_None.Text = "Nothing";
             this.W10_Accent_None.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -6078,7 +6078,7 @@ namespace WinPaletter
             // 
             this.BetaBadge.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
             this.BetaBadge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BetaBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
+            this.BetaBadge.BackColor = System.Drawing.Color.Transparent;
             this.BetaBadge.CenterText = true;
             this.BetaBadge.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.BetaBadge.Font = new System.Drawing.Font("Segoe UI", 9F);

@@ -263,7 +263,8 @@ namespace WinPaletter
 
             if (ch_appearance)
             {
-                FetchDarkMode();
+                GetRoundedCorners();
+                GetDarkMode();
                 ApplyStyle();
             }
 

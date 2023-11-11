@@ -422,6 +422,7 @@ namespace WinPaletter.Theme
 
                 if (ReportProgress)
                     AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+
                 sw.Stop();
 
                 if (Cursor_Enabled)
@@ -432,9 +433,9 @@ namespace WinPaletter.Theme
                     {
                         this.Execute(new MethodInvoker(() =>
                         {
-                            SystemParametersInfo(TreeView, (int)SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile);
-                            SystemParametersInfo(TreeView, (int)SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile);
-                            SystemParametersInfo(TreeView, (int)SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile);
+                            SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.SPIF_UPDATEINIFILE);
+                            SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETMOUSESONAR, 0, Cursor_Sonar, SPIF.SPIF_UPDATEINIFILE);
+                            SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETMOUSETRAILS, Cursor_Trails, 0, SPIF.SPIF_UPDATEINIFILE);
 
                             ApplyCursorsToReg("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
 

@@ -22,7 +22,7 @@ namespace WinPaletter
         private string ver = "";
         private int StableInt, BetaInt, UpdateChannel;
         private int ChannelFixer;
-        private List<string> Updates_ls = new List<string>();
+        private List<string> Updates_ls = new();
         public bool LoggingOff = false;
 
         public MainFrm()
@@ -77,6 +77,7 @@ namespace WinPaletter
                 }
             }
         }
+       
         public void LoadFromTM(Theme.Manager TM)
         {
             themename_lbl.Text = string.Format("{0} ({1})", TM.Info.ThemeName, TM.Info.ThemeVersion);
@@ -296,6 +297,7 @@ namespace WinPaletter
             ApplyMetroStartToButton(TM, W81_start);
             ApplyBackLogonUI(TM, W81_logonui);
         }
+        
         public void ApplyDefaultTMValues()
         {
             using (Theme.Manager DefTM = Theme.Default.Get())
@@ -336,6 +338,7 @@ namespace WinPaletter
                 WVista_ColorizationColor_pick.DefaultColor = DefTM.WindowsVista.ColorizationColor;
             }
         }
+        
         public void Update_Wallpaper_Preview()
         {
             Cursor = Cursors.AppStarting;
@@ -349,6 +352,7 @@ namespace WinPaletter
             ReValidateLivePreview(pnl_preview_classic);
             Cursor = Cursors.Default;
         }
+        
         public void SelectLeftPanelIndex()
         {
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -380,6 +384,7 @@ namespace WinPaletter
                 TablessControl1.SelectedIndex = 0;
             }
         }
+        
         public void UpdateLegends()
         {
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -599,8 +604,6 @@ namespace WinPaletter
             Visible = true;
 
             BetaBadge.Visible = Program.IsBeta;
-
-
         }
 
         public void LoadData()

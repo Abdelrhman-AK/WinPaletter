@@ -305,6 +305,7 @@
     <Compile Include="Program\TypesExtensions\TreeViews.cs" />
     <Compile Include="Program\Users\SetSystemCursor.cs" />
     <Compile Include="Program\NativeMethods\User32.cs" />
+    <Compile Include="Program\Users\SPI.cs" />
     <Compile Include="Program\Users\SystemParametersInfo.cs" />
     <Compile Include="Program\Users\UxTheme.cs" />
     <Compile Include="Program\NativeMethods\UxTheme.cs" />

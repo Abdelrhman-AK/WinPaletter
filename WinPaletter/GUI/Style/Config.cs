@@ -4,7 +4,7 @@ namespace WinPaletter.UI.Style
 {
     public partial class Config
     {
-        public Config(Color BaseColor, Color BackColor, bool Dark)
+        public Config(Color BaseColor, Color BackColor, bool Dark, bool Rounded)
         {
             Colors = new Colors_Structure()
             {
@@ -19,6 +19,9 @@ namespace WinPaletter.UI.Style
                 Border_Checked_Hover = Colors.BaseColor.CB((float)-0.2d)
             };
             DarkMode = Dark;
+            RoundedCorners = Rounded;
+            Radius = 5;
+
             Colors.BaseColor = BaseColor;
             Colors.NotTranslatedColor = DarkMode ? Color.FromArgb(125, 20, 30) : Color.FromArgb(255, 136, 127);
             Colors.SearchColor = DarkMode ? Color.FromArgb(4, 94, 53) : Color.FromArgb(255, 255, 163);

@@ -173,7 +173,7 @@ namespace WinPaletter.Theme.Structures
 
                     if (WallpaperType == WallpaperTypes.SolidColor)
                     {
-                        SystemParametersInfo(TreeView, (int)SPI.Desktop.SETDESKWALLPAPER, 0, "", SPIF.UpdateINIFile);
+                        SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, "", SPIF.SPIF_UPDATEINIFILE);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
                     }
 
@@ -193,7 +193,7 @@ namespace WinPaletter.Theme.Structures
                             }
                         }
 
-                        SystemParametersInfo(TreeView, (int)SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, SPIF.UpdateINIFile);
+                        SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, ImageFile, SPIF.SPIF_UPDATEINIFILE);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String);
 
                         // Necessary to make both WinPaletter and Windows remember last wallpaper that is not from slideshow and not a spotlight image
@@ -202,7 +202,7 @@ namespace WinPaletter.Theme.Structures
 
                     else if (WallpaperType == WallpaperTypes.SlideShow)
                     {
-                        SystemParametersInfo(TreeView, (int)SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, SPIF.UpdateINIFile);
+                        SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, slideshow_img, SPIF.SPIF_UPDATEINIFILE);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String);
                     }
                 }
