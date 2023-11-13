@@ -1,23 +1,26 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: Issue
-labels: bug, issue
-assignees: ''
-
+name: Error report
+about: "Report an issue to help the project improve."
+title: "[Error] "
+labels: "Type: Error"
+assignees: Abdelrhman-AK
 ---
 
-## **Describe the bug**
-A clear and concise description of what the bug is.
+## :x: Error report
+
+## **Describe the error**
+- A short description about error.
+
+## **How to reproduce the error**
+- Write here the steps (starting from opening the application) that causes the error or bug.
 
 ## **WinPaletter Log**
-If an exception error occurred, press on `copy details` and paste them here. 
-The details will include info about WinPaletter version, date, current OS, exception error message & Stack Trace.
+- If an exception error occurred, press on `copy details` and paste them here. 
+- The details will include info about WinPaletter version, date, current OS, exception error message & stack trace.
 
 ## **Screenshots/Screen records**
-Don't add screenshot if you already wrote WinPaletter Log.
-
-If possible, add screenshots/Screen records of the wrong behaviour to help explain your problem.
+- Don't add screenshot to exception error dialog if you already wrote WinPaletter Log.
+- If possible, add screenshots/Screen records of the wrong behaviour to help explain your problem.
 
 ## **Additional context**
-Add any other context about the problem here.
+- Add any other context about the problem here.
