@@ -1,7 +1,7 @@
 ---
 name: :x: Error report
 about: "Report an issue to help the project improve."
-title: "[Error] "
+title: ":x: [Error] "
 labels: "Type: :x: Error"
 assignees: Abdelrhman-AK
 ---
