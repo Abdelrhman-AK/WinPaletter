@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Principal;
 
 namespace WinPaletter.NativeMethods
 {

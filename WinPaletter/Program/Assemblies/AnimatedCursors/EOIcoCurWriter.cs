@@ -244,8 +244,8 @@ public class EOIcoCurWriter
     {
         int w = 0, h = 0, bpp = 0, imgsize = 0;
         long SeekPos = 0;
-        long ImgOffset = (long)(IcoHeader.GetStructSize() +
-            DirectoryEntry.GetStructSize() * m_Entries.Length);
+        long ImgOffset = IcoHeader.GetStructSize() +
+            DirectoryEntry.GetStructSize() * m_Entries.Length;
 
         // Make sure the incoming image is valid
         if (null == img || img.Width <= 0 || img.Height <= 0)
@@ -280,8 +280,8 @@ public class EOIcoCurWriter
         {
             // Unless this is the first image that we are writing, the position
             // will be determined from the previous directory entry.
-            ImgOffset = (long)(m_Entries[m_NumWritten - 1].dwImageOffset +
-                m_Entries[m_NumWritten - 1].dwBytesInRes);
+            ImgOffset = m_Entries[m_NumWritten - 1].dwImageOffset +
+                m_Entries[m_NumWritten - 1].dwBytesInRes;
         }
         m_Entries[m_NumWritten].bWidth = (w >= 256) ? (byte)0 : (byte)w;
         m_Entries[m_NumWritten].bHeight = (h >= 256) ? (byte)0 : (byte)h;

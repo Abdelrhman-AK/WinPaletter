@@ -70,7 +70,7 @@ namespace WinPaletter
                             SP.Play();
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         AltPlayingMethod = true;
                         NativeMethods.DLLFunc.PlayAudio(PathsExt.appData + @"\WindowsStartup_Backup.wav");
@@ -100,7 +100,7 @@ namespace WinPaletter
                             SP.Play();
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         AltPlayingMethod = true;
                         NativeMethods.DLLFunc.PlayAudio(snd);
@@ -206,7 +206,7 @@ namespace WinPaletter
                         SP.Play();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     AltPlayingMethod = true;
                     NativeMethods.DLLFunc.PlayAudio(snd);

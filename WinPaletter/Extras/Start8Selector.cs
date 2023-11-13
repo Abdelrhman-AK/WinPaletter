@@ -130,7 +130,7 @@ namespace WinPaletter
 
         public void LoadImagesFromDLL()
         {
-            img19.Image = (Image)Program.TM.Windows81.PersonalColors_Background.ToBitmap(new Size(64, 64));
+            img19.Image = Program.TM.Windows81.PersonalColors_Background.ToBitmap(new Size(64, 64));
             img20.Image = Program.Wallpaper.Resize(64, 64);
         }
 

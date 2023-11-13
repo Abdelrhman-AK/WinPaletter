@@ -192,7 +192,7 @@ public class EOIcoCurLoader
             return -2;
         }
 
-        int count = (int)data[4] + (int)data[5] * 256;
+        int count = data[4] + data[5] * 256;
         m_reader.BaseStream.Position = oldPos;
         return count;
     }
@@ -220,7 +220,7 @@ public class EOIcoCurLoader
         // Allocate array of directory entries
         DirectoryEntry[] idEntries = new DirectoryEntry[hdr.Count];
         // Load each directory entry from the stream
-        for (i = 0; i < (int)hdr.Count; i++)
+        for (i = 0; i < hdr.Count; i++)
         {
             idEntries[i].ReadFromStream(m_reader);
         }
@@ -231,7 +231,7 @@ public class EOIcoCurLoader
             idEntries[ImageIndex].BitCount_YHotspot);
 
         // Make sure the image offset is within the length of the stream
-        if (m_initialStreamPos + (long)idEntries[ImageIndex].dwImageOffset >
+        if (m_initialStreamPos + idEntries[ImageIndex].dwImageOffset >
             m_reader.BaseStream.Length)
         {
             ErrorMsg = "Directory entry is invalid. Image offset is outside of the bounds of " +
@@ -240,7 +240,7 @@ public class EOIcoCurLoader
         }
 
         // Seek to appropriate position in stream
-        m_reader.BaseStream.Position = m_initialStreamPos + (long)idEntries[ImageIndex].dwImageOffset;
+        m_reader.BaseStream.Position = m_initialStreamPos + idEntries[ImageIndex].dwImageOffset;
 
         // At this point there's a possibility that what follows is PNG image data.
         uint PNGsig = m_reader.ReadUInt32();
@@ -339,7 +339,7 @@ public class EOIcoCurLoader
         }
 
         // Seek to appropriate position in stream
-        long SeekPos = m_initialStreamPos + (long)de[ImageIndex].dwImageOffset;
+        long SeekPos = m_initialStreamPos + de[ImageIndex].dwImageOffset;
         try
         {
             m_reader.BaseStream.Seek(SeekPos, SeekOrigin.Begin);
@@ -386,11 +386,11 @@ public class EOIcoCurLoader
         bih.ReadFromStream(m_reader);
 
         // Get bits per pixel
-        out_bpp = (uint)bih.BitCount;
+        out_bpp = bih.BitCount;
 
         // Get dimensions and "fix" them, if necessary
-        out_Width = (uint)de[ImageIndex].bWidth;
-        out_Height = (uint)de[ImageIndex].bHeight;
+        out_Width = de[ImageIndex].bWidth;
+        out_Height = de[ImageIndex].bHeight;
         // If the computed size does not match the indicated size, see if
         // we can convert 255 dimensions to 256
         uint LiteralSize = SizeComp(out_Width, out_Height, out_bpp) +

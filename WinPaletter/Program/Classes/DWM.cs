@@ -22,9 +22,9 @@ namespace WinPaletter
             }
 
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
-            bool Transparency_W11_10 = (OS.W10 || OS.W11 || OS.W12) && Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
+            bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
 
-            if ((OS.W12 || OS.W11) && Transparency_W11_10)
+            if ((OS.W12 || OS.W11) && Transparency_W10x)
             {
                 switch (FormStyle)
                 {
@@ -66,7 +66,7 @@ namespace WinPaletter
                 }
             }
 
-            else if (OS.W10 && Transparency_W11_10)
+            else if (OS.W10 && Transparency_W10x)
             {
                 switch (FormStyle)
                 {

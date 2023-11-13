@@ -112,7 +112,7 @@
         /// <param name="TM1">Theme manager #1</param>
         /// <param name="TM2">Theme manager #2</param>
         /// <returns></returns>
-        public static bool operator ==(Manager TM1, Manager TM2) => (bool)TM1.Equals(TM2);
+        public static bool operator ==(Manager TM1, Manager TM2) => TM1.Equals(TM2);
 
         /// <summary>
         /// Checks if two theme managers are not equal

@@ -61,18 +61,25 @@ namespace WinPaletter
                 }
                 else
                 {
-                    bool condition0 = PreviewConfig == PreviewHelpers.WindowStyle.W11 & TM.WallpaperTone_W11.Enabled;
-                    bool condition1 = PreviewConfig == PreviewHelpers.WindowStyle.W10 & TM.WallpaperTone_W10.Enabled;
-                    bool condition2 = PreviewConfig == PreviewHelpers.WindowStyle.W81 & TM.WallpaperTone_W81.Enabled;
-                    bool condition3 = PreviewConfig == PreviewHelpers.WindowStyle.W7 & TM.WallpaperTone_W7.Enabled;
-                    bool condition4 = PreviewConfig == PreviewHelpers.WindowStyle.WVista & TM.WallpaperTone_WVista.Enabled;
-                    bool condition5 = PreviewConfig == PreviewHelpers.WindowStyle.WXP & TM.WallpaperTone_WXP.Enabled;
-                    bool condition = condition0 || condition1 || condition2 || condition3 || condition4 || condition5;
+                    bool condition0 = PreviewConfig == PreviewHelpers.WindowStyle.W12 & TM.WallpaperTone_W12.Enabled;
+                    bool condition1 = PreviewConfig == PreviewHelpers.WindowStyle.W11 & TM.WallpaperTone_W11.Enabled;
+                    bool condition2 = PreviewConfig == PreviewHelpers.WindowStyle.W10 & TM.WallpaperTone_W10.Enabled;
+                    bool condition3 = PreviewConfig == PreviewHelpers.WindowStyle.W81 & TM.WallpaperTone_W81.Enabled;
+                    bool condition4 = PreviewConfig == PreviewHelpers.WindowStyle.W7 & TM.WallpaperTone_W7.Enabled;
+                    bool condition5 = PreviewConfig == PreviewHelpers.WindowStyle.WVista & TM.WallpaperTone_WVista.Enabled;
+                    bool condition6 = PreviewConfig == PreviewHelpers.WindowStyle.WXP & TM.WallpaperTone_WXP.Enabled;
+                    bool condition = condition0 || condition1 || condition2 || condition3 || condition4 || condition5 || condition6;
 
                     if (condition)
                     {
                         switch (PreviewConfig)
                         {
+                            case PreviewHelpers.WindowStyle.W12:
+                                {
+                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
+                                    break;
+                                }
+
                             case PreviewHelpers.WindowStyle.W11:
                                 {
                                     Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W11);
@@ -111,7 +118,7 @@ namespace WinPaletter
 
                             default:
                                 {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W11);
+                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
                                     break;
                                 }
 
@@ -185,7 +192,7 @@ namespace WinPaletter
                         ScaleH = (1080 / (double)picbox.Size.Height);
                     }
 
-                    Wall = Wall.Resize((int)Math.Round((double)Wall.Width / ScaleW), (int)Math.Round((double)Wall.Height / ScaleH));
+                    Wall = Wall.Resize((int)Math.Round(Wall.Width / ScaleW), (int)Math.Round(Wall.Height / ScaleH));
 
                     if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fill)
                     {
@@ -281,7 +288,7 @@ namespace WinPaletter
             WallMon_Watcher2.EventArrived += Wallpaper_Changed_EventHandler;
             WallMon_Watcher2.Start();
 
-            if (OS.W10 || OS.W11)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
                 KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
                 valueName = "BackgroundType";

@@ -84,7 +84,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (RoundedCorners)
             {
-                if (BackgroundBlurred is not null)
+                if (BackgroundBlurred != null)
                     G.DrawRoundImage(BackgroundBlurred, Rect, Radius, true);
 
                 using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
@@ -144,10 +144,11 @@ namespace WinPaletter.TypesExtensions
                     Radius = Program.Style.Radius;
 
                 if (Graphics is null)
-                    throw new ArgumentNullException("graphics");
+                    return;
+
                 Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
+                if ((Program.Style.RoundedCorners || ForcedRoundCorner) && Radius > 0)
                 {
                     using (var path = Rectangle.Round(Radius))
                     {
@@ -159,9 +160,7 @@ namespace WinPaletter.TypesExtensions
                     Graphics.FillRectangle(Brush, Rectangle);
                 }
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         public static void DrawRoundImage(this Graphics Graphics, Image Image, Rectangle Rectangle, int Radius = -1, bool ForcedRoundCorner = false)
@@ -294,8 +293,8 @@ namespace WinPaletter.TypesExtensions
                             var cblend = new ColorBlend(5)
                             {
                                 Colors = new Color[5] { CColor, Pen.Color, Pen.Color, Pen.Color, CColor },
-                                Positions = Rounded ? 
-                                new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f } : 
+                                Positions = Rounded ?
+                                new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f } :
                                 new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f }
                             };
                             G.InterpolationColors = cblend;
@@ -353,7 +352,7 @@ namespace WinPaletter.TypesExtensions
                                 SidePen = Pen2;
 
                                 Graphics.DrawLine(SidePen, P_L1, P_L2);
-                                
+
                                 Graphics.DrawLine(SidePen, P_R1, P_R2);
 
                                 if (Rounded)

@@ -747,9 +747,6 @@ namespace WinPaletter
         #region    TM Handling
         public void ApplyFromTM(Theme.Manager TM, Edition Edition)
         {
-
-            var Console = new Theme.Structures.Console();
-
             switch (Edition)
             {
                 case Edition.CMD:
@@ -878,7 +875,7 @@ namespace WinPaletter
             if (!Console.FontRaster)
             {
                 {
-                    var temp = Font.FromLogFont(new LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
+                    var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
                     F_cmd = new Font(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
@@ -1262,7 +1259,7 @@ namespace WinPaletter
         {
             if (!_Shown)
                 return;
-            var fx = new LogFont();
+            NativeMethods.GDI32.LogFont fx = new();
             F_cmd = new Font(F_cmd.Name, F_cmd.Size, F_cmd.Style);
             F_cmd.ToLogFont(fx);
             fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
@@ -1491,7 +1488,7 @@ namespace WinPaletter
                 F_cmd = FontDialog1.Font;
                 FontName.Text = FontName.Font.Name;
                 CMD_FontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
-                var fx = new LogFont();
+                NativeMethods.GDI32.LogFont fx = new();
                 F_cmd.ToLogFont(fx);
                 fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
                 {

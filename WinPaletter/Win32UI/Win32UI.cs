@@ -196,6 +196,8 @@ namespace WinPaletter
             SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR3);
             SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR4);
             SetClassicPanelRaisedRColors(Program.TM, Forms.MainFrm.ClassicTaskbar);
+            Forms.MainFrm.Window1.Refresh();
+            Forms.MainFrm.Window2.Refresh();
             Close();
         }
 
@@ -699,7 +701,6 @@ namespace WinPaletter
 
         private void ColorItem_DragDrop(object sender, DragEventArgs e)
         {
-
             WindowR2.Color1 = activetitle_pick.BackColor;
             WindowR3.Color1 = activetitle_pick.BackColor;
             WindowR4.Color1 = activetitle_pick.BackColor;
@@ -1057,13 +1058,8 @@ namespace WinPaletter
             LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
             PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
 
-            int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(TM.MetricsFonts.CaptionFont).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(TM.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
-            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
-
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
-            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + TitleTextH_Sum;
+            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
             var _Padding = new Padding(iP, iT, iP, iP);
 
             foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
@@ -1075,8 +1071,8 @@ namespace WinPaletter
                 }
             }
 
-            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
-            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + TM.MetricsFonts.MenuHeight;
+            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font);
+            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight;
 
             Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
             Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);

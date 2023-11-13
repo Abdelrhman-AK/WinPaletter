@@ -13,12 +13,14 @@
         public string TM_Time_They { get; set; } = "They took {0} seconds";
         public string TM_SavingInfo { get; set; } = "Saving theme info into registry";
         public string TM_ThemeReset { get; set; } = "Resetting theme to default Windows to apply new theme correctly";
+        public string TM_Applying_Win12 { get; set; } = "Applying Windows 12 scheme";
         public string TM_Applying_Win11 { get; set; } = "Applying Windows 11 scheme";
         public string TM_Applying_Win10 { get; set; } = "Applying Windows 10 scheme";
         public string TM_Applying_Win81 { get; set; } = "Applying Windows 8.1 scheme";
         public string TM_Applying_Win7 { get; set; } = "Applying Windows 7 theme";
         public string TM_Applying_WinVista { get; set; } = "Applying Windows Vista theme";
         public string TM_Applying_WinXP { get; set; } = "Applying Windows XP theme";
+        public string TM_Applying_LogonUI12 { get; set; } = "Applying Windows 11 LogonUI";
         public string TM_Applying_LogonUI11 { get; set; } = "Applying Windows 11 LogonUI";
         public string TM_Applying_LogonUI10 { get; set; } = "Applying Windows 10 LogonUI";
         public string TM_Applying_LogonUI8 { get; set; } = "Applying Windows 8.1 Lock Screen";

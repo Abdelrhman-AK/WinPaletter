@@ -41,7 +41,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows 10/11 LogonUI data structure</param>
         public void Load(LogonUI10x @default)
         {
-            if (OS.W10 | OS.W11)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
                 DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", @default.DisableAcrylicBackgroundOnLogon));
                 DisableLogonBackgroundImage = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", @default.DisableLogonBackgroundImage));

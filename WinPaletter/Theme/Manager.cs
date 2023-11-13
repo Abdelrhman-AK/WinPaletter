@@ -10,7 +10,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -42,6 +41,7 @@ namespace WinPaletter.Theme
                             {
                                 Exceptions.ThemeLoad.Clear();
                                 Info.Load();
+                                Windows12.Load(@default.Windows12);
                                 Windows11.Load(@default.Windows11);
                                 Windows10.Load(@default.Windows10);
                                 Windows81.Load(@default.Windows81);
@@ -59,6 +59,7 @@ namespace WinPaletter.Theme
                                 Sounds.Load(@default.Sounds);
                                 AppTheme.Load(@default.AppTheme);
 
+                                WallpaperTone_W12.Load("Win12");
                                 WallpaperTone_W11.Load("Win11");
                                 WallpaperTone_W10.Load("Win10");
                                 WallpaperTone_W81.Load("Win8.1");
@@ -86,7 +87,7 @@ namespace WinPaletter.Theme
                                 Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)) == 1;
                                 TerminalPreview.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)) == 1;
 
-                                if (OS.W10 | OS.W11)
+                                if (OS.W12 || OS.W11 || OS.W10)
                                 {
                                     string TerDir;
                                     string TerPreDir;
@@ -333,38 +334,24 @@ namespace WinPaletter.Theme
                                 TreeView.Nodes.Clear();
                                 TreeView.Visible = true;
                                 string OS_str;
-                                if (OS.W11)
-                                {
-                                    OS_str = Program.Lang.OS_Win11;
-                                }
-                                else if (OS.W10)
-                                {
-                                    OS_str = Program.Lang.OS_Win10;
-                                }
-                                else if (OS.W8)
-                                {
-                                    OS_str = Program.Lang.OS_Win8;
-                                }
-                                else if (OS.W81)
-                                {
-                                    OS_str = Program.Lang.OS_Win81;
-                                }
-                                else if (OS.W7)
-                                {
-                                    OS_str = Program.Lang.OS_Win7;
-                                }
-                                else if (OS.WVista)
-                                {
-                                    OS_str = Program.Lang.OS_WinVista;
-                                }
-                                else if (OS.WXP)
-                                {
-                                    OS_str = Program.Lang.OS_WinXP;
-                                }
-                                else
-                                {
-                                    OS_str = Program.Lang.OS_WinUndefined;
-                                }
+
+                                if (OS.W12) { OS_str = Program.Lang.OS_Win12; }
+
+                                else if (OS.W11) { OS_str = Program.Lang.OS_Win11; }
+
+                                else if (OS.W10) { OS_str = Program.Lang.OS_Win10; }
+
+                                else if (OS.W8) { OS_str = Program.Lang.OS_Win8; }
+
+                                else if (OS.W81) { OS_str = Program.Lang.OS_Win81; }
+
+                                else if (OS.W7) { OS_str = Program.Lang.OS_Win7; }
+
+                                else if (OS.WVista) { OS_str = Program.Lang.OS_WinVista; }
+
+                                else if (OS.WXP) { OS_str = Program.Lang.OS_WinXP; }
+
+                                else { OS_str = Program.Lang.OS_WinUndefined; }
 
                                 AddNode(TreeView, string.Format("{0}", string.Format(Program.Lang.TM_ApplyFrom, OS_str)), "info");
 
@@ -414,6 +401,13 @@ namespace WinPaletter.Theme
                             // Wallpaper
                             // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
                             this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Wallpaper, Program.Lang.TM_Error_Wallpaper, Program.Lang.TM_Time, sw_all, !Wallpaper.Enabled, Program.Lang.TM_Skip_Wallpaper);
+
+                            if (OS.W12)
+                            {
+                                this.Execute(new MethodInvoker(() => Windows12.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win12, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+
+                                this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI12, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
+                            }
 
                             if (OS.W11)
                             {
@@ -482,6 +476,7 @@ namespace WinPaletter.Theme
                             // WallpaperTone
                             this.Execute(new MethodInvoker(() =>
                             {
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W12, "Win12", ReportProgress_Detailed ? TreeView : null);
                                 WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", ReportProgress_Detailed ? TreeView : null);
                                 WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", ReportProgress_Detailed ? TreeView : null);
                                 WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", ReportProgress_Detailed ? TreeView : null);
@@ -491,16 +486,24 @@ namespace WinPaletter.Theme
 
                                 if (Wallpaper.Enabled)
                                 {
+                                    if (OS.W12 & WallpaperTone_W12.Enabled)
+                                        WallpaperTone_W12.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.W11 & WallpaperTone_W11.Enabled)
                                         WallpaperTone_W11.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.W10 & WallpaperTone_W10.Enabled)
                                         WallpaperTone_W10.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.W81 & WallpaperTone_W81.Enabled)
                                         WallpaperTone_W81.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.W7 & WallpaperTone_W7.Enabled)
                                         WallpaperTone_W7.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.WVista & WallpaperTone_WVista.Enabled)
                                         WallpaperTone_WVista.Apply(ReportProgress_Detailed ? TreeView : null);
+
                                     if (OS.WXP & WallpaperTone_WXP.Enabled)
                                         WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
                                 }
@@ -525,9 +528,8 @@ namespace WinPaletter.Theme
                             var sw = new Stopwatch();
                             sw.Reset();
                             sw.Start();
-                            if (OS.W10 | OS.W11)
+                            if (OS.W12 || OS.W11 || OS.W10)
                             {
-
                                 if (ReportProgress)
                                 {
                                     if (Terminal.Enabled & TerminalPreview.Enabled)

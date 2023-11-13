@@ -97,7 +97,7 @@
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Cyotek.Windows.Forms.ColorPicker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.1.7.2\lib\net35\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+      <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.2.0.0-beta.7\lib\net472\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Devcorp.Controls.VisualStyles">
@@ -167,8 +167,8 @@
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Resources.Extensions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Resources.Extensions.7.0.0\lib\net462\System.Resources.Extensions.dll</HintPath>
+    <Reference Include="System.Resources.Extensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Resources.Extensions.8.0.0-rc.2.23479.6\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -296,9 +296,11 @@
     <Compile Include="Program\TypesExtensions\Colors.cs" />
     <Compile Include="Program\TypesExtensions\ComboBoxes.cs" />
     <Compile Include="Program\TypesExtensions\Controls.cs" />
+    <Compile Include="Program\TypesExtensions\Fonts.cs" />
     <Compile Include="Program\TypesExtensions\Graphics.cs" />
     <Compile Include="Program\TypesExtensions\Icons.cs" />
     <Compile Include="Program\TypesExtensions\Integers.cs" />
+    <Compile Include="Program\TypesExtensions\LogFonts.cs" />
     <Compile Include="Program\TypesExtensions\StringFormats.cs" />
     <Compile Include="Program\TypesExtensions\StringLists.cs" />
     <Compile Include="Program\TypesExtensions\Strings.cs" />
@@ -369,6 +371,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Theme\Default\Windows10.cs" />
+    <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
     <Compile Include="Theme\Default\Windows7.cs" />
     <Compile Include="Theme\Default\Windows8.cs" />
@@ -732,8 +735,6 @@
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Metrics_Fonts\LogFont.cs" />
-    <Compile Include="Metrics_Fonts\Metrics.cs" />
     <Compile Include="Metrics_Fonts\Metrics_Fonts.Designer.cs">
       <DependentUpon>Metrics_Fonts.cs</DependentUpon>
     </Compile>
@@ -904,6 +905,9 @@
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
+    <None Include="Resources\LogonUI_2000.png" />
+    <None Include="Resources\add_win12.png" />
+    <None Include="Resources\Native12.png" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <None Include="Resources\Service_SysEventsSounds_Reg.txt" />
     <None Include="Resources\Start10_Light.png" />

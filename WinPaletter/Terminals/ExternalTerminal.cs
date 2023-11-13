@@ -231,7 +231,7 @@ namespace WinPaletter
                     if (!ExtTerminal_RasterToggle.Checked)
                     {
                         {
-                            var temp = Font.FromLogFont(new LogFont() { lfFaceName = y_cmd.ToString(), lfWeight = fw });
+                            var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = y_cmd.ToString(), lfWeight = fw });
                             f_extterminal = new Font(temp.FontFamily, ExtTerminal_FontSizeBar.Value, temp.Style);
                         }
                         FontName.Text = f_extterminal.Name;
@@ -519,7 +519,8 @@ namespace WinPaletter
         {
             if (!_Shown)
                 return;
-            var fx = new LogFont();
+
+            NativeMethods.GDI32.LogFont fx = new();
             f_extterminal = new Font(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
             f_extterminal.ToLogFont(fx);
             fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
@@ -1410,7 +1411,7 @@ namespace WinPaletter
             if (!TM.CommandPrompt.FontRaster)
             {
                 {
-                    var temp = Font.FromLogFont(new LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight });
+                    var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight });
                     f_extterminal = new Font(temp.FontFamily, (int)Math.Round(TM.CommandPrompt.FontSize / 65536d), temp.Style);
                 }
             }
@@ -1536,7 +1537,7 @@ namespace WinPaletter
                 f_extterminal = FontDialog1.Font;
                 FontName.Text = FontName.Font.Name;
                 ExtTerminal_FontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
-                var fx = new LogFont();
+                NativeMethods.GDI32.LogFont fx = new();
                 f_extterminal.ToLogFont(fx);
                 fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
                 {

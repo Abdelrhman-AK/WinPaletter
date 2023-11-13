@@ -31,13 +31,14 @@ namespace WinPaletter.Theme
         {
             return PreviewStyle switch
             {
+                WindowStyle.W12 => Windows12(),
                 WindowStyle.W11 => Windows11(),
                 WindowStyle.W10 => Windows10(),
                 WindowStyle.W81 => Windows81(),
                 WindowStyle.W7 => Windows7(),
                 WindowStyle.WVista => WindowsVista(),
                 WindowStyle.WXP => WindowsXP(),
-                _ => Windows11(),
+                _ => Windows12(),
             };
         }
 
@@ -47,7 +48,10 @@ namespace WinPaletter.Theme
         /// <returns><code>WinPaletter.Theme.Manager</code></returns>
         public static Manager Get()
         {
-            if (OS.W11 || OS.W12)
+            if (OS.W12)
+                return Windows12();
+
+            if (OS.W11)
                 return Windows11();
 
             else if (OS.W10)

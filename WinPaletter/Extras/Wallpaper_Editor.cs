@@ -43,6 +43,12 @@ namespace WinPaletter
 
             switch (Program.PreviewStyle)
             {
+                case WindowStyle.W12:
+                    {
+                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win12);
+                        break;
+                    }
+
                 case WindowStyle.W11:
                     {
                         AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win11);
@@ -277,6 +283,11 @@ namespace WinPaletter
 
             switch (Program.PreviewStyle)
             {
+                case WindowStyle.W12:
+                    {
+                        Program.TM.WallpaperTone_W12 = WT;
+                        break;
+                    }
                 case WindowStyle.W11:
                     {
                         Program.TM.WallpaperTone_W11 = WT;
@@ -310,7 +321,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        Program.TM.WallpaperTone_W11 = WT;
+                        Program.TM.WallpaperTone_W12 = WT;
                         break;
                     }
 

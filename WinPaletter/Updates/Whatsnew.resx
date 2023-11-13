@@ -260,20 +260,58 @@
         Pj9Hek9ISEhISEhISEhISEhISEjIK6VS/R8C92uYq3K1PwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>• Sounds
-  - Added Unlock and Charger connected sounds
-  - Improvement in Task Scheduler deflection method
-  - Fix empty icons after patching imageres.dll
-  - Fix "Sound API only supports playing PCM wave files" on opening a WAV file
-  - Added alert dialog on changing PE files resources, for example imageres.dll (for startup sound)
+  <data name="label21.Text" xml:space="preserve">
+    <value>• It is possible now to control multiple users in WinPaletter.
 
-• Classic colors speed improvements</value>
+• This feature helped WinPaletter to reduce UAC dialogs appearance and fixed issue of not applying and getting theme data from a different account.
+
+• Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPaletter retains their previous state and is unaffected by the theme.
+
+• So, the best practice method is to open target user then open WinPaletter inside this profile, not from a different one.</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>• Task Scheduler method is removed, being replaced by a service made by WinPaletter.
+
+• This service listens to system events and play sounds according to the received event, and this method is relatively better than Task Scheduler method.
+
+• This service can handle Windows shutdown, logoff, logon, account lock and unlock, and charger connection and disconnection sounds.</value>
+  </data>
+  <data name="label28.Text" xml:space="preserve">
+    <value>• Applying WinPaletter theme is now in a separate thread, to fix issue of Windows and WinPaletter freezing
+
+• New Explorer restart method (all to avoid crashing all open applications): When you apply a theme, firstly it will kill Explorer, waits for theme applying finish and finally reopen Explorer. Formerly, the method was both killing and opening after finishing theme apply.
+</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>• Rescue tools are returned, to help you fix your Windows and manage current Windows session if you are stuck in an error
+
+• Classic colors preview speed improvements
+
+• UI improvements
+
+• This is in code, but nothing will be visible to you: make WinPaletter can handle Windows 12. WinPaletter will manage it as if it is Windows 11 until Windows 12 stable is released and WinPaletter is optimized and tested in it.
+
+• Cyotek color picker component is updated into 2.0.0-beta.7</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
-    <value>• Fix issue of disappearing taskbar and start in preview
+    <value>• Sounds: Fix bug of repeated pathing imageres.dll alert with sounds are the same
 
-• Fix issue of conflict between custom DPI and metrics and fonts
+• ExplorerPatcher error fix
+
+• GUI translator bug fix: Form exception error
+
+• Fix color picker not working in Windows XP
+
+• Fix Preview of Windows 11/10 not syncing color with color picker
+
+• Fix metrics preview of Windows XP to 8.1 (inner padding)
+
+• Bug report fix: Windows 10 OS info if Windows 11 is running
+
+• Fix issue of disappearing taskbar and start in preview</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>• Fix issue of conflict between custom DPI and metrics and fonts
 
 • Fix small icons fonts and other fonts on applying metrics and fonts with DPI higher than 125 and with delaying metrics and fonts effects option in settings is enabled
 

@@ -48,6 +48,9 @@ namespace WinPaletter
             {
                 case Element.Titlebar:
                     {
+                        Rectangle.Offset(1, 1);
+                        Rectangle.Inflate(0, 1);
+
                         var CS = Active ? WindowCaptionState.Active : WindowCaptionState.Inactive;
 
                         if (!ToolWindow)

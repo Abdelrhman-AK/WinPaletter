@@ -24,6 +24,12 @@ namespace WinPaletter
 
             switch (Program.PreviewStyle)
             {
+                case WindowStyle.W12:
+                    {
+                        RadioImage1.Image = Properties.Resources.Native12;
+                        break;
+                    }
+
                 case WindowStyle.W11:
                     {
                         RadioImage1.Image = Properties.Resources.Native11;
@@ -54,9 +60,15 @@ namespace WinPaletter
                         break;
                     }
 
+                case WindowStyle.WXP:
+                    {
+                        RadioImage1.Image = Properties.Resources.NativeXP;
+                        break;
+                    }
+
                 default:
                     {
-                        RadioImage1.Image = Properties.Resources.Native11;
+                        RadioImage1.Image = Properties.Resources.Native12;
                         break;
                     }
 
@@ -74,6 +86,13 @@ namespace WinPaletter
 
             switch (Program.PreviewStyle)
             {
+                case WindowStyle.W12:
+                    {
+                        WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11;
+                        WinElement1.DarkMode = !Program.TM.Windows12.WinMode_Light;
+                        break;
+                    }
+
                 case WindowStyle.W11:
                     {
                         WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11;

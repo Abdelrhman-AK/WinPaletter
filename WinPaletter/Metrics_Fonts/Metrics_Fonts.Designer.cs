@@ -388,7 +388,7 @@ namespace WinPaletter
             this.AlertBox10.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
             this.AlertBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(67)))), ((int)(((byte)(91)))));
+            this.AlertBox10.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox10.CenterText = false;
             this.AlertBox10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -589,7 +589,7 @@ namespace WinPaletter
             this.AlertBox14.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
             this.AlertBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(50)))), ((int)(((byte)(2)))));
+            this.AlertBox14.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox14.CenterText = false;
             this.AlertBox14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox14.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -607,7 +607,7 @@ namespace WinPaletter
             this.AlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
             this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(50)))), ((int)(((byte)(2)))));
+            this.AlertBox3.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox3.CenterText = false;
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -833,12 +833,12 @@ namespace WinPaletter
             this.Trackbar13.LargeChange = 10;
             this.Trackbar13.Location = new System.Drawing.Point(188, 77);
             this.Trackbar13.Maximum = 50;
-            this.Trackbar13.Minimum = 0;
+            this.Trackbar13.Minimum = 18;
             this.Trackbar13.Name = "Trackbar13";
             this.Trackbar13.Size = new System.Drawing.Size(162, 19);
             this.Trackbar13.SmallChange = 1;
             this.Trackbar13.TabIndex = 114;
-            this.Trackbar13.Value = 0;
+            this.Trackbar13.Value = 18;
             this.Trackbar13.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar13_Scroll);
             // 
             // PictureBox11
@@ -871,12 +871,12 @@ namespace WinPaletter
             this.Trackbar14.LargeChange = 10;
             this.Trackbar14.Location = new System.Drawing.Point(188, 47);
             this.Trackbar14.Maximum = 50;
-            this.Trackbar14.Minimum = 0;
+            this.Trackbar14.Minimum = 17;
             this.Trackbar14.Name = "Trackbar14";
             this.Trackbar14.Size = new System.Drawing.Size(162, 19);
             this.Trackbar14.SmallChange = 1;
             this.Trackbar14.TabIndex = 113;
-            this.Trackbar14.Value = 0;
+            this.Trackbar14.Value = 17;
             this.Trackbar14.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar14_Scroll);
             // 
             // Label45
@@ -947,7 +947,7 @@ namespace WinPaletter
             // AlertBox11
             // 
             this.AlertBox11.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
-            this.AlertBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
+            this.AlertBox11.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox11.CenterText = true;
             this.AlertBox11.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox11.Font = new System.Drawing.Font("Segoe UI", 9F);

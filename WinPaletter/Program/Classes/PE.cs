@@ -168,12 +168,12 @@ namespace WinPaletter
                 }
                 else
                 {
-                    return (Bitmap)Color.Black.ToBitmap(new Size(UnfoundW, UnfoundH));
+                    return Color.Black.ToBitmap(new Size(UnfoundW, UnfoundH));
                 }
             }
             catch
             {
-                return (Bitmap)Color.Black.ToBitmap(new Size(UnfoundW, UnfoundH));
+                return Color.Black.ToBitmap(new Size(UnfoundW, UnfoundH));
             }
         }
 

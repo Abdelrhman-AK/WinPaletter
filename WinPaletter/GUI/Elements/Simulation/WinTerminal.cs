@@ -593,7 +593,7 @@ namespace WinPaletter.UI.Simulation
 
             Font fx;
 
-            if (OS.W11)
+            if (OS.W12 || OS.W11)
             {
                 fx = new Font("Segoe Fluent Icons", 12f);
             }

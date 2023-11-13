@@ -92,7 +92,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows10x data structure</param>
         public void Load(Windows10x @default)
         {
-            if (OS.W10 | OS.W11 | OS.W12)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
                 var Colors = new List<Color>();
                 Colors.Clear();

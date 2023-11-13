@@ -36,6 +36,8 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
+
+
         #endregion
 
         #region Helpers Voids/functions
@@ -98,6 +100,15 @@ namespace WinPaletter
                         if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? "") == (row.Cells[1].Value.ToString().ToLower().Trim() ?? ""))
                         {
                             row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                        }
+                        else if ((row.Cells[2].Value.ToString() ?? "").Contains("{") || (row.Cells[1].Value.ToString() ?? "").Contains("{"))
+                        {
+                            int count1 = (row.Cells[1].Value ?? "").ToString().Count(c => c == '{');
+                            int count2 = (row.Cells[2].Value ?? "").ToString().Count(c => c == '{');
+                            if (count1 != count2)
+                            {
+                                row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                            }
                         }
                     }
 
@@ -880,7 +891,23 @@ namespace WinPaletter
         {
             if (((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) != ((data[2, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) && !string.IsNullOrWhiteSpace((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()))
             {
-                data[1, e.RowIndex].Style.BackColor = data[2, e.RowIndex].Style.BackColor;
+                if ((data[1, e.RowIndex].Value ?? "").ToString().Contains("{") || (data[1, e.RowIndex].Value ?? "").ToString().Contains("{"))
+                {
+                    int count1 = (data[1, e.RowIndex].Value ?? "").ToString().Count(c => c == '{');
+                    int count2 = (data[2, e.RowIndex].Value ?? "").ToString().Count(c => c == '{');
+                    if (count1 != count2)
+                    {
+                        data[1, e.RowIndex].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                    }
+                    else
+                    {
+                        data[1, e.RowIndex].Style.BackColor = data[2, e.RowIndex].Style.BackColor;
+                    }
+                }
+                else
+                {
+                    data[1, e.RowIndex].Style.BackColor = data[2, e.RowIndex].Style.BackColor;
+                }
             }
             else
             {

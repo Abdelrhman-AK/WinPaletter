@@ -191,6 +191,22 @@ namespace WinPaletter
 
             switch (Program.PreviewStyle)
             {
+                case PreviewHelpers.WindowStyle.W12:
+                    {
+                        Program.TM.Windows12.Titlebar_Active = Colors_List[arr[0]];
+                        Program.TM.Windows12.Titlebar_Inactive = Colors_List[arr[1]];
+                        Program.TM.Windows12.StartMenu_Accent = Colors_List[arr[2]];
+                        Program.TM.Windows12.Color_Index0 = Colors_List[arr[3]];
+                        Program.TM.Windows12.Color_Index1 = Colors_List[arr[4]];
+                        Program.TM.Windows12.Color_Index2 = Colors_List[arr[5]];
+                        Program.TM.Windows12.Color_Index3 = Colors_List[arr[6]];
+                        Program.TM.Windows12.Color_Index4 = Colors_List[arr[7]];
+                        Program.TM.Windows12.Color_Index5 = Colors_List[arr[8]];
+                        Program.TM.Windows12.Color_Index6 = Colors_List[arr[9]];
+                        Program.TM.Windows12.Color_Index7 = Colors_List[arr[10]];
+                        break;
+                    }
+
                 case PreviewHelpers.WindowStyle.W11:
                     {
                         Program.TM.Windows11.Titlebar_Active = Colors_List[arr[0]];
@@ -264,6 +280,21 @@ namespace WinPaletter
         {
             switch (Program.PreviewStyle)
             {
+                case PreviewHelpers.WindowStyle.W12:
+                    {
+                        Program.TM.Windows12.Titlebar_Active = TM_Backup.Windows12.Titlebar_Active;
+                        Program.TM.Windows12.StartMenu_Accent = TM_Backup.Windows12.StartMenu_Accent;
+                        Program.TM.Windows12.Color_Index0 = TM_Backup.Windows12.Color_Index0;
+                        Program.TM.Windows12.Color_Index1 = TM_Backup.Windows12.Color_Index1;
+                        Program.TM.Windows12.Color_Index2 = TM_Backup.Windows12.Color_Index2;
+                        Program.TM.Windows12.Color_Index3 = TM_Backup.Windows12.Color_Index3;
+                        Program.TM.Windows12.Color_Index4 = TM_Backup.Windows12.Color_Index4;
+                        Program.TM.Windows12.Color_Index5 = TM_Backup.Windows12.Color_Index5;
+                        Program.TM.Windows12.Color_Index6 = TM_Backup.Windows12.Color_Index6;
+                        Program.TM.Windows12.Color_Index7 = TM_Backup.Windows12.Color_Index7;
+                        break;
+                    }
+
                 case PreviewHelpers.WindowStyle.W11:
                     {
                         Program.TM.Windows11.Titlebar_Active = TM_Backup.Windows11.Titlebar_Active;

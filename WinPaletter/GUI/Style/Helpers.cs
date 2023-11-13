@@ -27,7 +27,7 @@ namespace WinPaletter.UI.Style
                     Program.Style.RoundedCorners = false;
                 }
 
-                else if (OS.W11)
+                else if (OS.W12 || OS.W11)
                 {
                     Program.Style.RoundedCorners = true;
                 }
@@ -68,7 +68,7 @@ namespace WinPaletter.UI.Style
                 {
                     return false;
                 }
-                else if (OS.W11 || OS.W12)
+                else if (OS.W12 || OS.W11)
                 {
                     return true;
                 }
@@ -190,7 +190,7 @@ namespace WinPaletter.UI.Style
 
                         ApplyStyleToSubControls(form, DarkMode);
 
-                        if (OS.W11 || OS.W12)
+                        if (OS.W12 || OS.W11)
                         {
                             int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
                             DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
@@ -221,7 +221,7 @@ namespace WinPaletter.UI.Style
 
                 ApplyStyleToSubControls(Form, DarkMode);
 
-                if (OS.W11)
+                if (OS.W12 || OS.W11)
                 {
                     int argpvAttribute2 = (int)DWMAPI.FormCornersType.Default;
                     DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
@@ -268,8 +268,8 @@ namespace WinPaletter.UI.Style
             // User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
             // User32.ReleaseDC(Handle, hDC);
 
-            // Apply specific window corner preference for Windows 11
-            if (OS.W11)
+            // Apply specific window corner preference for Windows 11/12
+            if (OS.W12 || OS.W11)
             {
                 int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
                 DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));

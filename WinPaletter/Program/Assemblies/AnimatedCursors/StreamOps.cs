@@ -16,7 +16,7 @@ namespace EOFC
         {
             byte[] buf = new byte[4];
             inS.Read(buf, 0, 4);
-            return (int)((uint)buf[0] | (((uint)buf[1]) << 8) |
+            return (int)(buf[0] | (((uint)buf[1]) << 8) |
                 (((uint)buf[2]) << 16) | (((uint)buf[3]) << 24));
         }
 
@@ -61,21 +61,21 @@ namespace EOFC
 
         public static long ReadLong(Stream s)
         {
-            return (long)ReadUInt(s) | (((long)ReadUInt(s)) << 32);
+            return ReadUInt(s) | (((long)ReadUInt(s)) << 32);
         }
 
         public static short ReadShort(Stream inS)
         {
             byte[] buf = new byte[2];
             inS.Read(buf, 0, 2);
-            return (short)((uint)buf[0] | (((uint)buf[1]) << 8));
+            return (short)(buf[0] | (((uint)buf[1]) << 8));
         }
 
         public static uint ReadUInt(Stream inS)
         {
             byte[] buf = new byte[4];
             inS.Read(buf, 0, 4);
-            return ((uint)buf[0] | (((uint)buf[1]) << 8) |
+            return (buf[0] | (((uint)buf[1]) << 8) |
                 (((uint)buf[2]) << 16) | (((uint)buf[3]) << 24));
         }
 
@@ -98,7 +98,7 @@ namespace EOFC
         {
             byte[] buf = new byte[2];
             inS.Read(buf, 0, 2);
-            return (ushort)((uint)buf[0] | (((uint)buf[1]) << 8));
+            return (ushort)(buf[0] | (((uint)buf[1]) << 8));
         }
 
         public static unsafe void Write(BinaryWriter writer, void* data, int byteCount)

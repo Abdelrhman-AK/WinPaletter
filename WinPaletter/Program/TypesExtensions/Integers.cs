@@ -54,7 +54,6 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string SizeString(this long length, bool ShowSecondUnit = false)
         {
-            long B = 0L;
             long KB = 1024L;
             long MB = KB * 1024L;
             long GB = MB * 1024L;

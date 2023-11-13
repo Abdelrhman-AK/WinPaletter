@@ -13,7 +13,6 @@ namespace WinPaletter.UI.Controllers
     [DefaultEvent("Click")]
     public class ColorItem : Panel
     {
-
         public ColorItem()
         {
             Rect = new Rectangle(0, 0, Width - 1, Height - 1);
@@ -685,7 +684,8 @@ namespace WinPaletter.UI.Controllers
                     G.FillRoundedRect(br, RectInner, R);
                 }
 
-                using (var path = RectInner.Round(R))
+                GraphicsPath path = Program.Style.RoundedCorners ? RectInner.Round(R) : new GraphicsPath();
+                if (!Program.Style.RoundedCorners) { path.AddRectangle(RectInner); }
                 {
                     var reg = new Region(path);
                     G.Clip = reg;
@@ -712,8 +712,8 @@ namespace WinPaletter.UI.Controllers
                         MakeAfterDropEffect = false;
                         Invalidate();
                     }
-
                 }
+                path.Dispose();
 
                 using (var P = new Pen(LineColor))
                 {

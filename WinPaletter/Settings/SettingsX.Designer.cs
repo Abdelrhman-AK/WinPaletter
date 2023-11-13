@@ -1311,7 +1311,7 @@ namespace WinPaletter
             this.AlertBox22.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.AlertBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.AlertBox22.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox22.CenterText = false;
             this.AlertBox22.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox22.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1398,20 +1398,20 @@ namespace WinPaletter
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
             this.CheckBox1.Location = new System.Drawing.Point(47, 54);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(637, 24);
+            this.CheckBox1.Size = new System.Drawing.Size(671, 24);
             this.CheckBox1.TabIndex = 6;
-            this.CheckBox1.Text = "Automatic add extension of theme file and setting file (*.wpth,*.wpsf) to registr" +
-    "y every time I open the program";
+            this.CheckBox1.Text = "Automatic add extension of theme file and setting file (*.wpth,*.wpsf, *.wptp) to" +
+    " registry every time I open the program";
             // 
             // AlertBox1
             // 
             this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Success;
-            this.AlertBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(79)))));
+            this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox1.CenterText = true;
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(690, 57);
+            this.AlertBox1.Location = new System.Drawing.Point(724, 57);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(91, 19);
             this.AlertBox1.TabIndex = 10;

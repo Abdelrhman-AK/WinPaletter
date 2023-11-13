@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -139,7 +138,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.TM.Info.Color1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
+                StoreItem1.TM.Info.Color1 = ((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 
@@ -158,7 +157,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.TM.Info.Color2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
+                StoreItem1.TM.Info.Color2 = ((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 

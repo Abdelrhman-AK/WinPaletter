@@ -134,7 +134,7 @@ namespace WinPaletter.TypesExtensions
                 var cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
                 return cs.SelectMany(c => c.GetAllControls()).Concat(cs).OrderBy(c => c.Name);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 var cs = parent.Controls.OfType<Control>();
                 return cs.SelectMany(c => c.GetAllControls()).Concat(cs);

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
@@ -213,15 +212,15 @@ namespace WinPaletter
 
                             UserSwitch(new UserChangeEventArgs() { SID = _SID, Timing = UserChangeEventArgs.Timings.AfterChange });
                         }
-                }
+                    }
 
-                else
-                {
-                    Token = IntPtr.Zero;
-                    Identity = WindowsIdentity.GetCurrent();
-                    UserSwitch(new UserChangeEventArgs() { SID = AdminSID_GrantedUAC, Timing = UserChangeEventArgs.Timings.AfterChange });
+                    else
+                    {
+                        Token = IntPtr.Zero;
+                        Identity = WindowsIdentity.GetCurrent();
+                        UserSwitch(new UserChangeEventArgs() { SID = AdminSID_GrantedUAC, Timing = UserChangeEventArgs.Timings.AfterChange });
+                    }
                 }
-            }
             }
         }
 

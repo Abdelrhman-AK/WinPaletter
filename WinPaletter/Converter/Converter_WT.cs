@@ -34,7 +34,6 @@ namespace WinPaletter
                 case Mode.WinPaletterFile:
                     {
                         var Collected = new List<string>();
-                        bool Preview = false;
 
                         var lst = new List<string>();
                         lst.Clear();

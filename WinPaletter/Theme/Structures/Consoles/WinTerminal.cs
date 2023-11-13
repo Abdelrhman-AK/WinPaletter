@@ -1088,7 +1088,7 @@ namespace WinPaletter
     public class TFont : ICloneable
     {
         /// <summary>Font name</summary>
-        public string Face { get; set; } = OS.W11 ? "Cascadia Mono" : "Consolas";
+        public string Face { get; set; } = (OS.W12 || OS.W11) ? "Cascadia Mono" : "Consolas";
 
         /// <summary>Font weight</summary>
         public FontWeight_Enum Weight { get; set; } = FontWeight_Enum.normal;

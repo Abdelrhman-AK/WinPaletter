@@ -118,7 +118,7 @@ namespace WinPaletter
                 Forms.WindowsTerminal.Show();
             }
 
-            else if (OS.W10 | OS.W11)
+            else if (OS.W12 || OS.W11 || OS.W10)
             {
                 string TerDir;
 
@@ -163,7 +163,7 @@ namespace WinPaletter
                 Close();
                 Forms.WindowsTerminal.Show();
             }
-            else if (OS.W10 | OS.W11)
+            else if (OS.W12 || OS.W11 || OS.W10)
             {
                 string TerPreDir;
 

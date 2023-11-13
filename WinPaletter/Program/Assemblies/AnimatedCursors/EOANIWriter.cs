@@ -48,7 +48,7 @@ public class EOANIWriter
 
         // Create the RIFF stuff for an animated cursor file
         m_writer.Write(fourccRIFF, 0, 4);
-        m_writer.Write((int)0);  // Placeholder for RIFF chunk size
+        m_writer.Write(0);  // Placeholder for RIFF chunk size
         m_writer.Write(fourccACON, 0, 4);
 
         // After writing "ACON" we'll write the INFO list. The function will only perform a write
@@ -66,7 +66,7 @@ public class EOANIWriter
 
         m_writer.Write(fourccLIST, 0, 4);
         FramesListSizePosition = m_writer.BaseStream.Position;
-        m_writer.Write((int)0);  // Placeholder for LIST chunk size
+        m_writer.Write(0);  // Placeholder for LIST chunk size
         m_writer.Write(fourccfram, 0, 4);
 
         // Update main RIFF chunk size value
@@ -175,7 +175,7 @@ public class EOANIWriter
         m_writer.Write(fourccLIST, 0, 4);
 
         // Write the size of this chunk
-        m_writer.Write((uint)(len1 + len2 + 4));
+        m_writer.Write(len1 + len2 + 4);
 
         // Write "INFO"
         m_writer.Write(fourccINFO, 0, 4);

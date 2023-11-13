@@ -121,6 +121,14 @@ namespace WinPaletter
 
                 switch (Program.PreviewStyle)
                 {
+                    case WindowStyle.W12:
+                        {
+                            TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                            break;
+                        }
+
                     case WindowStyle.W11:
                         {
                             TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
@@ -139,9 +147,9 @@ namespace WinPaletter
 
                     default:
                         {
-                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                            TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows12.AppMode_Light;
                             break;
                         }
                 }
@@ -544,7 +552,7 @@ namespace WinPaletter
                 TerCursorHeightBar.Value = temp.CursorHeight;
 
                 TerFontName.Text = temp.Font.Face;
-                var fx = new LogFont();
+                NativeMethods.GDI32.LogFont fx = new();
                 var f_cmd = new Font(temp.Font.Face, temp.Font.Size);
                 f_cmd.ToLogFont(fx);
                 fx.lfWeight = (int)temp.Font.Weight * 100;
@@ -985,6 +993,13 @@ namespace WinPaletter
                     {
                         switch (Program.PreviewStyle)
                         {
+                            case WindowStyle.W12:
+                                {
+                                    Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                                    Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                                    break;
+                                }
+
                             case WindowStyle.W11:
                                 {
                                     Terminal1.Light = Program.TM.Windows11.AppMode_Light;
@@ -1001,8 +1016,8 @@ namespace WinPaletter
 
                             default:
                                 {
-                                    Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                                    Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                                    Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                                    Terminal2.Light = Program.TM.Windows12.AppMode_Light;
                                     break;
                                 }
                         }
@@ -1017,7 +1032,7 @@ namespace WinPaletter
 
                 {
                     var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                    var fx = new LogFont();
+                    NativeMethods.GDI32.LogFont fx = new();
                     var f_cmd = new Font(temp.Font.Face, temp.Font.Size);
                     f_cmd.ToLogFont(fx);
                     fx.lfWeight = (int)temp.Font.Weight * 100;
@@ -1044,7 +1059,7 @@ namespace WinPaletter
 
         private void TerFontWeight_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var fx = new LogFont();
+            NativeMethods.GDI32.LogFont fx = new();
             var f_cmd = new Font(Terminal1.Font.Name, Terminal1.Font.Size, Terminal1.Font.Style);
             f_cmd.ToLogFont(fx);
             fx.lfWeight = TerFontWeight.SelectedIndex * 100;
@@ -1097,6 +1112,13 @@ namespace WinPaletter
 
                 switch (Program.PreviewStyle)
                 {
+                    case WindowStyle.W12:
+                        {
+                            if (TerThemes.SelectedIndex == 2)
+                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                            break;
+                        }
+
                     case WindowStyle.W11:
                         {
                             if (TerThemes.SelectedIndex == 2)
@@ -1114,7 +1136,7 @@ namespace WinPaletter
                     default:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
                             break;
                         }
 
@@ -1404,7 +1426,7 @@ namespace WinPaletter
 
             if (TerEnabled.Checked)
             {
-                if (OS.W10 | OS.W11)
+                if (OS.W12 || OS.W11 || OS.W10)
                 {
 
                     try
@@ -1470,7 +1492,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            if (OS.W10 | OS.W11)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
                 string TerDir;
                 string TerPreDir;
@@ -1496,7 +1518,7 @@ namespace WinPaletter
         {
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
-                if (OS.W10 | OS.W11)
+                if (OS.W12 || OS.W11 || OS.W10)
                 {
                     string TerDir;
                     string TerPreDir;
@@ -1727,7 +1749,7 @@ namespace WinPaletter
                         TerCursorHeightBar.Value = CCatFrom.CursorHeight;
 
                         TerFontName.Text = CCatFrom.Font.Face;
-                        var fx = new LogFont();
+                        NativeMethods.GDI32.LogFont fx = new();
                         var f_cmd = new Font(CCatFrom.Font.Face, CCatFrom.Font.Size);
                         f_cmd.ToLogFont(fx);
                         fx.lfWeight = (int)CCatFrom.Font.Weight * 100;
@@ -1992,7 +2014,7 @@ namespace WinPaletter
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
                 TerFontName.Text = FontDialog1.Font.Name;
-                var fx = new LogFont();
+                NativeMethods.GDI32.LogFont fx = new();
                 FontDialog1.Font.ToLogFont(fx);
                 fx.lfWeight = TerFontWeight.SelectedIndex * 100;
                 {

@@ -246,7 +246,23 @@ namespace WinPaletter
             CtrlTheme theme;
             Color statusBackColor, StatusForeColor;
 
-            if (Program.PreviewStyle == WindowStyle.W11)
+            if (Program.PreviewStyle == WindowStyle.W12)
+            {
+                if (TM.Windows12.AppMode_Light)
+                {
+                    theme = CtrlTheme.Default;
+                    StatusForeColor = Color.Black;
+                    statusBackColor = Color.White;
+                }
+                else
+                {
+                    theme = CtrlTheme.DarkExplorer;
+                    StatusForeColor = Color.White;
+                    statusBackColor = Color.FromArgb(28, 28, 28);
+                }
+            }
+
+            else if (Program.PreviewStyle == WindowStyle.W11)
             {
 
                 if (TM.Windows11.AppMode_Light)
@@ -607,14 +623,9 @@ namespace WinPaletter
             MenuStrip1.Height = Math.Max(Trackbar9.Value, GetTitleTextHeight(MenuStrip1.Font));
         }
 
-        public int GetTitleTextHeight(Font Font)
+        public int GetTitleTextHeight(Font font)
         {
-            int TitleTextH; // , TitleTextH_9, TitleTextH_Sum As Integer
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(Font).Height);
-            // TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font([Font].Name, 9, [Font].Style)).Height
-            // TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
-
-            return Font.Height; // TitleTextH 'TitleTextH_Sum
+            return font.Height;
         }
 
         private void Button11_Click(object sender, EventArgs e)

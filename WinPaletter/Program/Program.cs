@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Principal;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -15,6 +17,7 @@ namespace WinPaletter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            CultureInfo.DefaultThreadCurrentUICulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             AppDomain.CurrentDomain.AssemblyResolve += DomainCheck;
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;

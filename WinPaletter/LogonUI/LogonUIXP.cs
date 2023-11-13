@@ -8,13 +8,20 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class LogonUIXP
     {
         public LogonUIXP()
         {
             InitializeComponent();
+            color_pick.DragDrop += ColorItem_DragDrop;
+            FormClosing += LogonUIXP_FormClosing;
         }
+
+        private void LogonUIXP_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            color_pick.DragDrop -= ColorItem_DragDrop;
+        }
+
         private void LogonUIXP_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
@@ -41,30 +48,30 @@ namespace WinPaletter
 
         public void ApplyFromTM(Theme.Manager TM)
         {
+            Toggle1.Checked = TM.LogonUIXP.Enabled;
+            switch (TM.LogonUIXP.Mode)
             {
-                Toggle1.Checked = TM.LogonUIXP.Enabled;
-                switch (TM.LogonUIXP.Mode)
-                {
-                    case Theme.Structures.LogonUIXP.Modes.Default:
-                        {
-                            RadioImage1.Checked = true;
-                            break;
-                        }
-                    case Theme.Structures.LogonUIXP.Modes.Win2000:
-                        {
-                            RadioImage2.Checked = true;
-                            break;
-                        }
+                case Theme.Structures.LogonUIXP.Modes.Default:
+                    {
+                        RadioImage1.Checked = true;
+                        break;
+                    }
+                case Theme.Structures.LogonUIXP.Modes.Win2000:
+                    {
+                        RadioImage2.Checked = true;
+                        break;
+                    }
 
-                    default:
-                        {
-                            RadioImage1.Checked = true;
-                            break;
-                        }
-                }
-                color_pick.BackColor = TM.LogonUIXP.BackColor;
-                CheckBox1.Checked = TM.LogonUIXP.ShowMoreOptions;
+                default:
+                    {
+                        RadioImage1.Checked = true;
+                        break;
+                    }
             }
+
+            color_pick.BackColor = TM.LogonUIXP.BackColor;
+            CheckBox1.Checked = TM.LogonUIXP.ShowMoreOptions;
+            UpdateWin2000Preview(TM.LogonUIXP.BackColor);
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -79,6 +86,20 @@ namespace WinPaletter
 
                 TM.LogonUIXP.BackColor = color_pick.BackColor;
                 TM.LogonUIXP.ShowMoreOptions = CheckBox1.Checked;
+            }
+        }
+
+        private void UpdateWin2000Preview(Color color)
+        {
+            using (Bitmap b = new(Properties.Resources.LogonUI_2000.Width, Properties.Resources.LogonUI_2000.Height))
+            {
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.Clear(color);
+                    g.DrawImage(Properties.Resources.LogonUI_2000, 0, 0);
+                    g.Save();
+                }
+                RadioImage2.Image = (Bitmap)b.Clone();
             }
         }
 
@@ -136,15 +157,20 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                UpdateWin2000Preview(Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender));
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            List<Control> CList = new() { (Control)sender };
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
+            UpdateWin2000Preview(C);
             CList.Clear();
+        }
 
+        private void ColorItem_DragDrop(object sender, DragEventArgs e)
+        {
+            UpdateWin2000Preview(color_pick.BackColor);
         }
 
         private void Toggle1_CheckedChanged(object sender, EventArgs e)

@@ -237,7 +237,7 @@ namespace WinPaletter
                     case var @case when @case == ("Default Dark".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
                             AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = DefaultColors.BackColorDark;
                             break;
@@ -246,7 +246,7 @@ namespace WinPaletter
                     case var case1 when case1 == ("Default Light".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
                             AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = DefaultColors.BackColorLight;
                             break;
@@ -255,7 +255,7 @@ namespace WinPaletter
                     case var case2 when case2 == ("AMOLED".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
                             AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = Color.Black;
                             break;
@@ -264,7 +264,7 @@ namespace WinPaletter
                     case var case3 when case3 == ("Extreme White".ToLower() ?? ""):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = OS.W11 | OS.W7;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
                             AccentColor.BackColor = DefaultColors.Accent;
                             BackColorPick.BackColor = Color.White;
                             break;

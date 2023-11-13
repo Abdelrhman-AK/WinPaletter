@@ -19,6 +19,8 @@ namespace WinPaletter
         /// </summary>
         public enum WindowStyle
         {
+            /// <summary>Windows 12 (Placeholder until Windows 12 release)</summary>
+            W12,
             /// <summary>Windows 11</summary>
             W11,
             /// <summary>Windows 10</summary>
@@ -1116,10 +1118,10 @@ namespace WinPaletter
             var Taskbar_Style = Taskbar.Style;
             var Window_Style = Window1.Preview;
 
-            Settings_Container.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
-            Link_preview.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
-            Start.Visible = !(Style == WindowStyle.W81) & !(Style == WindowStyle.W10 & TM.WindowsEffects.FullScreenStartMenu);
-            ActionCenter.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
+            Settings_Container.Visible = Style == WindowStyle.W12 || Style == WindowStyle.W11 || Style == WindowStyle.W10;
+            Link_preview.Visible = Style == WindowStyle.W12 || Style == WindowStyle.W11 || Style == WindowStyle.W10;
+            Start.Visible = !(Style == WindowStyle.W81) & !(Style == WindowStyle.W10 && TM.WindowsEffects.FullScreenStartMenu);
+            ActionCenter.Visible = Style == WindowStyle.W12 || Style == WindowStyle.W11 || Style == WindowStyle.W10;
 
             switch (Style)
             {
@@ -1376,7 +1378,7 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        if (OS.W11)
+                        if (OS.W12 || OS.W11)
                             Program.EP = new ExplorerPatcher();
 
                         if (ExplorerPatcher.IsAllowed())
@@ -1440,9 +1442,7 @@ namespace WinPaletter
                                                 Start.UseWin11RoundedCorners_WithWin10_Level2 = true;
                                                 break;
                                             }
-
                                     }
-
                                 }
                             }
                         }
@@ -1582,7 +1582,7 @@ namespace WinPaletter
 
             }
 
-            if (Style == WindowStyle.W10 & !TM.WindowsEffects.FullScreenStartMenu | Style == WindowStyle.W11)
+            if (Style == WindowStyle.W12 || Style == WindowStyle.W11 || (Style == WindowStyle.W10 & !TM.WindowsEffects.FullScreenStartMenu))
             {
                 Window1.Left = (int)Math.Round(Start.Right + (Window1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - Window1.Width) / 2d);
             }
@@ -1641,6 +1641,25 @@ namespace WinPaletter
 
             switch (Style)
             {
+                case WindowStyle.W12:
+                    {
+                        Window1.AccentColor_Enabled = TM.Windows12.ApplyAccentOnTitlebars;
+                        Window2.AccentColor_Enabled = TM.Windows12.ApplyAccentOnTitlebars;
+
+                        Window1.AccentColor_Active = TM.Windows12.Titlebar_Active;
+                        Window2.AccentColor_Active = TM.Windows12.Titlebar_Active;
+
+                        Window1.AccentColor_Inactive = TM.Windows12.Titlebar_Inactive;
+                        Window2.AccentColor_Inactive = TM.Windows12.Titlebar_Inactive;
+
+                        Window1.DarkMode = !TM.Windows12.AppMode_Light;
+                        Window2.DarkMode = !TM.Windows12.AppMode_Light;
+
+                        Window1.Shadow = TM.WindowsEffects.WindowShadow;
+                        Window2.Shadow = TM.WindowsEffects.WindowShadow;
+                        break;
+                    }
+
                 case WindowStyle.W11:
                     {
                         Window1.AccentColor_Enabled = TM.Windows11.ApplyAccentOnTitlebars;
@@ -2116,7 +2135,7 @@ namespace WinPaletter
                     }
                 case 19:
                     {
-                        W81_start.Image = (Image)TM.Windows81.PersonalColors_Background.ToBitmap(new Size(48, 48));
+                        W81_start.Image = TM.Windows81.PersonalColors_Background.ToBitmap(new Size(48, 48));
                         break;
                     }
                 case 20:
@@ -2145,157 +2164,157 @@ namespace WinPaletter
             {
                 case 0:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 1:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 2:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 3:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 4:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(42, 27, 0).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(42, 27, 0).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 5:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(59, 0, 3).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(59, 0, 3).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 6:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(65, 0, 49).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(65, 0, 49).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 7:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(41, 0, 66).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(41, 0, 66).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 8:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(30, 3, 84).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(30, 3, 84).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 9:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(0, 31, 66).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(0, 31, 66).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 10:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(3, 66, 82).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(3, 66, 82).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 11:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(30, 144, 255).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(30, 144, 255).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 12:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(4, 63, 0).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(4, 63, 0).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 13:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(188, 90, 28).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(188, 90, 28).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 14:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(155, 28, 29).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(155, 28, 29).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 15:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(152, 28, 90).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(152, 28, 90).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 16:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(88, 28, 152).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(88, 28, 152).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 17:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(28, 74, 153).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(28, 74, 153).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 18:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(69, 143, 221).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(69, 143, 221).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 19:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(0, 141, 142).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(0, 141, 142).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 20:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(120, 168, 33).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(120, 168, 33).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 21:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(191, 142, 16).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(191, 142, 16).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 22:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(219, 80, 171).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(219, 80, 171).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 23:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(154, 154, 154).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(154, 154, 154).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 case 24:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(88, 88, 88).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(88, 88, 88).ToBitmap(new Size(48, 48));
                         break;
                     }
 
                 default:
                     {
-                        W8_logonui.Image = (Image)Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
+                        W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(48, 48));
                         break;
                     }
 
@@ -2333,6 +2352,17 @@ namespace WinPaletter
                 return (Bitmap)ImgF.Image.Clone();
             }
 
+        }
+
+        /// <summary>
+        /// Return height of a titlebar provided by a font
+        /// </summary>
+        public static int GetTitlebarTextHeight(Font font)
+        {
+            string TitleScheme = "ABCabc0123xYz.#";
+            int Title_x_Height = (int)Math.Round(TitleScheme.Measure(font).Height);
+            int Title_9_Height = (int)Math.Round(TitleScheme.Measure(new Font(font.Name, 9f, font.Style)).Height);
+            return Math.Max(0, Title_x_Height - Title_9_Height - 5);
         }
     }
 }

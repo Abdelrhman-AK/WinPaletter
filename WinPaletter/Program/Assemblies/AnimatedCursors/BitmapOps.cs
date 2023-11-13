@@ -365,7 +365,7 @@ namespace EOFC
             for (int y = 0; y < h; y++)
             {
                 uint* destrow = (uint*)(bdest + y * bd.Stride);
-                byte* srcrow = (byte*)&bsrc[y * SRowSize];
+                byte* srcrow = &bsrc[y * SRowSize];
 
                 if (y == h - 1) // We handle the last row in a different fashion
                 {
@@ -375,7 +375,7 @@ namespace EOFC
                     {
                         ushort firsttwo = *((ushort*)&srcrow[x * 3]);
                         byte third = srcrow[x * 3 + 2];
-                        destrow[x] = (uint)firsttwo | ((uint)third) << 16 | 0xFF000000;
+                        destrow[x] = firsttwo | ((uint)third) << 16 | 0xFF000000;
                     }
                 }
                 else
@@ -431,7 +431,7 @@ namespace EOFC
             for (int y = 0; y < h; y++)
             {
                 uint* destrow = (uint*)(bdest + y * bd.Stride);
-                byte* srcrow = (byte*)&bsrc[y * SRowSize];
+                byte* srcrow = &bsrc[y * SRowSize];
 
                 // Loop through the pixels in this row
                 for (int x = 0; x < w; x++)
@@ -471,7 +471,7 @@ namespace EOFC
             for (int y = 0; y < h; y++)
             {
                 uint* destrow = (uint*)(bdest + y * bd.Stride);
-                byte* srcrow = (byte*)&bsrc[y * SRowSize];
+                byte* srcrow = &bsrc[y * SRowSize];
 
                 // Loop through the pixels in this row
                 for (int x = 0; x < w; x++)
@@ -505,12 +505,12 @@ namespace EOFC
             for (int y = 0; y < h; y++)
             {
                 uint* destrow = (uint*)(bdest + y * bd.Stride);
-                byte* srcrow = (byte*)&bsrc[y * SRowSize];
+                byte* srcrow = &bsrc[y * SRowSize];
 
                 // Loop through the pixels in this row
                 for (int x = 0; x < w; x++)
                 {
-                    index = (uint)srcrow[x / 8];
+                    index = srcrow[x / 8];
                     index = (index >> (7 - (x % 8))) & 1;
                     destrow[x] = (index == 0) ? 0xFF000000 : 0xFFFFFFFF;
                 }
@@ -689,8 +689,8 @@ namespace EOFC
             // Build the new image
             for (int y = 0; y < NewHeight; y++)
             {
-                uint* dest = (uint*)&NewBits[y * NewWidth];
-                uint* src = (uint*)&OldBits[y * OldWidth];
+                uint* dest = &NewBits[y * NewWidth];
+                uint* src = &OldBits[y * OldWidth];
 
                 if (y >= OldHeight)
                 {

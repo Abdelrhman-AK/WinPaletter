@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
 {
@@ -102,6 +103,144 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         [DllImport("gdi32.dll")]
         public static extern int SetTextColor(IntPtr hDC, int crColor);
+
+        [DllImport("user32.dll")]
+        private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
+
+        /// <summary>
+        /// Contains parameters that describe the non-client area metrics of a window, such as the caption height, border width, and the system font.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NONCLIENTMETRICS
+        {
+            /// <summary>
+            /// The size, in bytes, of this structure.
+            /// </summary>
+            public int cbSize;
+
+            /// <summary>
+            /// The width of the window border, in pixels.
+            /// </summary>
+            public int iBorderWidth;
+
+            /// <summary>
+            /// The width of the scroll box, in pixels.
+            /// </summary>
+            public int iScrollWidth;
+
+            /// <summary>
+            /// The height of the scroll box, in pixels.
+            /// </summary>
+            public int iScrollHeight;
+
+            /// <summary>
+            /// The width of the caption or title bar, in pixels.
+            /// </summary>
+            public int iCaptionWidth;
+
+            /// <summary>
+            /// The height of the caption or title bar, in pixels.
+            /// </summary>
+            public int iCaptionHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the caption or title bar.
+            /// </summary>
+            public LogFont lfCaptionFont;
+
+            /// <summary>
+            /// The width of the small caption, in pixels.
+            /// </summary>
+            public int iSMCaptionWidth;
+
+            /// <summary>
+            /// The height of the small caption, in pixels.
+            /// </summary>
+            public int iSMCaptionHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the small caption.
+            /// </summary>
+            public LogFont lfSMCaptionFont;
+
+            /// <summary>
+            /// The width of the menu bar, in pixels.
+            /// </summary>
+            public int iMenuWidth;
+
+            /// <summary>
+            /// The height of the menu bar, in pixels.
+            /// </summary>
+            public int iMenuHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the menu bar.
+            /// </summary>
+            public LogFont lfMenuFont;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the status bar.
+            /// </summary>
+            public LogFont lfStatusFont;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the message box window.
+            /// </summary>
+            public LogFont lfMessageFont;
+
+            /// <summary>
+            /// The border padding for caption buttons, in pixels.
+            /// </summary>
+            public int iPaddedBorderWidth;
+        }
+
+        /// <summary>
+        /// Contains parameters that describe the metrics of icons displayed by the Shell.
+        /// </summary>
+        public struct ICONMETRICS
+        {
+            /// <summary>
+            /// The size, in bytes, of this structure.
+            /// </summary>
+            public uint cbSize;
+
+            /// <summary>
+            /// The horizontal space, in pixels, between icons.
+            /// </summary>
+            public int iHorzSpacing;
+
+            /// <summary>
+            /// The vertical space, in pixels, between icons.
+            /// </summary>
+            public int iVertSpacing;
+
+            /// <summary>
+            /// The maximum number of characters displayed in a label.
+            /// </summary>
+            public int iTitleWrap;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the icon label.
+            /// </summary>
+            public LogFont lfFont;
+        }
+
+        /// <summary>
+        /// Contains parameters that control the animation effects associated with user actions.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ANIMATIONINFO
+        {
+            /// <summary>
+            /// The size, in bytes, of this structure.
+            /// </summary>
+            public uint cbSize;
+
+            /// <summary>
+            /// If this member is TRUE, minimize and restore motion is enabled; otherwise, it is disabled.
+            /// </summary>
+            public int IMinAnimate;
+        }
 
         /// <summary>
         /// Represents the accent policy for the Desktop Window Manager (DWM).
@@ -330,7 +469,7 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             OCR_WAIT = 32514
         }
-       
+
         /// <summary>
         /// Constants for various Windows messages.
         /// </summary>
@@ -376,9 +515,6 @@ namespace WinPaletter.NativeMethods
         /// Special window handle value to broadcast the message to all top-level windows.
         /// </summary>
         public const int HWND_BROADCAST = 0xFFFF;
-
-        [DllImport("user32.dll")]
-        private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
 
         private delegate bool EnumChildProc(IntPtr hWnd, IntPtr lParam);
 

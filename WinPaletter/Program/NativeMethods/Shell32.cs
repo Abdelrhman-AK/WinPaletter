@@ -89,7 +89,7 @@ namespace WinPaletter.NativeMethods
             }
             else
             {
-                return (Image)Color.Black.ToBitmap(new Size(128, 128));
+                return Color.Black.ToBitmap(new Size(128, 128));
             }
         }
 

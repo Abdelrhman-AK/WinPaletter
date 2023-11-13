@@ -295,7 +295,7 @@ namespace WinPaletter
 
             else if (RadioButton3.Checked)
             {
-                bmpX = (Bitmap)color_pick.BackColor.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                bmpX = color_pick.BackColor.ToBitmap(Program.Computer.Screen.Bounds.Size);
             }
 
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
@@ -305,7 +305,7 @@ namespace WinPaletter
 
             else
             {
-                bmpX = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                bmpX = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
 
             }
 

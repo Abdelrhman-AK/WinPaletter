@@ -72,7 +72,7 @@ namespace WinPaletter
                 descriptionKey.DeleteValue("Version", false);
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
             }
             finally

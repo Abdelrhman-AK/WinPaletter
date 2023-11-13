@@ -5,7 +5,6 @@ using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using WinPaletter.Theme;
-using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.NativeMethods
 {

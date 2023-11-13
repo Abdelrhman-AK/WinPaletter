@@ -60,6 +60,11 @@ namespace WinPaletter
             string r1 = r[0];
             string r2 = r[1];
 
+            if (OS.W12)
+            {
+                RadioImage7.Image = Properties.Resources.Native12.Resize(20, 20);
+            }
+
             if (OS.W11)
             {
                 RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);

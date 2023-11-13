@@ -113,8 +113,8 @@ namespace WinPaletter.UI.WP
             }
             set
             {
-                if (value == _Value)
-                    return;
+                //if (value == _Value)
+                //    return;
 
                 if (value > _Maximum)
                 {

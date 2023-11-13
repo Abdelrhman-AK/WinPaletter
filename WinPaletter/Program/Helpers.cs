@@ -52,6 +52,9 @@ namespace WinPaletter
 
         private static void LoadThemeManager()
         {
+            if (OS.W12)
+                PreviewStyle = PreviewHelpers.WindowStyle.W12;
+
             if (OS.W11)
                 PreviewStyle = PreviewHelpers.WindowStyle.W11;
 
@@ -74,7 +77,7 @@ namespace WinPaletter
                 PreviewStyle = PreviewHelpers.WindowStyle.WXP;
 
             else
-                PreviewStyle = PreviewHelpers.WindowStyle.W11;
+                PreviewStyle = PreviewHelpers.WindowStyle.W12;
 
             // Load Manager
             if (!ExternalLink)

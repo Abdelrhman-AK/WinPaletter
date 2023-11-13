@@ -4,7 +4,6 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static WinPaletter.Metrics;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
@@ -256,17 +255,22 @@ namespace WinPaletter.Theme.Structures
                 int OldDPI = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor()));
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 
-                var lfCaptionFont = new LogFont();
+                NativeMethods.GDI32.LogFont lfCaptionFont = new();
                 CaptionFont.ToLogFont(lfCaptionFont);
-                var lfIconFont = new LogFont();
+
+                NativeMethods.GDI32.LogFont lfIconFont = new();
                 IconFont.ToLogFont(lfIconFont);
-                var lfMenuFont = new LogFont();
+
+                NativeMethods.GDI32.LogFont lfMenuFont = new();
                 MenuFont.ToLogFont(lfMenuFont);
-                var lfMessageFont = new LogFont();
+
+                NativeMethods.GDI32.LogFont lfMessageFont = new();
                 MessageFont.ToLogFont(lfMessageFont);
-                var lfSMCaptionFont = new LogFont();
+
+                NativeMethods.GDI32.LogFont lfSMCaptionFont = new();
                 SmCaptionFont.ToLogFont(lfSMCaptionFont);
-                var lfStatusFont = new LogFont();
+
+                NativeMethods.GDI32.LogFont lfStatusFont = new();
                 StatusFont.ToLogFont(lfStatusFont);
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);

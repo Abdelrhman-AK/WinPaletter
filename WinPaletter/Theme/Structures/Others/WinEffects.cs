@@ -2,7 +2,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static WinPaletter.Metrics;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
@@ -363,12 +362,12 @@ namespace WinPaletter.Theme.Structures
 
             if (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
             {
-                Win11BootDots = !OS.W11;
+                Win11BootDots = !OS.W12 && !OS.W11;
             }
 
             else
             {
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", OS.W11 ? 1 : 0))
+                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (OS.W12 || OS.W11) ? 1 : 0))
                 {
                     case 0:
                         {
@@ -514,7 +513,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
 
-                if (OS.W11)
+                if (OS.W12 || OS.W11)
                     EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
 
                 if (OS.W8 | OS.W81 || OS.W10)
@@ -580,7 +579,7 @@ namespace WinPaletter.Theme.Structures
                     EditReg_CMD(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
                 }
 
-                if (OS.W11)
+                if (OS.W12 || OS.W11)
                 {
                     try
                     {

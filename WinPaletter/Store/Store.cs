@@ -78,6 +78,7 @@ namespace WinPaletter
             Menu_Window.BringToFront();
         }
 
+
         public void SetClassicMetrics(Theme.Manager TM)
         {
             try
@@ -129,13 +130,8 @@ namespace WinPaletter
             LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
             PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
 
-            int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(TM.MetricsFonts.CaptionFont).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(TM.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
-            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
-
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
-            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + TitleTextH_Sum;
+            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
             var _Padding = new System.Windows.Forms.Padding(iP, iT, iP, iP);
 
             foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
@@ -147,8 +143,10 @@ namespace WinPaletter
                 }
             }
 
-            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
-            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + TM.MetricsFonts.MenuHeight;
+
+
+            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font);
+            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight;
 
             Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
             Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);
@@ -362,7 +360,7 @@ namespace WinPaletter
             if (!Console.FontRaster)
             {
                 {
-                    var temp = Font.FromLogFont(new LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
+                    var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
                     CMD.Font = new Font(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
@@ -767,7 +765,7 @@ namespace WinPaletter
                             }
                         }
 
-                        catch (Exception ex)
+                        catch (Exception)
                         {
 
                         }
@@ -838,7 +836,7 @@ namespace WinPaletter
                                 }
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                         }
 
@@ -1357,7 +1355,7 @@ namespace WinPaletter
             Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0);
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
 
-            if (OS.W11 | OS.W10)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
                 CompositionEnabled = CompositionEnabled & Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
             }
@@ -1367,7 +1365,7 @@ namespace WinPaletter
                 Titlebar_lbl.DrawOnGlass = true;
                 Titlebar_panel.BackColor = Color.Black;
 
-                if (OS.W11)
+                if (OS.W12 || OS.W11)
                 {
                     this.DrawMica(Pd);
                 }
@@ -1432,7 +1430,7 @@ namespace WinPaletter
             else
             {
                 Titlebar_lbl.DrawOnGlass = true;
-                if (OS.W11 || OS.W10)
+                if (OS.W12 || OS.W11 || OS.W10)
                     DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
                 this.DrawAero(Pd);
 

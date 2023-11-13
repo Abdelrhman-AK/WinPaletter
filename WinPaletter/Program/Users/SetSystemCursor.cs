@@ -31,7 +31,7 @@ namespace WinPaletter.NativeMethods
                     if (TreeView != null)
                         Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: " + ex.Message), "dll");
 
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
 
                     return;
                 }

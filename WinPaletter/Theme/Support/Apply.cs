@@ -81,7 +81,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmpList.Add((Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                                bmpList.Add(Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size));
                             }
 
                             break;
@@ -89,7 +89,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
-                            bmpList.Add((Bitmap)LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                            bmpList.Add(LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
                             break;
                         }
 
@@ -240,7 +240,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                                bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             }
 
                             break;
@@ -254,7 +254,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                                bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             }
 
                             break;
@@ -262,7 +262,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
-                            bmp = (Bitmap)LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            bmp = LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             break;
                         }
 
@@ -278,7 +278,7 @@ namespace WinPaletter.Theme
 
                     default:
                         {
-                            bmp = (Bitmap)Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
                             break;
                         }
 

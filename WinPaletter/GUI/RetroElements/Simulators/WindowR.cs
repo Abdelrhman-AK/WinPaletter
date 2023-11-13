@@ -14,13 +14,15 @@ namespace WinPaletter.UI.Retro
 
         public WindowR()
         {
+            Font = new Font("Microsoft Sans Serif", 8f);
+            TitleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
+
             _CloseBtn = new ButtonR() { Name = "CloseBtn", Text = "r", Font = new Font("Marlett", 7.8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             _MinBtn = new ButtonR() { Name = "MinBtn", Text = "1", Font = new Font("Marlett", 8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             _MaxBtn = new ButtonR() { Name = "MaxBtn", Text = "0", Font = new Font("Marlett", 8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            BtnHeight = Metrics_CaptionHeight + GetTitleTextHeight() - 4;
+            BtnHeight = Metrics_CaptionHeight + TitleHeight - 4;
             BtnWidth = Metrics_CaptionWidth - 2;
             DoubleBuffered = true;
-            Font = new Font("Microsoft Sans Serif", 8f);
             BackColor = Color.FromArgb(192, 192, 192);
             ForeColor = Color.White;
             BorderStyle = BorderStyle.None;
@@ -32,6 +34,7 @@ namespace WinPaletter.UI.Retro
         }
 
         #region Properties
+        private int TitleHeight;
 
         public bool ColorGradient { get; set; } = true;
         public Color ColorBorder { get; set; } = Color.FromArgb(192, 192, 192);
@@ -300,7 +303,6 @@ namespace WinPaletter.UI.Retro
         #endregion
 
         #region Events
-
         private void WindowR_BackColorChanged(object sender, EventArgs e)
         {
             _CloseBtn.BackColor = BackColor;
@@ -330,28 +332,17 @@ namespace WinPaletter.UI.Retro
 
         private void WindowR_FontChanged(object sender, EventArgs e)
         {
+            TitleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
             AdjustControlBoxFontsSizes();
             AdjustButtonSizes();
             AdjustLocations();
         }
-
         #endregion
 
         #region Voids/Functions
-
-        public int GetTitleTextHeight()
-        {
-            int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(Font).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(Font.Name, 9f, Font.Style)).Height);
-            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
-
-            return TitleTextH_Sum;
-        }
-
         private void AdjustButtonSizes()
         {
-            BtnHeight = Conversions.ToInteger(Math.Max(_Metrics_CaptionHeight + GetTitleTextHeight() - 4, 5));
+            BtnHeight = Conversions.ToInteger(Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5));
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
 
             _CloseBtn.Size = new Size(BtnWidth, BtnHeight);
@@ -408,7 +399,7 @@ namespace WinPaletter.UI.Retro
         public void AdjustPadding()
         {
             int iP = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
-            int iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + GetTitleTextHeight();
+            int iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
             var _Padding = new Padding(iP, iT, iP, iP);
             Padding = _Padding;
         }
@@ -436,14 +427,9 @@ namespace WinPaletter.UI.Retro
             // ################################################################################# Customizer
             var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
-            int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(Font).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(Font.Name, 9f, Font.Style)).Height);
-            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
-
             int CompinedPadding = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3;
 
-            var TRect = new Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + TitleTextH_Sum);
+            var TRect = new Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + TitleHeight);
 
             var ARect = new Rectangle(2, 2, Width - 5, Height - 5);
             // #################################################################################

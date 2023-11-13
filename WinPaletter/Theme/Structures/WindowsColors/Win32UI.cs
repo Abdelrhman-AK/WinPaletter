@@ -744,7 +744,11 @@ namespace WinPaletter.Theme.Structures
             else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
             {
                 Win32UI @default;
-                if (Program.PreviewStyle == WindowStyle.W11)
+                if (Program.PreviewStyle == WindowStyle.W12)
+                {
+                    @default = Theme.Default.Windows12().Win32;
+                }
+                else if (Program.PreviewStyle == WindowStyle.W11)
                 {
                     @default = Theme.Default.Windows11().Win32;
                 }
@@ -770,7 +774,7 @@ namespace WinPaletter.Theme.Structures
                 }
                 else
                 {
-                    @default = Theme.Default.Windows11().Win32;
+                    @default = Theme.Default.Windows12().Win32;
                 }
 
                 EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);

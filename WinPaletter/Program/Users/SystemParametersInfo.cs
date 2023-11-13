@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows.Forms;
-using static WinPaletter.Metrics;
 
 namespace WinPaletter.NativeMethods
 {

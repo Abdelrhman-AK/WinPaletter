@@ -2048,7 +2048,7 @@ namespace WinPaletter
             AWT_Enabled = false,
             AWT_Delay = 0,
             AWT_BringActivatedWindowToTop = false,
-            Win11BootDots = !OS.W11,
+            Win11BootDots = !OS.W11 && !OS.W12,
             Win11ExplorerBar = Structures.WinEffects.ExplorerBar.Default,
             DisableNavBar = false
         };
@@ -3198,7 +3198,7 @@ namespace WinPaletter
                 try
                 {
                     {
-                        var temp = OS.W11 ? Windows11 : Windows10;
+                        var temp = (OS.W12 || OS.W11) ? Windows11 : Windows10;
                         tx.Add("<LegacyWinPaletter_Windows11/10>");
                         tx.Add("*WinMode_Light= " + temp.WinMode_Light);
                         tx.Add("*AppMode_Light= " + temp.AppMode_Light);
@@ -3402,12 +3402,12 @@ namespace WinPaletter
                     var obj = JToken.Parse(strInput);
                     return true;
                 }
-                catch (JsonReaderException jex)
+                catch (JsonReaderException)
                 {
                     // Exception in parsing json
                     return false;
                 }
-                catch (Exception ex) // some other exception
+                catch (Exception) // some other exception
                 {
                     return false;
                 }

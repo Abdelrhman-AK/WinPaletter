@@ -34,7 +34,30 @@ namespace WinPaletter.Theme
             BackColor = Color.FromArgb(25, 25, 25),
             AccentColor = Color.FromArgb(0, 81, 210),
             DarkMode = true,
-            RoundCorners = OS.WXP | OS.WVista | OS.W7 | OS.W11
+            RoundCorners = OS.WXP || OS.WVista | OS.W7 || OS.W11 || OS.W12
+        };
+
+        /// <summary>Object derived of structure that has data about Windows 12 colors and appearance, and it can be customized.</summary>
+        public Windows10x Windows12 = new()
+        {
+            Color_Index0 = Color.FromArgb(153, 235, 255),
+            Color_Index1 = Color.FromArgb(76, 194, 255),
+            Color_Index2 = Color.FromArgb(0, 145, 248),
+            Color_Index3 = Color.FromArgb(0, 120, 212),
+            Color_Index4 = Color.FromArgb(0, 103, 192),
+            Color_Index5 = Color.FromArgb(0, 62, 146),
+            Color_Index6 = Color.FromArgb(0, 26, 104),
+            Color_Index7 = Color.FromArgb(247, 99, 12),
+            Titlebar_Active = Color.FromArgb(0, 120, 212),
+            Titlebar_Inactive = Color.FromArgb(32, 32, 32),
+            StartMenu_Accent = Color.FromArgb(0, 103, 192),
+            WinMode_Light = true,
+            AppMode_Light = true,
+            Transparency = true,
+            ApplyAccentOnTitlebars = false,
+            ApplyAccentOnTaskbar = Windows10x.AccentTaskbarLevels.None,
+            IncreaseTBTransparency = false,
+            TB_Blur = true
         };
 
         /// <summary>Object derived of structure that has data about Windows 11 colors and appearance, and it can be customized.</summary>
@@ -216,6 +239,20 @@ namespace WinPaletter.Theme
 
         /// <summary>
         /// Structure that has data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property is targeting Windows 12 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+        /// </summary>
+        public WallpaperTone WallpaperTone_W12 = new()
+        {
+            Enabled = false,
+            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            H = 0,
+            S = 100,
+            L = 100
+        };
+
+        /// <summary>
+        /// Structure that has data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property is targeting Windows 11 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
         /// </summary>
@@ -363,7 +400,7 @@ namespace WinPaletter.Theme
             AWT_Enabled = false,
             AWT_Delay = 0,
             AWT_BringActivatedWindowToTop = false,
-            Win11BootDots = !OS.W11,
+            Win11BootDots = !OS.W12 && !OS.W11,
             Win11ExplorerBar = WinEffects.ExplorerBar.Default,
             DisableNavBar = false,
             AutoHideScrollBars = true,
@@ -386,7 +423,7 @@ namespace WinPaletter.Theme
         public Sounds Sounds = new()
         {
             Enabled = true,
-            Snd_Imageres_SystemStart = OS.W11 ? "Default" : "",
+            Snd_Imageres_SystemStart = (OS.W12 || OS.W11) ? "Default" : "",
             Snd_ChargerConnected = "",
             Snd_ChargerDisconnected = "",
             Snd_Win_WindowsLock = ""

@@ -74,7 +74,21 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        public Image Image { get; set; }
+        private Image _image;
+        public Image Image
+        {
+            get
+            {
+                return _image;
+            }
+
+            set
+            {
+                _image = value;
+                Invalidate();
+            }
+        }
+
         public bool ShowText { get; set; } = false;
 
         public bool ImageWithText { get; set; } = false;
@@ -272,100 +286,92 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
+            var G = e.Graphics;
+
+            if (Parent is null)
+                return;
+
+            G.Clear(this.GetParentColor());
+
+            G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            DoubleBuffered = true;
+
+            var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
+            var TextRect = new Rectangle(5, 5, Width - 10, Height - 10);
+
+            var bkC = _Checked ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
+            var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
+
+            using (var br = new SolidBrush(bkC)) { G.FillRoundedRect(br, MainRectInner); }
+            using (var br = new SolidBrush(bkCC)) { G.FillRoundedRect(br, MainRect); }
+
+            var lC = Color.FromArgb(255 - alpha, _Checked ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
+            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+
+            using (var P = new Pen(lC))
             {
-                var G = e.Graphics;
-                if (Parent is null)
-                    return;
-                G.Clear(this.GetParentColor());
+                G.DrawRoundedRect_LikeW11(P, MainRectInner);
+            }
+            using (var P = new Pen(lCC))
+            {
+                G.DrawRoundedRect_LikeW11(P, MainRect);
+            }
 
-                G = e.Graphics;
-                G.SmoothingMode = SmoothingMode.AntiAlias;
-                G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-                DoubleBuffered = true;
+            if (!ImageWithText)
+            {
+                Rectangle CenterRect = new();
 
-                var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
-                var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
-                var TextRect = new Rectangle(5, 5, Width - 10, Height - 10);
-
-                var bkC = _Checked ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
-                var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
-
-                using (var br = new SolidBrush(bkC))
+                try
                 {
-                    G.FillRoundedRect(br, MainRectInner);
-                }
-                using (var br = new SolidBrush(bkCC))
-                {
-                    G.FillRoundedRect(br, MainRect);
-                }
-
-                var lC = Color.FromArgb(255 - alpha, _Checked ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
-                var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
-
-                using (var P = new Pen(lC))
-                {
-                    G.DrawRoundedRect_LikeW11(P, MainRectInner);
-                }
-                using (var P = new Pen(lCC))
-                {
-                    G.DrawRoundedRect_LikeW11(P, MainRect);
-                }
-
-                if (!ImageWithText)
-                {
-                    var CenterRect = new Rectangle();
-
-                    if (Image is not null)
-                        CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - Image.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - Image.Height) / 2d), Image.Width, Image.Height);
-
-                    if (Image is not null)
-                        G.DrawImage(Image, CenterRect);
-
-                    if (ShowText)
+                    if (_image != null)
                     {
-                        using (var br = new SolidBrush(ForeColor))
-                        {
-                            G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat());
-                        }
+                        CenterRect = new((int)Math.Round(MainRect.X + (MainRect.Width - _image.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - _image.Height) / 2d), _image.Width, _image.Height);
+                        G.DrawImage(_image, CenterRect);
                     }
                 }
-                else
+                catch { }
+
+                if (ShowText)
                 {
-                    int imgX = default, imgY = default;
-
-                    try
-                    {
-                        if (Image is not null)
-                        {
-                            imgX = (int)Math.Round((Width - Image.Width) / 2d);
-                            imgY = (int)Math.Round((Height - Image.Height) / 2d);
-                        }
-                    }
-                    catch { }
-
-                    var Rec = new Rectangle(imgY, imgY, Image.Width, Image.Height);
-                    int Bo = imgY + Image.Width + imgY - 5;
-                    var RecText = new Rectangle(Bo, 5, Width - Bo, Height - 10);
-                    var u = Rectangle.Union(Rec, RecText);
-                    int innerSpace = RecText.Left - Rec.Right;
-
-                    Rec.X = u.Left;
-                    RecText.X = u.Left + Rec.Width + innerSpace;
-
-                    G.DrawImage((Bitmap)Image.Clone(), Rec);
                     using (var br = new SolidBrush(ForeColor))
                     {
-                        G.DrawString(Text, Font, br, RecText, TextAlign.ToStringFormat());
+                        G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat());
                     }
                 }
             }
-            catch
+            else
             {
+                int imgX = default, imgY = default;
 
+                try
+                {
+                    if (_image is not null)
+                    {
+                        imgX = (int)Math.Round((Width - _image.Width) / 2d);
+                        imgY = (int)Math.Round((Height - _image.Height) / 2d);
+                    }
+                }
+                catch { }
+
+                var Rec = new Rectangle(imgY, imgY, _image.Width, _image.Height);
+                int Bo = imgY + _image.Width + imgY - 5;
+                var RecText = new Rectangle(Bo, 5, Width - Bo, Height - 10);
+                var u = Rectangle.Union(Rec, RecText);
+                int innerSpace = RecText.Left - Rec.Right;
+
+                Rec.X = u.Left;
+                RecText.X = u.Left + Rec.Width + innerSpace;
+
+                G.DrawImage((Bitmap)_image.Clone(), Rec);
+                using (var br = new SolidBrush(ForeColor))
+                {
+                    G.DrawString(Text, Font, br, RecText, TextAlign.ToStringFormat());
+                }
             }
         }
-
     }
 
 }

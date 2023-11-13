@@ -276,7 +276,7 @@ namespace WinPaletter
 
             if (ch_terminal)
             {
-                if (OS.W10 | OS.W11)
+                if (OS.W12 || OS.W11 || OS.W10)
                 {
                     string TerDir;
                     string TerPreDir;

@@ -433,8 +433,8 @@ namespace WinPaletter.Theme.Structures
 
                 else if (!(Snd_Imageres_SystemStart.Trim().ToUpper() == "CURRENT"))
                 {
-                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W11) ? 1 : 0);
-                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W11) ? 1 : 0);
+                    EditReg_CMD(TreeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W12 && !OS.W11) ? 1 : 0);
+                    EditReg_CMD(TreeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W12 && !OS.W11) ? 1 : 0);
                 }
 
                 else

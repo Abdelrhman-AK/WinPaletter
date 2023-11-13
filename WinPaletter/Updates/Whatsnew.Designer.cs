@@ -41,8 +41,15 @@ namespace WinPaletter
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.TabPage7 = new System.Windows.Forms.TabPage();
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.Label14 = new System.Windows.Forms.Label();
@@ -51,6 +58,9 @@ namespace WinPaletter
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Label4 = new System.Windows.Forms.Label();
@@ -59,6 +69,10 @@ namespace WinPaletter
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.Label7 = new System.Windows.Forms.Label();
             this.Label8 = new System.Windows.Forms.Label();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.button9 = new WinPaletter.UI.WP.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.Button8 = new WinPaletter.UI.WP.Button();
             this.Label9 = new System.Windows.Forms.Label();
@@ -72,31 +86,36 @@ namespace WinPaletter
             this.TabPage8 = new System.Windows.Forms.TabPage();
             this.Label16 = new System.Windows.Forms.Label();
             this.Label17 = new System.Windows.Forms.Label();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.button9 = new WinPaletter.UI.WP.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tabPage10.SuspendLayout();
+            this.tabPage11.SuspendLayout();
             this.TabPage7.SuspendLayout();
             this.TabPage1.SuspendLayout();
+            this.tabPage14.SuspendLayout();
             this.TabPage2.SuspendLayout();
             this.TabPage3.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.TabPage4.SuspendLayout();
             this.TabPage5.SuspendLayout();
             this.TabPage13.SuspendLayout();
             this.TabPage8.SuspendLayout();
-            this.tabPage9.SuspendLayout();
+            this.tabPage12.SuspendLayout();
             this.SuspendLayout();
             // 
             // AnimatedBox1
             // 
+            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(162)))));
             this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.AnimatedBox1.Controls.Add(this.Label2);
@@ -141,8 +160,11 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl1.Controls.Add(this.tabPage6);
+            this.TabControl1.Controls.Add(this.tabPage10);
+            this.TabControl1.Controls.Add(this.tabPage11);
             this.TabControl1.Controls.Add(this.TabPage7);
             this.TabControl1.Controls.Add(this.TabPage1);
+            this.TabControl1.Controls.Add(this.tabPage14);
             this.TabControl1.Controls.Add(this.TabPage2);
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.tabPage9);
@@ -150,6 +172,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.TabPage5);
             this.TabControl1.Controls.Add(this.TabPage13);
             this.TabControl1.Controls.Add(this.TabPage8);
+            this.TabControl1.Controls.Add(this.tabPage12);
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(28, 150);
@@ -158,47 +181,129 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(825, 372);
+            this.TabControl1.Size = new System.Drawing.Size(825, 434);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 4;
             // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.label20);
             this.tabPage6.Controls.Add(this.label13);
             this.tabPage6.Controls.Add(this.pictureBox2);
             this.tabPage6.Location = new System.Drawing.Point(154, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(667, 364);
+            this.tabPage6.Size = new System.Drawing.Size(667, 426);
             this.tabPage6.TabIndex = 34;
             this.tabPage6.Text = "C#";
             // 
+            // label20
+            // 
+            this.label20.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(19, 271);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(629, 33);
+            this.label20.TabIndex = 41;
+            this.label20.Text = "In 1.0.8.2, there is extensive optimization in code after coding language shift a" +
+    "nd bugs fixes";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label13
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(7, 203);
+            this.label13.Location = new System.Drawing.Point(19, 224);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(653, 48);
+            this.label13.Size = new System.Drawing.Size(629, 47);
             this.label13.TabIndex = 28;
             this.label13.Text = "WinPaletter is now written in C# instead of Visual Basic .NET";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(269, 68);
+            this.pictureBox2.Location = new System.Drawing.Point(269, 89);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(128, 128);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox2.TabIndex = 27;
             this.pictureBox2.TabStop = false;
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage10.Controls.Add(this.label21);
+            this.tabPage10.Controls.Add(this.label22);
+            this.tabPage10.Location = new System.Drawing.Point(154, 4);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(667, 426);
+            this.tabPage10.TabIndex = 36;
+            this.tabPage10.Text = "Multiple users";
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(6, 48);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(656, 254);
+            this.label21.TabIndex = 42;
+            this.label21.Text = resources.GetString("label21.Text");
+            // 
+            // label22
+            // 
+            this.label22.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.Crimson;
+            this.label22.Location = new System.Drawing.Point(3, 3);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(661, 45);
+            this.label22.TabIndex = 41;
+            this.label22.Text = "Multiple users";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage11.Controls.Add(this.label23);
+            this.tabPage11.Controls.Add(this.label24);
+            this.tabPage11.Location = new System.Drawing.Point(154, 4);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(667, 426);
+            this.tabPage11.TabIndex = 37;
+            this.tabPage11.Text = "Sounds service";
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(6, 48);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(656, 155);
+            this.label23.TabIndex = 42;
+            this.label23.Text = resources.GetString("label23.Text");
+            // 
+            // label24
+            // 
+            this.label24.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.Color.Crimson;
+            this.label24.Location = new System.Drawing.Point(3, 3);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(661, 45);
+            this.label24.TabIndex = 41;
+            this.label24.Text = "Sounds service";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TabPage7
             // 
@@ -209,7 +314,7 @@ namespace WinPaletter
             this.TabPage7.Location = new System.Drawing.Point(154, 4);
             this.TabPage7.Name = "TabPage7";
             this.TabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage7.Size = new System.Drawing.Size(667, 364);
+            this.TabPage7.Size = new System.Drawing.Size(667, 426);
             this.TabPage7.TabIndex = 23;
             this.TabPage7.Text = "Drag and drop colors";
             // 
@@ -262,7 +367,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(154, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(667, 364);
+            this.TabPage1.Size = new System.Drawing.Size(667, 426);
             this.TabPage1.TabIndex = 29;
             this.TabPage1.Text = "Palette generator";
             // 
@@ -306,6 +411,41 @@ namespace WinPaletter
             this.Label3.Text = "Palette generator";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tabPage14
+            // 
+            this.tabPage14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage14.Controls.Add(this.label28);
+            this.tabPage14.Controls.Add(this.label29);
+            this.tabPage14.Location = new System.Drawing.Point(154, 4);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(667, 426);
+            this.tabPage14.TabIndex = 39;
+            this.tabPage14.Text = "Applying theme thread";
+            // 
+            // label28
+            // 
+            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(6, 48);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(656, 131);
+            this.label28.TabIndex = 44;
+            this.label28.Text = resources.GetString("label28.Text");
+            // 
+            // label29
+            // 
+            this.label29.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label29.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.ForeColor = System.Drawing.Color.Crimson;
+            this.label29.Location = new System.Drawing.Point(3, 3);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(661, 45);
+            this.label29.TabIndex = 43;
+            this.label29.Text = "Applying theme thread";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -315,7 +455,7 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(154, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(667, 364);
+            this.TabPage2.Size = new System.Drawing.Size(667, 426);
             this.TabPage2.TabIndex = 30;
             this.TabPage2.Text = "Colors history";
             // 
@@ -368,7 +508,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(154, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(667, 364);
+            this.TabPage3.Size = new System.Drawing.Size(667, 426);
             this.TabPage3.TabIndex = 31;
             this.TabPage3.Text = "GUI language editor";
             // 
@@ -412,6 +552,58 @@ namespace WinPaletter
             this.Label8.Text = "GUI language editor";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tabPage9
+            // 
+            this.tabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage9.Controls.Add(this.button9);
+            this.tabPage9.Controls.Add(this.label18);
+            this.tabPage9.Controls.Add(this.label19);
+            this.tabPage9.Location = new System.Drawing.Point(154, 4);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(667, 426);
+            this.tabPage9.TabIndex = 35;
+            this.tabPage9.Text = "Download sources";
+            // 
+            // button9
+            // 
+            this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.button9.DrawOnGlass = false;
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button9.ForeColor = System.Drawing.Color.White;
+            this.button9.Image = null;
+            this.button9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button9.Location = new System.Drawing.Point(10, 80);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(347, 34);
+            this.button9.TabIndex = 52;
+            this.button9.Text = "Click here to know how to download through these sources";
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(6, 48);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(656, 29);
+            this.label18.TabIndex = 51;
+            this.label18.Text = "• Including WinGet and Chocolatey";
+            // 
+            // label19
+            // 
+            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Crimson;
+            this.label19.Location = new System.Drawing.Point(3, 3);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(661, 45);
+            this.label19.TabIndex = 50;
+            this.label19.Text = "New download sources for WinPaletter";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // TabPage4
             // 
             this.TabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -421,7 +613,7 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(154, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(667, 364);
+            this.TabPage4.Size = new System.Drawing.Size(667, 426);
             this.TabPage4.TabIndex = 32;
             this.TabPage4.Text = "Theme log levels";
             // 
@@ -473,7 +665,7 @@ namespace WinPaletter
             this.TabPage5.Location = new System.Drawing.Point(154, 4);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(667, 364);
+            this.TabPage5.Size = new System.Drawing.Size(667, 426);
             this.TabPage5.TabIndex = 33;
             this.TabPage5.Text = "Windows Effects";
             // 
@@ -508,7 +700,7 @@ namespace WinPaletter
             this.TabPage13.Location = new System.Drawing.Point(154, 4);
             this.TabPage13.Name = "TabPage13";
             this.TabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage13.Size = new System.Drawing.Size(667, 364);
+            this.TabPage13.Size = new System.Drawing.Size(667, 426);
             this.TabPage13.TabIndex = 28;
             this.TabPage13.Text = "Improvements";
             // 
@@ -519,7 +711,7 @@ namespace WinPaletter
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label5.Location = new System.Drawing.Point(6, 48);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(656, 313);
+            this.Label5.Size = new System.Drawing.Size(656, 359);
             this.Label5.TabIndex = 44;
             this.Label5.Text = resources.GetString("Label5.Text");
             // 
@@ -543,9 +735,9 @@ namespace WinPaletter
             this.TabPage8.Location = new System.Drawing.Point(154, 4);
             this.TabPage8.Name = "TabPage8";
             this.TabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage8.Size = new System.Drawing.Size(667, 364);
+            this.TabPage8.Size = new System.Drawing.Size(667, 426);
             this.TabPage8.TabIndex = 24;
-            this.TabPage8.Text = "Bugs fixes";
+            this.TabPage8.Text = "Bugs fixes #1";
             // 
             // Label16
             // 
@@ -570,6 +762,41 @@ namespace WinPaletter
             this.Label17.Text = "Bugs fixes";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tabPage12
+            // 
+            this.tabPage12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage12.Controls.Add(this.label25);
+            this.tabPage12.Controls.Add(this.label27);
+            this.tabPage12.Location = new System.Drawing.Point(154, 4);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(667, 426);
+            this.tabPage12.TabIndex = 38;
+            this.tabPage12.Text = "Bugs fixes # 2";
+            // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(6, 48);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(656, 313);
+            this.label25.TabIndex = 44;
+            this.label25.Text = resources.GetString("label25.Text");
+            // 
+            // label27
+            // 
+            this.label27.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.Crimson;
+            this.label27.Location = new System.Drawing.Point(3, 3);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(661, 45);
+            this.label27.TabIndex = 43;
+            this.label27.Text = "Bugs fixes";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -579,7 +806,7 @@ namespace WinPaletter
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
             this.Button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button3.Location = new System.Drawing.Point(12, 453);
+            this.Button3.Location = new System.Drawing.Point(12, 515);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(100, 34);
             this.Button3.TabIndex = 3;
@@ -597,7 +824,7 @@ namespace WinPaletter
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
             this.Button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button2.Location = new System.Drawing.Point(647, 453);
+            this.Button2.Location = new System.Drawing.Point(647, 515);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 2;
@@ -614,7 +841,7 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
             this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button1.Location = new System.Drawing.Point(733, 453);
+            this.Button1.Location = new System.Drawing.Point(733, 515);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
             this.Button1.TabIndex = 1;
@@ -622,64 +849,12 @@ namespace WinPaletter
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // tabPage9
-            // 
-            this.tabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage9.Controls.Add(this.button9);
-            this.tabPage9.Controls.Add(this.label18);
-            this.tabPage9.Controls.Add(this.label19);
-            this.tabPage9.Location = new System.Drawing.Point(154, 4);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(667, 364);
-            this.tabPage9.TabIndex = 35;
-            this.tabPage9.Text = "Download sources";
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.button9.DrawOnGlass = false;
-            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button9.ForeColor = System.Drawing.Color.White;
-            this.button9.Image = null;
-            this.button9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button9.Location = new System.Drawing.Point(10, 80);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(347, 34);
-            this.button9.TabIndex = 52;
-            this.button9.Text = "Click here to know how to download through these sources";
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(6, 48);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(656, 29);
-            this.label18.TabIndex = 51;
-            this.label18.Text = "• Including WinGet and Chocolatey";
-            // 
-            // label19
-            // 
-            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.Crimson;
-            this.label19.Location = new System.Drawing.Point(3, 3);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(661, 45);
-            this.label19.TabIndex = 50;
-            this.label19.Text = "New download sources for WinPaletter";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Whatsnew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(825, 499);
+            this.ClientSize = new System.Drawing.Size(825, 561);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.Button3);
@@ -701,15 +876,19 @@ namespace WinPaletter
             this.TabControl1.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage11.ResumeLayout(false);
             this.TabPage7.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
+            this.tabPage14.ResumeLayout(false);
             this.TabPage2.ResumeLayout(false);
             this.TabPage3.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
             this.TabPage4.ResumeLayout(false);
             this.TabPage5.ResumeLayout(false);
             this.TabPage13.ResumeLayout(false);
             this.TabPage8.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
+            this.tabPage12.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -756,5 +935,18 @@ namespace WinPaletter
         internal UI.WP.Button button9;
         internal Label label18;
         internal Label label19;
+        internal Label label20;
+        private TabPage tabPage10;
+        internal Label label21;
+        internal Label label22;
+        private TabPage tabPage11;
+        internal Label label23;
+        internal Label label24;
+        private TabPage tabPage12;
+        internal Label label25;
+        internal Label label27;
+        private TabPage tabPage14;
+        internal Label label28;
+        internal Label label29;
     }
 }

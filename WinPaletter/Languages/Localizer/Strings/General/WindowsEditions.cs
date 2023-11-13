@@ -10,6 +10,8 @@
         public string OS_Win7 { get; set; } = "Windows 7";
         public string OS_WinVista { get; set; } = "Windows Vista";
         public string OS_WinXP { get; set; } = "Windows XP";
-        public string OS_WinUndefined { get; set; } = "Windows 11 or higher";
+        public string OS_WinUndefined { get; set; } = "Windows 12 or higher";
+        public string OS_32Bit { get; set; } = "32-bit";
+        public string OS_64Bit { get; set; } = "64-bit";
     }
 }
