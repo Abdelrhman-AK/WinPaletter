@@ -12,7 +12,7 @@ assignees: Abdelrhman-AK
 - A short description about error.
 
 ## **How to reproduce the error**
-- Write here the steps (starting from opening the application) that causes the error or bug.
+- Write here the steps (starting from opening the application) that causes the error.
 
 ## **WinPaletter Log**
 - If an exception error occurred, press on `copy details` and paste them here. 
