@@ -14,7 +14,7 @@ assignees: Abdelrhman-AK
 ---
 
 ### **Improve README.md**
-- Write here all new text, or attach README.md
+- Write here all new text, or attach the improved README.md
 
 ---
 
