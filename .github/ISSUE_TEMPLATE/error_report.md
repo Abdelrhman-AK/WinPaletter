@@ -1,5 +1,5 @@
 ---
-name: :x: Error report
+name: ❌ Error report
 about: "Report an issue (error) occured to help me improve WinPaletter."
 title: ":x: [Error] "
 labels: "Type: :x: Error"
