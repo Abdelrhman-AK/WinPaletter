@@ -1,7 +1,7 @@
 ---
 name: "🚀 Feature request"
 about: "Suggest an idea or possible new feature for WinPaletter"
-title: "🚀 [Feature request]"
+title: "🚀 [Feature request] "
 labels: "Type: 🚀 Feature"
 assignees: Abdelrhman-AK
 ---
