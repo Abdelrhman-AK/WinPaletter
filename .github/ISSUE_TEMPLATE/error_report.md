@@ -1,5 +1,5 @@
 ---
-name: :x: Error report
+name: Error report
 about: "Report an issue to help the project improve."
 title: ":x: [Error] "
 labels: "Type: :x: Error"
