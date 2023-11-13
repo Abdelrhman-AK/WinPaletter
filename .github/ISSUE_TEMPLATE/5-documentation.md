@@ -15,6 +15,7 @@ assignees: Abdelrhman-AK
 
 ### **Add new documentation**
 - Write here all new text that documents a WinPaletter feature, better provided by media (photo/videos).
+- Or attach an *.md file\s
 
 ---
 
