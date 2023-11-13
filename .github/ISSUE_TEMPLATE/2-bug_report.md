@@ -1,6 +1,6 @@
 ---
 name: 🐞 Bug report
-about: "Report a strange or unwanted behaviour that occurred to help me improve WinPaletter."
+about: "Report a strange or unwanted behaviour that occurred during your WinPaletter usage, to help me improve WinPaletter."
 title: "🐞 [Bug] "
 labels: "Type: 🐞 Bug"
 assignees: Abdelrhman-AK
