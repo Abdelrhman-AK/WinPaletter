@@ -8,7 +8,7 @@ assignees: Abdelrhman-AK
 ---
 # **📚 Documentation**
 
-## **Fix issue**
+## **Fix issue in documentation**
 - If there is something wrong in documentation, please re-write it here after correction.
   
 ---
