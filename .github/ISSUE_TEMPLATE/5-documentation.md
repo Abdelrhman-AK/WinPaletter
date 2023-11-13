@@ -1,7 +1,7 @@
 ---
 name: "📚 Documentation"
 about: "Report an issue in documentation, or add a new documentation for undocumented WinPaletter feature"
-title: "📚 [Documentation]"
+title: "📚 [Documentation] "
 labels: "Type: 📚 Documentation"
 assignees: Abdelrhman-AK
 
