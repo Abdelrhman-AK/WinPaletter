@@ -1,7 +1,7 @@
 ---
 name: "❓ Question or support request"
 about: "Ask for help or support"
-title: "❓ [Question, Support request]"
+title: "❓ [Question, Support request] "
 labels: "Type: ❓ Question"
 assignees: Abdelrhman-AK
 
