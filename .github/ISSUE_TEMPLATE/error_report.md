@@ -2,7 +2,7 @@
 name: Error report
 about: "Report an issue to help the project improve."
 title: "[Error] "
-labels: "Type: Error"
+labels: "Type: :x: Error"
 assignees: Abdelrhman-AK
 ---
 
