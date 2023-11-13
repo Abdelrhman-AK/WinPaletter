@@ -1,6 +1,6 @@
 ---
 name: ❌ Error report
-about: "Report an issue (error) occured to help me improve WinPaletter."
+about: "Report an issue or error occured during your WinPaletter usage, to help me improve WinPaletter"
 title: ":x: [Error] "
 labels: "Type: :x: Error"
 assignees: Abdelrhman-AK
