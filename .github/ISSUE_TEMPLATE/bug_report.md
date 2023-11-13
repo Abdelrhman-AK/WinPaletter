@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: 🐞 Bug report
 about: "Report a strange or unwanted behaviour that occurred to help me improve WinPaletter."
 title: "🐞 [Bug] "
 labels: "Type: 🐞 Bug"
