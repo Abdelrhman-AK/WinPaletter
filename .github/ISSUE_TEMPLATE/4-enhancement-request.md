@@ -2,7 +2,7 @@
 name: "➕ Enhancement request"
 about: "Suggest an enhancement for a feature already implemented in WinPaletter"
 title: "➕ [Enhancement request] "
-labels: "Type: ➕ Enhancement"
+labels: ➕ Enhancement
 assignees: Abdelrhman-AK
 ---
 
