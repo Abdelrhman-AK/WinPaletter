@@ -49,7 +49,7 @@ namespace WinPaletter
                 {
                     LicenseAccepted = Conversions.ToBoolean(GetReg(REG_General, "LicenseAccepted", false));
                     ComplexSaveResult = GetReg(REG_General, "ComplexSaveResult", "2.1").ToString();
-                    WhatsNewRecord = (string[])GetReg(REG_General, "WhatsNewRecord", new[] { "" });
+                    WhatsNewRecord = (string[])GetReg(REG_General, "WhatsNewRecord", new[] { string.Empty });
                     MainFormWidth = GetReg(REG_General_MainForm, "MainFormWidth", 1110);
                     MainFormHeight = GetReg(REG_General_MainForm, "MainFormHeight", 725);
                     MainFormStatus = GetReg(REG_General_MainForm, "MainFormStatus", FormWindowState.Normal);
@@ -233,13 +233,13 @@ namespace WinPaletter
 
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_Language, "", false));
-                    File = GetReg(REG_Language, "File", "").ToString();
+                    Enabled = Conversions.ToBoolean(GetReg(REG_Language, string.Empty, false));
+                    File = GetReg(REG_Language, "File", string.Empty).ToString();
                 }
 
                 public void Save()
                 {
-                    EditReg(REG_Language, "", Enabled, RegistryValueKind.DWord);
+                    EditReg(REG_Language, string.Empty, Enabled, RegistryValueKind.DWord);
                     EditReg(REG_Language, "File", File, RegistryValueKind.String);
                 }
 
@@ -256,7 +256,7 @@ namespace WinPaletter
 
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_EP, "", true));
+                    Enabled = Conversions.ToBoolean(GetReg(REG_EP, string.Empty, true));
                     Enabled_Force = Conversions.ToBoolean(GetReg(REG_EP, "Enabled_Force", false));
                     UseStart10 = Conversions.ToBoolean(GetReg(REG_EP, "UseStart10", false));
                     UseTaskbar10 = Conversions.ToBoolean(GetReg(REG_EP, "UseTaskbar10", false));
@@ -266,7 +266,7 @@ namespace WinPaletter
 
                 public void Save()
                 {
-                    EditReg(REG_EP, "", Enabled, RegistryValueKind.DWord);
+                    EditReg(REG_EP, string.Empty, Enabled, RegistryValueKind.DWord);
                     EditReg(REG_EP, "Enabled_Force", Enabled_Force, RegistryValueKind.DWord);
                     EditReg(REG_EP, "UseStart10", UseStart10, RegistryValueKind.DWord);
                     EditReg(REG_EP, "UseTaskbar10", UseTaskbar10, RegistryValueKind.DWord);
@@ -355,7 +355,7 @@ namespace WinPaletter
                 {
                     Online_or_Offline = Conversions.ToBoolean(GetReg(REG_Store, "Online_or_Offline", true));
                     Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB });
-                    Offline_Directories = (string[])GetReg(REG_Store, "Offline_Directories", new[] { "" });
+                    Offline_Directories = (string[])GetReg(REG_Store, "Offline_Directories", new[] { string.Empty });
                     Offline_SubFolders = Conversions.ToBoolean(GetReg(REG_Store, "Offline_SubFolders", true));
                     Search_ThemeNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_ThemeNames", true));
                     Search_AuthorsNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_AuthorsNames", true));
@@ -424,7 +424,7 @@ namespace WinPaletter
 
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_NerdStats, "", true));
+                    Enabled = Conversions.ToBoolean(GetReg(REG_NerdStats, string.Empty, true));
                     ShowHexHash = Conversions.ToBoolean(GetReg(REG_NerdStats, "ShowHexHash", true));
                     Type = (Formats)Conversions.ToInteger(GetReg(REG_NerdStats, "Type", Formats.HEX));
                     UseWindowsMonospacedFont = Conversions.ToBoolean(GetReg(REG_NerdStats, "UseWindowsMonospacedFont", false));
@@ -438,7 +438,7 @@ namespace WinPaletter
 
                 public void Save()
                 {
-                    EditReg(REG_NerdStats, "", Enabled, RegistryValueKind.DWord);
+                    EditReg(REG_NerdStats, string.Empty, Enabled, RegistryValueKind.DWord);
                     EditReg(REG_NerdStats, "ShowHexHash", ShowHexHash, RegistryValueKind.DWord);
                     EditReg(REG_NerdStats, "Type", (int)Type);
                     EditReg(REG_NerdStats, "UseWindowsMonospacedFont", UseWindowsMonospacedFont);
@@ -492,7 +492,7 @@ namespace WinPaletter
             MainFormWidth = 1110,
             MainFormHeight = 725,
             MainFormStatus = FormWindowState.Normal,
-            WhatsNewRecord = new[] { "" }
+            WhatsNewRecord = new[] { string.Empty }
         };
 
         public Structures.Updates Updates = new Structures.Updates()
@@ -582,7 +582,7 @@ namespace WinPaletter
             Search_Descriptions = true,
             Online_or_Offline = true,
             Online_Repositories = new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB },
-            Offline_Directories = new[] { "" },
+            Offline_Directories = new[] { string.Empty },
             Offline_SubFolders = true,
             ShowTips = true
         };

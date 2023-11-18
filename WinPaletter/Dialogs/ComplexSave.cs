@@ -173,7 +173,7 @@ namespace WinPaletter
                             string r1 = r[0];
                             string r2 = r[1];
 
-                            switch (r1 ?? "")
+                            switch (r1 ?? string.Empty)
                             {
                                 case "0":              // ' Save
                                     {
@@ -210,7 +210,7 @@ namespace WinPaletter
                                     }
                             }
 
-                            switch (r2 ?? "")
+                            switch (r2 ?? string.Empty)
                             {
                                 case "1":
                                     {

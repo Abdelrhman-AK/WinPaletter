@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
 
@@ -20,40 +21,23 @@ namespace WinPaletter.Theme
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-            try { RenderCursor(Paths.CursorType.Arrow, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Help, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.AppLoading, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Busy, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Pen, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.None, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Move, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Up, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.NS, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.EW, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.NESW, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.NWSE, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Link, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Pin, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Person, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.IBeam, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
-            try { RenderCursor(Paths.CursorType.Cross, TM, ReportProgress_Detailed ? TreeView : null); }
-            catch { }
+            if (!TM.Cursor_Arrow.UseFromFile || (TM.Cursor_Arrow.UseFromFile && !File.Exists(TM.Cursor_Arrow.File))) RenderCursor(Paths.CursorType.Arrow, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_AppLoading.UseFromFile || (TM.Cursor_AppLoading.UseFromFile && !File.Exists(TM.Cursor_AppLoading.File))) RenderCursor(Paths.CursorType.AppLoading, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Busy.UseFromFile || (TM.Cursor_Busy.UseFromFile && !File.Exists(TM.Cursor_Busy.File))) RenderCursor(Paths.CursorType.Busy, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Help.UseFromFile || (TM.Cursor_Help.UseFromFile && !File.Exists(TM.Cursor_Help.File))) RenderCursor(Paths.CursorType.Help, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Pen.UseFromFile || (TM.Cursor_Pen.UseFromFile && !File.Exists(TM.Cursor_Pen.File))) RenderCursor(Paths.CursorType.Pen, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_None.UseFromFile || (TM.Cursor_None.UseFromFile && !File.Exists(TM.Cursor_None.File))) RenderCursor(Paths.CursorType.None, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Move.UseFromFile || (TM.Cursor_Move.UseFromFile && !File.Exists(TM.Cursor_Move.File))) RenderCursor(Paths.CursorType.Move, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Up.UseFromFile || (TM.Cursor_Up.UseFromFile && !File.Exists(TM.Cursor_Up.File))) RenderCursor(Paths.CursorType.Up, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_NS.UseFromFile || (TM.Cursor_NS.UseFromFile && !File.Exists(TM.Cursor_NS.File))) RenderCursor(Paths.CursorType.NS, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_EW.UseFromFile || (TM.Cursor_EW.UseFromFile && !File.Exists(TM.Cursor_EW.File))) RenderCursor(Paths.CursorType.EW, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_NESW.UseFromFile || (TM.Cursor_NESW.UseFromFile && !File.Exists(TM.Cursor_NESW.File))) RenderCursor(Paths.CursorType.NESW, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_NWSE.UseFromFile || (TM.Cursor_NWSE.UseFromFile && !File.Exists(TM.Cursor_NWSE.File))) RenderCursor(Paths.CursorType.NWSE, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Link.UseFromFile || (TM.Cursor_Link.UseFromFile && !File.Exists(TM.Cursor_Link.File))) RenderCursor(Paths.CursorType.Link, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Pin.UseFromFile || (TM.Cursor_Pin.UseFromFile && !File.Exists(TM.Cursor_Pin.File))) RenderCursor(Paths.CursorType.Pin, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Person.UseFromFile || (TM.Cursor_Person.UseFromFile && !File.Exists(TM.Cursor_Person.File))) RenderCursor(Paths.CursorType.Person, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_IBeam.UseFromFile || (TM.Cursor_IBeam.UseFromFile && !File.Exists(TM.Cursor_IBeam.File))) RenderCursor(Paths.CursorType.IBeam, TM, ReportProgress_Detailed ? TreeView : null);
+            if (!TM.Cursor_Cross.UseFromFile || (TM.Cursor_Cross.UseFromFile && !File.Exists(TM.Cursor_Cross.File))) RenderCursor(Paths.CursorType.Cross, TM, ReportProgress_Detailed ? TreeView : null);
         }
 
         /// <summary>
@@ -64,120 +48,34 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void RenderCursor(Paths.CursorType Type, Manager TM, TreeView TreeView = null)
         {
-            string CurName = "";
-
-            switch (Type)
+            Dictionary<Paths.CursorType, string> cursorTypeMap = new()
             {
-                case Paths.CursorType.Arrow:
-                    {
-                        CurName = "Arrow";
-                        break;
-                    }
+                { Paths.CursorType.Arrow, "Arrow" },
+                { Paths.CursorType.Help, "Help" },
+                { Paths.CursorType.Busy, "Busy" },
+                { Paths.CursorType.AppLoading, "AppLoading" },
+                { Paths.CursorType.None, "None" },
+                { Paths.CursorType.Move, "Move" },
+                { Paths.CursorType.Up, "Up" },
+                { Paths.CursorType.NS, "NS" },
+                { Paths.CursorType.EW, "EW" },
+                { Paths.CursorType.NESW, "NESW" },
+                { Paths.CursorType.NWSE, "NWSE" },
+                { Paths.CursorType.Pen, "Pen" },
+                { Paths.CursorType.Link, "Link" },
+                { Paths.CursorType.Pin, "Pin" },
+                { Paths.CursorType.Person, "Person" },
+                { Paths.CursorType.IBeam, "IBeam" },
+                { Paths.CursorType.Cross, "Cross" }
+            };
 
-                case Paths.CursorType.Help:
-                    {
-                        CurName = "Help";
-                        break;
-                    }
-
-                case Paths.CursorType.Busy:
-                    {
-                        CurName = "Busy";
-                        break;
-                    }
-
-                case Paths.CursorType.AppLoading:
-                    {
-                        CurName = "AppLoading";
-                        break;
-                    }
-
-                case Paths.CursorType.None:
-                    {
-                        CurName = "None";
-                        break;
-                    }
-
-                case Paths.CursorType.Move:
-                    {
-                        CurName = "Move";
-                        break;
-                    }
-
-                case Paths.CursorType.Up:
-                    {
-                        CurName = "Up";
-                        break;
-                    }
-
-                case Paths.CursorType.NS:
-                    {
-                        CurName = "NS";
-                        break;
-                    }
-
-                case Paths.CursorType.EW:
-                    {
-                        CurName = "EW";
-                        break;
-                    }
-
-                case Paths.CursorType.NESW:
-                    {
-                        CurName = "NESW";
-                        break;
-                    }
-
-                case Paths.CursorType.NWSE:
-                    {
-                        CurName = "NWSE";
-                        break;
-                    }
-
-                case Paths.CursorType.Pen:
-                    {
-                        CurName = "Pen";
-                        break;
-                    }
-
-                case Paths.CursorType.Link:
-                    {
-                        CurName = "Link";
-                        break;
-                    }
-
-                case Paths.CursorType.Pin:
-                    {
-                        CurName = "Pin";
-                        break;
-                    }
-
-                case Paths.CursorType.Person:
-                    {
-                        CurName = "Person";
-                        break;
-                    }
-
-                case Paths.CursorType.IBeam:
-                    {
-                        CurName = "IBeam";
-                        break;
-                    }
-
-                case Paths.CursorType.Cross:
-                    {
-                        CurName = "Cross";
-                        break;
-                    }
-
-            }
+            string CurName = cursorTypeMap.TryGetValue(Type, out var name) ? name : string.Empty;
 
             if (TreeView is not null)
                 AddNode(TreeView, string.Format(Program.Lang.Verbose_RenderingCursor, CurName), "pe_patch");
 
             if (!(Type == Paths.CursorType.Busy) & !(Type == Paths.CursorType.AppLoading))
             {
-
                 if (!Directory.Exists(PathsExt.CursorsWP))
                     Directory.CreateDirectory(PathsExt.CursorsWP);
 
@@ -327,86 +225,75 @@ namespace WinPaletter.Theme
 
             else
             {
-                var HotPoint = new Point(1, 1);
+                Point HotPoint = new(1, 1);
+                int increment = 10;
+                int steps = 360 / increment + 2; // +1 for first angle, +1 for last  angle
+                int[] angles = new int[steps];
+                int loopIndex = 0;
+                int[] scales = new int[] { 32, 64, 128 };
 
-                for (float i = 1f; i <= 4f; i += 1f)
+                //Create array of angles
+                for (int ang = 180; ang <= 360; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
+                for (int ang = 0; ang <= 180; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
+
+                string[] ProcessedFiles = new string[] { string.Empty };
+
+                //Loop to create different cursors sizes(scales)
+                foreach (int scale in scales)
                 {
                     List<Bitmap> BMPList = new();
                     BMPList.Clear();
+                    float factor = (float)scale / 32;
 
-                    #region Add angles bitmaps from 180 deg to 180 deg (Cycle)
-
-                    for (int ang = 180; ang <= 360; ang += +10)
+                    foreach (int angle in angles)
                     {
-                        Bitmap bm;
+                        Bitmap bm = null;
 
                         if (Type == Paths.CursorType.AppLoading)
                         {
-                            var CurOptions = new CursorOptions(TM.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = i, _Angle = ang };
+                            CursorOptions CurOptions = new(TM.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = factor, _Angle = angle };
                             bm = new Bitmap(Paths.Draw(CurOptions));
-                            HotPoint = new Point(1, 1 + (int)Math.Round(8f * i));
+                            HotPoint = new Point(1, 1 + (int)Math.Round(8f * factor));
                         }
 
-                        else
+                        else if (Type == Paths.CursorType.Busy)
                         {
-                            var CurOptions = new CursorOptions(TM.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = i, _Angle = ang };
+                            CursorOptions CurOptions = new(TM.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = factor, _Angle = angle };
                             bm = new Bitmap(Paths.Draw(CurOptions));
-
-                            HotPoint = new Point((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
-
+                            HotPoint = new Point((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * factor), 1 + (int)Math.Round(11f * factor));
                         }
 
-                        BMPList.Add(bm);
+                        if (bm != null) { BMPList.Add(bm); }
                     }
 
-                    for (int ang = 0; ang <= 180; ang += +10)
+                    uint count = (uint)BMPList.Count;
+                    uint[] frameRates = new uint[count];
+                    uint[] framesSequentialNumbers = new uint[count];
+                    uint Speed = 2;
+
+                    for (uint i1 = 0; i1 <= count - 1; i1++) { frameRates[i1] = Speed; framesSequentialNumbers[i1] = i1; }
+
+                    if (!Directory.Exists(PathsExt.CursorsWP)) { Directory.CreateDirectory(PathsExt.CursorsWP); }
+
+                    string curFileNameModifier = string.Empty;
+                    if (scale == 64) { curFileNameModifier = "_l"; }
+                    if (scale == 128) { curFileNameModifier = "_xl"; }
+
+                    string OutputFile = string.Format(PathsExt.CursorsWP + @"\{0}{1}.ani", CurName, curFileNameModifier);
+
+                    using (FileStream fs = new(OutputFile, FileMode.Create))
                     {
-                        Bitmap bm;
+                        EOANIWriter AN = new(fs, count, Speed, frameRates, framesSequentialNumbers, null, null, HotPoint);
 
-                        if (Type == Paths.CursorType.AppLoading)
-                        {
-                            var CurOptions = new CursorOptions(TM.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = i, _Angle = ang };
-                            bm = new Bitmap(Paths.Draw(CurOptions));
-                            HotPoint = new Point(1, 1 + (int)Math.Round(8f * i));
-                        }
+                        for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
-                        else
-                        {
-                            var CurOptions = new CursorOptions(TM.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = i, _Angle = ang };
-                            bm = new Bitmap(Paths.Draw(CurOptions));
-                            HotPoint = new Point((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
+                        ProcessedFiles = ProcessedFiles.ToList().Append(string.Format(PathsExt.CursorsWP + @"\{0}{1}.ani", CurName, curFileNameModifier)).ToArray();
 
-                        }
-
-                        BMPList.Add(bm);
+                        fs.Close();
                     }
-
-                    #endregion
-
-                    int Count = BMPList.Count;
-                    uint[] frameRates = new uint[Count];
-                    uint[] seqNums = new uint[Count];
-                    int Speed = 2;
-
-                    for (int ixx = 0, loopTo = Count - 1; ixx <= loopTo; ixx++)
-                    {
-                        frameRates[ixx] = Convert.ToUInt32(Speed);
-                        seqNums[ixx] = (uint)ixx;
-                    }
-
-                    if (!Directory.Exists(PathsExt.CursorsWP))
-                        Directory.CreateDirectory(PathsExt.CursorsWP);
-                    var fs = new FileStream(string.Format(PathsExt.CursorsWP + @"\{0}_{1}x.ani", CurName, i), FileMode.Create);
-
-                    var AN = new EOANIWriter(fs, (uint)Count, (uint)Speed, frameRates, seqNums, null, null, HotPoint);
-
-                    for (int ix = 0, loopTo1 = Count - 1; ix <= loopTo1; ix++)
-                        AN.WriteFrame32(BMPList[ix]);
 
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, string.Format(PathsExt.CursorsWP + @"\{0}_{1}x.ani", CurName, i)), "info");
-
-                    fs.Close();
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, string.Format(PathsExt.CursorsWP + @"\{0}{1}.ani", CurName, curFileNameModifier)), "info");
                 }
             }
         }
@@ -414,17 +301,23 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Apply rendered WinPaletter cursors to registry and broadcast registry change to system
         /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>
         /// <param name="TreeView">TreeView used to show applying log</param>
-        public void ApplyCursorsToReg(string scopeReg = "HKEY_CURRENT_USER", TreeView TreeView = null)
+        public void ApplyCursorsToReg(Manager TM, string scopeReg = "HKEY_CURRENT_USER", TreeView TreeView = null)
         {
             string Path = PathsExt.CursorsWP;
+
+            double DPI = Program.GetWindowsScreenScalingFactor();
+            string DPI_Fixer = string.Empty;
+
+            if (DPI >= 150 && DPI < 175) { DPI_Fixer = "_l"; } else if (DPI >= 175) { DPI_Fixer = "_xl"; }
 
             string RegValue;
             RegValue = string.Format(@"{0}\{1}", Path, "Arrow.cur");
             RegValue += string.Format(@",{0}\{1}", Path, "Help.cur");
-            RegValue += string.Format(@",{0}\{1}", Path, "AppLoading_1x.ani");
-            RegValue += string.Format(@",{0}\{1}", Path, "Busy_1x.ani");
+            RegValue += string.Format(@",{0}\{1}", Path, $"AppLoading{DPI_Fixer}.ani");
+            RegValue += string.Format(@",{0}\{1}", Path, $"Busy{DPI_Fixer}.ani");
             RegValue += string.Format(@",{0}\{1}", Path, "Cross.cur");
             RegValue += string.Format(@",{0}\{1}", Path, "IBeam.cur");
             RegValue += string.Format(@",{0}\{1}", Path, "Pen.cur");
@@ -440,77 +333,111 @@ namespace WinPaletter.Theme
             RegValue += string.Format(@",{0}\{1}", Path, "Person.cur");
 
             EditReg(scopeReg + @"\Control Panel\Cursors\Schemes", "WinPaletter", RegValue, RegistryValueKind.String);
-            EditReg(scopeReg + @"\Control Panel\Cursors", "", "WinPaletter", RegistryValueKind.String);
+            EditReg(scopeReg + @"\Control Panel\Cursors", string.Empty, "WinPaletter", RegistryValueKind.String);
             EditReg(scopeReg + @"\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
             EditReg(scopeReg + @"\Control Panel\Cursors", "Scheme Source", 1, RegistryValueKind.DWord);
 
-            string x = string.Format(@"{0}\{1}", Path, "AppLoading_1x.ani");
-            EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
-            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
-
-            x = string.Format(@"{0}\{1}", Path, "Arrow.cur");
+            string x = System.IO.Path.Combine(Path, "Arrow.cur");
+            if (TM.Cursor_Arrow.UseFromFile && (File.Exists(TM.Cursor_Arrow.File) || OS.WXP))
+                x = TM.Cursor_Arrow.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
-            x = string.Format(@"{0}\{1}", Path, "Cross.cur");
+            x = System.IO.Path.Combine(Path, $"AppLoading{DPI_Fixer}.ani");
+            if (TM.Cursor_AppLoading.UseFromFile && (File.Exists(TM.Cursor_AppLoading.File) || OS.WXP))
+                x = TM.Cursor_AppLoading.File;
+            EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
+
+            x = System.IO.Path.Combine(Path, $"Busy{DPI_Fixer}.ani");
+            if (TM.Cursor_Busy.UseFromFile && (File.Exists(TM.Cursor_Busy.File) || OS.WXP))
+                x = TM.Cursor_Busy.File;
+            EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
+            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
+
+            x = System.IO.Path.Combine(Path, "Cross.cur");
+            if (TM.Cursor_Cross.UseFromFile && (File.Exists(TM.Cursor_Cross.File) || OS.WXP))
+                x = TM.Cursor_Cross.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
 
-            x = string.Format(@"{0}\{1}", Path, "Link.cur");
+            x = System.IO.Path.Combine(Path, "Link.cur");
+            if (TM.Cursor_Link.UseFromFile && (File.Exists(TM.Cursor_Link.File) || OS.WXP))
+                x = TM.Cursor_Link.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
 
-            x = string.Format(@"{0}\{1}", Path, "Help.cur");
+            x = System.IO.Path.Combine(Path, "Help.cur");
+            if (TM.Cursor_Help.UseFromFile && (File.Exists(TM.Cursor_Help.File) || OS.WXP))
+                x = TM.Cursor_Help.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
 
-            x = string.Format(@"{0}\{1}", Path, "IBeam.cur");
+            x = System.IO.Path.Combine(Path, "IBeam.cur");
+            if (TM.Cursor_IBeam.UseFromFile && (File.Exists(TM.Cursor_IBeam.File) || OS.WXP))
+                x = TM.Cursor_IBeam.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
-            x = string.Format(@"{0}\{1}", Path, "None.cur");
+            x = System.IO.Path.Combine(Path, "None.cur");
+            if (TM.Cursor_None.UseFromFile && (File.Exists(TM.Cursor_None.File) || OS.WXP))
+                x = TM.Cursor_None.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "No", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
 
-            x = string.Format(@"{0}\{1}", Path, "Pen.cur");
+            x = System.IO.Path.Combine(Path, "Pen.cur");
+            if (TM.Cursor_Pen.UseFromFile && (File.Exists(TM.Cursor_Pen.File) || OS.WXP))
+                x = TM.Cursor_Pen.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
             // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
-            x = string.Format(@"{0}\{1}", Path, "Person.cur");
+            x = System.IO.Path.Combine(Path, "Person.cur");
+            if (TM.Cursor_Person.UseFromFile && (File.Exists(TM.Cursor_Person.File) || OS.WXP))
+                x = TM.Cursor_Person.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
             // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
-            x = string.Format(@"{0}\{1}", Path, "Pin.cur");
+            x = System.IO.Path.Combine(Path, "Pin.cur");
+            if (TM.Cursor_Pin.UseFromFile && (File.Exists(TM.Cursor_Pin.File) || OS.WXP))
+                x = TM.Cursor_Pin.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
             // SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_
 
-            x = string.Format(@"{0}\{1}", Path, "Move.cur");
+            x = System.IO.Path.Combine(Path, "Move.cur");
+            if (TM.Cursor_Move.UseFromFile && (File.Exists(TM.Cursor_Move.File) || OS.WXP))
+                x = TM.Cursor_Move.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
-            x = string.Format(@"{0}\{1}", Path, "NESW.cur");
+            x = System.IO.Path.Combine(Path, "NESW.cur");
+            if (TM.Cursor_NESW.UseFromFile && (File.Exists(TM.Cursor_NESW.File) || OS.WXP))
+                x = TM.Cursor_NESW.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
-            x = string.Format(@"{0}\{1}", Path, "NS.cur");
+            x = System.IO.Path.Combine(Path, "NS.cur");
+            if (TM.Cursor_NS.UseFromFile && (File.Exists(TM.Cursor_NS.File) || OS.WXP))
+                x = TM.Cursor_NS.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
-            x = string.Format(@"{0}\{1}", Path, "NWSE.cur");
+            x = System.IO.Path.Combine(Path, "NWSE.cur");
+            if (TM.Cursor_NWSE.UseFromFile && (File.Exists(TM.Cursor_NWSE.File) || OS.WXP))
+                x = TM.Cursor_NWSE.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
-            x = string.Format(@"{0}\{1}", Path, "EW.cur");
+            x = System.IO.Path.Combine(Path, "EW.cur");
+            if (TM.Cursor_EW.UseFromFile && (File.Exists(TM.Cursor_EW.File) || OS.WXP))
+                x = TM.Cursor_EW.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
-            x = string.Format(@"{0}\{1}", Path, "Up.cur");
+            x = System.IO.Path.Combine(Path, "Up.cur");
+            if (TM.Cursor_Up.UseFromFile && (File.Exists(TM.Cursor_Up.File) || OS.WXP))
+                x = TM.Cursor_Up.File;
             EditReg(scopeReg + @"\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
             SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
-
-            x = string.Format(@"{0}\{1}", Path, "Busy_1x.ani");
-            EditReg(scopeReg + @"\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
-            SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
             SystemParametersInfo(TreeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
         }
@@ -538,7 +465,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                EditReg(scopeReg + @"\Control Panel\Cursors", "", "Windows Default", RegistryValueKind.String);
+                EditReg(scopeReg + @"\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
 
@@ -556,7 +483,7 @@ namespace WinPaletter.Theme
                     SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
                 }
 
-                x = string.Format("");
+                x = string.Format(string.Empty);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
@@ -577,7 +504,7 @@ namespace WinPaletter.Theme
                     SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
                 }
 
-                x = string.Format("");
+                x = string.Format(string.Empty);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
                 if (System.IO.File.Exists(x))
                 {
@@ -657,7 +584,7 @@ namespace WinPaletter.Theme
 
             catch (Exception ex)
             {
-                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
 
@@ -691,11 +618,11 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                EditReg(scopeReg + @"\Control Panel\Cursors", "", "Windows Default", RegistryValueKind.String);
+                EditReg(scopeReg + @"\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
                 EditReg(scopeReg + @"\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
 
-                string x = "";
+                string x = string.Empty;
                 EditReg(scopeReg + @"\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
                 SetSystemCursor(TreeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
@@ -744,7 +671,7 @@ namespace WinPaletter.Theme
             catch (Exception ex)
             {
 
-                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
         }

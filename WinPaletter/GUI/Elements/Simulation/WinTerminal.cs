@@ -16,7 +16,7 @@ namespace WinPaletter.UI.Simulation
 
         public WinTerminal()
         {
-            Text = "";
+            Text = string.Empty;
             DoubleBuffered = true;
             HandleCreated += WinTerminal_HandleCreated;
             HandleDestroyed += WinTerminal_HandleDestroyed;
@@ -113,7 +113,7 @@ namespace WinPaletter.UI.Simulation
         public bool Light { get; set; } = false;
         public bool UseAcrylicOnTitlebar { get; set; } = false;
         public bool UseAcrylic { get; set; } = false;
-        public string TabTitle { get; set; } = "";
+        public string TabTitle { get; set; } = string.Empty;
         public Image TabIcon { get; set; }
         public Color TabColor { get; set; } = Color.FromArgb(0, 0, 0, 0);
         public bool PreviewVersion { get; set; } = true;

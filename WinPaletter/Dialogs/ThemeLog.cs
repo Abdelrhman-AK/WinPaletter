@@ -103,7 +103,7 @@ namespace WinPaletter.Dialogs
 
                 try
                 {
-                    TM.Save(Theme.Manager.Source.Registry, "", LogEnabled ? TreeView1 : null);
+                    TM.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
                         Theme.Manager.AddNode(TreeView1, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_AllDone), "info");
@@ -207,7 +207,7 @@ namespace WinPaletter.Dialogs
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = "";
+            log_lbl.Text = string.Empty;
             timer1.Enabled = false;
             timer1.Stop();
             this.Close();

@@ -102,15 +102,15 @@ namespace WinPaletter.GlobalVariables
         /// Get current Windows build
         /// </summary>
         public static string Build
-        { 
+        {
             get
             {
-                string X0 = RuntimeInformation.OSDescription.Replace("Microsoft Windows ", "");
-                X0 = X0.Replace("S", "").Trim();
+                string X0 = RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
+                X0 = X0.Replace("S", string.Empty).Trim();
 
                 string X1 = "." + GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", 0).ToString();
-                if (X1 == ".0") { X1 = ""; }
-                    
+                if (X1 == ".0") { X1 = string.Empty; }
+
                 return X0 + X1;
             }
         }

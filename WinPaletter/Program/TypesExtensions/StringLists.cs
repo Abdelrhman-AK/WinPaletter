@@ -18,7 +18,7 @@ namespace WinPaletter.TypesExtensions
                 Exist = false;
                 foreach (string ElementStringInResult in Result)
                 {
-                    if ((ElementString ?? "") == (ElementStringInResult ?? ""))
+                    if ((ElementString ?? string.Empty) == (ElementStringInResult ?? string.Empty))
                     {
                         Exist = true;
                         break;

@@ -42,7 +42,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (OS.WXP)
             {
-                Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", @default.Enabled));
+                Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled));
 
                 switch (GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
                 {
@@ -88,7 +88,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, Enabled);
 
             if (Enabled & OS.WXP)
             {

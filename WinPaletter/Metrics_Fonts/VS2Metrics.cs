@@ -30,7 +30,7 @@ namespace WinPaletter
         {
             try
             {
-                string theme = "";
+                string theme = string.Empty;
 
                 if (Path.GetExtension(TextBox1.Text) == ".theme")
                 {

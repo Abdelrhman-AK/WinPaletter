@@ -121,8 +121,8 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Label7.Text = "";
-                            Label9.Text = "";
+                            Label7.Text = string.Empty;
+                            Label9.Text = string.Empty;
                             url = null;
                             Button1.Text = Program.Lang.CheckForUpdates;
                             AlertBox2.Text = string.Format(Program.Lang.NoUpdateAvailable);
@@ -133,8 +133,8 @@ namespace WinPaletter
                     }
                     else
                     {
-                        Label7.Text = "";
-                        Label9.Text = "";
+                        Label7.Text = string.Empty;
+                        Label9.Text = string.Empty;
                         url = null;
                         Button1.Text = Program.Lang.CheckForUpdates;
                         AlertBox2.Text = string.Format(Program.Lang.NetworkError);
@@ -143,8 +143,8 @@ namespace WinPaletter
                 }
                 catch (Exception ex)
                 {
-                    Label7.Text = "";
-                    Label9.Text = "";
+                    Label7.Text = string.Empty;
+                    Label9.Text = string.Empty;
                     url = null;
                     Button1.Text = Program.Lang.CheckForUpdates;
                     AlertBox2.Text = string.Format(Program.Lang.ServerError);
@@ -222,8 +222,8 @@ namespace WinPaletter
             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
             AlertBox2.Visible = false;
             Panel1.Visible = false;
-            Label7.Text = "";
-            Label9.Text = "";
+            Label7.Text = string.Empty;
+            Label9.Text = string.Empty;
             url = null;
             Button1.Enabled = true;
             Panel1.Enabled = true;

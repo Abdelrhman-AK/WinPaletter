@@ -115,12 +115,12 @@ public class EOANIWriter
         m_writer.Write((uint)1);
     }
 
-    public bool WriteFrame32(Bitmap BMFrame)
+    public bool WriteFrame(Bitmap frame)
     {
         uint FrameSize = 0;
         // The user should pass in a 32x32 bitmap, but we won't check this
-        uint w = (uint)BMFrame.Width;
-        uint h = (uint)BMFrame.Height;
+        uint w = (uint)frame.Width;
+        uint h = (uint)frame.Height;
 
         FrameSize = w * h * 4 + (w * h / 8) +
             6 +     // Size of icon file header
@@ -130,15 +130,18 @@ public class EOANIWriter
         m_writer.Write(fourccicon, 0, 4);
         m_writer.Write(FrameSize);
 
-        EOIcoCurWriter writer = new EOIcoCurWriter(m_writer.BaseStream, 1, EOIcoCurWriter.IcoCurType.Cursor);
-        writer.WriteBitmap(BMFrame, null, HotSpot);
+        // WORK ON THIS TO MAKE IT ACCEPT DIFFERENT BITMAP SIZES !!??
+        {
+            EOIcoCurWriter writer = new EOIcoCurWriter(m_writer.BaseStream, 1, EOIcoCurWriter.IcoCurType.Cursor);
+            writer.WriteBitmap(frame, null, HotSpot);
 
-        // Update the data size of the written frame data
-        FramesListDataSize += (FrameSize + 8);
-        long BackupPos = m_writer.BaseStream.Position;
-        m_writer.BaseStream.Position = this.FramesListSizePosition;
-        m_writer.Write(FramesListDataSize);
-        m_writer.BaseStream.Position = BackupPos;
+            // Update the data size of the written frame data
+            FramesListDataSize += (FrameSize + 8);
+            long BackupPos = m_writer.BaseStream.Position;
+            m_writer.BaseStream.Position = this.FramesListSizePosition;
+            m_writer.Write(FramesListDataSize);
+            m_writer.BaseStream.Position = BackupPos;
+        }
 
         // Update main RIFF chunk size
         UpdateRIFFChunkSize();

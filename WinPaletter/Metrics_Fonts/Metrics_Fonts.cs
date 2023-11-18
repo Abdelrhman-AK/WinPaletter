@@ -815,7 +815,7 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            TextBox3.Text = "";
+            TextBox3.Text = string.Empty;
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)

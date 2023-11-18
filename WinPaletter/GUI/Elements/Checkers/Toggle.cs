@@ -16,7 +16,7 @@ namespace WinPaletter.UI.WP
         {
             DoubleBuffered = true;
             Size = new Size(40, 20);
-            Text = "";
+            Text = string.Empty;
             Resize += Toggle_Resize;
             HandleCreated += Toggle_HandleCreated;
             HandleDestroyed += Toggle_HandleDestroyed;
@@ -43,7 +43,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         private bool _checked;
         public bool Checked

@@ -270,9 +270,9 @@ namespace WinPaletter
                         {
                             var C = Color.FromArgb(255, 0, 0, 0);
                             s = s.Remove(0, "color ".Count());
-                            s = s.Replace("[", "");
-                            s = s.Replace("]", "");
-                            s = s.Replace(" ", "");
+                            s = s.Replace("[", string.Empty);
+                            s = s.Replace("]", string.Empty);
+                            s = s.Replace(" ", string.Empty);
 
                             foreach (string x in s.Split(','))
                             {

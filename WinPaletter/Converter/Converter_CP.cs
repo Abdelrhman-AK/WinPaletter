@@ -158,7 +158,7 @@ namespace WinPaletter
 
                         if (line.StartsWith("AccentOnStartTBAC= ", StringComparison.OrdinalIgnoreCase))
                         {
-                            switch (line.Remove(0, "AccentOnStartTBAC= ".Count()).ToLower() ?? "")
+                            switch (line.Remove(0, "AccentOnStartTBAC= ".Count()).ToLower() ?? string.Empty)
                             {
                                 case "false":
                                     {
@@ -174,7 +174,7 @@ namespace WinPaletter
 
                                 default:
                                     {
-                                        switch (line.Remove(0, "AccentOnStartTBAC= ".Count()) ?? "")
+                                        switch (line.Remove(0, "AccentOnStartTBAC= ".Count()) ?? string.Empty)
                                         {
                                             case "0":
                                                 {
@@ -952,43 +952,43 @@ namespace WinPaletter
                     {
                         foreach (var x in fonts)
                         {
-                            string Value = x.Replace(x.Split('=')[0] + "= ", "").Trim();
+                            string Value = x.Replace(x.Split('=')[0] + "= ", string.Empty).Trim();
                             string FontName = x.Split('=')[0].ToString().Split('_')[0];
                             string Prop = x.Split('=')[0].ToString().Split('_')[1];
 
-                            switch (FontName.ToLower() ?? "")
+                            switch (FontName.ToLower() ?? string.Empty)
                             {
-                                case var @case when @case == ("Caption".ToLower() ?? ""):
+                                case var @case when @case == ("Caption".ToLower() ?? string.Empty):
                                     {
                                         CaptionFont = SetToFont(Prop, Value, CaptionFont);
                                         break;
                                     }
 
-                                case var case1 when case1 == ("Icon".ToLower() ?? ""):
+                                case var case1 when case1 == ("Icon".ToLower() ?? string.Empty):
                                     {
                                         IconFont = SetToFont(Prop, Value, IconFont);
                                         break;
                                     }
 
-                                case var case2 when case2 == ("Menu".ToLower() ?? ""):
+                                case var case2 when case2 == ("Menu".ToLower() ?? string.Empty):
                                     {
                                         MenuFont = SetToFont(Prop, Value, MenuFont);
                                         break;
                                     }
 
-                                case var case3 when case3 == ("Message".ToLower() ?? ""):
+                                case var case3 when case3 == ("Message".ToLower() ?? string.Empty):
                                     {
                                         MessageFont = SetToFont(Prop, Value, MessageFont);
                                         break;
                                     }
 
-                                case var case4 when case4 == ("SmCaption".ToLower() ?? ""):
+                                case var case4 when case4 == ("SmCaption".ToLower() ?? string.Empty):
                                     {
                                         SmCaptionFont = SetToFont(Prop, Value, SmCaptionFont);
                                         break;
                                     }
 
-                                case var case5 when case5 == ("Status".ToLower() ?? ""):
+                                case var case5 when case5 == ("Status".ToLower() ?? string.Empty):
                                     {
                                         StatusFont = SetToFont(Prop, Value, StatusFont);
                                         break;
@@ -1004,9 +1004,9 @@ namespace WinPaletter
                 {
                     var F = new Font(Font.Name, Font.Size, Font.Style);
 
-                    switch (PropName.ToLower() ?? "")
+                    switch (PropName.ToLower() ?? string.Empty)
                     {
-                        case var @case when @case == ("Name".ToLower() ?? ""):
+                        case var @case when @case == ("Name".ToLower() ?? string.Empty):
                             {
                                 if (PropValue.ToUpper() == "MS SANS SERIF")
                                     PropValue = "Microsoft Sans Serif";
@@ -1014,13 +1014,13 @@ namespace WinPaletter
                                 break;
                             }
 
-                        case var case1 when case1 == ("Size".ToLower() ?? ""):
+                        case var case1 when case1 == ("Size".ToLower() ?? string.Empty):
                             {
                                 F = new Font(Font.Name, Conversions.ToSingle(PropValue), Font.Style);
                                 break;
                             }
 
-                        case var case2 when case2 == ("Style".ToLower() ?? ""):
+                        case var case2 when case2 == ("Style".ToLower() ?? string.Empty):
                             {
                                 F = new Font(Font.Name, Font.Size, ReturnFontStyle(PropValue));
                                 break;
@@ -1037,29 +1037,29 @@ namespace WinPaletter
                     if (!Value.Contains(","))
                     {
 
-                        switch (Value.ToLower() ?? "")
+                        switch (Value.ToLower() ?? string.Empty)
                         {
-                            case var @case when @case == ("Bold".ToLower() ?? ""):
+                            case var @case when @case == ("Bold".ToLower() ?? string.Empty):
                                 {
                                     return FontStyle.Bold;
                                 }
 
-                            case var case1 when case1 == ("Italic".ToLower() ?? ""):
+                            case var case1 when case1 == ("Italic".ToLower() ?? string.Empty):
                                 {
                                     return FontStyle.Italic;
                                 }
 
-                            case var case2 when case2 == ("Regular".ToLower() ?? ""):
+                            case var case2 when case2 == ("Regular".ToLower() ?? string.Empty):
                                 {
                                     return FontStyle.Regular;
                                 }
 
-                            case var case3 when case3 == ("Strikeout".ToLower() ?? ""):
+                            case var case3 when case3 == ("Strikeout".ToLower() ?? string.Empty):
                                 {
                                     return FontStyle.Strikeout;
                                 }
 
-                            case var case4 when case4 == ("Underline".ToLower() ?? ""):
+                            case var case4 when case4 == ("Underline".ToLower() ?? string.Empty):
                                 {
                                     return FontStyle.Underline;
                                 }
@@ -1080,33 +1080,33 @@ namespace WinPaletter
                         {
                             string val = x.Trim();
 
-                            switch (val.ToLower() ?? "")
+                            switch (val.ToLower() ?? string.Empty)
                             {
-                                case var case5 when case5 == ("Bold".ToLower() ?? ""):
+                                case var case5 when case5 == ("Bold".ToLower() ?? string.Empty):
                                     {
                                         Collection = Collection + (int)FontStyle.Bold;
                                         break;
                                     }
 
-                                case var case6 when case6 == ("Italic".ToLower() ?? ""):
+                                case var case6 when case6 == ("Italic".ToLower() ?? string.Empty):
                                     {
                                         Collection = Collection + (int)FontStyle.Italic;
                                         break;
                                     }
 
-                                case var case7 when case7 == ("Regular".ToLower() ?? ""):
+                                case var case7 when case7 == ("Regular".ToLower() ?? string.Empty):
                                     {
                                         Collection = Collection + (int)FontStyle.Regular;
                                         break;
                                     }
 
-                                case var case8 when case8 == ("Strikeout".ToLower() ?? ""):
+                                case var case8 when case8 == ("Strikeout".ToLower() ?? string.Empty):
                                     {
                                         Collection = Collection + (int)FontStyle.Strikeout;
                                         break;
                                     }
 
-                                case var case9 when case9 == ("Underline".ToLower() ?? ""):
+                                case var case9 when case9 == ("Underline".ToLower() ?? string.Empty):
                                     {
                                         Collection = Collection + (int)FontStyle.Underline;
                                         break;
@@ -1403,7 +1403,7 @@ namespace WinPaletter
 
                     foreach (string line in Lines)
                     {
-                        string line_processed = "";
+                        string line_processed = string.Empty;
 
                         if (line.StartsWith("*CMD_", StringComparison.OrdinalIgnoreCase))
                             line_processed = line.Remove(0, "*CMD_".Count());
@@ -1653,7 +1653,7 @@ namespace WinPaletter
                         // Dim [Cursor] As New Cursor
                         foreach (string line in Lines)
                         {
-                            string line_processed = "";
+                            string line_processed = string.Empty;
                             if (line.StartsWith("*Cursor_Arrow_", StringComparison.OrdinalIgnoreCase))
                                 line_processed = line.Remove(0, "*Cursor_Arrow_".Count());
                             if (line.StartsWith("*Cursor_Help_", StringComparison.OrdinalIgnoreCase))
@@ -1808,10 +1808,10 @@ namespace WinPaletter
         {
             AppVersion = Program.Version,
             ThemeName = "Current Mode",
-            Description = "",
+            Description = string.Empty,
             ThemeVersion = "1.0.0.0",
             Author = Environment.UserName,
-            AuthorSocialMediaLink = ""
+            AuthorSocialMediaLink = string.Empty
         };
 
         public Structures.Windows10x Windows11 = new Structures.Windows10x()
@@ -2078,7 +2078,7 @@ namespace WinPaletter
             StatusFont = new Font("Segoe UI", 9f, FontStyle.Regular),
             FontSubstitute_MSShellDlg = "Microsoft Sans Serif",
             FontSubstitute_MSShellDlg2 = "Tahoma",
-            FontSubstitute_SegoeUI = ""
+            FontSubstitute_SegoeUI = string.Empty
         };
 
         public Structures.AltTab AltTab = new Structures.AltTab() { Enabled = true, Style = Structures.AltTab.Styles.Default, Win10Opacity = 95 };
@@ -2191,9 +2191,9 @@ namespace WinPaletter
             W10_1909_WindowAlpha = 255
         };
 
-        public WinTerminal_Converter Terminal = new WinTerminal_Converter("", WinTerminal_Converter.Mode.Empty);
+        public WinTerminal_Converter Terminal = new WinTerminal_Converter(string.Empty, WinTerminal_Converter.Mode.Empty);
 
-        public WinTerminal_Converter TerminalPreview = new WinTerminal_Converter("", WinTerminal_Converter.Mode.Empty);
+        public WinTerminal_Converter TerminalPreview = new WinTerminal_Converter(string.Empty, WinTerminal_Converter.Mode.Empty);
 
         #region Cursors
         public bool Cursor_Enabled = false;
@@ -3022,7 +3022,7 @@ namespace WinPaletter
 
                         if (line.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ", StringComparison.OrdinalIgnoreCase))
                         {
-                            switch (line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count()).ToLower() ?? "")
+                            switch (line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count()).ToLower() ?? string.Empty)
                             {
                                 case "false":
                                     {
@@ -3038,7 +3038,7 @@ namespace WinPaletter
 
                                 default:
                                     {
-                                        switch (line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count()) ?? "")
+                                        switch (line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count()) ?? string.Empty)
                                         {
                                             case "0":
                                                 {

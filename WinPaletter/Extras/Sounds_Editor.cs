@@ -79,7 +79,7 @@ namespace WinPaletter
                 }
             }
 
-            else if ((snd ?? "") == (((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text ?? ""))
+            else if ((snd ?? string.Empty) == (((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text ?? string.Empty))
             {
 
                 if (File.Exists(snd))
@@ -232,11 +232,11 @@ namespace WinPaletter
                     {
                         try
                         {
-                            if ((btn.Tag ?? "").ToString() == "1")
+                            if ((btn.Tag ?? string.Empty).ToString() == "1")
                                 btn.Click -= PressPlay;
-                            if ((btn.Tag ?? "").ToString() == "2")
+                            if ((btn.Tag ?? string.Empty).ToString() == "2")
                                 btn.Click -= StopPlayer;
-                            if ((btn.Tag ?? "").ToString() == "3")
+                            if ((btn.Tag ?? string.Empty).ToString() == "3")
                                 btn.Click -= BrowseForWAV;
                         }
                         catch
@@ -252,11 +252,11 @@ namespace WinPaletter
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
-                        if ((btn.Tag ?? "").ToString() == "1")
+                        if ((btn.Tag ?? string.Empty).ToString() == "1")
                             btn.Click += PressPlay;
-                        if ((btn.Tag ?? "").ToString() == "2")
+                        if ((btn.Tag ?? string.Empty).ToString() == "2")
                             btn.Click += StopPlayer;
-                        if ((btn.Tag ?? "").ToString() == "3")
+                        if ((btn.Tag ?? string.Empty).ToString() == "3")
                             btn.Click += BrowseForWAV;
                     }
                 }
@@ -271,11 +271,11 @@ namespace WinPaletter
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
-                        if ((btn.Tag ?? "").ToString() == "1")
+                        if ((btn.Tag ?? string.Empty).ToString() == "1")
                             btn.Click -= PressPlay;
-                        if ((btn.Tag ?? "").ToString() == "2")
+                        if ((btn.Tag ?? string.Empty).ToString() == "2")
                             btn.Click -= StopPlayer;
-                        if ((btn.Tag ?? "").ToString() == "3")
+                        if ((btn.Tag ?? string.Empty).ToString() == "3")
                             btn.Click -= BrowseForWAV;
                     }
                 }
@@ -538,7 +538,7 @@ namespace WinPaletter
 
         private void Button23_Click(object sender, EventArgs e)
         {
-            TextBox2.Text = "";
+            TextBox2.Text = string.Empty;
         }
 
         private void Button24_Click(object sender, EventArgs e)

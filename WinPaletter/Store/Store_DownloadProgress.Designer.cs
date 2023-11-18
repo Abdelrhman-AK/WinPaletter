@@ -36,7 +36,7 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             var resources = new System.ComponentModel.ComponentResourceManager(typeof(Store_DownloadProgress));
-            ProgressBar1 = new ProgressBar();
+            ProgressBar1 = new UI.WP.ProgressBar();
             Label2 = new Label();
             Label3 = new Label();
             Label4 = new Label();
@@ -245,7 +245,7 @@ namespace WinPaletter
 
         }
 
-        internal ProgressBar ProgressBar1;
+        internal UI.WP.ProgressBar ProgressBar1;
         internal Label Label2;
         internal Label Label3;
         internal Label Label4;

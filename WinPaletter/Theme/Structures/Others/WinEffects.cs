@@ -228,7 +228,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WinEffects data structure</param>
         public void Load(WinEffects @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", true));
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true));
 
             if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref WindowShadow, SPIF.SPIF_NONE))
                 WindowShadow = @default.WindowShadow;
@@ -236,7 +236,7 @@ namespace WinPaletter.Theme.Structures
             if (!SystemParametersInfo(SPI.SPI_GETUIEFFECTS, 0, ref WindowUIEffects, SPIF.SPIF_NONE))
                 WindowUIEffects = @default.WindowUIEffects;
 
-            if (!SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref AnimateControlsInsideWindow, SPIF.SPIF_NONE))
+            if (!OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref AnimateControlsInsideWindow, SPIF.SPIF_NONE))
                 AnimateControlsInsideWindow = @default.AnimateControlsInsideWindow;
 
             if (!SystemParametersInfo(SPI.SPI_GETMENUANIMATION, 0, ref MenuAnimation, SPIF.SPIF_NONE))
@@ -424,7 +424,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", Enabled);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, Enabled);
 
             if (Enabled)
             {
@@ -435,7 +435,10 @@ namespace WinPaletter.Theme.Structures
                 SystemParametersInfo(TreeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(TreeView, SPI.SPI_SETDROPSHADOW, 0, WindowShadow, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(TreeView, SPI.SPI_SETUIEFFECTS, 0, WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+
+                if (!OS.WXP)
+                    SystemParametersInfo(TreeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+
                 SystemParametersInfo(TreeView, SPI.SPI_SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
                 SystemParametersInfo(TreeView, SPI.SPI_SETMENUANIMATION, 0, MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(TreeView, SPI.SPI_SETMENUFADE, 0, MenuFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
@@ -467,7 +470,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : "", RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, RegistryValueKind.String);
 
                 if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
                 {
@@ -587,7 +590,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
-                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
@@ -615,7 +618,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
-                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
@@ -641,7 +644,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
-                        Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue("", "", RegistryValueKind.String);
+                        Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                     }
                     else
                     {

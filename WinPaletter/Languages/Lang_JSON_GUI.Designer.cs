@@ -45,7 +45,7 @@ namespace WinPaletter
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.GroupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.AlertBox3 = new WinPaletter.UI.WP.AlertBox();
-            this.ProgressBar2 = new System.Windows.Forms.ProgressBar();
+            this.ProgressBar2 = new WinPaletter.UI.WP.ProgressBar();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button8 = new WinPaletter.UI.WP.Button();
@@ -95,7 +95,7 @@ namespace WinPaletter
             this.Label5 = new System.Windows.Forms.Label();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
-            this.ProgressBar1 = new System.Windows.Forms.ProgressBar();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.GroupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.GroupBox7 = new WinPaletter.UI.WP.GroupBox();
             this.TextBox9 = new WinPaletter.UI.WP.TextBox();
@@ -226,10 +226,16 @@ namespace WinPaletter
             // 
             this.ProgressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar2.Location = new System.Drawing.Point(742, 10);
+            this.ProgressBar2.AnimationDuration = 1000;
+            this.ProgressBar2.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar2.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar2.Location = new System.Drawing.Point(740, 12);
             this.ProgressBar2.Name = "ProgressBar2";
-            this.ProgressBar2.Size = new System.Drawing.Size(229, 20);
+            this.ProgressBar2.Size = new System.Drawing.Size(229, 17);
+            this.ProgressBar2.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar2.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             this.ProgressBar2.TabIndex = 208;
+            this.ProgressBar2.TaskbarBroadcast = true;
             this.ProgressBar2.Visible = false;
             // 
             // Button6
@@ -958,10 +964,16 @@ namespace WinPaletter
             // 
             this.ProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
             this.ProgressBar1.Location = new System.Drawing.Point(10, 38);
             this.ProgressBar1.Name = "ProgressBar1";
             this.ProgressBar1.Size = new System.Drawing.Size(456, 24);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             this.ProgressBar1.TabIndex = 209;
+            this.ProgressBar1.TaskbarBroadcast = true;
             this.ProgressBar1.Visible = false;
             // 
             // GroupBox2
@@ -1317,7 +1329,7 @@ namespace WinPaletter
         internal UI.WP.Button Button2;
         internal Label Label5;
         internal UI.WP.GroupBox GroupBox2;
-        internal ProgressBar ProgressBar2;
+        internal UI.WP.ProgressBar ProgressBar2;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal TabPage TabPage2;
@@ -1356,7 +1368,7 @@ namespace WinPaletter
         internal DataGridViewTextBoxColumn Column3;
         internal UI.WP.AlertBox AlertBox1;
         internal UI.WP.AlertBox AlertBox3;
-        internal ProgressBar ProgressBar1;
+        internal UI.WP.ProgressBar ProgressBar1;
         internal UI.WP.TextBox TextBox8;
         internal UI.WP.Button Button12;
         internal UI.WP.CheckBox CheckBox1;

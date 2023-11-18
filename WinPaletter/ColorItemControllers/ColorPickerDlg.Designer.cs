@@ -51,7 +51,7 @@ namespace WinPaletter
             this.Label6 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
             this.PictureBox8 = new System.Windows.Forms.PictureBox();
-            this.ProgressBar1 = new System.Windows.Forms.ProgressBar();
+            this.ProgressBar1 = new UI.WP.ProgressBar();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
             this.Label3 = new System.Windows.Forms.Label();
             this.Button4 = new WinPaletter.UI.WP.Button();
@@ -279,7 +279,7 @@ namespace WinPaletter
             this.ProgressBar1.Name = "ProgressBar1";
             this.ProgressBar1.Size = new System.Drawing.Size(274, 6);
             this.ProgressBar1.Step = 1;
-            this.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
             this.ProgressBar1.TabIndex = 9;
             this.ProgressBar1.Visible = false;
             // 
@@ -1001,7 +1001,7 @@ namespace WinPaletter
         internal PictureBox PictureBox5;
         internal Label Label3;
         internal System.ComponentModel.BackgroundWorker BackgroundWorker1;
-        internal ProgressBar ProgressBar1;
+        internal UI.WP.ProgressBar ProgressBar1;
         internal Label Label4;
         internal UI.WP.CheckBox CheckBox1;
         internal Label Label6;

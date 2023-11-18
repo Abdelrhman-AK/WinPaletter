@@ -232,14 +232,14 @@ namespace WinPaletter
 
                 if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
                     ch_terminal = true;
-                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
                     ch_terminal = true;
-                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
                     ch_terminal = true;
 
                 if (Settings.Language.Enabled != CheckBox8.Checked)
                     ch_lang = true;
-                if ((Settings.Language.File ?? "") != (TextBox3.Text ?? ""))
+                if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
                     ch_lang = true;
 
                 if (Settings.ExplorerPatcher.Enabled != CheckBox20.Checked)
@@ -314,7 +314,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        Program.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                        Program.TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
                     }
 
                     if (File.Exists(TerPreDir))
@@ -323,14 +323,14 @@ namespace WinPaletter
                     }
                     else
                     {
-                        Program.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                     }
                 }
 
                 else
                 {
-                    Program.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                    Program.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                    Program.TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+                    Program.TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                 }
             }
 
@@ -535,7 +535,7 @@ namespace WinPaletter
 
                 if (Settings.Language.Enabled != CheckBox8.Checked)
                     Changed = true;
-                if ((Settings.Language.File ?? "") != (TextBox3.Text ?? ""))
+                if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
                     Changed = true;
 
                 if (Settings.NerdStats.Enabled != CheckBox10.Checked)
@@ -563,9 +563,9 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
                     Changed = true;
-                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
                     Changed = true;
-                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != CheckBox15.Checked)
                     Changed = true;
@@ -829,7 +829,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
             {
 
                 CheckBox1.Checked = false;
@@ -905,7 +905,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            string inputText = "";
+            string inputText = string.Empty;
             if (ListBox1.SelectedItem is not null)
                 inputText = ListBox1.SelectedItem.ToString();
             string response = InputBox(Program.Lang.InputThemeRepos, inputText, Program.Lang.InputThemeRepos_Notice);
@@ -919,7 +919,7 @@ namespace WinPaletter
             {
                 int i = ListBox1.SelectedIndex;
 
-                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (Properties.Resources.Link_StoreReposDB.ToUpper() ?? "")) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? "")))
+                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreReposDB.ToUpper() ?? string.Empty)) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? string.Empty)))
                 {
                     ListBox1.Items.RemoveAt(i);
                     if (i < ListBox1.Items.Count - 1)

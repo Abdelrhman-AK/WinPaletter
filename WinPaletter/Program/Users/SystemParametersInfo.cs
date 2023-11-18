@@ -78,11 +78,11 @@ namespace WinPaletter.NativeMethods
 
                     if (uAction.ToString().StartsWith("SPI_GET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
+                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: " + ex.Message), ex));
                     }
                     else if (uAction.ToString().StartsWith("SPI_SET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: " + ex.Message), ex));
                     }
 
                     return;

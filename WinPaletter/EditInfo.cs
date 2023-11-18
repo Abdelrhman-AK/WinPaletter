@@ -56,7 +56,7 @@ namespace WinPaletter
                     return;
                 }
 
-                if (!TextBox2.Text.Replace(".", "").All(char.IsDigit))
+                if (!TextBox2.Text.Replace(".", string.Empty).All(char.IsDigit))
                 {
                     MsgBox(lang.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

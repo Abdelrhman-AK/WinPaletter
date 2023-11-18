@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Security.Principal;
@@ -11,6 +12,16 @@ namespace WinPaletter
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
         public readonly static string Version = System.Windows.Forms.Application.ProductVersion;
+
+        /// <summary>
+        /// WinPaletter elements animation interval in ms.
+        /// </summary>
+        public readonly static int AnimationDuration = 1000;
+
+        /// <summary>
+        /// WinPaletter elements quick animation interval in ms.
+        /// </summary>
+        public readonly static int AnimationDuration_Quick = 200;
 
         /// <summary>
         /// WinPaletter executable file path
@@ -76,7 +87,7 @@ namespace WinPaletter
             StartInfo = new ProcessStartInfo()
             {
                 FileName = PathsExt.System32 + @"\taskkill.exe",
-                Verb = !OS.WXP ? "runas" : "",
+                Verb = !OS.WXP ? "runas" : string.Empty,
                 Arguments = "/F /IM explorer.exe",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = true
@@ -113,7 +124,7 @@ namespace WinPaletter
         /// <summary>
         /// Gets file that opened WinPaletter
         /// </summary>
-        public static string ExternalLink_File = "";
+        public static string ExternalLink_File = string.Empty;
 
         /// <summary>
         /// Class that has bitmaps to used visual styles files and renders them in WinPaletter preview

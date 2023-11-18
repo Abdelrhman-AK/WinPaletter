@@ -32,7 +32,7 @@ namespace WinPaletter
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = Program.Style.Colors.Core;
 
-            textBox1.Text = "";
+            textBox1.Text = string.Empty;
             textBox1.Font = Fonts.ConsoleMedium;
             textBox2.Font = Fonts.ConsoleMedium;
 
@@ -63,7 +63,7 @@ namespace WinPaletter
 
         public void Setup()
         {
-            textBox1.SetText("");
+            textBox1.SetText(string.Empty);
 
             Button1.Enabled = false;
             Button2.Enabled = false;
@@ -118,7 +118,7 @@ namespace WinPaletter
 
         public void Remove()
         {
-            textBox1.SetText("");
+            textBox1.SetText(string.Empty);
 
             Button1.Enabled = false;
             Button2.Enabled = false;

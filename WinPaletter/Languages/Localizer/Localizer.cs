@@ -100,7 +100,7 @@ namespace WinPaletter
 
             foreach (PropertyInfo property in properties1)
             {
-                if (!((property.Name.ToLower() ?? "") == ("Name".ToLower() ?? "")) && !((property.Name.ToLower() ?? "") == ("TranslationVersion".ToLower() ?? "")) && !((property.Name.ToLower() ?? "") == ("Lang".ToLower() ?? "")) && !((property.Name.ToLower() ?? "") == ("LangCode".ToLower() ?? "")) && !((property.Name.ToLower() ?? "") == ("AppVer".ToLower() ?? "")) && !((property.Name.ToLower() ?? "") == ("RightToLeft".ToLower() ?? "")))
+                if (!((property.Name.ToLower() ?? string.Empty) == ("Name".ToLower() ?? string.Empty)) && !((property.Name.ToLower() ?? string.Empty) == ("TranslationVersion".ToLower() ?? string.Empty)) && !((property.Name.ToLower() ?? string.Empty) == ("Lang".ToLower() ?? string.Empty)) && !((property.Name.ToLower() ?? string.Empty) == ("LangCode".ToLower() ?? string.Empty)) && !((property.Name.ToLower() ?? string.Empty) == ("AppVer".ToLower() ?? string.Empty)) && !((property.Name.ToLower() ?? string.Empty) == ("RightToLeft".ToLower() ?? string.Empty)))
                 {
                     if (Strings.ContainsKey(property.Name.ToLower()))
                         property.SetValue(this, Convert.ChangeType(Strings[property.Name.ToLower()], property.PropertyType));
@@ -225,7 +225,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if ((Form.Name.ToLower() ?? "") == (member.Item1.ToLower() ?? ""))
+                    if ((Form.Name.ToLower() ?? string.Empty) == (member.Item1.ToLower() ?? string.Empty))
                     {
 
                         if (string.IsNullOrEmpty(member.Item2))
@@ -260,7 +260,7 @@ namespace WinPaletter
                                 {
                                     if (member.Item3.ToLower() == "text")
                                     {
-                                        if ((member.Item1.ToLower() ?? "") != (Forms.Whatsnew.Name.ToLower() ?? ""))
+                                        if ((member.Item1.ToLower() ?? string.Empty) != (Forms.Whatsnew.Name.ToLower() ?? string.Empty))
                                         {
                                             ctrl.SetText(member.Item4.ToString());
                                         }
@@ -319,7 +319,7 @@ namespace WinPaletter
 
             foreach (PropertyInfo property in properties1)
             {
-                if (!string.IsNullOrWhiteSpace(property.GetValue(newL).ToString()) & !((property.Name.ToLower() ?? "") == ("Name".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("TranslationVersion".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("Lang".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("LangCode".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("AppVer".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("RightToLeft".ToLower() ?? "")))
+                if (!string.IsNullOrWhiteSpace(property.GetValue(newL).ToString()) & !((property.Name.ToLower() ?? string.Empty) == ("Name".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("TranslationVersion".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("Lang".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("LangCode".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("AppVer".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("RightToLeft".ToLower() ?? string.Empty)))
                 {
                     j_globalstrings.Add(property.Name.ToLower(), property.GetValue(newL).ToString());
                 }
@@ -334,7 +334,7 @@ namespace WinPaletter
                     var ins = new Form();
                     ins = (Form)Activator.CreateInstance(f);
 
-                    if ((ins.Name.ToLower() ?? "") != (WinPaletter.Forms.BK.Name.ToLower() ?? ""))
+                    if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
                         JObject j_ctrl = new JObject(), j_child = new JObject();
                         j_ctrl.RemoveAll();
@@ -345,10 +345,10 @@ namespace WinPaletter
                         foreach (var ctrl in ins.GetAllControls())
                         {
 
-                            if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? "") == (ctrl.Name ?? "")))
+                            if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
 
-                                if ((ins.Name.ToLower() ?? "") != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? ""))
+                                if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
                                 {
                                     j_child.Add(ctrl.Name + ".Text", ctrl.Text);
                                 }
@@ -397,7 +397,7 @@ namespace WinPaletter
 
                 foreach (var f in Forms)
                 {
-                    if ((f.Name.ToLower() ?? "") != (WinPaletter.Forms.BK.Name.ToLower() ?? ""))
+                    if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
                         JObject j_ctrl = new JObject(), j_child = new JObject();
                         j_ctrl.RemoveAll();
@@ -408,10 +408,10 @@ namespace WinPaletter
                         foreach (var ctrl in f.GetAllControls())
                         {
 
-                            if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? "") == (ctrl.Name ?? "")))
+                            if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
 
-                                if ((f.Name.ToLower() ?? "") != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? ""))
+                                if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
                                 {
                                     j_child.Add(ctrl.Name + ".Text", ctrl.Text);
                                 }

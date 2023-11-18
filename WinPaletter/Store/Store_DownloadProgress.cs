@@ -56,9 +56,9 @@ namespace WinPaletter
             Icon = Forms.Store.Icon;
 
             Label1.Text = string.Format(Program.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);
-            Label2.Text = "";
-            Label3.Text = "";
-            Label4.Text = "";
+            Label2.Text = string.Empty;
+            Label3.Text = string.Empty;
+            Label4.Text = string.Empty;
             ProgressBar1.Value = 0;
 
             SW.Reset();
@@ -76,7 +76,7 @@ namespace WinPaletter
 
             if (e.TotalBytesToReceive != 0L)
             {
-                ProgressBar1.Style = ProgressBarStyle.Blocks;
+                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                 ProgressBar1.Value = e.ProgressPercentage;
                 Label2.SetText(string.Format("{0}/{1}", e.BytesReceived.SizeString(), e.TotalBytesToReceive.SizeString()));
                 var time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
@@ -84,10 +84,10 @@ namespace WinPaletter
             }
             else
             {
-                ProgressBar1.Style = ProgressBarStyle.Marquee;
+                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
                 ProgressBar1.Value = 0;
                 Label2.SetText(e.BytesReceived.SizeString());
-                Label4.SetText("");
+                Label4.SetText(string.Empty);
             }
 
 

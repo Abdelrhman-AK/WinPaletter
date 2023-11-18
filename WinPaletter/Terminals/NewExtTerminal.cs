@@ -34,7 +34,7 @@ namespace WinPaletter
                     MsgBox(Program.Lang.Terminal_External_NotExist, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                else if ((TextBox1.Text.ToLower() ?? "") == ("%%Startup".ToLower() ?? "") | (TextBox1.Text.ToLower() ?? "") == ("%SystemRoot%_System32_cmd.exe".ToLower() ?? "") | (TextBox1.Text.ToLower() ?? "") == ("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? "") | (TextBox1.Text.ToLower() ?? "") == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? ""))
+                else if ((TextBox1.Text.ToLower() ?? string.Empty) == ("%%Startup".ToLower() ?? string.Empty) | (TextBox1.Text.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_cmd.exe".ToLower() ?? string.Empty) | (TextBox1.Text.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty) | (TextBox1.Text.ToLower() ?? string.Empty) == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty))
                 {
 
                     MsgBox(Program.Lang.Terminal_External_Reversed, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -58,7 +58,7 @@ namespace WinPaletter
             catch (Exception ex)
             {
 
-                MsgBox(Program.Lang.ExtTer_NewError, MessageBoxButtons.OK, MessageBoxIcon.Error, "", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.ErrorDetails + ex.Message);
+                MsgBox(Program.Lang.ExtTer_NewError, MessageBoxButtons.OK, MessageBoxIcon.Error, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.ErrorDetails + ex.Message);
             }
 
         }

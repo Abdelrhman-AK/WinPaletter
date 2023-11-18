@@ -143,7 +143,7 @@ namespace WinPaletter.UI.Controllers
                 }
             }
 
-            else if (!string.IsNullOrWhiteSpace(Text) && (Text.Trim() ?? "") == (Text_English.Trim() ?? ""))
+            else if (!string.IsNullOrWhiteSpace(Text) && (Text.Trim() ?? string.Empty) == (Text_English.Trim() ?? string.Empty))
             {
                 using (var br = new SolidBrush(NotTranslatedColor))
                 {
@@ -151,7 +151,7 @@ namespace WinPaletter.UI.Controllers
                 }
             }
 
-            else if (Tag is not null && !string.IsNullOrWhiteSpace(Tag.ToString()) && (Tag.ToString().Trim() ?? "") == (Tag_English.Trim() ?? ""))
+            else if (Tag is not null && !string.IsNullOrWhiteSpace(Tag.ToString()) && (Tag.ToString().Trim() ?? string.Empty) == (Tag_English.Trim() ?? string.Empty))
             {
                 using (var br = new SolidBrush(NotTranslatedColor))
                 {

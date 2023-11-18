@@ -15,7 +15,7 @@ namespace WinPaletter.UI.WP
         {
             TabStop = false;
             DoubleBuffered = true;
-            Text = "";
+            Text = string.Empty;
         }
 
         #region Properties
@@ -25,7 +25,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
         public bool AlternativeLook { get; set; } = false;
 
         #endregion

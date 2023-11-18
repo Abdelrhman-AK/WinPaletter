@@ -15,7 +15,7 @@ namespace WinPaletter.UI.WP
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
-            Text = "";
+            Text = string.Empty;
             BackColor = Color.Transparent;
             SetColors();
             HandleCreated += AnimatedBox_HandleCreated;
@@ -69,6 +69,7 @@ namespace WinPaletter.UI.WP
 
         private Color _Color = default;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Color Color
         {
@@ -104,7 +105,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         protected override CreateParams CreateParams
         {
@@ -138,11 +139,11 @@ namespace WinPaletter.UI.WP
                     {
                         if (Color == C1 | Color == Color1)
                         {
-                            System.Threading.Tasks.Task.Run(() => { Visual.FadeColor(this, "Color", Color, C2, 10, 1); });
+                            System.Threading.Tasks.Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
                         }
                         else
                         {
-                            System.Threading.Tasks.Task.Run(() => { Visual.FadeColor(this, "Color", Color, C1, 10, 1); });
+                            System.Threading.Tasks.Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
                         }
                     }
                 }

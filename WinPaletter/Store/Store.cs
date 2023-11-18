@@ -579,7 +579,7 @@ namespace WinPaletter
             Tabs.SelectedIndex = 0;
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            Status_lbl.SetText("");
+            Status_lbl.SetText(string.Empty);
         }
 
         #endregion
@@ -599,7 +599,7 @@ namespace WinPaletter
             // Check by Ping if repos DB URL is accessible or not
             foreach (string DB in Program.Settings.Store.Online_Repositories)
             {
-                string var = "";
+                string var = string.Empty;
 
                 if (!DB.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                     var = "https://" + DB;
@@ -627,13 +627,13 @@ namespace WinPaletter
                 string reposName;
                 if (DB.ToUpper().Contains("GITHUB.COM"))
                 {
-                    string[] x = DB.Replace("https://", "").Replace("http://", "").Split('/');
+                    string[] x = DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split('/');
                     reposName = x[1] + "_" + x[2];
                     reposName = string.Join("_", reposName.Split(System.IO.Path.GetInvalidFileNameChars()));
                 }
                 else
                 {
-                    reposName = string.Join("_", DB.Replace("https://", "").Replace("http://", "").Split(System.IO.Path.GetInvalidFileNameChars()));
+                    reposName = string.Join("_", DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split(System.IO.Path.GetInvalidFileNameChars()));
                 }
 
                 // Get text of the DB from URL
@@ -680,14 +680,14 @@ namespace WinPaletter
                     string MD5_ThemeFile = item_splitted[0].ToUpper();
                     string MD5_PackFile = item_splitted[1].ToUpper();
                     string URL_ThemeFile = item_splitted[2];
-                    string URL_PackFile = "";
+                    string URL_PackFile = string.Empty;
                     if (item_splitted.Count() == 4)
                         URL_PackFile = item_splitted[3];
 
                     // Create a folder inside AppData folder
-                    string temp = URL_ThemeFile.Replace("?raw=true", "");
+                    string temp = URL_ThemeFile.Replace("?raw=true", string.Empty);
                     string FileName = temp.Split('/').Last();
-                    temp = temp.Replace("/" + FileName, "");
+                    temp = temp.Replace("/" + FileName, string.Empty);
                     string FolderName = temp.Split('/').Last();
                     string Dir = PathsExt.StoreCache;
                     if (!string.IsNullOrWhiteSpace(FolderName))
@@ -695,13 +695,13 @@ namespace WinPaletter
                     if (!System.IO.Directory.Exists(Dir))
                         System.IO.Directory.CreateDirectory(Dir);
 
-                    Status_lbl.SetText("");
+                    Status_lbl.SetText(string.Empty);
 
                     // Download the theme (*.wpth)
                     if (System.IO.File.Exists(Dir + @"\" + FileName))
                     {
                         // If it exists, check MD5, if it is changed, redownload the theme
-                        if ((CalculateMD5(Dir + @"\" + FileName) ?? "") != (MD5_ThemeFile ?? ""))
+                        if ((CalculateMD5(Dir + @"\" + FileName) ?? string.Empty) != (MD5_ThemeFile ?? string.Empty))
                         {
                             System.IO.File.Delete(Dir + @"\" + FileName);
                             Status_lbl.SetText(string.Format(Program.Lang.Store_UpdateTheme, FileName, URL_ThemeFile));
@@ -746,7 +746,7 @@ namespace WinPaletter
                                     TM = TM,
                                     MD5_ThemeFile = MD5_ThemeFile,
                                     MD5_PackFile = MD5_PackFile,
-                                    DoneByWinPaletter = (DB.ToUpper() ?? "") == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? ""),
+                                    DoneByWinPaletter = (DB.ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? string.Empty),
                                     Size = new Size(w, h),
                                     URL_ThemeFile = URL_ThemeFile,
                                     URL_PackFile = URL_PackFile
@@ -771,7 +771,7 @@ namespace WinPaletter
                         }
                     }
 
-                    Status_lbl.SetText("");
+                    Status_lbl.SetText(string.Empty);
 
                     i += 1;
 
@@ -885,7 +885,7 @@ namespace WinPaletter
                     store_container.Visible = true;
                 }));
 
-            Status_lbl.SetText("");
+            Status_lbl.SetText(string.Empty);
 
             TMList.Clear();
 
@@ -1082,7 +1082,7 @@ namespace WinPaletter
                             if (StoreItem.TM.Info.DesignedFor_WinXP)
                                 os_list.Add(Program.Lang.OS_WinXP);
 
-                            string os_format = "";
+                            string os_format = string.Empty;
                             if (os_list.Count == 1)
                             {
                                 os_format = os_list[0];
@@ -1128,7 +1128,7 @@ namespace WinPaletter
 
                             Program.Animator.ShowSync(Tabs);
 
-                            // ' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .Manager.Info.Color2, 10, 15)
+                            // ' '' ''FluentTransitions.Transition.With(Titlebar_panel, nameof(BackColor), Titlebar_panel.BackColor, .Manager.Info.Color2, 10, 15)
                         }
 
 
@@ -1243,7 +1243,7 @@ namespace WinPaletter
 
         public void PerformSearch()
         {
-            string search_text = search_box.Text.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper();
+            string search_text = search_box.Text.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper();
 
             if (string.IsNullOrWhiteSpace(search_text))
                 return;
@@ -1260,7 +1260,7 @@ namespace WinPaletter
 
             foreach (var st_item in lst)
             {
-                if ((Program.Settings.Store.Search_ThemeNames && st_item.Value.TM.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_AuthorsNames && st_item.Value.TM.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_Descriptions && st_item.Value.TM.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)))
+                if ((Program.Settings.Store.Search_ThemeNames && st_item.Value.TM.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_AuthorsNames && st_item.Value.TM.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_Descriptions && st_item.Value.TM.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)))
 
                 {
 
@@ -1305,7 +1305,7 @@ namespace WinPaletter
                 using (var md5 = MD5.Create())
                 {
                     byte[] hash = md5.ComputeHash(System.IO.File.ReadAllBytes(path));
-                    string result = BitConverter.ToString(hash).Replace("-", "");
+                    string result = BitConverter.ToString(hash).Replace("-", string.Empty);
                     return result.ToUpper();
                 }
             }
@@ -1515,8 +1515,6 @@ namespace WinPaletter
 
             Titlebar_lbl.Text = Text;
             Program.Animator.ShowSync(Tabs);
-
-            // ' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, My.Style.Colors.Back, 10, 15)
         }
 
         #region    Applying row
@@ -1533,9 +1531,9 @@ namespace WinPaletter
 
             if (StartedAsOnlineOrOffline)
             {
-                string temp = selectedItem.URL_PackFile.Replace("?raw=true", "");
+                string temp = selectedItem.URL_PackFile.Replace("?raw=true", string.Empty);
                 string FileName = temp.Split('/').Last();
-                temp = temp.Replace("/" + FileName, "");
+                temp = temp.Replace("/" + FileName, string.Empty);
                 string FolderName = temp.Split('/').Last();
                 string Dir;
                 if (System.IO.File.Exists(selectedItem.FileName))
@@ -1544,14 +1542,14 @@ namespace WinPaletter
                 }
                 else
                 {
-                    Dir = selectedItem.FileName.Replace(@"\" + selectedItem.FileName.Split('\\').Last(), "");
+                    Dir = selectedItem.FileName.Replace(@"\" + selectedItem.FileName.Split('\\').Last(), string.Empty);
                 }
                 if (!System.IO.Directory.Exists(Dir))
                     System.IO.Directory.CreateDirectory(Dir);
 
                 if (selectedItem.MD5_PackFile != "0")
                 {
-                    if (System.IO.File.Exists(Dir + @"\" + FileName) && (CalculateMD5(Dir + @"\" + FileName) ?? "") != (selectedItem.MD5_PackFile ?? "") || !System.IO.File.Exists(Dir + @"\" + FileName))
+                    if (System.IO.File.Exists(Dir + @"\" + FileName) && (CalculateMD5(Dir + @"\" + FileName) ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !System.IO.File.Exists(Dir + @"\" + FileName))
                     {
                         try
                         {

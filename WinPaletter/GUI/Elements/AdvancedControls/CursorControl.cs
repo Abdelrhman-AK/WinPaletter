@@ -39,7 +39,8 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Properties
-
+        public string Prop_File { get; set; } = string.Empty;
+        public bool Prop_UseFromFile { get; set; } = false;
         public Paths.CursorType Prop_Cursor { get; set; } = Paths.CursorType.Arrow;
         public Paths.ArrowStyle Prop_ArrowStyle { get; set; } = Paths.ArrowStyle.Aero;
         public Paths.CircleStyle Prop_CircleStyle { get; set; } = Paths.CircleStyle.Aero;
@@ -194,6 +195,8 @@ namespace WinPaletter.UI.Controllers
 
             var CurOptions = new CursorOptions()
             {
+                UseFromFile = Prop_UseFromFile,
+                File = Prop_File,
                 Cursor = Prop_Cursor,
                 ArrowStyle = Prop_ArrowStyle,
                 CircleStyle = Prop_CircleStyle,

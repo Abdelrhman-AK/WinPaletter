@@ -131,13 +131,28 @@ namespace WinPaletter.TypesExtensions
         {
             try
             {
-                var cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
-                return cs.SelectMany(c => c.GetAllControls()).Concat(cs).OrderBy(c => c.Name);
+                if (parent != null && parent.Controls.Count > 0)
+                {
+                    var cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
+                    return cs.SelectMany(c => c.GetAllControls()).Concat(cs).OrderBy(c => c.Name);
+                }
+                else
+                {
+                    return new List<Control>();
+                }
+
             }
             catch (Exception)
             {
-                var cs = parent.Controls.OfType<Control>();
-                return cs.SelectMany(c => c.GetAllControls()).Concat(cs);
+                if (parent != null && parent.Controls.Count > 0)
+                {
+                    var cs = parent.Controls.OfType<Control>();
+                    return cs.SelectMany(c => c.GetAllControls()).Concat(cs);
+                }
+                else
+                {
+                    return new List<Control>();
+                }
             }
         }
 
@@ -206,7 +221,7 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void AddTreeNodeInvoker(TreeView Ctrl, string text, string imagekey);
 
-        public static void PerformStepMethod2(this ProgressBar ProgressBar)
+        public static void PerformStepMethod2(this UI.WP.ProgressBar ProgressBar)
         {
             if (ProgressBar.InvokeRequired)
             {
@@ -217,6 +232,6 @@ namespace WinPaletter.TypesExtensions
                 ProgressBar.PerformStep();
             }
         }
-        private delegate void PerformStepMethod2Invoker(ProgressBar ProgressBar);
+        private delegate void PerformStepMethod2Invoker(UI.WP.ProgressBar ProgressBar);
     }
 }

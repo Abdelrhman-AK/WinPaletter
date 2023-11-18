@@ -104,6 +104,10 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FluentTransitions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentTransitions.2.0.1\lib\net45\FluentTransitions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
       <Private>False</Private>
@@ -168,7 +172,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Resources.Extensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.8.0.0-rc.2.23479.6\lib\net462\System.Resources.Extensions.dll</HintPath>
+      <HintPath>..\packages\System.Resources.Extensions.8.0.0\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -254,6 +258,9 @@
     <Compile Include="Dialogs\UserPassword.Designer.cs">
       <DependentUpon>UserPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Elements\Others\ProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Languages.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\Consoles.cs" />
@@ -285,7 +292,10 @@
     <Compile Include="Program\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\OffsetStream.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Program\TaskbarProgress\CTaskbarList.cs" />
+    <Compile Include="Program\TaskbarProgress\ITaskbarList3.cs" />
     <Compile Include="Program\NativeMethods\advapi.cs" />
+    <Compile Include="Program\Classes\Cursors.cs" />
     <Compile Include="Program\NativeMethods\Dnsapi.cs" />
     <Compile Include="Program\NativeMethods\DWMAPI.cs" />
     <Compile Include="Program\NativeMethods\GDI32.cs" />
@@ -340,7 +350,6 @@
     <Compile Include="Forms.cs" />
     <Compile Include="Program\Classes\DWM.cs" />
     <Compile Include="Program\Classes\RGBComparer.cs" />
-    <Compile Include="Program\Classes\Visual.cs" />
     <Compile Include="Program\GlobalVariables\ColorClipboard.cs" />
     <Compile Include="Program\GlobalVariables\Exceptions.cs" />
     <Compile Include="Program\GlobalVariables\Fonts.cs" />
@@ -652,7 +661,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Theme\Manager.cs" />
-    <Compile Include="Theme\Default.cs" />
+    <Compile Include="Theme\Default\Default.cs" />
     <Compile Include="CursorsStudio\CursorsCustomizer.cs" />
     <Compile Include="CursorsStudio\CursorsStudio.Designer.cs">
       <DependentUpon>CursorsStudio.cs</DependentUpon>

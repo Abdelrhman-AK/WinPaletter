@@ -38,7 +38,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AltTab data structure</param>
         public void Load(AltTab @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", string.Empty, @default.Enabled));
             Style = (Styles)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", @default.Style));
             Win10Opacity = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", @default.Win10Opacity));
             if (Win10Opacity == default)
@@ -51,7 +51,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", Enabled);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", string.Empty, Enabled);
             if (Enabled)
             {
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", Style);

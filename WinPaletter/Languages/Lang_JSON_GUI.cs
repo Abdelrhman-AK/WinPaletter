@@ -79,7 +79,7 @@ namespace WinPaletter
             foreach (PropertyInfo property in Program.Lang.GetType().GetProperties())
             {
 
-                if (!string.IsNullOrWhiteSpace(property.GetValue(Program.Lang).ToString()) & !((property.Name.ToLower() ?? "") == ("Name".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("TranslationVersion".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("Lang".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("LangCode".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("AppVer".ToLower() ?? "")) & !((property.Name.ToLower() ?? "") == ("RightToLeft".ToLower() ?? "")))
+                if (!string.IsNullOrWhiteSpace(property.GetValue(Program.Lang).ToString()) & !((property.Name.ToLower() ?? string.Empty) == ("Name".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("TranslationVersion".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("Lang".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("LangCode".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("AppVer".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("RightToLeft".ToLower() ?? string.Empty)))
                 {
 
                     var row = new DataGridViewRow();
@@ -97,14 +97,14 @@ namespace WinPaletter
                         row.Cells[1].Value = JObject[property.Name.ToLower()].ToString();
                         row.Cells[1].ReadOnly = false;
 
-                        if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? "") == (row.Cells[1].Value.ToString().ToLower().Trim() ?? ""))
+                        if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? string.Empty) == (row.Cells[1].Value.ToString().ToLower().Trim() ?? string.Empty))
                         {
                             row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
                         }
-                        else if ((row.Cells[2].Value.ToString() ?? "").Contains("{") || (row.Cells[1].Value.ToString() ?? "").Contains("{"))
+                        else if ((row.Cells[2].Value.ToString() ?? string.Empty).Contains("{") || (row.Cells[1].Value.ToString() ?? string.Empty).Contains("{"))
                         {
-                            int count1 = (row.Cells[1].Value ?? "").ToString().Count(c => c == '{');
-                            int count2 = (row.Cells[2].Value ?? "").ToString().Count(c => c == '{');
+                            int count1 = (row.Cells[1].Value ?? string.Empty).ToString().Count(c => c == '{');
+                            int count2 = (row.Cells[2].Value ?? string.Empty).ToString().Count(c => c == '{');
                             if (count1 != count2)
                             {
                                 row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
@@ -115,7 +115,7 @@ namespace WinPaletter
                     else
                     {
                         row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
-                        row.Cells[1].Value = "";
+                        row.Cells[1].Value = string.Empty;
                         row.Cells[1].ReadOnly = false;
                     }
 
@@ -146,6 +146,7 @@ namespace WinPaletter
 
             if (Th is not null && Th.IsAlive)
                 Th.Abort();
+
             Th = new Thread(LoadAllMiniFormsIntoList_Thread) { Priority = ThreadPriority.Highest, IsBackground = true };
             Th.Start();
         }
@@ -254,7 +255,7 @@ namespace WinPaletter
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
-                            Tag = (string)(ctrl.Tag ?? ""),
+                            Tag = (string)(ctrl.Tag ?? string.Empty),
                             Anchor = ctrl.Anchor,
                             BackColor = ctrl.BackColor,
                             ForeColor = Color.Black,
@@ -271,7 +272,7 @@ namespace WinPaletter
                             {
                                 Name = ((TabControl)ctrl).TabPages[i].Name,
                                 Text = ((TabControl)ctrl).TabPages[i].Text,
-                                Tag = (string)(((TabControl)ctrl).TabPages[i].Tag ?? ""),
+                                Tag = (string)(((TabControl)ctrl).TabPages[i].Tag ?? string.Empty),
                                 BackColor = ((TabControl)ctrl).TabPages[i].BackColor,
                                 ForeColor = ((TabControl)ctrl).TabPages[i].ForeColor,
                                 Size = ((TabControl)ctrl).TabPages[i].Size,
@@ -300,8 +301,8 @@ namespace WinPaletter
                             Name = ctrl.Name,
                             Text = ctrl.Text,
                             Text_English = ctrl.Text,
-                            Tag = ctrl.Tag ?? "",
-                            Tag_English = (string)(ctrl.Tag ?? ""),
+                            Tag = ctrl.Tag ?? string.Empty,
+                            Tag_English = (string)(ctrl.Tag ?? string.Empty),
                             Anchor = ctrl.Anchor,
                             Padding = ctrl.Padding,
                             Font = ctrl.Font,
@@ -324,7 +325,7 @@ namespace WinPaletter
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
-                            Tag = (string)(ctrl.Tag ?? ""),
+                            Tag = (string)(ctrl.Tag ?? string.Empty),
                             BackColor = Color.Transparent,
                             ForeColor = ctrl.ForeColor,
                             Size = ctrl.Size,
@@ -358,8 +359,8 @@ namespace WinPaletter
                             Name = ctrl.Name,
                             Text = ctrl.Text,
                             Text_English = OriginalForm.Controls.Find(ctrl.Name, true).First().Text,
-                            Tag = ctrl.Tag ?? "",
-                            Tag_English = (string)(OriginalForm.Controls.Find(ctrl.Name, true).First().Tag ?? ""),
+                            Tag = ctrl.Tag ?? string.Empty,
+                            Tag_English = (string)(OriginalForm.Controls.Find(ctrl.Name, true).First().Tag ?? string.Empty),
                             Anchor = ctrl.Anchor,
                             Padding = ctrl.Padding,
                             Font = ctrl.Font,
@@ -403,7 +404,7 @@ namespace WinPaletter
                         {
                             {
                                 var temp3 = (UI.WP.RadioImage)ctrl;
-                                c.Text = temp3.ShowText ? temp3.Text : "";
+                                c.Text = temp3.ShowText ? temp3.Text : string.Empty;
                                 c.Image = temp3.Image;
                             }
                         }
@@ -436,7 +437,7 @@ namespace WinPaletter
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
-                            Tag = (string)(ctrl.Tag ?? ""),
+                            Tag = (string)(ctrl.Tag ?? string.Empty),
                             Padding = ctrl.Padding,
                             Font = ctrl.Font,
                             Dock = ctrl.Dock,
@@ -559,7 +560,7 @@ namespace WinPaletter
 
             else
             {
-                TextBox1.Text = "";
+                TextBox1.Text = string.Empty;
                 EditingTag = false;
             }
 
@@ -583,7 +584,7 @@ namespace WinPaletter
 
                     else
                     {
-                        TextBox2.Text = "";
+                        TextBox2.Text = string.Empty;
                         EditingTag = false;
 
                     }
@@ -706,7 +707,7 @@ namespace WinPaletter
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
             Icon = Forms.Lang_JSON_Manage.Icon;
-            LangFile = "";
+            LangFile = string.Empty;
             AlertBox1.Visible = true;
             GroupBox8.Visible = false;
             TabControl1.Visible = false;
@@ -872,11 +873,11 @@ namespace WinPaletter
 
                 JObject JObj = (JObject)JToken.Parse(System.IO.File.ReadAllText(LangFile));
 
-                var j_info = new JObject() { { "Name".ToLower(), TextBox5.Text ?? "" }, { "TranslationVersion".ToLower(), TextBox6.Text ?? "" }, { "Lang".ToLower(), TextBox3.Text ?? "" }, { "LangCode".ToLower(), TextBox4.Text ?? "" }, { "AppVer".ToLower(), TextBox7.Text ?? "" }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
+                var j_info = new JObject() { { "Name".ToLower(), TextBox5.Text ?? string.Empty }, { "TranslationVersion".ToLower(), TextBox6.Text ?? string.Empty }, { "Lang".ToLower(), TextBox3.Text ?? string.Empty }, { "LangCode".ToLower(), TextBox4.Text ?? string.Empty }, { "AppVer".ToLower(), TextBox7.Text ?? string.Empty }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
 
                 var j_globalstrings = new JObject();
                 for (int r = 0, loopTo = data.Rows.Count - 1; r <= loopTo; r++)
-                    j_globalstrings[data[0, r].Value.ToString().ToLower()] = (data[1, r].Value ?? "").ToString();
+                    j_globalstrings[data[0, r].Value.ToString().ToLower()] = (data[1, r].Value ?? string.Empty).ToString();
 
                 JObj["Information"] = j_info;
                 JObj["Global Strings"] = j_globalstrings;
@@ -889,12 +890,12 @@ namespace WinPaletter
 
         private void data_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) != ((data[2, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) && !string.IsNullOrWhiteSpace((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()))
+            if (((data[1, e.RowIndex].Value ?? string.Empty).ToString().ToLower().Trim()) != ((data[2, e.RowIndex].Value ?? string.Empty).ToString().ToLower().Trim()) && !string.IsNullOrWhiteSpace((data[1, e.RowIndex].Value ?? string.Empty).ToString().ToLower().Trim()))
             {
-                if ((data[1, e.RowIndex].Value ?? "").ToString().Contains("{") || (data[1, e.RowIndex].Value ?? "").ToString().Contains("{"))
+                if ((data[1, e.RowIndex].Value ?? string.Empty).ToString().Contains("{") || (data[1, e.RowIndex].Value ?? string.Empty).ToString().Contains("{"))
                 {
-                    int count1 = (data[1, e.RowIndex].Value ?? "").ToString().Count(c => c == '{');
-                    int count2 = (data[2, e.RowIndex].Value ?? "").ToString().Count(c => c == '{');
+                    int count1 = (data[1, e.RowIndex].Value ?? string.Empty).ToString().Count(c => c == '{');
+                    int count2 = (data[2, e.RowIndex].Value ?? string.Empty).ToString().Count(c => c == '{');
                     if (count1 != count2)
                     {
                         data[1, e.RowIndex].Style.BackColor = Program.Style.Colors.NotTranslatedColor;

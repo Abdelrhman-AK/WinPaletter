@@ -10,12 +10,12 @@ namespace WinPaletter.Theme
         {
             AppVersion = Program.Version,
             ThemeName = Program.Lang.CurrentMode,
-            Description = "",
+            Description = string.Empty,
             ExportResThemePack = false,
-            License = "",
+            License = string.Empty,
             ThemeVersion = "1.0.0.0",
             Author = User.UserName,
-            AuthorSocialMediaLink = "",
+            AuthorSocialMediaLink = string.Empty,
             Color1 = Color.FromArgb(0, 102, 204),
             Color2 = Color.FromArgb(122, 9, 9),
             DesignedFor_Win11 = true,
@@ -231,7 +231,7 @@ namespace WinPaletter.Theme
             WallpaperType = Wallpaper.WallpaperTypes.Picture,
             WallpaperStyle = Wallpaper.WallpaperStyles.Fill,
             Wallpaper_Slideshow_Images = new string[] { },
-            Wallpaper_Slideshow_ImagesRootPath = "",
+            Wallpaper_Slideshow_ImagesRootPath = string.Empty,
             Wallpaper_Slideshow_Interval = 60000,
             Wallpaper_Slideshow_Shuffle = false,
             SlideShow_Folder_or_ImagesList = true
@@ -363,7 +363,7 @@ namespace WinPaletter.Theme
             StatusFont = new Font("Segoe UI", 9f, FontStyle.Regular),
             FontSubstitute_MSShellDlg = "Microsoft Sans Serif",
             FontSubstitute_MSShellDlg2 = "Tahoma",
-            FontSubstitute_SegoeUI = ""
+            FontSubstitute_SegoeUI = string.Empty
         };
 
         /// <summary>Object derived of structure that has data about Windows effects and animations, and it can be customized.</summary>
@@ -414,7 +414,7 @@ namespace WinPaletter.Theme
         public ScreenSaver ScreenSaver = new()
         {
             Enabled = false,
-            File = "",
+            File = string.Empty,
             IsSecure = false,
             TimeOut = 60
         };
@@ -423,10 +423,10 @@ namespace WinPaletter.Theme
         public Sounds Sounds = new()
         {
             Enabled = true,
-            Snd_Imageres_SystemStart = (OS.W12 || OS.W11) ? "Default" : "",
-            Snd_ChargerConnected = "",
-            Snd_ChargerDisconnected = "",
-            Snd_Win_WindowsLock = ""
+            Snd_Imageres_SystemStart = (OS.W12 || OS.W11) ? "Default" : string.Empty,
+            Snd_ChargerConnected = string.Empty,
+            Snd_ChargerDisconnected = string.Empty,
+            Snd_Win_WindowsLock = string.Empty
         };
 
         /// <summary>Object derived of structure that has data about Windows switcher (Alt+Tab) appearance, and it can be customized.</summary>
@@ -549,9 +549,9 @@ namespace WinPaletter.Theme
         };
 
         /// <summary>Object derived of class that has data about Windows Terminal Stable, and it can be customized.</summary>
-        public WinTerminal Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+        public WinTerminal Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
 
         /// <summary>Object derived of class that has data about Windows Terminal Preview, and it can be customized.</summary>
-        public WinTerminal TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+        public WinTerminal TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
     }
 }

@@ -43,7 +43,7 @@ namespace WinPaletter
             RadioButton2 = new UI.WP.RadioButton();
             RadioButton3 = new UI.WP.RadioButton();
             RadioButton1 = new UI.WP.RadioButton();
-            ProgressBar1 = new ProgressBar();
+            ProgressBar1 = new UI.WP.ProgressBar();
             SaveFileDialog1 = new SaveFileDialog();
             Label1 = new Label();
             PictureBox2 = new PictureBox();
@@ -426,7 +426,7 @@ namespace WinPaletter
         internal UI.WP.RadioButton RadioButton2;
         internal UI.WP.RadioButton RadioButton3;
         internal UI.WP.RadioButton RadioButton1;
-        internal ProgressBar ProgressBar1;
+        internal UI.WP.ProgressBar ProgressBar1;
         internal SaveFileDialog SaveFileDialog1;
         internal Label Label1;
         internal PictureBox PictureBox2;

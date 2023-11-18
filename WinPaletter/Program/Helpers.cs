@@ -23,8 +23,8 @@ namespace WinPaletter
                 StartInfo = new ProcessStartInfo()
                 {
                     FileName = command.Split(' ')[0],
-                    Verb = OS.WXP ? "" : "runas",
-                    Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : "",
+                    Verb = OS.WXP ? string.Empty : "runas",
+                    Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : string.Empty,
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true,
                     UseShellExecute = true
@@ -90,7 +90,7 @@ namespace WinPaletter
                 Forms.MainFrm.OpenFileDialog1.FileName = ExternalLink_File;
                 Forms.MainFrm.SaveFileDialog1.FileName = ExternalLink_File;
                 ExternalLink = false;
-                ExternalLink_File = "";
+                ExternalLink_File = string.Empty;
             }
 
             TM_Original = (Theme.Manager)TM.Clone();
@@ -185,12 +185,12 @@ namespace WinPaletter
                         {
                             if (!File.Contains("|"))
                             {
-                                f = File.Replace("\"", "");
+                                f = File.Replace("\"", string.Empty);
                             }
                             else
                             {
                                 string[] arr = File.Split('|');
-                                f = arr[0].Replace("\"", "");
+                                f = arr[0].Replace("\"", string.Empty);
                                 if (arr.Count() == 2)
                                     compress = arr[1];
                                 if (arr.Count() == 3)
@@ -367,7 +367,7 @@ namespace WinPaletter
                             if (entry.FullName.Contains(@"\"))
                             {
                                 string dest = System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName);
-                                string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), "");
+                                string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), string.Empty);
 
                                 if (!System.IO.Directory.Exists(dest_dir))
                                 {

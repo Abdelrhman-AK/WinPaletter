@@ -304,6 +304,8 @@ public class EOIcoCurLoader
             EOFC.BitmapOps.MaskToAlpha(bm, bmMask);
         }
 
+        bm.RotateFlip(RotateFlipType.Rotate180FlipX);
+
         return bm;
     }
 

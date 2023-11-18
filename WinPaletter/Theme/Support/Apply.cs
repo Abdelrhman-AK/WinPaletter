@@ -221,7 +221,7 @@ namespace WinPaletter.Theme
                 {
                     case Theme.Structures.LogonUI7.Sources.Default:
                         {
-                            string syslock = "";
+                            string syslock = string.Empty;
 
                             if (System.IO.File.Exists(string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID)))
                             {
@@ -338,13 +338,13 @@ namespace WinPaletter.Theme
         {
             if (CommandPrompt.Enabled)
             {
-                Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt, TreeView);
+                Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", string.Empty, CommandPrompt, TreeView);
                 if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
                     Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
 
                 if (Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "", CommandPrompt, TreeView);
+                    Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", string.Empty, CommandPrompt, TreeView);
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
                 }
             }
@@ -385,6 +385,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Apply WinPaletter themed cursors
         /// </summary>
+        /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_Cursors(TreeView TreeView = null)
         {
@@ -393,7 +394,7 @@ namespace WinPaletter.Theme
                 bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
                 bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-                EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled);
+                EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Cursor_Enabled);
 
                 var sw = new Stopwatch();
                 if (ReportProgress)
@@ -402,23 +403,23 @@ namespace WinPaletter.Theme
                 sw.Reset();
                 sw.Start();
 
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Busy", Cursor_Busy, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Move", Cursor_Move, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("NS", Cursor_NS, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("EW", Cursor_EW, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("NESW", Cursor_NESW, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("NWSE", Cursor_NWSE, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Up", Cursor_Up, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Pen", Cursor_Pen, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("None", Cursor_None, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Link", Cursor_Link, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Pin", Cursor_Pin, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, ReportProgress_Detailed ? TreeView : null);
-                Theme.Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Busy", Cursor_Busy, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Move", Cursor_Move, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("NS", Cursor_NS, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("EW", Cursor_EW, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("NESW", Cursor_NESW, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("NWSE", Cursor_NWSE, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Up", Cursor_Up, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Pen", Cursor_Pen, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("None", Cursor_None, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Link", Cursor_Link, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Pin", Cursor_Pin, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, ReportProgress_Detailed ? TreeView : null);
+                Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, ReportProgress_Detailed ? TreeView : null);
 
                 if (ReportProgress)
                     AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
@@ -437,12 +438,12 @@ namespace WinPaletter.Theme
                             SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETMOUSESONAR, 0, Cursor_Sonar, SPIF.SPIF_UPDATEINIFILE);
                             SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETMOUSETRAILS, Cursor_Trails, 0, SPIF.SPIF_UPDATEINIFILE);
 
-                            ApplyCursorsToReg("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
+                            ApplyCursorsToReg(this, "HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
 
                             if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
                                 EditReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails);
-                                ApplyCursorsToReg(@"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
+                                ApplyCursorsToReg(this, @"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
                             }
 
                         }), TreeView, Program.Lang.TM_ApplyingCursors, Program.Lang.TM_CursorsApplying_Error, Program.Lang.TM_Time);

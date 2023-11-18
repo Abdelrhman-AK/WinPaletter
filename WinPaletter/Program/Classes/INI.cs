@@ -19,7 +19,7 @@ namespace WinPaletter
         public void Write(string Section, string Key, string Value)
         {
             if (!System.IO.File.Exists(path))
-                System.IO.File.WriteAllText(path, "");
+                System.IO.File.WriteAllText(path, string.Empty);
 
             Kernel32.WritePrivateProfileString(Section, Key, Value, path);
         }

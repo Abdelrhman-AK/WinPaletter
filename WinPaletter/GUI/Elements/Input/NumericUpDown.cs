@@ -124,7 +124,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         #endregion
 

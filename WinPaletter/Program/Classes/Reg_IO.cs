@@ -69,7 +69,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             if (RegType == RegistryValueKind.String & Value is null)
-                Value = "";
+                Value = string.Empty;
 
             var scope = default(Reg_scope);
 
@@ -382,7 +382,7 @@ namespace WinPaletter
                     case RegistryValueKind.Binary:
                         {
                             regTemplate = "add \"{0}\" /v \"{1}\" /t REG_BINARY /d {2} /f";
-                            _Value = BitConverter.ToString((byte[])Value).Replace("-", "");
+                            _Value = BitConverter.ToString((byte[])Value).Replace("-", string.Empty);
                             break;
                         }
 
@@ -421,7 +421,7 @@ namespace WinPaletter
             else
             {
                 regTemplate = "add \"{0}\" /v \"{1}\" /d \"{2}\" /f";
-                _Value = "";
+                _Value = string.Empty;
 
             }
 
@@ -601,7 +601,7 @@ namespace WinPaletter
 
                 if (Result != null && Result.ToString().StartsWith("#USR:", StringComparison.OrdinalIgnoreCase))
                 {
-                    Result = GetReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", "")}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
+                    Result = GetReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
                 }
 
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
@@ -685,11 +685,11 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(File))
                 {
-                    process.StartInfo.Arguments = "/c sfc.exe /SCANFILE=\"" + File + $"\"{(!Hide ? " && pause" : "")}";
+                    process.StartInfo.Arguments = "/c sfc.exe /SCANFILE=\"" + File + $"\"{(!Hide ? " && pause" : string.Empty)}";
                 }
                 else if (IfNotExist_DoScannow)
                 {
-                    process.StartInfo.Arguments = $"/c sfc.exe /scannow{(!Hide ? " && pause" : "")}";
+                    process.StartInfo.Arguments = $"/c sfc.exe /scannow{(!Hide ? " && pause" : string.Empty)}";
                 }
                 else
                 {
@@ -713,7 +713,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.SendCommand($"{PathsExt.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : "")}");
+                Program.SendCommand($"{PathsExt.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
 
                 try
                 {

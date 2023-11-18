@@ -15,7 +15,7 @@ namespace WinPaletter.UI.Simulation
 
         public WinCMD()
         {
-            Text = "";
+            Text = string.Empty;
             DoubleBuffered = true;
         }
 
@@ -457,12 +457,12 @@ namespace WinPaletter.UI.Simulation
             {
                 if (!PowerShell)
                 {
-                    string sx = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", "");
-                    sx = sx.Replace("S", "").Trim();
+                    string sx = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
+                    sx = sx.Replace("S", string.Empty).Trim();
 
                     string sy = "." + Microsoft.Win32.Registry.GetValue(CV, "UBR", 0).ToString();
                     if (sy == ".0")
-                        sy = "";
+                        sy = string.Empty;
 
                     S = string.Format("Microsoft Windows [Version {0}{1}]", sx, sy) + "\r\n" + S1 + "\r\n" + "\r\n" + S2;
                 }

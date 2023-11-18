@@ -76,12 +76,12 @@ namespace WinPaletter.Theme
             ls.Clear();
 
             var AllThemes = String.CList();
-            string SelectedTheme = "";
+            string SelectedTheme = string.Empty;
             bool Found = false;
 
             foreach (string th in AllThemes)
             {
-                if ((th.Split('|')[0].ToLower() ?? "") == (ThemeName.ToLower() ?? ""))
+                if ((th.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
                 {
                     SelectedTheme = th.Replace("|", "\r\n");
                     Found = true;

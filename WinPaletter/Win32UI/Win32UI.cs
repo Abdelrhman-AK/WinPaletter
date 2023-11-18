@@ -227,9 +227,9 @@ namespace WinPaletter
 
             Color C = ((UI.Controllers.ColorItem)sender).BackColor;
 
-            switch (((UI.Controllers.ColorItem)sender).ToString().ToLower() ?? "")
+            switch (((UI.Controllers.ColorItem)sender).ToString().ToLower() ?? string.Empty)
             {
-                case var @case when @case == ("activetitle_pick".ToLower() ?? ""):
+                case var @case when @case == ("activetitle_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR2);
                         CList.Add(WindowR3);
@@ -243,7 +243,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case1 when case1 == ("GActivetitle_pick".ToLower() ?? ""):
+                case var case1 when case1 == ("GActivetitle_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR2);
                         CList.Add(WindowR3);
@@ -257,7 +257,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case2 when case2 == ("TitleText_pick".ToLower() ?? ""):
+                case var case2 when case2 == ("TitleText_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR2);
                         CList.Add(WindowR3);
@@ -271,7 +271,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case3 when case3 == ("InactiveTitle_pick".ToLower() ?? ""):
+                case var case3 when case3 == ("InactiveTitle_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRColor1 = true };
@@ -280,7 +280,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case4 when case4 == ("GInactivetitle_pick".ToLower() ?? ""):
+                case var case4 when case4 == ("GInactivetitle_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRColor2 = true };
@@ -289,7 +289,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case5 when case5 == ("InactivetitleText_pick".ToLower() ?? ""):
+                case var case5 when case5 == ("InactivetitleText_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRForeColor = true };
@@ -298,7 +298,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case6 when case6 == ("ActiveBorder_pick".ToLower() ?? ""):
+                case var case6 when case6 == ("ActiveBorder_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR2);
                         CList.Add(WindowR3);
@@ -312,7 +312,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case7 when case7 == ("InactiveBorder_pick".ToLower() ?? ""):
+                case var case7 when case7 == ("InactiveBorder_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(WindowR1);
                         var _Conditions = new Conditions() { WindowRBorder = true };
@@ -321,7 +321,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case8 when case8 == ("Frame_pick".ToLower() ?? ""):
+                case var case8 when case8 == ("Frame_pick".ToLower() ?? string.Empty):
                     {
                         foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
                             CList.Add(ButtonR);
@@ -338,7 +338,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case9 when case9 == ("btnface_pick".ToLower() ?? ""):
+                case var case9 when case9 == ("btnface_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -365,7 +365,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case10 when case10 == ("btndkshadow_pick".ToLower() ?? ""):
+                case var case10 when case10 == ("btndkshadow_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -388,7 +388,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case11 when case11 == ("btnhilight_pick".ToLower() ?? ""):
+                case var case11 when case11 == ("btnhilight_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -419,7 +419,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case12 when case12 == ("btnlight_pick".ToLower() ?? ""):
+                case var case12 when case12 == ("btnlight_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -442,7 +442,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case13 when case13 == ("btnshadow_pick".ToLower() ?? ""):
+                case var case13 when case13 == ("btnshadow_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -471,7 +471,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case14 when case14 == ("btntext_pick".ToLower() ?? ""):
+                case var case14 when case14 == ("btntext_pick".ToLower() ?? string.Empty):
                     {
                         foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
                             CList.Add(WindowR);
@@ -491,7 +491,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case15 when case15 == ("AppWorkspace_pick".ToLower() ?? ""):
+                case var case15 when case15 == ("AppWorkspace_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(programcontainer);
                         var _Conditions = new Conditions() { RetroAppWorkspace = true };
@@ -500,7 +500,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case16 when case16 == ("background_pick".ToLower() ?? ""):
+                case var case16 when case16 == ("background_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(pnl_preview);
                         var _Conditions = new Conditions() { RetroBackground = true };
@@ -509,7 +509,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case17 when case17 == ("menu_pick".ToLower() ?? ""):
+                case var case17 when case17 == ("menu_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(Menu_Window);
 
@@ -530,7 +530,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case18 when case18 == ("menubar_pick".ToLower() ?? ""):
+                case var case18 when case18 == ("menubar_pick".ToLower() ?? string.Empty):
                     {
                         if (Toggle1.Checked)
                         {
@@ -548,7 +548,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case19 when case19 == ("hilight_pick".ToLower() ?? ""):
+                case var case19 when case19 == ("hilight_pick".ToLower() ?? string.Empty):
                     {
                         if (Toggle1.Checked)
                         {
@@ -573,7 +573,7 @@ namespace WinPaletter
                     }
 
 
-                case var case20 when case20 == ("menuhilight_pick".ToLower() ?? ""):
+                case var case20 when case20 == ("menuhilight_pick".ToLower() ?? string.Empty):
                     {
                         if (Toggle1.Checked)
                         {
@@ -593,7 +593,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case21 when case21 == ("menutext_pick".ToLower() ?? ""):
+                case var case21 when case21 == ("menutext_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(LabelR1);
                         if (!Toggle1.Checked)
@@ -609,7 +609,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case22 when case22 == ("hilighttext_pick".ToLower() ?? ""):
+                case var case22 when case22 == ("hilighttext_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(LabelR5);
                         if (Toggle1.Checked)
@@ -622,7 +622,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case23 when case23 == ("GrayText_pick".ToLower() ?? ""):
+                case var case23 when case23 == ("GrayText_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(LabelR2);
                         CList.Add(LabelR9);
@@ -633,7 +633,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case24 when case24 == ("Window_pick".ToLower() ?? ""):
+                case var case24 when case24 == ("Window_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(TextBoxR1);
                         var _Conditions = new Conditions() { RetroBackground = true };
@@ -642,7 +642,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case25 when case25 == ("WindowText_pick".ToLower() ?? ""):
+                case var case25 when case25 == ("WindowText_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(TextBoxR1);
                         CList.Add(LabelR4);
@@ -654,7 +654,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case26 when case26 == ("InfoWindow_pick".ToLower() ?? ""):
+                case var case26 when case26 == ("InfoWindow_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(LabelR13);
                         var _Conditions = new Conditions() { RetroBackground = true };
@@ -663,7 +663,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case27 when case27 == ("InfoText_pick".ToLower() ?? ""):
+                case var case27 when case27 == ("InfoText_pick".ToLower() ?? string.Empty):
                     {
                         CList.Add(LabelR13);
                         C = Forms.ColorPickerDlg.Pick(CList);
@@ -671,7 +671,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case28 when case28 == ("Scrollbar_pick".ToLower() ?? ""):
+                case var case28 when case28 == ("Scrollbar_pick".ToLower() ?? string.Empty):
                     {
                         C = Forms.ColorPickerDlg.Pick(CList);
                         break;
@@ -915,14 +915,14 @@ namespace WinPaletter
             ls.Clear();
 
             var AllThemes = String.CList();
-            string SelectedTheme = "";
+            string SelectedTheme = string.Empty;
             var SelectedThemeList = new List<string>();
 
             bool Found = false;
 
             foreach (string th in AllThemes)
             {
-                if ((th.Split('|')[0].ToLower() ?? "") == (ThemeName.ToLower() ?? ""))
+                if ((th.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
                 {
                     SelectedTheme = th.Replace("|", "\r\n");
                     Found = true;
@@ -1322,7 +1322,7 @@ namespace WinPaletter
                 s.Add("; " + string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author));
                 s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName));
                 s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion));
-                s.Add("");
+                s.Add(string.Empty);
 
                 s.Add(string.Format(@"[Control Panel\Colors]"));
 
@@ -1454,25 +1454,25 @@ namespace WinPaletter
                     var temp31 = desktop_pick.BackColor;
                     s.Add(string.Format("{0}={1} {2} {3}", "Desktop", temp31.R, temp31.G, temp31.B));
                 }
-                s.Add("");
+                s.Add(string.Empty);
 
                 s.Add(string.Format("[MasterThemeSelector]"));
                 s.Add(string.Format("MTSM=DABJDKT"));
 
-                s.Add("");
+                s.Add(string.Empty);
                 s.Add(@"[Control Panel\Desktop]");
                 s.Add("Wallpaper=");
                 s.Add("TileWallpaper=0");
                 s.Add("WallpaperStyle=10");
                 s.Add("Pattern=");
-                s.Add("");
+                s.Add(string.Empty);
 
                 s.Add("[VisualStyles]");
                 s.Add("Path=");
                 s.Add("ColorStyle=@themeui.dll,-854");
                 s.Add("Size=@themeui.dll,-2019");
                 s.Add("Transparency=0");
-                s.Add("");
+                s.Add(string.Empty);
 
                 try
                 {

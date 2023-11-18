@@ -161,7 +161,7 @@ namespace WinPaletter
                 }
 
                 _SID = value;
-                Password = "";
+                Password = string.Empty;
 
                 if (changed && UserSwitch != null)
                 {
@@ -244,7 +244,7 @@ namespace WinPaletter
             }
             else
             {
-                result = NativeMethods.advapi.LogonUser(UserName, ComputerName, "", NativeMethods.advapi.LOGON32_LOGON_SERVICE, NativeMethods.advapi.LOGON32_PROVIDER_DEFAULT, ref token);
+                result = NativeMethods.advapi.LogonUser(UserName, ComputerName, string.Empty, NativeMethods.advapi.LOGON32_LOGON_SERVICE, NativeMethods.advapi.LOGON32_PROVIDER_DEFAULT, ref token);
                 error = Marshal.GetLastWin32Error();
             }
 
@@ -380,7 +380,7 @@ namespace WinPaletter
         /// <summary>
         /// Password of current user profile
         /// </summary>
-        public static string Password = "";
+        public static string Password = string.Empty;
 
         /// <summary>
         /// Current user Windows identity, used to impersonate user profile to do codes and operations on this user.

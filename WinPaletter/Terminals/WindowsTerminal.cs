@@ -273,10 +273,10 @@ namespace WinPaletter
 
         public void SetDefaultsToScheme(string Scheme)
         {
-            switch (Scheme.ToLower() ?? "")
+            switch (Scheme.ToLower() ?? string.Empty)
             {
 
-                case var @case when @case == ("Campbell".ToLower() ?? ""):
+                case var @case when @case == ("Campbell".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF0C0C0C".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF0C0C0C".FromHEXToColor(true);
@@ -301,7 +301,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case1 when case1 == ("Campbell Powershell".ToLower() ?? ""):
+                case var case1 when case1 == ("Campbell Powershell".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF012456".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF0C0C0C".FromHEXToColor(true);
@@ -326,7 +326,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case2 when case2 == ("One Half Dark".ToLower() ?? ""):
+                case var case2 when case2 == ("One Half Dark".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF282C34".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF282C34".FromHEXToColor(true);
@@ -351,7 +351,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case3 when case3 == ("One Half Light".ToLower() ?? ""):
+                case var case3 when case3 == ("One Half Light".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FFFAFAFA".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF383A42".FromHEXToColor(true);
@@ -376,7 +376,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case4 when case4 == ("Solarized Dark".ToLower() ?? ""):
+                case var case4 when case4 == ("Solarized Dark".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF002B36".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF002B36".FromHEXToColor(true);
@@ -401,7 +401,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case5 when case5 == ("Solarized Light".ToLower() ?? ""):
+                case var case5 when case5 == ("Solarized Light".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FFFDF6E3".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF002B36".FromHEXToColor(true);
@@ -426,7 +426,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case6 when case6 == ("Tango Dark".ToLower() ?? ""):
+                case var case6 when case6 == ("Tango Dark".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF000000".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF000000".FromHEXToColor(true);
@@ -451,7 +451,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case7 when case7 == ("Tango Light".ToLower() ?? ""):
+                case var case7 when case7 == ("Tango Light".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FFFFFFFF".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF000000".FromHEXToColor(true);
@@ -476,7 +476,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case8 when case8 == ("Vintage".ToLower() ?? ""):
+                case var case8 when case8 == ("Vintage".ToLower() ?? string.Empty):
                     {
                         TerBackground.DefaultColor = "FF000000".FromHEXToColor(true);
                         TerBlack.DefaultColor = "FF000000".FromHEXToColor(true);
@@ -594,7 +594,7 @@ namespace WinPaletter
                 {
                     IntPtr intPtr = IntPtr.Zero;
                     NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                    string path = "";
+                    string path = string.Empty;
                     if (temp.Commandline is not null)
                         path = temp.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
                     NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -1174,7 +1174,7 @@ namespace WinPaletter
             if (TerThemes.SelectedIndex > 2)
             {
                 string s = InputBox(Program.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString());
-                if ((s ?? "") != (TerThemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
+                if ((s ?? string.Empty) != (TerThemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
                 {
                     int i = TerThemes.SelectedIndex;
                     TerThemes.Items.RemoveAt(i);
@@ -1188,7 +1188,7 @@ namespace WinPaletter
         private void Button4_Click(object sender, EventArgs e)
         {
             string s = InputBox(Program.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString());
-            if ((s ?? "") != (TerSchemes.SelectedItem.ToString() ?? "") & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
+            if ((s ?? string.Empty) != (TerSchemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
             {
                 int i = TerSchemes.SelectedIndex;
                 TerSchemes.Items.RemoveAt(i);
@@ -1709,7 +1709,7 @@ namespace WinPaletter
             {
                 for (int x = 0, loopTo = TerProfiles.Items.Count - 1; x <= loopTo; x++)
                 {
-                    if ((TerProfiles.Items[x].ToString().ToLower() ?? "") == (CCat.ToLower() ?? ""))
+                    if ((TerProfiles.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
                         var CCatFrom = x == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[x - 1];
@@ -1791,7 +1791,7 @@ namespace WinPaletter
                         {
                             IntPtr intPtr = IntPtr.Zero;
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                            string path = "";
+                            string path = string.Empty;
                             if (CCatFrom.Commandline is not null)
                                 path = CCatFrom.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -1835,7 +1835,7 @@ namespace WinPaletter
             {
                 for (int x = 0, loopTo = TerSchemes.Items.Count - 1; x <= loopTo; x++)
                 {
-                    if ((TerSchemes.Items[x].ToString().ToLower() ?? "") == (CCat.ToLower() ?? ""))
+                    if ((TerSchemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
                         var CCatFrom = _Terminal.Colors[x];
@@ -1919,7 +1919,7 @@ namespace WinPaletter
             {
                 for (int x = 0, loopTo = TerThemes.Items.Count - 1; x <= loopTo; x++)
                 {
-                    if ((TerThemes.Items[x].ToString().ToLower() ?? "") == (CCat.ToLower() ?? ""))
+                    if ((TerThemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
                         var CCatFrom = _Terminal.Themes[x - 3];

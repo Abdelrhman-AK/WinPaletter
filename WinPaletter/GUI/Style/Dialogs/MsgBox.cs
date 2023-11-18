@@ -99,15 +99,15 @@ namespace WinPaletter.UI.Style
                         EnableHyperlinks = true,
                         RightToLeft = Program.Lang.RightToLeft,
                         ButtonStyle = TaskDialogButtonStyle.Standard,
-                        Content = ConvertToLink((SubMessage ?? "").ToString()),
+                        Content = ConvertToLink((SubMessage ?? string.Empty).ToString()),
                         FooterIcon = FooterIcon,
                         CenterParent = true,
                         WindowTitle = (DialogTitle ?? Application.ProductName).ToString(),
-                        MainInstruction = (Message ?? "").ToString(),
-                        CollapsedControlText = (ExpandedText ?? "").ToString(),
-                        ExpandedControlText = (CollapsedText ?? "").ToString(),
-                        ExpandedInformation = ConvertToLink((ExpandedDetails ?? "").ToString()),
-                        Footer = ConvertToLink((Footer ?? "").ToString())
+                        MainInstruction = (Message ?? string.Empty).ToString(),
+                        CollapsedControlText = (ExpandedText ?? string.Empty).ToString(),
+                        ExpandedControlText = (CollapsedText ?? string.Empty).ToString(),
+                        ExpandedInformation = ConvertToLink((ExpandedDetails ?? string.Empty).ToString()),
+                        Footer = ConvertToLink((Footer ?? string.Empty).ToString())
                     };
 
                     if (FooterCustomIcon is null)
@@ -245,10 +245,10 @@ namespace WinPaletter.UI.Style
 
         private static DialogResult Msgbox_Classic(object Message, object SubMessage, object ExpandedDetails, object Footer, object DialogTitle, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information)
         {
-            string SM = !string.IsNullOrWhiteSpace((SubMessage ?? "").ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : "";
-            string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? "").ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : "";
-            string Fo = !string.IsNullOrWhiteSpace((Footer ?? "").ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : "";
-            string T = !string.IsNullOrWhiteSpace((DialogTitle ?? "").ToString()) ? DialogTitle.ToString() : Application.ProductName;
+            string SM = !string.IsNullOrWhiteSpace((SubMessage ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : string.Empty;
+            string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : string.Empty;
+            string Fo = !string.IsNullOrWhiteSpace((Footer ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : string.Empty;
+            string T = !string.IsNullOrWhiteSpace((DialogTitle ?? string.Empty).ToString()) ? DialogTitle.ToString() : Application.ProductName;
 
             return MessageBox.Show(Message + SM + ED + Fo, T, Buttons, Icon);
         }

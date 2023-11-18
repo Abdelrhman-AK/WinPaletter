@@ -10,6 +10,12 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct Cursor : ICloneable
     {
+        /// <summary>Use a cursor file instead of rendering</summary>
+        public bool UseFromFile;
+
+        /// <summary>Used cursor file</summary>
+        public string File;
+
         /// <summary>Style of main arrow</summary>
         public Paths.ArrowStyle ArrowStyle;
 
@@ -160,6 +166,9 @@ namespace WinPaletter.Theme.Structures
         /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         public void Load(string subKey)
         {
+            UseFromFile = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "UseFromFile", false));
+            File = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "File", string.Empty).ToString();
+
             ArrowStyle = (Paths.ArrowStyle)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "ArrowStyle", Paths.ArrowStyle.Aero));
             CircleStyle = (Paths.CircleStyle)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "CircleStyle", Paths.CircleStyle.Aero));
 
@@ -208,6 +217,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used for theme log</param>
         public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView TreeView = null)
         {
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "UseFromFile", Cursor.UseFromFile);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "File", Cursor.File);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "ArrowStyle", (int)Cursor.ArrowStyle);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "CircleStyle", (int)Cursor.CircleStyle);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColor1", Cursor.PrimaryColor1.ToArgb());

@@ -30,9 +30,9 @@ namespace WinPaletter
 
             if (IsDefault)
             {
-                TerName.Text = "";
-                TerTabTitle.Text = "";
-                TerTabIcon.Text = "";
+                TerName.Text = string.Empty;
+                TerTabTitle.Text = string.Empty;
+                TerTabIcon.Text = string.Empty;
                 TerName.Enabled = false;
                 TerTabTitle.Enabled = false;
                 TerTabIcon.Enabled = false;
@@ -50,7 +50,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
 
-            if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? "") == (TerName.Text.ToLower() ?? "")))
+            if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? string.Empty) == (TerName.Text.ToLower() ?? string.Empty)))
             {
                 MsgBox(Program.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

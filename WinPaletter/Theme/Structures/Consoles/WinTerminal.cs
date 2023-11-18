@@ -455,7 +455,7 @@ namespace WinPaletter
             {
                 case Mode.JSONFile:
                     {
-                        string SettingsFile = "";
+                        string SettingsFile = string.Empty;
 
                         switch (Version)
                         {
@@ -545,7 +545,7 @@ namespace WinPaletter
                                 {
                                     foreach (var itemX in (IEnumerable)item)
                                     {
-                                        bool Contains = JS.ContainsKey(itemX.ToString().Split(':')[0].Trim().Replace("\"", ""));
+                                        bool Contains = JS.ContainsKey(itemX.ToString().Split(':')[0].Trim().Replace("\"", string.Empty));
                                         if (!Contains)
                                             JS.Add(itemX);
                                     }
@@ -565,7 +565,7 @@ namespace WinPaletter
                             {
                                 string name2 = y["name"].ToString();
 
-                                if ((name1 ?? "") == (name2 ?? ""))
+                                if ((name1 ?? string.Empty) == (name2 ?? string.Empty))
                                 {
                                     Found = true;
                                     break;
@@ -679,9 +679,9 @@ namespace WinPaletter
                                 {
                                     foreach (var itemX in (IEnumerable)item)
                                     {
-                                        if (itemX.ToString().Split(':')[0].Trim().Replace("\"", "") != "tabColor")
+                                        if (itemX.ToString().Split(':')[0].Trim().Replace("\"", string.Empty) != "tabColor")
                                         {
-                                            bool Contains = JS.ContainsKey(itemX.ToString().Split(':')[0].Trim().Replace("\"", ""));
+                                            bool Contains = JS.ContainsKey(itemX.ToString().Split(':')[0].Trim().Replace("\"", string.Empty));
                                             if (!Contains)
                                                 JS.Add(itemX);
                                         }
@@ -702,7 +702,7 @@ namespace WinPaletter
                             {
                                 string name2 = y["name"].ToString();
 
-                                if ((name1 ?? "") == (name2 ?? ""))
+                                if ((name1 ?? string.Empty) == (name2 ?? string.Empty))
                                 {
                                     Found = true;
                                     break;
@@ -768,7 +768,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        return "";
+                        return string.Empty;
                     }
 
             }
@@ -801,14 +801,14 @@ namespace WinPaletter
             {
                 if (HEX is not null)
                 {
-                    if (HEX.Replace("#", "").Count() / 2d == 3d)
+                    if (HEX.Replace("#", string.Empty).Count() / 2d == 3d)
                     {
-                        return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(HEX.Replace("#", ""), 16)));
+                        return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(HEX.Replace("#", string.Empty), 16)));
                     }
                     else
                     {
                         int a = Convert.ToInt32(HEX.Substring(HEX.Count() - 2, 2), 16);
-                        return Color.FromArgb(a, Color.FromArgb(Convert.ToInt32(HEX.Remove(HEX.Count() - 2, 2).Replace("#", ""), 16)));
+                        return Color.FromArgb(a, Color.FromArgb(Convert.ToInt32(HEX.Remove(HEX.Count() - 2, 2).Replace("#", string.Empty), 16)));
                     }
                 }
                 else
@@ -840,7 +840,7 @@ namespace WinPaletter
             // MsgBox(Enumerable.SequenceEqual(First.Colors, Second.Colors))
             if (!(First.DefaultProf == Second.DefaultProf))
                 _equal = false;
-            if (!((First.Theme ?? "") == (Second.Theme ?? "")))
+            if (!((First.Theme ?? string.Empty) == (Second.Theme ?? string.Empty)))
                 _equal = false;
             if (!(First.UseAcrylicInTabRow == Second.UseAcrylicInTabRow))
                 _equal = false;
@@ -1146,13 +1146,13 @@ namespace WinPaletter
         public string Name { get; set; }
 
         /// <summary>Windows Terminal profile title on tab</summary>
-        public string TabTitle { get; set; } = "";
+        public string TabTitle { get; set; } = string.Empty;
 
         /// <summary>
         /// Icon of profile on tab
         /// <br><b>- It can be a path to PNG file or string emoji for "Segoe Fluent Icons" font</b></br>
         /// </summary>
-        public string Icon { get; set; } = "";
+        public string Icon { get; set; } = string.Empty;
 
         /// <summary>
         /// Command that starts the profile
@@ -1173,7 +1173,7 @@ namespace WinPaletter
         public TFont Font { get; set; } = new TFont();
 
         /// <summary>Background image path for this profile</summary>
-        public string BackgroundImage { get; set; } = "";
+        public string BackgroundImage { get; set; } = string.Empty;
 
         /// <summary>Background image opacity for this profile</summary>
         public float BackgroundImageOpacity { get; set; } = 1f;
@@ -1336,7 +1336,7 @@ namespace WinPaletter
         /// <param name="str">string</param>
         public static CursorShape_Enum CursorShape_GetFromString(string str)
         {
-            return (str.ToLower() ?? "") switch
+            return (str.ToLower() ?? string.Empty) switch
             {
                 "bar" => CursorShape_Enum.bar,
                 "doubleunderscore" => CursorShape_Enum.doubleUnderscore,
@@ -1429,7 +1429,7 @@ namespace WinPaletter
         /// </summary>
         public static FontWeight_Enum FontWeight_GetFromString(string String)
         {
-            return (String.ToLower() ?? "") switch
+            return (String.ToLower() ?? string.Empty) switch
             {
                 "thin" => FontWeight_Enum.thin,
                 "extra-light" => FontWeight_Enum.extra_light,

@@ -39,7 +39,7 @@ namespace WinPaletter.Dialogs
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, "", "", "", "", Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
@@ -98,7 +98,7 @@ namespace WinPaletter.Dialogs
 
         private void button11_Click(object sender, EventArgs e)
         {
-            Task.Run(new Action(() => { SFC("", true, false); }));
+            Task.Run(new Action(() => { SFC(string.Empty, true, false); }));
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -138,7 +138,7 @@ namespace WinPaletter.Dialogs
 
                         case DialogResult.No:
                             {
-                                string file = "";
+                                string file = string.Empty;
                                 DialogResult result = DialogResult.None;
 
                                 //Cross thread issue

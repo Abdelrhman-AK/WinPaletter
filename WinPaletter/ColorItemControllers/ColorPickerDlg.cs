@@ -358,22 +358,22 @@ namespace WinPaletter
                         {
                             if (_Conditions.AppUnderlineOnly)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppUnderline", WinElement.AppUnderline, color.Light(), steps, delay);
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppUnderline), color.Light()).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
 
                             else if (_Conditions.AppUnderlineWithTaskbar)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppUnderline", WinElement.AppUnderline, color.Light(), steps, delay);
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.Background), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppUnderline), color.Light()).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
 
                             else if (_Conditions.AppBackgroundOnly)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "AppBackground", WinElement.AppBackground, color, steps, delay);
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppBackground), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
                             else if (_Conditions.StartColorOnly)
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "StartColor", WinElement.StartColor, color, steps, delay);
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.StartColor), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
                             else
                             {
@@ -387,19 +387,19 @@ namespace WinPaletter
                                 }
                                 else
                                 {
-                                    Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
+                                    FluentTransitions.Transition.With(WinElement, nameof(WinElement.Background), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                                 }
                             }
                         }
 
                         else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter11 & _Conditions.ActionCenterBtn)
                         {
-                            Visual.FadeColor((UI.Simulation.WinElement)control, "ActionCenterButton_Normal", WinElement.ActionCenterButton_Normal, color, steps, delay);
+                            FluentTransitions.Transition.With(WinElement, nameof(WinElement.ActionCenterButton_Normal), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
 
                         else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter10 & _Conditions.ActionCenterLink)
                         {
-                            Visual.FadeColor((UI.Simulation.WinElement)control, "LinkColor", WinElement.LinkColor, color, steps, delay);
+                            FluentTransitions.Transition.With(WinElement, nameof(WinElement.LinkColor), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
 
                         else
@@ -414,7 +414,7 @@ namespace WinPaletter
                             }
                             else
                             {
-                                Visual.FadeColor((UI.Simulation.WinElement)control, "Background", WinElement.Background, color, steps, delay);
+                                FluentTransitions.Transition.With(WinElement, nameof(WinElement.Background), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
 
                         }
@@ -446,7 +446,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        Visual.FadeColor(control, "Forecolor", control.ForeColor, Color.FromArgb(control.ForeColor.A, color), steps, delay);
+                        FluentTransitions.Transition.With(control, nameof(control.ForeColor), Color.FromArgb(control.ForeColor.A, color)).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                 }
 
@@ -618,7 +618,7 @@ namespace WinPaletter
 
                     else if (control is UI.Controllers.ColorItem)
                     {
-                        Visual.FadeColor(control, "BackColor", control.BackColor, color, steps, delay);
+                        FluentTransitions.Transition.With(control, nameof(control.BackColor), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
 
                     control.Refresh();
@@ -847,7 +847,7 @@ namespace WinPaletter
 
                 else
                 {
-                    try { Visual.FadeColor(control, "backcolor", control.BackColor, Color.FromArgb(255, color), steps, delay); }
+                    try { FluentTransitions.Transition.With(control, nameof(control.ForeColor), Color.FromArgb(255, color)).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
                     catch
                     {
                         try { control.BackColor = Color.FromArgb(255, color); }

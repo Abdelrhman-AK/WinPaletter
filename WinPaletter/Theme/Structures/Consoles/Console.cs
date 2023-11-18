@@ -116,7 +116,7 @@ namespace WinPaletter.Theme.Structures
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
             object temp;
-            string RegAddress = @"HKEY_CURRENT_USER\Console" + (string.IsNullOrEmpty(RegKey) ? "" : @"\" + RegKey);
+            string RegAddress = @"HKEY_CURRENT_USER\Console" + (string.IsNullOrEmpty(RegKey) ? string.Empty : @"\" + RegKey);
 
             temp = GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb());
             ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
@@ -230,7 +230,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as a theme log</param>
         public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView TreeView = null)
         {
-            string RegAddress = scopeReg + @"\Console" + (string.IsNullOrEmpty(RegKey) ? "" : @"\" + RegKey);
+            string RegAddress = scopeReg + @"\Console" + (string.IsNullOrEmpty(RegKey) ? string.Empty : @"\" + RegKey);
 
             try
             {

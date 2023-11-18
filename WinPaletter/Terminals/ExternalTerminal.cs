@@ -67,7 +67,7 @@ namespace WinPaletter
 
             foreach (string x in Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames())
             {
-                if (!((x.ToLower() ?? "") == ("%%Startup".ToLower() ?? "")) & !((x.ToLower() ?? "") == ("%SystemRoot%_System32_cmd.exe".ToLower() ?? "")) & !((x.ToLower() ?? "") == ("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? "")) & !((x.ToLower() ?? "") == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? "")))
+                if (!((x.ToLower() ?? string.Empty) == ("%%Startup".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_cmd.exe".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty)))
                 {
                     ListBox.Items.Add(x);
                 }

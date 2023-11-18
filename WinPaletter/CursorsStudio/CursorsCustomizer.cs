@@ -2,11 +2,12 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
-
     public static class Paths
     {
         public enum CursorType
@@ -152,13 +153,10 @@ namespace WinPaletter
             var b = new Bitmap((int)Math.Round(32f * CursorOptions.Scale), (int)Math.Round(32f * CursorOptions.Scale), PixelFormat.Format32bppPArgb);
             var G = Graphics.FromImage(b);
 
-            // If [CursorOptions].ArrowStyle = ArrowStyle.Classic Or [CursorOptions].CircleStyle = CircleStyle.Classic Then
-            // G.SmoothingMode = SmoothingMode.HighSpeed
-            // Else
-            // G.SmoothingMode = SmoothingMode.HighQuality
-            // End If
+            //G.SmoothingMode = (CursorOptions.ArrowStyle == ArrowStyle.Classic || CursorOptions.CircleStyle == CircleStyle.Classic) ? SmoothingMode.HighSpeed : SmoothingMode.HighQuality;
 
             G.SmoothingMode = SmoothingMode.HighQuality;
+
             G.Clear(Color.Transparent);
 
             #region Rectangles Helpers
@@ -171,914 +169,967 @@ namespace WinPaletter
             var _Person = new Rectangle(19, 17, b.Width, b.Height);
             #endregion
 
-            switch (CursorOptions.Cursor)
+            if (!CursorOptions.UseFromFile || !System.IO.File.Exists(CursorOptions.File))
             {
-                case CursorType.Arrow:
-                    {
-                        #region Arrow
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
+                switch (CursorOptions.Cursor)
+                {
+                    case CursorType.Arrow:
                         {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Help:
-                    {
-                        #region Help
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        Brush BB_H, BL_H;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB_H = ReturnGradience(_Help, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB_H = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL_H = ReturnGradience(_Help, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL_H = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL_H = new Pen(BL_H, CursorOptions.LineThickness);
-
-
-                        G.FillPath(BB, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.FillPath(BB_H, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        if (CursorOptions.ArrowStyle != ArrowStyle.Classic)
-                            G.DrawPath(PL_H, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-
-                #endregion
-                case CursorType.Busy:
-                    {
-                        #region Busy
-                        Brush BC, BH;
-                        if (CursorOptions.LoadingCircleBackGradient)
-                        {
-                            BC = ReturnGradience(_Arrow, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
-                        }
-                        if (CursorOptions.LoadingCircleHotGradient)
-                        {
-                            BH = ReturnGradience(_Arrow, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
-                        }
-
-                        if (CursorOptions.CircleStyle == CircleStyle.Classic)
-                        {
-                            var PL = new Pen(BH, CursorOptions.LineThickness);
-
-                            G.FillPath(BC, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            G.DrawPath(PL, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            G.DrawPath(PL, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-
-                            if (CursorOptions.LoadingCircleBackNoise)
+                            #region Arrow
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
                             {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
-                                G.FillPath(Noise, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            if (CursorOptions.LoadingCircleHotNoise)
-                            {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
-                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            }
-                        }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
 
-                        else
-                        {
-                            G.FillPath(BC, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                            G.FillPath(BB, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
 
-                            if (CursorOptions.LoadingCircleBackNoise)
+                            if (CursorOptions.PrimaryNoise)
                             {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
-                                G.FillPath(Noise, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
                             }
 
-                            G.FillPath(BH, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                            G.DrawPath(PL, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
 
-                            if (CursorOptions.LoadingCircleHotNoise)
+                            if (CursorOptions.SecondaryNoise)
                             {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
-                                G.FillPath(Noise, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
                             }
 
+                            break;
                         }
-
-                        break;
-                    }
-
-
-                #endregion
-                case CursorType.AppLoading:
-                    {
-                        #region AppLoading
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        Brush BC, BH;
-                        if (CursorOptions.LoadingCircleBackGradient)
-                        {
-                            BC = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
-                        }
-                        if (CursorOptions.LoadingCircleHotGradient)
-                        {
-                            BH = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions._Angle);
-                        }
-                        else
-                        {
-                            BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
-                        }
-
-                        G.FillPath(BB, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        if (CursorOptions.CircleStyle == CircleStyle.Classic)
-                        {
-                            var PLx = new Pen(BH, CursorOptions.LineThickness);
-
-                            G.FillPath(BC, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            G.DrawPath(PLx, AppLoaderCircle(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            G.DrawPath(PLx, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-
-                            if (CursorOptions.LoadingCircleBackNoise)
-                            {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
-                                G.FillPath(Noise, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            }
-
-                            if (CursorOptions.LoadingCircleHotNoise)
-                            {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
-                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), AppLoaderCircle(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            }
-                        }
-
-                        else
-                        {
-                            G.FillPath(BC, AppLoading(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-
-                            if (CursorOptions.LoadingCircleBackNoise)
-                            {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
-                                G.FillPath(Noise, AppLoading(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            }
-
-                            G.FillPath(BH, AppLoaderCircle(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-
-                            if (CursorOptions.LoadingCircleHotNoise)
-                            {
-                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
-                                G.FillPath(Noise, AppLoaderCircle(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
-                            }
-                        }
-
-                        break;
-                    }
-
-                #endregion
-                case CursorType.None:
-                    {
-                        #region None
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-
-                        G.FillPath(BB, NoneBackground(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, NoneBackground(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.FillPath(BL, None(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.FillPath(Noise, None(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Move:
-                    {
-                        #region Move
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, Move(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Move(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Move(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Move(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Up:
-                    {
-                        #region Up
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, Up(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Up(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Up(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Up(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.NS:
-                    {
-                        #region NS
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, NS(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, NS(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, NS(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NS(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.EW:
-                    {
-                        #region EW
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, EW(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, EW(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, EW(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), EW(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.NESW:
-                    {
-                        #region NESW
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, NESW(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, NESW(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, NESW(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NESW(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-
-                #endregion
-                case CursorType.NWSE:
-                    {
-                        #region NWSE
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, NWSE(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, NWSE(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, NWSE(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NWSE(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Pen:
-                    {
-                        #region Pen
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, PenBackground(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, PenBackground(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Pen(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Pen(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Link:
-                    {
-                        #region Link
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Pin:
-                    {
-                        #region Pin
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        Brush BB_P, BL_P;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB_P = ReturnGradience(_Pin, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL_P = ReturnGradience(_Pin, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-
-                        G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.FillPath(BB_P, Pin(_Pin, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Pin(_Pin, CursorOptions.Scale));
-                        }
-
-                        G.FillPath(BL_P, Pin_CenterPoint(_Pin, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Pin_CenterPoint(_Pin, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(new Pen(BL_P, 2f), Pin(_Pin, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Pin(_Pin, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Person:
-                    {
-                        #region Person
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        Brush BB_P, BL_P;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB_P = ReturnGradience(_Person, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL_P = ReturnGradience(_Person, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-
-                        G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
-                        }
-
-                        G.FillPath(BB_P, Person(_Person, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Person(_Person, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(new Pen(BL_P, 2f), Person(_Person, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Person(_Person, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.IBeam:
-                    {
-                        #region IBeam
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, IBeam(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, IBeam(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, IBeam(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), IBeam(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
-                #endregion
-                case CursorType.Cross:
-                    {
-                        #region Cross
-                        Brush BB, BL;
-                        if (CursorOptions.PrimaryColorGradient)
-                        {
-                            BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                        }
-                        if (CursorOptions.SecondaryColorGradient)
-                        {
-                            BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                        }
-                        else
-                        {
-                            BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                        }
-                        var PL = new Pen(BL, CursorOptions.LineThickness);
-
-                        G.FillPath(BB, Cross(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.PrimaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
-                            G.FillPath(Noise, Cross(_Arrow, CursorOptions.Scale));
-                        }
-
-                        G.DrawPath(PL, Cross(_Arrow, CursorOptions.Scale));
-
-                        if (CursorOptions.SecondaryNoise)
-                        {
-                            Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
-                            G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Cross(_Arrow, CursorOptions.Scale));
-                        }
-
-                        break;
-                    }
                     #endregion
+                    case CursorType.Help:
+                        {
+                            #region Help
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            Brush BB_H, BL_H;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB_H = ReturnGradience(_Help, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB_H = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL_H = ReturnGradience(_Help, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL_H = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL_H = new Pen(BL_H, CursorOptions.LineThickness);
+
+
+                            G.FillPath(BB, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.FillPath(BB_H, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            if (CursorOptions.ArrowStyle != ArrowStyle.Classic)
+                                G.DrawPath(PL_H, Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+
+                    #endregion
+                    case CursorType.Busy:
+                        {
+                            #region Busy
+                            Brush BC, BH;
+                            if (CursorOptions.LoadingCircleBackGradient)
+                            {
+                                BC = ReturnGradience(_Arrow, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                            }
+                            if (CursorOptions.LoadingCircleHotGradient)
+                            {
+                                BH = ReturnGradience(_Arrow, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                            }
+
+                            if (CursorOptions.CircleStyle == CircleStyle.Classic)
+                            {
+                                var PL = new Pen(BH, CursorOptions.LineThickness);
+
+                                G.FillPath(BC, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                G.DrawPath(PL, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                G.DrawPath(PL, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleBackNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
+                                    G.FillPath(Noise, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+
+                                if (CursorOptions.LoadingCircleHotNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
+                                    G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                    G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+                            }
+
+                            else
+                            {
+                                G.FillPath(BC, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleBackNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
+                                    G.FillPath(Noise, Busy(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+
+                                G.FillPath(BH, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleHotNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
+                                    G.FillPath(Noise, BusyLoader(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+
+                            }
+
+                            break;
+                        }
+
+
+                    #endregion
+                    case CursorType.AppLoading:
+                        {
+                            #region AppLoading
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            Brush BC, BH;
+                            if (CursorOptions.LoadingCircleBackGradient)
+                            {
+                                BC = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                            }
+                            if (CursorOptions.LoadingCircleHotGradient)
+                            {
+                                BH = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions._Angle);
+                            }
+                            else
+                            {
+                                BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                            }
+
+                            G.FillPath(BB, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), DefaultCursor(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            if (CursorOptions.CircleStyle == CircleStyle.Classic)
+                            {
+                                var PLx = new Pen(BH, CursorOptions.LineThickness);
+
+                                G.FillPath(BC, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                G.DrawPath(PLx, AppLoaderCircle(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                G.DrawPath(PLx, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleBackNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
+                                    G.FillPath(Noise, AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+
+                                if (CursorOptions.LoadingCircleHotNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
+                                    G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), AppLoaderCircle(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                    G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), AppLoading(_Busy, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+                            }
+
+                            else
+                            {
+                                G.FillPath(BC, AppLoading(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleBackNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity));
+                                    G.FillPath(Noise, AppLoading(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+
+                                G.FillPath(BH, AppLoaderCircle(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+
+                                if (CursorOptions.LoadingCircleHotNoise)
+                                {
+                                    Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity));
+                                    G.FillPath(Noise, AppLoaderCircle(_LoadRect, CursorOptions._Angle, CursorOptions.CircleStyle, CursorOptions.Scale));
+                                }
+                            }
+
+                            break;
+                        }
+
+                    #endregion
+                    case CursorType.None:
+                        {
+                            #region None
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+
+                            G.FillPath(BB, NoneBackground(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, NoneBackground(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.FillPath(BL, None(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.FillPath(Noise, None(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Move:
+                        {
+                            #region Move
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, Move(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Move(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Move(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Move(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Up:
+                        {
+                            #region Up
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, Up(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Up(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Up(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Up(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.NS:
+                        {
+                            #region NS
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, NS(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, NS(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, NS(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NS(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.EW:
+                        {
+                            #region EW
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, EW(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, EW(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, EW(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), EW(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.NESW:
+                        {
+                            #region NESW
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, NESW(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, NESW(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, NESW(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NESW(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+
+                    #endregion
+                    case CursorType.NWSE:
+                        {
+                            #region NWSE
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, NWSE(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, NWSE(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, NWSE(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), NWSE(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Pen:
+                        {
+                            #region Pen
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, PenBackground(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, PenBackground(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Pen(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Pen(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Link:
+                        {
+                            #region Link
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Pin:
+                        {
+                            #region Pin
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            Brush BB_P, BL_P;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB_P = ReturnGradience(_Pin, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL_P = ReturnGradience(_Pin, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+
+                            G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.FillPath(BB_P, Pin(_Pin, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Pin(_Pin, CursorOptions.Scale));
+                            }
+
+                            G.FillPath(BL_P, Pin_CenterPoint(_Pin, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Pin_CenterPoint(_Pin, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(new Pen(BL_P, 2f), Pin(_Pin, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Pin(_Pin, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Person:
+                        {
+                            #region Person
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            Brush BB_P, BL_P;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB_P = ReturnGradience(_Person, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL_P = ReturnGradience(_Person, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+
+                            G.FillPath(BB, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale));
+                            }
+
+                            G.FillPath(BB_P, Person(_Person, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Person(_Person, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(new Pen(BL_P, 2f), Person(_Person, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Person(_Person, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.IBeam:
+                        {
+                            #region IBeam
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, IBeam(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, IBeam(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, IBeam(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), IBeam(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    case CursorType.Cross:
+                        {
+                            #region Cross
+                            Brush BB, BL;
+                            if (CursorOptions.PrimaryColorGradient)
+                            {
+                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                            }
+                            if (CursorOptions.SecondaryColorGradient)
+                            {
+                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                            }
+                            else
+                            {
+                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                            }
+                            var PL = new Pen(BL, CursorOptions.LineThickness);
+
+                            G.FillPath(BB, Cross(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.PrimaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity));
+                                G.FillPath(Noise, Cross(_Arrow, CursorOptions.Scale));
+                            }
+
+                            G.DrawPath(PL, Cross(_Arrow, CursorOptions.Scale));
+
+                            if (CursorOptions.SecondaryNoise)
+                            {
+                                Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity));
+                                G.DrawPath(new Pen(Noise, CursorOptions.LineThickness), Cross(_Arrow, CursorOptions.Scale));
+                            }
+
+                            break;
+                        }
+                        #endregion
+                }
+            }
+
+            else
+            {
+                if (System.IO.File.Exists(CursorOptions.File))
+                {
+                    if (System.IO.Path.GetExtension(CursorOptions.File).ToUpper() != ".ANI")
+                    {
+                        using (System.IO.FileStream stream = new(CursorOptions.File, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                        {
+                            EOIcoCurLoader cur = new(stream);
+
+                            Bitmap ExtractedBMP = null;
+
+                            for (uint i = 0; i <= cur.CountImages() - 1; i++)
+                            {
+                                if (cur.GetImage(i).Size.Width <= b.Size.Width)
+                                {
+                                    ExtractedBMP = cur.GetImage(i);
+                                    break;
+                                }
+                            }
+
+                            G.DrawImage(ExtractedBMP, 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        int frames = CursorExtensions.GetTotalFramesFromANIHeader(CursorOptions.File);
+
+                        Bitmap bitmap = null;
+
+                        if (frames == 0 || frames == 1 || CursorOptions._Angle == 180)
+                        {
+                            IntPtr hCursor = User32.LoadCursorFromFile(CursorOptions.File);
+                            Cursor cursor = new(hCursor);
+                            bitmap = cursor.ToBitmap(b.Size);
+                        }
+                        else
+                        {
+                            float _Angle = 0;
+                            if (CursorOptions._Angle >= 180) { _Angle = CursorOptions._Angle - 180f; }
+                            else if (CursorOptions._Angle < 180) { _Angle = CursorOptions._Angle + 180f; }
+
+                            int AngleToFrame = (int)(_Angle / 360 * frames);
+                            bitmap = CursorExtensions.ToBitmap(CursorOptions.File, b.Size, AngleToFrame);
+                        }
+
+                        if (bitmap != null) { G.DrawImage(bitmap, 0, 0); }
+                    }
+                }
             }
 
             G.Flush();
             G.Save();
-
 
             var B_Final = new Bitmap(b.Width, b.Height);
             var G_Final = Graphics.FromImage(B_Final);
@@ -1093,7 +1144,7 @@ namespace WinPaletter
                         shadowedBMP.SetPixel(x, y, Color.FromArgb(b.GetPixel(x, y).A, CursorOptions.Shadow_Color));
                 }
 
-                using (var ImgF = new ImageProcessor.ImageFactory())
+                using (ImageProcessor.ImageFactory ImgF = new())
                 {
                     ImgF.Load(shadowedBMP);
                     ImgF.GaussianBlur(CursorOptions.Shadow_Blur);
@@ -1104,9 +1155,10 @@ namespace WinPaletter
 
             G_Final.DrawImage(b, new Rectangle(0, 0, b.Width, b.Height));
 
-            return new Bitmap(B_Final);
             b.Dispose();
             G.Dispose();
+
+            return new Bitmap(B_Final);
         }
 
         public enum ArrowStyle
@@ -2355,11 +2407,12 @@ namespace WinPaletter
 
     public class CursorOptions
     {
-
         public CursorOptions(Theme.Structures.Cursor Cursor = default)
         {
             if (Cursor != null)
             {
+                UseFromFile = Cursor.UseFromFile;
+                File = Cursor.File;
                 ArrowStyle = Cursor.ArrowStyle;
                 CircleStyle = Cursor.CircleStyle;
                 PrimaryColor1 = Cursor.PrimaryColor1;
@@ -2395,6 +2448,8 @@ namespace WinPaletter
             }
         }
 
+        public bool UseFromFile;
+        public string File;
         public Paths.CursorType Cursor;
         public Paths.ArrowStyle ArrowStyle;
         public Paths.CircleStyle CircleStyle;
@@ -2431,6 +2486,5 @@ namespace WinPaletter
         public float Shadow_Opacity = 0.3f;
         public int Shadow_OffsetX = 2;
         public int Shadow_OffsetY = 2;
-
     }
 }

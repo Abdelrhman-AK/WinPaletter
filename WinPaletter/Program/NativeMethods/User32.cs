@@ -63,12 +63,6 @@ namespace WinPaletter.NativeMethods
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
-        /// Finds a window by class name and window name.
-        /// </summary>
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        /// <summary>
         /// Loads the specified cursor resource from a file.
         /// </summary>
         [DllImport("user32.dll", EntryPoint = "LoadCursorFromFileA")]
@@ -79,6 +73,26 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
+        /// </summary>
+        /// <param name="lpClassName">The class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.</param>
+        /// <param name="lpWindowName">The window name (the window's title).</param>
+        /// <returns>If the function succeeds, the return value is a handle to the window that has the specified class name and window name. If the function fails, the return value is IntPtr.Zero.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        /// <summary>
+        /// Sends the specified message to a window or windows. The SendMessage function calls the window procedure for the specified window and does not return until the window procedure has processed the message.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message.</param>
+        /// <param name="Msg">The message to be sent.</param>
+        /// <param name="wParam">Additional message-specific information.</param>
+        /// <param name="lParam">Additional message-specific information.</param>
+        /// <returns>The result of the message processing; it depends on the message sent.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// Retrieves the device context (DC) for the entire window, including title bar, menus, and scroll bars.
@@ -106,6 +120,160 @@ namespace WinPaletter.NativeMethods
 
         [DllImport("user32.dll")]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
+
+        /// <summary>
+        /// Loads an animated cursor from a file.
+        /// </summary>
+        /// <param name="hinst">A handle to the instance of the module that contains the image.</param>
+        /// <param name="lpszName">The name or identifier of the image resource.</param>
+        /// <param name="uType">The type of the image resource (e.g., IMAGE_CURSOR).</param>
+        /// <param name="cxDesired">The desired width of the image, in pixels.</param>
+        /// <param name="cyDesired">The desired height of the image, in pixels.</param>
+        /// <param name="fuLoad">Flags that specify how to load the image (e.g., LR_LOADFROMFILE).</param>
+        /// <returns>
+        /// If the function succeeds, the handle to the loaded image. If the function fails, it returns IntPtr.Zero.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr LoadImage(
+            IntPtr hinst,
+            string lpszName,
+            uint uType,
+            int cxDesired,
+            int cyDesired,
+            uint fuLoad);
+
+        // Constants for LoadImage
+        public const uint IMAGE_CURSOR = 2;
+
+        /// <summary>
+        /// Flags for the LoadImage function specifying how to load the image.
+        /// </summary>
+        [Flags]
+        public enum LoadImageFlags : uint
+        {
+            /// <summary>
+            /// Use the default size (cxDesired and cyDesired are ignored).
+            /// </summary>
+            LR_DEFAULTSIZE = 0x00000040,
+
+            /// <summary>
+            /// Load the image from a file (lpszName is the file path).
+            /// </summary>
+            LR_LOADFROMFILE = 0x00000010,
+
+            /// <summary>
+            /// Convert the image to monochrome.
+            /// </summary>
+            LR_MONOCHROME = 0x00000001,
+
+            /// <summary>
+            /// Share the image handle (do not create a new copy).
+            /// </summary>
+            LR_SHARED = 0x00008000,
+        }
+
+        /// <summary>
+        /// Enum representing different image types for the LoadImage function.
+        /// </summary>
+        public enum ImageType : uint
+        {
+            /// <summary>
+            /// Bitmap image type.
+            /// </summary>
+            IMAGE_BITMAP = 0,
+
+            /// <summary>
+            /// Icon image type.
+            /// </summary>
+            IMAGE_ICON = 1,
+
+            /// <summary>
+            /// Cursor image type.
+            /// </summary>
+            IMAGE_CURSOR = 2,
+
+            /// <summary>
+            /// Enhanced metafile image type.
+            /// </summary>
+            IMAGE_ENHMETAFILE = 3,
+
+            // Add more image types as needed
+        }
+
+
+        /// <summary>
+        /// The DrawIconEx function draws an icon or cursor into the specified device context.
+        /// </summary>
+        /// <param name="hdc">A handle to the device context into which the icon or cursor will be drawn.</param>
+        /// <param name="xLeft">The logical x-coordinate of the upper-left corner of the icon or cursor.</param>
+        /// <param name="yTop">The logical y-coordinate of the upper-left corner of the icon or cursor.</param>
+        /// <param name="hIcon">A handle to the icon or cursor to be drawn. The icon or cursor must have been created by a previous call to the LoadIcon function or LoadCursor function.</param>
+        /// <param name="cxWidth">The logical width of the icon or cursor, in logical units. If this parameter is zero, the function uses the actual resource width.</param>
+        /// <param name="cyHeight">The logical height of the icon or cursor, in logical units. If this parameter is zero, the function uses the actual resource height.</param>
+        /// <param name="istepIfAniCur">The index of the image in the cursor's image list. This parameter is ignored for icons.</param>
+        /// <param name="hbrFlickerFreeDraw">A handle to the brush that the function uses to draw the icon or cursor. If this parameter is NULL, the function uses the default brush.</param>
+        /// <param name="diFlags">This parameter can be one or more of the following values.
+        /// <list type="table">
+        /// <item>
+        /// <term>DI_NORMAL</term>
+        /// <description>Draws the icon or cursor using the image's size without any stretching.</description>
+        /// </item>
+        /// <item>
+        /// <term>DI_IMAGE</term>
+        /// <description>Draws the icon or cursor using the image's size without any stretching. This flag is similar to DI_NORMAL, but preserves the 8-bit alpha channel of the icon's XOR mask. The default is to treat this image as an opaque image.</description>
+        /// </item>
+        /// </list>
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is true.
+        /// If the function fails, the return value is false.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
+
+        /// <summary>
+        /// Retrieves information about the specified icon or cursor.
+        /// </summary>
+        /// <param name="hIcon">A handle to the icon or cursor.</param>
+        /// <param name="pIconInfo">A pointer to an ICONINFO structure. The function fills in the structure's members with information about the icon or cursor.</param>
+        /// <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
+        [DllImport("user32")]
+        public static extern bool GetIconInfo(IntPtr hIcon, out ICONINFO pIconInfo);
+
+        /// <summary>
+        /// Contains information about an icon or a cursor.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ICONINFO
+        {
+            /// <summary>
+            /// Specifies whether this structure defines an icon or a cursor. A value of true indicates an icon; false indicates a cursor.
+            /// </summary>
+            public bool fIcon;
+
+            /// <summary>
+            /// The x-coordinate of a cursor's hot spot. If this structure defines an icon, the hot spot is always in the center of the icon, and this member is ignored.
+            /// </summary>
+            public int xHotspot;
+
+            /// <summary>
+            /// The y-coordinate of the cursor's hot spot. If this structure defines an icon, the hot spot is always in the center of the icon, and this member is ignored.
+            /// </summary>
+            public int yHotspot;
+
+            /// <summary>
+            /// A handle to the mask bitmap. If this structure defines an icon, the mask bitmaps are XORed with the color bitmaps to produce the icon bitmaps.
+            /// If this structure defines a cursor, the mask bitmaps are applied to the destination in the screen DC.
+            /// </summary>
+            public IntPtr hbmMask;
+
+            /// <summary>
+            /// A handle to the color bitmap. This member can be optional if this structure defines a black and white icon. The color bitmap is applied to the destination
+            /// in the screen DC in a similar way to how the mask bitmaps are applied to the destination when a cursor is drawn.
+            /// </summary>
+            public IntPtr hbmColor;
+        }
 
         /// <summary>
         /// Contains parameters that describe the non-client area metrics of a window, such as the caption height, border width, and the system font.
@@ -392,6 +560,33 @@ namespace WinPaletter.NativeMethods
             /// Uses blend animation.
             /// </summary>
             AW_BLEND = 0x80000
+        }
+
+        /// <summary>
+        /// Flags for the DrawIconEx function.
+        /// </summary>
+        [Flags]
+        public enum DrawIconExFlags : int
+        {
+            /// <summary>
+            /// Draws the icon or cursor using the image's size without any stretching.
+            /// </summary>
+            DI_NORMAL = 0x0003,
+
+            /// <summary>
+            /// Draws the icon or cursor using the image's size without any stretching. This flag is similar to DI_NORMAL, but preserves the 8-bit alpha channel of the icon's XOR mask.
+            /// </summary>
+            DI_IMAGE = 0x0008,
+
+            /// <summary>
+            /// Draws the icon as an XOR image.
+            /// </summary>
+            DI_MASK = 0x0001,
+
+            /// <summary>
+            /// Combines the icon with a color specified by the <see cref="hbrFlickerFreeDraw"/> parameter. This operation is not visible unless the device context specified by <see cref="hdc"/> is displayed on a 256-color VGA monitor or on a device context with similar characteristics.
+            /// </summary>
+            DI_NOMIRROR = 0x0010
         }
 
         /// <summary>

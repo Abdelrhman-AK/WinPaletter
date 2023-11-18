@@ -12,7 +12,7 @@ namespace WinPaletter.TypesExtensions
             int h = (int)Math.Round(Math.Max(8d, ClientRect.Height / 5d));
             float emSize = G.DpiY * Font.SizeInPoints / 72f;
             if (Text is null | string.IsNullOrWhiteSpace(Text))
-                Text = "";
+                Text = string.Empty;
 
             using (var b = new Bitmap(w, h))
             {

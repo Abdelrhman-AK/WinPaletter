@@ -21,7 +21,7 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 9f);
             ForeColor = Color.White;
-            Text = "";
+            Text = string.Empty;
             MouseEnter += RadioImage_MouseEnter;
             MouseLeave += RadioImage_MouseLeave;
             HandleCreated += RadioImage_HandleCreated;
@@ -98,7 +98,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         public ContentAlignment TextAlign { get; set; } = ContentAlignment.MiddleCenter;
         #endregion

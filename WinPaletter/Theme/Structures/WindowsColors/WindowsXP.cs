@@ -59,7 +59,7 @@ namespace WinPaletter.Theme.Structures
                 string colorName = ThemeTuple.Item2;
                 string sizeName = ThemeTuple.Item3;
 
-                if ((vsFile.ToString().ToLower() ?? "") == (PathsExt.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? ""))
+                if ((vsFile.ToString().ToLower() ?? string.Empty) == (PathsExt.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? string.Empty))
                 {
                     if (colorName.ToString().ToLower() == "normalcolor")
                     {
@@ -99,8 +99,8 @@ namespace WinPaletter.Theme.Structures
                 else
                 {
                     Theme = Themes.Custom;
-                    ThemeFile = "";
-                    ColorScheme = "";
+                    ThemeFile = string.Empty;
+                    ColorScheme = string.Empty;
 
                 }
             }

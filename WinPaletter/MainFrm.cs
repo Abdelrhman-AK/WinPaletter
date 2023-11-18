@@ -19,7 +19,7 @@ namespace WinPaletter
     {
         private bool _Shown = false;
         private bool RaiseUpdate = false;
-        private string ver = "";
+        private string ver = string.Empty;
         private int StableInt, BetaInt, UpdateChannel;
         private int ChannelFixer;
         private List<string> Updates_ls = new();
@@ -405,26 +405,26 @@ namespace WinPaletter
         public void UpdateHint(object sender, EventArgs e)
         {
             if (sender.GetType() == typeof(UI.WP.Button))
-                status_lbl.Text = (string)(((UI.WP.Button)sender).Tag ?? "");
+                status_lbl.Text = (string)(((UI.WP.Button)sender).Tag ?? string.Empty);
 
             else if (sender.GetType() == typeof(UI.WP.RadioImage))
-                status_lbl.Text = (string)(((UI.WP.RadioImage)sender).Tag ?? "");
+                status_lbl.Text = (string)(((UI.WP.RadioImage)sender).Tag ?? string.Empty);
 
         }
 
         public void EraseHint(object sender, EventArgs e)
         {
-            status_lbl.Text = "";
+            status_lbl.Text = string.Empty;
         }
 
         public void UpdateHint_Dashboard(object sender, EventArgs e)
         {
-            status_lbl.Text = (string)(((UI.WP.Button)sender).Tag ?? "");
+            status_lbl.Text = (string)(((UI.WP.Button)sender).Tag ?? string.Empty);
         }
 
         public void EraseHint_Dashboard(object sender, EventArgs e)
         {
-            status_lbl.Text = "";
+            status_lbl.Text = string.Empty;
         }
 
         #endregion
@@ -453,7 +453,7 @@ namespace WinPaletter
                 {
                     var WebCL = new WebClient();
                     RaiseUpdate = false;
-                    ver = "";
+                    ver = string.Empty;
 
                     Updates_ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
 
@@ -721,7 +721,7 @@ namespace WinPaletter
                                 string r1 = r[0];
                                 string r2 = r[1];
 
-                                switch (r1 ?? "")
+                                switch (r1 ?? string.Empty)
                                 {
                                     case "0":              // ' Save
                                         {
@@ -758,7 +758,7 @@ namespace WinPaletter
                                         }
                                 }
 
-                                switch (r2 ?? "")
+                                switch (r2 ?? string.Empty)
                                 {
                                     case "1":
                                         {
@@ -2627,7 +2627,7 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            string theme = "";
+            string theme = string.Empty;
 
             if (System.IO.Path.GetExtension(WXP_VS_textbox.Text) == ".theme")
             {
@@ -2711,7 +2711,7 @@ namespace WinPaletter
         {
             if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
             {
-                status_lbl.Text = "";
+                status_lbl.Text = string.Empty;
                 status_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
             }
         }
@@ -2724,7 +2724,7 @@ namespace WinPaletter
 
         private void Button19_MouseLeave(object sender, EventArgs e)
         {
-            status_lbl.Text = "";
+            status_lbl.Text = string.Empty;
             status_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
         }
 
@@ -2893,7 +2893,7 @@ namespace WinPaletter
 
         private void Button23_Click(object sender, EventArgs e)
         {
-            if ((Button23.Text.ToLower() ?? "") == (Program.Lang.Hide.ToLower() ?? ""))
+            if ((Button23.Text.ToLower() ?? string.Empty) == (Program.Lang.Hide.ToLower() ?? string.Empty))
             {
                 tabs_preview.Visible = false;
                 Button23.Text = Program.Lang.Show;
@@ -3118,7 +3118,7 @@ namespace WinPaletter
         private void Button28_Click(object sender, EventArgs e)
         {
 
-            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, "", "", "", "", Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
                 LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
@@ -3143,7 +3143,7 @@ namespace WinPaletter
 
         private void Button28_MouseLeave(object sender, EventArgs e)
         {
-            status_lbl.Text = "";
+            status_lbl.Text = string.Empty;
             status_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
         }
 

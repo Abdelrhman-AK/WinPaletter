@@ -25,7 +25,7 @@ namespace WinPaletter.UI.WP
             SetStyle((ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
             Height = 19;
-            Text = "";
+            Text = string.Empty;
             MouseUp += ColorBar_MouseUp;
             MouseEnter += ColorBar_MouseEnter;
             MouseLeave += ColorBar_MouseLeave;
@@ -243,7 +243,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         public ModesList Mode { get; set; } = ModesList.Hue;
 

@@ -44,7 +44,7 @@ namespace WinPaletter
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.back_btn = new WinPaletter.UI.WP.Button();
             this.Titlebar_img = new System.Windows.Forms.PictureBox();
-            this.ProgressBar1 = new System.Windows.Forms.ProgressBar();
+            this.ProgressBar1 = new UI.WP.ProgressBar();
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
@@ -2820,7 +2820,7 @@ namespace WinPaletter
         internal UI.WP.Trackbar CursorsSize_Bar;
         internal Timer Cursor_Timer;
         internal Panel search_panel;
-        internal ProgressBar ProgressBar1;
+        internal UI.WP.ProgressBar ProgressBar1;
         internal Panel Status_pnl;
         internal Label Status_lbl;
         internal Label respacksize_lbl;

@@ -232,9 +232,9 @@ namespace WinPaletter
         {
             if (_Shown)
             {
-                switch (appearance_list.SelectedItem.ToString().ToLower() ?? "")
+                switch (appearance_list.SelectedItem.ToString().ToLower() ?? string.Empty)
                 {
-                    case var @case when @case == ("Default Dark".ToLower() ?? ""):
+                    case var @case when @case == ("Default Dark".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
@@ -243,7 +243,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case1 when case1 == ("Default Light".ToLower() ?? ""):
+                    case var case1 when case1 == ("Default Light".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
@@ -252,7 +252,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case2 when case2 == ("AMOLED".ToLower() ?? ""):
+                    case var case2 when case2 == ("AMOLED".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
@@ -261,7 +261,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case3 when case3 == ("Extreme White".ToLower() ?? ""):
+                    case var case3 when case3 == ("Extreme White".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
@@ -270,7 +270,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case4 when case4 == ("GitHub Dark".ToLower() ?? ""):
+                    case var case4 when case4 == ("GitHub Dark".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = true;
@@ -279,7 +279,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case5 when case5 == ("GitHub Light".ToLower() ?? ""):
+                    case var case5 when case5 == ("GitHub Light".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
@@ -288,7 +288,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case6 when case6 == ("Reddit Dark".ToLower() ?? ""):
+                    case var case6 when case6 == ("Reddit Dark".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = true;
@@ -297,7 +297,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case7 when case7 == ("Reddit Light".ToLower() ?? ""):
+                    case var case7 when case7 == ("Reddit Light".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
@@ -306,7 +306,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case8 when case8 == ("Discord Dark".ToLower() ?? ""):
+                    case var case8 when case8 == ("Discord Dark".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = false;
@@ -315,7 +315,7 @@ namespace WinPaletter
                             break;
                         }
 
-                    case var case9 when case9 == ("Discord Light".ToLower() ?? ""):
+                    case var case9 when case9 == ("Discord Light".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = false;

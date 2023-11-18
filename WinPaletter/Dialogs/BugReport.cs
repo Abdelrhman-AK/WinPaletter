@@ -113,7 +113,7 @@ namespace WinPaletter
 
             Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
 
-            Label3.Text = Program.Version + (Program.IsBeta ? $", {Program.Lang.Beta}" : "");
+            Label3.Text = Program.Version + (Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty);
 
             AlertBox1.Visible = NoRecovery;
             TreeView1.Nodes.Clear();
@@ -206,7 +206,7 @@ namespace WinPaletter
 
             foreach (TreeNode x in TreeView1.Nodes)
             {
-                string prop = x.Text.Replace(" ", ".").Replace("'s", "").Replace(@"\", "_");
+                string prop = x.Text.Replace(" ", ".").Replace("'s", string.Empty).Replace(@"\", "_");
 
                 if (x.Nodes.Count == 1)
                 {

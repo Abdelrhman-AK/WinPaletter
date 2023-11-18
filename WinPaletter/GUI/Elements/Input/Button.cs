@@ -163,7 +163,7 @@ namespace WinPaletter.UI.WP
             }
 
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
             if (_Shown)
             {
@@ -184,7 +184,7 @@ namespace WinPaletter.UI.WP
             var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
 
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
             if (_Shown)
             {
@@ -216,7 +216,7 @@ namespace WinPaletter.UI.WP
             }
 
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             State = MouseState.Down;
 
             if (_Shown)
@@ -252,7 +252,7 @@ namespace WinPaletter.UI.WP
             }
 
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
             State = MouseState.Over;
 
@@ -288,7 +288,7 @@ namespace WinPaletter.UI.WP
             }
 
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             State = MouseState.Down;
             Invalidate();
         }
@@ -301,7 +301,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
         }
         #endregion
@@ -314,7 +314,7 @@ namespace WinPaletter.UI.WP
             var C_Before = BackColor;
             var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
             if (!DesignMode)
-                Visual.FadeColor(this, "BackColor", C_Before, C_After, Steps, Delay);
+                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
         }
 

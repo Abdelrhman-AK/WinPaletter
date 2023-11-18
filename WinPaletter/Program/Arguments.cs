@@ -78,7 +78,7 @@ namespace WinPaletter
                 else if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
                 {
                     string File = arg.Remove(0, "/apply:".Count());
-                    File = File.Replace("\"", "");
+                    File = File.Replace("\"", string.Empty);
                     if (System.IO.File.Exists(File))
                     {
                         var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
@@ -93,7 +93,7 @@ namespace WinPaletter
                 else if (arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase))
                 {
                     string File = arg.Remove(0, "/edit:".Count());
-                    File = File.Replace("\"", "");
+                    File = File.Replace("\"", string.Empty);
                     ExternalLink = true;
                     ExternalLink_File = File;
                 }
@@ -108,7 +108,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if ((arg.ToLower() ?? "") == ("/exportlanguage".ToLower() ?? ""))
+                        if ((arg.ToLower() ?? string.Empty) == ("/exportlanguage".ToLower() ?? string.Empty))
                         {
                             MsgBox(Lang.LngShouldClose, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -165,7 +165,7 @@ namespace WinPaletter
                             if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
                             {
                                 string File = arg.Remove(0, "/apply:".Count());
-                                File = File.Replace("\"", "");
+                                File = File.Replace("\"", string.Empty);
                                 if (System.IO.File.Exists(File))
                                 {
                                     var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
@@ -178,7 +178,7 @@ namespace WinPaletter
                             if (arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase))
                             {
                                 string File = arg.Remove(0, "/edit:".Count());
-                                File = File.Replace("\"", "");
+                                File = File.Replace("\"", string.Empty);
 
                                 Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 

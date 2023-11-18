@@ -58,8 +58,8 @@ namespace WinPaletter
 
             else
             {
-                Label4.Text = "";
-                TextBox1.Text = "";
+                Label4.Text = string.Empty;
+                TextBox1.Text = string.Empty;
             }
 
             TextBox3.Text = TextBox1.Text;
@@ -112,7 +112,7 @@ namespace WinPaletter
                 return;
             }
 
-            if ((LastSearchText ?? "") != (searchText ?? ""))
+            if ((LastSearchText ?? string.Empty) != (searchText ?? string.Empty))
             {
                 CurrentNodeMatches.Clear();
                 LastSearchText = searchText;

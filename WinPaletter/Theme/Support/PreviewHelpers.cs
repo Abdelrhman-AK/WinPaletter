@@ -572,16 +572,16 @@ namespace WinPaletter
 
                         if (AnimateColorChange)
                         {
-                            Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TB_Color, Steps, Delay);
-                            Visual.FadeColor(Start, "Background", Start.Background, S_Color, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "Background", ActionCenter.Background, AC_Color, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, AC_Normal, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, AC_Hover, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, AC_Pressed, Steps, Delay);
-                            Visual.FadeColor(Taskbar, "AppUnderline", Taskbar.AppUnderline, TB_UL_Color, Steps, Delay);
-                            Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, Settings_Label_Color, Steps, Delay);
-                            Visual.FadeColor(Link_preview, "ForeColor", Link_preview.ForeColor, Link_preview_Color, Steps, Delay);
-                            Visual.FadeColor(settings_label, "ForeColor", settings_label.ForeColor, TM.Windows11.AppMode_Light ? Color.Black : Color.White, Steps, Delay);
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.Background), TB_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Start, nameof(Start.Background), S_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.Background), AC_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.ActionCenterButton_Normal), AC_Normal).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.ActionCenterButton_Hover), AC_Hover).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.ActionCenterButton_Pressed), AC_Pressed).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.AppUnderline), TB_UL_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(setting_icon_preview, nameof(setting_icon_preview.ForeColor), Settings_Label_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Link_preview, nameof(Link_preview.ForeColor), Link_preview_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(settings_label, nameof(settings_label.ForeColor), TM.Windows11.AppMode_Light ? Color.Black : Color.White).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                         }
                         else
                         {
@@ -891,16 +891,16 @@ namespace WinPaletter
 
                         if (AnimateColorChange)
                         {
-                            Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TB_Color, Steps, Delay);
-                            Visual.FadeColor(Taskbar, "StartColor", Taskbar.StartColor, TB_StartBtnColor, Steps, Delay);
-                            Visual.FadeColor(Start, "Background", Start.Background, S_Color, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "Background", ActionCenter.Background, AC_Color, Steps, Delay);
-                            Visual.FadeColor(Taskbar, "AppBackground", Taskbar.AppBackground, TB_AppBack_Color, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, AC_LinkColor, Steps, Delay);
-                            Visual.FadeColor(Taskbar, "AppUnderline", Taskbar.AppUnderline, TB_UL_Color, Steps, Delay);
-                            Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, Settings_Label_Color, Steps, Delay);
-                            Visual.FadeColor(Link_preview, "ForeColor", Link_preview.ForeColor, Link_preview_Color, Steps, Delay);
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, AC_Normal, Steps, Delay);
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.Background), TB_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.StartColor), TB_StartBtnColor).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Start, nameof(Start.Background), S_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.Background), AC_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.AppBackground), TB_AppBack_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.LinkColor), AC_LinkColor).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.AppUnderline), TB_UL_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(setting_icon_preview, nameof(setting_icon_preview.ForeColor), Settings_Label_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(Link_preview, nameof(Link_preview.ForeColor), Link_preview_Color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(ActionCenter, nameof(ActionCenter.ActionCenterButton_Normal), AC_Normal).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                         }
                         else
                         {
@@ -942,7 +942,7 @@ namespace WinPaletter
 
                         if (AnimateColorChange)
                         {
-                            Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TM.Windows81.ColorizationColor, Steps, Delay);
+                            FluentTransitions.Transition.With(Taskbar, nameof(Taskbar.Background), TM.Windows81.ColorizationColor).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                         }
                         else
                         {
@@ -1365,8 +1365,8 @@ namespace WinPaletter
                 ClassicAppButton2.ImageAlign = ContentAlignment.MiddleCenter;
                 ClassicAppButton1.Width = 48;
                 ClassicAppButton2.Width = 48;
-                ClassicAppButton1.Text = "";
-                ClassicAppButton2.Text = "";
+                ClassicAppButton1.Text = string.Empty;
+                ClassicAppButton2.Text = string.Empty;
                 ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
                 ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
                 ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);

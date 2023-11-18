@@ -498,7 +498,7 @@ namespace WinPaletter.UI.Style
                 case CtrlTheme.None:
                     {
                         // Set the control theme to None
-                        return UxTheme.SetWindowTheme(handle, "", null);
+                        return UxTheme.SetWindowTheme(handle, string.Empty, null);
                     }
                 case CtrlTheme.Explorer:
                     {

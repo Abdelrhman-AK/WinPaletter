@@ -23,11 +23,11 @@ namespace WinPaletter.TypesExtensions
             {
                 if (!Alpha)
                 {
-                    return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(String.Replace("#", ""), 16)));
+                    return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(String.Replace("#", string.Empty), 16)));
                 }
                 else
                 {
-                    return Color.FromArgb(Convert.ToInt32(String.Replace("#", ""), 16));
+                    return Color.FromArgb(Convert.ToInt32(String.Replace("#", string.Empty), 16));
                 }
             }
             catch

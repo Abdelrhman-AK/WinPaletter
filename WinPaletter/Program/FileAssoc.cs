@@ -22,22 +22,22 @@ namespace WinPaletter
                 extension = "." + extension;
 
             if (exeProgram.Contains("\""))
-                exeProgram = exeProgram.Replace("\"", "");
+                exeProgram = exeProgram.Replace("\"", string.Empty);
 
             exeProgram = string.Format("\"{0}\"", exeProgram);
 
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", "", className, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", "", description, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open", "Icon", exeProgram.Replace("\"", "") + ", 0", RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open\\Command", "", exeProgram + " \"%1\"", RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open", "Icon", exeProgram.Replace("\"", string.Empty) + ", 0", RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open\\Command", string.Empty, exeProgram + " \"%1\"", RegistryValueKind.String);
 
-            if ((className.ToLower() ?? "") == ("WinPaletter.ThemeFile".ToLower() ?? ""))
+            if ((className.ToLower() ?? string.Empty) == ("WinPaletter.ThemeFile".ToLower() ?? string.Empty))
             {
-                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Edit In WinPaletter\\Command", "", exeProgram + "  /edit:\"%1\"", RegistryValueKind.String);
-                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Apply by WinPaletter\\Command", "", exeProgram + "  /apply:\"%1\"", RegistryValueKind.String);
+                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Edit In WinPaletter\\Command", string.Empty, exeProgram + "  /edit:\"%1\"", RegistryValueKind.String);
+                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Apply by WinPaletter\\Command", string.Empty, exeProgram + "  /apply:\"%1\"", RegistryValueKind.String);
             }
 
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\DefaultIcon", "", iconPath, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\DefaultIcon", string.Empty, iconPath, RegistryValueKind.String);
 
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName", Application.ProductName, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", Application.CompanyName, RegistryValueKind.String);

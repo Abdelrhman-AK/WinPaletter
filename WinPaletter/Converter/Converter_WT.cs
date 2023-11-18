@@ -113,45 +113,45 @@ namespace WinPaletter
                             string prop = lin.Split('=')[0].Trim();
                             string value = lin.Split('=')[1].Trim();
 
-                            switch (prop.ToLower() ?? "")
+                            switch (prop.ToLower() ?? string.Empty)
                             {
-                                case var @case when @case == ("name".ToLower() ?? ""):
+                                case var @case when @case == ("name".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.Name = value;
                                         break;
                                     }
 
-                                case var case1 when case1 == ("BackgroundImage".ToLower() ?? ""):
+                                case var case1 when case1 == ("BackgroundImage".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.BackgroundImage = value;
                                         break;
                                     }
 
-                                case var case2 when case2 == ("ColorScheme".ToLower() ?? ""):
+                                case var case2 when case2 == ("ColorScheme".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.ColorScheme = value;
                                         break;
                                     }
 
-                                case var case3 when case3 == ("TabTitle".ToLower() ?? ""):
+                                case var case3 when case3 == ("TabTitle".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.TabTitle = value;
                                         break;
                                     }
 
-                                case var case4 when case4 == ("Icon".ToLower() ?? ""):
+                                case var case4 when case4 == ("Icon".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.Icon = value;
                                         break;
                                     }
 
-                                case var case5 when case5 == ("CursorShape".ToLower() ?? ""):
+                                case var case5 when case5 == ("CursorShape".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.CursorShape = (CursorShape_Enum)Conversions.ToInteger(value);
                                         break;
                                     }
 
-                                case var case6 when case6 == ("Font".ToLower() ?? ""):
+                                case var case6 when case6 == ("Font".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.Font.Face = value.Split(',')[0];
                                         DefaultProf.Font.Size = Conversions.ToInteger(value.Split(',')[1]);
@@ -159,31 +159,31 @@ namespace WinPaletter
                                         break;
                                     }
 
-                                case var case7 when case7 == ("TabColor".ToLower() ?? ""):
+                                case var case7 when case7 == ("TabColor".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.TabColor = Color.FromArgb(Conversions.ToInteger(value));
                                         break;
                                     }
 
-                                case var case8 when case8 == ("UseAcrylic".ToLower() ?? ""):
+                                case var case8 when case8 == ("UseAcrylic".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.UseAcrylic = Conversions.ToBoolean(value);
                                         break;
                                     }
 
-                                case var case9 when case9 == ("CursorHeight".ToLower() ?? ""):
+                                case var case9 when case9 == ("CursorHeight".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.CursorHeight = Conversions.ToInteger(value);
                                         break;
                                     }
 
-                                case var case10 when case10 == ("Opacity".ToLower() ?? ""):
+                                case var case10 when case10 == ("Opacity".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.Opacity = Conversions.ToInteger(value);
                                         break;
                                     }
 
-                                case var case11 when case11 == ("BackgroundImageOpacity".ToLower() ?? ""):
+                                case var case11 when case11 == ("BackgroundImageOpacity".ToLower() ?? string.Empty):
                                     {
                                         DefaultProf.BackgroundImageOpacity = Conversions.ToSingle(value);
                                         break;
@@ -199,51 +199,51 @@ namespace WinPaletter
                             var P = new TProfile();
                             foreach (string lin in CollectedProfiles)
                             {
-                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? "") == (x.ToLower() ?? ""))
+                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? string.Empty) == (x.ToLower() ?? string.Empty))
                                 {
 
                                     string prop = lin.Split('=')[0].Split('.')[1].Trim();
                                     string value = lin.Split('=')[1].Trim();
 
-                                    switch (prop.ToLower() ?? "")
+                                    switch (prop.ToLower() ?? string.Empty)
                                     {
-                                        case var case12 when case12 == ("Name".ToLower() ?? ""):
+                                        case var case12 when case12 == ("Name".ToLower() ?? string.Empty):
                                             {
                                                 P.Name = value;
                                                 break;
                                             }
 
-                                        case var case13 when case13 == ("TabTitle".ToLower() ?? ""):
+                                        case var case13 when case13 == ("TabTitle".ToLower() ?? string.Empty):
                                             {
                                                 P.TabTitle = value;
                                                 break;
                                             }
 
-                                        case var case14 when case14 == ("Icon".ToLower() ?? ""):
+                                        case var case14 when case14 == ("Icon".ToLower() ?? string.Empty):
                                             {
                                                 P.Icon = value;
                                                 break;
                                             }
 
-                                        case var case15 when case15 == ("TabColor".ToLower() ?? ""):
+                                        case var case15 when case15 == ("TabColor".ToLower() ?? string.Empty):
                                             {
                                                 P.TabColor = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case16 when case16 == ("UseAcrylic".ToLower() ?? ""):
+                                        case var case16 when case16 == ("UseAcrylic".ToLower() ?? string.Empty):
                                             {
                                                 P.UseAcrylic = Conversions.ToBoolean(value);
                                                 break;
                                             }
 
-                                        case var case17 when case17 == ("Opacity".ToLower() ?? ""):
+                                        case var case17 when case17 == ("Opacity".ToLower() ?? string.Empty):
                                             {
                                                 P.Opacity = Conversions.ToInteger(value);
                                                 break;
                                             }
 
-                                        case var case18 when case18 == ("Font".ToLower() ?? ""):
+                                        case var case18 when case18 == ("Font".ToLower() ?? string.Empty):
                                             {
                                                 P.Font.Face = value.Split(',')[0];
                                                 P.Font.Size = Conversions.ToInteger(value.Split(',')[1]);
@@ -251,31 +251,31 @@ namespace WinPaletter
                                                 break;
                                             }
 
-                                        case var case19 when case19 == ("BackgroundImage".ToLower() ?? ""):
+                                        case var case19 when case19 == ("BackgroundImage".ToLower() ?? string.Empty):
                                             {
                                                 P.BackgroundImage = value;
                                                 break;
                                             }
 
-                                        case var case20 when case20 == ("BackgroundImageOpacity".ToLower() ?? ""):
+                                        case var case20 when case20 == ("BackgroundImageOpacity".ToLower() ?? string.Empty):
                                             {
                                                 P.BackgroundImageOpacity = Conversions.ToSingle(value);
                                                 break;
                                             }
 
-                                        case var case21 when case21 == ("ColorScheme".ToLower() ?? ""):
+                                        case var case21 when case21 == ("ColorScheme".ToLower() ?? string.Empty):
                                             {
                                                 P.ColorScheme = value;
                                                 break;
                                             }
 
-                                        case var case22 when case22 == ("CursorShape".ToLower() ?? ""):
+                                        case var case22 when case22 == ("CursorShape".ToLower() ?? string.Empty):
                                             {
                                                 P.CursorShape = (CursorShape_Enum)Conversions.ToInteger(value);
                                                 break;
                                             }
 
-                                        case var case23 when case23 == ("CursorHeight".ToLower() ?? ""):
+                                        case var case23 when case23 == ("CursorHeight".ToLower() ?? string.Empty):
                                             {
                                                 P.CursorHeight = Conversions.ToInteger(value);
                                                 break;
@@ -298,134 +298,134 @@ namespace WinPaletter
 
                             foreach (string lin in CollectedColors)
                             {
-                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? "") == (x.ToLower() ?? ""))
+                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? string.Empty) == (x.ToLower() ?? string.Empty))
                                 {
                                     string prop = lin.Split('=')[0].Split('.')[1].Trim();
                                     string value = lin.Split('=')[1].Trim();
 
-                                    switch (prop.ToLower() ?? "")
+                                    switch (prop.ToLower() ?? string.Empty)
                                     {
-                                        case var case24 when case24 == ("Name".ToLower() ?? ""):
+                                        case var case24 when case24 == ("Name".ToLower() ?? string.Empty):
                                             {
                                                 TC.Name = value;
                                                 break;
                                             }
 
-                                        case var case25 when case25 == ("Background".ToLower() ?? ""):
+                                        case var case25 when case25 == ("Background".ToLower() ?? string.Empty):
                                             {
                                                 TC.Background = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case26 when case26 == ("Foreground".ToLower() ?? ""):
+                                        case var case26 when case26 == ("Foreground".ToLower() ?? string.Empty):
                                             {
                                                 TC.Foreground = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case27 when case27 == ("SelectionBackground".ToLower() ?? ""):
+                                        case var case27 when case27 == ("SelectionBackground".ToLower() ?? string.Empty):
                                             {
                                                 TC.SelectionBackground = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case28 when case28 == ("Black".ToLower() ?? ""):
+                                        case var case28 when case28 == ("Black".ToLower() ?? string.Empty):
                                             {
                                                 TC.Black = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case29 when case29 == ("Blue".ToLower() ?? ""):
+                                        case var case29 when case29 == ("Blue".ToLower() ?? string.Empty):
                                             {
                                                 TC.Blue = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case30 when case30 == ("BrightBlack".ToLower() ?? ""):
+                                        case var case30 when case30 == ("BrightBlack".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightBlack = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case31 when case31 == ("BrightBlue".ToLower() ?? ""):
+                                        case var case31 when case31 == ("BrightBlue".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightBlue = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case32 when case32 == ("BrightCyan".ToLower() ?? ""):
+                                        case var case32 when case32 == ("BrightCyan".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightCyan = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case33 when case33 == ("BrightGreen".ToLower() ?? ""):
+                                        case var case33 when case33 == ("BrightGreen".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightGreen = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case34 when case34 == ("BrightPurple".ToLower() ?? ""):
+                                        case var case34 when case34 == ("BrightPurple".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightPurple = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case35 when case35 == ("BrightRed".ToLower() ?? ""):
+                                        case var case35 when case35 == ("BrightRed".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightRed = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case36 when case36 == ("BrightWhite".ToLower() ?? ""):
+                                        case var case36 when case36 == ("BrightWhite".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightWhite = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case37 when case37 == ("BrightYellow".ToLower() ?? ""):
+                                        case var case37 when case37 == ("BrightYellow".ToLower() ?? string.Empty):
                                             {
                                                 TC.BrightYellow = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case38 when case38 == ("CursorColor".ToLower() ?? ""):
+                                        case var case38 when case38 == ("CursorColor".ToLower() ?? string.Empty):
                                             {
                                                 TC.CursorColor = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case39 when case39 == ("Cyan".ToLower() ?? ""):
+                                        case var case39 when case39 == ("Cyan".ToLower() ?? string.Empty):
                                             {
                                                 TC.Cyan = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case40 when case40 == ("Green".ToLower() ?? ""):
+                                        case var case40 when case40 == ("Green".ToLower() ?? string.Empty):
                                             {
                                                 TC.Green = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case41 when case41 == ("Purple".ToLower() ?? ""):
+                                        case var case41 when case41 == ("Purple".ToLower() ?? string.Empty):
                                             {
                                                 TC.Purple = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case42 when case42 == ("Red".ToLower() ?? ""):
+                                        case var case42 when case42 == ("Red".ToLower() ?? string.Empty):
                                             {
                                                 TC.Red = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case43 when case43 == ("White".ToLower() ?? ""):
+                                        case var case43 when case43 == ("White".ToLower() ?? string.Empty):
                                             {
                                                 TC.White = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case44 when case44 == ("Yellow".ToLower() ?? ""):
+                                        case var case44 when case44 == ("Yellow".ToLower() ?? string.Empty):
                                             {
                                                 TC.Yellow = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
@@ -448,44 +448,44 @@ namespace WinPaletter
 
                             foreach (string lin in CollectedThemes)
                             {
-                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? "") == (x.ToLower() ?? ""))
+                                if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? string.Empty) == (x.ToLower() ?? string.Empty))
                                 {
                                     string prop = lin.Split('=')[0].Split('.')[1].Trim();
                                     string value = lin.Split('=')[1].Trim();
 
-                                    switch (prop.ToLower() ?? "")
+                                    switch (prop.ToLower() ?? string.Empty)
                                     {
-                                        case var case45 when case45 == ("Name".ToLower() ?? ""):
+                                        case var case45 when case45 == ("Name".ToLower() ?? string.Empty):
                                             {
                                                 Th.Name = value;
                                                 break;
                                             }
 
-                                        case var case46 when case46 == ("Titlebar_Active".ToLower() ?? ""):
+                                        case var case46 when case46 == ("Titlebar_Active".ToLower() ?? string.Empty):
                                             {
                                                 Th.Titlebar_Active = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case47 when case47 == ("Titlebar_Inactive".ToLower() ?? ""):
+                                        case var case47 when case47 == ("Titlebar_Inactive".ToLower() ?? string.Empty):
                                             {
                                                 Th.Titlebar_Inactive = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case48 when case48 == ("Tab_Active".ToLower() ?? ""):
+                                        case var case48 when case48 == ("Tab_Active".ToLower() ?? string.Empty):
                                             {
                                                 Th.Tab_Active = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case49 when case49 == ("Tab_Inactive".ToLower() ?? ""):
+                                        case var case49 when case49 == ("Tab_Inactive".ToLower() ?? string.Empty):
                                             {
                                                 Th.Tab_Inactive = Color.FromArgb(Conversions.ToInteger(value));
                                                 break;
                                             }
 
-                                        case var case50 when case50 == ("applicationTheme_light".ToLower() ?? ""):
+                                        case var case50 when case50 == ("applicationTheme_light".ToLower() ?? string.Empty):
                                             {
                                                 Th.Style = value;
                                                 break;
@@ -587,13 +587,13 @@ namespace WinPaletter
             {
                 case Mode.JSONFile:
                     {
-                        return "";
+                        return string.Empty;
                     }
 
                 case Mode.WinPaletterFile:
                     {
 
-                        string First = "";
+                        string First = string.Empty;
 
                         switch (Version)
                         {
@@ -679,7 +679,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null)
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", "").Replace(".", ""), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
                                         }
                                     }
                                     catch
@@ -705,7 +705,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null & property.Name != "commandline")
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", "").Replace(".", ""), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
                                         }
                                     }
                                 }
@@ -730,7 +730,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null)
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", "").Replace(".", ""), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
                                         }
                                     }
                                     catch
@@ -748,7 +748,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        return "";
+                        return string.Empty;
                     }
 
             }
@@ -760,14 +760,14 @@ namespace WinPaletter
             var tx = new List<string>();
             tx.Clear();
             tx.Add(string.Format("<{0}>", Signature));
-            tx.Add(Save("", Mode.WinPaletterFile, Edition));
+            tx.Add(Save(string.Empty, Mode.WinPaletterFile, Edition));
             tx.Add(string.Format("</{0}>", Signature));
             return tx.CString();
         }
 
         public string ReturnPerfectValue(Type Type, object Value)
         {
-            switch (Type.Name.ToLower() ?? "")
+            switch (Type.Name.ToLower() ?? string.Empty)
             {
                 case "color":
                     {

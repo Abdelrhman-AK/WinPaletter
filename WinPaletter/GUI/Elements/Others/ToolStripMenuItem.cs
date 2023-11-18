@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-    [Description("ToolStripMenuItem fixed To respect dark/light mode")]
+    [Description("ToolStripMenuItem fixed to respect dark/light mode")]
     public class ToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
     {
         protected override void OnPaint(PaintEventArgs e)

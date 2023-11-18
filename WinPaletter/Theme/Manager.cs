@@ -68,7 +68,7 @@ namespace WinPaletter.Theme
                                 WallpaperTone_WXP.Load("WinXP");
                                 Wallpaper.Load(@default.Wallpaper);
 
-                                CommandPrompt.Load("", "Terminal_CMD_Enabled", @default.CommandPrompt);
+                                CommandPrompt.Load(string.Empty, "Terminal_CMD_Enabled", @default.CommandPrompt);
                                 if (Directory.Exists(PathsExt.PS86_app))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
@@ -109,20 +109,20 @@ namespace WinPaletter.Theme
                                     }
 
                                     if (System.IO.File.Exists(TerDir)) { Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile); }
-                                    else { Terminal = new WinTerminal("", WinTerminal.Mode.Empty); }
+                                    else { Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty); }
 
                                     if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
-                                    else { TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
+                                    else { TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
                                 else
                                 {
-                                    Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                                    TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                                    Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+                                    TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                                 }
                                 #endregion
 
                                 #region Cursors
-                                Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", false));
+                                Cursor_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, false));
 
                                 if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Cursor_Shadow, SPIF.SPIF_NONE))
                                     Cursor_Shadow = @default.Cursor_Shadow;
@@ -158,9 +158,9 @@ namespace WinPaletter.Theme
                                     Forms.Saving_ex_list.ShowDialog();
                                 }
                             }
-
-                            wic.Undo();
                         }
+
+
                         break;
                     }
 
@@ -185,7 +185,7 @@ namespace WinPaletter.Theme
                             {
                                 if (line.Trim().StartsWith("\"ThemeName\":", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    Info.ThemeName = line.Split(':')[1].ToString().Replace("\"", "").Replace(",", "").Trim();
+                                    Info.ThemeName = line.Split(':')[1].ToString().Replace("\"", string.Empty).Replace(",", string.Empty).Trim();
                                     break;
                                 }
                             }
@@ -194,7 +194,7 @@ namespace WinPaletter.Theme
                             txt.Clear();
                             string Pack = new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp";
                             bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && converter.GetFormat(File) == Converter_CP.WP_Format.JSON;
-                            string cache = PathsExt.ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", "").Split(Path.GetInvalidFileNameChars()));
+                            string cache = PathsExt.ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()));
 
                             // Extract theme resources pack
                             try
@@ -213,7 +213,7 @@ namespace WinPaletter.Theme
                                                 if (entry.FullName.Contains(@"\"))
                                                 {
                                                     string dest = Path.Combine(cache, entry.FullName);
-                                                    string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), "");
+                                                    string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), string.Empty);
                                                     if (!Directory.Exists(dest_dir))
                                                         Directory.CreateDirectory(dest_dir);
                                                 }
@@ -259,7 +259,7 @@ namespace WinPaletter.Theme
                                     {
                                         if (J[item.Key] is null && J_Original[item.Key] is not null)
                                             J[item.Key] = J_Original[item.Key];
-                                        if (!(item.Value is JValue))
+                                        if (item.Value is not JValue)
                                         {
                                             foreach (KeyValuePair<string, JToken> prop in (JObject)item.Value)
                                             {
@@ -289,7 +289,7 @@ namespace WinPaletter.Theme
 
                             else if (converter.GetFormat(File) == Converter_CP.WP_Format.WPTH)
                             {
-                                if (MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", Program.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+                                if (MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Convert_Detect_Old_OnLoading1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
                                 {
                                     converter.Convert(File, File, Program.Settings.FileTypeManagement.CompressThemeFile, false);
                                     goto Start;
@@ -687,17 +687,17 @@ namespace WinPaletter.Theme
                             this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Sounds, Program.Lang.TM_Error_Sounds, Program.Lang.TM_Time, sw_all, !Sounds.Enabled, Program.Lang.TM_Skip_Sounds);
 
                             // Cursors
-                            this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
+                            this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, string.Empty, Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
 
                             // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                             if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
                                 this.Execute(new MethodInvoker(() =>
                                 {
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty), RegistryValueKind.String);
                                     EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
                                     EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", string.Empty), RegistryValueKind.String);
                                 }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
                             }
 
@@ -706,10 +706,10 @@ namespace WinPaletter.Theme
 
                                 this.Execute(new MethodInvoker(() =>
                                 {
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
                                     EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
                                     EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String);
+                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", string.Empty, RegistryValueKind.String);
                                 }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
 
                             }
@@ -824,7 +824,7 @@ namespace WinPaletter.Theme
         /// <param name="Pack">Theme resources pack file</param>
         public void PackThemeResources(Manager TM, string ThemeFile, string Pack)
         {
-            string cache = @"%WinPaletterAppData%\ThemeResPack_Cache\" + string.Concat(TM.Info.ThemeName.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + @"\";
+            string cache = @"%WinPaletterAppData%\ThemeResPack_Cache\" + string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + @"\";
             var filesList = new Dictionary<string, string>();
             filesList.Clear();
             string x;
@@ -871,7 +871,7 @@ namespace WinPaletter.Theme
                         x = i.BackgroundImage;
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
+                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
                                 i.BackgroundImage = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -880,7 +880,7 @@ namespace WinPaletter.Theme
                         x = i.Icon;
                         if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
+                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
                                 i.Icon = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -913,7 +913,7 @@ namespace WinPaletter.Theme
                         x = i.BackgroundImage;
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
+                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
                                 i.BackgroundImage = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -922,7 +922,7 @@ namespace WinPaletter.Theme
                         x = i.Icon;
                         if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", "").Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
+                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
                             if (System.IO.File.Exists(x))
                                 i.Icon = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1011,6 +1011,182 @@ namespace WinPaletter.Theme
                         if (System.IO.File.Exists(x))
                             TM.ScreenSaver.File = ZipEntry;
                         filesList.Add(ZipEntry, x);
+                    }
+                }
+
+                if (TM.Cursor_Enabled)
+                {
+                    if (TM.Cursor_Arrow.UseFromFile && System.IO.File.Exists(TM.Cursor_Arrow.File))
+                    {
+                        // Cursor_Arrow
+                        x = TM.Cursor_Arrow.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Arrow" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Arrow.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_AppLoading
+                        x = TM.Cursor_AppLoading.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_AppLoading" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_AppLoading.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Busy
+                        x = TM.Cursor_Busy.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Busy" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Busy.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Help
+                        x = TM.Cursor_Help.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Help" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Help.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Move
+                        x = TM.Cursor_Move.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Move" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Move.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_NS
+                        x = TM.Cursor_NS.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_NS" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_NS.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_EW
+                        x = TM.Cursor_EW.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_EW" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_EW.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_NESW
+                        x = TM.Cursor_NESW.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_NESW" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_NESW.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_NWSE
+                        x = TM.Cursor_NWSE.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_NWSE" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_NWSE.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Up
+                        x = TM.Cursor_Up.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Up" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Up.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Pen
+                        x = TM.Cursor_Pen.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Pen" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Pen.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_None
+                        x = TM.Cursor_None.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_None" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_None.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Link
+                        x = TM.Cursor_Link.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Link" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Link.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Pin
+                        x = TM.Cursor_Pin.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Pin" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Pin.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Person
+                        x = TM.Cursor_Person.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Person" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Person.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_IBeam
+                        x = TM.Cursor_IBeam.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_IBeam" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_IBeam.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
+
+                        // Cursor_Cross
+                        x = TM.Cursor_Cross.File;
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        {
+                            ZipEntry = cache + "Cursor_Cross" + Path.GetExtension(x);
+                            if (System.IO.File.Exists(x))
+                                TM.Cursor_Cross.File = ZipEntry;
+                            filesList.Add(ZipEntry, x);
+                        }
                     }
                 }
 
@@ -1796,7 +1972,7 @@ namespace WinPaletter.Theme
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
                             if (System.IO.File.Exists(file))
-                                archive.CreateEntryFromFile(file, "WXP_VS" + file.Replace(DirName, ""), CompressionLevel.Optimal);
+                                archive.CreateEntryFromFile(file, "WXP_VS" + file.Replace(DirName, string.Empty), CompressionLevel.Optimal);
                         }
                     }
                 }

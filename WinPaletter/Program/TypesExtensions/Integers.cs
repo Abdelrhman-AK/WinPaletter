@@ -13,16 +13,16 @@ namespace WinPaletter.TypesExtensions
             if (@int.ToString().Count() <= 8)
             {
                 int i = 8 - @int.ToString().Count();
-                string s = "";
+                string s = string.Empty;
                 var loopTo = i;
                 for (i = 1; i <= loopTo; i++)
                     s += "0";
                 s += @int.ToString();
-                return s.Replace("-", "");
+                return s.Replace("-", string.Empty);
             }
             else
             {
-                return @int.ToString().Replace("-", "");
+                return @int.ToString().Replace("-", string.Empty);
             }
 
         }
@@ -35,16 +35,16 @@ namespace WinPaletter.TypesExtensions
             if (@int.ToString().Count() <= 16)
             {
                 int i = 16 - @int.ToString().Count();
-                string s = "";
+                string s = string.Empty;
                 var loopTo = i;
                 for (i = 1; i <= loopTo; i++)
                     s += "0";
                 s += @int.ToString();
-                return s.Replace("-", "");
+                return s.Replace("-", string.Empty);
             }
             else
             {
-                return @int.ToString().Replace("-", "");
+                return @int.ToString().Replace("-", string.Empty);
             }
 
         }

@@ -232,7 +232,7 @@ namespace WinPaletter
 
         public static Bitmap GetWallpaperFromRegistry()
         {
-            string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString();
+            string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString();
             int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
 
             if (System.IO.File.Exists(WallpaperPath) && WallpaperType != 1)
@@ -253,7 +253,7 @@ namespace WinPaletter
             {
                 S.Reset();
                 S.Start();
-                while (!System.IO.File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString()))
+                while (!System.IO.File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
                 {
                     if (S.ElapsedMilliseconds > 5000L)
                         break;

@@ -98,7 +98,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Wallpaper data structure</param>
         public void Load(Wallpaper @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, @default.Enabled));
             SlideShow_Folder_or_ImagesList = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", @default.SlideShow_Folder_or_ImagesList));
             Wallpaper_Slideshow_ImagesRootPath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", @default.Wallpaper_Slideshow_ImagesRootPath).ToString();
             Wallpaper_Slideshow_Images = (string[])GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", @default.Wallpaper_Slideshow_Images);
@@ -140,7 +140,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(bool SkipSettingWallpaper = false, TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", Enabled);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, Enabled);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString);
@@ -153,7 +153,7 @@ namespace WinPaletter.Theme.Structures
                 if (File.Exists(slideshow_ini))
                 {
                     File.SetAttributes(slideshow_ini, FileAttributes.Normal);
-                    File.WriteAllText(slideshow_ini, "");
+                    File.WriteAllText(slideshow_ini, string.Empty);
                     File.SetAttributes(slideshow_ini, FileAttributes.Hidden);
                 }
 
@@ -173,8 +173,8 @@ namespace WinPaletter.Theme.Structures
 
                     if (WallpaperType == WallpaperTypes.SolidColor)
                     {
-                        SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, "", SPIF.SPIF_UPDATEINIFILE);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String);
+                        SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, string.Empty, SPIF.SPIF_UPDATEINIFILE);
+                        EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
                     }
 
                     else if (WallpaperType == WallpaperTypes.Picture)

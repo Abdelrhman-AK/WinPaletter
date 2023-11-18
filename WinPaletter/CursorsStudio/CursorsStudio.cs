@@ -14,7 +14,7 @@ namespace WinPaletter
         private bool _Shown = false;
         private CursorControl _SelectedControl;
         private CursorControl _CopiedControl;
-        private readonly List<CursorControl> AnimateList = new List<CursorControl>();
+        private readonly List<CursorControl> AnimateList = new();
 
         public CursorsStudio()
         {
@@ -23,6 +23,8 @@ namespace WinPaletter
 
         public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
+            CursorControl.Prop_UseFromFile = Cursor.UseFromFile;
+            CursorControl.Prop_File = Cursor.File;
             CursorControl.Prop_ArrowStyle = Cursor.ArrowStyle;
             CursorControl.Prop_CircleStyle = Cursor.CircleStyle;
             CursorControl.Prop_PrimaryColor1 = Cursor.PrimaryColor1;
@@ -60,6 +62,8 @@ namespace WinPaletter
         public Theme.Structures.Cursor Cursor_to_CursorTM(CursorControl CursorControl)
         {
             Theme.Structures.Cursor Cursor;
+            Cursor.UseFromFile = CursorControl.Prop_UseFromFile;
+            Cursor.File = CursorControl.Prop_File;
             Cursor.ArrowStyle = CursorControl.Prop_ArrowStyle;
             Cursor.CircleStyle = CursorControl.Prop_CircleStyle;
             Cursor.PrimaryColor1 = CursorControl.Prop_PrimaryColor1;
@@ -121,12 +125,9 @@ namespace WinPaletter
             CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
             CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
 
-            foreach (CursorControl i in FlowLayoutPanel1.Controls)
+            foreach (CursorControl i in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
-                if (i is CursorControl)
-                {
-                    i.Invalidate();
-                }
+                i.Invalidate();
             }
         }
 
@@ -162,7 +163,6 @@ namespace WinPaletter
             ApplyStyle(this);
             FlowLayoutPanel1.DoubleBuffer();
 
-            AnimateList.Clear();
             _CopiedControl = null;
             _Shown = false;
 
@@ -171,34 +171,20 @@ namespace WinPaletter
             Timer1.Enabled = false;
             Timer1.Stop();
 
-            // Remove handler to avoid doubling/tripling events
-            foreach (CursorControl i in FlowLayoutPanel1.Controls)
-            {
-                if (i is CursorControl)
-                {
-                    try
-                    {
-                        i.Click -= Clicked;
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-
-            foreach (CursorControl i in FlowLayoutPanel1.Controls)
-            {
-                if (i is CursorControl)
-                {
-                    i.Click += Clicked;
-                    if (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy)
-                        AnimateList.Add(i);
-                }
-            }
-
             Button8.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
 
             LoadFromTM(Program.TM);
+
+            // Remove handler to avoid doubling/tripling events
+            foreach (CursorControl i in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+            {
+                try { i.Click -= Clicked; } catch { }
+            }
+
+            foreach (CursorControl i in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+            {
+                i.Click += Clicked;
+            }
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -226,15 +212,14 @@ namespace WinPaletter
             _SelectedControl = (CursorControl)sender;
             ApplyColorsFromCursor(_SelectedControl);
             Button1.Enabled = true;
-            GroupBox9.Enabled = true;
-            GroupBox6.Enabled = true;
-            GroupBox5.Enabled = true;
-            GroupBox2.Enabled = true;
-            GroupBox10.Enabled = true;
         }
 
         public void ApplyColorsFromCursor(CursorControl CursorControl)
         {
+            source1.Checked = CursorControl.Prop_UseFromFile;
+            source0.Checked = !CursorControl.Prop_UseFromFile;
+            textBox1.Text = CursorControl.Prop_File;
+
             ComboBox5.SelectedIndex = (int)CursorControl.Prop_ArrowStyle;
             ComboBox6.SelectedIndex = (int)CursorControl.Prop_CircleStyle;
 
@@ -277,6 +262,9 @@ namespace WinPaletter
 
         public void ApplyColorsToPreview(CursorControl CursorControl)
         {
+            CursorControl.Prop_UseFromFile = source1.Checked;
+            CursorControl.Prop_File = textBox1.Text;
+
             CursorControl.Prop_ArrowStyle = (Paths.ArrowStyle)ComboBox5.SelectedIndex;
             CursorControl.Prop_CircleStyle = (Paths.CircleStyle)ComboBox6.SelectedIndex;
 
@@ -319,7 +307,6 @@ namespace WinPaletter
 
         private void TaskbarFrontAndFoldersOnStart_picker_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
@@ -350,7 +337,6 @@ namespace WinPaletter
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
-
         }
 
         private void GroupBox3_Click(object sender, EventArgs e)
@@ -561,18 +547,19 @@ namespace WinPaletter
 
             foreach (CursorControl i in FlowLayoutPanel1.Controls)
             {
-                i.Prop_Scale = Conversions.ToSingle(((UI.WP.Trackbar)sender).Value / 100);
+                i.Prop_Scale = ((float)((UI.WP.Trackbar)sender).Value) / 100;
                 i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
                 i.Height = i.Width;
                 i.Refresh();
             }
 
-            Label5.Text = string.Format("{0} ({1}x)", Program.Lang.Scaling, ((UI.WP.Trackbar)sender).Value / 100);
+            Label5.Text = string.Format("{0} ({1}x)", Program.Lang.Scaling, ((float)((UI.WP.Trackbar)sender).Value) / 100);
         }
 
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
+
         private void Timer1_Tick(object sender, EventArgs e)
         {
             if (!_Shown)
@@ -586,20 +573,26 @@ namespace WinPaletter
                     i.Refresh();
 
                     if (Angle + Increment >= 360f)
+                    {
                         Angle = 0f;
+                    }
+
                     Angle += Increment;
 
-                    if (Angle == 180f & Cycles >= 2)
+                    if (Cycles >= 3)
                     {
                         i.Angle = 180f;
+                        i.Refresh();
+
                         Timer1.Enabled = false;
                         Timer1.Stop();
-                    }
-                    else if (Angle == 180f)
-                    {
-                        Cycles += 1;
-                    }
 
+                        Cycles = 0;
+                    }
+                    else
+                    {
+                        if (Angle == 180f) { Cycles += 1; }
+                    }
                 }
             }
             catch
@@ -609,6 +602,15 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
+            AnimateList.Clear();
+
+            foreach (CursorControl i in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+            {
+                bool condition0 = !i.Prop_UseFromFile && (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy);
+                bool condition1 = i.Prop_UseFromFile && System.IO.File.Exists(i.Prop_File) && System.IO.Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
+                if (condition0 || condition1) { AnimateList.Add(i); }
+            }
+
             Angle = 180f;
             Cycles = 0;
             Timer1.Enabled = true;
@@ -1196,6 +1198,32 @@ namespace WinPaletter
         private void CursorsStudio_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-cursors");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = openFileDialog2.FileName;
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            _SelectedControl.Prop_File = textBox1.Text;
+            _SelectedControl.Invalidate();
+        }
+
+        private void source0_CheckedChanged(object sender)
+        {
+            _SelectedControl.Prop_UseFromFile = !source0.Checked;
+            _SelectedControl.Invalidate();
+        }
+
+        private void source1_CheckedChanged(object sender)
+        {
+            _SelectedControl.Prop_UseFromFile = source1.Checked;
+            _SelectedControl.Invalidate();
         }
     }
 }

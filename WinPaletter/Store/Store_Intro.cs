@@ -25,7 +25,7 @@ namespace WinPaletter
             if (TablessControl1.SelectedIndex + 1 <= TablessControl1.TabPages.Count - 1)
                 TablessControl1.SelectedIndex += 1;
 
-            if ((Button1.Text ?? "") == (Program.Lang.Finish ?? ""))
+            if ((Button1.Text ?? string.Empty) == (Program.Lang.Finish ?? string.Empty))
             {
                 Close();
                 TablessControl1.SelectedIndex = 0;

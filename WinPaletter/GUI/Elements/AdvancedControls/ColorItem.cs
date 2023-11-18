@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Controllers
             Timer2 = new Timer() { Enabled = false, Interval = 1 };
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
-            Text = "";
+            Text = string.Empty;
             ColorsHistory.Clear();
             MouseEnter += ColorItem_MouseEnter;
             MouseLeave += ColorItem_MouseLeave;
@@ -63,7 +63,7 @@ namespace WinPaletter.UI.Controllers
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
         [DefaultValue("")]
-        public override string Text { get; set; } = "";
+        public override string Text { get; set; } = string.Empty;
 
         #endregion
 
