@@ -220,7 +220,6 @@ namespace WinPaletter
             Button9.Font = new Font("Segoe UI", 9.0f);
             Button9.ForeColor = Color.White;
             Button9.Image = (Image)resources.GetObject("Button9.Image");
-            Button9.LineColor = Color.FromArgb(11, 54, 73);
             Button9.Location = new Point(157, 180);
             Button9.Name = "Button9";
             Button9.Size = new Size(25, 19);
@@ -257,7 +256,6 @@ namespace WinPaletter
             Button8.Font = new Font("Segoe UI", 9.0f);
             Button8.ForeColor = Color.White;
             Button8.Image = (Image)resources.GetObject("Button8.Image");
-            Button8.LineColor = Color.FromArgb(11, 54, 73);
             Button8.Location = new Point(157, 236);
             Button8.Name = "Button8";
             Button8.Size = new Size(25, 19);
@@ -271,7 +269,6 @@ namespace WinPaletter
             Button7.Font = new Font("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = (Image)resources.GetObject("Button7.Image");
-            Button7.LineColor = Color.FromArgb(11, 54, 73);
             Button7.Location = new Point(157, 123);
             Button7.Name = "Button7";
             Button7.Size = new Size(25, 19);
@@ -285,7 +282,6 @@ namespace WinPaletter
             Button6.Font = new Font("Segoe UI", 9.0f);
             Button6.ForeColor = Color.White;
             Button6.Image = (Image)resources.GetObject("Button6.Image");
-            Button6.LineColor = Color.FromArgb(11, 54, 73);
             Button6.Location = new Point(157, 68);
             Button6.Name = "Button6";
             Button6.Size = new Size(25, 19);
@@ -345,7 +341,6 @@ namespace WinPaletter
             Button4.Font = new Font("Segoe UI", 9.0f);
             Button4.ForeColor = Color.White;
             Button4.Image = null;
-            Button4.LineColor = Color.FromArgb(44, 66, 77);
             Button4.Location = new Point(187, 42);
             Button4.Name = "Button4";
             Button4.Size = new Size(12, 215);
@@ -402,7 +397,6 @@ namespace WinPaletter
             Button10.Font = new Font("Segoe UI", 9.0f);
             Button10.ForeColor = Color.White;
             Button10.Image = (Image)resources.GetObject("Button10.Image");
-            Button10.LineColor = Color.FromArgb(14, 66, 89);
             Button10.Location = new Point(100, 4);
             Button10.Name = "Button10";
             Button10.Size = new Size(30, 30);
@@ -416,7 +410,6 @@ namespace WinPaletter
             Button2.Font = new Font("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = (Image)resources.GetObject("Button2.Image");
-            Button2.LineColor = Color.FromArgb(44, 66, 77);
             Button2.Location = new Point(4, 4);
             Button2.Name = "Button2";
             Button2.Size = new Size(30, 30);
@@ -430,7 +423,6 @@ namespace WinPaletter
             Button1.Font = new Font("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = (Image)resources.GetObject("Button1.Image");
-            Button1.LineColor = Color.FromArgb(177, 177, 177);
             Button1.Location = new Point(36, 4);
             Button1.Name = "Button1";
             Button1.Size = new Size(30, 30);
@@ -445,7 +437,6 @@ namespace WinPaletter
             Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = (Image)resources.GetObject("Button3.Image");
-            Button3.LineColor = Color.FromArgb(155, 145, 139);
             Button3.Location = new Point(68, 4);
             Button3.Name = "Button3";
             Button3.Size = new Size(30, 30);
@@ -459,7 +450,6 @@ namespace WinPaletter
             Button5.Font = new Font("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
             Button5.Image = (Image)resources.GetObject("Button5.Image");
-            Button5.LineColor = Color.FromArgb(149, 43, 50);
             Button5.Location = new Point(132, 4);
             Button5.Name = "Button5";
             Button5.Size = new Size(30, 30);

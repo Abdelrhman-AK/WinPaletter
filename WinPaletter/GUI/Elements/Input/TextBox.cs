@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed TextBox for WinPaletter UI")]
     [DefaultEvent("TextChanged")]
     public class TextBox : Control
@@ -16,49 +15,35 @@ namespace WinPaletter.UI.WP
         public TextBox()
         {
             Timer = new Timer() { Enabled = false, Interval = 1 };
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
-            DoubleBuffered = true;
-
-            ForeColor = Color.White;
 
             TB = new System.Windows.Forms.TextBox()
             {
                 Font = new Font("Segoe UI", 9f),
                 Text = Text,
-                ForeColor = Color.White,
+                ForeColor = ForeColor,
                 MaxLength = _MaxLength,
                 Multiline = _Multiline,
                 ReadOnly = _ReadOnly,
                 UseSystemPasswordChar = _UseSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
                 Location = new Point(1, 0),
-                Width = this.Width - 3,
+                Width = Width,
                 Cursor = Cursors.IBeam,
                 ScrollBars = Scrollbars,
-                WordWrap = WordWrap
+                WordWrap = WordWrap,
+                Height = _Multiline ? Height - 8 : Height + 8
             };
 
-            if (_Multiline)
-            {
-                TB.Height = Height - 8;
-            }
-            else
-            {
-                Height = TB.Height + 8;
-            }
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            UpdateStyles();
 
-            if (Program.Style.DarkMode)
-                BackColor = Color.FromArgb(55, 55, 55);
-            else
-                BackColor = Color.FromArgb(225, 225, 225);
-            if (Program.Style.DarkMode)
-                TB.BackColor = Color.FromArgb(55, 55, 55);
-            else
-                TB.BackColor = Color.FromArgb(225, 225, 225);
+            BackColor = Color.Transparent;
+            DoubleBuffered = true;
 
             HandleCreated += TextBox_HandleCreated;
             HandleDestroyed += TextBox_HandleDestroyed;
             Timer.Tick += Timer_Tick;
+            ForeColorChanged += TextBox_ForeColorChanged;
         }
 
         #region Variables
@@ -97,7 +82,6 @@ namespace WinPaletter.UI.WP
             }
         }
         private bool _Shown = false;
-        private Color ActiveTTLColor;
 
         private MouseState State = MouseState.None;
 
@@ -112,9 +96,6 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Properties
-
-        public bool DrawOnGlass { get; set; } = false;
-
         private HorizontalAlignment _TextAlign = HorizontalAlignment.Left;
 
         [Category("Options")]
@@ -256,7 +237,7 @@ namespace WinPaletter.UI.WP
                 {
                     TB.Font = value;
                     TB.Location = new Point(3, 4);
-                    TB.Width = Width - 6;
+                    TB.Width = Width;
 
                     if (!_Multiline)
                     {
@@ -335,7 +316,7 @@ namespace WinPaletter.UI.WP
             get
             {
                 var cpar = base.CreateParams;
-                if (DrawOnGlass & !DesignMode)
+                if (!DesignMode)
                 {
                     cpar.ExStyle = cpar.ExStyle | 0x20;
                     return cpar;
@@ -391,7 +372,7 @@ namespace WinPaletter.UI.WP
         protected override void OnResize(EventArgs e)
         {
             TB.Location = new Point(4, 4);
-            TB.Width = Width - 14;
+            TB.Width = Width - TB.Location.X * 2;
 
             if (_Multiline)
             {
@@ -531,6 +512,12 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        private void TextBox_ForeColorChanged(object sender, EventArgs e)
+        {
+            TB.ForeColor = ForeColor;
+            Refresh();
+        }
+
         public void Loaded(object sender, EventArgs e)
         {
             _Shown = false;
@@ -599,133 +586,50 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            Graphics G = e.Graphics;
             DoubleBuffered = true;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
-
-            base.OnPaint(e);
-
-            try
-            {
-                ActiveTTLColor = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(System.Windows.Forms.VisualStyles.ColorProperty.TextColor).Invert();
-            }
-            catch
-            {
-                ActiveTTLColor = SystemColors.ActiveCaptionText;
-            }
-
-            if (!DrawOnGlass)
-            {
-                if (Program.Style.DarkMode)
-                {
-                    if (ForeColor != Color.White)
-                        ForeColor = Color.White;
-                }
-                else if (ForeColor != Color.Black)
-                    ForeColor = Color.Black;
-            }
-            else
-            {
-                ForeColor = ActiveTTLColor;
-            }
-
-            TB.ForeColor = ForeColor;
 
             var OuterRect = new Rectangle(0, 0, Width - 1, Height - 1);
             var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
 
-            var ParentColor = this.GetParentColor();
-            Color LineNone, LineHovered;
-            Color BackNone, BackHovered;
-
-            if (!DrawOnGlass)
-            {
-                LineNone = Program.Style.DarkMode ? ParentColor.Light(0.3f) : ParentColor.Light(0.05f);
-                LineHovered = Program.Style.Colors.Border_Checked_Hover;
-
-                BackNone = Program.Style.DarkMode ? ParentColor.Light(0.05f) : ParentColor.Light(0.3f);
-                BackHovered = Program.Style.Colors.Back_Checked;
-            }
-            else
-            {
-                LineNone = !ActiveTTLColor.IsDark() ? ParentColor.Light(0.3f) : ParentColor.Light(0.05f);
-                LineHovered = Program.Style.Colors.Border_Checked_Hover;
-
-                BackNone = !ActiveTTLColor.IsDark() ? ParentColor.Light(0.05f) : ParentColor.Light(0.3f);
-                BackHovered = Program.Style.Colors.Back_Checked;
-            }
-
-            var FadeInColor = Color.FromArgb(alpha, LineHovered);
-            var FadeOutColor = Color.FromArgb(255 - alpha, LineNone);
-
-            if (DrawOnGlass)
-            {
-                G.Clear(Color.Transparent);
-            }
-            else
-            {
-                G.Clear(ParentColor);
-            }
+            Color Line = scheme.Colors.Line_Checked;
+            Color LineHover = scheme.Colors.Back_Hover;
+            Color FadeInColor = Color.FromArgb(alpha, Line);
+            Color FadeOutColor = Color.FromArgb(255 - alpha, LineHover);
 
             if (TB.Focused | Focused)
             {
-                if (!DrawOnGlass)
-                {
-                    using (var br = new SolidBrush(BackHovered))
-                    {
-                        G.FillRoundedRect(br, OuterRect);
-                    }
-                    using (var P = new Pen(LineHovered))
-                    {
-                        G.DrawRoundedRect_LikeW11(P, OuterRect);
-                    }
-                    TB.BackColor = BackHovered;
-                }
-                else
-                {
-                    using (var P = new Pen(LineHovered))
-                    {
-                        G.DrawRoundedRect_LikeW11(P, OuterRect);
-                    }
-                    TB.BackColor = ParentColor;
-                }
+                G.FillRoundedRect(scheme.Brushes.Back_Checked, OuterRect);
+
+                G.DrawRoundedRect_LikeW11(scheme.Pens.Line_Hover, OuterRect);
+
+                _TB.BackColor = scheme.Colors.Back_Checked;
             }
 
-            else if (!DrawOnGlass)
-            {
-                using (var br = new SolidBrush(BackNone))
-                {
-                    G.FillRoundedRect(br, InnerRect);
-                }
-                using (var br = new SolidBrush(Color.FromArgb(alpha, BackNone)))
-                {
-                    G.FillRoundedRect(br, OuterRect);
-                }
-                using (var P = new Pen(FadeInColor))
-                {
-                    G.DrawRoundedRect_LikeW11(P, OuterRect);
-                }
-                using (var P = new Pen(FadeOutColor))
-                {
-                    G.DrawRoundedRect_LikeW11(P, InnerRect);
-                }
-                TB.BackColor = BackNone;
-            }
             else
             {
-                using (var P = new Pen(FadeInColor.CB(0.1f)))
-                {
-                    G.DrawRoundedRect_LikeW11(P, OuterRect);
-                }
-                using (var P = new Pen(FadeOutColor.CB(0.1f)))
-                {
-                    G.DrawRoundedRect_LikeW11(P, InnerRect);
-                }
-                TB.BackColor = ParentColor;
+                G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
+
+                using (var br = new SolidBrush(scheme.Colors.Back)) { G.FillRoundedRect(br, InnerRect); }
+
+                using (var br = new SolidBrush(Color.FromArgb(alpha, scheme.Colors.Back))) { G.FillRoundedRect(br, OuterRect); }
+
+                using (var P = new Pen(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+
+                using (var P = new Pen(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+
+                _TB.BackColor = scheme.Colors.Back;
             }
 
+            base.OnPaint(e);
         }
-
     }
 }

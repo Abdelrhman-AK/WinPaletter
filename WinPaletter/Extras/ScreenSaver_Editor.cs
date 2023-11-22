@@ -19,33 +19,28 @@ namespace WinPaletter
 
         private void ScreenSaver_Editor_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             pnl_preview.DoubleBuffer();
             ApplyFromTM(Program.TM);
-        }
 
+            this.LoadLanguage();
+            ApplyStyle(this);
+        }
 
         public void ApplyFromTM(Theme.Manager TM)
         {
-            {
-                ScrSvrEnabled.Checked = TM.ScreenSaver.Enabled;
-                TextBox1.Text = TM.ScreenSaver.File;
-                Trackbar5.Value = TM.ScreenSaver.TimeOut;
-                CheckBox1.Checked = TM.ScreenSaver.IsSecure;
-            }
-
+            ScrSvrEnabled.Checked = TM.ScreenSaver.Enabled;
+            TextBox1.Text = TM.ScreenSaver.File;
+            Trackbar5.Value = TM.ScreenSaver.TimeOut;
+            CheckBox1.Checked = TM.ScreenSaver.IsSecure;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            {
-                TM.ScreenSaver.Enabled = ScrSvrEnabled.Checked;
-                TM.ScreenSaver.File = TextBox1.Text;
-                TM.ScreenSaver.TimeOut = Trackbar5.Value;
-                TM.ScreenSaver.IsSecure = CheckBox1.Checked;
-            }
+            TM.ScreenSaver.Enabled = ScrSvrEnabled.Checked;
+            TM.ScreenSaver.File = TextBox1.Text;
+            TM.ScreenSaver.TimeOut = Trackbar5.Value;
+            TM.ScreenSaver.IsSecure = CheckBox1.Checked;
         }
 
         private void Button11_Click(object sender, EventArgs e)

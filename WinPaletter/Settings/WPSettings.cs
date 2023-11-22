@@ -196,7 +196,11 @@ namespace WinPaletter
                 public bool CustomColors;
                 public bool CustomTheme;
                 public Color AccentColor;
+                public Color SecondaryColor;
+                public Color TertiaryColor;
+                public Color DisabledColor;
                 public Color BackColor;
+                public Color DisabledBackColor;
                 public bool RoundedCorners;
                 public bool ManagedByTheme;
 
@@ -206,8 +210,12 @@ namespace WinPaletter
                     AutoDarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "AutoDarkMode", true));
                     CustomColors = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomColors", false));
                     CustomTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
-                    AccentColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "AccentColor", Color.FromArgb(0, 81, 210).ToArgb())));
-                    BackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "BackColor", Color.FromArgb(25, 25, 25).ToArgb())));
+                    AccentColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "AccentColor", DefaultColors.Accent.ToArgb())));
+                    BackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColorDark.ToArgb())));
+                    SecondaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
+                    TertiaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
+                    DisabledColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
+                    DisabledBackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor.ToArgb())));
                     RoundedCorners = Conversions.ToBoolean(GetReg(REG_Appearance, "RoundedCorners", true));
                     ManagedByTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "ManagedByTheme", true));
                 }
@@ -220,10 +228,13 @@ namespace WinPaletter
                     EditReg(REG_Appearance, "CustomTheme", CustomTheme, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "AccentColor", AccentColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "BackColor", BackColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
                 }
-
             }
 
             public struct Language
@@ -536,8 +547,12 @@ namespace WinPaletter
             AutoDarkMode = true,
             CustomColors = false,
             CustomTheme = true,
-            AccentColor = Color.FromArgb(0, 81, 210),
-            BackColor = Color.FromArgb(25, 25, 25),
+            AccentColor = DefaultColors.Accent,
+            BackColor = DefaultColors.BackColorDark,
+            SecondaryColor = DefaultColors.Secondary,
+            TertiaryColor = DefaultColors.Tertiary,
+            DisabledColor = DefaultColors.Disabled,
+            DisabledBackColor = DefaultColors.DisabledBackColor,
             RoundedCorners = true,
             ManagedByTheme = true
         };

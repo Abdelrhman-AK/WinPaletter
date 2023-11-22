@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -192,7 +194,6 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
             var CurOptions = new CursorOptions()
             {
                 UseFromFile = Prop_UseFromFile,
@@ -247,8 +248,8 @@ namespace WinPaletter.UI.Controllers
             var CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - bmp.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - bmp.Height) / 2d), bmp.Width, bmp.Height);
 
 
-            var bkC = _Focused ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
-            var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
+            var bkC = _Focused ? Program.Style.Schemes.Main.Colors.Back_Checked : Program.Style.Schemes.Main.Colors.Back;
+            var bkCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Back_Checked);
 
             using (var br = new SolidBrush(bkC))
             {
@@ -259,8 +260,8 @@ namespace WinPaletter.UI.Controllers
                 e.Graphics.FillRoundedRect(br, MainRect);
             }
 
-            var lC = Color.FromArgb(255 - alpha, _Focused ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
-            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+            var lC = Color.FromArgb(255 - alpha, _Focused ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
+            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
 
             using (var P = new Pen(lC))
             {
@@ -271,9 +272,46 @@ namespace WinPaletter.UI.Controllers
                 e.Graphics.DrawRoundedRect_LikeW11(P, MainRect);
             }
 
-            e.Graphics.DrawImage(bmp, CenterRect);
+            if (CurOptions.UseFromFile && System.IO.File.Exists(CurOptions.File) && System.IO.Path.GetExtension(CurOptions.File).ToUpper() == ".ANI")
+            {
+                float _Angle = 0;
+                if (CurOptions._Angle >= 180) { _Angle = CurOptions._Angle - 180f; }
+                else if (CurOptions._Angle < 180) { _Angle = CurOptions._Angle + 180f; }
+
+                int frames = GetTotalFramesFromANI(CurOptions.File);
+
+                Size size = new((int)(CurOptions.Scale * 32), (int)(CurOptions.Scale * 32));
+                Point location = new((Width - size.Width) / 2 - 1, (Height - size.Height) / 2 - 1);
+
+                int AngleToFrame = (int)(_Angle / 360 * frames);
+
+                IntPtr hCursor = User32.LoadCursorFromFile(CurOptions.File);
+
+                IntPtr hdc = e.Graphics.GetHdc();
+                User32.DrawIconEx(hdc, location.X, location.Y, hCursor, size.Width, size.Height, AngleToFrame, IntPtr.Zero, (int)(User32.DrawIconExFlags.DI_NORMAL | User32.DrawIconExFlags.DI_COMPAT));
+                e.Graphics.ReleaseHdc(hdc);
+                User32.DestroyIcon(hCursor);
+            }
+            else
+            {
+                e.Graphics.DrawImage(bmp, CenterRect);
+            }
 
         }
 
+        private static int GetTotalFramesFromANI(string filePath)
+        {
+            using (FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read))
+            {
+                // ANI file format: https://www.daubnet.com/en/file-format-ani
+                // Skip to the position where the number of frames is stored
+                fileStream.Seek(6, SeekOrigin.Begin);
+
+                // Read the number of frames (little-endian format)
+                int totalFrames = fileStream.ReadByte() | (fileStream.ReadByte() << 8);
+
+                return totalFrames * 2 + 1;
+            }
+        }
     }
 }

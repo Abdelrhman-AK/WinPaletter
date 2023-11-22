@@ -331,6 +331,21 @@ namespace WinPaletter.NativeMethods
         public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
 
         /// <summary>
+        /// Creates a solid brush with the specified color.
+        /// </summary>
+        /// <param name="crColor">The 32-bit RGB color value.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is a handle to the newly created solid brush.
+        /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
+        /// </returns>
+        /// <remarks>
+        /// The brush can be deleted by calling <see cref="DeleteObject"/> when it is no longer needed.
+        /// </remarks>
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateSolidBrush(uint crColor);
+
+
+        /// <summary>
         /// Deletes the specified logical brush.
         /// </summary>
         /// <param name="hObject">A handle to the brush to be deleted.</param>

@@ -35,76 +35,78 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerateDashboard));
-            ToolTip1 = new ToolTip(components);
-            Button4 = new UI.WP.Button();
-            Button4.Click += new EventHandler(Button4_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerateDashboard));
+            this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.Button4 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.SuspendLayout();
             // 
             // ToolTip1
             // 
-            ToolTip1.BackColor = Color.Black;
+            this.ToolTip1.BackColor = System.Drawing.Color.Black;
             // 
             // Button4
             // 
-            Button4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Button4.BackColor = Color.FromArgb(35, 35, 35);
-            Button4.DrawOnGlass = false;
-            Button4.Font = new Font("Segoe UI", 9.0f);
-            Button4.ForeColor = Color.White;
-            Button4.Image = (Image)resources.GetObject("Button4.Image");
-            Button4.ImageAlign = ContentAlignment.MiddleRight;
-            Button4.LineColor = Color.FromArgb(104, 25, 31);
-            Button4.Location = new Point(5, 45);
-            Button4.Name = "Button4";
-            Button4.Size = new Size(253, 32);
-            Button4.TabIndex = 90;
-            Button4.Text = "Generate a palette from a color";
-            Button4.UseVisualStyleBackColor = false;
+            this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button4.CustomColor = System.Drawing.Color.Empty;
+            this.Button4.DrawOnGlass = false;
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button4.ForeColor = System.Drawing.Color.White;
+            this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
+            this.Button4.Location = new System.Drawing.Point(5, 45);
+            this.Button4.Name = "Button4";
+            this.Button4.Size = new System.Drawing.Size(230, 32);
+            this.Button4.TabIndex = 90;
+            this.Button4.Text = "Generate a palette from a color";
+            this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button4.UseVisualStyleBackColor = false;
+            this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(35, 35, 35);
-            Button1.DrawOnGlass = false;
-            Button1.Font = new Font("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = (Image)resources.GetObject("Button1.Image");
-            Button1.ImageAlign = ContentAlignment.MiddleRight;
-            Button1.LineColor = Color.FromArgb(41, 92, 141);
-            Button1.Location = new Point(5, 7);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(253, 32);
-            Button1.TabIndex = 86;
-            Button1.Text = "Generate a palette from an image";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.Location = new System.Drawing.Point(5, 7);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(230, 32);
+            this.Button1.TabIndex = 86;
+            this.Button1.Text = "Generate a palette from an image";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // PaletteGenerateDashboard
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(24, 24, 24);
-            ClientSize = new Size(263, 83);
-            ControlBox = false;
-            Controls.Add(Button4);
-            Controls.Add(Button1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "PaletteGenerateDashboard";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            Text = "Terminals Dashboard";
-            Load += new EventHandler(TerminalsDashboard_Load);
-            FormClosing += new FormClosingEventHandler(SubMenu_FormClosing);
-            Shown += new EventHandler(TerminalsDashboard_Shown);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.ClientSize = new System.Drawing.Size(240, 83);
+            this.ControlBox = false;
+            this.Controls.Add(this.Button4);
+            this.Controls.Add(this.Button1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "PaletteGenerateDashboard";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.Text = "Terminals Dashboard";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SubMenu_FormClosing);
+            this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
+            this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
+            this.ResumeLayout(false);
 
         }
         internal UI.WP.Button Button1;

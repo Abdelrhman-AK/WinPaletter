@@ -64,18 +64,18 @@ namespace WinPaletter
             // 
             // Button4
             // 
-            this.Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Button4.CustomColor = System.Drawing.Color.Empty;
             this.Button4.DrawOnGlass = false;
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(97)))), ((int)(((byte)(68)))));
             this.Button4.Location = new System.Drawing.Point(495, 400);
             this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(220, 30);
+            this.Button4.Size = new System.Drawing.Size(220, 31);
             this.Button4.TabIndex = 127;
             this.Button4.Text = "Restore PE file integrity (health)";
+            this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
@@ -84,6 +84,7 @@ namespace WinPaletter
             this.Separator1.AlternativeLook = false;
             this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Separator1.BackColor = System.Drawing.Color.Transparent;
             this.Separator1.Location = new System.Drawing.Point(12, 440);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(850, 1);
@@ -93,18 +94,18 @@ namespace WinPaletter
             // 
             // Button3
             // 
-            this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
             this.Button3.DrawOnGlass = false;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(107)))), ((int)(((byte)(147)))));
             this.Button3.Location = new System.Drawing.Point(13, 400);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(340, 30);
             this.Button3.TabIndex = 125;
             this.Button3.Text = "Know more about Windows Security (Defender) issue";
+            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
@@ -113,7 +114,7 @@ namespace WinPaletter
             this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
             this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(47)))), ((int)(((byte)(70)))));
+            this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox1.CenterText = false;
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -182,35 +183,36 @@ namespace WinPaletter
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
             this.Button2.DrawOnGlass = false;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Button2.Location = new System.Drawing.Point(626, 448);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
             this.Button2.TabIndex = 117;
             this.Button2.Text = "Don\'t modify";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
             this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(83)))), ((int)(((byte)(55)))));
             this.Button1.Location = new System.Drawing.Point(747, 448);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
             this.Button1.TabIndex = 116;
             this.Button1.Text = "Modify";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -266,18 +268,18 @@ namespace WinPaletter
             // 
             // Button5
             // 
-            this.Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Button5.CustomColor = System.Drawing.Color.Empty;
             this.Button5.DrawOnGlass = false;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(107)))), ((int)(((byte)(147)))));
             this.Button5.Location = new System.Drawing.Point(359, 400);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(130, 30);
             this.Button5.TabIndex = 128;
             this.Button5.Text = "Help (Wiki)";
+            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 

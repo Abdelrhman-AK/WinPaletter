@@ -30,7 +30,7 @@ namespace WinPaletter
 
             var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.Color1 = c;
-            AnimatedBox1.Color2 = Program.Style.Colors.Core;
+            AnimatedBox1.Color2 = Program.Style.Schemes.Main.Colors.AccentAlt;
 
             textBox1.Text = string.Empty;
             textBox1.Font = Fonts.ConsoleMedium;

@@ -11,13 +11,14 @@ namespace WinPaletter.UI.WP
     [Description("Themed NumericUpDown for WinPaletter UI")]
     public class NumericUpDown : Control
     {
-
         public NumericUpDown()
         {
-            Timer = new Timer() { Enabled = false, Interval = 1 };
-            Font = new Font("Segoe UI", 9f);
-            Enabled = true;
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
+            BackColor = Color.Transparent;
+            Timer = new Timer() { Enabled = false, Interval = 1 };
+
+            Enabled = true;
             MouseDown += NumericUpDown_MouseDown;
             HandleCreated += NumericUpDown_HandleCreated;
             HandleDestroyed += NumericUpDown_HandleDestroyed;
@@ -55,16 +56,16 @@ namespace WinPaletter.UI.WP
             {
                 switch (value)
                 {
-                    case var @case when @case > Max:
+                    case var @case when @case > Maximum:
                         {
-                            value = Max;
+                            value = Maximum;
                             Invalidate();
                             break;
                         }
 
-                    case var case1 when case1 < Min:
+                    case var case1 when case1 < Minimum:
                         {
-                            value = Min;
+                            value = Minimum;
                             Invalidate();
                             break;
                         }
@@ -75,8 +76,9 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _Max = 100;
-        public int Max
+        public int Maximum
         {
             get
             {
@@ -97,8 +99,9 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _Min;
-        public int Min
+        public int Minimum
         {
             get
             {
@@ -126,6 +129,22 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Animator
@@ -188,6 +207,31 @@ namespace WinPaletter.UI.WP
         public event ValueChangedEventHandler ValueChanged;
 
         public delegate void ValueChangedEventHandler(object sender, EventArgs e);
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                if (Value < Maximum)
+                {
+                    if (e.Delta <= -240)
+                        Value = Math.Max(Minimum, Value - UpDownStep * 2);
+                    else
+                        Value = Math.Max(Minimum, Value - UpDownStep);
+                }
+            }
+            else
+            {
+                if (Value > Minimum)
+                {
+                    if (e.Delta >= 240)
+                        Value = Math.Min(Maximum, Value + UpDownStep * 2);
+                    else
+                        Value = Math.Min(Maximum, Value + UpDownStep);
+                }
+            }
+            base.OnMouseWheel(e);
+        }
 
         protected override void OnMouseEnter(EventArgs e)
         {
@@ -258,7 +302,6 @@ namespace WinPaletter.UI.WP
                 {
                     FindForm().Load += Loaded;
                     FindForm().Shown += Showed;
-                    Parent.BackColorChanged += RefreshColorPalette;
                 }
                 catch
                 {
@@ -274,7 +317,6 @@ namespace WinPaletter.UI.WP
                 {
                     FindForm().Load -= Loaded;
                     FindForm().Shown -= Showed;
-                    Parent.BackColorChanged -= RefreshColorPalette;
                 }
                 catch
                 {
@@ -292,15 +334,6 @@ namespace WinPaletter.UI.WP
             _Shown = true;
             Invalidate();
         }
-
-        public void RefreshColorPalette(object sender, EventArgs e)
-        {
-            if (_Shown)
-            {
-                Invalidate();
-            }
-        }
-
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
@@ -311,10 +344,15 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             bool RTL = (int)RightToLeft == 1;
 
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+
             // ################################################################################# Customizer
             var OuterRect = new Rectangle(0, 0, Width - 1, Height - 1);
             var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
-            SideRect = new Rectangle(Width - 16, 0, 15, Height);
+            SideRect = new Rectangle(Width - 18, 0, 17, Height);
 
             if (RTL)
             {
@@ -322,54 +360,32 @@ namespace WinPaletter.UI.WP
                 InnerRect.X = Width - InnerRect.X - InnerRect.Width;
                 SideRect.X = Width - SideRect.X - SideRect.Width;
             }
-
             // #################################################################################
 
-            G.Clear(this.GetParentColor());
+            G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
 
-            using (var br = new SolidBrush(Color.FromArgb(255 - alpha, Program.Style.Colors.Back)))
-            {
-                G.FillRoundedRect(br, OuterRect);
-            }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Back_Checked)))
-            {
-                G.FillRoundedRect(br, OuterRect);
-            }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover)))
-            {
-                G.FillRoundedRect(br, SideRect);
-            }
+            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
-            using (var P = new Pen(Color.FromArgb(255 - alpha, Program.Style.Colors.Border)))
-            {
-                G.DrawRoundedRect_LikeW11(P, InnerRect);
-            }
-            using (var P = new Pen(Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover)))
-            {
-                G.DrawRoundedRect_LikeW11(P, OuterRect);
-            }
+            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover))) { G.FillRoundedRect(br, SideRect); }
 
-            if (Focused & State == MouseState.None)
+            using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+
+            using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+
+            using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_CheckedHover)))
             {
-                using (var P = new Pen(Color.FromArgb(255, Program.Style.Colors.Border_Checked_Hover)))
+                using (Font SignFont = new("Marlett", 11f))
                 {
-                    G.DrawRoundedRect(P, InnerRect);
+                    G.DrawString("t", SignFont, scheme.Brushes.Back_Checked, new Point(SideRect.Left, 0));
+                    G.DrawString("u", SignFont, scheme.Brushes.Back_Checked, new Point(SideRect.Left, Height - 16));
+
+                    G.DrawString("t", SignFont, SignBrush, new Point(SideRect.Left, 0));
+                    G.DrawString("u", SignFont, SignBrush, new Point(SideRect.Left, Height - 16));
                 }
             }
 
-            using (var TextColor = new SolidBrush(Program.Style.DarkMode ? Color.White : Color.Black))
-            {
-                G.DrawString(Value.ToString(), Font, TextColor, new Rectangle(0, 0, Width - 15, Height), ContentAlignment.MiddleCenter.ToStringFormat());
-            }
-
-            using (var SignColor = new SolidBrush(Program.Style.Colors.Back_Checked))
-            using (var SignFont = new Font("Marlett", 11f))
-            {
-                G.DrawString("t", SignFont, SignColor, new Point(SideRect.Left - 1, 0));
-                G.DrawString("u", SignFont, SignColor, new Point(SideRect.Left - 1, Height - 16));
-            }
+            using (SolidBrush TextColor = new(ForeColor)) { G.DrawString($"{Value}", Fonts.ConsoleMedium, TextColor, new Rectangle(0, 1, Width - SideRect.Width, Height), ContentAlignment.MiddleCenter.ToStringFormat()); }
         }
-
     }
 
 }

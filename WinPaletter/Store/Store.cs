@@ -1419,7 +1419,7 @@ namespace WinPaletter
 
                 if (Program.TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
-                    Titlebar_panel.BackColor = Program.Style.Colors.Back;
+                    Titlebar_panel.BackColor = Program.Style.Schemes.Main.Colors.Back;
                 }
                 else
                 {
@@ -1441,7 +1441,6 @@ namespace WinPaletter
             back_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
             search_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
             search_filter_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
-            search_box.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
 
             UpdateTitlebarColors();
         }

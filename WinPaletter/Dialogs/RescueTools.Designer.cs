@@ -72,7 +72,6 @@
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
-            this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button1.Location = new System.Drawing.Point(5, 46);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(294, 32);
@@ -128,7 +127,6 @@
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = null;
-            this.button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button3.Location = new System.Drawing.Point(5, 122);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(294, 32);
@@ -146,7 +144,6 @@
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
-            this.button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button2.Location = new System.Drawing.Point(5, 84);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(294, 32);
@@ -202,7 +199,6 @@
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
-            this.button4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button4.Location = new System.Drawing.Point(5, 121);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(294, 32);
@@ -220,7 +216,6 @@
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
-            this.button5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button5.Location = new System.Drawing.Point(5, 84);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(294, 32);
@@ -238,7 +233,6 @@
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = null;
-            this.button6.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button6.Location = new System.Drawing.Point(5, 46);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(294, 32);
@@ -295,7 +289,6 @@
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
-            this.button7.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button7.Location = new System.Drawing.Point(5, 122);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(294, 32);
@@ -313,7 +306,6 @@
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
-            this.button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button8.Location = new System.Drawing.Point(5, 44);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(294, 32);
@@ -331,7 +323,6 @@
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
-            this.button9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button9.Location = new System.Drawing.Point(5, 84);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(294, 32);
@@ -387,7 +378,6 @@
             this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button10.ForeColor = System.Drawing.Color.White;
             this.button10.Image = null;
-            this.button10.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button10.Location = new System.Drawing.Point(5, 122);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(294, 32);
@@ -405,7 +395,6 @@
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button11.ForeColor = System.Drawing.Color.White;
             this.button11.Image = null;
-            this.button11.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button11.Location = new System.Drawing.Point(5, 84);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(294, 32);
@@ -423,7 +412,6 @@
             this.button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button12.ForeColor = System.Drawing.Color.White;
             this.button12.Image = null;
-            this.button12.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button12.Location = new System.Drawing.Point(5, 46);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(294, 32);

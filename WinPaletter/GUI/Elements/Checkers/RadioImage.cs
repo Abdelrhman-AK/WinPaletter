@@ -302,14 +302,14 @@ namespace WinPaletter.UI.WP
             var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
             var TextRect = new Rectangle(5, 5, Width - 10, Height - 10);
 
-            var bkC = _Checked ? Program.Style.Colors.Back_Checked : Program.Style.Colors.Back;
-            var bkCC = Color.FromArgb(alpha, Program.Style.Colors.Back_Checked);
+            var bkC = _Checked ? Program.Style.Schemes.Main.Colors.Back_Checked : Program.Style.Schemes.Main.Colors.Back;
+            var bkCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Back_Checked);
 
             using (var br = new SolidBrush(bkC)) { G.FillRoundedRect(br, MainRectInner); }
             using (var br = new SolidBrush(bkCC)) { G.FillRoundedRect(br, MainRect); }
 
-            var lC = Color.FromArgb(255 - alpha, _Checked ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
-            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+            var lC = Color.FromArgb(255 - alpha, _Checked ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
+            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
 
             using (var P = new Pen(lC))
             {

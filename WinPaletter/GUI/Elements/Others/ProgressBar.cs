@@ -145,25 +145,25 @@ namespace WinPaletter.UI.WP
                 {
                     case ProgressBarState.Normal:
                         {
-                            color = Program.Style.Colors.Border_Checked_Hover;
+                            color = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
                             break;
                         }
 
                     case ProgressBarState.Error:
                         {
-                            color = Program.Style.Colors.NotTranslatedColor;
+                            color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                             break;
                         }
 
                     case ProgressBarState.Pause:
                         {
-                            color = Program.Style.Colors.Back_Hover;
+                            color = Program.Style.Schemes.Main.Colors.Back_Hover;
                             break;
                         }
 
                     default:
                         {
-                            color = Program.Style.Colors.Border_Checked_Hover;
+                            color = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
                             break;
                         }
                 }
@@ -275,7 +275,7 @@ namespace WinPaletter.UI.WP
 
         private int _animatedValue = 0;
 
-        private Color _StateColor = Program.Style.Colors.Border_Checked_Hover;
+        private Color _StateColor = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
@@ -458,7 +458,12 @@ namespace WinPaletter.UI.WP
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             Rectangle rect = new(0, 0, Width, Height - 1);
 
@@ -473,13 +478,13 @@ namespace WinPaletter.UI.WP
 
                 if (Program.Style.RoundedCorners) G.SetClip(rect.Round(radius));
 
-                using (SolidBrush br = new(Program.Style.Colors.Back)) { G.FillRoundedRect(br, rect, radius); }
+                G.FillRoundedRect(scheme.Brushes.Back, rect, radius);
                 using (SolidBrush br = new(StateColor)) { G.FillRoundedRect(br, rectValue, radius); }
                 G.FillRoundedRect(Noise, rectValue, radius);
 
                 G.ResetClip();
 
-                using (Pen p = new(Program.Style.Colors.Border)) { G.DrawRoundedRect_LikeW11(p, rect, radius); }
+                G.DrawRoundedRect_LikeW11(scheme.Pens.Line, rect, radius);
             }
 
             else if (Appearance == ProgressBarAppearance.Circle)
@@ -504,7 +509,7 @@ namespace WinPaletter.UI.WP
                             pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
                             pen.EndCap = pen.StartCap;
 
-                            using (LinearGradientBrush brush2 = new(rect, Program.Style.Colors.Back, Program.Style.Colors.Back_Hover, LinearGradientMode.BackwardDiagonal))
+                            using (LinearGradientBrush brush2 = new(rect, scheme.Colors.Back, scheme.Colors.Back_Hover, LinearGradientMode.BackwardDiagonal))
                             {
                                 using (Pen pen2 = new(brush2, PenWidth))
                                 {

@@ -44,7 +44,7 @@ namespace WinPaletter
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.back_btn = new WinPaletter.UI.WP.Button();
             this.Titlebar_img = new System.Windows.Forms.PictureBox();
-            this.ProgressBar1 = new UI.WP.ProgressBar();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
@@ -231,12 +231,12 @@ namespace WinPaletter
             // search_btn
             // 
             this.search_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.search_btn.CustomColor = System.Drawing.Color.Empty;
             this.search_btn.DrawOnGlass = true;
+            this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_btn.ForeColor = System.Drawing.Color.White;
             this.search_btn.Image = ((System.Drawing.Image)(resources.GetObject("search_btn.Image")));
-            this.search_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(111)))), ((int)(((byte)(122)))));
             this.search_btn.Location = new System.Drawing.Point(308, 3);
             this.search_btn.Name = "search_btn";
             this.search_btn.Size = new System.Drawing.Size(32, 24);
@@ -249,7 +249,6 @@ namespace WinPaletter
             this.search_box.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.search_box.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.search_box.DrawOnGlass = true;
             this.search_box.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.search_box.Location = new System.Drawing.Point(3, 3);
             this.search_box.MaxLength = 32767;
@@ -270,12 +269,12 @@ namespace WinPaletter
             // search_filter_btn
             // 
             this.search_filter_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_filter_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.search_filter_btn.CustomColor = System.Drawing.Color.Empty;
             this.search_filter_btn.DrawOnGlass = true;
+            this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_filter_btn.ForeColor = System.Drawing.Color.White;
             this.search_filter_btn.Image = ((System.Drawing.Image)(resources.GetObject("search_filter_btn.Image")));
-            this.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
             this.search_filter_btn.Location = new System.Drawing.Point(270, 3);
             this.search_filter_btn.Name = "search_filter_btn";
             this.search_filter_btn.Size = new System.Drawing.Size(32, 24);
@@ -302,12 +301,12 @@ namespace WinPaletter
             // 
             // back_btn
             // 
-            this.back_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.back_btn.CustomColor = System.Drawing.Color.Empty;
             this.back_btn.DrawOnGlass = true;
+            this.back_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.back_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.back_btn.ForeColor = System.Drawing.Color.White;
             this.back_btn.Image = null;
-            this.back_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.back_btn.Location = new System.Drawing.Point(8, 0);
             this.back_btn.Name = "back_btn";
             this.back_btn.Size = new System.Drawing.Size(64, 64);
@@ -330,11 +329,17 @@ namespace WinPaletter
             // 
             // ProgressBar1
             // 
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
             this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
             this.ProgressBar1.Name = "ProgressBar1";
             this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             this.ProgressBar1.TabIndex = 43;
+            this.ProgressBar1.TaskbarBroadcast = true;
             this.ProgressBar1.Visible = false;
             // 
             // Cursor_Timer
@@ -418,7 +423,7 @@ namespace WinPaletter
             this.VersionAlert_lbl.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
             this.VersionAlert_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.VersionAlert_lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(72)))), ((int)(((byte)(6)))));
+            this.VersionAlert_lbl.BackColor = System.Drawing.Color.Transparent;
             this.VersionAlert_lbl.CenterText = true;
             this.VersionAlert_lbl.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.VersionAlert_lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -508,18 +513,18 @@ namespace WinPaletter
             // Button1
             // 
             this.Button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
             this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(111)))), ((int)(((byte)(122)))));
             this.Button1.Location = new System.Drawing.Point(193, 234);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(156, 34);
             this.Button1.TabIndex = 146;
             this.Button1.Text = "Save as ...";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -542,7 +547,6 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.desc_txt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.desc_txt.DrawOnGlass = false;
             this.desc_txt.ForeColor = System.Drawing.Color.White;
             this.desc_txt.Location = new System.Drawing.Point(14, 382);
             this.desc_txt.MaxLength = 32767;
@@ -562,12 +566,12 @@ namespace WinPaletter
             // author_url_button
             // 
             this.author_url_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.author_url_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.author_url_button.CustomColor = System.Drawing.Color.Empty;
             this.author_url_button.DrawOnGlass = false;
+            this.author_url_button.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.author_url_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.author_url_button.ForeColor = System.Drawing.Color.White;
             this.author_url_button.Image = null;
-            this.author_url_button.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.author_url_button.Location = new System.Drawing.Point(342, 537);
             this.author_url_button.Name = "author_url_button";
             this.author_url_button.Size = new System.Drawing.Size(24, 24);
@@ -579,18 +583,18 @@ namespace WinPaletter
             // RestartExplorer
             // 
             this.RestartExplorer.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.RestartExplorer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.RestartExplorer.CustomColor = System.Drawing.Color.Empty;
             this.RestartExplorer.DrawOnGlass = false;
+            this.RestartExplorer.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.RestartExplorer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RestartExplorer.ForeColor = System.Drawing.Color.White;
             this.RestartExplorer.Image = null;
-            this.RestartExplorer.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.RestartExplorer.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(127)))), ((int)(((byte)(79)))));
             this.RestartExplorer.Location = new System.Drawing.Point(31, 274);
             this.RestartExplorer.Name = "RestartExplorer";
             this.RestartExplorer.Size = new System.Drawing.Size(318, 34);
             this.RestartExplorer.TabIndex = 138;
             this.RestartExplorer.Text = "Restart Explorer";
+            this.RestartExplorer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.RestartExplorer.UseVisualStyleBackColor = false;
             this.RestartExplorer.Click += new System.EventHandler(this.RestartExplorer_Click);
             // 
@@ -598,6 +602,7 @@ namespace WinPaletter
             // 
             this.SeparatorVertical1.AlternativeLook = false;
             this.SeparatorVertical1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
             this.SeparatorVertical1.Location = new System.Drawing.Point(190, 320);
             this.SeparatorVertical1.Name = "SeparatorVertical1";
             this.SeparatorVertical1.Size = new System.Drawing.Size(1, 46);
@@ -650,18 +655,18 @@ namespace WinPaletter
             // Apply_btn
             // 
             this.Apply_btn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Apply_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Apply_btn.CustomColor = System.Drawing.Color.Empty;
             this.Apply_btn.DrawOnGlass = false;
+            this.Apply_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Apply_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Apply_btn.ForeColor = System.Drawing.Color.White;
             this.Apply_btn.Image = null;
-            this.Apply_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Apply_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.Apply_btn.Location = new System.Drawing.Point(31, 194);
             this.Apply_btn.Name = "Apply_btn";
             this.Apply_btn.Size = new System.Drawing.Size(318, 34);
             this.Apply_btn.TabIndex = 134;
             this.Apply_btn.Text = "Apply";
+            this.Apply_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Apply_btn.UseVisualStyleBackColor = false;
             this.Apply_btn.Click += new System.EventHandler(this.Apply_Edit_btn_Click);
             // 
@@ -681,18 +686,18 @@ namespace WinPaletter
             // Edit_btn
             // 
             this.Edit_btn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Edit_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Edit_btn.CustomColor = System.Drawing.Color.Empty;
             this.Edit_btn.DrawOnGlass = false;
+            this.Edit_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Edit_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Edit_btn.ForeColor = System.Drawing.Color.White;
             this.Edit_btn.Image = ((System.Drawing.Image)(resources.GetObject("Edit_btn.Image")));
-            this.Edit_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Edit_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(39)))), ((int)(((byte)(12)))));
             this.Edit_btn.Location = new System.Drawing.Point(31, 234);
             this.Edit_btn.Name = "Edit_btn";
             this.Edit_btn.Size = new System.Drawing.Size(156, 34);
             this.Edit_btn.TabIndex = 137;
             this.Edit_btn.Text = "Edit";
+            this.Edit_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Edit_btn.UseVisualStyleBackColor = false;
             this.Edit_btn.Click += new System.EventHandler(this.Apply_Edit_btn_Click);
             // 
@@ -805,7 +810,7 @@ namespace WinPaletter
             this.WXP_Alert2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
             this.WXP_Alert2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
+            this.WXP_Alert2.BackColor = System.Drawing.Color.Transparent;
             this.WXP_Alert2.CenterText = true;
             this.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.WXP_Alert2.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1850,13 +1855,13 @@ namespace WinPaletter
             // 
             // cur_anim_btn
             // 
-            this.cur_anim_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
             this.cur_anim_btn.DrawOnGlass = false;
+            this.cur_anim_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
             this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
             this.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(99)))), ((int)(((byte)(126)))));
             this.cur_anim_btn.Location = new System.Drawing.Point(356, 267);
             this.cur_anim_btn.Name = "cur_anim_btn";
             this.cur_anim_btn.Size = new System.Drawing.Size(141, 21);
@@ -1899,6 +1904,7 @@ namespace WinPaletter
             this.Arrow.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Arrow.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Arrow.Prop_Cursor = WinPaletter.Paths.CursorType.Arrow;
+            this.Arrow.Prop_File = "";
             this.Arrow.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Arrow.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Arrow.Prop_LoadingCircleBackGradient = false;
@@ -1930,6 +1936,7 @@ namespace WinPaletter
             this.Arrow.Prop_Shadow_OffsetX = 2;
             this.Arrow.Prop_Shadow_OffsetY = 2;
             this.Arrow.Prop_Shadow_Opacity = 0.3F;
+            this.Arrow.Prop_UseFromFile = false;
             this.Arrow.Size = new System.Drawing.Size(64, 64);
             this.Arrow.TabIndex = 5;
             // 
@@ -1940,6 +1947,7 @@ namespace WinPaletter
             this.Help.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Help.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Help.Prop_Cursor = WinPaletter.Paths.CursorType.Help;
+            this.Help.Prop_File = "";
             this.Help.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Help.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Help.Prop_LoadingCircleBackGradient = false;
@@ -1971,6 +1979,7 @@ namespace WinPaletter
             this.Help.Prop_Shadow_OffsetX = 2;
             this.Help.Prop_Shadow_OffsetY = 2;
             this.Help.Prop_Shadow_Opacity = 0.3F;
+            this.Help.Prop_UseFromFile = false;
             this.Help.Size = new System.Drawing.Size(64, 64);
             this.Help.TabIndex = 6;
             // 
@@ -1981,6 +1990,7 @@ namespace WinPaletter
             this.AppLoading.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.AppLoading.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.AppLoading.Prop_Cursor = WinPaletter.Paths.CursorType.AppLoading;
+            this.AppLoading.Prop_File = "";
             this.AppLoading.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.AppLoading.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.AppLoading.Prop_LoadingCircleBackGradient = false;
@@ -2012,6 +2022,7 @@ namespace WinPaletter
             this.AppLoading.Prop_Shadow_OffsetX = 2;
             this.AppLoading.Prop_Shadow_OffsetY = 2;
             this.AppLoading.Prop_Shadow_Opacity = 0.3F;
+            this.AppLoading.Prop_UseFromFile = false;
             this.AppLoading.Size = new System.Drawing.Size(64, 64);
             this.AppLoading.TabIndex = 6;
             // 
@@ -2022,6 +2033,7 @@ namespace WinPaletter
             this.Busy.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Busy.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Busy.Prop_Cursor = WinPaletter.Paths.CursorType.Busy;
+            this.Busy.Prop_File = "";
             this.Busy.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Busy.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Busy.Prop_LoadingCircleBackGradient = false;
@@ -2053,6 +2065,7 @@ namespace WinPaletter
             this.Busy.Prop_Shadow_OffsetX = 2;
             this.Busy.Prop_Shadow_OffsetY = 2;
             this.Busy.Prop_Shadow_Opacity = 0.3F;
+            this.Busy.Prop_UseFromFile = false;
             this.Busy.Size = new System.Drawing.Size(64, 64);
             this.Busy.TabIndex = 7;
             // 
@@ -2063,6 +2076,7 @@ namespace WinPaletter
             this.Move_Cur.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Move_Cur.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Move_Cur.Prop_Cursor = WinPaletter.Paths.CursorType.Move;
+            this.Move_Cur.Prop_File = "";
             this.Move_Cur.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Move_Cur.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Move_Cur.Prop_LoadingCircleBackGradient = false;
@@ -2094,6 +2108,7 @@ namespace WinPaletter
             this.Move_Cur.Prop_Shadow_OffsetX = 2;
             this.Move_Cur.Prop_Shadow_OffsetY = 2;
             this.Move_Cur.Prop_Shadow_Opacity = 0.3F;
+            this.Move_Cur.Prop_UseFromFile = false;
             this.Move_Cur.Size = new System.Drawing.Size(64, 64);
             this.Move_Cur.TabIndex = 8;
             // 
@@ -2104,6 +2119,7 @@ namespace WinPaletter
             this.Up.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Up.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Up.Prop_Cursor = WinPaletter.Paths.CursorType.Up;
+            this.Up.Prop_File = "";
             this.Up.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Up.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Up.Prop_LoadingCircleBackGradient = false;
@@ -2135,6 +2151,7 @@ namespace WinPaletter
             this.Up.Prop_Shadow_OffsetX = 2;
             this.Up.Prop_Shadow_OffsetY = 2;
             this.Up.Prop_Shadow_Opacity = 0.3F;
+            this.Up.Prop_UseFromFile = false;
             this.Up.Size = new System.Drawing.Size(64, 64);
             this.Up.TabIndex = 9;
             // 
@@ -2145,6 +2162,7 @@ namespace WinPaletter
             this.NS.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.NS.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NS.Prop_Cursor = WinPaletter.Paths.CursorType.NS;
+            this.NS.Prop_File = "";
             this.NS.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NS.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NS.Prop_LoadingCircleBackGradient = false;
@@ -2176,6 +2194,7 @@ namespace WinPaletter
             this.NS.Prop_Shadow_OffsetX = 2;
             this.NS.Prop_Shadow_OffsetY = 2;
             this.NS.Prop_Shadow_Opacity = 0.3F;
+            this.NS.Prop_UseFromFile = false;
             this.NS.Size = new System.Drawing.Size(64, 64);
             this.NS.TabIndex = 10;
             // 
@@ -2186,6 +2205,7 @@ namespace WinPaletter
             this.EW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.EW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.EW.Prop_Cursor = WinPaletter.Paths.CursorType.EW;
+            this.EW.Prop_File = "";
             this.EW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.EW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.EW.Prop_LoadingCircleBackGradient = false;
@@ -2217,6 +2237,7 @@ namespace WinPaletter
             this.EW.Prop_Shadow_OffsetX = 2;
             this.EW.Prop_Shadow_OffsetY = 2;
             this.EW.Prop_Shadow_Opacity = 0.3F;
+            this.EW.Prop_UseFromFile = false;
             this.EW.Size = new System.Drawing.Size(64, 64);
             this.EW.TabIndex = 11;
             // 
@@ -2227,6 +2248,7 @@ namespace WinPaletter
             this.NESW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.NESW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NESW.Prop_Cursor = WinPaletter.Paths.CursorType.NESW;
+            this.NESW.Prop_File = "";
             this.NESW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NESW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NESW.Prop_LoadingCircleBackGradient = false;
@@ -2258,6 +2280,7 @@ namespace WinPaletter
             this.NESW.Prop_Shadow_OffsetX = 2;
             this.NESW.Prop_Shadow_OffsetY = 2;
             this.NESW.Prop_Shadow_Opacity = 0.3F;
+            this.NESW.Prop_UseFromFile = false;
             this.NESW.Size = new System.Drawing.Size(64, 64);
             this.NESW.TabIndex = 12;
             // 
@@ -2268,6 +2291,7 @@ namespace WinPaletter
             this.NWSE.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.NWSE.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NWSE.Prop_Cursor = WinPaletter.Paths.CursorType.NWSE;
+            this.NWSE.Prop_File = "";
             this.NWSE.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NWSE.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.NWSE.Prop_LoadingCircleBackGradient = false;
@@ -2299,6 +2323,7 @@ namespace WinPaletter
             this.NWSE.Prop_Shadow_OffsetX = 2;
             this.NWSE.Prop_Shadow_OffsetY = 2;
             this.NWSE.Prop_Shadow_Opacity = 0.3F;
+            this.NWSE.Prop_UseFromFile = false;
             this.NWSE.Size = new System.Drawing.Size(64, 64);
             this.NWSE.TabIndex = 13;
             // 
@@ -2309,6 +2334,7 @@ namespace WinPaletter
             this.Pen.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Pen.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Pen.Prop_Cursor = WinPaletter.Paths.CursorType.Pen;
+            this.Pen.Prop_File = "";
             this.Pen.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Pen.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Pen.Prop_LoadingCircleBackGradient = false;
@@ -2340,6 +2366,7 @@ namespace WinPaletter
             this.Pen.Prop_Shadow_OffsetX = 2;
             this.Pen.Prop_Shadow_OffsetY = 2;
             this.Pen.Prop_Shadow_Opacity = 0.3F;
+            this.Pen.Prop_UseFromFile = false;
             this.Pen.Size = new System.Drawing.Size(64, 64);
             this.Pen.TabIndex = 14;
             // 
@@ -2350,6 +2377,7 @@ namespace WinPaletter
             this.None.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.None.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.None.Prop_Cursor = WinPaletter.Paths.CursorType.None;
+            this.None.Prop_File = "";
             this.None.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.None.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.None.Prop_LoadingCircleBackGradient = false;
@@ -2381,6 +2409,7 @@ namespace WinPaletter
             this.None.Prop_Shadow_OffsetX = 2;
             this.None.Prop_Shadow_OffsetY = 2;
             this.None.Prop_Shadow_Opacity = 0.3F;
+            this.None.Prop_UseFromFile = false;
             this.None.Size = new System.Drawing.Size(64, 64);
             this.None.TabIndex = 15;
             // 
@@ -2391,6 +2420,7 @@ namespace WinPaletter
             this.Link.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Link.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Link.Prop_Cursor = WinPaletter.Paths.CursorType.Link;
+            this.Link.Prop_File = "";
             this.Link.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Link.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Link.Prop_LoadingCircleBackGradient = false;
@@ -2422,6 +2452,7 @@ namespace WinPaletter
             this.Link.Prop_Shadow_OffsetX = 2;
             this.Link.Prop_Shadow_OffsetY = 2;
             this.Link.Prop_Shadow_Opacity = 0.3F;
+            this.Link.Prop_UseFromFile = false;
             this.Link.Size = new System.Drawing.Size(64, 64);
             this.Link.TabIndex = 16;
             // 
@@ -2432,6 +2463,7 @@ namespace WinPaletter
             this.Pin.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Pin.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Pin.Prop_Cursor = WinPaletter.Paths.CursorType.Pin;
+            this.Pin.Prop_File = "";
             this.Pin.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Pin.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Pin.Prop_LoadingCircleBackGradient = false;
@@ -2463,6 +2495,7 @@ namespace WinPaletter
             this.Pin.Prop_Shadow_OffsetX = 2;
             this.Pin.Prop_Shadow_OffsetY = 2;
             this.Pin.Prop_Shadow_Opacity = 0.3F;
+            this.Pin.Prop_UseFromFile = false;
             this.Pin.Size = new System.Drawing.Size(64, 64);
             this.Pin.TabIndex = 17;
             // 
@@ -2473,6 +2506,7 @@ namespace WinPaletter
             this.Person.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Person.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Person.Prop_Cursor = WinPaletter.Paths.CursorType.Person;
+            this.Person.Prop_File = "";
             this.Person.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Person.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Person.Prop_LoadingCircleBackGradient = false;
@@ -2504,6 +2538,7 @@ namespace WinPaletter
             this.Person.Prop_Shadow_OffsetX = 2;
             this.Person.Prop_Shadow_OffsetY = 2;
             this.Person.Prop_Shadow_Opacity = 0.3F;
+            this.Person.Prop_UseFromFile = false;
             this.Person.Size = new System.Drawing.Size(64, 64);
             this.Person.TabIndex = 18;
             // 
@@ -2514,6 +2549,7 @@ namespace WinPaletter
             this.IBeam.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.IBeam.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.IBeam.Prop_Cursor = WinPaletter.Paths.CursorType.IBeam;
+            this.IBeam.Prop_File = "";
             this.IBeam.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.IBeam.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.IBeam.Prop_LoadingCircleBackGradient = false;
@@ -2545,6 +2581,7 @@ namespace WinPaletter
             this.IBeam.Prop_Shadow_OffsetX = 2;
             this.IBeam.Prop_Shadow_OffsetY = 2;
             this.IBeam.Prop_Shadow_Opacity = 0.3F;
+            this.IBeam.Prop_UseFromFile = false;
             this.IBeam.Size = new System.Drawing.Size(64, 64);
             this.IBeam.TabIndex = 19;
             // 
@@ -2555,6 +2592,7 @@ namespace WinPaletter
             this.Cross.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
             this.Cross.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Cross.Prop_Cursor = WinPaletter.Paths.CursorType.Cross;
+            this.Cross.Prop_File = "";
             this.Cross.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Cross.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.Cross.Prop_LoadingCircleBackGradient = false;
@@ -2586,17 +2624,18 @@ namespace WinPaletter
             this.Cross.Prop_Shadow_OffsetX = 2;
             this.Cross.Prop_Shadow_OffsetY = 2;
             this.Cross.Prop_Shadow_Opacity = 0.3F;
+            this.Cross.Prop_UseFromFile = false;
             this.Cross.Size = new System.Drawing.Size(64, 64);
             this.Cross.TabIndex = 20;
             // 
             // cur_tip_btn
             // 
-            this.cur_tip_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.cur_tip_btn.CustomColor = System.Drawing.Color.Empty;
             this.cur_tip_btn.DrawOnGlass = false;
+            this.cur_tip_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.cur_tip_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_tip_btn.ForeColor = System.Drawing.Color.White;
             this.cur_tip_btn.Image = null;
-            this.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
             this.cur_tip_btn.Location = new System.Drawing.Point(500, 267);
             this.cur_tip_btn.Name = "cur_tip_btn";
             this.cur_tip_btn.Size = new System.Drawing.Size(20, 21);
@@ -2616,6 +2655,7 @@ namespace WinPaletter
             // 
             // CursorsSize_Bar
             // 
+            this.CursorsSize_Bar.BackColor = System.Drawing.Color.Transparent;
             this.CursorsSize_Bar.LargeChange = 50;
             this.CursorsSize_Bar.Location = new System.Drawing.Point(127, 268);
             this.CursorsSize_Bar.Maximum = 320;

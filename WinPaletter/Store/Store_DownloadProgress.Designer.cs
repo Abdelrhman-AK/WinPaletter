@@ -160,7 +160,6 @@ namespace WinPaletter
             Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
-            Button3.LineColor = Color.FromArgb(199, 49, 61);
             Button3.Location = new Point(592, 200);
             Button3.Name = "Button3";
             Button3.Size = new Size(80, 34);

@@ -121,6 +121,24 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
 
+
+        /// <summary>
+        /// Creates an icon or cursor from an ICONINFO structure.
+        /// </summary>
+        /// <param name="icon">
+        /// A reference to an <see cref="ICONINFO"/> structure that contains information about the icon or cursor.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is a handle to the icon or cursor.
+        /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
+        /// </returns>
+        /// <remarks>
+        /// The ICONINFO structure should be properly initialized before calling this function.
+        /// The created icon or cursor can be destroyed using <see cref="DestroyIcon"/> when it is no longer needed.
+        /// </remarks>
+        [DllImport("user32.dll")]
+        public static extern IntPtr CreateIconIndirect(ref ICONINFO icon);
+
         /// <summary>
         /// Loads an animated cursor from a file.
         /// </summary>
@@ -134,13 +152,7 @@ namespace WinPaletter.NativeMethods
         /// If the function succeeds, the handle to the loaded image. If the function fails, it returns IntPtr.Zero.
         /// </returns>
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr LoadImage(
-            IntPtr hinst,
-            string lpszName,
-            uint uType,
-            int cxDesired,
-            int cyDesired,
-            uint fuLoad);
+        public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
 
         // Constants for LoadImage
         public const uint IMAGE_CURSOR = 2;
@@ -566,28 +578,54 @@ namespace WinPaletter.NativeMethods
         /// Flags for the DrawIconEx function.
         /// </summary>
         [Flags]
-        public enum DrawIconExFlags : int
+        public enum DrawIconExFlags : uint
         {
             /// <summary>
-            /// Draws the icon or cursor using the image's size without any stretching.
+            /// Draws the icon using the current size.
             /// </summary>
             DI_NORMAL = 0x0003,
 
             /// <summary>
-            /// Draws the icon or cursor using the image's size without any stretching. This flag is similar to DI_NORMAL, but preserves the 8-bit alpha channel of the icon's XOR mask.
+            /// Uses a compatible brush (specified by hbrFlickerFreeDraw) for the background when the icon is drawn.
+            /// </summary>
+            DI_COMPAT = 0x0004,
+
+            /// <summary>
+            /// Draws the icon as an image without using the mask.
             /// </summary>
             DI_IMAGE = 0x0008,
 
             /// <summary>
-            /// Draws the icon as an XOR image.
+            /// Draws the icon using the mask.
             /// </summary>
-            DI_MASK = 0x0001,
+            DI_MASK = 0x0010,
 
             /// <summary>
-            /// Combines the icon with a color specified by the <see cref="hbrFlickerFreeDraw"/> parameter. This operation is not visible unless the device context specified by <see cref="hdc"/> is displayed on a 256-color VGA monitor or on a device context with similar characteristics.
+            /// Disables mirroring of the image.
             /// </summary>
-            DI_NOMIRROR = 0x0010
+            DI_NOMIRROR = 0x0010,
+
+            /// <summary>
+            /// Uses the default icon size.
+            /// </summary>
+            DI_DEFAULTSIZE = 0x0040,
+
+            /// <summary>
+            /// Suppresses any confirmation dialog box.
+            /// </summary>
+            DI_UNSAFE = 0x2000,
+
+            /// <summary>
+            /// Allows drawing with Write access.
+            /// </summary>
+            DI_WRITABLE = 0x1000,
+
+            /// <summary>
+            /// Allows drawing with Read access.
+            /// </summary>
+            DI_READONLY = 0x0800
         }
+
 
         /// <summary>
         /// Enumeration representing system cursors for OCR.

@@ -96,7 +96,6 @@ namespace WinPaletter
             // 
             TextBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TextBox3.BackColor = Color.FromArgb(55, 55, 55);
-            TextBox3.DrawOnGlass = false;
             TextBox3.ForeColor = Color.White;
             TextBox3.Location = new Point(157, 12);
             TextBox3.MaxLength = 32767;
@@ -117,7 +116,7 @@ namespace WinPaletter
             // 
             TextBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TextBox4.BackColor = Color.FromArgb(55, 55, 55);
-            TextBox4.DrawOnGlass = false;
+
             TextBox4.ForeColor = Color.White;
             TextBox4.Location = new Point(157, 42);
             TextBox4.MaxLength = 32767;
@@ -142,7 +141,6 @@ namespace WinPaletter
             Button7.Font = new Font("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
-            Button7.LineColor = Color.FromArgb(199, 49, 61);
             Button7.Location = new Point(266, 175);
             Button7.Name = "Button7";
             Button7.Size = new Size(80, 34);
@@ -159,7 +157,6 @@ namespace WinPaletter
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.ImageAlign = ContentAlignment.MiddleLeft;
-            Button2.LineColor = Color.FromArgb(69, 110, 129);
             Button2.Location = new Point(352, 175);
             Button2.Name = "Button2";
             Button2.Size = new Size(80, 34);

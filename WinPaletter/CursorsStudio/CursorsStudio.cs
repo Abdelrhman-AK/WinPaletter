@@ -212,6 +212,7 @@ namespace WinPaletter
             _SelectedControl = (CursorControl)sender;
             ApplyColorsFromCursor(_SelectedControl);
             Button1.Enabled = true;
+            if (!tabControl1.Visible) Program.Animator.ShowSync(tabControl1);
         }
 
         public void ApplyColorsFromCursor(CursorControl CursorControl)
@@ -257,7 +258,6 @@ namespace WinPaletter
             Trackbar8.Value = (int)Math.Round(CursorControl.Prop_Shadow_Opacity * 100f);
             Trackbar9.Value = CursorControl.Prop_Shadow_OffsetX;
             Trackbar10.Value = CursorControl.Prop_Shadow_OffsetY;
-
         }
 
         public void ApplyColorsToPreview(CursorControl CursorControl)
@@ -1218,12 +1218,28 @@ namespace WinPaletter
         {
             _SelectedControl.Prop_UseFromFile = !source0.Checked;
             _SelectedControl.Invalidate();
+
+            if (source0.Checked)
+            {
+                ComboBox5.Enabled = true; ComboBox6.Enabled = true;
+                tabControl1.TabPages[1].GetAllControls().ToList().ForEach(x => x.Enabled = true);
+                tabControl1.TabPages[2].GetAllControls().ToList().ForEach(x => x.Enabled = true);
+                tabControl1.TabPages[3].GetAllControls().ToList().ForEach(x => x.Enabled = false);
+            }
         }
 
         private void source1_CheckedChanged(object sender)
         {
             _SelectedControl.Prop_UseFromFile = source1.Checked;
             _SelectedControl.Invalidate();
+
+            if (source1.Checked)
+            {
+                ComboBox5.Enabled = false; ComboBox6.Enabled = false;
+                tabControl1.TabPages[1].GetAllControls().ToList().ForEach(x => x.Enabled = false);
+                tabControl1.TabPages[2].GetAllControls().ToList().ForEach(x => x.Enabled = false);
+                tabControl1.TabPages[3].GetAllControls().ToList().ForEach(x => x.Enabled = true);
+            }
         }
     }
 }

@@ -57,15 +57,15 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.button1.CustomColor = System.Drawing.Color.Empty;
             this.button1.DrawOnGlass = false;
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(115)))), ((int)(((byte)(141)))));
-            this.button1.Location = new System.Drawing.Point(618, 186);
+            this.button1.Location = new System.Drawing.Point(619, 186);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(32, 26);
+            this.button1.Size = new System.Drawing.Size(33, 26);
             this.button1.TabIndex = 89;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -74,7 +74,6 @@
             // 
             this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.textBox1.DrawOnGlass = false;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
             this.textBox1.Location = new System.Drawing.Point(314, 186);
@@ -95,6 +94,7 @@
             // labelAlt1
             // 
             this.labelAlt1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = false;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlt1.Location = new System.Drawing.Point(312, 123);
@@ -107,12 +107,12 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.button2.CustomColor = System.Drawing.Color.Empty;
             this.button2.DrawOnGlass = true;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
-            this.button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button2.Location = new System.Drawing.Point(300, 168);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(221, 32);
@@ -123,27 +123,27 @@
             // button3
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.button3.CustomColor = System.Drawing.Color.Empty;
             this.button3.DrawOnGlass = false;
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(103)))), ((int)(((byte)(115)))));
             this.button3.Location = new System.Drawing.Point(580, 186);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(32, 26);
+            this.button3.Size = new System.Drawing.Size(33, 26);
             this.button3.TabIndex = 91;
             this.button3.UseVisualStyleBackColor = false;
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.button4.CustomColor = System.Drawing.Color.Empty;
             this.button4.DrawOnGlass = true;
+            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
-            this.button4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button4.Location = new System.Drawing.Point(718, 168);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(70, 32);
@@ -155,6 +155,7 @@
             // labelAlt3
             // 
             this.labelAlt3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt3.DrawOnGlass = false;
             this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlt3.Location = new System.Drawing.Point(315, 153);
@@ -167,12 +168,12 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.button5.CustomColor = System.Drawing.Color.Empty;
             this.button5.DrawOnGlass = true;
+            this.button5.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
-            this.button5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button5.Location = new System.Drawing.Point(527, 168);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(185, 32);

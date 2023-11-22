@@ -34,7 +34,9 @@ namespace WinPaletter
 
             InitializeApplication(true);
 
-            SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
+            Application.Run(new Form1());
+
+            //SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
         }
 
         public static void InitializeApplication(bool ShowLoginDialog)

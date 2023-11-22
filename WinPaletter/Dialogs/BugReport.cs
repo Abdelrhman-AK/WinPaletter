@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -17,6 +18,27 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
+
+        private void Center()
+        {
+            Location = new Point(Location.X - 15, Location.Y - 15);
+
+            Task.Delay(10).ContinueWith(_ =>
+            {
+                BeginInvoke(new MethodInvoker(() =>
+                {
+                    var area = Screen.FromControl(this).WorkingArea;
+                    var targetX = (area.Width / 2) - (Width / 2);
+                    var targetY = (area.Height / 2) - (Height / 2);
+
+                    FluentTransitions.Transition
+                        .With(this, nameof(Left), targetX)
+                        .With(this, nameof(Top), targetY)
+                        .Spring(TimeSpan.FromSeconds(0.75));
+                }));
+            });
+        }
+
         private void BugReport_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
@@ -40,6 +62,8 @@ namespace WinPaletter
             Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
 
             BringToFront();
+
+            Center();
         }
 
         public void AddData(string str, Exception Exception, TreeView Treeview)

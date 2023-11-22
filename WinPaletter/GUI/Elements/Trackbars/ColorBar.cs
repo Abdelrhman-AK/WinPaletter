@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -22,8 +21,13 @@ namespace WinPaletter.UI.WP
             };
             cb_L = new ColorBlend() { Positions = new[] { 0f, 1f / 2.0f, 1f }, Colors = new[] { Color.Black, _AccentColor, Color.White } };
             Timer = new Timer() { Enabled = false, Interval = 1 };
+
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             SetStyle((ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
+
             Height = 19;
             Text = string.Empty;
             MouseUp += ColorBar_MouseUp;
@@ -34,7 +38,6 @@ namespace WinPaletter.UI.WP
             HandleDestroyed += ColorBar_HandleDestroyed;
             Timer.Tick += Timer_Tick;
         }
-
 
         #region Variables
 
@@ -79,7 +82,7 @@ namespace WinPaletter.UI.WP
 
         #region Properties
 
-        private Color _AccentColor = Program.Style.Colors.Core;
+        private Color _AccentColor = Program.Style.Schemes.Main.Colors.AccentAlt;
         public Color AccentColor
         {
             get
@@ -247,6 +250,22 @@ namespace WinPaletter.UI.WP
 
         public ModesList Mode { get; set; } = ModesList.Hue;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -497,14 +516,14 @@ namespace WinPaletter.UI.WP
         protected override void OnPaint(PaintEventArgs e)
         {
             var G = e.Graphics;
-            G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
 
-            G.Clear(BackColor);
-            bool Dark = Program.Style.DarkMode;
-            var c_back = Dark ? Color.FromArgb(60, 60, 60) : Color.FromArgb(210, 210, 210);
-            var c_btn = Dark ? Color.FromArgb(165, 165, 165) : Color.FromArgb(100, 100, 100);
-            Color C;
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+
+            Color color;
 
             var middleRect = new Rectangle(0, (int)Math.Round((Height - Height * 0.25d) / 2d), Width - 1, (int)Math.Round(Height * 0.25d));
 
@@ -517,7 +536,7 @@ namespace WinPaletter.UI.WP
                         back = new LinearGradientBrush(middleRect, Color.Black, Color.Black, 0f, false) { InterpolationColors = cb_H };
                         var HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
                         HSL_.H = (int)Math.Round(Value / (double)Maximum * 359d);
-                        C = HSL_.ToRGB();
+                        color = HSL_.ToRGB();
                         break;
                     }
 
@@ -530,7 +549,7 @@ namespace WinPaletter.UI.WP
                         back = new LinearGradientBrush(middleRect, HSL_x1.ToRGB(), HSL_x2.ToRGB(), LinearGradientMode.Horizontal);
                         var HSL_ = _AccentColor.ToHSL();
                         HSL_.S = (float)(Value / (double)Maximum);
-                        C = HSL_.ToRGB();
+                        color = HSL_.ToRGB();
                         break;
                     }
 
@@ -540,49 +559,37 @@ namespace WinPaletter.UI.WP
                         back = new LinearGradientBrush(middleRect, Color.Black, Color.Black, 0f, false) { InterpolationColors = cb_L };
                         var HSL_ = _AccentColor.ToHSL();
                         HSL_.L = (float)(Value / (double)Maximum);
-                        C = HSL_.ToRGB();
+                        color = HSL_.ToRGB();
                         break;
                     }
 
                 default:
                     {
-                        C = Dark ? Color.FromArgb(60, 60, 60) : Color.FromArgb(210, 210, 210);
-                        back = new LinearGradientBrush(middleRect, C, C, (float)Paths.GradientMode.Horizontal);
+                        color = scheme.Colors.Back_Max;
+                        back = new LinearGradientBrush(middleRect, color, color, (float)Paths.GradientMode.Horizontal);
                         break;
                     }
 
             }
 
+            //Excluded to solve UI bug of short rounded rectangle height
+            G.ExcludeClip(new Rectangle(-1, 0, 3, Height));
+            G.ExcludeClip(new Rectangle(Width - 2, 0, 3, Height));
+
             G.FillRoundedRect(back, middleRect);
+
+            G.ResetClip();
 
             Circle = new Rectangle((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
 
-            using (var br = new SolidBrush(BackColor))
-            {
-                G.FillRectangle(br, new Rectangle(-1, 0, 4, Height));
-            }
-
-            using (var br = new SolidBrush(BackColor))
-            {
-                G.FillRectangle(br, new Rectangle(Width - 4, 0, 4, Height));
-            }
-
-            using (var br = new SolidBrush(Program.Style.Colors.Border))
-            {
-                G.FillEllipse(br, Circle);
-            }
+            G.FillEllipse(Program.Style.Schemes.Main.Brushes.Line, Circle);
 
             var smallC1 = new Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             var smallC2 = new Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
-            using (var br = new SolidBrush(C))
-            {
-                G.FillEllipse(br, smallC1);
-            }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, C)))
-            {
-                G.FillEllipse(br, smallC2);
-            }
+            using (var br = new SolidBrush(color)) { G.FillEllipse(br, smallC1); }
+
+            using (var br = new SolidBrush(Color.FromArgb(alpha, color))) { G.FillEllipse(br, smallC2); }
         }
 
     }

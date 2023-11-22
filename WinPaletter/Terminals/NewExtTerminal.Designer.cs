@@ -35,153 +35,160 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(NewExtTerminal));
-            PictureBox17 = new PictureBox();
-            Label102 = new Label();
-            OpenFileDialog1 = new OpenFileDialog();
-            Button2 = new UI.WP.Button();
-            Button2.Click += new EventHandler(Button2_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            AlertBox1 = new UI.WP.AlertBox();
-            Button16 = new UI.WP.Button();
-            Button16.Click += new EventHandler(Button16_Click);
-            TextBox1 = new UI.WP.TextBox();
-            ((System.ComponentModel.ISupportInitialize)PictureBox17).BeginInit();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewExtTerminal));
+            this.PictureBox17 = new System.Windows.Forms.PictureBox();
+            this.Label102 = new System.Windows.Forms.Label();
+            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.Button2 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.Button16 = new WinPaletter.UI.WP.Button();
+            this.TextBox1 = new WinPaletter.UI.WP.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
+            this.SuspendLayout();
             // 
             // PictureBox17
             // 
-            PictureBox17.Image = (Image)resources.GetObject("PictureBox17.Image");
-            PictureBox17.Location = new Point(12, 12);
-            PictureBox17.Name = "PictureBox17";
-            PictureBox17.Size = new Size(24, 24);
-            PictureBox17.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox17.TabIndex = 101;
-            PictureBox17.TabStop = false;
+            this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
+            this.PictureBox17.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox17.Name = "PictureBox17";
+            this.PictureBox17.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox17.TabIndex = 101;
+            this.PictureBox17.TabStop = false;
             // 
             // Label102
             // 
-            Label102.BackColor = Color.Transparent;
-            Label102.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label102.ForeColor = Color.White;
-            Label102.Location = new Point(42, 12);
-            Label102.Name = "Label102";
-            Label102.Size = new Size(39, 24);
-            Label102.TabIndex = 100;
-            Label102.Text = "Path:";
-            Label102.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label102.BackColor = System.Drawing.Color.Transparent;
+            this.Label102.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label102.ForeColor = System.Drawing.Color.White;
+            this.Label102.Location = new System.Drawing.Point(42, 12);
+            this.Label102.Name = "Label102";
+            this.Label102.Size = new System.Drawing.Size(39, 24);
+            this.Label102.TabIndex = 100;
+            this.Label102.Text = "Path:";
+            this.Label102.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // OpenFileDialog1
             // 
-            OpenFileDialog1.Filter = "Executable File (*.exe)|*.exe";
+            this.OpenFileDialog1.Filter = "Executable File (*.exe)|*.exe";
             // 
             // Button2
             // 
-            Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.Font = new Font("Segoe UI", 9.0f);
-            Button2.ForeColor = Color.White;
-            Button2.Image = null;
-            Button2.LineColor = Color.FromArgb(199, 49, 61);
-            Button2.Location = new Point(234, 105);
-            Button2.Name = "Button2";
-            Button2.Size = new Size(80, 34);
-            Button2.TabIndex = 201;
-            Button2.Text = "Cancel";
-            Button2.UseVisualStyleBackColor = false;
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.DrawOnGlass = false;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button2.ForeColor = System.Drawing.Color.White;
+            this.Button2.Image = null;
+            this.Button2.Location = new System.Drawing.Point(234, 105);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(80, 34);
+            this.Button2.TabIndex = 201;
+            this.Button2.Text = "Cancel";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.Font = new Font("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = (Image)resources.GetObject("Button1.Image");
-            Button1.ImageAlign = ContentAlignment.MiddleLeft;
-            Button1.LineColor = Color.FromArgb(28, 103, 64);
-            Button1.Location = new Point(320, 105);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(160, 34);
-            Button1.TabIndex = 200;
-            Button1.Text = "Add to registry entry";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.Location = new System.Drawing.Point(320, 105);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(160, 34);
+            this.Button1.TabIndex = 200;
+            this.Button1.Text = "Add to registry entry";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // AlertBox1
             // 
-            AlertBox1.AlertStyle = UI.WP.AlertBox.Style.Adaptive;
-            AlertBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AlertBox1.BackColor = Color.FromArgb(70, 51, 2);
-            AlertBox1.CenterText = false;
-            AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new Font("Segoe UI", 9.0f);
-            AlertBox1.Image = Properties.Resources.notify_warning;
-            AlertBox1.Location = new Point(12, 44);
-            AlertBox1.Name = "AlertBox1";
-            AlertBox1.Size = new Size(468, 49);
-            AlertBox1.TabIndex = 199;
-            AlertBox1.TabStop = false;
-            AlertBox1.Text = "This feature is experimental, you should be sure that you are selecting a console" + @" application not WinForm\Desktop application, and in system drive (C:\)";
+            this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
+            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox1.CenterText = false;
+            this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox1.Image = global::WinPaletter.Properties.Resources.notify_warning;
+            this.AlertBox1.Location = new System.Drawing.Point(12, 44);
+            this.AlertBox1.Name = "AlertBox1";
+            this.AlertBox1.Size = new System.Drawing.Size(468, 49);
+            this.AlertBox1.TabIndex = 199;
+            this.AlertBox1.TabStop = false;
+            this.AlertBox1.Text = "This feature is experimental, you should be sure that you are selecting a console" +
+    " application not WinForm\\Desktop application, and in system drive (C:\\)";
             // 
             // Button16
             // 
-            Button16.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Button16.BackColor = Color.FromArgb(34, 34, 34);
-            Button16.Font = new Font("Segoe UI", 9.0f);
-            Button16.ForeColor = Color.White;
-            Button16.Image = (Image)resources.GetObject("Button16.Image");
-            Button16.LineColor = Color.FromArgb(164, 125, 25);
-            Button16.Location = new Point(450, 12);
-            Button16.Name = "Button16";
-            Button16.Size = new Size(30, 24);
-            Button16.TabIndex = 193;
-            Button16.UseVisualStyleBackColor = false;
+            this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button16.CustomColor = System.Drawing.Color.Empty;
+            this.Button16.DrawOnGlass = false;
+            this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button16.ForeColor = System.Drawing.Color.White;
+            this.Button16.Image = ((System.Drawing.Image)(resources.GetObject("Button16.Image")));
+            this.Button16.Location = new System.Drawing.Point(450, 12);
+            this.Button16.Name = "Button16";
+            this.Button16.Size = new System.Drawing.Size(30, 24);
+            this.Button16.TabIndex = 193;
+            this.Button16.UseVisualStyleBackColor = false;
+            this.Button16.Click += new System.EventHandler(this.Button16_Click);
             // 
             // TextBox1
             // 
-            TextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TextBox1.BackColor = Color.FromArgb(55, 55, 55);
-            TextBox1.ForeColor = Color.White;
-            TextBox1.Location = new Point(87, 12);
-            TextBox1.MaxLength = 32767;
-            TextBox1.Multiline = false;
-            TextBox1.Name = "TextBox1";
-            TextBox1.ReadOnly = false;
-            TextBox1.Scrollbars = ScrollBars.None;
-            TextBox1.SelectedText = "";
-            TextBox1.SelectionLength = 0;
-            TextBox1.SelectionStart = 0;
-            TextBox1.Size = new Size(357, 24);
-            TextBox1.TabIndex = 102;
-            TextBox1.TextAlign = HorizontalAlignment.Left;
-            TextBox1.UseSystemPasswordChar = false;
-            TextBox1.WordWrap = true;
+            this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.TextBox1.ForeColor = System.Drawing.Color.White;
+            this.TextBox1.Location = new System.Drawing.Point(87, 12);
+            this.TextBox1.MaxLength = 32767;
+            this.TextBox1.Multiline = false;
+            this.TextBox1.Name = "TextBox1";
+            this.TextBox1.ReadOnly = false;
+            this.TextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.TextBox1.SelectedText = "";
+            this.TextBox1.SelectionLength = 0;
+            this.TextBox1.SelectionStart = 0;
+            this.TextBox1.Size = new System.Drawing.Size(357, 24);
+            this.TextBox1.TabIndex = 102;
+            this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.TextBox1.UseSystemPasswordChar = false;
+            this.TextBox1.WordWrap = true;
             // 
             // NewExtTerminal
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(492, 151);
-            Controls.Add(Button2);
-            Controls.Add(Button1);
-            Controls.Add(AlertBox1);
-            Controls.Add(Button16);
-            Controls.Add(TextBox1);
-            Controls.Add(PictureBox17);
-            Controls.Add(Label102);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "NewExtTerminal";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "New external terminal";
-            ((System.ComponentModel.ISupportInitialize)PictureBox17).EndInit();
-            Load += new EventHandler(NewExtTerminal_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(492, 151);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.AlertBox1);
+            this.Controls.Add(this.Button16);
+            this.Controls.Add(this.TextBox1);
+            this.Controls.Add(this.PictureBox17);
+            this.Controls.Add(this.Label102);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "NewExtTerminal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "New external terminal";
+            this.Load += new System.EventHandler(this.NewExtTerminal_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
+            this.ResumeLayout(false);
 
         }
 

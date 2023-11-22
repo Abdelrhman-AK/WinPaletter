@@ -17,8 +17,6 @@ namespace WinPaletter
         }
         private void AltTabEditor_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
             Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
             ApplyFromTM(Program.TM);
 
@@ -71,7 +69,6 @@ namespace WinPaletter
                         RadioImage1.Image = Properties.Resources.Native12;
                         break;
                     }
-
             }
 
             RadioImage2.Image = Properties.Resources.NativeXP;
@@ -172,7 +169,7 @@ namespace WinPaletter
             Panel2.BackColor = PanelRRaised1.BackColor;
             LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
-            GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 | ExplorerPatcher.IsAllowed();
+            GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.IsAllowed();
             AlertBox1.Visible = Program.PreviewStyle == WindowStyle.W7;
 
             if (ExplorerPatcher.IsAllowed())
@@ -204,27 +201,26 @@ namespace WinPaletter
             WinElement1.Top = (int)Math.Round((WinElement1.Parent.Height - WinElement1.Height) / 2d);
 
             tabs_preview_1.DoubleBuffer();
+
+            this.LoadLanguage();
+            ApplyStyle(this);
         }
 
         public void ApplyFromTM(Theme.Manager TM)
         {
-            {
-                AltTabEnabled.Checked = TM.AltTab.Enabled;
-                RadioImage1.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.Default | TM.AltTab.Style == Theme.Structures.AltTab.Styles.EP_Win10;
-                RadioImage2.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.ClassicNT;
-                Trackbar1.Value = TM.AltTab.Win10Opacity;
-            }
+            AltTabEnabled.Checked = TM.AltTab.Enabled;
+            RadioImage1.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.Default | TM.AltTab.Style == Theme.Structures.AltTab.Styles.EP_Win10;
+            RadioImage2.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.ClassicNT;
+            Trackbar1.Value = TM.AltTab.Win10Opacity;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            {
-                TM.AltTab.Enabled = AltTabEnabled.Checked;
-                TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
-                if (ExplorerPatcher.IsAllowed() & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
-                    TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
-                TM.AltTab.Win10Opacity = Trackbar1.Value;
-            }
+            TM.AltTab.Enabled = AltTabEnabled.Checked;
+            TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
+            if (ExplorerPatcher.IsAllowed() & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
+                TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
+            TM.AltTab.Win10Opacity = Trackbar1.Value;
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -289,8 +285,7 @@ namespace WinPaletter
         private void Trackbar1_Scroll(object sender)
         {
             opacity_btn.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
-                WinElement1.BackColorAlpha = Trackbar1.Value;
+            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
         }
 
         private void RadioImage2_CheckedChanged(object sender)

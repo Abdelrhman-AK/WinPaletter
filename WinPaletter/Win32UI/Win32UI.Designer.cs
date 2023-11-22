@@ -451,18 +451,18 @@ namespace WinPaletter
             // Button10
             // 
             this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button10.CustomColor = System.Drawing.Color.Empty;
             this.Button10.DrawOnGlass = false;
+            this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
             this.Button10.Image = ((System.Drawing.Image)(resources.GetObject("Button10.Image")));
-            this.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button10.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(81)))), ((int)(((byte)(110)))));
             this.Button10.Location = new System.Drawing.Point(568, 550);
             this.Button10.Name = "Button10";
             this.Button10.Size = new System.Drawing.Size(115, 34);
             this.Button10.TabIndex = 81;
             this.Button10.Text = "Quick apply";
+            this.Button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button10.UseVisualStyleBackColor = false;
             this.Button10.Click += new System.EventHandler(this.Button10_Click);
             // 
@@ -504,24 +504,25 @@ namespace WinPaletter
             // 
             // Button8
             // 
-            this.Button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button8.CustomColor = System.Drawing.Color.Empty;
             this.Button8.DrawOnGlass = false;
+            this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
-            this.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(157)))), ((int)(((byte)(165)))));
             this.Button8.Location = new System.Drawing.Point(405, 4);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(141, 28);
             this.Button8.TabIndex = 86;
             this.Button8.Text = "Visual styles file";
+            this.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button8.UseVisualStyleBackColor = false;
             this.Button8.Click += new System.EventHandler(this.Button8_Click);
             // 
             // SeparatorVertical1
             // 
             this.SeparatorVertical1.AlternativeLook = false;
+            this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
             this.SeparatorVertical1.Location = new System.Drawing.Point(703, 4);
             this.SeparatorVertical1.Name = "SeparatorVertical1";
             this.SeparatorVertical1.Size = new System.Drawing.Size(1, 28);
@@ -532,18 +533,18 @@ namespace WinPaletter
             // Button6
             // 
             this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button6.CustomColor = System.Drawing.Color.Empty;
             this.Button6.DrawOnGlass = false;
+            this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
-            this.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button6.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(110)))), ((int)(((byte)(129)))));
             this.Button6.Location = new System.Drawing.Point(709, 4);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(140, 28);
             this.Button6.TabIndex = 83;
             this.Button6.Text = "Export";
+            this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
@@ -566,18 +567,18 @@ namespace WinPaletter
             // 
             // Button7
             // 
-            this.Button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button7.CustomColor = System.Drawing.Color.Empty;
             this.Button7.DrawOnGlass = false;
+            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = ((System.Drawing.Image)(resources.GetObject("Button7.Image")));
-            this.Button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button7.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(113)))), ((int)(((byte)(122)))), ((int)(((byte)(131)))));
             this.Button7.Location = new System.Drawing.Point(110, 4);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(147, 28);
             this.Button7.TabIndex = 69;
             this.Button7.Text = "WinPaletter theme";
+            this.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button7.UseVisualStyleBackColor = false;
             this.Button7.Click += new System.EventHandler(this.Button7_Click);
             // 
@@ -594,35 +595,35 @@ namespace WinPaletter
             // 
             // Button3
             // 
-            this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
             this.Button3.DrawOnGlass = false;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(111)))), ((int)(((byte)(91)))));
             this.Button3.Location = new System.Drawing.Point(259, 4);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(144, 28);
             this.Button3.TabIndex = 66;
             this.Button3.Text = "Classic .theme file";
+            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // Button5
             // 
-            this.Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button5.CustomColor = System.Drawing.Color.Empty;
             this.Button5.DrawOnGlass = false;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(160)))), ((int)(((byte)(149)))));
             this.Button5.Location = new System.Drawing.Point(548, 4);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(150, 28);
             this.Button5.TabIndex = 67;
             this.Button5.Text = "Current applied";
+            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
@@ -686,6 +687,7 @@ namespace WinPaletter
             this.Separator6.AlternativeLook = false;
             this.Separator6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Separator6.BackColor = System.Drawing.Color.Transparent;
             this.Separator6.Location = new System.Drawing.Point(4, 235);
             this.Separator6.Name = "Separator6";
             this.Separator6.Size = new System.Drawing.Size(338, 1);
@@ -705,12 +707,12 @@ namespace WinPaletter
             // 
             // Button11
             // 
-            this.Button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button11.CustomColor = System.Drawing.Color.Empty;
             this.Button11.DrawOnGlass = false;
+            this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
-            this.Button11.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button11.Location = new System.Drawing.Point(238, 243);
             this.Button11.Name = "Button11";
             this.Button11.Size = new System.Drawing.Size(100, 24);
@@ -772,12 +774,12 @@ namespace WinPaletter
             // 
             // Button9
             // 
-            this.Button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button9.CustomColor = System.Drawing.Color.Empty;
             this.Button9.DrawOnGlass = false;
+            this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
             this.Button9.Image = null;
-            this.Button9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button9.Location = new System.Drawing.Point(112, 243);
             this.Button9.Name = "Button9";
             this.Button9.Size = new System.Drawing.Size(120, 24);
@@ -1015,6 +1017,7 @@ namespace WinPaletter
             // SeparatorVertical4
             // 
             this.SeparatorVertical4.AlternativeLook = true;
+            this.SeparatorVertical4.BackColor = System.Drawing.Color.Transparent;
             this.SeparatorVertical4.Location = new System.Drawing.Point(200, 169);
             this.SeparatorVertical4.Name = "SeparatorVertical4";
             this.SeparatorVertical4.Size = new System.Drawing.Size(2, 9);
@@ -1024,6 +1027,7 @@ namespace WinPaletter
             // SeparatorVertical3
             // 
             this.SeparatorVertical3.AlternativeLook = true;
+            this.SeparatorVertical3.BackColor = System.Drawing.Color.Transparent;
             this.SeparatorVertical3.Location = new System.Drawing.Point(165, 118);
             this.SeparatorVertical3.Name = "SeparatorVertical3";
             this.SeparatorVertical3.Size = new System.Drawing.Size(2, 60);
@@ -1033,6 +1037,7 @@ namespace WinPaletter
             // Separator3
             // 
             this.Separator3.AlternativeLook = true;
+            this.Separator3.BackColor = System.Drawing.Color.Transparent;
             this.Separator3.Location = new System.Drawing.Point(107, 146);
             this.Separator3.Name = "Separator3";
             this.Separator3.Size = new System.Drawing.Size(25, 2);
@@ -1043,6 +1048,7 @@ namespace WinPaletter
             // Separator4
             // 
             this.Separator4.AlternativeLook = true;
+            this.Separator4.BackColor = System.Drawing.Color.Transparent;
             this.Separator4.Location = new System.Drawing.Point(218, 146);
             this.Separator4.Name = "Separator4";
             this.Separator4.Size = new System.Drawing.Size(25, 2);
@@ -1053,6 +1059,7 @@ namespace WinPaletter
             // Separator5
             // 
             this.Separator5.AlternativeLook = true;
+            this.Separator5.BackColor = System.Drawing.Color.Transparent;
             this.Separator5.Location = new System.Drawing.Point(108, 85);
             this.Separator5.Name = "Separator5";
             this.Separator5.Size = new System.Drawing.Size(18, 2);
@@ -1063,6 +1070,7 @@ namespace WinPaletter
             // Separator2
             // 
             this.Separator2.AlternativeLook = true;
+            this.Separator2.BackColor = System.Drawing.Color.Transparent;
             this.Separator2.Location = new System.Drawing.Point(225, 85);
             this.Separator2.Name = "Separator2";
             this.Separator2.Size = new System.Drawing.Size(18, 2);
@@ -1073,6 +1081,7 @@ namespace WinPaletter
             // SeparatorVertical2
             // 
             this.SeparatorVertical2.AlternativeLook = true;
+            this.SeparatorVertical2.BackColor = System.Drawing.Color.Transparent;
             this.SeparatorVertical2.Location = new System.Drawing.Point(173, 54);
             this.SeparatorVertical2.Name = "SeparatorVertical2";
             this.SeparatorVertical2.Size = new System.Drawing.Size(2, 32);
@@ -2980,35 +2989,36 @@ namespace WinPaletter
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
             this.Button2.DrawOnGlass = false;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
             this.Button2.Location = new System.Drawing.Point(482, 550);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 64;
             this.Button2.Text = "Cancel";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
             this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(20)))), ((int)(((byte)(64)))));
             this.Button1.Location = new System.Drawing.Point(689, 550);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(180, 34);
             this.Button1.TabIndex = 63;
             this.Button1.Text = "Load into current theme";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -3017,6 +3027,7 @@ namespace WinPaletter
             this.Separator1.AlternativeLook = false;
             this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Separator1.BackColor = System.Drawing.Color.Transparent;
             this.Separator1.Location = new System.Drawing.Point(12, 539);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(857, 1);

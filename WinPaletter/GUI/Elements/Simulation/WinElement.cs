@@ -92,7 +92,7 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        private byte _BackColorAlpha = 130;
+        private int _BackColorAlpha = 130;
         public int BackColorAlpha
         {
             get
@@ -101,7 +101,7 @@ namespace WinPaletter.UI.Simulation
             }
             set
             {
-                _BackColorAlpha = (byte)value;
+                _BackColorAlpha = value;
                 if (!SuspendRefresh)
                     Refresh();
             }
@@ -845,6 +845,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRectangle(br, Rect);
                         }
+
                         if (Transparency)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
 
@@ -1178,9 +1179,9 @@ namespace WinPaletter.UI.Simulation
                 case Styles.AltTab10:
                     #region Alt+Tab 10
                     {
-                        int a = Math.Max(Math.Min(255, BackColorAlpha / 100 * 255), 0);
+                        float a = Math.Max(Math.Min(255, (float)((float)BackColorAlpha / 100) * 255), 0);
 
-                        using (var br = new SolidBrush(Color.FromArgb(a, 23, 23, 23)))
+                        using (var br = new SolidBrush(Color.FromArgb((int)a, 23, 23, 23)))
                         {
                             G.FillRectangle(br, RRect);
                         }

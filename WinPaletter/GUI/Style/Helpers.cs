@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.UI.WP.Button;
 
 namespace WinPaletter.UI.Style
 {
@@ -145,8 +146,12 @@ namespace WinPaletter.UI.Style
         {
             bool DarkMode;
             bool RoundedCorners;
-            Color BackColor;
             Color AccentColor;
+            Color Secondary;
+            Color Tertiary;
+            Color Disabled;
+            Color Disabled_Background;
+            Color BackColor;
 
             bool CustomR = false;
 
@@ -155,6 +160,10 @@ namespace WinPaletter.UI.Style
             {
                 BackColor = Program.Settings.Appearance.BackColor;
                 AccentColor = Program.Settings.Appearance.AccentColor;
+                Secondary = Program.Settings.Appearance.SecondaryColor;
+                Tertiary = Program.Settings.Appearance.TertiaryColor;
+                Disabled = Program.Settings.Appearance.DisabledColor;
+                Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
                 DarkMode = Program.Settings.Appearance.CustomTheme;
                 RoundedCorners = Program.Settings.Appearance.RoundedCorners;
                 CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
@@ -166,10 +175,14 @@ namespace WinPaletter.UI.Style
                 RoundedCorners = Program.Style.RoundedCorners;
                 BackColor = DarkMode ? DefaultColors.BackColorDark : DefaultColors.BackColorLight;
                 AccentColor = DefaultColors.Accent;
+                Secondary = DefaultColors.Secondary;
+                Tertiary = DefaultColors.Tertiary;
+                Disabled = DefaultColors.Disabled;
+                Disabled_Background = DefaultColors.DisabledBackColor;
                 CustomR = false;
             }
 
-            Program.Style = new Config(AccentColor, BackColor, DarkMode, RoundedCorners);
+            Program.Style = new Config(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners);
 
             // Apply the style to the specified form or all open forms
             if (Form is null)
@@ -211,6 +224,7 @@ namespace WinPaletter.UI.Style
                     }
                 }
             }
+
             else
             {
                 // Apply the style to the specified form
@@ -336,21 +350,7 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is UI.WP.Button)
             {
-                var temp = (UI.WP.Button)ctrl;
-                temp.BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.03d));
-                if (temp.DrawOnGlass)
-                {
-                    try
-                    {
-                        temp.ForeColor = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(System.Windows.Forms.VisualStyles.ColorProperty.TextColor).Invert();
-                    }
-                    catch { }
-                }
-            }
-
-            else if (ctrl is RichTextBox)
-            {
-                ctrl.BackColor = ctrl.Parent.BackColor;
+                ((UI.WP.Button)ctrl).UpdateStyleSchemes();
             }
 
             else if (ctrl is LinkLabel)
@@ -365,11 +365,9 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is TreeView)
             {
-                {
-                    var temp1 = (TreeView)ctrl;
-                    temp1.BackColor = ctrl.Parent.BackColor;
-                    temp1.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
+                var temp1 = (TreeView)ctrl;
+                temp1.BackColor = ctrl.Parent.BackColor;
+                temp1.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is ListView)
@@ -387,30 +385,24 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is CheckedListBox)
             {
-                {
-                    var temp4 = (CheckedListBox)ctrl;
-                    temp4.BackColor = ctrl.Parent.BackColor;
-                    temp4.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
+                var temp4 = (CheckedListBox)ctrl;
+                temp4.BackColor = ctrl.Parent.BackColor;
+                temp4.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is NumericUpDown)
             {
-                {
-                    var temp5 = (NumericUpDown)ctrl;
-                    temp5.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
-                    temp5.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
+                var temp5 = (NumericUpDown)ctrl;
+                temp5.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
+                temp5.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is ComboBox)
+            else if (ctrl is System.Windows.Forms.ComboBox && ctrl is not UI.WP.ComboBox)
             {
-                {
-                    var temp6 = (ComboBox)ctrl;
-                    temp6.FlatStyle = FlatStyle.Flat;
-                    temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
-                    temp6.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
+                var temp6 = (System.Windows.Forms.ComboBox)ctrl;
+                temp6.FlatStyle = FlatStyle.Flat;
+                temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
+                temp6.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is DataGridView)
@@ -422,15 +414,15 @@ namespace WinPaletter.UI.Style
                 {
                     case true:
                         {
-                            ColumnBack = Program.Style.Colors.Back.Light(0.05f);
-                            CellBack = Program.Style.Colors.Back;
+                            ColumnBack = Program.Style.Schemes.Main.Colors.Back.Light(0.05f);
+                            CellBack = Program.Style.Schemes.Main.Colors.Back;
                             break;
                         }
 
                     case false:
                         {
-                            ColumnBack = Program.Style.Colors.Back.Dark(0.05f);
-                            CellBack = Program.Style.Colors.Back;
+                            ColumnBack = Program.Style.Schemes.Main.Colors.Back.Dark(0.05f);
+                            CellBack = Program.Style.Schemes.Main.Colors.Back;
                             break;
                         }
 
@@ -447,13 +439,16 @@ namespace WinPaletter.UI.Style
                 foreach (Control c in ctrl.Controls)
                 {
                     if (c is TabPage)
+                    {
                         c.BackColor = ctrl.Parent.BackColor;
+                    }
+
                     ApplyStyleToSubControls(c, DarkMode);
                 }
             }
 
             if (ctrl.FindForm().Visible)
-                ctrl.Update();
+                ctrl.Refresh();
         }
 
         /// <summary>

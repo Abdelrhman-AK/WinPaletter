@@ -12,27 +12,22 @@ namespace WinPaletter.UI.WP
     [Description("Themed ComboBox for WinPaletter UI")]
     public class ComboBox : System.Windows.Forms.ComboBox
     {
-
         public ComboBox()
         {
             Timer1 = new Timer() { Enabled = false, Interval = 1 };
             Timer2 = new Timer() { Enabled = false, Interval = 1 };
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.DoubleBuffer, true);
+
+            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
+
             Size = new Size(190, 27);
             DrawMode = DrawMode.OwnerDrawVariable;
             ItemHeight = 20;
 
-            if (Program.Style.DarkMode)
-                BackColor = Color.FromArgb(55, 55, 55);
-            else
-                BackColor = Color.FromArgb(225, 225, 225);
             ForeColor = Color.White;
             DropDownStyle = ComboBoxStyle.DropDownList;
             Font = new Font("Segoe UI", 9f);
-            DoubleBuffered = true;
             MouseWheel += ComboBox_MouseWheel;
             MouseDown += ComboBox_MouseDown;
             MouseUp += ComboBox_Click;
@@ -47,7 +42,9 @@ namespace WinPaletter.UI.WP
 
         #region Variables
 
-        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.3d));
+        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.4d));
+        private readonly TextureBrush Noise2 = new(Properties.Resources.GaussianBlur.Fade(0.9d));
+
         private bool _Shown = false;
 
         private MouseState State = MouseState.None;
@@ -59,7 +56,6 @@ namespace WinPaletter.UI.WP
             Down
         }
 
-
         #endregion
 
         #region Voids
@@ -67,15 +63,38 @@ namespace WinPaletter.UI.WP
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {
             var points = new List<Point>() { FirstPoint, SecondPoint, ThirdPoint };
-            using (var br = new SolidBrush(Clr))
+            using (SolidBrush br = new(Clr))
             {
                 G.FillPolygon(br, points.ToArray());
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
             }
         }
 
         #endregion
 
         #region Events
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space) { this.DroppedDown = !this.DroppedDown; }
+            base.OnKeyDown(e);
+        }
 
         protected override void OnMouseEnter(EventArgs e)
         {
@@ -301,42 +320,42 @@ namespace WinPaletter.UI.WP
 
         public void ComboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            BackColor = Program.Style.Colors.Back;
-            e.DrawBackground();
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            if (base.BackColor.IsDark())
+            Rectangle Rect_Fix1 = new(e.Bounds.X - 1, e.Bounds.Y - 1, e.Bounds.Width + 2, e.Bounds.Height + 2);
+            Rectangle Rect_Fix2 = new(e.Bounds.X - 3, e.Bounds.Y - 3, e.Bounds.Width + 6, e.Bounds.Height + 6);
+
+            if (((e.State & DrawItemState.Focus) == DrawItemState.Focus) || ((e.State & DrawItemState.Selected) == DrawItemState.Selected) || ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight))
             {
-                if (ForeColor != Color.White)
-                    ForeColor = Color.White;
+                e.DrawBackground();
+                G.FillRectangle(scheme.Brushes.Back, Rect_Fix1);
             }
-            else if (ForeColor != Color.Black)
-                ForeColor = Color.Black;
-
-            using (var br = new SolidBrush(BackColor))
+            else
             {
-                e.Graphics.FillRectangle(br, new Rectangle(e.Bounds.X - 2, e.Bounds.Y - 2, e.Bounds.Width + 4, e.Bounds.Height + 4));
+                G.FillRectangle(scheme.Brushes.Back, Rect_Fix2);
             }
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                using (var br = new SolidBrush(Program.Style.Colors.Border_Checked_Hover))
-                {
-                    e.Graphics.FillRectangle(br, e.Bounds);
-                }
+                G.FillRectangle(scheme.Brushes.Line_Checked, e.Bounds);
+                G.FillRectangle(Noise2, e.Bounds);
             }
-
-            var Rect = e.Bounds;
-            Rect.X += 2;
-            Rect.Width -= 2;
 
             if (e.Index >= 0)
             {
-                using (var br = new SolidBrush(ForeColor))
+                var Rect = e.Bounds; Rect.X += 2; Rect.Y += 1; Rect.Width -= 2;
+
+                using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
                 {
-                    e.Graphics.DrawString(GetItemText(Items[e.Index]), e.Font, br, Rect, ContentAlignment.MiddleLeft.ToStringFormat());
+                    using (SolidBrush br = new(ForeColor))
+                    {
+                        G.DrawString(GetItemText(Items[e.Index]), e.Font, br, Rect, sf);
+                        Invalidate();
+                    }
                 }
             }
         }
@@ -348,107 +367,67 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
 
-            var OuterRect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
-            var TextRect = new Rectangle(5, 0, Width - 1, Height - 1);
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
 
-            var FadeInColor = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
-            var FadeOutColor = Color.FromArgb(255 - alpha, Program.Style.Colors.Border);
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            G.Clear(this.GetParentColor());
+            Rectangle OuterRect = new(0, 0, Width - 1, Height - 1);
+            Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
+            Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
-            using (var br = new SolidBrush(Program.Style.Colors.Back))
-            {
-                G.FillRoundedRect(br, InnerRect);
-            }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, Program.Style.Colors.Back_Checked)))
-            {
-                G.FillRoundedRect(br, OuterRect);
-            }
+            Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover);
+            Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line);
+
+            G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
+
+            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover))) { G.FillRoundedRect(br, OuterRect); }
+
             G.FillRoundedRect(Noise, InnerRect);
 
-            using (var P = new Pen(FadeInColor))
-            {
-                G.DrawRoundedRect_LikeW11(P, OuterRect);
-            }
-            using (var P = new Pen(FadeOutColor))
-            {
-                G.DrawRoundedRect_LikeW11(P, InnerRect);
-            }
+            using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
-            using (var br = new SolidBrush(Color.FromArgb(alpha2, Program.Style.Colors.Back_Checked)))
-            {
-                G.FillRoundedRect(br, OuterRect);
-            }
-            using (var P = new Pen(Color.FromArgb(alpha2, Program.Style.Colors.Border_Checked_Hover)))
-            {
-                G.DrawRoundedRect_LikeW11(P, OuterRect);
-            }
+            using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
             int ArrowHeight = 4;
             int Arrow_Y_1 = (int)Math.Round((Height - ArrowHeight) / 2d - 1d);
             int Arrow_Y_2 = Arrow_Y_1 + ArrowHeight;
 
-            if (Focused & State == MouseState.None)
+            Point point_TopRight = new(Width - 18, Arrow_Y_1);
+            Point point_TopLeft = new(Width - 10, Arrow_Y_1);
+
+            Point point_BottomRight = new(Width - 18, Arrow_Y_2);
+            Point point_BottomLeft = new(Width - 10, Arrow_Y_2);
+
+            Point point_CenterBottom = new(Width - 14, Arrow_Y_2);
+            Point point_CenterBottomFixer = new(point_CenterBottom.X, point_CenterBottom.Y + 1);
+
+            Point point_CenterTop = new(Width - 14, Arrow_Y_1);
+            Point point_CenterTopFixer = new(point_CenterTop.X, point_CenterTop.Y + 1);
+
+            if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_CheckedHover, OuterRect); }
+
+            using (Pen P = new(Color.FromArgb(255 - alpha2, !Focused ? ForeColor : FadeInColor), 2f))
             {
-                using (var P = new Pen(Color.FromArgb(255, FadeInColor)))
-                {
-                    G.DrawRoundedRect(P, InnerRect);
-                    G.DrawLine(P, new Point(Width - 18, Arrow_Y_1), new Point(Width - 14, Arrow_Y_2));
-                    G.DrawLine(P, new Point(Width - 14, Arrow_Y_2), new Point(Width - 10, Arrow_Y_1));
-                    G.DrawLine(P, new Point(Width - 14, Arrow_Y_2 + 1), new Point(Width - 14, Arrow_Y_2));
-                }
-            }
-            else
-            {
-                using (var P = new Pen(Color.FromArgb(255 - alpha, ForeColor), 2f))
-                {
-                    G.DrawLine(P, new Point(Width - 18, Arrow_Y_1), new Point(Width - 14, Arrow_Y_2));
-                    G.DrawLine(P, new Point(Width - 14, Arrow_Y_2), new Point(Width - 10, Arrow_Y_1));
-                }
-
-                using (var P = new Pen(Color.FromArgb(255 - alpha, ForeColor)))
-                {
-                    G.DrawLine(P, new Point(Width - 14, Arrow_Y_2 + 1), new Point(Width - 14, Arrow_Y_2));
-                }
-
-                if (!DroppedDown)
-                {
-
-                    using (var P = new Pen(FadeInColor, 2f))
-                    {
-                        G.DrawLine(P, new Point(Width - 18, Arrow_Y_1), new Point(Width - 14, Arrow_Y_2));
-                        G.DrawLine(P, new Point(Width - 14, Arrow_Y_2), new Point(Width - 10, Arrow_Y_1));
-                    }
-
-                    using (var P = new Pen(FadeInColor))
-                    {
-                        G.DrawLine(new Pen(FadeInColor), new Point(Width - 14, Arrow_Y_2 + 1), new Point(Width - 14, Arrow_Y_2));
-                    }
-                }
-
-                else
-                {
-                    using (var P = new Pen(FadeInColor))
-                    {
-                        G.DrawLine(P, new Point(Width - 14, Arrow_Y_1), new Point(Width - 14, Arrow_Y_1 + 1));
-                    }
-
-                    using (var P = new Pen(FadeInColor, 2f))
-                    {
-                        G.DrawLine(P, new Point(Width - 18, Arrow_Y_2), new Point(Width - 14, Arrow_Y_1));
-                        G.DrawLine(P, new Point(Width - 14, Arrow_Y_1), new Point(Width - 10, Arrow_Y_2));
-                    }
-                }
-
+                G.DrawLine(P, point_TopRight, point_CenterBottom);
+                G.DrawLine(P, point_CenterBottom, point_TopLeft);
+                G.DrawLine(P, point_CenterBottomFixer, point_CenterBottom);
             }
 
-            using (var br = new SolidBrush(ForeColor))
+            using (Pen P = new(Color.FromArgb(alpha2, FadeInColor), 2f))
             {
-                G.DrawString(Text, Font, br, TextRect, new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near });
+                G.DrawLine(P, point_BottomRight, point_CenterTop);
+                G.DrawLine(P, point_CenterTop, point_BottomLeft);
+                G.DrawLine(P, point_CenterTopFixer, point_CenterTop);
+            }
+
+            using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
+            {
+                using (SolidBrush br = new(ForeColor))
+                {
+                    G.DrawString((SelectedItem ?? "").ToString(), Font, br, TextRect, sf);
+                }
             }
         }
-
     }
-
 }

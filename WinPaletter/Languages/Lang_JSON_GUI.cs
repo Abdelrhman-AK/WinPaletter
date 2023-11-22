@@ -99,7 +99,7 @@ namespace WinPaletter
 
                         if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? string.Empty) == (row.Cells[1].Value.ToString().ToLower().Trim() ?? string.Empty))
                         {
-                            row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                            row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                         }
                         else if ((row.Cells[2].Value.ToString() ?? string.Empty).Contains("{") || (row.Cells[1].Value.ToString() ?? string.Empty).Contains("{"))
                         {
@@ -107,14 +107,14 @@ namespace WinPaletter
                             int count2 = (row.Cells[2].Value ?? string.Empty).ToString().Count(c => c == '{');
                             if (count1 != count2)
                             {
-                                row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                                row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                             }
                         }
                     }
 
                     else
                     {
-                        row.Cells[1].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                        row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                         row.Cells[1].Value = string.Empty;
                         row.Cells[1].ReadOnly = false;
                     }
@@ -632,7 +632,7 @@ namespace WinPaletter
                 float left = e.CellBounds.Left + (keyPos <= 0 ? 0f : textMetricSize.Width); // + 2
                 var keyRect = new RectangleF(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
 
-                var fillBrush = new SolidBrush(Program.Style.Colors.SearchColor);
+                var fillBrush = new SolidBrush(Program.Style.Schemes.Tertiary.Colors.Line_Hover);
                 e.Graphics.FillRectangle(fillBrush, keyRect);
                 fillBrush.Dispose();
 
@@ -898,7 +898,7 @@ namespace WinPaletter
                     int count2 = (data[2, e.RowIndex].Value ?? string.Empty).ToString().Count(c => c == '{');
                     if (count1 != count2)
                     {
-                        data[1, e.RowIndex].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                        data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                     }
                     else
                     {
@@ -912,7 +912,7 @@ namespace WinPaletter
             }
             else
             {
-                data[1, e.RowIndex].Style.BackColor = Program.Style.Colors.NotTranslatedColor;
+                data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
             }
         }
 

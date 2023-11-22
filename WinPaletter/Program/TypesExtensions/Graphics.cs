@@ -193,12 +193,13 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        public static GraphicsPath Round(this Rectangle r, int Radius)
+        public static GraphicsPath Round(this Rectangle r, int Radius = -1)
         {
             try
             {
-                var path = new GraphicsPath();
-                Radius *= 2;
+                Radius = Radius == -1 ? Program.Style.Radius * 2 : Radius *= 2;
+
+                GraphicsPath path = new();
 
                 path.AddLine(r.Left + Radius, r.Top, r.Right - Radius, r.Top);
                 path.AddArc(Rectangle.FromLTRB(r.Right - Radius, r.Top, r.Right, r.Top + Radius), -90, 90f);
@@ -275,7 +276,7 @@ namespace WinPaletter.TypesExtensions
 
                         if (Dark)
                         {
-                            Pen.Color = PenX.Color.CB(0.04f);
+                            Pen.Color = PenX.Color.CB(0.06f);
                             Pen2.Color = PenX.Color;
                         }
                         else

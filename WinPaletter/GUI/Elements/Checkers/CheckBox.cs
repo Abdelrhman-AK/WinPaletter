@@ -311,25 +311,28 @@ namespace WinPaletter.UI.WP
                 Color HoverRect_Color;
                 Color HoverCheckedRect_Color;
                 Color CheckRect_Color;
+                Color UncheckedRect_Color;
                 Color NonHoverRect_Color;
                 Color BackRect_Color;
                 var ParentColor = this.GetParentColor();
 
                 if (Enabled)
                 {
-                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Colors.Back_Checked);
-                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
-                    CheckRect_Color = Color.FromArgb(alpha2, Program.Style.Colors.Core);
-                    NonHoverRect_Color = Program.Style.Colors.Border;
-                    BackRect_Color = Program.Style.Colors.Back;
+                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Schemes.Main.Colors.Back_Checked);
+                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
+                    CheckRect_Color = Color.FromArgb(alpha2, Program.Style.Schemes.Main.Colors.AccentAlt);
+                    UncheckedRect_Color = Program.Style.Schemes.Main.Colors.Back_Hover;
+                    NonHoverRect_Color = Program.Style.Schemes.Main.Colors.Line;
+                    BackRect_Color = Program.Style.Schemes.Main.Colors.Back;
                 }
                 else
                 {
-                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Disabled_Colors.Back_Checked);
-                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Disabled_Colors.Border_Checked_Hover);
-                    CheckRect_Color = Color.FromArgb(alpha2, Program.Style.Disabled_Colors.Core);
-                    NonHoverRect_Color = Program.Style.Disabled_Colors.Border;
-                    BackRect_Color = Program.Style.Disabled_Colors.Back;
+                    HoverRect_Color = Color.FromArgb(alpha2, Program.Style.Schemes.Disabled.Colors.Back_Checked);
+                    HoverCheckedRect_Color = Color.FromArgb(alpha, Program.Style.Schemes.Disabled.Colors.Line_CheckedHover);
+                    CheckRect_Color = Color.FromArgb(alpha2, Color.White);
+                    UncheckedRect_Color = Program.Style.Schemes.Disabled.Colors.AccentAlt;
+                    NonHoverRect_Color = Program.Style.Schemes.Disabled.Colors.Line;
+                    BackRect_Color = Program.Style.Schemes.Disabled.Colors.Back;
                 }
 
                 #endregion
@@ -363,7 +366,7 @@ namespace WinPaletter.UI.WP
 
                     G.Clear(ParentColor);
 
-                    using (var br = new SolidBrush(Program.Style.Colors.Back))
+                    using (var br = new SolidBrush(BackRect_Color))
                     {
                         G.FillRoundedRect(br, InnerCheckRect, Radius);
                     }
@@ -405,7 +408,7 @@ namespace WinPaletter.UI.WP
                         G.DrawLine(CheckSignPen, x1_Left, y1_Left, x2_Left, y2_Left);
                         G.DrawLine(CheckSignPen, x1_Right, y1_Right, x2_Right, y2_Right);
 
-                        using (var P = new Pen(Color.FromArgb(255 - alpha, Program.Style.Colors.Back_Hover)))
+                        using (var P = new Pen(Color.FromArgb(255 - alpha, UncheckedRect_Color)))
                         {
                             G.DrawRoundedRect(P, InnerCheckRect, Radius);
                         }

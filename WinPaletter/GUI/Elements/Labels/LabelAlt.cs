@@ -11,6 +11,13 @@ namespace WinPaletter.UI.WP
     public class LabelAlt : Label
     {
 
+        public LabelAlt()
+        {
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
+        }
+
         #region Variables
 
         private IntPtr _textHdc = IntPtr.Zero;
@@ -22,10 +29,25 @@ namespace WinPaletter.UI.WP
 
         public bool DrawOnGlass { get; set; } = false;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Voids/Functions
-
         protected TextFormatFlags ReturnFormatFlags(string Text = "")
         {
             var format = TextFormatFlags.Default;
@@ -99,34 +121,31 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            e.Graphics.TextRenderingHint = Config.RenderingHint;
-            using (var br = new SolidBrush(BackColor))
-            {
-                e.Graphics.FillRectangle(br, new Rectangle(0, 0, Width, Height));
-            }
+            Graphics G = e.Graphics;
+
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.TextRenderingHint = Config.RenderingHint;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            using (SolidBrush br = new(BackColor)) { G.FillRectangle(br, new Rectangle(0, 0, Width, Height)); }
 
             try
             {
                 if (DesignMode || !DrawOnGlass)
                 {
-                    using (var br = new SolidBrush(ForeColor))
-                    {
-                        e.Graphics.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat());
-                    }
+                    using (SolidBrush br = new(ForeColor)) { G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat()); }
                 }
 
                 else if (!DesignMode & DrawOnGlass)
                 {
-                    Ookii.Dialogs.WinForms.Glass.DrawCompositedText(e.Graphics, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
+                    Ookii.Dialogs.WinForms.Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
                 }
             }
             catch
             {
-                using (var br = new SolidBrush(ForeColor))
-                {
-                    e.Graphics.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat());
-                }
+                using (SolidBrush br = new(ForeColor)) { G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat()); }
             }
         }
 

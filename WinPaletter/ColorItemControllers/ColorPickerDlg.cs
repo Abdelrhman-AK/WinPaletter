@@ -310,9 +310,6 @@ namespace WinPaletter
 
         private void Change_Color_Preview(object sender, EventArgs e)
         {
-            int steps = 25;
-            int delay = 1;
-
             Color color = _EnableAlpha ? ColorEditorManager1.Color : Color.FromArgb(255, ColorEditorManager1.Color);
 
             foreach (Control control in ColorControls_List)

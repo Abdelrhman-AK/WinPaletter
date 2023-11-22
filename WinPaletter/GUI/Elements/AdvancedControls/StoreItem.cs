@@ -301,7 +301,7 @@ namespace WinPaletter.UI.Controllers
             var rect_outer = new Rectangle(0, 0, Width - 1, Height - 1);
             var rect_inner = new Rectangle(1, 1, Width - 3, Height - 3);
 
-            var bkC = Color.FromArgb(255 - alpha, Program.Style.Colors.Back);
+            var bkC = Color.FromArgb(255 - alpha, Program.Style.Schemes.Main.Colors.Back);
             var bkCC = bkC;
 
             if (TM is not null)
@@ -361,8 +361,8 @@ namespace WinPaletter.UI.Controllers
             if (State != MouseState.None)
                 G.FillRoundedRect(Noise, rect_inner);
 
-            var lC = Color.FromArgb(255 - alpha, State != MouseState.None ? Program.Style.Colors.Border_Checked : Program.Style.Colors.Border);
-            var lCC = Color.FromArgb(alpha, Program.Style.Colors.Border_Checked_Hover);
+            var lC = Color.FromArgb(255 - alpha, State != MouseState.None ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
+            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
 
             G.DrawRoundedRect_LikeW11(new Pen(lC), rect_inner);
             G.DrawRoundedRect_LikeW11(new Pen(lCC), rect_outer);

@@ -178,6 +178,55 @@ There are expected glitches if fast startup is enabled, especially for shutdown 
         gg==
 </value>
   </data>
+  <data name="pictureBox88.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA0RJREFUSEvN
+        lMtPE1EUxokxxrhQg25csHDhn2RCYnBhlIcgVKQUrAzTdjrT0g7TQqcvFZUi2hpN1CBBKhHKQ1sUEEWR
+        ECnIw7hQZIcmn/dMp2iiMS1u+CU3M23O+Xr63XNOwY6H5/ndojsQtcqBanrXv/4/JE/4rNTqj9i83mOC
+        W+0X3D5YW9rAObzjesj2aVH8lZISgNjqZ0eFXfbB5moH7/Tikqis6WHbR/IEuyXFDzp37j3A82QKE5NT
+        uN/TB07yoNHmXjHyztTx47E9ekp+kC1UffTufSSSEzjdHkeZGsebuQU86O2HydKC2iYJVSahXk/JHQC7
+        mC09ZA1VXuqLY//JCA6euIoLoTjSix9R1+yAwWxHpYmP6mm5w+yJUfV2WcXLiUlU+J9o4oeKAzCF+7G6
+        9olVL6K6UXjIwndlsvLA6QmaMherap7PzqdhCPTDGHyMz1++oW8ggZqLAqrqbEf1lPyIxWJ7mHjK7lZX
+        qDXJ8w8Li1heWUVvfBAXOAeqGqwoN3JdesrfcSrhEkkOJkKh0D76TE/WjsOC4ivRAhgWp3etSVRgFmQ0
+        WF1MXEI1q76inseZ803letifOD2BFPU5tSHze4NVPCa0qhtUMfW7paUtSXGcqLy4ZG+ltoSx2dFXZrQd
+        Y9VHyur/IU5ISnBJF9e8prMl7mxDs0NJUxytBbPgMph4VzSvFSEp6hKJh6514elQQhui0WdJXL5xi4l7
+        wGzRfiBvZFktEpVAkLokfP0mpqamcHdgHFxkCI9Gp7G8vIyOrpjmeaPN5TfLcpGemhsOxf8ja8vQ8Aju
+        MfHCU904cLITh0s6MDgxh7ezc5rn9Wxa2aV+11Nz43fPX01Po4lVTuI0SIXFQcixEXz5+jUrjho2rXpq
+        bjDh79kLfZ4c12yhykn8SLEPqZk05j+kNXFaBecarPn9A9YJe0WXT6FuudoZ1TwfGJ+FOzqCZ68XsLm5
+        iXDn7Yz4RZub4vXU/LA4vB+pW65Eoph59x7r6+uYZ9OaFa9qtC7qoduDiS9lJ/S3C83aQpO6vTbNwome
+        1C9x10Yt5xgzmIWNjHgzSus4bZL/C7OglLAJTZSWZnYRPcuN/HC5wbK1i3YIBQU/AbHFX67vGA36AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="Button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
+        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
+        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
+        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
+        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAzdJREFUSEvd
+        1UtPE1EUB/Amxui3UBSNysNCqVBoobxaWmgpj1IKxrhyb2JMSJRAQpD4CGmQha50YcJCP4kG5FGBECht
+        Z6YvWujMlEJEjudeZtJpmQZ0p/+kSaH3/mZ6zrlTzf8dsNkuiU7vfcHh+cLbPZu8zZ3iO/pSaUvvJm/p
+        /Zxu7Rkma6Tlfxahe7hfdHgDQpcHePsAIA6IA+KQbu+BvVYX7LU4Ydfs2NprdvRJ284OuN0XxO4hn+Dw
+        wjlw2G3qglSjHZIm2zTZKzHFk+keequG7yCcmH0P8Zl3kGhGWIGnjDZI1lshWWfxSYx6Mi6vqxCPW1yQ
+        RJxtcYCcsMkO8cZO4IwdShx27rUdJ/QtDonLD5gfXi6sOed+AJmFRYoz5i6JxwsgGmqwgvhtHsLWPhkH
+        xCGha97aKFVpvOAcGsy7c3sfZNc3KEhwpqmTvicheMhgoe8zy35g6tplHOJVTRDXGt0Smwvic8qax6dn
+        KXAYYiBm7qRlkUNwztAOB4Eg/Zt78SaH3zVBrML4SWJz4TsHNpQN3V/5QTdHRydpQ0nNo698EH2JL7wA
+        KQv7dJSuEb8vA6ttlHGIldWvSWwuiAvyKEZxBI94gW5mnV61aaE1D5lPvtVRmodgRYOMQ/R2HS+xuSAu
+        ynMewTv+lc3SzYylRxUnNQ/h/0mOBBG2EZZwiNyqPX2BtLV3XT5EZM73/at0MzcyroqTmocfj9A14vwi
+        MHcMMg6Rm/pVic0l3eaak09oCr9B7PUM3UyaHG7Ds1CAb2NPDkJhuoYbm1LiwJXqTzcZH1yDyuPP4eSQ
+        ESTJbgaAffIMwnjowriGHRmDQy5CP9v3r0GwvF6B10CkRHd6TEH36OJuk3Nd2VAGm55ZPpkmtWSW/BDA
+        dUqcu6ZbAU2RZxLevauwoUxtO7DjUyAuLMHP1C6dGOHrPLDPJ+jk5OPVx2xJpfqjQk7K1DGp1lAy5yEE
+        gzgppKGRvJpTHLgS7YTEFA955CLuU+KKE6ocxTycuaqdLloatcRrWvt3dM2Bs3HdFnel6vw/OMqQp2Ki
+        0jQYKzd+jJUZ/IhnEc8i7udu6D+w16s9G6Wlf/eT+Y9Eo/kN6Yh5eNCCTOkAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="pictureBox92.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA0RJREFUSEvN
@@ -421,55 +470,6 @@ There are expected glitches if fast startup is enabled, especially for shutdown 
         CoIz2nfgjhC8eR4pbA7JddNIqp9BEpuL/dHoNwZai3ApCA+A7UhpmkfyIxuONtqQ9NCCI9yHH8QZQJNo
         O5xCa2ESah2EW3lr6w4ciffjCNB1yizaJMHWQbAFhxoIbuaejR2gbZcZTRLeWpwkvPUOPKF+Fpp7cQSk
         G+Va3no72iRi64R6M4HJ29y3VMyBkUbzH68FQl28l/5aAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox88.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA0RJREFUSEvN
-        lMtPE1EUxokxxrhQg25csHDhn2RCYnBhlIcgVKQUrAzTdjrT0g7TQqcvFZUi2hpN1CBBKhHKQ1sUEEWR
-        ECnIw7hQZIcmn/dMp2iiMS1u+CU3M23O+Xr63XNOwY6H5/ndojsQtcqBanrXv/4/JE/4rNTqj9i83mOC
-        W+0X3D5YW9rAObzjesj2aVH8lZISgNjqZ0eFXfbB5moH7/Tikqis6WHbR/IEuyXFDzp37j3A82QKE5NT
-        uN/TB07yoNHmXjHyztTx47E9ekp+kC1UffTufSSSEzjdHkeZGsebuQU86O2HydKC2iYJVSahXk/JHQC7
-        mC09ZA1VXuqLY//JCA6euIoLoTjSix9R1+yAwWxHpYmP6mm5w+yJUfV2WcXLiUlU+J9o4oeKAzCF+7G6
-        9olVL6K6UXjIwndlsvLA6QmaMherap7PzqdhCPTDGHyMz1++oW8ggZqLAqrqbEf1lPyIxWJ7mHjK7lZX
-        qDXJ8w8Li1heWUVvfBAXOAeqGqwoN3JdesrfcSrhEkkOJkKh0D76TE/WjsOC4ivRAhgWp3etSVRgFmQ0
-        WF1MXEI1q76inseZ803letifOD2BFPU5tSHze4NVPCa0qhtUMfW7paUtSXGcqLy4ZG+ltoSx2dFXZrQd
-        Y9VHyur/IU5ISnBJF9e8prMl7mxDs0NJUxytBbPgMph4VzSvFSEp6hKJh6514elQQhui0WdJXL5xi4l7
-        wGzRfiBvZFktEpVAkLokfP0mpqamcHdgHFxkCI9Gp7G8vIyOrpjmeaPN5TfLcpGemhsOxf8ja8vQ8Aju
-        MfHCU904cLITh0s6MDgxh7ezc5rn9Wxa2aV+11Nz43fPX01Po4lVTuI0SIXFQcixEXz5+jUrjho2rXpq
-        bjDh79kLfZ4c12yhykn8SLEPqZk05j+kNXFaBecarPn9A9YJe0WXT6FuudoZ1TwfGJ+FOzqCZ68XsLm5
-        iXDn7Yz4RZub4vXU/LA4vB+pW65Eoph59x7r6+uYZ9OaFa9qtC7qoduDiS9lJ/S3C83aQpO6vTbNwome
-        1C9x10Yt5xgzmIWNjHgzSus4bZL/C7OglLAJTZSWZnYRPcuN/HC5wbK1i3YIBQU/AbHFX67vGA36AAAA
-        AElFTkSuQmCC
-</value>
-  </data>
-  <data name="Button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
-        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
-        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
-        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
-        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
-  <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAzdJREFUSEvd
-        1UtPE1EUB/Amxui3UBSNysNCqVBoobxaWmgpj1IKxrhyb2JMSJRAQpD4CGmQha50YcJCP4kG5FGBECht
-        Z6YvWujMlEJEjudeZtJpmQZ0p/+kSaH3/mZ6zrlTzf8dsNkuiU7vfcHh+cLbPZu8zZ3iO/pSaUvvJm/p
-        /Zxu7Rkma6Tlfxahe7hfdHgDQpcHePsAIA6IA+KQbu+BvVYX7LU4Ydfs2NprdvRJ284OuN0XxO4hn+Dw
-        wjlw2G3qglSjHZIm2zTZKzHFk+keequG7yCcmH0P8Zl3kGhGWIGnjDZI1lshWWfxSYx6Mi6vqxCPW1yQ
-        RJxtcYCcsMkO8cZO4IwdShx27rUdJ/QtDonLD5gfXi6sOed+AJmFRYoz5i6JxwsgGmqwgvhtHsLWPhkH
-        xCGha97aKFVpvOAcGsy7c3sfZNc3KEhwpqmTvicheMhgoe8zy35g6tplHOJVTRDXGt0Smwvic8qax6dn
-        KXAYYiBm7qRlkUNwztAOB4Eg/Zt78SaH3zVBrML4SWJz4TsHNpQN3V/5QTdHRydpQ0nNo698EH2JL7wA
-        KQv7dJSuEb8vA6ttlHGIldWvSWwuiAvyKEZxBI94gW5mnV61aaE1D5lPvtVRmodgRYOMQ/R2HS+xuSAu
-        ynMewTv+lc3SzYylRxUnNQ/h/0mOBBG2EZZwiNyqPX2BtLV3XT5EZM73/at0MzcyroqTmocfj9A14vwi
-        MHcMMg6Rm/pVic0l3eaak09oCr9B7PUM3UyaHG7Ds1CAb2NPDkJhuoYbm1LiwJXqTzcZH1yDyuPP4eSQ
-        ESTJbgaAffIMwnjowriGHRmDQy5CP9v3r0GwvF6B10CkRHd6TEH36OJuk3Nd2VAGm55ZPpkmtWSW/BDA
-        dUqcu6ZbAU2RZxLevauwoUxtO7DjUyAuLMHP1C6dGOHrPLDPJ+jk5OPVx2xJpfqjQk7K1DGp1lAy5yEE
-        gzgppKGRvJpTHLgS7YTEFA955CLuU+KKE6ocxTycuaqdLloatcRrWvt3dM2Bs3HdFnel6vw/OMqQp2Ki
-        0jQYKzd+jJUZ/IhnEc8i7udu6D+w16s9G6Wlf/eT+Y9Eo/kN6Yh5eNCCTOkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

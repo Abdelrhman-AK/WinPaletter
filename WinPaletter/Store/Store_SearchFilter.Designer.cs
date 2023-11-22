@@ -55,7 +55,6 @@ namespace WinPaletter
             Button1.Font = new Font("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
-            Button1.LineColor = Color.FromArgb(0, 81, 210);
             Button1.Location = new Point(269, 245);
             Button1.Name = "Button1";
             Button1.Size = new Size(90, 34);
@@ -70,7 +69,6 @@ namespace WinPaletter
             Button7.Font = new Font("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
-            Button7.LineColor = Color.FromArgb(199, 49, 61);
             Button7.Location = new Point(183, 245);
             Button7.Name = "Button7";
             Button7.Size = new Size(80, 34);

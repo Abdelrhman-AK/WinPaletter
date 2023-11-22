@@ -133,36 +133,25 @@ namespace WinPaletter.UI.Controllers
             G.TextRenderingHint = Config.RenderingHint;
             DoubleBuffered = true;
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var NotTranslatedColor = Program.Style.Colors.NotTranslatedColor;
 
             if (_SearchHighlight is not null && !string.IsNullOrWhiteSpace(_SearchHighlight) && Text.ToLower().Trim().Contains(_SearchHighlight.ToLower().Trim()))
             {
-                using (var br = new SolidBrush(Program.Style.Colors.SearchColor))
-                {
-                    G.FillRectangle(br, rect);
-                }
+                G.FillRectangle(Program.Style.Schemes.Tertiary.Brushes.AccentAlt, rect);
             }
 
             else if (!string.IsNullOrWhiteSpace(Text) && (Text.Trim() ?? string.Empty) == (Text_English.Trim() ?? string.Empty))
             {
-                using (var br = new SolidBrush(NotTranslatedColor))
-                {
-                    G.FillRectangle(br, rect);
-                }
+                G.FillRectangle(Program.Style.Schemes.Tertiary.Brushes.AccentAlt, rect);
             }
 
             else if (Tag is not null && !string.IsNullOrWhiteSpace(Tag.ToString()) && (Tag.ToString().Trim() ?? string.Empty) == (Tag_English.Trim() ?? string.Empty))
             {
-                using (var br = new SolidBrush(NotTranslatedColor))
-                {
-                    G.FillRectangle(br, rect);
-                }
-
+                G.FillRectangle(Program.Style.Schemes.Tertiary.Brushes.AccentAlt, rect);
             }
 
             if (Pressed)
             {
-                G.FillRectangle(new SolidBrush(Program.Style.Colors.Back_Checked), rect);
+                G.FillRectangle(Program.Style.Schemes.Main.Brushes.Back_Checked, rect);
                 G.DrawRectangle(new Pen(Program.Style.DarkMode ? Color.White : Color.Black, 2f) { DashStyle = DashStyle.Dot }, rect);
             }
             else

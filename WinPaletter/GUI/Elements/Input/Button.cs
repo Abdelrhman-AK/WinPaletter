@@ -7,56 +7,46 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed Button for WinPaletter UI")]
     public class Button : System.Windows.Forms.Button
     {
-
         public Button()
         {
-            LineImage = LineColor;
-            Timer = new Timer() { Enabled = false, Interval = 1 };
-            Font = new Font("Segoe UI", 9f);
-            ForeColor = Color.White;
-            if (Program.Style.DarkMode)
-                BackColor = Color.FromArgb(50, 50, 50);
-            else
-                BackColor = Color.FromArgb(225, 225, 225);
-            LineColor = Color.FromArgb(0, 81, 210);
-            Image = base.Image;
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
+            BackColor = Color.Transparent;
 
-            try
-            {
-                if (Image is not null)
-                {
-                    LineImage = Image.AverageColor();
-                }
-                else
-                {
-                    LineImage = LineColor;
-                }
-            }
-            catch
-            {
-            }
+            _color = Colorize();
+            _lineColor = LineColor(_color);
+
+            hoverSize = Math.Max(Width, Height) + hoverFactor;
+            hoverFactor = hoverSize / 8;
+
+            Font = new Font("Segoe UI", 9f);
+            Image = base.Image;
+            if (Image is not null) { Flag = Flags.TintedOnHover; }
 
             LostFocus += Button_LostFocus;
             HandleCreated += Button_HandleCreated;
             HandleDestroyed += Button_HandleDestroyed;
             Timer.Tick += Timer_Tick;
+            Timer_Hover.Tick += Timer_Hover_Tick;
         }
 
         #region Variables
+        private Config.Scheme scheme1 = Program.Style.Schemes.Main;
+        private Config.Scheme scheme2 = Program.Style.Schemes.Secondary;
+        private Config.Scheme scheme3 = Program.Style.Schemes.Tertiary;
 
-        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.6d));
-        private Color LineImage;
-        private Color BC;
-        private readonly int Steps = 15;
-        private readonly int Delay = 1;
+        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.6d));
         private bool _Shown = false;
+        private Color imageColor;
 
         public MouseState State = MouseState.None;
+        private Point hoverPosition;
+        private Rectangle hoverRect;
+        private int hoverSize;
+        private int hoverFactor = 0;
 
         public enum MouseState
         {
@@ -65,60 +55,317 @@ namespace WinPaletter.UI.WP
             Down
         }
 
+        private bool _ripple = true;
         #endregion
 
         #region Properties
-        private Color _LineColor = Color.FromArgb(0, 81, 210);
-        public Color LineColor
+
+        public new Color BackColor
         {
             get
             {
-                return _LineColor;
+                return Color.Transparent;
             }
-
             set
             {
-                if (!(value == _LineColor))
+
+            }
+        }
+
+        private Image _image;
+        public new Image Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                if (_image != value)
                 {
-                    _LineColor = value;
+                    _image = value;
+
+                    if (_image is not null)
+                    {
+                        imageColor = Image.AverageColor();
+
+                        if (Flag == Flags.None) { Flag = Flags.TintedOnHover; }
+
+                        _color = Colorize();
+                    }
+
                     Refresh();
                 }
             }
         }
 
-        private Image _Image;
-        public new Image Image
+
+        public bool DrawOnGlass { get; set; } = false;
+
+        private Color _color;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public Color Color
         {
             get
             {
-                return _Image;
+                return _color;
             }
+
             set
             {
-                _Image = value;
-
-                try
+                if (_color != value)
                 {
-                    if (Image is not null)
-                    {
-                        LineImage = Image.AverageColor();
-                        LineColor = LineImage;
-                    }
-                    else
-                    {
-                        LineImage = LineColor;
-                    }
+                    _color = value;
+                    _lineColor = LineColor(value);
+                    Refresh();
                 }
-                catch
-                {
-
-                }
-
-                Invalidate();
             }
         }
 
-        public bool DrawOnGlass { get; set; } = false;
+
+        private Color _customColor;
+        public Color CustomColor
+        {
+            get
+            {
+                return _customColor;
+            }
+
+            set
+            {
+                if (_customColor != value)
+                {
+                    _customColor = value;
+                    _color = Colorize();
+                    _lineColor = LineColor(value);
+                    Refresh();
+                }
+            }
+        }
+
+
+        private Color _lineColor;
+        private Color _rippleColor;
+
+        private Color Colorize()
+        {
+            float coloringFactor_None_Dark = 0.2f;
+            float coloringFactor_None_Light = 0.5f;
+
+            float coloringFactor_Over_Dark = 0.4f;
+            float coloringFactor_Over_Light = 0.7f;
+
+            float coloringFactor_Down_Dark = 0.6f;
+            float coloringFactor_Down_Light = 0.8f;
+
+            Color AccentColor = scheme1.Colors.Accent;
+            Color resultColor = scheme1.Colors.Back;
+
+            switch (Flag)
+            {
+                case Flags.AlwaysTinted:
+                    {
+                        AccentColor = scheme1.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.AlwaysError:
+                    {
+                        AccentColor = scheme2.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.AlwaysTertiary:
+                    {
+                        AccentColor = scheme3.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.AlwaysCustomColor:
+                    {
+                        AccentColor = _customColor;
+                        break;
+                    }
+                case Flags.TintedOnHover:
+                    {
+                        AccentColor = scheme1.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.ErrorOnHover:
+                    {
+                        AccentColor = scheme2.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.TertiaryOnHover:
+                    {
+                        AccentColor = scheme3.Colors.AccentAlt;
+                        break;
+                    }
+                case Flags.CustomColorOnHover:
+                    {
+                        AccentColor = _customColor;
+                        break;
+                    }
+            }
+
+            switch (State)
+            {
+                case MouseState.None:
+                    {
+                        if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
+                        {
+                            resultColor = scheme1.Colors.Button;
+                        }
+                        else
+                        {
+                            if (_image != null)
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = imageColor.Dark(coloringFactor_None_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = imageColor.CB(coloringFactor_None_Light);
+                                }
+                            }
+
+                            else
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = AccentColor.Dark(coloringFactor_None_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = AccentColor.CB(coloringFactor_None_Light);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case MouseState.Over:
+                    {
+                        if (Flag == Flags.None) { resultColor = scheme1.Colors.Button_Over; }
+
+                        else
+                        {
+                            if (_image != null)
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = imageColor.Dark(coloringFactor_Over_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = imageColor.CB(coloringFactor_Over_Light);
+                                }
+                            }
+
+                            else
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = AccentColor.Dark(coloringFactor_Over_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = AccentColor.CB(coloringFactor_Over_Light);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case MouseState.Down:
+                    {
+                        if (Flag == Flags.None) { resultColor = scheme1.Colors.Button_Down; }
+
+                        else
+                        {
+                            if (_image != null)
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = imageColor.Dark(coloringFactor_Down_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = imageColor.CB(coloringFactor_Down_Dark);
+                                }
+                            }
+
+                            else
+                            {
+                                if (Program.Style.DarkMode)
+                                {
+                                    resultColor = AccentColor.Dark(coloringFactor_Down_Dark);
+                                }
+                                else
+                                {
+                                    resultColor = AccentColor.CB(coloringFactor_Down_Light);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+            }
+
+            float coloringFactor_Circle_Over_Dark = 0.35f;
+            float coloringFactor_Circle_Over_Light = 0.04f;
+
+            float coloringFactor_Circle_Down_Dark = 0.3f;
+            float coloringFactor_Circle_Down_Light = 0.06f;
+
+            switch (State)
+            {
+                case MouseState.Over:
+                    {
+                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Over_Dark) : resultColor.Dark(coloringFactor_Circle_Over_Light);
+                        break;
+                    }
+
+                case MouseState.Down:
+                    {
+                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Down_Dark) : resultColor.Dark(coloringFactor_Circle_Down_Light);
+                        break;
+                    }
+            }
+
+            _lineColor = LineColor(resultColor);
+
+            return resultColor;
+        }
+
+        private Color LineColor(Color baseColor = default)
+        {
+            if (baseColor == default) baseColor = _color;
+
+            switch (State)
+            {
+                case MouseState.None:
+                    {
+                        return _color.CB(Color.IsDark() ? 0.02f : -0.04f);
+                    }
+
+                case MouseState.Over:
+                    {
+                        return _color.CB(Color.IsDark() ? 0.07 : -0.1f);
+                    }
+
+                case MouseState.Down:
+                    {
+                        return _color.CB(Color.IsDark() ? 0.1f : -0.08f);
+                    }
+                default:
+                    {
+                        return _color.CB(Color.IsDark() ? 0.02f : -0.04f);
+                    }
+            }
+        }
 
         protected override CreateParams CreateParams
         {
@@ -136,6 +383,40 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
+
+        private Flags _flag = Flags.None;
+        public Flags Flag
+        {
+            get
+            {
+                return _flag;
+            }
+            set
+            {
+                if (_flag != value)
+                {
+                    _flag = value;
+                    _color = Colorize();
+                    _lineColor = LineColor(_color);
+                    Refresh();
+                }
+            }
+        }
+
+        [Flags]
+        public enum Flags
+        {
+            None,
+            TintedOnHover,
+            ErrorOnHover,
+            TertiaryOnHover,
+            CustomColorOnHover,
+            AlwaysTinted,
+            AlwaysError,
+            AlwaysTertiary,
+            AlwaysCustomColor
+        }
+
         #endregion
 
         #region Events
@@ -143,185 +424,157 @@ namespace WinPaletter.UI.WP
         #region OnMouse
         protected override void OnMouseEnter(EventArgs e)
         {
-            base.OnMouseEnter(e);
             State = MouseState.Over;
-            var C_Before = BackColor;
-            var C_After = default(Color);
 
-            switch (Program.Style.DarkMode)
-            {
-                case true:
-                    {
-                        C_After = LineColor.Dark(0.15f);
-                        break;
-                    }
-                case false:
-                    {
-                        C_After = LineColor.Light((float)0.9d).CB(0.4f);
-                        break;
-                    }
+            Animate();
+
+            if (_Shown) 
+            { 
+                Timer.Enabled = true; Timer.Start();
+                Invalidate();
             }
 
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-
-            if (_Shown)
-            {
-                Timer.Enabled = true;
-                Timer.Start();
-            }
-
-            Invalidate();
+            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            base.OnMouseLeave(e);
             State = MouseState.None;
 
-            var C_Before = BackColor;
-
-            var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
-
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            Animate();
 
             if (_Shown)
             {
                 Timer.Enabled = true;
                 Timer.Start();
+                Invalidate();
             }
 
-            Invalidate();
+            base.OnMouseLeave(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-
-            var C_Before = BackColor;
-            var C_After = default(Color);
-
-            switch (Program.Style.DarkMode)
-            {
-                case true:
-                    {
-                        C_After = LineColor.Dark(0.3f);
-                        break;
-                    }
-                case false:
-                    {
-                        C_After = LineColor.Light(0.75f);
-                        break;
-                    }
-            }
-
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             State = MouseState.Down;
+
+            Animate();
 
             if (_Shown)
             {
-                Timer.Enabled = true;
-                Timer.Start();
+                Timer.Enabled = true; Timer.Start();
+                Timer_Hover.Enabled = true; Timer_Hover.Start();
+                Invalidate();
             }
-
-            Invalidate();
 
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            base.OnMouseUp(e);
-
-            var C_Before = BackColor;
-            var C_After = default(Color);
-
-            switch (Program.Style.DarkMode)
-            {
-                case true:
-                    {
-                        C_After = LineColor.Dark(0.15f);
-                        break;
-                    }
-                case false:
-                    {
-                        C_After = LineColor.Light((float)0.9d).CB(0.4f);
-                        break;
-                    }
-            }
-
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-
             State = MouseState.Over;
 
-            if (_Shown)
-            {
-                Timer.Enabled = true;
-                Timer.Start();
+            hoverSize = Math.Max(Width, Height);
+            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+
+            if (_Shown) 
+            { 
+                Timer.Enabled = true; Timer.Start();
+                Invalidate();
             }
 
-            Invalidate();
+            Animate();
+
+
+            base.OnMouseUp(e);
         }
         #endregion
 
         #region OnKey
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            base.OnKeyDown(e);
-            var C_Before = BackColor;
-            var C_After = default(Color);
-
-            switch (Program.Style.DarkMode)
-            {
-                case true:
-                    {
-                        C_After = LineColor.Light(0.3f);
-                        break;
-                    }
-                case false:
-                    {
-                        C_After = LineColor.Light(0.75f);
-                        break;
-                    }
-            }
-
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             State = MouseState.Down;
+
+            Animate();
+
+            Timer_Hover.Enabled = true; Timer_Hover.Start();
+
             Invalidate();
+
+            base.OnKeyDown(e);
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            base.OnKeyUp(e);
             State = MouseState.None;
 
-            var C_Before = BackColor;
-            var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            hoverSize = Math.Max(Width, Height);
+            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+
+            if (_Shown) { Timer.Enabled = true; Timer.Start(); }
+
+            Animate();
+
             Invalidate();
+
+            base.OnKeyUp(e);
         }
         #endregion
 
         protected override void OnLeave(EventArgs e)
         {
-            base.OnLeave(e);
             State = MouseState.None;
 
-            var C_Before = BackColor;
-            var C_After = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.04d : -0.03d));
-            if (!DesignMode)
-                FluentTransitions.Transition.With(this, nameof(BackColor), C_After).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+            Animate();
+
+            if (_Shown) { Invalidate(); }
+
+            base.OnLeave(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs mevent)
+        {
+            if (_Shown && _ripple && State != MouseState.None)
+            {
+                hoverPosition = this.PointToClient(MousePosition);
+                hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+                Refresh();
+            }
+
+            base.OnMouseMove(mevent);
         }
 
         private void Button_LostFocus(object sender, EventArgs e)
         {
             State = MouseState.None;
-            Invalidate();
+
+            Animate();
+
+            if (_Shown) { Invalidate(); }
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            hoverSize = Math.Max(Width, Height);
+            hoverFactor = hoverSize / 8;
+            base.OnSizeChanged(e);
+        }
+
+        public void UpdateStyleSchemes()
+        {
+            Timer.Enabled = false; Timer.Stop();
+            Timer_Hover.Enabled = false; Timer_Hover.Stop();
+
+            alpha = 0;
+            State = MouseState.None;
+
+            scheme1 = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+            scheme2 = Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
+            scheme3 = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
+
+            _color = Colorize();
+            _lineColor = LineColor(_color);
+
+            Animate();
         }
 
         private void Button_HandleCreated(object sender, EventArgs e)
@@ -335,18 +588,12 @@ namespace WinPaletter.UI.WP
                         FindForm().Load += Loaded;
                         FindForm().Shown += Showed;
                         FindForm().FormClosed += Closed;
-                        Parent.Invalidated += ForceRefresh;
-                        Parent.BackColorChanged += ForceRefresh;
                     }
-                    catch
-                    {
-                    }
+                    catch { }
                 }
                 alpha = 0;
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private void Button_HandleDestroyed(object sender, EventArgs e)
@@ -360,24 +607,18 @@ namespace WinPaletter.UI.WP
                         FindForm().Load -= Loaded;
                         FindForm().Shown -= Showed;
                         FindForm().FormClosed -= Closed;
-                        Parent.Invalidated -= ForceRefresh;
-                        Parent.BackColorChanged -= ForceRefresh;
                     }
-                    catch
-                    {
-                    }
+                    catch { }
                 }
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         public void Loaded(object sender, EventArgs e)
         {
             _Shown = false;
-            Timer.Enabled = false;
-            Timer.Stop();
+            Timer.Enabled = false; Timer.Stop();
+            Timer_Hover.Enabled = false; Timer_Hover.Stop();
         }
 
         public void Showed(object sender, EventArgs e)
@@ -388,30 +629,30 @@ namespace WinPaletter.UI.WP
         public void Closed(object sender, EventArgs e)
         {
             _Shown = false;
-            Timer.Enabled = false;
-            Timer.Stop();
+            Timer.Enabled = false; Timer.Stop();
+            Timer_Hover.Enabled = false; Timer_Hover.Stop();
         }
-
-        public void ForceRefresh(object sender, EventArgs e)
-        {
-            try
-            {
-                BC = this.GetParentColor().CB((float)(this.GetParentColor().IsDark() ? 0.05d : -0.03d));
-                BackColor = BC;
-                Invalidate();
-            }
-            catch
-            {
-            }
-        }
-
         #endregion
 
         #region Animator
 
+        private void Animate()
+        {
+            if (!DesignMode & _Shown)
+            {
+                if (State != MouseState.None)
+                {
+                    hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+                }
+
+                FluentTransitions.Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+        }
+
         private int alpha;
         private readonly int Factor = 15;
-        private Timer Timer;
+        private readonly Timer Timer = new() { Enabled = false, Interval = 1 };
+        private readonly Timer Timer_Hover = new() { Enabled = false, Interval = 1 };
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -467,246 +708,273 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        private void Timer_Hover_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!DesignMode)
+                {
+
+                    if (State == MouseState.Down)
+                    {
+                        hoverSize += hoverFactor;
+                        hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+
+                        if (hoverSize > Math.Max(Width, Height) * 5)
+                        {
+                            hoverSize = Math.Max(Width, Height);
+                            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+
+                            Timer_Hover.Enabled = false;
+                            Timer_Hover.Stop();
+                        }
+
+                        if (_Shown)
+                        {
+                            System.Threading.Thread.Sleep(1);
+                            Refresh();
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
 
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
             // ################################################################################# Customizer
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
-            var ParentColor = this.GetParentColor();
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle RectInner = new(1, 1, Width - 3, Height - 3);
+            Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
+            Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2, Height - 7 - PaddingRect.Height * 2);
             // #################################################################################
 
-            if (DrawOnGlass)
+            #region Button render
+            //Color.FromArgb(150, Color)
+            using (var br = new SolidBrush(Color.FromArgb(255, Color)))
             {
-                G.Clear(Color.Transparent);
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round((255 - alpha) * 0.5d), BackColor)))
-                {
-                    G.FillRoundedRect(br, InnerRect);
-                }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 0.5d), BackColor)))
-                {
-                    G.FillRoundedRect(br, Rect);
-                }
+                G.FillRoundedRect(br, RectInner);
             }
-            else
+
+            using (var br = new SolidBrush(Color.FromArgb(alpha, Color)))
             {
-                G.Clear(ParentColor);
-                using (var br = new SolidBrush(Color.FromArgb(255 - alpha, BackColor)))
-                {
-                    G.FillRoundedRect(br, InnerRect);
-                }
-                using (var br = new SolidBrush(Color.FromArgb(alpha, BackColor)))
-                {
-                    G.FillRoundedRect(br, Rect);
-                }
+                G.FillRoundedRect(br, Rect);
             }
 
             if (!(State == MouseState.None))
+            {
+                if (_ripple)
+                {
+                    GraphicsPath path = Program.Style.RoundedCorners ? Rect.Round() : new GraphicsPath();
+
+                    G.SetClip(path);
+
+                    GraphicsPath gp = new();
+
+                    gp.AddEllipse(hoverRect);
+                    PathGradientBrush pgb = new(gp)
+                    {
+                        CenterPoint = hoverPosition,
+                        CenterColor = Color.FromArgb(alpha, _rippleColor),
+                        SurroundColors = new Color[] { Color.Transparent }
+                    };
+
+                    G.FillEllipse(pgb, hoverRect);
+
+                    G.ResetClip();
+                }
+
                 G.FillRoundedRect(Noise, Rect);
-
-            var c = default(Color);
-            Color c1, c1x;
-
-            switch (State)
-            {
-                case MouseState.None:
-                    {
-                        c = base.BackColor.CB((float)(ParentColor.IsDark() ? 0.02d : -0.02d));
-                        break;
-                    }
-
-                case MouseState.Over:
-                    {
-                        c = base.BackColor.CB((float)(ParentColor.IsDark() ? 0.15d : -0.05d));
-                        break;
-                    }
-
-                case MouseState.Down:
-                    {
-                        c = base.BackColor.CB((float)(ParentColor.IsDark() ? 0.08d : -0.03d));
-                        break;
-                    }
-
             }
 
-            if (DrawOnGlass)
+            using (var P = new Pen(Color.FromArgb(255 - alpha, _lineColor)))
             {
-                c1 = Color.FromArgb((int)Math.Round((255 - alpha) * 0.5d), c);
-                c1x = Color.FromArgb((int)Math.Round(alpha * 0.5d), c);
-            }
-            else
-            {
-                c1 = Color.FromArgb(255 - alpha, c);
-                c1x = Color.FromArgb(alpha, c);
+                G.DrawRoundedRect_LikeW11(P, RectInner);
             }
 
-            using (var P = new Pen(c1))
-            {
-                G.DrawRoundedRect_LikeW11(P, InnerRect);
-            }
-            using (var P = new Pen(c1x))
+            using (var P = new Pen(Color.FromArgb(alpha, _lineColor)))
             {
                 G.DrawRoundedRect_LikeW11(P, Rect);
             }
-
-            #region Text and Image Render
-            var ButtonString = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            bool RTL = (int)RightToLeft == 1;
-            if (RTL)
-                ButtonString.FormatFlags = StringFormatFlags.DirectionRightToLeft;
-
-            Bitmap img = null;
-            if (Image is not null)
-            {
-                if (Enabled)
-                {
-                    img = (Bitmap)Image.Clone();
-                }
-                else
-                {
-                    img = ((Bitmap)Image.Clone()).Grayscale();
-                }
-            }
-
-            int imgX = default, imgY = default;
-
-            try
-            {
-                if (img is not null)
-                    imgX = (int)Math.Round((Width - img.Width) / 2d);
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                if (img is not null)
-                    imgY = (int)Math.Round((Height - img.Height) / 2d);
-            }
-            catch
-            {
-            }
-
-            if (img is null)
-            {
-                try
-                {
-                    using (var br = new SolidBrush(ForeColor))
-                    {
-                        G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), base.TextAlign.ToStringFormat(RTL));
-                    }
-                }
-                catch
-                {
-                }
-            }
-            else
-            {
-
-                switch (ImageAlign)
-                {
-                    case ContentAlignment.MiddleCenter:
-                        {
-                            ButtonString.Alignment = StringAlignment.Center;
-                            ButtonString.LineAlignment = StringAlignment.Near;
-                            int alx = (int)Math.Round((Height - (img.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f);
-
-                            try
-                            {
-                                if (img is not null)
-                                {
-                                    if (string.IsNullOrEmpty(Text))
-                                    {
-                                        G.DrawImage((Bitmap)img.Clone(), new Rectangle(imgX, imgY, img.Width, img.Height));
-                                    }
-                                    else
-                                    {
-                                        G.DrawImage((Bitmap)img.Clone(), new Rectangle(imgX, alx, img.Width, img.Height));
-                                    }
-                                }
-                                using (var br = new SolidBrush(ForeColor))
-                                {
-                                    G.DrawString(Text, Font, br, new Rectangle(0, alx + 9 + img.Height, Width, Height), ButtonString);
-                                }
-                            }
-                            catch
-                            {
-                            }
-
-                            break;
-                        }
-
-                    case ContentAlignment.MiddleLeft:
-                        {
-                            var Rec = new Rectangle(imgY, imgY, img.Width, img.Height);
-                            int Bo = imgY + img.Width + imgY - 5;
-                            var RecText = new Rectangle(Bo, imgY, (int)Math.Round(base.Text.Measure(Font).Width + 15f - imgY), img.Height);
-                            var u = Rectangle.Union(Rec, RecText);
-                            u.X = (int)Math.Round((Width - u.Width) / 2d);
-                            int innerSpace = RecText.Left - Rec.Right;
-
-                            if (!RTL)
-                            {
-                                Rec.X = u.Left;
-                                RecText.X = u.Left + Rec.Width + innerSpace;
-                            }
-                            else
-                            {
-                                Rec.X = u.Right - Rec.Width;
-                                RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace;
-                            }
-
-
-                            G.DrawImage((Bitmap)img.Clone(), Rec);
-                            using (var br = new SolidBrush(ForeColor))
-                            {
-                                G.DrawString(Text, Font, br, RecText, ButtonString);
-                            }
-
-                            break;
-                        }
-
-                    case ContentAlignment.MiddleRight:
-                        {
-                            var Rec = new Rectangle(imgY, imgY, img.Width, img.Height);
-                            int Bo = imgY + img.Width + imgY - 5;
-                            var RecText = new Rectangle(Bo, imgY, Width - Bo, img.Height);
-                            var u = Rectangle.Union(Rec, RecText);
-                            int innerSpace = RecText.Left - Rec.Right;
-
-                            if (!RTL)
-                            {
-                                Rec.X = u.Left;
-                                RecText.X = u.Left + Rec.Width + innerSpace;
-                            }
-                            else
-                            {
-                                Rec.X = u.Right - Rec.Width - 2;
-                                RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace;
-                            }
-
-                            G.DrawImage((Bitmap)img.Clone(), Rec);
-                            using (var br = new SolidBrush(ForeColor))
-                            {
-                                G.DrawString(Text, Font, br, RecText, ButtonString);
-                            }
-
-                            break;
-                        }
-                }
-            }
-
             #endregion
 
+            #region Text and Image Render
+            using (StringFormat sf = TextAlign.ToStringFormat((int)base.RightToLeft == 1))
+            {
+                using (SolidBrush fc = new(ForeColor))
+                {
+                    if (Image == null) 
+                    {
+                        //Fix label maladjustment in center position
+                        if (TextAlign == ContentAlignment.MiddleCenter)
+                        {
+                            if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
+                            if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
+                        }
+
+                        G.DrawString(Text, Font, fc, TextAndImageRect, sf); 
+                    }
+
+                    else
+                    {
+                        if (TextImageRelation == TextImageRelation.Overlay)
+                        {
+                            Rectangle imageRect = GetImageRectangle(TextAndImageRect, Image.Size, ImageAlign);
+
+                            //Fix image maladjustment in center position
+                            if (ImageAlign == ContentAlignment.MiddleCenter)
+                            {
+                                if (Width % Image.Width != 0) imageRect.Offset(1, 0);
+                                if (Height % Image.Height != 0) imageRect.Offset(0, 1);
+                            }
+
+                            //Fix label maladjustment in center position
+                            if (TextAlign == ContentAlignment.MiddleCenter)
+                            {
+                                if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
+                                if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
+                            }
+
+                            G.DrawImage(Image, imageRect);
+                            G.DrawString(Text, Font, fc, TextAndImageRect, sf);
+                        }
+                        else
+                        {
+                            int innerSpacing = 1;
+                            Size ImageSize = Image.Size - new Size(1, 1);
+                            SizeF TextSizeF = G.MeasureString(Text, Font, TextAndImageRect.Size, sf);
+                            Size TextSize = new((int)TextSizeF.Width + innerSpacing * 2, (int)TextSizeF.Height);
+
+                            Rectangle space = new();
+                            Rectangle textRect = new();
+                            Rectangle imageRect = new();
+
+                            if (TextImageRelation == TextImageRelation.ImageAboveText)
+                            {
+                                space.Width = Math.Max(ImageSize.Width, TextSize.Width);
+                                space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                imageRect = GetImageRectangle(space, Image.Size, ImageAlign);
+                                imageRect.Y = space.Y;
+
+                                textRect.Width = space.Width;
+                                textRect.Height = TextSize.Height;
+                                textRect.X = space.X;
+                                textRect.Y = imageRect.Bottom + innerSpacing;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.TextAboveImage)
+                            {
+                                space.Width = Math.Max(ImageSize.Width, TextSize.Width);
+                                space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                textRect.Width = space.Width;
+                                textRect.Height = TextSize.Height;
+                                textRect.X = space.X;
+                                textRect.Y = space.Y;
+
+                                imageRect = GetImageRectangle(space, Image.Size, ImageAlign);
+                                imageRect.Y = textRect.Bottom + innerSpacing;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.ImageBeforeText)
+                            {
+                                space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
+                                space.Height = Math.Max(ImageSize.Height, TextSize.Height);
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                imageRect = GetImageRectangle(space, ImageSize, ContentAlignment.MiddleLeft);
+
+                                textRect.X = imageRect.Right + innerSpacing;
+                                textRect.Y = space.Y + 1;
+                                textRect.Width = TextSize.Width;
+                                textRect.Height = space.Height;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.TextBeforeImage)
+                            {
+                                space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
+                                space.Height = Math.Max(ImageSize.Height, TextSize.Height);
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                textRect.X = space.X;
+                                textRect.Y = space.Y;
+                                textRect.Width = TextSize.Width;
+                                textRect.Height = space.Height;
+
+                                imageRect.X = textRect.Right + innerSpacing;
+                                imageRect.Y = space.Y;
+                                imageRect.Width = ImageSize.Width;
+                                imageRect.Height = ImageSize.Height;
+                            }
+
+                            G.DrawImage(Image, new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
+                            G.DrawString(Text, Font, fc, textRect, sf);
+                        }
+                    }
+                }
+            }
+            #endregion
         }
 
-    }
+        private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
+        {
+            float CenterWidthD = rect.X + (float)(rect.Width - size.Width) / 2;
+            float CenterHeightD = rect.Y + (float)(rect.Height - size.Height) / 2;
 
+            int CenterWidth = (int)Math.Round(CenterWidthD, 2);
+            int CenterHeight = (int)Math.Round(CenterHeightD, 2);
+
+            switch (contentAlignment)
+            {
+                case ContentAlignment.TopLeft:
+                    return new(rect.X, rect.Y, size.Width, size.Height);
+
+                case ContentAlignment.TopRight:
+                    return new(rect.Right - size.Width, rect.Y, size.Width, size.Height);
+
+                case ContentAlignment.TopCenter:
+                    return new(CenterWidth, rect.Y, size.Width, size.Height);
+
+                case ContentAlignment.MiddleLeft:
+                    return new(rect.X, CenterHeight, size.Width, size.Height);
+
+                case ContentAlignment.MiddleCenter:
+                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
+
+                case ContentAlignment.MiddleRight:
+                    return new(rect.Right - size.Width, CenterHeight, size.Width, size.Height);
+
+                case ContentAlignment.BottomLeft:
+                    return new(rect.X, rect.Bottom - size.Height, size.Width, size.Height);
+
+                case ContentAlignment.BottomCenter:
+                    return new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height);
+
+                case ContentAlignment.BottomRight:
+                    return new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height);
+
+                default:
+                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
+            }
+        }
+    }
 }

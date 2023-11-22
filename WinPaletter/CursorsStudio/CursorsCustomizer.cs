@@ -2,9 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -40,7 +38,7 @@ namespace WinPaletter
             Circle
         }
 
-        private static TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlurOpaque.Fade(0.2d));
+        private static TextureBrush Noise = new(Properties.Resources.GaussianBlurOpaque.Fade(0.2d));
 
         public static GradientMode ReturnGradientModeFromString(string String)
         {
@@ -1081,7 +1079,7 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(CursorOptions.File))
                 {
-                    if (System.IO.Path.GetExtension(CursorOptions.File).ToUpper() != ".ANI")
+                    if (System.IO.Path.GetExtension(CursorOptions.File).ToUpper() == ".CUR")
                     {
                         using (System.IO.FileStream stream = new(CursorOptions.File, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                         {
@@ -1100,30 +1098,6 @@ namespace WinPaletter
 
                             G.DrawImage(ExtractedBMP, 0, 0);
                         }
-                    }
-                    else
-                    {
-                        int frames = CursorExtensions.GetTotalFramesFromANIHeader(CursorOptions.File);
-
-                        Bitmap bitmap = null;
-
-                        if (frames == 0 || frames == 1 || CursorOptions._Angle == 180)
-                        {
-                            IntPtr hCursor = User32.LoadCursorFromFile(CursorOptions.File);
-                            Cursor cursor = new(hCursor);
-                            bitmap = cursor.ToBitmap(b.Size);
-                        }
-                        else
-                        {
-                            float _Angle = 0;
-                            if (CursorOptions._Angle >= 180) { _Angle = CursorOptions._Angle - 180f; }
-                            else if (CursorOptions._Angle < 180) { _Angle = CursorOptions._Angle + 180f; }
-
-                            int AngleToFrame = (int)(_Angle / 360 * frames);
-                            bitmap = CursorExtensions.ToBitmap(CursorOptions.File, b.Size, AngleToFrame);
-                        }
-
-                        if (bitmap != null) { G.DrawImage(bitmap, 0, 0); }
                     }
                 }
             }

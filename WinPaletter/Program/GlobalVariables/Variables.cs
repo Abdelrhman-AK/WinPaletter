@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Security.Principal;
@@ -52,7 +51,7 @@ namespace WinPaletter
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.Accent, DefaultColors.BackColorDark, true, true);
+        public static Config Style = new(DefaultColors.Accent, DefaultColors.Secondary, DefaultColors.Tertiary, DefaultColors.Disabled, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, true, true);
 
         /// <summary>
         /// A class that represents WinPaletter's Settings

@@ -13,6 +13,9 @@ namespace WinPaletter.UI.WP
 
         public SeparatorH()
         {
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
             TabStop = false;
             DoubleBuffered = true;
             Text = string.Empty;
@@ -29,6 +32,22 @@ namespace WinPaletter.UI.WP
 
         public bool AlternativeLook { get; set; } = false;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode && !AlternativeLook)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -46,48 +65,21 @@ namespace WinPaletter.UI.WP
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             DoubleBuffered = true;
-            base.OnPaint(e);
 
-            // ################################################################################# Customizer
-            Color IdleLine;
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
 
-            if (Parent is not null)
-            {
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-                if (Program.Style.DarkMode)
-                {
-                    if (!AlternativeLook)
-                    {
-                        IdleLine = Parent.BackColor.CB(0.1f);
-                    }
-                    else
-                    {
-                        IdleLine = Color.DarkRed;
-                    }
-                }
-                else if (!AlternativeLook)
-                {
-                    IdleLine = Parent.BackColor.CB((float)-0.1d);
-                }
-                else
-                {
-                    IdleLine = Color.DarkRed;
-                }
-            }
+            Color Line = AlternativeLook ? Color.DarkRed : Color.FromArgb(128, scheme.Colors.Back_Hover);
 
-            else if (Program.Style.DarkMode)
-                IdleLine = Color.FromArgb(76, 76, 76);
-            else
-                IdleLine = Color.FromArgb(210, 210, 210);
-            // ################################################################################# Customizer
-
-            using (var C = new Pen(IdleLine, !AlternativeLook ? 1 : 2))
+            using (Pen C = new(Line, !AlternativeLook ? 1 : 2))
             {
                 G.DrawLine(C, new Point(0, 0), new Point(Width, 0));
                 G.DrawLine(C, new Point(0, 1), new Point(Width, 1));
             }
+
+            base.OnPaint(e);
         }
-
     }
-
 }

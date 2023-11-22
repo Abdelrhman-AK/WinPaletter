@@ -10,6 +10,21 @@ namespace WinPaletter.TypesExtensions
     public static class ControlExtensions
     {
         /// <summary>
+        /// SetStyle to controls without restriction
+        /// </summary>
+        public static bool SetStyle(this Control c, ControlStyles Style, bool value)
+        {
+            bool retval = false;
+            if (c != null)
+            {
+                Type typeTB = typeof(Control);
+                System.Reflection.MethodInfo misSetStyle = typeTB.GetMethod("SetStyle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (misSetStyle != null) { misSetStyle.Invoke(c, new object[] { Style, value }); retval = true; }
+            }
+            return retval;
+        }
+
+        /// <summary>
         /// Return graphical state of a control to a bitmap
         /// </summary>
         public static Bitmap ToBitmap(this Control Control, bool FixMethod = false)

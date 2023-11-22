@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -12,12 +11,15 @@ namespace WinPaletter.UI.WP
     [DefaultEvent("Scroll")]
     public class Trackbar : Control
     {
-
         public Trackbar()
         {
             Timer = new Timer() { Enabled = false, Interval = 1 };
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             SetStyle((ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
+
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
             Height = 19;
             Text = string.Empty;
             MouseUp += Trackbar_MouseUp;
@@ -79,6 +81,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _Maximum = 100;
         public int Maximum
         {
@@ -102,6 +105,7 @@ namespace WinPaletter.UI.WP
                 InvalidateLayout();
             }
         }
+
 
         private int _Value;
         public int Value
@@ -128,10 +132,11 @@ namespace WinPaletter.UI.WP
 
                 _Value = value;
                 InvalidatePosition();
-
+                Refresh();
                 Scroll?.Invoke(this);
             }
         }
+
 
         private int _SmallChange = 1;
         public int SmallChange
@@ -151,6 +156,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _LargeChange = 10;
         public int LargeChange
         {
@@ -169,6 +175,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -176,6 +183,22 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -361,15 +384,6 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Voids/Functions
-
-        private double GetProgress()
-        {
-            return (_Value - _Minimum) / (double)(_Maximum - _Minimum);
-        }
-
-        #endregion
-
         #region Animator
 
         private int alpha;
@@ -421,61 +435,37 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
-            G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
 
-            G.Clear(BackColor);
-            bool Dark = Program.Style.DarkMode;
-            var c_back = Dark ? Color.FromArgb(60, 60, 60) : Color.FromArgb(210, 210, 210);
-            var c_btn = Dark ? Color.FromArgb(165, 165, 165) : Color.FromArgb(100, 100, 100);
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
 
-            var C = Program.Style.Colors.Core;
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            var middleRect = new Rectangle(0, (int)Math.Round((Height - Height * 0.25d) / 2d), Width - 1, (int)Math.Round(Height * 0.25d));
+            Rectangle bar = new(0, (int)Math.Round((Height - Height * 0.25d) / 2d), Width - 1, (int)Math.Round(Height * 0.25d));
 
-            using (var br = new SolidBrush(c_back))
-            {
-                G.FillRoundedRect(br, middleRect);
-            }
+            //Excluded to solve UI bug of short rounded rectangle height
+            G.ExcludeClip(new Rectangle(-1, 0, 3, Height));
+            G.ExcludeClip(new Rectangle(Width - 2, 0, 3, Height));
 
-            Circle = new Rectangle((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
+            G.FillRoundedRect(scheme.Brushes.Back_Max, bar);
+            G.FillRoundedRect(scheme.Brushes.AccentAlt, new Rectangle(Thumb.X + 1, bar.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), bar.Height));
 
-            {
-                using (var br = new SolidBrush(C))
-                {
-                    G.FillRoundedRect(br, new Rectangle(Thumb.X + 1, middleRect.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), middleRect.Height));
-                }
-            }
+            G.ResetClip();
 
-            using (var br = new SolidBrush(BackColor))
-            {
-                G.FillRectangle(br, new Rectangle(-1, 0, 4, Height));
-            }
+            Circle = new Rectangle((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
 
-            using (var br = new SolidBrush(BackColor))
-            {
-                G.FillRectangle(br, new Rectangle(Width - 4, 0, 4, Height));
-            }
-
-            using (var br = new SolidBrush(Program.Style.Colors.Border))
-            {
-                G.FillEllipse(br, Circle);
-            }
+            G.FillEllipse(scheme.Brushes.Line, Circle);
 
             var smallC1 = new Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             var smallC2 = new Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
-            using (var br = new SolidBrush(C))
-            {
-                G.FillEllipse(br, smallC1);
-            }
-            using (var br = new SolidBrush(Color.FromArgb(alpha, C)))
-            {
-                G.FillEllipse(br, smallC2);
-            }
+            G.FillEllipse(scheme.Brushes.AccentAlt, smallC1);
+
+            using SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt));
+            G.FillEllipse(br, smallC2);
+
         }
-
     }
-
 }

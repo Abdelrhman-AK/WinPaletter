@@ -35,384 +35,425 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(Start8Selector));
-            img1 = new UI.WP.RadioImage();
-            img2 = new UI.WP.RadioImage();
-            img3 = new UI.WP.RadioImage();
-            img7 = new UI.WP.RadioImage();
-            img4 = new UI.WP.RadioImage();
-            img5 = new UI.WP.RadioImage();
-            img6 = new UI.WP.RadioImage();
-            img8 = new UI.WP.RadioImage();
-            img9 = new UI.WP.RadioImage();
-            img15 = new UI.WP.RadioImage();
-            img14 = new UI.WP.RadioImage();
-            img12 = new UI.WP.RadioImage();
-            img11 = new UI.WP.RadioImage();
-            img10 = new UI.WP.RadioImage();
-            img13 = new UI.WP.RadioImage();
-            img18 = new UI.WP.RadioImage();
-            img17 = new UI.WP.RadioImage();
-            img16 = new UI.WP.RadioImage();
-            img20 = new UI.WP.RadioImage();
-            img19 = new UI.WP.RadioImage();
-            Button2 = new UI.WP.Button();
-            Button2.Click += new EventHandler(Button2_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            GroupBox1 = new UI.WP.GroupBox();
-            PictureBox32 = new PictureBox();
-            Label41 = new Label();
-            GroupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox32).BeginInit();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Start8Selector));
+            this.img1 = new WinPaletter.UI.WP.RadioImage();
+            this.img2 = new WinPaletter.UI.WP.RadioImage();
+            this.img3 = new WinPaletter.UI.WP.RadioImage();
+            this.img7 = new WinPaletter.UI.WP.RadioImage();
+            this.img4 = new WinPaletter.UI.WP.RadioImage();
+            this.img5 = new WinPaletter.UI.WP.RadioImage();
+            this.img6 = new WinPaletter.UI.WP.RadioImage();
+            this.img8 = new WinPaletter.UI.WP.RadioImage();
+            this.img9 = new WinPaletter.UI.WP.RadioImage();
+            this.img15 = new WinPaletter.UI.WP.RadioImage();
+            this.img14 = new WinPaletter.UI.WP.RadioImage();
+            this.img12 = new WinPaletter.UI.WP.RadioImage();
+            this.img11 = new WinPaletter.UI.WP.RadioImage();
+            this.img10 = new WinPaletter.UI.WP.RadioImage();
+            this.img13 = new WinPaletter.UI.WP.RadioImage();
+            this.img18 = new WinPaletter.UI.WP.RadioImage();
+            this.img17 = new WinPaletter.UI.WP.RadioImage();
+            this.img16 = new WinPaletter.UI.WP.RadioImage();
+            this.img20 = new WinPaletter.UI.WP.RadioImage();
+            this.img19 = new WinPaletter.UI.WP.RadioImage();
+            this.Button2 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.PictureBox32 = new System.Windows.Forms.PictureBox();
+            this.Label41 = new System.Windows.Forms.Label();
+            this.GroupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).BeginInit();
+            this.SuspendLayout();
             // 
             // img1
             // 
-            img1.Checked = false;
-            img1.Font = new Font("Segoe UI", 9.0f);
-            img1.ForeColor = Color.White;
-            img1.Image = (Image)resources.GetObject("img1.Image");
-            img1.Location = new Point(3, 41);
-            img1.Name = "img1";
-            img1.ShowText = false;
-            img1.Size = new Size(80, 80);
-            img1.TabIndex = 0;
+            this.img1.Checked = false;
+            this.img1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img1.ForeColor = System.Drawing.Color.White;
+            this.img1.Image = ((System.Drawing.Image)(resources.GetObject("img1.Image")));
+            this.img1.ImageWithText = false;
+            this.img1.Location = new System.Drawing.Point(3, 41);
+            this.img1.Name = "img1";
+            this.img1.ShowText = false;
+            this.img1.Size = new System.Drawing.Size(80, 80);
+            this.img1.TabIndex = 0;
+            this.img1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img2
             // 
-            img2.Checked = false;
-            img2.Font = new Font("Segoe UI", 9.0f);
-            img2.ForeColor = Color.White;
-            img2.Image = (Image)resources.GetObject("img2.Image");
-            img2.Location = new Point(89, 41);
-            img2.Name = "img2";
-            img2.ShowText = false;
-            img2.Size = new Size(80, 80);
-            img2.TabIndex = 1;
+            this.img2.Checked = false;
+            this.img2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img2.ForeColor = System.Drawing.Color.White;
+            this.img2.Image = ((System.Drawing.Image)(resources.GetObject("img2.Image")));
+            this.img2.ImageWithText = false;
+            this.img2.Location = new System.Drawing.Point(89, 41);
+            this.img2.Name = "img2";
+            this.img2.ShowText = false;
+            this.img2.Size = new System.Drawing.Size(80, 80);
+            this.img2.TabIndex = 1;
+            this.img2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img3
             // 
-            img3.Checked = false;
-            img3.Font = new Font("Segoe UI", 9.0f);
-            img3.ForeColor = Color.White;
-            img3.Image = (Image)resources.GetObject("img3.Image");
-            img3.Location = new Point(175, 41);
-            img3.Name = "img3";
-            img3.ShowText = false;
-            img3.Size = new Size(80, 80);
-            img3.TabIndex = 2;
+            this.img3.Checked = false;
+            this.img3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img3.ForeColor = System.Drawing.Color.White;
+            this.img3.Image = ((System.Drawing.Image)(resources.GetObject("img3.Image")));
+            this.img3.ImageWithText = false;
+            this.img3.Location = new System.Drawing.Point(175, 41);
+            this.img3.Name = "img3";
+            this.img3.ShowText = false;
+            this.img3.Size = new System.Drawing.Size(80, 80);
+            this.img3.TabIndex = 2;
+            this.img3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img7
             // 
-            img7.Checked = false;
-            img7.Font = new Font("Segoe UI", 9.0f);
-            img7.ForeColor = Color.White;
-            img7.Image = (Image)resources.GetObject("img7.Image");
-            img7.Location = new Point(175, 127);
-            img7.Name = "img7";
-            img7.ShowText = false;
-            img7.Size = new Size(80, 80);
-            img7.TabIndex = 3;
+            this.img7.Checked = false;
+            this.img7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img7.ForeColor = System.Drawing.Color.White;
+            this.img7.Image = ((System.Drawing.Image)(resources.GetObject("img7.Image")));
+            this.img7.ImageWithText = false;
+            this.img7.Location = new System.Drawing.Point(175, 127);
+            this.img7.Name = "img7";
+            this.img7.ShowText = false;
+            this.img7.Size = new System.Drawing.Size(80, 80);
+            this.img7.TabIndex = 3;
+            this.img7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img4
             // 
-            img4.Checked = false;
-            img4.Font = new Font("Segoe UI", 9.0f);
-            img4.ForeColor = Color.White;
-            img4.Image = (Image)resources.GetObject("img4.Image");
-            img4.Location = new Point(261, 41);
-            img4.Name = "img4";
-            img4.ShowText = false;
-            img4.Size = new Size(80, 80);
-            img4.TabIndex = 4;
+            this.img4.Checked = false;
+            this.img4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img4.ForeColor = System.Drawing.Color.White;
+            this.img4.Image = ((System.Drawing.Image)(resources.GetObject("img4.Image")));
+            this.img4.ImageWithText = false;
+            this.img4.Location = new System.Drawing.Point(261, 41);
+            this.img4.Name = "img4";
+            this.img4.ShowText = false;
+            this.img4.Size = new System.Drawing.Size(80, 80);
+            this.img4.TabIndex = 4;
+            this.img4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img5
             // 
-            img5.Checked = false;
-            img5.Font = new Font("Segoe UI", 9.0f);
-            img5.ForeColor = Color.White;
-            img5.Image = (Image)resources.GetObject("img5.Image");
-            img5.Location = new Point(3, 127);
-            img5.Name = "img5";
-            img5.ShowText = false;
-            img5.Size = new Size(80, 80);
-            img5.TabIndex = 5;
+            this.img5.Checked = false;
+            this.img5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img5.ForeColor = System.Drawing.Color.White;
+            this.img5.Image = ((System.Drawing.Image)(resources.GetObject("img5.Image")));
+            this.img5.ImageWithText = false;
+            this.img5.Location = new System.Drawing.Point(3, 127);
+            this.img5.Name = "img5";
+            this.img5.ShowText = false;
+            this.img5.Size = new System.Drawing.Size(80, 80);
+            this.img5.TabIndex = 5;
+            this.img5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img6
             // 
-            img6.Checked = false;
-            img6.Font = new Font("Segoe UI", 9.0f);
-            img6.ForeColor = Color.White;
-            img6.Image = (Image)resources.GetObject("img6.Image");
-            img6.Location = new Point(89, 127);
-            img6.Name = "img6";
-            img6.ShowText = false;
-            img6.Size = new Size(80, 80);
-            img6.TabIndex = 6;
+            this.img6.Checked = false;
+            this.img6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img6.ForeColor = System.Drawing.Color.White;
+            this.img6.Image = ((System.Drawing.Image)(resources.GetObject("img6.Image")));
+            this.img6.ImageWithText = false;
+            this.img6.Location = new System.Drawing.Point(89, 127);
+            this.img6.Name = "img6";
+            this.img6.ShowText = false;
+            this.img6.Size = new System.Drawing.Size(80, 80);
+            this.img6.TabIndex = 6;
+            this.img6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img8
             // 
-            img8.Checked = false;
-            img8.Font = new Font("Segoe UI", 9.0f);
-            img8.ForeColor = Color.White;
-            img8.Image = (Image)resources.GetObject("img8.Image");
-            img8.Location = new Point(261, 127);
-            img8.Name = "img8";
-            img8.ShowText = false;
-            img8.Size = new Size(80, 80);
-            img8.TabIndex = 7;
+            this.img8.Checked = false;
+            this.img8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img8.ForeColor = System.Drawing.Color.White;
+            this.img8.Image = ((System.Drawing.Image)(resources.GetObject("img8.Image")));
+            this.img8.ImageWithText = false;
+            this.img8.Location = new System.Drawing.Point(261, 127);
+            this.img8.Name = "img8";
+            this.img8.ShowText = false;
+            this.img8.Size = new System.Drawing.Size(80, 80);
+            this.img8.TabIndex = 7;
+            this.img8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img9
             // 
-            img9.Checked = false;
-            img9.Font = new Font("Segoe UI", 9.0f);
-            img9.ForeColor = Color.White;
-            img9.Image = (Image)resources.GetObject("img9.Image");
-            img9.Location = new Point(3, 213);
-            img9.Name = "img9";
-            img9.ShowText = false;
-            img9.Size = new Size(80, 80);
-            img9.TabIndex = 8;
+            this.img9.Checked = false;
+            this.img9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img9.ForeColor = System.Drawing.Color.White;
+            this.img9.Image = ((System.Drawing.Image)(resources.GetObject("img9.Image")));
+            this.img9.ImageWithText = false;
+            this.img9.Location = new System.Drawing.Point(3, 213);
+            this.img9.Name = "img9";
+            this.img9.ShowText = false;
+            this.img9.Size = new System.Drawing.Size(80, 80);
+            this.img9.TabIndex = 8;
+            this.img9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img15
             // 
-            img15.Checked = false;
-            img15.Font = new Font("Segoe UI", 9.0f);
-            img15.ForeColor = Color.White;
-            img15.Image = (Image)resources.GetObject("img15.Image");
-            img15.Location = new Point(175, 299);
-            img15.Name = "img15";
-            img15.ShowText = false;
-            img15.Size = new Size(80, 80);
-            img15.TabIndex = 14;
+            this.img15.Checked = false;
+            this.img15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img15.ForeColor = System.Drawing.Color.White;
+            this.img15.Image = ((System.Drawing.Image)(resources.GetObject("img15.Image")));
+            this.img15.ImageWithText = false;
+            this.img15.Location = new System.Drawing.Point(175, 299);
+            this.img15.Name = "img15";
+            this.img15.ShowText = false;
+            this.img15.Size = new System.Drawing.Size(80, 80);
+            this.img15.TabIndex = 14;
+            this.img15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img14
             // 
-            img14.Checked = false;
-            img14.Font = new Font("Segoe UI", 9.0f);
-            img14.ForeColor = Color.White;
-            img14.Image = (Image)resources.GetObject("img14.Image");
-            img14.Location = new Point(89, 299);
-            img14.Name = "img14";
-            img14.ShowText = false;
-            img14.Size = new Size(80, 80);
-            img14.TabIndex = 13;
+            this.img14.Checked = false;
+            this.img14.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img14.ForeColor = System.Drawing.Color.White;
+            this.img14.Image = ((System.Drawing.Image)(resources.GetObject("img14.Image")));
+            this.img14.ImageWithText = false;
+            this.img14.Location = new System.Drawing.Point(89, 299);
+            this.img14.Name = "img14";
+            this.img14.ShowText = false;
+            this.img14.Size = new System.Drawing.Size(80, 80);
+            this.img14.TabIndex = 13;
+            this.img14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img12
             // 
-            img12.Checked = false;
-            img12.Font = new Font("Segoe UI", 9.0f);
-            img12.ForeColor = Color.White;
-            img12.Image = (Image)resources.GetObject("img12.Image");
-            img12.Location = new Point(261, 213);
-            img12.Name = "img12";
-            img12.ShowText = false;
-            img12.Size = new Size(80, 80);
-            img12.TabIndex = 12;
+            this.img12.Checked = false;
+            this.img12.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img12.ForeColor = System.Drawing.Color.White;
+            this.img12.Image = ((System.Drawing.Image)(resources.GetObject("img12.Image")));
+            this.img12.ImageWithText = false;
+            this.img12.Location = new System.Drawing.Point(261, 213);
+            this.img12.Name = "img12";
+            this.img12.ShowText = false;
+            this.img12.Size = new System.Drawing.Size(80, 80);
+            this.img12.TabIndex = 12;
+            this.img12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img11
             // 
-            img11.Checked = false;
-            img11.Font = new Font("Segoe UI", 9.0f);
-            img11.ForeColor = Color.White;
-            img11.Image = (Image)resources.GetObject("img11.Image");
-            img11.Location = new Point(175, 213);
-            img11.Name = "img11";
-            img11.ShowText = false;
-            img11.Size = new Size(80, 80);
-            img11.TabIndex = 11;
+            this.img11.Checked = false;
+            this.img11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img11.ForeColor = System.Drawing.Color.White;
+            this.img11.Image = ((System.Drawing.Image)(resources.GetObject("img11.Image")));
+            this.img11.ImageWithText = false;
+            this.img11.Location = new System.Drawing.Point(175, 213);
+            this.img11.Name = "img11";
+            this.img11.ShowText = false;
+            this.img11.Size = new System.Drawing.Size(80, 80);
+            this.img11.TabIndex = 11;
+            this.img11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img10
             // 
-            img10.Checked = false;
-            img10.Font = new Font("Segoe UI", 9.0f);
-            img10.ForeColor = Color.White;
-            img10.Image = (Image)resources.GetObject("img10.Image");
-            img10.Location = new Point(89, 213);
-            img10.Name = "img10";
-            img10.ShowText = false;
-            img10.Size = new Size(80, 80);
-            img10.TabIndex = 10;
+            this.img10.Checked = false;
+            this.img10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img10.ForeColor = System.Drawing.Color.White;
+            this.img10.Image = ((System.Drawing.Image)(resources.GetObject("img10.Image")));
+            this.img10.ImageWithText = false;
+            this.img10.Location = new System.Drawing.Point(89, 213);
+            this.img10.Name = "img10";
+            this.img10.ShowText = false;
+            this.img10.Size = new System.Drawing.Size(80, 80);
+            this.img10.TabIndex = 10;
+            this.img10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img13
             // 
-            img13.Checked = false;
-            img13.Font = new Font("Segoe UI", 9.0f);
-            img13.ForeColor = Color.White;
-            img13.Image = (Image)resources.GetObject("img13.Image");
-            img13.Location = new Point(3, 299);
-            img13.Name = "img13";
-            img13.ShowText = false;
-            img13.Size = new Size(80, 80);
-            img13.TabIndex = 9;
+            this.img13.Checked = false;
+            this.img13.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img13.ForeColor = System.Drawing.Color.White;
+            this.img13.Image = ((System.Drawing.Image)(resources.GetObject("img13.Image")));
+            this.img13.ImageWithText = false;
+            this.img13.Location = new System.Drawing.Point(3, 299);
+            this.img13.Name = "img13";
+            this.img13.ShowText = false;
+            this.img13.Size = new System.Drawing.Size(80, 80);
+            this.img13.TabIndex = 9;
+            this.img13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img18
             // 
-            img18.Checked = false;
-            img18.Font = new Font("Segoe UI", 9.0f);
-            img18.ForeColor = Color.White;
-            img18.Image = (Image)resources.GetObject("img18.Image");
-            img18.Location = new Point(89, 385);
-            img18.Name = "img18";
-            img18.ShowText = false;
-            img18.Size = new Size(80, 80);
-            img18.TabIndex = 17;
+            this.img18.Checked = false;
+            this.img18.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img18.ForeColor = System.Drawing.Color.White;
+            this.img18.Image = ((System.Drawing.Image)(resources.GetObject("img18.Image")));
+            this.img18.ImageWithText = false;
+            this.img18.Location = new System.Drawing.Point(89, 385);
+            this.img18.Name = "img18";
+            this.img18.ShowText = false;
+            this.img18.Size = new System.Drawing.Size(80, 80);
+            this.img18.TabIndex = 17;
+            this.img18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img17
             // 
-            img17.Checked = false;
-            img17.Font = new Font("Segoe UI", 9.0f);
-            img17.ForeColor = Color.White;
-            img17.Image = (Image)resources.GetObject("img17.Image");
-            img17.Location = new Point(3, 385);
-            img17.Name = "img17";
-            img17.ShowText = false;
-            img17.Size = new Size(80, 80);
-            img17.TabIndex = 16;
+            this.img17.Checked = false;
+            this.img17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img17.ForeColor = System.Drawing.Color.White;
+            this.img17.Image = ((System.Drawing.Image)(resources.GetObject("img17.Image")));
+            this.img17.ImageWithText = false;
+            this.img17.Location = new System.Drawing.Point(3, 385);
+            this.img17.Name = "img17";
+            this.img17.ShowText = false;
+            this.img17.Size = new System.Drawing.Size(80, 80);
+            this.img17.TabIndex = 16;
+            this.img17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img16
             // 
-            img16.Checked = false;
-            img16.Font = new Font("Segoe UI", 9.0f);
-            img16.ForeColor = Color.White;
-            img16.Image = (Image)resources.GetObject("img16.Image");
-            img16.Location = new Point(261, 299);
-            img16.Name = "img16";
-            img16.ShowText = false;
-            img16.Size = new Size(80, 80);
-            img16.TabIndex = 15;
+            this.img16.Checked = false;
+            this.img16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img16.ForeColor = System.Drawing.Color.White;
+            this.img16.Image = ((System.Drawing.Image)(resources.GetObject("img16.Image")));
+            this.img16.ImageWithText = false;
+            this.img16.Location = new System.Drawing.Point(261, 299);
+            this.img16.Name = "img16";
+            this.img16.ShowText = false;
+            this.img16.Size = new System.Drawing.Size(80, 80);
+            this.img16.TabIndex = 15;
+            this.img16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img20
             // 
-            img20.Checked = false;
-            img20.Font = new Font("Segoe UI", 9.0f);
-            img20.ForeColor = Color.White;
-            img20.Image = null;
-            img20.Location = new Point(261, 385);
-            img20.Name = "img20";
-            img20.ShowText = false;
-            img20.Size = new Size(80, 80);
-            img20.TabIndex = 19;
+            this.img20.Checked = false;
+            this.img20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img20.ForeColor = System.Drawing.Color.White;
+            this.img20.Image = null;
+            this.img20.ImageWithText = false;
+            this.img20.Location = new System.Drawing.Point(261, 385);
+            this.img20.Name = "img20";
+            this.img20.ShowText = false;
+            this.img20.Size = new System.Drawing.Size(80, 80);
+            this.img20.TabIndex = 19;
+            this.img20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // img19
             // 
-            img19.Checked = false;
-            img19.Font = new Font("Segoe UI", 9.0f);
-            img19.ForeColor = Color.White;
-            img19.Image = null;
-            img19.Location = new Point(175, 385);
-            img19.Name = "img19";
-            img19.ShowText = false;
-            img19.Size = new Size(80, 80);
-            img19.TabIndex = 18;
+            this.img19.Checked = false;
+            this.img19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img19.ForeColor = System.Drawing.Color.White;
+            this.img19.Image = null;
+            this.img19.ImageWithText = false;
+            this.img19.Location = new System.Drawing.Point(175, 385);
+            this.img19.Name = "img19";
+            this.img19.ShowText = false;
+            this.img19.Size = new System.Drawing.Size(80, 80);
+            this.img19.TabIndex = 18;
+            this.img19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Button2
             // 
-            Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.DrawOnGlass = false;
-            Button2.Font = new Font("Segoe UI", 9.0f);
-            Button2.ForeColor = Color.White;
-            Button2.Image = null;
-            Button2.LineColor = Color.FromArgb(199, 49, 61);
-            Button2.Location = new Point(191, 493);
-            Button2.Name = "Button2";
-            Button2.Size = new Size(80, 34);
-            Button2.TabIndex = 68;
-            Button2.Text = "Cancel";
-            Button2.UseVisualStyleBackColor = false;
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.DrawOnGlass = false;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button2.ForeColor = System.Drawing.Color.White;
+            this.Button2.Image = null;
+            this.Button2.Location = new System.Drawing.Point(191, 493);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(80, 34);
+            this.Button2.TabIndex = 68;
+            this.Button2.Text = "Cancel";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.DrawOnGlass = false;
-            Button1.Font = new Font("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = (Image)resources.GetObject("Button1.Image");
-            Button1.ImageAlign = ContentAlignment.MiddleLeft;
-            Button1.LineColor = Color.FromArgb(52, 20, 64);
-            Button1.Location = new Point(277, 493);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(80, 34);
-            Button1.TabIndex = 67;
-            Button1.Text = "Load";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.DrawOnGlass = false;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.Location = new System.Drawing.Point(277, 493);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(80, 34);
+            this.Button1.TabIndex = 67;
+            this.Button1.Text = "Load";
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // GroupBox1
             // 
-            GroupBox1.BackColor = Color.FromArgb(34, 34, 34);
-            GroupBox1.Controls.Add(PictureBox32);
-            GroupBox1.Controls.Add(Label41);
-            GroupBox1.Controls.Add(img1);
-            GroupBox1.Controls.Add(img20);
-            GroupBox1.Controls.Add(img2);
-            GroupBox1.Controls.Add(img19);
-            GroupBox1.Controls.Add(img3);
-            GroupBox1.Controls.Add(img18);
-            GroupBox1.Controls.Add(img7);
-            GroupBox1.Controls.Add(img17);
-            GroupBox1.Controls.Add(img4);
-            GroupBox1.Controls.Add(img16);
-            GroupBox1.Controls.Add(img5);
-            GroupBox1.Controls.Add(img15);
-            GroupBox1.Controls.Add(img6);
-            GroupBox1.Controls.Add(img14);
-            GroupBox1.Controls.Add(img8);
-            GroupBox1.Controls.Add(img12);
-            GroupBox1.Controls.Add(img9);
-            GroupBox1.Controls.Add(img11);
-            GroupBox1.Controls.Add(img13);
-            GroupBox1.Controls.Add(img10);
-            GroupBox1.Location = new Point(12, 12);
-            GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(345, 468);
-            GroupBox1.TabIndex = 69;
+            this.GroupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.GroupBox1.Controls.Add(this.PictureBox32);
+            this.GroupBox1.Controls.Add(this.Label41);
+            this.GroupBox1.Controls.Add(this.img1);
+            this.GroupBox1.Controls.Add(this.img20);
+            this.GroupBox1.Controls.Add(this.img2);
+            this.GroupBox1.Controls.Add(this.img19);
+            this.GroupBox1.Controls.Add(this.img3);
+            this.GroupBox1.Controls.Add(this.img18);
+            this.GroupBox1.Controls.Add(this.img7);
+            this.GroupBox1.Controls.Add(this.img17);
+            this.GroupBox1.Controls.Add(this.img4);
+            this.GroupBox1.Controls.Add(this.img16);
+            this.GroupBox1.Controls.Add(this.img5);
+            this.GroupBox1.Controls.Add(this.img15);
+            this.GroupBox1.Controls.Add(this.img6);
+            this.GroupBox1.Controls.Add(this.img14);
+            this.GroupBox1.Controls.Add(this.img8);
+            this.GroupBox1.Controls.Add(this.img12);
+            this.GroupBox1.Controls.Add(this.img9);
+            this.GroupBox1.Controls.Add(this.img11);
+            this.GroupBox1.Controls.Add(this.img13);
+            this.GroupBox1.Controls.Add(this.img10);
+            this.GroupBox1.Location = new System.Drawing.Point(12, 12);
+            this.GroupBox1.Name = "GroupBox1";
+            this.GroupBox1.Size = new System.Drawing.Size(345, 468);
+            this.GroupBox1.TabIndex = 69;
             // 
             // PictureBox32
             // 
-            PictureBox32.Image = (Image)resources.GetObject("PictureBox32.Image");
-            PictureBox32.Location = new Point(3, 3);
-            PictureBox32.Name = "PictureBox32";
-            PictureBox32.Size = new Size(35, 35);
-            PictureBox32.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox32.TabIndex = 3;
-            PictureBox32.TabStop = false;
+            this.PictureBox32.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox32.Image")));
+            this.PictureBox32.Location = new System.Drawing.Point(3, 3);
+            this.PictureBox32.Name = "PictureBox32";
+            this.PictureBox32.Size = new System.Drawing.Size(35, 35);
+            this.PictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox32.TabIndex = 3;
+            this.PictureBox32.TabStop = false;
             // 
             // Label41
             // 
-            Label41.Font = new Font("Segoe UI", 11.25f, FontStyle.Bold);
-            Label41.ForeColor = Color.White;
-            Label41.Location = new Point(44, 3);
-            Label41.Name = "Label41";
-            Label41.Size = new Size(297, 35);
-            Label41.TabIndex = 2;
-            Label41.Text = "Start background";
-            Label41.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label41.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.Label41.ForeColor = System.Drawing.Color.White;
+            this.Label41.Location = new System.Drawing.Point(44, 3);
+            this.Label41.Name = "Label41";
+            this.Label41.Size = new System.Drawing.Size(297, 35);
+            this.Label41.TabIndex = 2;
+            this.Label41.Text = "Start background";
+            this.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Start8Selector
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(369, 539);
-            Controls.Add(GroupBox1);
-            Controls.Add(Button2);
-            Controls.Add(Button1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.Black;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Start8Selector";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Windows 8.1 start";
-            GroupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)PictureBox32).EndInit();
-            Load += new EventHandler(Start8Selector_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(369, 539);
+            this.Controls.Add(this.GroupBox1);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.Button1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Start8Selector";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Windows 8.1 start";
+            this.Load += new System.EventHandler(this.Start8Selector_Load);
+            this.GroupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).EndInit();
+            this.ResumeLayout(false);
 
         }
 
