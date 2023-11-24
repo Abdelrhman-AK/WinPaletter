@@ -2,7 +2,7 @@
 name: ❌ Issue report
 about: "Report an issue or error occurred during your WinPaletter usage, to help me improve WinPaletter"
 title: ":x: [Error] "
-labels: issue
+labels: Issue
 assignees: Abdelrhman-AK
 ---
 
