@@ -371,7 +371,7 @@ namespace WinPaletter.UI.Retro
             G = Graphics.FromImage(B);
             DoubleBuffered = true;
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
 
             base.OnPaint(e);
             TB.ForeColor = ForeColor;

@@ -404,7 +404,7 @@ namespace WinPaletter
                         {
                             {
                                 var temp3 = (UI.WP.RadioImage)ctrl;
-                                c.Text = temp3.ShowText ? temp3.Text : string.Empty;
+                                c.Text = !string.IsNullOrWhiteSpace(temp3.Text) ? temp3.Text : string.Empty;
                                 c.Image = temp3.Image;
                             }
                         }
@@ -619,7 +619,7 @@ namespace WinPaletter
             {
                 e.PaintBackground(e.CellBounds, true);
 
-                var br = new SolidBrush(e.CellStyle.ForeColor);
+                SolidBrush br = new(e.CellStyle.ForeColor);
 
                 var textMetricSize = new SizeF(0f, 0f);
                 if (keyPos >= 1)

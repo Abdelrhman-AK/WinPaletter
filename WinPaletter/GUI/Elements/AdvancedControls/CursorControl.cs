@@ -251,23 +251,23 @@ namespace WinPaletter.UI.Controllers
             var bkC = _Focused ? Program.Style.Schemes.Main.Colors.Back_Checked : Program.Style.Schemes.Main.Colors.Back;
             var bkCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Back_Checked);
 
-            using (var br = new SolidBrush(bkC))
+            using (SolidBrush br = new(bkC))
             {
                 e.Graphics.FillRoundedRect(br, MainRectInner);
             }
-            using (var br = new SolidBrush(bkCC))
+            using (SolidBrush br = new(bkCC))
             {
                 e.Graphics.FillRoundedRect(br, MainRect);
             }
 
             var lC = Color.FromArgb(255 - alpha, _Focused ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
-            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
+            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_Checked_Hover);
 
-            using (var P = new Pen(lC))
+            using (Pen P = new(lC))
             {
                 e.Graphics.DrawRoundedRect_LikeW11(P, MainRectInner);
             }
-            using (var P = new Pen(lCC))
+            using (Pen P = new(lCC))
             {
                 e.Graphics.DrawRoundedRect_LikeW11(P, MainRect);
             }

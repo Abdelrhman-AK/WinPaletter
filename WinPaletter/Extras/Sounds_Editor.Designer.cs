@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -904,7 +904,7 @@ namespace WinPaletter
             // alertBox1
             // 
             this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.alertBox1.BackColor = System.Drawing.Color.Transparent;
             this.alertBox1.CenterText = false;
@@ -922,7 +922,6 @@ namespace WinPaletter
             // 
             this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button10.CustomColor = System.Drawing.Color.Empty;
-            this.Button10.DrawOnGlass = false;
             this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
@@ -940,7 +939,6 @@ namespace WinPaletter
             // 
             this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.DrawOnGlass = false;
             this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
@@ -958,7 +956,6 @@ namespace WinPaletter
             // 
             this.Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button8.CustomColor = System.Drawing.Color.Empty;
-            this.Button8.DrawOnGlass = false;
             this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
@@ -975,8 +972,8 @@ namespace WinPaletter
             // TabControl1
             // 
             this.TabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl1.Controls.Add(this.TabPage1);
             this.TabControl1.Controls.Add(this.TabPage2);
@@ -993,7 +990,6 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(30, 140);
-            this.TabControl1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.TabControl1.Location = new System.Drawing.Point(12, 57);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
@@ -1024,7 +1020,7 @@ namespace WinPaletter
             // 
             // groupBox88
             // 
-            this.groupBox88.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox88.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox88.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.groupBox88.Controls.Add(this.pictureBox92);
@@ -1053,7 +1049,6 @@ namespace WinPaletter
             // 
             this.button266.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button266.CustomColor = System.Drawing.Color.Empty;
-            this.button266.DrawOnGlass = false;
             this.button266.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button266.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button266.ForeColor = System.Drawing.Color.White;
@@ -1069,7 +1064,6 @@ namespace WinPaletter
             // 
             this.button267.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button267.CustomColor = System.Drawing.Color.Empty;
-            this.button267.DrawOnGlass = false;
             this.button267.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button267.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button267.ForeColor = System.Drawing.Color.White;
@@ -1085,7 +1079,6 @@ namespace WinPaletter
             // 
             this.button268.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button268.CustomColor = System.Drawing.Color.Empty;
-            this.button268.DrawOnGlass = false;
             this.button268.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button268.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button268.ForeColor = System.Drawing.Color.White;
@@ -1099,9 +1092,8 @@ namespace WinPaletter
             // 
             // textBox86
             // 
-            this.textBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox86.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.textBox86.ForeColor = System.Drawing.Color.White;
             this.textBox86.Location = new System.Drawing.Point(175, 3);
             this.textBox86.MaxLength = 32767;
@@ -1141,7 +1133,7 @@ namespace WinPaletter
             // Separator1
             // 
             this.Separator1.AlternativeLook = false;
-            this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator1.BackColor = System.Drawing.Color.Transparent;
             this.Separator1.Location = new System.Drawing.Point(4, 309);
@@ -1154,7 +1146,7 @@ namespace WinPaletter
             // Separator3
             // 
             this.Separator3.AlternativeLook = false;
-            this.Separator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Separator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator3.BackColor = System.Drawing.Color.Transparent;
             this.Separator3.Location = new System.Drawing.Point(4, 130);
@@ -1199,7 +1191,7 @@ namespace WinPaletter
             // 
             // CheckBox35_SFC
             // 
-            this.CheckBox35_SFC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.CheckBox35_SFC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox35_SFC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.CheckBox35_SFC.Checked = false;
@@ -1214,7 +1206,7 @@ namespace WinPaletter
             // 
             // GroupBox65
             // 
-            this.GroupBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox65.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox65.Controls.Add(this.Button199);
@@ -1230,10 +1222,9 @@ namespace WinPaletter
             // 
             // Button199
             // 
-            this.Button199.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button199.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button199.CustomColor = System.Drawing.Color.Empty;
-            this.Button199.DrawOnGlass = false;
             this.Button199.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button199.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button199.ForeColor = System.Drawing.Color.White;
@@ -1247,10 +1238,9 @@ namespace WinPaletter
             // 
             // Button200
             // 
-            this.Button200.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button200.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button200.CustomColor = System.Drawing.Color.Empty;
-            this.Button200.DrawOnGlass = false;
             this.Button200.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button200.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button200.ForeColor = System.Drawing.Color.White;
@@ -1264,10 +1254,9 @@ namespace WinPaletter
             // 
             // Button201
             // 
-            this.Button201.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button201.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button201.CustomColor = System.Drawing.Color.Empty;
-            this.Button201.DrawOnGlass = false;
             this.Button201.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button201.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button201.ForeColor = System.Drawing.Color.White;
@@ -1281,9 +1270,8 @@ namespace WinPaletter
             // 
             // TextBox64
             // 
-            this.TextBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox64.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox64.ForeColor = System.Drawing.Color.White;
             this.TextBox64.Location = new System.Drawing.Point(175, 3);
             this.TextBox64.MaxLength = 32767;
@@ -1313,7 +1301,7 @@ namespace WinPaletter
             // 
             // PictureBox64
             // 
-            this.PictureBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox64.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox64.Image")));
             this.PictureBox64.Location = new System.Drawing.Point(3, 3);
@@ -1324,7 +1312,7 @@ namespace WinPaletter
             // 
             // GroupBox5
             // 
-            this.GroupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox5.Controls.Add(this.Button24);
@@ -1345,7 +1333,6 @@ namespace WinPaletter
             // 
             this.Button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button24.CustomColor = System.Drawing.Color.Empty;
-            this.Button24.DrawOnGlass = false;
             this.Button24.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button24.ForeColor = System.Drawing.Color.White;
@@ -1364,7 +1351,6 @@ namespace WinPaletter
             // 
             this.Button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button23.CustomColor = System.Drawing.Color.Empty;
-            this.Button23.DrawOnGlass = false;
             this.Button23.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button23.ForeColor = System.Drawing.Color.White;
@@ -1383,7 +1369,6 @@ namespace WinPaletter
             // 
             this.Button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button22.CustomColor = System.Drawing.Color.Empty;
-            this.Button22.DrawOnGlass = false;
             this.Button22.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button22.ForeColor = System.Drawing.Color.White;
@@ -1400,10 +1385,9 @@ namespace WinPaletter
             // 
             // Button19
             // 
-            this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.Empty;
-            this.Button19.DrawOnGlass = false;
             this.Button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button19.ForeColor = System.Drawing.Color.White;
@@ -1417,10 +1401,9 @@ namespace WinPaletter
             // 
             // Button20
             // 
-            this.Button20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button20.CustomColor = System.Drawing.Color.Empty;
-            this.Button20.DrawOnGlass = false;
             this.Button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button20.ForeColor = System.Drawing.Color.White;
@@ -1435,10 +1418,9 @@ namespace WinPaletter
             // 
             // Button21
             // 
-            this.Button21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button21.CustomColor = System.Drawing.Color.Empty;
-            this.Button21.DrawOnGlass = false;
             this.Button21.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button21.ForeColor = System.Drawing.Color.White;
@@ -1452,9 +1434,8 @@ namespace WinPaletter
             // 
             // TextBox2
             // 
-            this.TextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox2.ForeColor = System.Drawing.Color.White;
             this.TextBox2.Location = new System.Drawing.Point(175, 3);
             this.TextBox2.MaxLength = 32767;
@@ -1484,7 +1465,7 @@ namespace WinPaletter
             // 
             // PictureBox5
             // 
-            this.PictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
             this.PictureBox5.Location = new System.Drawing.Point(3, 3);
@@ -1495,7 +1476,7 @@ namespace WinPaletter
             // 
             // GroupBox3
             // 
-            this.GroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox3.Controls.Add(this.pictureBox90);
@@ -1524,7 +1505,6 @@ namespace WinPaletter
             // 
             this.Button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button15.CustomColor = System.Drawing.Color.Empty;
-            this.Button15.DrawOnGlass = false;
             this.Button15.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button15.ForeColor = System.Drawing.Color.White;
@@ -1540,7 +1520,6 @@ namespace WinPaletter
             // 
             this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.DrawOnGlass = false;
             this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
@@ -1556,7 +1535,6 @@ namespace WinPaletter
             // 
             this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button6.CustomColor = System.Drawing.Color.Empty;
-            this.Button6.DrawOnGlass = false;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
@@ -1570,9 +1548,8 @@ namespace WinPaletter
             // 
             // TextBox5
             // 
-            this.TextBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox5.ForeColor = System.Drawing.Color.White;
             this.TextBox5.Location = new System.Drawing.Point(175, 3);
             this.TextBox5.MaxLength = 32767;
@@ -1611,7 +1588,7 @@ namespace WinPaletter
             // 
             // GroupBox6
             // 
-            this.GroupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox6.Controls.Add(this.pictureBox91);
@@ -1640,7 +1617,6 @@ namespace WinPaletter
             // 
             this.Button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button25.CustomColor = System.Drawing.Color.Empty;
-            this.Button25.DrawOnGlass = false;
             this.Button25.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button25.ForeColor = System.Drawing.Color.White;
@@ -1656,7 +1632,6 @@ namespace WinPaletter
             // 
             this.Button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button26.CustomColor = System.Drawing.Color.Empty;
-            this.Button26.DrawOnGlass = false;
             this.Button26.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button26.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button26.ForeColor = System.Drawing.Color.White;
@@ -1672,7 +1647,6 @@ namespace WinPaletter
             // 
             this.Button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button27.CustomColor = System.Drawing.Color.Empty;
-            this.Button27.DrawOnGlass = false;
             this.Button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button27.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button27.ForeColor = System.Drawing.Color.White;
@@ -1686,9 +1660,8 @@ namespace WinPaletter
             // 
             // TextBox6
             // 
-            this.TextBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox6.ForeColor = System.Drawing.Color.White;
             this.TextBox6.Location = new System.Drawing.Point(175, 3);
             this.TextBox6.MaxLength = 32767;
@@ -1727,7 +1700,7 @@ namespace WinPaletter
             // 
             // GroupBox4
             // 
-            this.GroupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox4.Controls.Add(this.pictureBox89);
@@ -1756,7 +1729,6 @@ namespace WinPaletter
             // 
             this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button16.CustomColor = System.Drawing.Color.Empty;
-            this.Button16.DrawOnGlass = false;
             this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
@@ -1772,7 +1744,6 @@ namespace WinPaletter
             // 
             this.Button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button13.CustomColor = System.Drawing.Color.Empty;
-            this.Button13.DrawOnGlass = false;
             this.Button13.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button13.ForeColor = System.Drawing.Color.White;
@@ -1788,7 +1759,6 @@ namespace WinPaletter
             // 
             this.Button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button14.CustomColor = System.Drawing.Color.Empty;
-            this.Button14.DrawOnGlass = false;
             this.Button14.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button14.ForeColor = System.Drawing.Color.White;
@@ -1802,9 +1772,8 @@ namespace WinPaletter
             // 
             // TextBox4
             // 
-            this.TextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox4.ForeColor = System.Drawing.Color.White;
             this.TextBox4.Location = new System.Drawing.Point(175, 3);
             this.TextBox4.MaxLength = 32767;
@@ -1843,7 +1812,7 @@ namespace WinPaletter
             // 
             // GroupBox2
             // 
-            this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox2.Controls.Add(this.pictureBox88);
@@ -1872,7 +1841,6 @@ namespace WinPaletter
             // 
             this.Button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button17.CustomColor = System.Drawing.Color.Empty;
-            this.Button17.DrawOnGlass = false;
             this.Button17.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button17.ForeColor = System.Drawing.Color.White;
@@ -1888,7 +1856,6 @@ namespace WinPaletter
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.DrawOnGlass = false;
             this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
@@ -1904,7 +1871,6 @@ namespace WinPaletter
             // 
             this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button4.CustomColor = System.Drawing.Color.Empty;
-            this.Button4.DrawOnGlass = false;
             this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
@@ -1918,9 +1884,8 @@ namespace WinPaletter
             // 
             // TextBox3
             // 
-            this.TextBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox3.ForeColor = System.Drawing.Color.White;
             this.TextBox3.Location = new System.Drawing.Point(175, 3);
             this.TextBox3.MaxLength = 32767;
@@ -1959,7 +1924,7 @@ namespace WinPaletter
             // 
             // GroupBox1
             // 
-            this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.GroupBox1.Controls.Add(this.Button18);
@@ -1975,10 +1940,9 @@ namespace WinPaletter
             // 
             // Button18
             // 
-            this.Button18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button18.CustomColor = System.Drawing.Color.Empty;
-            this.Button18.DrawOnGlass = false;
             this.Button18.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button18.ForeColor = System.Drawing.Color.White;
@@ -1992,10 +1956,9 @@ namespace WinPaletter
             // 
             // Button2
             // 
-            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -2009,10 +1972,9 @@ namespace WinPaletter
             // 
             // Button1
             // 
-            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
@@ -2026,9 +1988,8 @@ namespace WinPaletter
             // 
             // TextBox1
             // 
-            this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(175, 3);
             this.TextBox1.MaxLength = 32767;
@@ -2058,7 +2019,7 @@ namespace WinPaletter
             // 
             // PictureBox1
             // 
-            this.PictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
             this.PictureBox1.Location = new System.Drawing.Point(3, 3);
@@ -2085,7 +2046,7 @@ namespace WinPaletter
             // 
             // GroupBox67
             // 
-            this.GroupBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox67.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox67.Controls.Add(this.Button205);
@@ -2101,10 +2062,9 @@ namespace WinPaletter
             // 
             // Button205
             // 
-            this.Button205.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button205.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button205.CustomColor = System.Drawing.Color.Empty;
-            this.Button205.DrawOnGlass = false;
             this.Button205.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button205.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button205.ForeColor = System.Drawing.Color.White;
@@ -2118,10 +2078,9 @@ namespace WinPaletter
             // 
             // Button206
             // 
-            this.Button206.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button206.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button206.CustomColor = System.Drawing.Color.Empty;
-            this.Button206.DrawOnGlass = false;
             this.Button206.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button206.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button206.ForeColor = System.Drawing.Color.White;
@@ -2135,10 +2094,9 @@ namespace WinPaletter
             // 
             // Button207
             // 
-            this.Button207.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button207.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button207.CustomColor = System.Drawing.Color.Empty;
-            this.Button207.DrawOnGlass = false;
             this.Button207.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button207.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button207.ForeColor = System.Drawing.Color.White;
@@ -2152,9 +2110,8 @@ namespace WinPaletter
             // 
             // TextBox66
             // 
-            this.TextBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox66.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox66.ForeColor = System.Drawing.Color.White;
             this.TextBox66.Location = new System.Drawing.Point(195, 3);
             this.TextBox66.MaxLength = 32767;
@@ -2184,7 +2141,7 @@ namespace WinPaletter
             // 
             // PictureBox66
             // 
-            this.PictureBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox66.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox66.Image")));
             this.PictureBox66.Location = new System.Drawing.Point(3, 3);
@@ -2195,7 +2152,7 @@ namespace WinPaletter
             // 
             // GroupBox69
             // 
-            this.GroupBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox69.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox69.Controls.Add(this.Button211);
@@ -2211,10 +2168,9 @@ namespace WinPaletter
             // 
             // Button211
             // 
-            this.Button211.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button211.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button211.CustomColor = System.Drawing.Color.Empty;
-            this.Button211.DrawOnGlass = false;
             this.Button211.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button211.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button211.ForeColor = System.Drawing.Color.White;
@@ -2228,10 +2184,9 @@ namespace WinPaletter
             // 
             // Button212
             // 
-            this.Button212.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button212.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button212.CustomColor = System.Drawing.Color.Empty;
-            this.Button212.DrawOnGlass = false;
             this.Button212.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button212.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button212.ForeColor = System.Drawing.Color.White;
@@ -2245,10 +2200,9 @@ namespace WinPaletter
             // 
             // Button213
             // 
-            this.Button213.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button213.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button213.CustomColor = System.Drawing.Color.Empty;
-            this.Button213.DrawOnGlass = false;
             this.Button213.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button213.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button213.ForeColor = System.Drawing.Color.White;
@@ -2262,9 +2216,8 @@ namespace WinPaletter
             // 
             // TextBox68
             // 
-            this.TextBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox68.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox68.ForeColor = System.Drawing.Color.White;
             this.TextBox68.Location = new System.Drawing.Point(195, 3);
             this.TextBox68.MaxLength = 32767;
@@ -2294,7 +2247,7 @@ namespace WinPaletter
             // 
             // PictureBox68
             // 
-            this.PictureBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox68.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox68.Image")));
             this.PictureBox68.Location = new System.Drawing.Point(3, 3);
@@ -2305,7 +2258,7 @@ namespace WinPaletter
             // 
             // GroupBox11
             // 
-            this.GroupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox11.Controls.Add(this.Button40);
@@ -2321,10 +2274,9 @@ namespace WinPaletter
             // 
             // Button40
             // 
-            this.Button40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button40.CustomColor = System.Drawing.Color.Empty;
-            this.Button40.DrawOnGlass = false;
             this.Button40.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button40.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button40.ForeColor = System.Drawing.Color.White;
@@ -2338,10 +2290,9 @@ namespace WinPaletter
             // 
             // Button41
             // 
-            this.Button41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button41.CustomColor = System.Drawing.Color.Empty;
-            this.Button41.DrawOnGlass = false;
             this.Button41.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button41.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button41.ForeColor = System.Drawing.Color.White;
@@ -2355,10 +2306,9 @@ namespace WinPaletter
             // 
             // Button42
             // 
-            this.Button42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button42.CustomColor = System.Drawing.Color.Empty;
-            this.Button42.DrawOnGlass = false;
             this.Button42.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button42.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button42.ForeColor = System.Drawing.Color.White;
@@ -2372,9 +2322,8 @@ namespace WinPaletter
             // 
             // TextBox11
             // 
-            this.TextBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox11.ForeColor = System.Drawing.Color.White;
             this.TextBox11.Location = new System.Drawing.Point(195, 3);
             this.TextBox11.MaxLength = 32767;
@@ -2404,7 +2353,7 @@ namespace WinPaletter
             // 
             // PictureBox11
             // 
-            this.PictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
             this.PictureBox11.Location = new System.Drawing.Point(3, 3);
@@ -2415,7 +2364,7 @@ namespace WinPaletter
             // 
             // GroupBox10
             // 
-            this.GroupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox10.Controls.Add(this.Button37);
@@ -2431,10 +2380,9 @@ namespace WinPaletter
             // 
             // Button37
             // 
-            this.Button37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button37.CustomColor = System.Drawing.Color.Empty;
-            this.Button37.DrawOnGlass = false;
             this.Button37.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button37.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button37.ForeColor = System.Drawing.Color.White;
@@ -2448,10 +2396,9 @@ namespace WinPaletter
             // 
             // Button38
             // 
-            this.Button38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button38.CustomColor = System.Drawing.Color.Empty;
-            this.Button38.DrawOnGlass = false;
             this.Button38.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button38.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button38.ForeColor = System.Drawing.Color.White;
@@ -2465,10 +2412,9 @@ namespace WinPaletter
             // 
             // Button39
             // 
-            this.Button39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button39.CustomColor = System.Drawing.Color.Empty;
-            this.Button39.DrawOnGlass = false;
             this.Button39.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button39.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button39.ForeColor = System.Drawing.Color.White;
@@ -2482,9 +2428,8 @@ namespace WinPaletter
             // 
             // TextBox10
             // 
-            this.TextBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox10.ForeColor = System.Drawing.Color.White;
             this.TextBox10.Location = new System.Drawing.Point(195, 3);
             this.TextBox10.MaxLength = 32767;
@@ -2514,7 +2459,7 @@ namespace WinPaletter
             // 
             // PictureBox10
             // 
-            this.PictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox10.Image")));
             this.PictureBox10.Location = new System.Drawing.Point(3, 3);
@@ -2525,7 +2470,7 @@ namespace WinPaletter
             // 
             // GroupBox9
             // 
-            this.GroupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox9.Controls.Add(this.Button34);
@@ -2541,10 +2486,9 @@ namespace WinPaletter
             // 
             // Button34
             // 
-            this.Button34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button34.CustomColor = System.Drawing.Color.Empty;
-            this.Button34.DrawOnGlass = false;
             this.Button34.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button34.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button34.ForeColor = System.Drawing.Color.White;
@@ -2558,10 +2502,9 @@ namespace WinPaletter
             // 
             // Button35
             // 
-            this.Button35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button35.CustomColor = System.Drawing.Color.Empty;
-            this.Button35.DrawOnGlass = false;
             this.Button35.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button35.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button35.ForeColor = System.Drawing.Color.White;
@@ -2575,10 +2518,9 @@ namespace WinPaletter
             // 
             // Button36
             // 
-            this.Button36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button36.CustomColor = System.Drawing.Color.Empty;
-            this.Button36.DrawOnGlass = false;
             this.Button36.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button36.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button36.ForeColor = System.Drawing.Color.White;
@@ -2592,9 +2534,8 @@ namespace WinPaletter
             // 
             // TextBox9
             // 
-            this.TextBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox9.ForeColor = System.Drawing.Color.White;
             this.TextBox9.Location = new System.Drawing.Point(195, 3);
             this.TextBox9.MaxLength = 32767;
@@ -2624,7 +2565,7 @@ namespace WinPaletter
             // 
             // PictureBox9
             // 
-            this.PictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
             this.PictureBox9.Location = new System.Drawing.Point(3, 3);
@@ -2635,7 +2576,7 @@ namespace WinPaletter
             // 
             // GroupBox8
             // 
-            this.GroupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox8.Controls.Add(this.Button31);
@@ -2651,10 +2592,9 @@ namespace WinPaletter
             // 
             // Button31
             // 
-            this.Button31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button31.CustomColor = System.Drawing.Color.Empty;
-            this.Button31.DrawOnGlass = false;
             this.Button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button31.ForeColor = System.Drawing.Color.White;
@@ -2668,10 +2608,9 @@ namespace WinPaletter
             // 
             // Button32
             // 
-            this.Button32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button32.CustomColor = System.Drawing.Color.Empty;
-            this.Button32.DrawOnGlass = false;
             this.Button32.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button32.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button32.ForeColor = System.Drawing.Color.White;
@@ -2685,10 +2624,9 @@ namespace WinPaletter
             // 
             // Button33
             // 
-            this.Button33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button33.CustomColor = System.Drawing.Color.Empty;
-            this.Button33.DrawOnGlass = false;
             this.Button33.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button33.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button33.ForeColor = System.Drawing.Color.White;
@@ -2702,9 +2640,8 @@ namespace WinPaletter
             // 
             // TextBox8
             // 
-            this.TextBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox8.ForeColor = System.Drawing.Color.White;
             this.TextBox8.Location = new System.Drawing.Point(195, 3);
             this.TextBox8.MaxLength = 32767;
@@ -2734,7 +2671,7 @@ namespace WinPaletter
             // 
             // PictureBox8
             // 
-            this.PictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox8.Image")));
             this.PictureBox8.Location = new System.Drawing.Point(3, 3);
@@ -2745,7 +2682,7 @@ namespace WinPaletter
             // 
             // GroupBox7
             // 
-            this.GroupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox7.Controls.Add(this.Button28);
@@ -2761,10 +2698,9 @@ namespace WinPaletter
             // 
             // Button28
             // 
-            this.Button28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button28.CustomColor = System.Drawing.Color.Empty;
-            this.Button28.DrawOnGlass = false;
             this.Button28.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button28.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button28.ForeColor = System.Drawing.Color.White;
@@ -2778,10 +2714,9 @@ namespace WinPaletter
             // 
             // Button29
             // 
-            this.Button29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button29.CustomColor = System.Drawing.Color.Empty;
-            this.Button29.DrawOnGlass = false;
             this.Button29.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button29.ForeColor = System.Drawing.Color.White;
@@ -2795,10 +2730,9 @@ namespace WinPaletter
             // 
             // Button30
             // 
-            this.Button30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button30.CustomColor = System.Drawing.Color.Empty;
-            this.Button30.DrawOnGlass = false;
             this.Button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button30.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button30.ForeColor = System.Drawing.Color.White;
@@ -2812,9 +2746,8 @@ namespace WinPaletter
             // 
             // TextBox7
             // 
-            this.TextBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox7.ForeColor = System.Drawing.Color.White;
             this.TextBox7.Location = new System.Drawing.Point(195, 3);
             this.TextBox7.MaxLength = 32767;
@@ -2844,7 +2777,7 @@ namespace WinPaletter
             // 
             // PictureBox7
             // 
-            this.PictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
             this.PictureBox7.Location = new System.Drawing.Point(3, 3);
@@ -2873,7 +2806,7 @@ namespace WinPaletter
             // 
             // GroupBox55
             // 
-            this.GroupBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox55.Controls.Add(this.Button169);
@@ -2889,10 +2822,9 @@ namespace WinPaletter
             // 
             // Button169
             // 
-            this.Button169.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button169.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button169.CustomColor = System.Drawing.Color.Empty;
-            this.Button169.DrawOnGlass = false;
             this.Button169.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button169.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button169.ForeColor = System.Drawing.Color.White;
@@ -2906,10 +2838,9 @@ namespace WinPaletter
             // 
             // Button170
             // 
-            this.Button170.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button170.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button170.CustomColor = System.Drawing.Color.Empty;
-            this.Button170.DrawOnGlass = false;
             this.Button170.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button170.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button170.ForeColor = System.Drawing.Color.White;
@@ -2923,10 +2854,9 @@ namespace WinPaletter
             // 
             // Button171
             // 
-            this.Button171.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button171.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button171.CustomColor = System.Drawing.Color.Empty;
-            this.Button171.DrawOnGlass = false;
             this.Button171.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button171.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button171.ForeColor = System.Drawing.Color.White;
@@ -2940,9 +2870,8 @@ namespace WinPaletter
             // 
             // TextBox54
             // 
-            this.TextBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox54.ForeColor = System.Drawing.Color.White;
             this.TextBox54.Location = new System.Drawing.Point(140, 3);
             this.TextBox54.MaxLength = 32767;
@@ -2972,7 +2901,7 @@ namespace WinPaletter
             // 
             // PictureBox54
             // 
-            this.PictureBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox54.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox54.Image")));
             this.PictureBox54.Location = new System.Drawing.Point(3, 3);
@@ -2984,7 +2913,7 @@ namespace WinPaletter
             // Separator2
             // 
             this.Separator2.AlternativeLook = false;
-            this.Separator2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Separator2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator2.BackColor = System.Drawing.Color.Transparent;
             this.Separator2.Location = new System.Drawing.Point(4, 209);
@@ -2996,7 +2925,7 @@ namespace WinPaletter
             // 
             // GroupBox54
             // 
-            this.GroupBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox54.Controls.Add(this.Button166);
@@ -3012,10 +2941,9 @@ namespace WinPaletter
             // 
             // Button166
             // 
-            this.Button166.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button166.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button166.CustomColor = System.Drawing.Color.Empty;
-            this.Button166.DrawOnGlass = false;
             this.Button166.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button166.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button166.ForeColor = System.Drawing.Color.White;
@@ -3029,10 +2957,9 @@ namespace WinPaletter
             // 
             // Button167
             // 
-            this.Button167.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button167.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button167.CustomColor = System.Drawing.Color.Empty;
-            this.Button167.DrawOnGlass = false;
             this.Button167.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button167.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button167.ForeColor = System.Drawing.Color.White;
@@ -3046,10 +2973,9 @@ namespace WinPaletter
             // 
             // Button168
             // 
-            this.Button168.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button168.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button168.CustomColor = System.Drawing.Color.Empty;
-            this.Button168.DrawOnGlass = false;
             this.Button168.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button168.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button168.ForeColor = System.Drawing.Color.White;
@@ -3063,9 +2989,8 @@ namespace WinPaletter
             // 
             // TextBox53
             // 
-            this.TextBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox53.ForeColor = System.Drawing.Color.White;
             this.TextBox53.Location = new System.Drawing.Point(140, 3);
             this.TextBox53.MaxLength = 32767;
@@ -3095,7 +3020,7 @@ namespace WinPaletter
             // 
             // PictureBox53
             // 
-            this.PictureBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox53.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox53.Image")));
             this.PictureBox53.Location = new System.Drawing.Point(3, 3);
@@ -3106,7 +3031,7 @@ namespace WinPaletter
             // 
             // GroupBox18
             // 
-            this.GroupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox18.Controls.Add(this.Button58);
@@ -3122,10 +3047,9 @@ namespace WinPaletter
             // 
             // Button58
             // 
-            this.Button58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button58.CustomColor = System.Drawing.Color.Empty;
-            this.Button58.DrawOnGlass = false;
             this.Button58.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button58.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button58.ForeColor = System.Drawing.Color.White;
@@ -3139,10 +3063,9 @@ namespace WinPaletter
             // 
             // Button59
             // 
-            this.Button59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button59.CustomColor = System.Drawing.Color.Empty;
-            this.Button59.DrawOnGlass = false;
             this.Button59.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button59.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button59.ForeColor = System.Drawing.Color.White;
@@ -3156,10 +3079,9 @@ namespace WinPaletter
             // 
             // Button60
             // 
-            this.Button60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button60.CustomColor = System.Drawing.Color.Empty;
-            this.Button60.DrawOnGlass = false;
             this.Button60.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button60.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button60.ForeColor = System.Drawing.Color.White;
@@ -3173,9 +3095,8 @@ namespace WinPaletter
             // 
             // TextBox17
             // 
-            this.TextBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox17.ForeColor = System.Drawing.Color.White;
             this.TextBox17.Location = new System.Drawing.Point(140, 3);
             this.TextBox17.MaxLength = 32767;
@@ -3205,7 +3126,7 @@ namespace WinPaletter
             // 
             // PictureBox17
             // 
-            this.PictureBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
             this.PictureBox17.Location = new System.Drawing.Point(3, 3);
@@ -3216,7 +3137,7 @@ namespace WinPaletter
             // 
             // GroupBox13
             // 
-            this.GroupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox13.Controls.Add(this.Button43);
@@ -3232,10 +3153,9 @@ namespace WinPaletter
             // 
             // Button43
             // 
-            this.Button43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button43.CustomColor = System.Drawing.Color.Empty;
-            this.Button43.DrawOnGlass = false;
             this.Button43.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button43.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button43.ForeColor = System.Drawing.Color.White;
@@ -3249,10 +3169,9 @@ namespace WinPaletter
             // 
             // Button44
             // 
-            this.Button44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button44.CustomColor = System.Drawing.Color.Empty;
-            this.Button44.DrawOnGlass = false;
             this.Button44.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button44.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button44.ForeColor = System.Drawing.Color.White;
@@ -3266,10 +3185,9 @@ namespace WinPaletter
             // 
             // Button45
             // 
-            this.Button45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button45.CustomColor = System.Drawing.Color.Empty;
-            this.Button45.DrawOnGlass = false;
             this.Button45.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button45.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button45.ForeColor = System.Drawing.Color.White;
@@ -3283,9 +3201,8 @@ namespace WinPaletter
             // 
             // TextBox12
             // 
-            this.TextBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox12.ForeColor = System.Drawing.Color.White;
             this.TextBox12.Location = new System.Drawing.Point(140, 3);
             this.TextBox12.MaxLength = 32767;
@@ -3315,7 +3232,7 @@ namespace WinPaletter
             // 
             // PictureBox12
             // 
-            this.PictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
             this.PictureBox12.Location = new System.Drawing.Point(3, 3);
@@ -3326,7 +3243,7 @@ namespace WinPaletter
             // 
             // GroupBox14
             // 
-            this.GroupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox14.Controls.Add(this.Button46);
@@ -3342,10 +3259,9 @@ namespace WinPaletter
             // 
             // Button46
             // 
-            this.Button46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button46.CustomColor = System.Drawing.Color.Empty;
-            this.Button46.DrawOnGlass = false;
             this.Button46.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button46.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button46.ForeColor = System.Drawing.Color.White;
@@ -3359,10 +3275,9 @@ namespace WinPaletter
             // 
             // Button47
             // 
-            this.Button47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button47.CustomColor = System.Drawing.Color.Empty;
-            this.Button47.DrawOnGlass = false;
             this.Button47.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button47.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button47.ForeColor = System.Drawing.Color.White;
@@ -3376,10 +3291,9 @@ namespace WinPaletter
             // 
             // Button48
             // 
-            this.Button48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button48.CustomColor = System.Drawing.Color.Empty;
-            this.Button48.DrawOnGlass = false;
             this.Button48.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button48.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button48.ForeColor = System.Drawing.Color.White;
@@ -3393,9 +3307,8 @@ namespace WinPaletter
             // 
             // TextBox13
             // 
-            this.TextBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox13.ForeColor = System.Drawing.Color.White;
             this.TextBox13.Location = new System.Drawing.Point(140, 3);
             this.TextBox13.MaxLength = 32767;
@@ -3425,7 +3338,7 @@ namespace WinPaletter
             // 
             // PictureBox13
             // 
-            this.PictureBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox13.Image")));
             this.PictureBox13.Location = new System.Drawing.Point(3, 3);
@@ -3436,7 +3349,7 @@ namespace WinPaletter
             // 
             // GroupBox15
             // 
-            this.GroupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox15.Controls.Add(this.Button49);
@@ -3452,10 +3365,9 @@ namespace WinPaletter
             // 
             // Button49
             // 
-            this.Button49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button49.CustomColor = System.Drawing.Color.Empty;
-            this.Button49.DrawOnGlass = false;
             this.Button49.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button49.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button49.ForeColor = System.Drawing.Color.White;
@@ -3469,10 +3381,9 @@ namespace WinPaletter
             // 
             // Button50
             // 
-            this.Button50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button50.CustomColor = System.Drawing.Color.Empty;
-            this.Button50.DrawOnGlass = false;
             this.Button50.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button50.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button50.ForeColor = System.Drawing.Color.White;
@@ -3486,10 +3397,9 @@ namespace WinPaletter
             // 
             // Button51
             // 
-            this.Button51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button51.CustomColor = System.Drawing.Color.Empty;
-            this.Button51.DrawOnGlass = false;
             this.Button51.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button51.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button51.ForeColor = System.Drawing.Color.White;
@@ -3503,9 +3413,8 @@ namespace WinPaletter
             // 
             // TextBox14
             // 
-            this.TextBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox14.ForeColor = System.Drawing.Color.White;
             this.TextBox14.Location = new System.Drawing.Point(140, 3);
             this.TextBox14.MaxLength = 32767;
@@ -3535,7 +3444,7 @@ namespace WinPaletter
             // 
             // PictureBox14
             // 
-            this.PictureBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
             this.PictureBox14.Location = new System.Drawing.Point(3, 3);
@@ -3546,7 +3455,7 @@ namespace WinPaletter
             // 
             // GroupBox16
             // 
-            this.GroupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox16.Controls.Add(this.Button52);
@@ -3562,10 +3471,9 @@ namespace WinPaletter
             // 
             // Button52
             // 
-            this.Button52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button52.CustomColor = System.Drawing.Color.Empty;
-            this.Button52.DrawOnGlass = false;
             this.Button52.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button52.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button52.ForeColor = System.Drawing.Color.White;
@@ -3579,10 +3487,9 @@ namespace WinPaletter
             // 
             // Button53
             // 
-            this.Button53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button53.CustomColor = System.Drawing.Color.Empty;
-            this.Button53.DrawOnGlass = false;
             this.Button53.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button53.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button53.ForeColor = System.Drawing.Color.White;
@@ -3596,10 +3503,9 @@ namespace WinPaletter
             // 
             // Button54
             // 
-            this.Button54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button54.CustomColor = System.Drawing.Color.Empty;
-            this.Button54.DrawOnGlass = false;
             this.Button54.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button54.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button54.ForeColor = System.Drawing.Color.White;
@@ -3613,9 +3519,8 @@ namespace WinPaletter
             // 
             // TextBox15
             // 
-            this.TextBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox15.ForeColor = System.Drawing.Color.White;
             this.TextBox15.Location = new System.Drawing.Point(140, 3);
             this.TextBox15.MaxLength = 32767;
@@ -3645,7 +3550,7 @@ namespace WinPaletter
             // 
             // PictureBox15
             // 
-            this.PictureBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
             this.PictureBox15.Location = new System.Drawing.Point(3, 3);
@@ -3656,7 +3561,7 @@ namespace WinPaletter
             // 
             // GroupBox17
             // 
-            this.GroupBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox17.Controls.Add(this.Button55);
@@ -3672,10 +3577,9 @@ namespace WinPaletter
             // 
             // Button55
             // 
-            this.Button55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button55.CustomColor = System.Drawing.Color.Empty;
-            this.Button55.DrawOnGlass = false;
             this.Button55.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button55.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button55.ForeColor = System.Drawing.Color.White;
@@ -3689,10 +3593,9 @@ namespace WinPaletter
             // 
             // Button56
             // 
-            this.Button56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button56.CustomColor = System.Drawing.Color.Empty;
-            this.Button56.DrawOnGlass = false;
             this.Button56.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button56.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button56.ForeColor = System.Drawing.Color.White;
@@ -3706,10 +3609,9 @@ namespace WinPaletter
             // 
             // Button57
             // 
-            this.Button57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button57.CustomColor = System.Drawing.Color.Empty;
-            this.Button57.DrawOnGlass = false;
             this.Button57.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button57.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button57.ForeColor = System.Drawing.Color.White;
@@ -3723,9 +3625,8 @@ namespace WinPaletter
             // 
             // TextBox16
             // 
-            this.TextBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox16.ForeColor = System.Drawing.Color.White;
             this.TextBox16.Location = new System.Drawing.Point(140, 3);
             this.TextBox16.MaxLength = 32767;
@@ -3755,7 +3656,7 @@ namespace WinPaletter
             // 
             // PictureBox16
             // 
-            this.PictureBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox16.Image")));
             this.PictureBox16.Location = new System.Drawing.Point(3, 3);
@@ -3784,7 +3685,7 @@ namespace WinPaletter
             // 
             // groupBox87
             // 
-            this.groupBox87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox87.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.groupBox87.Controls.Add(this.pictureBox94);
@@ -3813,7 +3714,6 @@ namespace WinPaletter
             // 
             this.button263.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button263.CustomColor = System.Drawing.Color.Empty;
-            this.button263.DrawOnGlass = false;
             this.button263.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button263.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button263.ForeColor = System.Drawing.Color.White;
@@ -3829,7 +3729,6 @@ namespace WinPaletter
             // 
             this.button264.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button264.CustomColor = System.Drawing.Color.Empty;
-            this.button264.DrawOnGlass = false;
             this.button264.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button264.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button264.ForeColor = System.Drawing.Color.White;
@@ -3845,7 +3744,6 @@ namespace WinPaletter
             // 
             this.button265.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button265.CustomColor = System.Drawing.Color.Empty;
-            this.button265.DrawOnGlass = false;
             this.button265.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button265.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button265.ForeColor = System.Drawing.Color.White;
@@ -3859,9 +3757,8 @@ namespace WinPaletter
             // 
             // textBox85
             // 
-            this.textBox85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox85.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.textBox85.ForeColor = System.Drawing.Color.White;
             this.textBox85.Location = new System.Drawing.Point(201, 3);
             this.textBox85.MaxLength = 32767;
@@ -3900,7 +3797,7 @@ namespace WinPaletter
             // 
             // GroupBox86
             // 
-            this.GroupBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox86.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox86.Controls.Add(this.Button260);
@@ -3919,7 +3816,6 @@ namespace WinPaletter
             // 
             this.Button260.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button260.CustomColor = System.Drawing.Color.Empty;
-            this.Button260.DrawOnGlass = false;
             this.Button260.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button260.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button260.ForeColor = System.Drawing.Color.White;
@@ -3945,7 +3841,6 @@ namespace WinPaletter
             // 
             this.Button261.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button261.CustomColor = System.Drawing.Color.Empty;
-            this.Button261.DrawOnGlass = false;
             this.Button261.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button261.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button261.ForeColor = System.Drawing.Color.White;
@@ -3961,7 +3856,6 @@ namespace WinPaletter
             // 
             this.Button262.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button262.CustomColor = System.Drawing.Color.Empty;
-            this.Button262.DrawOnGlass = false;
             this.Button262.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button262.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button262.ForeColor = System.Drawing.Color.White;
@@ -3975,9 +3869,8 @@ namespace WinPaletter
             // 
             // TextBox84
             // 
-            this.TextBox84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox84.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox84.ForeColor = System.Drawing.Color.White;
             this.TextBox84.Location = new System.Drawing.Point(201, 3);
             this.TextBox84.MaxLength = 32767;
@@ -4016,7 +3909,7 @@ namespace WinPaletter
             // 
             // GroupBox53
             // 
-            this.GroupBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox53.Controls.Add(this.Button163);
@@ -4032,10 +3925,9 @@ namespace WinPaletter
             // 
             // Button163
             // 
-            this.Button163.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button163.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button163.CustomColor = System.Drawing.Color.Empty;
-            this.Button163.DrawOnGlass = false;
             this.Button163.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button163.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button163.ForeColor = System.Drawing.Color.White;
@@ -4049,10 +3941,9 @@ namespace WinPaletter
             // 
             // Button164
             // 
-            this.Button164.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button164.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button164.CustomColor = System.Drawing.Color.Empty;
-            this.Button164.DrawOnGlass = false;
             this.Button164.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button164.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button164.ForeColor = System.Drawing.Color.White;
@@ -4066,10 +3957,9 @@ namespace WinPaletter
             // 
             // Button165
             // 
-            this.Button165.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button165.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button165.CustomColor = System.Drawing.Color.Empty;
-            this.Button165.DrawOnGlass = false;
             this.Button165.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button165.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button165.ForeColor = System.Drawing.Color.White;
@@ -4083,9 +3973,8 @@ namespace WinPaletter
             // 
             // TextBox52
             // 
-            this.TextBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox52.ForeColor = System.Drawing.Color.White;
             this.TextBox52.Location = new System.Drawing.Point(201, 3);
             this.TextBox52.MaxLength = 32767;
@@ -4115,7 +4004,7 @@ namespace WinPaletter
             // 
             // PictureBox52
             // 
-            this.PictureBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox52.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox52.Image")));
             this.PictureBox52.Location = new System.Drawing.Point(3, 3);
@@ -4126,7 +4015,7 @@ namespace WinPaletter
             // 
             // GroupBox51
             // 
-            this.GroupBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox51.Controls.Add(this.Button157);
@@ -4142,10 +4031,9 @@ namespace WinPaletter
             // 
             // Button157
             // 
-            this.Button157.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button157.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button157.CustomColor = System.Drawing.Color.Empty;
-            this.Button157.DrawOnGlass = false;
             this.Button157.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button157.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button157.ForeColor = System.Drawing.Color.White;
@@ -4159,10 +4047,9 @@ namespace WinPaletter
             // 
             // Button158
             // 
-            this.Button158.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button158.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button158.CustomColor = System.Drawing.Color.Empty;
-            this.Button158.DrawOnGlass = false;
             this.Button158.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button158.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button158.ForeColor = System.Drawing.Color.White;
@@ -4176,10 +4063,9 @@ namespace WinPaletter
             // 
             // Button159
             // 
-            this.Button159.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button159.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button159.CustomColor = System.Drawing.Color.Empty;
-            this.Button159.DrawOnGlass = false;
             this.Button159.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button159.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button159.ForeColor = System.Drawing.Color.White;
@@ -4193,9 +4079,8 @@ namespace WinPaletter
             // 
             // TextBox50
             // 
-            this.TextBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox50.ForeColor = System.Drawing.Color.White;
             this.TextBox50.Location = new System.Drawing.Point(201, 3);
             this.TextBox50.MaxLength = 32767;
@@ -4225,7 +4110,7 @@ namespace WinPaletter
             // 
             // PictureBox50
             // 
-            this.PictureBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox50.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox50.Image")));
             this.PictureBox50.Location = new System.Drawing.Point(3, 3);
@@ -4236,7 +4121,7 @@ namespace WinPaletter
             // 
             // GroupBox50
             // 
-            this.GroupBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox50.Controls.Add(this.Button154);
@@ -4252,10 +4137,9 @@ namespace WinPaletter
             // 
             // Button154
             // 
-            this.Button154.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button154.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button154.CustomColor = System.Drawing.Color.Empty;
-            this.Button154.DrawOnGlass = false;
             this.Button154.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button154.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button154.ForeColor = System.Drawing.Color.White;
@@ -4269,10 +4153,9 @@ namespace WinPaletter
             // 
             // Button155
             // 
-            this.Button155.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button155.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button155.CustomColor = System.Drawing.Color.Empty;
-            this.Button155.DrawOnGlass = false;
             this.Button155.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button155.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button155.ForeColor = System.Drawing.Color.White;
@@ -4286,10 +4169,9 @@ namespace WinPaletter
             // 
             // Button156
             // 
-            this.Button156.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button156.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button156.CustomColor = System.Drawing.Color.Empty;
-            this.Button156.DrawOnGlass = false;
             this.Button156.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button156.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button156.ForeColor = System.Drawing.Color.White;
@@ -4303,9 +4185,8 @@ namespace WinPaletter
             // 
             // TextBox49
             // 
-            this.TextBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox49.ForeColor = System.Drawing.Color.White;
             this.TextBox49.Location = new System.Drawing.Point(201, 3);
             this.TextBox49.MaxLength = 32767;
@@ -4335,7 +4216,7 @@ namespace WinPaletter
             // 
             // PictureBox49
             // 
-            this.PictureBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox49.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox49.Image")));
             this.PictureBox49.Location = new System.Drawing.Point(3, 3);
@@ -4346,7 +4227,7 @@ namespace WinPaletter
             // 
             // GroupBox49
             // 
-            this.GroupBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox49.Controls.Add(this.Button151);
@@ -4362,10 +4243,9 @@ namespace WinPaletter
             // 
             // Button151
             // 
-            this.Button151.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button151.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button151.CustomColor = System.Drawing.Color.Empty;
-            this.Button151.DrawOnGlass = false;
             this.Button151.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button151.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button151.ForeColor = System.Drawing.Color.White;
@@ -4379,10 +4259,9 @@ namespace WinPaletter
             // 
             // Button152
             // 
-            this.Button152.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button152.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button152.CustomColor = System.Drawing.Color.Empty;
-            this.Button152.DrawOnGlass = false;
             this.Button152.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button152.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button152.ForeColor = System.Drawing.Color.White;
@@ -4396,10 +4275,9 @@ namespace WinPaletter
             // 
             // Button153
             // 
-            this.Button153.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button153.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button153.CustomColor = System.Drawing.Color.Empty;
-            this.Button153.DrawOnGlass = false;
             this.Button153.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button153.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button153.ForeColor = System.Drawing.Color.White;
@@ -4413,9 +4291,8 @@ namespace WinPaletter
             // 
             // TextBox48
             // 
-            this.TextBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox48.ForeColor = System.Drawing.Color.White;
             this.TextBox48.Location = new System.Drawing.Point(201, 3);
             this.TextBox48.MaxLength = 32767;
@@ -4445,7 +4322,7 @@ namespace WinPaletter
             // 
             // PictureBox48
             // 
-            this.PictureBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox48.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox48.Image")));
             this.PictureBox48.Location = new System.Drawing.Point(3, 3);
@@ -4456,7 +4333,7 @@ namespace WinPaletter
             // 
             // GroupBox48
             // 
-            this.GroupBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox48.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox48.Controls.Add(this.Button148);
@@ -4472,10 +4349,9 @@ namespace WinPaletter
             // 
             // Button148
             // 
-            this.Button148.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button148.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button148.CustomColor = System.Drawing.Color.Empty;
-            this.Button148.DrawOnGlass = false;
             this.Button148.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button148.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button148.ForeColor = System.Drawing.Color.White;
@@ -4489,10 +4365,9 @@ namespace WinPaletter
             // 
             // Button149
             // 
-            this.Button149.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button149.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button149.CustomColor = System.Drawing.Color.Empty;
-            this.Button149.DrawOnGlass = false;
             this.Button149.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button149.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button149.ForeColor = System.Drawing.Color.White;
@@ -4506,10 +4381,9 @@ namespace WinPaletter
             // 
             // Button150
             // 
-            this.Button150.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button150.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button150.CustomColor = System.Drawing.Color.Empty;
-            this.Button150.DrawOnGlass = false;
             this.Button150.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button150.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button150.ForeColor = System.Drawing.Color.White;
@@ -4523,9 +4397,8 @@ namespace WinPaletter
             // 
             // TextBox47
             // 
-            this.TextBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox47.ForeColor = System.Drawing.Color.White;
             this.TextBox47.Location = new System.Drawing.Point(201, 3);
             this.TextBox47.MaxLength = 32767;
@@ -4555,7 +4428,7 @@ namespace WinPaletter
             // 
             // PictureBox47
             // 
-            this.PictureBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox47.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox47.Image")));
             this.PictureBox47.Location = new System.Drawing.Point(3, 3);
@@ -4566,7 +4439,7 @@ namespace WinPaletter
             // 
             // GroupBox47
             // 
-            this.GroupBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox47.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox47.Controls.Add(this.Button145);
@@ -4582,10 +4455,9 @@ namespace WinPaletter
             // 
             // Button145
             // 
-            this.Button145.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button145.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button145.CustomColor = System.Drawing.Color.Empty;
-            this.Button145.DrawOnGlass = false;
             this.Button145.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button145.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button145.ForeColor = System.Drawing.Color.White;
@@ -4599,10 +4471,9 @@ namespace WinPaletter
             // 
             // Button146
             // 
-            this.Button146.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button146.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button146.CustomColor = System.Drawing.Color.Empty;
-            this.Button146.DrawOnGlass = false;
             this.Button146.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button146.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button146.ForeColor = System.Drawing.Color.White;
@@ -4616,10 +4487,9 @@ namespace WinPaletter
             // 
             // Button147
             // 
-            this.Button147.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button147.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button147.CustomColor = System.Drawing.Color.Empty;
-            this.Button147.DrawOnGlass = false;
             this.Button147.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button147.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button147.ForeColor = System.Drawing.Color.White;
@@ -4633,9 +4503,8 @@ namespace WinPaletter
             // 
             // TextBox46
             // 
-            this.TextBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox46.ForeColor = System.Drawing.Color.White;
             this.TextBox46.Location = new System.Drawing.Point(201, 3);
             this.TextBox46.MaxLength = 32767;
@@ -4665,7 +4534,7 @@ namespace WinPaletter
             // 
             // PictureBox46
             // 
-            this.PictureBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox46.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox46.Image")));
             this.PictureBox46.Location = new System.Drawing.Point(3, 3);
@@ -4676,7 +4545,7 @@ namespace WinPaletter
             // 
             // GroupBox46
             // 
-            this.GroupBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox46.Controls.Add(this.Button142);
@@ -4692,10 +4561,9 @@ namespace WinPaletter
             // 
             // Button142
             // 
-            this.Button142.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button142.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button142.CustomColor = System.Drawing.Color.Empty;
-            this.Button142.DrawOnGlass = false;
             this.Button142.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button142.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button142.ForeColor = System.Drawing.Color.White;
@@ -4709,10 +4577,9 @@ namespace WinPaletter
             // 
             // Button143
             // 
-            this.Button143.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button143.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button143.CustomColor = System.Drawing.Color.Empty;
-            this.Button143.DrawOnGlass = false;
             this.Button143.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button143.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button143.ForeColor = System.Drawing.Color.White;
@@ -4726,10 +4593,9 @@ namespace WinPaletter
             // 
             // Button144
             // 
-            this.Button144.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button144.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button144.CustomColor = System.Drawing.Color.Empty;
-            this.Button144.DrawOnGlass = false;
             this.Button144.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button144.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button144.ForeColor = System.Drawing.Color.White;
@@ -4743,9 +4609,8 @@ namespace WinPaletter
             // 
             // TextBox45
             // 
-            this.TextBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox45.ForeColor = System.Drawing.Color.White;
             this.TextBox45.Location = new System.Drawing.Point(201, 3);
             this.TextBox45.MaxLength = 32767;
@@ -4775,7 +4640,7 @@ namespace WinPaletter
             // 
             // PictureBox45
             // 
-            this.PictureBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox45.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox45.Image")));
             this.PictureBox45.Location = new System.Drawing.Point(3, 3);
@@ -4800,7 +4665,7 @@ namespace WinPaletter
             // 
             // GroupBox79
             // 
-            this.GroupBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox79.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox79.Controls.Add(this.Button241);
@@ -4816,10 +4681,9 @@ namespace WinPaletter
             // 
             // Button241
             // 
-            this.Button241.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button241.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button241.CustomColor = System.Drawing.Color.Empty;
-            this.Button241.DrawOnGlass = false;
             this.Button241.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button241.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button241.ForeColor = System.Drawing.Color.White;
@@ -4833,10 +4697,9 @@ namespace WinPaletter
             // 
             // Button242
             // 
-            this.Button242.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button242.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button242.CustomColor = System.Drawing.Color.Empty;
-            this.Button242.DrawOnGlass = false;
             this.Button242.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button242.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button242.ForeColor = System.Drawing.Color.White;
@@ -4850,10 +4713,9 @@ namespace WinPaletter
             // 
             // Button243
             // 
-            this.Button243.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button243.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button243.CustomColor = System.Drawing.Color.Empty;
-            this.Button243.DrawOnGlass = false;
             this.Button243.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button243.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button243.ForeColor = System.Drawing.Color.White;
@@ -4867,9 +4729,8 @@ namespace WinPaletter
             // 
             // TextBox78
             // 
-            this.TextBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox78.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox78.ForeColor = System.Drawing.Color.White;
             this.TextBox78.Location = new System.Drawing.Point(174, 3);
             this.TextBox78.MaxLength = 32767;
@@ -4899,7 +4760,7 @@ namespace WinPaletter
             // 
             // PictureBox78
             // 
-            this.PictureBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox78.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox78.Image")));
             this.PictureBox78.Location = new System.Drawing.Point(3, 3);
@@ -4910,7 +4771,7 @@ namespace WinPaletter
             // 
             // GroupBox80
             // 
-            this.GroupBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox80.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox80.Controls.Add(this.Button244);
@@ -4926,10 +4787,9 @@ namespace WinPaletter
             // 
             // Button244
             // 
-            this.Button244.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button244.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button244.CustomColor = System.Drawing.Color.Empty;
-            this.Button244.DrawOnGlass = false;
             this.Button244.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button244.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button244.ForeColor = System.Drawing.Color.White;
@@ -4943,10 +4803,9 @@ namespace WinPaletter
             // 
             // Button245
             // 
-            this.Button245.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button245.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button245.CustomColor = System.Drawing.Color.Empty;
-            this.Button245.DrawOnGlass = false;
             this.Button245.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button245.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button245.ForeColor = System.Drawing.Color.White;
@@ -4960,10 +4819,9 @@ namespace WinPaletter
             // 
             // Button246
             // 
-            this.Button246.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button246.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button246.CustomColor = System.Drawing.Color.Empty;
-            this.Button246.DrawOnGlass = false;
             this.Button246.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button246.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button246.ForeColor = System.Drawing.Color.White;
@@ -4977,9 +4835,8 @@ namespace WinPaletter
             // 
             // TextBox79
             // 
-            this.TextBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox79.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox79.ForeColor = System.Drawing.Color.White;
             this.TextBox79.Location = new System.Drawing.Point(174, 3);
             this.TextBox79.MaxLength = 32767;
@@ -5009,7 +4866,7 @@ namespace WinPaletter
             // 
             // PictureBox79
             // 
-            this.PictureBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox79.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox79.Image")));
             this.PictureBox79.Location = new System.Drawing.Point(3, 3);
@@ -5020,7 +4877,7 @@ namespace WinPaletter
             // 
             // GroupBox78
             // 
-            this.GroupBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox78.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox78.Controls.Add(this.Button238);
@@ -5036,10 +4893,9 @@ namespace WinPaletter
             // 
             // Button238
             // 
-            this.Button238.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button238.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button238.CustomColor = System.Drawing.Color.Empty;
-            this.Button238.DrawOnGlass = false;
             this.Button238.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button238.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button238.ForeColor = System.Drawing.Color.White;
@@ -5053,10 +4909,9 @@ namespace WinPaletter
             // 
             // Button239
             // 
-            this.Button239.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button239.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button239.CustomColor = System.Drawing.Color.Empty;
-            this.Button239.DrawOnGlass = false;
             this.Button239.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button239.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button239.ForeColor = System.Drawing.Color.White;
@@ -5070,10 +4925,9 @@ namespace WinPaletter
             // 
             // Button240
             // 
-            this.Button240.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button240.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button240.CustomColor = System.Drawing.Color.Empty;
-            this.Button240.DrawOnGlass = false;
             this.Button240.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button240.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button240.ForeColor = System.Drawing.Color.White;
@@ -5087,9 +4941,8 @@ namespace WinPaletter
             // 
             // TextBox77
             // 
-            this.TextBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox77.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox77.ForeColor = System.Drawing.Color.White;
             this.TextBox77.Location = new System.Drawing.Point(174, 3);
             this.TextBox77.MaxLength = 32767;
@@ -5119,7 +4972,7 @@ namespace WinPaletter
             // 
             // PictureBox77
             // 
-            this.PictureBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox77.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox77.Image")));
             this.PictureBox77.Location = new System.Drawing.Point(3, 3);
@@ -5130,7 +4983,7 @@ namespace WinPaletter
             // 
             // GroupBox77
             // 
-            this.GroupBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox77.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox77.Controls.Add(this.Button235);
@@ -5146,10 +4999,9 @@ namespace WinPaletter
             // 
             // Button235
             // 
-            this.Button235.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button235.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button235.CustomColor = System.Drawing.Color.Empty;
-            this.Button235.DrawOnGlass = false;
             this.Button235.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button235.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button235.ForeColor = System.Drawing.Color.White;
@@ -5163,10 +5015,9 @@ namespace WinPaletter
             // 
             // Button236
             // 
-            this.Button236.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button236.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button236.CustomColor = System.Drawing.Color.Empty;
-            this.Button236.DrawOnGlass = false;
             this.Button236.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button236.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button236.ForeColor = System.Drawing.Color.White;
@@ -5180,10 +5031,9 @@ namespace WinPaletter
             // 
             // Button237
             // 
-            this.Button237.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button237.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button237.CustomColor = System.Drawing.Color.Empty;
-            this.Button237.DrawOnGlass = false;
             this.Button237.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button237.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button237.ForeColor = System.Drawing.Color.White;
@@ -5197,9 +5047,8 @@ namespace WinPaletter
             // 
             // TextBox76
             // 
-            this.TextBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox76.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox76.ForeColor = System.Drawing.Color.White;
             this.TextBox76.Location = new System.Drawing.Point(174, 3);
             this.TextBox76.MaxLength = 32767;
@@ -5229,7 +5078,7 @@ namespace WinPaletter
             // 
             // PictureBox76
             // 
-            this.PictureBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox76.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox76.Image")));
             this.PictureBox76.Location = new System.Drawing.Point(3, 3);
@@ -5240,7 +5089,7 @@ namespace WinPaletter
             // 
             // GroupBox52
             // 
-            this.GroupBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox52.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox52.Controls.Add(this.Button160);
@@ -5256,10 +5105,9 @@ namespace WinPaletter
             // 
             // Button160
             // 
-            this.Button160.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button160.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button160.CustomColor = System.Drawing.Color.Empty;
-            this.Button160.DrawOnGlass = false;
             this.Button160.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button160.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button160.ForeColor = System.Drawing.Color.White;
@@ -5273,10 +5121,9 @@ namespace WinPaletter
             // 
             // Button161
             // 
-            this.Button161.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button161.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button161.CustomColor = System.Drawing.Color.Empty;
-            this.Button161.DrawOnGlass = false;
             this.Button161.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button161.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button161.ForeColor = System.Drawing.Color.White;
@@ -5290,10 +5137,9 @@ namespace WinPaletter
             // 
             // Button162
             // 
-            this.Button162.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button162.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button162.CustomColor = System.Drawing.Color.Empty;
-            this.Button162.DrawOnGlass = false;
             this.Button162.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button162.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button162.ForeColor = System.Drawing.Color.White;
@@ -5307,9 +5153,8 @@ namespace WinPaletter
             // 
             // TextBox51
             // 
-            this.TextBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox51.ForeColor = System.Drawing.Color.White;
             this.TextBox51.Location = new System.Drawing.Point(174, 3);
             this.TextBox51.MaxLength = 32767;
@@ -5339,7 +5184,7 @@ namespace WinPaletter
             // 
             // PictureBox51
             // 
-            this.PictureBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox51.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox51.Image")));
             this.PictureBox51.Location = new System.Drawing.Point(3, 3);
@@ -5368,7 +5213,7 @@ namespace WinPaletter
             // 
             // GroupBox76
             // 
-            this.GroupBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox76.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox76.Controls.Add(this.Button232);
@@ -5384,10 +5229,9 @@ namespace WinPaletter
             // 
             // Button232
             // 
-            this.Button232.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button232.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button232.CustomColor = System.Drawing.Color.Empty;
-            this.Button232.DrawOnGlass = false;
             this.Button232.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button232.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button232.ForeColor = System.Drawing.Color.White;
@@ -5401,10 +5245,9 @@ namespace WinPaletter
             // 
             // Button233
             // 
-            this.Button233.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button233.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button233.CustomColor = System.Drawing.Color.Empty;
-            this.Button233.DrawOnGlass = false;
             this.Button233.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button233.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button233.ForeColor = System.Drawing.Color.White;
@@ -5418,10 +5261,9 @@ namespace WinPaletter
             // 
             // Button234
             // 
-            this.Button234.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button234.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button234.CustomColor = System.Drawing.Color.Empty;
-            this.Button234.DrawOnGlass = false;
             this.Button234.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button234.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button234.ForeColor = System.Drawing.Color.White;
@@ -5435,9 +5277,8 @@ namespace WinPaletter
             // 
             // TextBox75
             // 
-            this.TextBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox75.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox75.ForeColor = System.Drawing.Color.White;
             this.TextBox75.Location = new System.Drawing.Point(203, 3);
             this.TextBox75.MaxLength = 32767;
@@ -5467,7 +5308,7 @@ namespace WinPaletter
             // 
             // PictureBox75
             // 
-            this.PictureBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox75.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox75.Image")));
             this.PictureBox75.Location = new System.Drawing.Point(3, 3);
@@ -5478,7 +5319,7 @@ namespace WinPaletter
             // 
             // GroupBox64
             // 
-            this.GroupBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox64.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox64.Controls.Add(this.Button196);
@@ -5494,10 +5335,9 @@ namespace WinPaletter
             // 
             // Button196
             // 
-            this.Button196.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button196.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button196.CustomColor = System.Drawing.Color.Empty;
-            this.Button196.DrawOnGlass = false;
             this.Button196.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button196.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button196.ForeColor = System.Drawing.Color.White;
@@ -5511,10 +5351,9 @@ namespace WinPaletter
             // 
             // Button197
             // 
-            this.Button197.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button197.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button197.CustomColor = System.Drawing.Color.Empty;
-            this.Button197.DrawOnGlass = false;
             this.Button197.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button197.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button197.ForeColor = System.Drawing.Color.White;
@@ -5528,10 +5367,9 @@ namespace WinPaletter
             // 
             // Button198
             // 
-            this.Button198.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button198.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button198.CustomColor = System.Drawing.Color.Empty;
-            this.Button198.DrawOnGlass = false;
             this.Button198.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button198.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button198.ForeColor = System.Drawing.Color.White;
@@ -5545,9 +5383,8 @@ namespace WinPaletter
             // 
             // TextBox63
             // 
-            this.TextBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox63.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox63.ForeColor = System.Drawing.Color.White;
             this.TextBox63.Location = new System.Drawing.Point(203, 3);
             this.TextBox63.MaxLength = 32767;
@@ -5577,7 +5414,7 @@ namespace WinPaletter
             // 
             // PictureBox63
             // 
-            this.PictureBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox63.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox63.Image")));
             this.PictureBox63.Location = new System.Drawing.Point(3, 3);
@@ -5588,7 +5425,7 @@ namespace WinPaletter
             // 
             // GroupBox57
             // 
-            this.GroupBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox57.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox57.Controls.Add(this.Button175);
@@ -5604,10 +5441,9 @@ namespace WinPaletter
             // 
             // Button175
             // 
-            this.Button175.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button175.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button175.CustomColor = System.Drawing.Color.Empty;
-            this.Button175.DrawOnGlass = false;
             this.Button175.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button175.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button175.ForeColor = System.Drawing.Color.White;
@@ -5621,10 +5457,9 @@ namespace WinPaletter
             // 
             // Button176
             // 
-            this.Button176.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button176.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button176.CustomColor = System.Drawing.Color.Empty;
-            this.Button176.DrawOnGlass = false;
             this.Button176.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button176.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button176.ForeColor = System.Drawing.Color.White;
@@ -5638,10 +5473,9 @@ namespace WinPaletter
             // 
             // Button177
             // 
-            this.Button177.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button177.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button177.CustomColor = System.Drawing.Color.Empty;
-            this.Button177.DrawOnGlass = false;
             this.Button177.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button177.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button177.ForeColor = System.Drawing.Color.White;
@@ -5655,9 +5489,8 @@ namespace WinPaletter
             // 
             // TextBox56
             // 
-            this.TextBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox56.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox56.ForeColor = System.Drawing.Color.White;
             this.TextBox56.Location = new System.Drawing.Point(203, 3);
             this.TextBox56.MaxLength = 32767;
@@ -5687,7 +5520,7 @@ namespace WinPaletter
             // 
             // PictureBox56
             // 
-            this.PictureBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox56.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox56.Image")));
             this.PictureBox56.Location = new System.Drawing.Point(3, 3);
@@ -5698,7 +5531,7 @@ namespace WinPaletter
             // 
             // GroupBox58
             // 
-            this.GroupBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox58.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox58.Controls.Add(this.Button178);
@@ -5714,10 +5547,9 @@ namespace WinPaletter
             // 
             // Button178
             // 
-            this.Button178.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button178.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button178.CustomColor = System.Drawing.Color.Empty;
-            this.Button178.DrawOnGlass = false;
             this.Button178.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button178.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button178.ForeColor = System.Drawing.Color.White;
@@ -5731,10 +5563,9 @@ namespace WinPaletter
             // 
             // Button179
             // 
-            this.Button179.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button179.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button179.CustomColor = System.Drawing.Color.Empty;
-            this.Button179.DrawOnGlass = false;
             this.Button179.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button179.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button179.ForeColor = System.Drawing.Color.White;
@@ -5748,10 +5579,9 @@ namespace WinPaletter
             // 
             // Button180
             // 
-            this.Button180.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button180.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button180.CustomColor = System.Drawing.Color.Empty;
-            this.Button180.DrawOnGlass = false;
             this.Button180.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button180.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button180.ForeColor = System.Drawing.Color.White;
@@ -5765,9 +5595,8 @@ namespace WinPaletter
             // 
             // TextBox57
             // 
-            this.TextBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox57.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox57.ForeColor = System.Drawing.Color.White;
             this.TextBox57.Location = new System.Drawing.Point(203, 3);
             this.TextBox57.MaxLength = 32767;
@@ -5797,7 +5626,7 @@ namespace WinPaletter
             // 
             // PictureBox57
             // 
-            this.PictureBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox57.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox57.Image")));
             this.PictureBox57.Location = new System.Drawing.Point(3, 3);
@@ -5808,7 +5637,7 @@ namespace WinPaletter
             // 
             // GroupBox59
             // 
-            this.GroupBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox59.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox59.Controls.Add(this.Button181);
@@ -5824,10 +5653,9 @@ namespace WinPaletter
             // 
             // Button181
             // 
-            this.Button181.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button181.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button181.CustomColor = System.Drawing.Color.Empty;
-            this.Button181.DrawOnGlass = false;
             this.Button181.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button181.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button181.ForeColor = System.Drawing.Color.White;
@@ -5841,10 +5669,9 @@ namespace WinPaletter
             // 
             // Button182
             // 
-            this.Button182.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button182.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button182.CustomColor = System.Drawing.Color.Empty;
-            this.Button182.DrawOnGlass = false;
             this.Button182.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button182.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button182.ForeColor = System.Drawing.Color.White;
@@ -5858,10 +5685,9 @@ namespace WinPaletter
             // 
             // Button183
             // 
-            this.Button183.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button183.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button183.CustomColor = System.Drawing.Color.Empty;
-            this.Button183.DrawOnGlass = false;
             this.Button183.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button183.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button183.ForeColor = System.Drawing.Color.White;
@@ -5875,9 +5701,8 @@ namespace WinPaletter
             // 
             // TextBox58
             // 
-            this.TextBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox58.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox58.ForeColor = System.Drawing.Color.White;
             this.TextBox58.Location = new System.Drawing.Point(203, 3);
             this.TextBox58.MaxLength = 32767;
@@ -5907,7 +5732,7 @@ namespace WinPaletter
             // 
             // PictureBox58
             // 
-            this.PictureBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox58.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox58.Image")));
             this.PictureBox58.Location = new System.Drawing.Point(3, 3);
@@ -5918,7 +5743,7 @@ namespace WinPaletter
             // 
             // GroupBox60
             // 
-            this.GroupBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox60.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox60.Controls.Add(this.Button184);
@@ -5934,10 +5759,9 @@ namespace WinPaletter
             // 
             // Button184
             // 
-            this.Button184.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button184.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button184.CustomColor = System.Drawing.Color.Empty;
-            this.Button184.DrawOnGlass = false;
             this.Button184.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button184.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button184.ForeColor = System.Drawing.Color.White;
@@ -5951,10 +5775,9 @@ namespace WinPaletter
             // 
             // Button185
             // 
-            this.Button185.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button185.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button185.CustomColor = System.Drawing.Color.Empty;
-            this.Button185.DrawOnGlass = false;
             this.Button185.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button185.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button185.ForeColor = System.Drawing.Color.White;
@@ -5968,10 +5791,9 @@ namespace WinPaletter
             // 
             // Button186
             // 
-            this.Button186.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button186.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button186.CustomColor = System.Drawing.Color.Empty;
-            this.Button186.DrawOnGlass = false;
             this.Button186.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button186.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button186.ForeColor = System.Drawing.Color.White;
@@ -5985,9 +5807,8 @@ namespace WinPaletter
             // 
             // TextBox59
             // 
-            this.TextBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox59.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox59.ForeColor = System.Drawing.Color.White;
             this.TextBox59.Location = new System.Drawing.Point(203, 3);
             this.TextBox59.MaxLength = 32767;
@@ -6017,7 +5838,7 @@ namespace WinPaletter
             // 
             // PictureBox59
             // 
-            this.PictureBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox59.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox59.Image")));
             this.PictureBox59.Location = new System.Drawing.Point(3, 3);
@@ -6028,7 +5849,7 @@ namespace WinPaletter
             // 
             // GroupBox61
             // 
-            this.GroupBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox61.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox61.Controls.Add(this.Button187);
@@ -6044,10 +5865,9 @@ namespace WinPaletter
             // 
             // Button187
             // 
-            this.Button187.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button187.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button187.CustomColor = System.Drawing.Color.Empty;
-            this.Button187.DrawOnGlass = false;
             this.Button187.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button187.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button187.ForeColor = System.Drawing.Color.White;
@@ -6061,10 +5881,9 @@ namespace WinPaletter
             // 
             // Button188
             // 
-            this.Button188.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button188.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button188.CustomColor = System.Drawing.Color.Empty;
-            this.Button188.DrawOnGlass = false;
             this.Button188.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button188.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button188.ForeColor = System.Drawing.Color.White;
@@ -6078,10 +5897,9 @@ namespace WinPaletter
             // 
             // Button189
             // 
-            this.Button189.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button189.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button189.CustomColor = System.Drawing.Color.Empty;
-            this.Button189.DrawOnGlass = false;
             this.Button189.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button189.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button189.ForeColor = System.Drawing.Color.White;
@@ -6095,9 +5913,8 @@ namespace WinPaletter
             // 
             // TextBox60
             // 
-            this.TextBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox60.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox60.ForeColor = System.Drawing.Color.White;
             this.TextBox60.Location = new System.Drawing.Point(203, 3);
             this.TextBox60.MaxLength = 32767;
@@ -6127,7 +5944,7 @@ namespace WinPaletter
             // 
             // PictureBox60
             // 
-            this.PictureBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox60.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox60.Image")));
             this.PictureBox60.Location = new System.Drawing.Point(3, 3);
@@ -6138,7 +5955,7 @@ namespace WinPaletter
             // 
             // GroupBox62
             // 
-            this.GroupBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox62.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox62.Controls.Add(this.Button190);
@@ -6154,10 +5971,9 @@ namespace WinPaletter
             // 
             // Button190
             // 
-            this.Button190.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button190.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button190.CustomColor = System.Drawing.Color.Empty;
-            this.Button190.DrawOnGlass = false;
             this.Button190.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button190.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button190.ForeColor = System.Drawing.Color.White;
@@ -6171,10 +5987,9 @@ namespace WinPaletter
             // 
             // Button191
             // 
-            this.Button191.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button191.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button191.CustomColor = System.Drawing.Color.Empty;
-            this.Button191.DrawOnGlass = false;
             this.Button191.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button191.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button191.ForeColor = System.Drawing.Color.White;
@@ -6188,10 +6003,9 @@ namespace WinPaletter
             // 
             // Button192
             // 
-            this.Button192.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button192.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button192.CustomColor = System.Drawing.Color.Empty;
-            this.Button192.DrawOnGlass = false;
             this.Button192.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button192.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button192.ForeColor = System.Drawing.Color.White;
@@ -6205,9 +6019,8 @@ namespace WinPaletter
             // 
             // TextBox61
             // 
-            this.TextBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox61.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox61.ForeColor = System.Drawing.Color.White;
             this.TextBox61.Location = new System.Drawing.Point(203, 3);
             this.TextBox61.MaxLength = 32767;
@@ -6237,7 +6050,7 @@ namespace WinPaletter
             // 
             // PictureBox61
             // 
-            this.PictureBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox61.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox61.Image")));
             this.PictureBox61.Location = new System.Drawing.Point(3, 3);
@@ -6248,7 +6061,7 @@ namespace WinPaletter
             // 
             // GroupBox63
             // 
-            this.GroupBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox63.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox63.Controls.Add(this.Button193);
@@ -6264,10 +6077,9 @@ namespace WinPaletter
             // 
             // Button193
             // 
-            this.Button193.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button193.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button193.CustomColor = System.Drawing.Color.Empty;
-            this.Button193.DrawOnGlass = false;
             this.Button193.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button193.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button193.ForeColor = System.Drawing.Color.White;
@@ -6281,10 +6093,9 @@ namespace WinPaletter
             // 
             // Button194
             // 
-            this.Button194.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button194.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button194.CustomColor = System.Drawing.Color.Empty;
-            this.Button194.DrawOnGlass = false;
             this.Button194.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button194.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button194.ForeColor = System.Drawing.Color.White;
@@ -6298,10 +6109,9 @@ namespace WinPaletter
             // 
             // Button195
             // 
-            this.Button195.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button195.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button195.CustomColor = System.Drawing.Color.Empty;
-            this.Button195.DrawOnGlass = false;
             this.Button195.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button195.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button195.ForeColor = System.Drawing.Color.White;
@@ -6315,9 +6125,8 @@ namespace WinPaletter
             // 
             // TextBox62
             // 
-            this.TextBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox62.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox62.ForeColor = System.Drawing.Color.White;
             this.TextBox62.Location = new System.Drawing.Point(203, 3);
             this.TextBox62.MaxLength = 32767;
@@ -6347,7 +6156,7 @@ namespace WinPaletter
             // 
             // PictureBox62
             // 
-            this.PictureBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox62.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox62.Image")));
             this.PictureBox62.Location = new System.Drawing.Point(3, 3);
@@ -6376,7 +6185,7 @@ namespace WinPaletter
             // 
             // GroupBox66
             // 
-            this.GroupBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox66.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox66.Controls.Add(this.Button202);
@@ -6392,10 +6201,9 @@ namespace WinPaletter
             // 
             // Button202
             // 
-            this.Button202.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button202.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button202.CustomColor = System.Drawing.Color.Empty;
-            this.Button202.DrawOnGlass = false;
             this.Button202.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button202.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button202.ForeColor = System.Drawing.Color.White;
@@ -6409,10 +6217,9 @@ namespace WinPaletter
             // 
             // Button203
             // 
-            this.Button203.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button203.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button203.CustomColor = System.Drawing.Color.Empty;
-            this.Button203.DrawOnGlass = false;
             this.Button203.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button203.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button203.ForeColor = System.Drawing.Color.White;
@@ -6426,10 +6233,9 @@ namespace WinPaletter
             // 
             // Button204
             // 
-            this.Button204.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button204.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button204.CustomColor = System.Drawing.Color.Empty;
-            this.Button204.DrawOnGlass = false;
             this.Button204.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button204.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button204.ForeColor = System.Drawing.Color.White;
@@ -6443,9 +6249,8 @@ namespace WinPaletter
             // 
             // TextBox65
             // 
-            this.TextBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox65.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox65.ForeColor = System.Drawing.Color.White;
             this.TextBox65.Location = new System.Drawing.Point(140, 3);
             this.TextBox65.MaxLength = 32767;
@@ -6475,7 +6280,7 @@ namespace WinPaletter
             // 
             // PictureBox65
             // 
-            this.PictureBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox65.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox65.Image")));
             this.PictureBox65.Location = new System.Drawing.Point(3, 3);
@@ -6486,7 +6291,7 @@ namespace WinPaletter
             // 
             // GroupBox56
             // 
-            this.GroupBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox56.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox56.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox56.Controls.Add(this.Button172);
@@ -6502,10 +6307,9 @@ namespace WinPaletter
             // 
             // Button172
             // 
-            this.Button172.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button172.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button172.CustomColor = System.Drawing.Color.Empty;
-            this.Button172.DrawOnGlass = false;
             this.Button172.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button172.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button172.ForeColor = System.Drawing.Color.White;
@@ -6519,10 +6323,9 @@ namespace WinPaletter
             // 
             // Button173
             // 
-            this.Button173.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button173.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button173.CustomColor = System.Drawing.Color.Empty;
-            this.Button173.DrawOnGlass = false;
             this.Button173.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button173.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button173.ForeColor = System.Drawing.Color.White;
@@ -6536,10 +6339,9 @@ namespace WinPaletter
             // 
             // Button174
             // 
-            this.Button174.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button174.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button174.CustomColor = System.Drawing.Color.Empty;
-            this.Button174.DrawOnGlass = false;
             this.Button174.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button174.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button174.ForeColor = System.Drawing.Color.White;
@@ -6553,9 +6355,8 @@ namespace WinPaletter
             // 
             // TextBox55
             // 
-            this.TextBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox55.ForeColor = System.Drawing.Color.White;
             this.TextBox55.Location = new System.Drawing.Point(140, 3);
             this.TextBox55.MaxLength = 32767;
@@ -6585,7 +6386,7 @@ namespace WinPaletter
             // 
             // PictureBox55
             // 
-            this.PictureBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox55.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox55.Image")));
             this.PictureBox55.Location = new System.Drawing.Point(3, 3);
@@ -6596,7 +6397,7 @@ namespace WinPaletter
             // 
             // GroupBox25
             // 
-            this.GroupBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox25.Controls.Add(this.Button79);
@@ -6612,10 +6413,9 @@ namespace WinPaletter
             // 
             // Button79
             // 
-            this.Button79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button79.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button79.CustomColor = System.Drawing.Color.Empty;
-            this.Button79.DrawOnGlass = false;
             this.Button79.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button79.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button79.ForeColor = System.Drawing.Color.White;
@@ -6629,10 +6429,9 @@ namespace WinPaletter
             // 
             // Button80
             // 
-            this.Button80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button80.CustomColor = System.Drawing.Color.Empty;
-            this.Button80.DrawOnGlass = false;
             this.Button80.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button80.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button80.ForeColor = System.Drawing.Color.White;
@@ -6646,10 +6445,9 @@ namespace WinPaletter
             // 
             // Button81
             // 
-            this.Button81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button81.CustomColor = System.Drawing.Color.Empty;
-            this.Button81.DrawOnGlass = false;
             this.Button81.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button81.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button81.ForeColor = System.Drawing.Color.White;
@@ -6663,9 +6461,8 @@ namespace WinPaletter
             // 
             // TextBox24
             // 
-            this.TextBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox24.ForeColor = System.Drawing.Color.White;
             this.TextBox24.Location = new System.Drawing.Point(140, 3);
             this.TextBox24.MaxLength = 32767;
@@ -6695,7 +6492,7 @@ namespace WinPaletter
             // 
             // PictureBox24
             // 
-            this.PictureBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox24.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox24.Image")));
             this.PictureBox24.Location = new System.Drawing.Point(3, 3);
@@ -6706,7 +6503,7 @@ namespace WinPaletter
             // 
             // GroupBox19
             // 
-            this.GroupBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox19.Controls.Add(this.Button61);
@@ -6722,10 +6519,9 @@ namespace WinPaletter
             // 
             // Button61
             // 
-            this.Button61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button61.CustomColor = System.Drawing.Color.Empty;
-            this.Button61.DrawOnGlass = false;
             this.Button61.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button61.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button61.ForeColor = System.Drawing.Color.White;
@@ -6739,10 +6535,9 @@ namespace WinPaletter
             // 
             // Button62
             // 
-            this.Button62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button62.CustomColor = System.Drawing.Color.Empty;
-            this.Button62.DrawOnGlass = false;
             this.Button62.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button62.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button62.ForeColor = System.Drawing.Color.White;
@@ -6756,10 +6551,9 @@ namespace WinPaletter
             // 
             // Button63
             // 
-            this.Button63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button63.CustomColor = System.Drawing.Color.Empty;
-            this.Button63.DrawOnGlass = false;
             this.Button63.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button63.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button63.ForeColor = System.Drawing.Color.White;
@@ -6773,9 +6567,8 @@ namespace WinPaletter
             // 
             // TextBox18
             // 
-            this.TextBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox18.ForeColor = System.Drawing.Color.White;
             this.TextBox18.Location = new System.Drawing.Point(140, 3);
             this.TextBox18.MaxLength = 32767;
@@ -6805,7 +6598,7 @@ namespace WinPaletter
             // 
             // PictureBox18
             // 
-            this.PictureBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox18.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox18.Image")));
             this.PictureBox18.Location = new System.Drawing.Point(3, 3);
@@ -6816,7 +6609,7 @@ namespace WinPaletter
             // 
             // GroupBox20
             // 
-            this.GroupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox20.Controls.Add(this.Button64);
@@ -6832,10 +6625,9 @@ namespace WinPaletter
             // 
             // Button64
             // 
-            this.Button64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button64.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button64.CustomColor = System.Drawing.Color.Empty;
-            this.Button64.DrawOnGlass = false;
             this.Button64.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button64.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button64.ForeColor = System.Drawing.Color.White;
@@ -6849,10 +6641,9 @@ namespace WinPaletter
             // 
             // Button65
             // 
-            this.Button65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button65.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button65.CustomColor = System.Drawing.Color.Empty;
-            this.Button65.DrawOnGlass = false;
             this.Button65.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button65.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button65.ForeColor = System.Drawing.Color.White;
@@ -6866,10 +6657,9 @@ namespace WinPaletter
             // 
             // Button66
             // 
-            this.Button66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button66.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button66.CustomColor = System.Drawing.Color.Empty;
-            this.Button66.DrawOnGlass = false;
             this.Button66.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button66.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button66.ForeColor = System.Drawing.Color.White;
@@ -6883,9 +6673,8 @@ namespace WinPaletter
             // 
             // TextBox19
             // 
-            this.TextBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox19.ForeColor = System.Drawing.Color.White;
             this.TextBox19.Location = new System.Drawing.Point(140, 3);
             this.TextBox19.MaxLength = 32767;
@@ -6915,7 +6704,7 @@ namespace WinPaletter
             // 
             // PictureBox19
             // 
-            this.PictureBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox19.Image")));
             this.PictureBox19.Location = new System.Drawing.Point(3, 3);
@@ -6926,7 +6715,7 @@ namespace WinPaletter
             // 
             // GroupBox21
             // 
-            this.GroupBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox21.Controls.Add(this.Button67);
@@ -6942,10 +6731,9 @@ namespace WinPaletter
             // 
             // Button67
             // 
-            this.Button67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button67.CustomColor = System.Drawing.Color.Empty;
-            this.Button67.DrawOnGlass = false;
             this.Button67.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button67.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button67.ForeColor = System.Drawing.Color.White;
@@ -6959,10 +6747,9 @@ namespace WinPaletter
             // 
             // Button68
             // 
-            this.Button68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button68.CustomColor = System.Drawing.Color.Empty;
-            this.Button68.DrawOnGlass = false;
             this.Button68.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button68.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button68.ForeColor = System.Drawing.Color.White;
@@ -6976,10 +6763,9 @@ namespace WinPaletter
             // 
             // Button69
             // 
-            this.Button69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button69.CustomColor = System.Drawing.Color.Empty;
-            this.Button69.DrawOnGlass = false;
             this.Button69.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button69.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button69.ForeColor = System.Drawing.Color.White;
@@ -6993,9 +6779,8 @@ namespace WinPaletter
             // 
             // TextBox20
             // 
-            this.TextBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox20.ForeColor = System.Drawing.Color.White;
             this.TextBox20.Location = new System.Drawing.Point(140, 3);
             this.TextBox20.MaxLength = 32767;
@@ -7025,7 +6810,7 @@ namespace WinPaletter
             // 
             // PictureBox20
             // 
-            this.PictureBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox20.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox20.Image")));
             this.PictureBox20.Location = new System.Drawing.Point(3, 3);
@@ -7036,7 +6821,7 @@ namespace WinPaletter
             // 
             // GroupBox22
             // 
-            this.GroupBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox22.Controls.Add(this.Button70);
@@ -7052,10 +6837,9 @@ namespace WinPaletter
             // 
             // Button70
             // 
-            this.Button70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button70.CustomColor = System.Drawing.Color.Empty;
-            this.Button70.DrawOnGlass = false;
             this.Button70.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button70.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button70.ForeColor = System.Drawing.Color.White;
@@ -7069,10 +6853,9 @@ namespace WinPaletter
             // 
             // Button71
             // 
-            this.Button71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button71.CustomColor = System.Drawing.Color.Empty;
-            this.Button71.DrawOnGlass = false;
             this.Button71.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button71.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button71.ForeColor = System.Drawing.Color.White;
@@ -7086,10 +6869,9 @@ namespace WinPaletter
             // 
             // Button72
             // 
-            this.Button72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button72.CustomColor = System.Drawing.Color.Empty;
-            this.Button72.DrawOnGlass = false;
             this.Button72.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button72.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button72.ForeColor = System.Drawing.Color.White;
@@ -7103,9 +6885,8 @@ namespace WinPaletter
             // 
             // TextBox21
             // 
-            this.TextBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox21.ForeColor = System.Drawing.Color.White;
             this.TextBox21.Location = new System.Drawing.Point(140, 3);
             this.TextBox21.MaxLength = 32767;
@@ -7135,7 +6916,7 @@ namespace WinPaletter
             // 
             // PictureBox21
             // 
-            this.PictureBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox21.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox21.Image")));
             this.PictureBox21.Location = new System.Drawing.Point(3, 3);
@@ -7146,7 +6927,7 @@ namespace WinPaletter
             // 
             // GroupBox23
             // 
-            this.GroupBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox23.Controls.Add(this.Button73);
@@ -7162,10 +6943,9 @@ namespace WinPaletter
             // 
             // Button73
             // 
-            this.Button73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button73.CustomColor = System.Drawing.Color.Empty;
-            this.Button73.DrawOnGlass = false;
             this.Button73.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button73.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button73.ForeColor = System.Drawing.Color.White;
@@ -7179,10 +6959,9 @@ namespace WinPaletter
             // 
             // Button74
             // 
-            this.Button74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button74.CustomColor = System.Drawing.Color.Empty;
-            this.Button74.DrawOnGlass = false;
             this.Button74.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button74.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button74.ForeColor = System.Drawing.Color.White;
@@ -7196,10 +6975,9 @@ namespace WinPaletter
             // 
             // Button75
             // 
-            this.Button75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button75.CustomColor = System.Drawing.Color.Empty;
-            this.Button75.DrawOnGlass = false;
             this.Button75.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button75.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button75.ForeColor = System.Drawing.Color.White;
@@ -7213,9 +6991,8 @@ namespace WinPaletter
             // 
             // TextBox22
             // 
-            this.TextBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox22.ForeColor = System.Drawing.Color.White;
             this.TextBox22.Location = new System.Drawing.Point(140, 3);
             this.TextBox22.MaxLength = 32767;
@@ -7245,7 +7022,7 @@ namespace WinPaletter
             // 
             // PictureBox22
             // 
-            this.PictureBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
             this.PictureBox22.Location = new System.Drawing.Point(3, 3);
@@ -7256,7 +7033,7 @@ namespace WinPaletter
             // 
             // GroupBox24
             // 
-            this.GroupBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox24.Controls.Add(this.Button76);
@@ -7272,10 +7049,9 @@ namespace WinPaletter
             // 
             // Button76
             // 
-            this.Button76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button76.CustomColor = System.Drawing.Color.Empty;
-            this.Button76.DrawOnGlass = false;
             this.Button76.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button76.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button76.ForeColor = System.Drawing.Color.White;
@@ -7289,10 +7065,9 @@ namespace WinPaletter
             // 
             // Button77
             // 
-            this.Button77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button77.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button77.CustomColor = System.Drawing.Color.Empty;
-            this.Button77.DrawOnGlass = false;
             this.Button77.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button77.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button77.ForeColor = System.Drawing.Color.White;
@@ -7306,10 +7081,9 @@ namespace WinPaletter
             // 
             // Button78
             // 
-            this.Button78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button78.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button78.CustomColor = System.Drawing.Color.Empty;
-            this.Button78.DrawOnGlass = false;
             this.Button78.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button78.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button78.ForeColor = System.Drawing.Color.White;
@@ -7323,9 +7097,8 @@ namespace WinPaletter
             // 
             // TextBox23
             // 
-            this.TextBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox23.ForeColor = System.Drawing.Color.White;
             this.TextBox23.Location = new System.Drawing.Point(140, 3);
             this.TextBox23.MaxLength = 32767;
@@ -7355,7 +7128,7 @@ namespace WinPaletter
             // 
             // PictureBox23
             // 
-            this.PictureBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
             this.PictureBox23.Location = new System.Drawing.Point(3, 3);
@@ -7385,7 +7158,7 @@ namespace WinPaletter
             // 
             // GroupBox33
             // 
-            this.GroupBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox33.Controls.Add(this.Button103);
@@ -7401,10 +7174,9 @@ namespace WinPaletter
             // 
             // Button103
             // 
-            this.Button103.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button103.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button103.CustomColor = System.Drawing.Color.Empty;
-            this.Button103.DrawOnGlass = false;
             this.Button103.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button103.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button103.ForeColor = System.Drawing.Color.White;
@@ -7418,10 +7190,9 @@ namespace WinPaletter
             // 
             // Button104
             // 
-            this.Button104.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button104.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button104.CustomColor = System.Drawing.Color.Empty;
-            this.Button104.DrawOnGlass = false;
             this.Button104.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button104.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button104.ForeColor = System.Drawing.Color.White;
@@ -7435,10 +7206,9 @@ namespace WinPaletter
             // 
             // Button105
             // 
-            this.Button105.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button105.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button105.CustomColor = System.Drawing.Color.Empty;
-            this.Button105.DrawOnGlass = false;
             this.Button105.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button105.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button105.ForeColor = System.Drawing.Color.White;
@@ -7452,9 +7222,8 @@ namespace WinPaletter
             // 
             // TextBox32
             // 
-            this.TextBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox32.ForeColor = System.Drawing.Color.White;
             this.TextBox32.Location = new System.Drawing.Point(140, 3);
             this.TextBox32.MaxLength = 32767;
@@ -7484,7 +7253,7 @@ namespace WinPaletter
             // 
             // PictureBox32
             // 
-            this.PictureBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox32.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox32.Image")));
             this.PictureBox32.Location = new System.Drawing.Point(3, 3);
@@ -7495,7 +7264,7 @@ namespace WinPaletter
             // 
             // GroupBox34
             // 
-            this.GroupBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox34.Controls.Add(this.Button106);
@@ -7511,10 +7280,9 @@ namespace WinPaletter
             // 
             // Button106
             // 
-            this.Button106.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button106.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button106.CustomColor = System.Drawing.Color.Empty;
-            this.Button106.DrawOnGlass = false;
             this.Button106.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button106.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button106.ForeColor = System.Drawing.Color.White;
@@ -7528,10 +7296,9 @@ namespace WinPaletter
             // 
             // Button107
             // 
-            this.Button107.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button107.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button107.CustomColor = System.Drawing.Color.Empty;
-            this.Button107.DrawOnGlass = false;
             this.Button107.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button107.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button107.ForeColor = System.Drawing.Color.White;
@@ -7545,10 +7312,9 @@ namespace WinPaletter
             // 
             // Button108
             // 
-            this.Button108.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button108.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button108.CustomColor = System.Drawing.Color.Empty;
-            this.Button108.DrawOnGlass = false;
             this.Button108.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button108.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button108.ForeColor = System.Drawing.Color.White;
@@ -7562,9 +7328,8 @@ namespace WinPaletter
             // 
             // TextBox33
             // 
-            this.TextBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox33.ForeColor = System.Drawing.Color.White;
             this.TextBox33.Location = new System.Drawing.Point(140, 3);
             this.TextBox33.MaxLength = 32767;
@@ -7594,7 +7359,7 @@ namespace WinPaletter
             // 
             // PictureBox33
             // 
-            this.PictureBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox33.Image")));
             this.PictureBox33.Location = new System.Drawing.Point(3, 3);
@@ -7605,7 +7370,7 @@ namespace WinPaletter
             // 
             // GroupBox35
             // 
-            this.GroupBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox35.Controls.Add(this.Button109);
@@ -7621,10 +7386,9 @@ namespace WinPaletter
             // 
             // Button109
             // 
-            this.Button109.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button109.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button109.CustomColor = System.Drawing.Color.Empty;
-            this.Button109.DrawOnGlass = false;
             this.Button109.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button109.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button109.ForeColor = System.Drawing.Color.White;
@@ -7638,10 +7402,9 @@ namespace WinPaletter
             // 
             // Button110
             // 
-            this.Button110.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button110.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button110.CustomColor = System.Drawing.Color.Empty;
-            this.Button110.DrawOnGlass = false;
             this.Button110.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button110.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button110.ForeColor = System.Drawing.Color.White;
@@ -7655,10 +7418,9 @@ namespace WinPaletter
             // 
             // Button111
             // 
-            this.Button111.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button111.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button111.CustomColor = System.Drawing.Color.Empty;
-            this.Button111.DrawOnGlass = false;
             this.Button111.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button111.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button111.ForeColor = System.Drawing.Color.White;
@@ -7672,9 +7434,8 @@ namespace WinPaletter
             // 
             // TextBox34
             // 
-            this.TextBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox34.ForeColor = System.Drawing.Color.White;
             this.TextBox34.Location = new System.Drawing.Point(140, 3);
             this.TextBox34.MaxLength = 32767;
@@ -7704,7 +7465,7 @@ namespace WinPaletter
             // 
             // PictureBox34
             // 
-            this.PictureBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
             this.PictureBox34.Location = new System.Drawing.Point(3, 3);
@@ -7715,7 +7476,7 @@ namespace WinPaletter
             // 
             // GroupBox26
             // 
-            this.GroupBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox26.Controls.Add(this.Button82);
@@ -7731,10 +7492,9 @@ namespace WinPaletter
             // 
             // Button82
             // 
-            this.Button82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button82.CustomColor = System.Drawing.Color.Empty;
-            this.Button82.DrawOnGlass = false;
             this.Button82.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button82.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button82.ForeColor = System.Drawing.Color.White;
@@ -7748,10 +7508,9 @@ namespace WinPaletter
             // 
             // Button83
             // 
-            this.Button83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button83.CustomColor = System.Drawing.Color.Empty;
-            this.Button83.DrawOnGlass = false;
             this.Button83.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button83.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button83.ForeColor = System.Drawing.Color.White;
@@ -7765,10 +7524,9 @@ namespace WinPaletter
             // 
             // Button84
             // 
-            this.Button84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button84.CustomColor = System.Drawing.Color.Empty;
-            this.Button84.DrawOnGlass = false;
             this.Button84.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button84.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button84.ForeColor = System.Drawing.Color.White;
@@ -7782,9 +7540,8 @@ namespace WinPaletter
             // 
             // TextBox25
             // 
-            this.TextBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox25.ForeColor = System.Drawing.Color.White;
             this.TextBox25.Location = new System.Drawing.Point(140, 3);
             this.TextBox25.MaxLength = 32767;
@@ -7814,7 +7571,7 @@ namespace WinPaletter
             // 
             // PictureBox25
             // 
-            this.PictureBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox25.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox25.Image")));
             this.PictureBox25.Location = new System.Drawing.Point(3, 3);
@@ -7825,7 +7582,7 @@ namespace WinPaletter
             // 
             // GroupBox27
             // 
-            this.GroupBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox27.Controls.Add(this.Button85);
@@ -7841,10 +7598,9 @@ namespace WinPaletter
             // 
             // Button85
             // 
-            this.Button85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button85.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button85.CustomColor = System.Drawing.Color.Empty;
-            this.Button85.DrawOnGlass = false;
             this.Button85.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button85.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button85.ForeColor = System.Drawing.Color.White;
@@ -7858,10 +7614,9 @@ namespace WinPaletter
             // 
             // Button86
             // 
-            this.Button86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button86.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button86.CustomColor = System.Drawing.Color.Empty;
-            this.Button86.DrawOnGlass = false;
             this.Button86.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button86.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button86.ForeColor = System.Drawing.Color.White;
@@ -7875,10 +7630,9 @@ namespace WinPaletter
             // 
             // Button87
             // 
-            this.Button87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button87.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button87.CustomColor = System.Drawing.Color.Empty;
-            this.Button87.DrawOnGlass = false;
             this.Button87.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button87.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button87.ForeColor = System.Drawing.Color.White;
@@ -7892,9 +7646,8 @@ namespace WinPaletter
             // 
             // TextBox26
             // 
-            this.TextBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox26.ForeColor = System.Drawing.Color.White;
             this.TextBox26.Location = new System.Drawing.Point(140, 3);
             this.TextBox26.MaxLength = 32767;
@@ -7924,7 +7677,7 @@ namespace WinPaletter
             // 
             // PictureBox26
             // 
-            this.PictureBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
             this.PictureBox26.Location = new System.Drawing.Point(3, 3);
@@ -7935,7 +7688,7 @@ namespace WinPaletter
             // 
             // GroupBox28
             // 
-            this.GroupBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox28.Controls.Add(this.Button88);
@@ -7951,10 +7704,9 @@ namespace WinPaletter
             // 
             // Button88
             // 
-            this.Button88.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button88.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button88.CustomColor = System.Drawing.Color.Empty;
-            this.Button88.DrawOnGlass = false;
             this.Button88.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button88.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button88.ForeColor = System.Drawing.Color.White;
@@ -7968,10 +7720,9 @@ namespace WinPaletter
             // 
             // Button89
             // 
-            this.Button89.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button89.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button89.CustomColor = System.Drawing.Color.Empty;
-            this.Button89.DrawOnGlass = false;
             this.Button89.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button89.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button89.ForeColor = System.Drawing.Color.White;
@@ -7985,10 +7736,9 @@ namespace WinPaletter
             // 
             // Button90
             // 
-            this.Button90.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button90.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button90.CustomColor = System.Drawing.Color.Empty;
-            this.Button90.DrawOnGlass = false;
             this.Button90.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button90.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button90.ForeColor = System.Drawing.Color.White;
@@ -8002,9 +7752,8 @@ namespace WinPaletter
             // 
             // TextBox27
             // 
-            this.TextBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox27.ForeColor = System.Drawing.Color.White;
             this.TextBox27.Location = new System.Drawing.Point(140, 3);
             this.TextBox27.MaxLength = 32767;
@@ -8034,7 +7783,7 @@ namespace WinPaletter
             // 
             // PictureBox27
             // 
-            this.PictureBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox27.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox27.Image")));
             this.PictureBox27.Location = new System.Drawing.Point(3, 3);
@@ -8045,7 +7794,7 @@ namespace WinPaletter
             // 
             // GroupBox29
             // 
-            this.GroupBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox29.Controls.Add(this.Button91);
@@ -8061,10 +7810,9 @@ namespace WinPaletter
             // 
             // Button91
             // 
-            this.Button91.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button91.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button91.CustomColor = System.Drawing.Color.Empty;
-            this.Button91.DrawOnGlass = false;
             this.Button91.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button91.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button91.ForeColor = System.Drawing.Color.White;
@@ -8078,10 +7826,9 @@ namespace WinPaletter
             // 
             // Button92
             // 
-            this.Button92.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button92.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button92.CustomColor = System.Drawing.Color.Empty;
-            this.Button92.DrawOnGlass = false;
             this.Button92.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button92.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button92.ForeColor = System.Drawing.Color.White;
@@ -8095,10 +7842,9 @@ namespace WinPaletter
             // 
             // Button93
             // 
-            this.Button93.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button93.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button93.CustomColor = System.Drawing.Color.Empty;
-            this.Button93.DrawOnGlass = false;
             this.Button93.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button93.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button93.ForeColor = System.Drawing.Color.White;
@@ -8112,9 +7858,8 @@ namespace WinPaletter
             // 
             // TextBox28
             // 
-            this.TextBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox28.ForeColor = System.Drawing.Color.White;
             this.TextBox28.Location = new System.Drawing.Point(140, 3);
             this.TextBox28.MaxLength = 32767;
@@ -8144,7 +7889,7 @@ namespace WinPaletter
             // 
             // PictureBox28
             // 
-            this.PictureBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
             this.PictureBox28.Location = new System.Drawing.Point(3, 3);
@@ -8155,7 +7900,7 @@ namespace WinPaletter
             // 
             // GroupBox30
             // 
-            this.GroupBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox30.Controls.Add(this.Button94);
@@ -8171,10 +7916,9 @@ namespace WinPaletter
             // 
             // Button94
             // 
-            this.Button94.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button94.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button94.CustomColor = System.Drawing.Color.Empty;
-            this.Button94.DrawOnGlass = false;
             this.Button94.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button94.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button94.ForeColor = System.Drawing.Color.White;
@@ -8188,10 +7932,9 @@ namespace WinPaletter
             // 
             // Button95
             // 
-            this.Button95.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button95.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button95.CustomColor = System.Drawing.Color.Empty;
-            this.Button95.DrawOnGlass = false;
             this.Button95.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button95.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button95.ForeColor = System.Drawing.Color.White;
@@ -8205,10 +7948,9 @@ namespace WinPaletter
             // 
             // Button96
             // 
-            this.Button96.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button96.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button96.CustomColor = System.Drawing.Color.Empty;
-            this.Button96.DrawOnGlass = false;
             this.Button96.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button96.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button96.ForeColor = System.Drawing.Color.White;
@@ -8222,9 +7964,8 @@ namespace WinPaletter
             // 
             // TextBox29
             // 
-            this.TextBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox29.ForeColor = System.Drawing.Color.White;
             this.TextBox29.Location = new System.Drawing.Point(140, 3);
             this.TextBox29.MaxLength = 32767;
@@ -8254,7 +7995,7 @@ namespace WinPaletter
             // 
             // PictureBox29
             // 
-            this.PictureBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
             this.PictureBox29.Location = new System.Drawing.Point(3, 3);
@@ -8265,7 +8006,7 @@ namespace WinPaletter
             // 
             // GroupBox31
             // 
-            this.GroupBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox31.Controls.Add(this.Button97);
@@ -8281,10 +8022,9 @@ namespace WinPaletter
             // 
             // Button97
             // 
-            this.Button97.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button97.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button97.CustomColor = System.Drawing.Color.Empty;
-            this.Button97.DrawOnGlass = false;
             this.Button97.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button97.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button97.ForeColor = System.Drawing.Color.White;
@@ -8298,10 +8038,9 @@ namespace WinPaletter
             // 
             // Button98
             // 
-            this.Button98.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button98.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button98.CustomColor = System.Drawing.Color.Empty;
-            this.Button98.DrawOnGlass = false;
             this.Button98.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button98.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button98.ForeColor = System.Drawing.Color.White;
@@ -8315,10 +8054,9 @@ namespace WinPaletter
             // 
             // Button99
             // 
-            this.Button99.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button99.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button99.CustomColor = System.Drawing.Color.Empty;
-            this.Button99.DrawOnGlass = false;
             this.Button99.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button99.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button99.ForeColor = System.Drawing.Color.White;
@@ -8332,9 +8070,8 @@ namespace WinPaletter
             // 
             // TextBox30
             // 
-            this.TextBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox30.ForeColor = System.Drawing.Color.White;
             this.TextBox30.Location = new System.Drawing.Point(140, 3);
             this.TextBox30.MaxLength = 32767;
@@ -8364,7 +8101,7 @@ namespace WinPaletter
             // 
             // PictureBox30
             // 
-            this.PictureBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
             this.PictureBox30.Location = new System.Drawing.Point(3, 3);
@@ -8375,7 +8112,7 @@ namespace WinPaletter
             // 
             // GroupBox32
             // 
-            this.GroupBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox32.Controls.Add(this.Button100);
@@ -8391,10 +8128,9 @@ namespace WinPaletter
             // 
             // Button100
             // 
-            this.Button100.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button100.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button100.CustomColor = System.Drawing.Color.Empty;
-            this.Button100.DrawOnGlass = false;
             this.Button100.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button100.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button100.ForeColor = System.Drawing.Color.White;
@@ -8408,10 +8144,9 @@ namespace WinPaletter
             // 
             // Button101
             // 
-            this.Button101.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button101.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button101.CustomColor = System.Drawing.Color.Empty;
-            this.Button101.DrawOnGlass = false;
             this.Button101.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button101.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button101.ForeColor = System.Drawing.Color.White;
@@ -8425,10 +8160,9 @@ namespace WinPaletter
             // 
             // Button102
             // 
-            this.Button102.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button102.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button102.CustomColor = System.Drawing.Color.Empty;
-            this.Button102.DrawOnGlass = false;
             this.Button102.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button102.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button102.ForeColor = System.Drawing.Color.White;
@@ -8442,9 +8176,8 @@ namespace WinPaletter
             // 
             // TextBox31
             // 
-            this.TextBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox31.ForeColor = System.Drawing.Color.White;
             this.TextBox31.Location = new System.Drawing.Point(140, 3);
             this.TextBox31.MaxLength = 32767;
@@ -8474,7 +8207,7 @@ namespace WinPaletter
             // 
             // PictureBox31
             // 
-            this.PictureBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
             this.PictureBox31.Location = new System.Drawing.Point(3, 3);
@@ -8504,7 +8237,7 @@ namespace WinPaletter
             // 
             // GroupBox36
             // 
-            this.GroupBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox36.Controls.Add(this.Button112);
@@ -8520,10 +8253,9 @@ namespace WinPaletter
             // 
             // Button112
             // 
-            this.Button112.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button112.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button112.CustomColor = System.Drawing.Color.Empty;
-            this.Button112.DrawOnGlass = false;
             this.Button112.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button112.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button112.ForeColor = System.Drawing.Color.White;
@@ -8537,10 +8269,9 @@ namespace WinPaletter
             // 
             // Button113
             // 
-            this.Button113.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button113.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button113.CustomColor = System.Drawing.Color.Empty;
-            this.Button113.DrawOnGlass = false;
             this.Button113.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button113.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button113.ForeColor = System.Drawing.Color.White;
@@ -8554,10 +8285,9 @@ namespace WinPaletter
             // 
             // Button114
             // 
-            this.Button114.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button114.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button114.CustomColor = System.Drawing.Color.Empty;
-            this.Button114.DrawOnGlass = false;
             this.Button114.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button114.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button114.ForeColor = System.Drawing.Color.White;
@@ -8571,9 +8301,8 @@ namespace WinPaletter
             // 
             // TextBox35
             // 
-            this.TextBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox35.ForeColor = System.Drawing.Color.White;
             this.TextBox35.Location = new System.Drawing.Point(140, 3);
             this.TextBox35.MaxLength = 32767;
@@ -8603,7 +8332,7 @@ namespace WinPaletter
             // 
             // PictureBox35
             // 
-            this.PictureBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox35.Image")));
             this.PictureBox35.Location = new System.Drawing.Point(3, 3);
@@ -8614,7 +8343,7 @@ namespace WinPaletter
             // 
             // GroupBox37
             // 
-            this.GroupBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox37.Controls.Add(this.Button115);
@@ -8630,10 +8359,9 @@ namespace WinPaletter
             // 
             // Button115
             // 
-            this.Button115.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button115.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button115.CustomColor = System.Drawing.Color.Empty;
-            this.Button115.DrawOnGlass = false;
             this.Button115.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button115.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button115.ForeColor = System.Drawing.Color.White;
@@ -8647,10 +8375,9 @@ namespace WinPaletter
             // 
             // Button116
             // 
-            this.Button116.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button116.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button116.CustomColor = System.Drawing.Color.Empty;
-            this.Button116.DrawOnGlass = false;
             this.Button116.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button116.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button116.ForeColor = System.Drawing.Color.White;
@@ -8664,10 +8391,9 @@ namespace WinPaletter
             // 
             // Button117
             // 
-            this.Button117.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button117.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button117.CustomColor = System.Drawing.Color.Empty;
-            this.Button117.DrawOnGlass = false;
             this.Button117.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button117.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button117.ForeColor = System.Drawing.Color.White;
@@ -8681,9 +8407,8 @@ namespace WinPaletter
             // 
             // TextBox36
             // 
-            this.TextBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox36.ForeColor = System.Drawing.Color.White;
             this.TextBox36.Location = new System.Drawing.Point(140, 3);
             this.TextBox36.MaxLength = 32767;
@@ -8713,7 +8438,7 @@ namespace WinPaletter
             // 
             // PictureBox36
             // 
-            this.PictureBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox36.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox36.Image")));
             this.PictureBox36.Location = new System.Drawing.Point(3, 3);
@@ -8724,7 +8449,7 @@ namespace WinPaletter
             // 
             // GroupBox38
             // 
-            this.GroupBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox38.Controls.Add(this.Button118);
@@ -8740,10 +8465,9 @@ namespace WinPaletter
             // 
             // Button118
             // 
-            this.Button118.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button118.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button118.CustomColor = System.Drawing.Color.Empty;
-            this.Button118.DrawOnGlass = false;
             this.Button118.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button118.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button118.ForeColor = System.Drawing.Color.White;
@@ -8757,10 +8481,9 @@ namespace WinPaletter
             // 
             // Button119
             // 
-            this.Button119.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button119.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button119.CustomColor = System.Drawing.Color.Empty;
-            this.Button119.DrawOnGlass = false;
             this.Button119.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button119.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button119.ForeColor = System.Drawing.Color.White;
@@ -8774,10 +8497,9 @@ namespace WinPaletter
             // 
             // Button120
             // 
-            this.Button120.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button120.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button120.CustomColor = System.Drawing.Color.Empty;
-            this.Button120.DrawOnGlass = false;
             this.Button120.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button120.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button120.ForeColor = System.Drawing.Color.White;
@@ -8791,9 +8513,8 @@ namespace WinPaletter
             // 
             // TextBox37
             // 
-            this.TextBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox37.ForeColor = System.Drawing.Color.White;
             this.TextBox37.Location = new System.Drawing.Point(140, 3);
             this.TextBox37.MaxLength = 32767;
@@ -8823,7 +8544,7 @@ namespace WinPaletter
             // 
             // PictureBox37
             // 
-            this.PictureBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox37.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox37.Image")));
             this.PictureBox37.Location = new System.Drawing.Point(3, 3);
@@ -8834,7 +8555,7 @@ namespace WinPaletter
             // 
             // GroupBox39
             // 
-            this.GroupBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox39.Controls.Add(this.Button121);
@@ -8850,10 +8571,9 @@ namespace WinPaletter
             // 
             // Button121
             // 
-            this.Button121.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button121.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button121.CustomColor = System.Drawing.Color.Empty;
-            this.Button121.DrawOnGlass = false;
             this.Button121.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button121.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button121.ForeColor = System.Drawing.Color.White;
@@ -8867,10 +8587,9 @@ namespace WinPaletter
             // 
             // Button122
             // 
-            this.Button122.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button122.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button122.CustomColor = System.Drawing.Color.Empty;
-            this.Button122.DrawOnGlass = false;
             this.Button122.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button122.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button122.ForeColor = System.Drawing.Color.White;
@@ -8884,10 +8603,9 @@ namespace WinPaletter
             // 
             // Button123
             // 
-            this.Button123.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button123.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button123.CustomColor = System.Drawing.Color.Empty;
-            this.Button123.DrawOnGlass = false;
             this.Button123.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button123.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button123.ForeColor = System.Drawing.Color.White;
@@ -8901,9 +8619,8 @@ namespace WinPaletter
             // 
             // TextBox38
             // 
-            this.TextBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox38.ForeColor = System.Drawing.Color.White;
             this.TextBox38.Location = new System.Drawing.Point(140, 3);
             this.TextBox38.MaxLength = 32767;
@@ -8933,7 +8650,7 @@ namespace WinPaletter
             // 
             // PictureBox38
             // 
-            this.PictureBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox38.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox38.Image")));
             this.PictureBox38.Location = new System.Drawing.Point(3, 3);
@@ -8944,7 +8661,7 @@ namespace WinPaletter
             // 
             // GroupBox40
             // 
-            this.GroupBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox40.Controls.Add(this.Button124);
@@ -8960,10 +8677,9 @@ namespace WinPaletter
             // 
             // Button124
             // 
-            this.Button124.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button124.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button124.CustomColor = System.Drawing.Color.Empty;
-            this.Button124.DrawOnGlass = false;
             this.Button124.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button124.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button124.ForeColor = System.Drawing.Color.White;
@@ -8977,10 +8693,9 @@ namespace WinPaletter
             // 
             // Button125
             // 
-            this.Button125.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button125.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button125.CustomColor = System.Drawing.Color.Empty;
-            this.Button125.DrawOnGlass = false;
             this.Button125.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button125.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button125.ForeColor = System.Drawing.Color.White;
@@ -8994,10 +8709,9 @@ namespace WinPaletter
             // 
             // Button126
             // 
-            this.Button126.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button126.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button126.CustomColor = System.Drawing.Color.Empty;
-            this.Button126.DrawOnGlass = false;
             this.Button126.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button126.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button126.ForeColor = System.Drawing.Color.White;
@@ -9011,9 +8725,8 @@ namespace WinPaletter
             // 
             // TextBox39
             // 
-            this.TextBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox39.ForeColor = System.Drawing.Color.White;
             this.TextBox39.Location = new System.Drawing.Point(140, 3);
             this.TextBox39.MaxLength = 32767;
@@ -9043,7 +8756,7 @@ namespace WinPaletter
             // 
             // PictureBox39
             // 
-            this.PictureBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox39.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox39.Image")));
             this.PictureBox39.Location = new System.Drawing.Point(3, 3);
@@ -9054,7 +8767,7 @@ namespace WinPaletter
             // 
             // GroupBox41
             // 
-            this.GroupBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox41.Controls.Add(this.Button127);
@@ -9070,10 +8783,9 @@ namespace WinPaletter
             // 
             // Button127
             // 
-            this.Button127.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button127.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button127.CustomColor = System.Drawing.Color.Empty;
-            this.Button127.DrawOnGlass = false;
             this.Button127.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button127.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button127.ForeColor = System.Drawing.Color.White;
@@ -9087,10 +8799,9 @@ namespace WinPaletter
             // 
             // Button128
             // 
-            this.Button128.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button128.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button128.CustomColor = System.Drawing.Color.Empty;
-            this.Button128.DrawOnGlass = false;
             this.Button128.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button128.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button128.ForeColor = System.Drawing.Color.White;
@@ -9104,10 +8815,9 @@ namespace WinPaletter
             // 
             // Button129
             // 
-            this.Button129.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button129.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button129.CustomColor = System.Drawing.Color.Empty;
-            this.Button129.DrawOnGlass = false;
             this.Button129.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button129.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button129.ForeColor = System.Drawing.Color.White;
@@ -9121,9 +8831,8 @@ namespace WinPaletter
             // 
             // TextBox40
             // 
-            this.TextBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox40.ForeColor = System.Drawing.Color.White;
             this.TextBox40.Location = new System.Drawing.Point(140, 3);
             this.TextBox40.MaxLength = 32767;
@@ -9153,7 +8862,7 @@ namespace WinPaletter
             // 
             // PictureBox40
             // 
-            this.PictureBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox40.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox40.Image")));
             this.PictureBox40.Location = new System.Drawing.Point(3, 3);
@@ -9164,7 +8873,7 @@ namespace WinPaletter
             // 
             // GroupBox42
             // 
-            this.GroupBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox42.Controls.Add(this.Button130);
@@ -9180,10 +8889,9 @@ namespace WinPaletter
             // 
             // Button130
             // 
-            this.Button130.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button130.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button130.CustomColor = System.Drawing.Color.Empty;
-            this.Button130.DrawOnGlass = false;
             this.Button130.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button130.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button130.ForeColor = System.Drawing.Color.White;
@@ -9197,10 +8905,9 @@ namespace WinPaletter
             // 
             // Button131
             // 
-            this.Button131.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button131.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button131.CustomColor = System.Drawing.Color.Empty;
-            this.Button131.DrawOnGlass = false;
             this.Button131.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button131.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button131.ForeColor = System.Drawing.Color.White;
@@ -9214,10 +8921,9 @@ namespace WinPaletter
             // 
             // Button132
             // 
-            this.Button132.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button132.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button132.CustomColor = System.Drawing.Color.Empty;
-            this.Button132.DrawOnGlass = false;
             this.Button132.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button132.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button132.ForeColor = System.Drawing.Color.White;
@@ -9231,9 +8937,8 @@ namespace WinPaletter
             // 
             // TextBox41
             // 
-            this.TextBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox41.ForeColor = System.Drawing.Color.White;
             this.TextBox41.Location = new System.Drawing.Point(140, 3);
             this.TextBox41.MaxLength = 32767;
@@ -9263,7 +8968,7 @@ namespace WinPaletter
             // 
             // PictureBox41
             // 
-            this.PictureBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox41.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox41.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox41.Image")));
             this.PictureBox41.Location = new System.Drawing.Point(3, 3);
@@ -9274,7 +8979,7 @@ namespace WinPaletter
             // 
             // GroupBox43
             // 
-            this.GroupBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox43.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox43.Controls.Add(this.Button133);
@@ -9290,10 +8995,9 @@ namespace WinPaletter
             // 
             // Button133
             // 
-            this.Button133.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button133.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button133.CustomColor = System.Drawing.Color.Empty;
-            this.Button133.DrawOnGlass = false;
             this.Button133.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button133.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button133.ForeColor = System.Drawing.Color.White;
@@ -9307,10 +9011,9 @@ namespace WinPaletter
             // 
             // Button134
             // 
-            this.Button134.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button134.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button134.CustomColor = System.Drawing.Color.Empty;
-            this.Button134.DrawOnGlass = false;
             this.Button134.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button134.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button134.ForeColor = System.Drawing.Color.White;
@@ -9324,10 +9027,9 @@ namespace WinPaletter
             // 
             // Button135
             // 
-            this.Button135.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button135.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button135.CustomColor = System.Drawing.Color.Empty;
-            this.Button135.DrawOnGlass = false;
             this.Button135.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button135.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button135.ForeColor = System.Drawing.Color.White;
@@ -9341,9 +9043,8 @@ namespace WinPaletter
             // 
             // TextBox42
             // 
-            this.TextBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox42.ForeColor = System.Drawing.Color.White;
             this.TextBox42.Location = new System.Drawing.Point(140, 3);
             this.TextBox42.MaxLength = 32767;
@@ -9373,7 +9074,7 @@ namespace WinPaletter
             // 
             // PictureBox42
             // 
-            this.PictureBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox42.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox42.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox42.Image")));
             this.PictureBox42.Location = new System.Drawing.Point(3, 3);
@@ -9384,7 +9085,7 @@ namespace WinPaletter
             // 
             // GroupBox44
             // 
-            this.GroupBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox44.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox44.Controls.Add(this.Button136);
@@ -9400,10 +9101,9 @@ namespace WinPaletter
             // 
             // Button136
             // 
-            this.Button136.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button136.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button136.CustomColor = System.Drawing.Color.Empty;
-            this.Button136.DrawOnGlass = false;
             this.Button136.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button136.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button136.ForeColor = System.Drawing.Color.White;
@@ -9417,10 +9117,9 @@ namespace WinPaletter
             // 
             // Button137
             // 
-            this.Button137.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button137.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button137.CustomColor = System.Drawing.Color.Empty;
-            this.Button137.DrawOnGlass = false;
             this.Button137.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button137.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button137.ForeColor = System.Drawing.Color.White;
@@ -9434,10 +9133,9 @@ namespace WinPaletter
             // 
             // Button138
             // 
-            this.Button138.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button138.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button138.CustomColor = System.Drawing.Color.Empty;
-            this.Button138.DrawOnGlass = false;
             this.Button138.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button138.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button138.ForeColor = System.Drawing.Color.White;
@@ -9451,9 +9149,8 @@ namespace WinPaletter
             // 
             // TextBox43
             // 
-            this.TextBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox43.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox43.ForeColor = System.Drawing.Color.White;
             this.TextBox43.Location = new System.Drawing.Point(140, 3);
             this.TextBox43.MaxLength = 32767;
@@ -9483,7 +9180,7 @@ namespace WinPaletter
             // 
             // PictureBox43
             // 
-            this.PictureBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox43.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox43.Image")));
             this.PictureBox43.Location = new System.Drawing.Point(3, 3);
@@ -9494,7 +9191,7 @@ namespace WinPaletter
             // 
             // GroupBox45
             // 
-            this.GroupBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox45.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox45.Controls.Add(this.Button139);
@@ -9510,10 +9207,9 @@ namespace WinPaletter
             // 
             // Button139
             // 
-            this.Button139.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button139.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button139.CustomColor = System.Drawing.Color.Empty;
-            this.Button139.DrawOnGlass = false;
             this.Button139.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button139.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button139.ForeColor = System.Drawing.Color.White;
@@ -9527,10 +9223,9 @@ namespace WinPaletter
             // 
             // Button140
             // 
-            this.Button140.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button140.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button140.CustomColor = System.Drawing.Color.Empty;
-            this.Button140.DrawOnGlass = false;
             this.Button140.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button140.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button140.ForeColor = System.Drawing.Color.White;
@@ -9544,10 +9239,9 @@ namespace WinPaletter
             // 
             // Button141
             // 
-            this.Button141.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button141.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button141.CustomColor = System.Drawing.Color.Empty;
-            this.Button141.DrawOnGlass = false;
             this.Button141.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button141.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button141.ForeColor = System.Drawing.Color.White;
@@ -9561,9 +9255,8 @@ namespace WinPaletter
             // 
             // TextBox44
             // 
-            this.TextBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox44.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox44.ForeColor = System.Drawing.Color.White;
             this.TextBox44.Location = new System.Drawing.Point(140, 3);
             this.TextBox44.MaxLength = 32767;
@@ -9593,7 +9286,7 @@ namespace WinPaletter
             // 
             // PictureBox44
             // 
-            this.PictureBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox44.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox44.Image")));
             this.PictureBox44.Location = new System.Drawing.Point(3, 3);
@@ -9619,7 +9312,7 @@ namespace WinPaletter
             // 
             // GroupBox70
             // 
-            this.GroupBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox70.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox70.Controls.Add(this.Button214);
@@ -9635,10 +9328,9 @@ namespace WinPaletter
             // 
             // Button214
             // 
-            this.Button214.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button214.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button214.CustomColor = System.Drawing.Color.Empty;
-            this.Button214.DrawOnGlass = false;
             this.Button214.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button214.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button214.ForeColor = System.Drawing.Color.White;
@@ -9652,10 +9344,9 @@ namespace WinPaletter
             // 
             // Button215
             // 
-            this.Button215.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button215.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button215.CustomColor = System.Drawing.Color.Empty;
-            this.Button215.DrawOnGlass = false;
             this.Button215.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button215.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button215.ForeColor = System.Drawing.Color.White;
@@ -9669,10 +9360,9 @@ namespace WinPaletter
             // 
             // Button216
             // 
-            this.Button216.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button216.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button216.CustomColor = System.Drawing.Color.Empty;
-            this.Button216.DrawOnGlass = false;
             this.Button216.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button216.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button216.ForeColor = System.Drawing.Color.White;
@@ -9686,9 +9376,8 @@ namespace WinPaletter
             // 
             // TextBox69
             // 
-            this.TextBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox69.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox69.ForeColor = System.Drawing.Color.White;
             this.TextBox69.Location = new System.Drawing.Point(203, 3);
             this.TextBox69.MaxLength = 32767;
@@ -9718,7 +9407,7 @@ namespace WinPaletter
             // 
             // PictureBox69
             // 
-            this.PictureBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox69.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox69.Image")));
             this.PictureBox69.Location = new System.Drawing.Point(3, 3);
@@ -9729,7 +9418,7 @@ namespace WinPaletter
             // 
             // GroupBox71
             // 
-            this.GroupBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox71.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox71.Controls.Add(this.Button217);
@@ -9745,10 +9434,9 @@ namespace WinPaletter
             // 
             // Button217
             // 
-            this.Button217.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button217.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button217.CustomColor = System.Drawing.Color.Empty;
-            this.Button217.DrawOnGlass = false;
             this.Button217.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button217.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button217.ForeColor = System.Drawing.Color.White;
@@ -9762,10 +9450,9 @@ namespace WinPaletter
             // 
             // Button218
             // 
-            this.Button218.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button218.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button218.CustomColor = System.Drawing.Color.Empty;
-            this.Button218.DrawOnGlass = false;
             this.Button218.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button218.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button218.ForeColor = System.Drawing.Color.White;
@@ -9779,10 +9466,9 @@ namespace WinPaletter
             // 
             // Button219
             // 
-            this.Button219.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button219.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button219.CustomColor = System.Drawing.Color.Empty;
-            this.Button219.DrawOnGlass = false;
             this.Button219.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button219.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button219.ForeColor = System.Drawing.Color.White;
@@ -9796,9 +9482,8 @@ namespace WinPaletter
             // 
             // TextBox70
             // 
-            this.TextBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox70.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox70.ForeColor = System.Drawing.Color.White;
             this.TextBox70.Location = new System.Drawing.Point(203, 3);
             this.TextBox70.MaxLength = 32767;
@@ -9828,7 +9513,7 @@ namespace WinPaletter
             // 
             // PictureBox70
             // 
-            this.PictureBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox70.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox70.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox70.Image")));
             this.PictureBox70.Location = new System.Drawing.Point(3, 3);
@@ -9839,7 +9524,7 @@ namespace WinPaletter
             // 
             // GroupBox72
             // 
-            this.GroupBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox72.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox72.Controls.Add(this.Button220);
@@ -9855,10 +9540,9 @@ namespace WinPaletter
             // 
             // Button220
             // 
-            this.Button220.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button220.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button220.CustomColor = System.Drawing.Color.Empty;
-            this.Button220.DrawOnGlass = false;
             this.Button220.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button220.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button220.ForeColor = System.Drawing.Color.White;
@@ -9872,10 +9556,9 @@ namespace WinPaletter
             // 
             // Button221
             // 
-            this.Button221.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button221.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button221.CustomColor = System.Drawing.Color.Empty;
-            this.Button221.DrawOnGlass = false;
             this.Button221.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button221.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button221.ForeColor = System.Drawing.Color.White;
@@ -9889,10 +9572,9 @@ namespace WinPaletter
             // 
             // Button222
             // 
-            this.Button222.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button222.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button222.CustomColor = System.Drawing.Color.Empty;
-            this.Button222.DrawOnGlass = false;
             this.Button222.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button222.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button222.ForeColor = System.Drawing.Color.White;
@@ -9906,9 +9588,8 @@ namespace WinPaletter
             // 
             // TextBox71
             // 
-            this.TextBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox71.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox71.ForeColor = System.Drawing.Color.White;
             this.TextBox71.Location = new System.Drawing.Point(203, 3);
             this.TextBox71.MaxLength = 32767;
@@ -9938,7 +9619,7 @@ namespace WinPaletter
             // 
             // PictureBox71
             // 
-            this.PictureBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox71.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox71.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox71.Image")));
             this.PictureBox71.Location = new System.Drawing.Point(3, 3);
@@ -9949,7 +9630,7 @@ namespace WinPaletter
             // 
             // GroupBox73
             // 
-            this.GroupBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox73.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox73.Controls.Add(this.Button223);
@@ -9965,10 +9646,9 @@ namespace WinPaletter
             // 
             // Button223
             // 
-            this.Button223.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button223.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button223.CustomColor = System.Drawing.Color.Empty;
-            this.Button223.DrawOnGlass = false;
             this.Button223.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button223.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button223.ForeColor = System.Drawing.Color.White;
@@ -9982,10 +9662,9 @@ namespace WinPaletter
             // 
             // Button224
             // 
-            this.Button224.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button224.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button224.CustomColor = System.Drawing.Color.Empty;
-            this.Button224.DrawOnGlass = false;
             this.Button224.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button224.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button224.ForeColor = System.Drawing.Color.White;
@@ -9999,10 +9678,9 @@ namespace WinPaletter
             // 
             // Button225
             // 
-            this.Button225.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button225.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button225.CustomColor = System.Drawing.Color.Empty;
-            this.Button225.DrawOnGlass = false;
             this.Button225.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button225.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button225.ForeColor = System.Drawing.Color.White;
@@ -10016,9 +9694,8 @@ namespace WinPaletter
             // 
             // TextBox72
             // 
-            this.TextBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox72.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox72.ForeColor = System.Drawing.Color.White;
             this.TextBox72.Location = new System.Drawing.Point(203, 3);
             this.TextBox72.MaxLength = 32767;
@@ -10048,7 +9725,7 @@ namespace WinPaletter
             // 
             // PictureBox72
             // 
-            this.PictureBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox72.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox72.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox72.Image")));
             this.PictureBox72.Location = new System.Drawing.Point(3, 3);
@@ -10059,7 +9736,7 @@ namespace WinPaletter
             // 
             // GroupBox74
             // 
-            this.GroupBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox74.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox74.Controls.Add(this.Button226);
@@ -10075,10 +9752,9 @@ namespace WinPaletter
             // 
             // Button226
             // 
-            this.Button226.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button226.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button226.CustomColor = System.Drawing.Color.Empty;
-            this.Button226.DrawOnGlass = false;
             this.Button226.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button226.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button226.ForeColor = System.Drawing.Color.White;
@@ -10092,10 +9768,9 @@ namespace WinPaletter
             // 
             // Button227
             // 
-            this.Button227.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button227.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button227.CustomColor = System.Drawing.Color.Empty;
-            this.Button227.DrawOnGlass = false;
             this.Button227.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button227.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button227.ForeColor = System.Drawing.Color.White;
@@ -10109,10 +9784,9 @@ namespace WinPaletter
             // 
             // Button228
             // 
-            this.Button228.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button228.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button228.CustomColor = System.Drawing.Color.Empty;
-            this.Button228.DrawOnGlass = false;
             this.Button228.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button228.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button228.ForeColor = System.Drawing.Color.White;
@@ -10126,9 +9800,8 @@ namespace WinPaletter
             // 
             // TextBox73
             // 
-            this.TextBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox73.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox73.ForeColor = System.Drawing.Color.White;
             this.TextBox73.Location = new System.Drawing.Point(203, 3);
             this.TextBox73.MaxLength = 32767;
@@ -10158,7 +9831,7 @@ namespace WinPaletter
             // 
             // PictureBox73
             // 
-            this.PictureBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox73.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox73.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox73.Image")));
             this.PictureBox73.Location = new System.Drawing.Point(3, 3);
@@ -10169,7 +9842,7 @@ namespace WinPaletter
             // 
             // GroupBox75
             // 
-            this.GroupBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox75.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox75.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox75.Controls.Add(this.Button229);
@@ -10185,10 +9858,9 @@ namespace WinPaletter
             // 
             // Button229
             // 
-            this.Button229.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button229.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button229.CustomColor = System.Drawing.Color.Empty;
-            this.Button229.DrawOnGlass = false;
             this.Button229.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button229.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button229.ForeColor = System.Drawing.Color.White;
@@ -10202,10 +9874,9 @@ namespace WinPaletter
             // 
             // Button230
             // 
-            this.Button230.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button230.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button230.CustomColor = System.Drawing.Color.Empty;
-            this.Button230.DrawOnGlass = false;
             this.Button230.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button230.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button230.ForeColor = System.Drawing.Color.White;
@@ -10219,10 +9890,9 @@ namespace WinPaletter
             // 
             // Button231
             // 
-            this.Button231.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button231.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button231.CustomColor = System.Drawing.Color.Empty;
-            this.Button231.DrawOnGlass = false;
             this.Button231.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button231.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button231.ForeColor = System.Drawing.Color.White;
@@ -10236,9 +9906,8 @@ namespace WinPaletter
             // 
             // TextBox74
             // 
-            this.TextBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox74.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox74.ForeColor = System.Drawing.Color.White;
             this.TextBox74.Location = new System.Drawing.Point(203, 3);
             this.TextBox74.MaxLength = 32767;
@@ -10268,7 +9937,7 @@ namespace WinPaletter
             // 
             // PictureBox74
             // 
-            this.PictureBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox74.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox74.Image")));
             this.PictureBox74.Location = new System.Drawing.Point(3, 3);
@@ -10294,7 +9963,7 @@ namespace WinPaletter
             // AlertBox3
             // 
             this.AlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.AlertBox3.CenterText = false;
@@ -10311,7 +9980,7 @@ namespace WinPaletter
             // 
             // GroupBox81
             // 
-            this.GroupBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox81.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox81.Controls.Add(this.Button247);
@@ -10327,10 +9996,9 @@ namespace WinPaletter
             // 
             // Button247
             // 
-            this.Button247.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button247.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button247.CustomColor = System.Drawing.Color.Empty;
-            this.Button247.DrawOnGlass = false;
             this.Button247.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button247.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button247.ForeColor = System.Drawing.Color.White;
@@ -10344,10 +10012,9 @@ namespace WinPaletter
             // 
             // Button248
             // 
-            this.Button248.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button248.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button248.CustomColor = System.Drawing.Color.Empty;
-            this.Button248.DrawOnGlass = false;
             this.Button248.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button248.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button248.ForeColor = System.Drawing.Color.White;
@@ -10361,10 +10028,9 @@ namespace WinPaletter
             // 
             // Button249
             // 
-            this.Button249.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button249.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button249.CustomColor = System.Drawing.Color.Empty;
-            this.Button249.DrawOnGlass = false;
             this.Button249.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button249.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button249.ForeColor = System.Drawing.Color.White;
@@ -10378,9 +10044,8 @@ namespace WinPaletter
             // 
             // TextBox80
             // 
-            this.TextBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox80.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox80.ForeColor = System.Drawing.Color.White;
             this.TextBox80.Location = new System.Drawing.Point(190, 3);
             this.TextBox80.MaxLength = 32767;
@@ -10410,7 +10075,7 @@ namespace WinPaletter
             // 
             // PictureBox80
             // 
-            this.PictureBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox80.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox80.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox80.Image")));
             this.PictureBox80.Location = new System.Drawing.Point(3, 3);
@@ -10421,7 +10086,7 @@ namespace WinPaletter
             // 
             // GroupBox82
             // 
-            this.GroupBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox82.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox82.Controls.Add(this.Button250);
@@ -10437,10 +10102,9 @@ namespace WinPaletter
             // 
             // Button250
             // 
-            this.Button250.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button250.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button250.CustomColor = System.Drawing.Color.Empty;
-            this.Button250.DrawOnGlass = false;
             this.Button250.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button250.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button250.ForeColor = System.Drawing.Color.White;
@@ -10454,10 +10118,9 @@ namespace WinPaletter
             // 
             // Button251
             // 
-            this.Button251.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button251.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button251.CustomColor = System.Drawing.Color.Empty;
-            this.Button251.DrawOnGlass = false;
             this.Button251.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button251.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button251.ForeColor = System.Drawing.Color.White;
@@ -10471,10 +10134,9 @@ namespace WinPaletter
             // 
             // Button252
             // 
-            this.Button252.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button252.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button252.CustomColor = System.Drawing.Color.Empty;
-            this.Button252.DrawOnGlass = false;
             this.Button252.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button252.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button252.ForeColor = System.Drawing.Color.White;
@@ -10488,9 +10150,8 @@ namespace WinPaletter
             // 
             // TextBox81
             // 
-            this.TextBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox81.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox81.ForeColor = System.Drawing.Color.White;
             this.TextBox81.Location = new System.Drawing.Point(190, 3);
             this.TextBox81.MaxLength = 32767;
@@ -10520,7 +10181,7 @@ namespace WinPaletter
             // 
             // PictureBox81
             // 
-            this.PictureBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox81.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox81.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox81.Image")));
             this.PictureBox81.Location = new System.Drawing.Point(3, 3);
@@ -10531,7 +10192,7 @@ namespace WinPaletter
             // 
             // GroupBox83
             // 
-            this.GroupBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox83.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox83.Controls.Add(this.Button253);
@@ -10547,10 +10208,9 @@ namespace WinPaletter
             // 
             // Button253
             // 
-            this.Button253.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button253.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button253.CustomColor = System.Drawing.Color.Empty;
-            this.Button253.DrawOnGlass = false;
             this.Button253.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button253.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button253.ForeColor = System.Drawing.Color.White;
@@ -10564,10 +10224,9 @@ namespace WinPaletter
             // 
             // Button254
             // 
-            this.Button254.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button254.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button254.CustomColor = System.Drawing.Color.Empty;
-            this.Button254.DrawOnGlass = false;
             this.Button254.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button254.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button254.ForeColor = System.Drawing.Color.White;
@@ -10581,10 +10240,9 @@ namespace WinPaletter
             // 
             // Button255
             // 
-            this.Button255.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button255.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button255.CustomColor = System.Drawing.Color.Empty;
-            this.Button255.DrawOnGlass = false;
             this.Button255.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button255.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button255.ForeColor = System.Drawing.Color.White;
@@ -10598,9 +10256,8 @@ namespace WinPaletter
             // 
             // TextBox82
             // 
-            this.TextBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox82.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox82.ForeColor = System.Drawing.Color.White;
             this.TextBox82.Location = new System.Drawing.Point(190, 3);
             this.TextBox82.MaxLength = 32767;
@@ -10630,7 +10287,7 @@ namespace WinPaletter
             // 
             // PictureBox82
             // 
-            this.PictureBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox82.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox82.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox82.Image")));
             this.PictureBox82.Location = new System.Drawing.Point(3, 3);
@@ -10641,7 +10298,7 @@ namespace WinPaletter
             // 
             // GroupBox84
             // 
-            this.GroupBox84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox84.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox84.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox84.Controls.Add(this.Button256);
@@ -10657,10 +10314,9 @@ namespace WinPaletter
             // 
             // Button256
             // 
-            this.Button256.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button256.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button256.CustomColor = System.Drawing.Color.Empty;
-            this.Button256.DrawOnGlass = false;
             this.Button256.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button256.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button256.ForeColor = System.Drawing.Color.White;
@@ -10674,10 +10330,9 @@ namespace WinPaletter
             // 
             // Button257
             // 
-            this.Button257.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button257.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button257.CustomColor = System.Drawing.Color.Empty;
-            this.Button257.DrawOnGlass = false;
             this.Button257.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button257.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button257.ForeColor = System.Drawing.Color.White;
@@ -10691,10 +10346,9 @@ namespace WinPaletter
             // 
             // Button258
             // 
-            this.Button258.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button258.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button258.CustomColor = System.Drawing.Color.Empty;
-            this.Button258.DrawOnGlass = false;
             this.Button258.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button258.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button258.ForeColor = System.Drawing.Color.White;
@@ -10708,9 +10362,8 @@ namespace WinPaletter
             // 
             // TextBox83
             // 
-            this.TextBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox83.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox83.ForeColor = System.Drawing.Color.White;
             this.TextBox83.Location = new System.Drawing.Point(190, 3);
             this.TextBox83.MaxLength = 32767;
@@ -10740,7 +10393,7 @@ namespace WinPaletter
             // 
             // PictureBox83
             // 
-            this.PictureBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox83.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox83.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox83.Image")));
             this.PictureBox83.Location = new System.Drawing.Point(3, 3);
@@ -10761,7 +10414,7 @@ namespace WinPaletter
             // 
             // GroupBox68
             // 
-            this.GroupBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox68.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox68.Controls.Add(this.Button208);
@@ -10777,10 +10430,9 @@ namespace WinPaletter
             // 
             // Button208
             // 
-            this.Button208.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button208.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button208.CustomColor = System.Drawing.Color.Empty;
-            this.Button208.DrawOnGlass = false;
             this.Button208.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button208.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button208.ForeColor = System.Drawing.Color.White;
@@ -10794,10 +10446,9 @@ namespace WinPaletter
             // 
             // Button209
             // 
-            this.Button209.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button209.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button209.CustomColor = System.Drawing.Color.Empty;
-            this.Button209.DrawOnGlass = false;
             this.Button209.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button209.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button209.ForeColor = System.Drawing.Color.White;
@@ -10811,10 +10462,9 @@ namespace WinPaletter
             // 
             // Button210
             // 
-            this.Button210.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button210.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Button210.CustomColor = System.Drawing.Color.Empty;
-            this.Button210.DrawOnGlass = false;
             this.Button210.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button210.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button210.ForeColor = System.Drawing.Color.White;
@@ -10828,9 +10478,8 @@ namespace WinPaletter
             // 
             // TextBox67
             // 
-            this.TextBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox67.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox67.ForeColor = System.Drawing.Color.White;
             this.TextBox67.Location = new System.Drawing.Point(140, 3);
             this.TextBox67.MaxLength = 32767;
@@ -10860,7 +10509,7 @@ namespace WinPaletter
             // 
             // PictureBox67
             // 
-            this.PictureBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PictureBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox67.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox67.Image")));
             this.PictureBox67.Location = new System.Drawing.Point(3, 3);
@@ -10871,7 +10520,7 @@ namespace WinPaletter
             // 
             // GroupBox12
             // 
-            this.GroupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.GroupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox12.Controls.Add(this.Button259);
@@ -10889,7 +10538,6 @@ namespace WinPaletter
             // Button259
             // 
             this.Button259.CustomColor = System.Drawing.Color.Empty;
-            this.Button259.DrawOnGlass = false;
             this.Button259.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button259.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button259.ForeColor = System.Drawing.Color.White;
@@ -10906,7 +10554,6 @@ namespace WinPaletter
             // Button9
             // 
             this.Button9.CustomColor = System.Drawing.Color.Empty;
-            this.Button9.DrawOnGlass = false;
             this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
@@ -10934,7 +10581,6 @@ namespace WinPaletter
             // Button11
             // 
             this.Button11.CustomColor = System.Drawing.Color.Empty;
-            this.Button11.DrawOnGlass = false;
             this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
@@ -10951,7 +10597,6 @@ namespace WinPaletter
             // Button12
             // 
             this.Button12.CustomColor = System.Drawing.Color.Empty;
-            this.Button12.DrawOnGlass = false;
             this.Button12.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button12.ForeColor = System.Drawing.Color.White;

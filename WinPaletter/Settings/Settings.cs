@@ -10,8 +10,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
-    public class WPSettings
+    public class Settings
     {
         private BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
@@ -210,11 +209,11 @@ namespace WinPaletter
                     AutoDarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "AutoDarkMode", true));
                     CustomColors = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomColors", false));
                     CustomTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
-                    AccentColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "AccentColor", DefaultColors.Accent.ToArgb())));
+                    AccentColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor.ToArgb())));
                     BackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColorDark.ToArgb())));
-                    SecondaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
-                    TertiaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
-                    DisabledColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
+                    //SecondaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
+                    //TertiaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
+                    //DisabledColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
                     DisabledBackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor.ToArgb())));
                     RoundedCorners = Conversions.ToBoolean(GetReg(REG_Appearance, "RoundedCorners", true));
                     ManagedByTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "ManagedByTheme", true));
@@ -547,11 +546,11 @@ namespace WinPaletter
             AutoDarkMode = true,
             CustomColors = false,
             CustomTheme = true,
-            AccentColor = DefaultColors.Accent,
+            AccentColor = DefaultColors.PrimaryColor,
             BackColor = DefaultColors.BackColorDark,
-            SecondaryColor = DefaultColors.Secondary,
-            TertiaryColor = DefaultColors.Tertiary,
-            DisabledColor = DefaultColors.Disabled,
+            //SecondaryColor = DefaultColors.Secondary,
+            //TertiaryColor = DefaultColors.Tertiary,
+            //DisabledColor = DefaultColors.Disabled,
             DisabledBackColor = DefaultColors.DisabledBackColor,
             RoundedCorners = true,
             ManagedByTheme = true
@@ -633,7 +632,7 @@ namespace WinPaletter
             Empty
         }
 
-        public WPSettings(Mode LoadFrom, string File = null)
+        public Settings(Mode LoadFrom, string File = null)
         {
             switch (LoadFrom)
             {

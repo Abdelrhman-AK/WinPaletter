@@ -370,7 +370,7 @@ namespace WinPaletter
             if (ExplorerPatcher.IsAllowed())
                 Program.EP = new ExplorerPatcher();
 
-            Config.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -1105,7 +1105,7 @@ namespace WinPaletter
         /// <param name="WXP_VS_ReplaceFonts">Use fonts in Visual Styles file for Windows XP instead of registry</param>
         public static void ApplyWinElementsStyle(Theme.Manager TM, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
         {
-            Config.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;

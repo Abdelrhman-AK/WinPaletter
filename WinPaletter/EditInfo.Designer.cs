@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -136,7 +136,6 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(30, 150);
-            this.TabControl1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.TabControl1.Location = new System.Drawing.Point(12, 12);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
@@ -226,7 +225,6 @@ namespace WinPaletter
             // 
             this.TextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox4.ForeColor = System.Drawing.Color.White;
             this.TextBox4.Location = new System.Drawing.Point(170, 312);
             this.TextBox4.MaxLength = 32767;
@@ -259,7 +257,6 @@ namespace WinPaletter
             // 
             this.TextBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox5.ForeColor = System.Drawing.Color.White;
             this.TextBox5.Location = new System.Drawing.Point(170, 342);
             this.TextBox5.MaxLength = 32767;
@@ -324,7 +321,6 @@ namespace WinPaletter
             // 
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(170, 6);
             this.TextBox1.MaxLength = 32767;
@@ -357,7 +353,6 @@ namespace WinPaletter
             // 
             this.TextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox2.ForeColor = System.Drawing.Color.White;
             this.TextBox2.Location = new System.Drawing.Point(170, 36);
             this.TextBox2.MaxLength = 12;
@@ -390,7 +385,6 @@ namespace WinPaletter
             // 
             this.TextBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox3.ForeColor = System.Drawing.Color.White;
             this.TextBox3.Location = new System.Drawing.Point(170, 67);
             this.TextBox3.MaxLength = 32767;
@@ -540,7 +534,6 @@ namespace WinPaletter
             this.TextBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox6.ForeColor = System.Drawing.Color.White;
             this.TextBox6.Location = new System.Drawing.Point(6, 122);
             this.TextBox6.MaxLength = 32767;
@@ -1008,7 +1001,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -1026,7 +1018,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;

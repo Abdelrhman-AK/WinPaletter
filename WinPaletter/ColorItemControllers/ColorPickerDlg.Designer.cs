@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -196,7 +196,6 @@ namespace WinPaletter
             // Button6
             // 
             this.Button6.CustomColor = System.Drawing.Color.Empty;
-            this.Button6.DrawOnGlass = false;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
@@ -312,7 +311,6 @@ namespace WinPaletter
             // Button4
             // 
             this.Button4.CustomColor = System.Drawing.Color.Empty;
-            this.Button4.DrawOnGlass = false;
             this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
@@ -327,7 +325,6 @@ namespace WinPaletter
             // 
             // TextBox1
             // 
-            this.TextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(86, 33);
             this.TextBox1.MaxLength = 32767;
@@ -367,7 +364,6 @@ namespace WinPaletter
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.DrawOnGlass = false;
             this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
@@ -385,7 +381,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -415,7 +410,6 @@ namespace WinPaletter
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ImageList = this.ImageList1;
             this.TabControl1.ItemSize = new System.Drawing.Size(30, 36);
-            this.TabControl1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.TabControl1.Location = new System.Drawing.Point(1, 1);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
@@ -449,7 +443,6 @@ namespace WinPaletter
             // 
             this.Button1.CustomColor = System.Drawing.Color.Empty;
             this.Button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
@@ -532,7 +525,6 @@ namespace WinPaletter
             this.TabControl2.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl2.ItemSize = new System.Drawing.Size(80, 26);
-            this.TabControl2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.TabControl2.Location = new System.Drawing.Point(0, 0);
             this.TabControl2.Name = "TabControl2";
             this.TabControl2.SelectedIndex = 0;
@@ -615,10 +607,8 @@ namespace WinPaletter
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
             this.RadioButton2.Image = null;
-            this.RadioButton2.ImageWithText = false;
             this.RadioButton2.Location = new System.Drawing.Point(211, 3);
             this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.ShowText = true;
             this.RadioButton2.Size = new System.Drawing.Size(66, 24);
             this.RadioButton2.TabIndex = 133;
             this.RadioButton2.Text = "Image";
@@ -630,10 +620,8 @@ namespace WinPaletter
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
             this.RadioButton1.Image = null;
-            this.RadioButton1.ImageWithText = false;
             this.RadioButton1.Location = new System.Drawing.Point(86, 3);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.ShowText = true;
             this.RadioButton1.Size = new System.Drawing.Size(119, 24);
             this.RadioButton1.TabIndex = 132;
             this.RadioButton1.Text = "Current wallpaper";
@@ -642,7 +630,6 @@ namespace WinPaletter
             // val2
             // 
             this.val2.CustomColor = System.Drawing.Color.Empty;
-            this.val2.DrawOnGlass = false;
             this.val2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.val2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.val2.ForeColor = System.Drawing.Color.White;
@@ -657,7 +644,6 @@ namespace WinPaletter
             // val1
             // 
             this.val1.CustomColor = System.Drawing.Color.Empty;
-            this.val1.DrawOnGlass = false;
             this.val1.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.val1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.val1.ForeColor = System.Drawing.Color.White;
@@ -736,7 +722,6 @@ namespace WinPaletter
             // Button7
             // 
             this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.DrawOnGlass = false;
             this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
@@ -772,7 +757,6 @@ namespace WinPaletter
             // 
             // ComboBox1
             // 
-            this.ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -808,7 +792,6 @@ namespace WinPaletter
             // 
             // TextBox2
             // 
-            this.TextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox2.ForeColor = System.Drawing.Color.White;
             this.TextBox2.Location = new System.Drawing.Point(92, 36);
             this.TextBox2.MaxLength = 32767;
@@ -869,8 +852,6 @@ namespace WinPaletter
             // 
             // ComboBox2
             // 
-            this.ComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.ComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ComboBox2.ForeColor = System.Drawing.Color.White;

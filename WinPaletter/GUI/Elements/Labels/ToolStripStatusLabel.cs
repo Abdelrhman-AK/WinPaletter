@@ -10,13 +10,13 @@ namespace WinPaletter.UI.WP
     {
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.TextRenderingHint = Config.RenderingHint;
+            e.Graphics.TextRenderingHint = Program.Style.RenderingHint;
 
-            using (var br = new SolidBrush(BackColor))
+            using (SolidBrush br = new(BackColor))
             {
                 e.Graphics.FillRectangle(br, new Rectangle(0, 0, Width, Height));
             }
-            using (var br = new SolidBrush(ForeColor))
+            using (SolidBrush br = new(ForeColor))
             {
                 e.Graphics.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat());
             }

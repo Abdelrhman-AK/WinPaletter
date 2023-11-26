@@ -654,7 +654,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
             var Rect = new Rectangle(-1, -1, Width + 2, Height + 2);
             var RRect = new Rectangle(0, 0, Width - 1, Height - 1);
@@ -670,20 +670,20 @@ namespace WinPaletter.UI.Simulation
 
                         if (DarkMode)
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(85, 28, 28, 28)))
+                            using (SolidBrush br = new(Color.FromArgb(85, 28, 28, 28)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
                         }
                         else
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(75, 255, 255, 255)))
+                            using (SolidBrush br = new(Color.FromArgb(75, 255, 255, 255)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
                         }
 
-                        using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
@@ -705,16 +705,16 @@ namespace WinPaletter.UI.Simulation
                             SearchBorderColor = Color.FromArgb(175, 200, 200, 200);
                         }
 
-                        using (var br = new SolidBrush(SearchColor))
+                        using (SolidBrush br = new(SearchColor))
                         {
                             G.FillRoundedRect(br, SearchRect, 8, true);
                         }
-                        using (var P = new Pen(SearchBorderColor))
+                        using (Pen P = new(SearchBorderColor))
                         {
                             G.DrawRoundedRect(P, SearchRect, 8, true);
                         }
 
-                        using (var P = new Pen(Color.FromArgb(150, 90, 90, 90)))
+                        using (Pen P = new(Color.FromArgb(150, 90, 90, 90)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);
                         }
@@ -731,20 +731,20 @@ namespace WinPaletter.UI.Simulation
 
                         if (DarkMode)
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(85, 28, 28, 28)))
+                            using (SolidBrush br = new(Color.FromArgb(85, 28, 28, 28)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
                         }
                         else
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(75, 255, 255, 255)))
+                            using (SolidBrush br = new(Color.FromArgb(75, 255, 255, 255)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
                         }
 
-                        using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
@@ -795,23 +795,23 @@ namespace WinPaletter.UI.Simulation
                                 }
                         }
 
-                        using (var br = new SolidBrush(Cx1))
+                        using (SolidBrush br = new(Cx1))
                         {
                             G.FillRoundedRect(br, Button1, Radius, true);
                         }
-                        using (var P = new Pen(Cx1.Light(0.15f)))
+                        using (Pen P = new(Cx1.Light(0.15f)))
                         {
                             G.DrawRoundedRect_LikeW11(P, Button1, Radius, true);
                         }
-                        using (var br = new SolidBrush(Cx2))
+                        using (SolidBrush br = new(Cx2))
                         {
                             G.FillRoundedRect(br, Button2, Radius, true);
                         }
-                        using (var P = new Pen(Cx2.CB(DarkMode ? 0.05d : -0.05d)))
+                        using (Pen P = new(Cx2.CB(DarkMode ? 0.05d : -0.05d)))
                         {
                             G.DrawRoundedRect(P, Button2, Radius, true);
                         }
-                        using (var P = new Pen(Color.FromArgb(150, 90, 90, 90)))
+                        using (Pen P = new(Color.FromArgb(150, 90, 90, 90)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);
                         }
@@ -828,20 +828,20 @@ namespace WinPaletter.UI.Simulation
 
                         if (DarkMode)
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(110, 28, 28, 28)))
+                            using (SolidBrush br = new(Color.FromArgb(110, 28, 28, 28)))
                             {
                                 G.FillRectangle(br, Rect);
                             }
                         }
                         else
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(90, 255, 255, 255)))
+                            using (SolidBrush br = new(Color.FromArgb(90, 255, 255, 255)))
                             {
                                 G.FillRectangle(br, Rect);
                             }
                         }
 
-                        using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -874,37 +874,37 @@ namespace WinPaletter.UI.Simulation
                             BorderC = Color.FromArgb(35, 255, 255, 255);
                         }
 
-                        using (var br = new SolidBrush(BackC))
+                        using (SolidBrush br = new(BackC))
                         {
                             G.FillRoundedRect(br, StartBtnRect, 3, true);
                         }
-                        using (var P = new Pen(BorderC))
+                        using (Pen P = new(BorderC))
                         {
                             G.DrawRoundedRect_LikeW11(P, StartBtnRect, 3);
                         }
                         G.DrawImage(DarkMode ? Properties.Resources.StartBtn_11Dark : Properties.Resources.StartBtn_11Light, StartImgRect);
 
-                        using (var br = new SolidBrush(BackC))
+                        using (SolidBrush br = new(BackC))
                         {
                             G.FillRoundedRect(br, AppBtnRect, 3, true);
                         }
-                        using (var P = new Pen(BorderC))
+                        using (Pen P = new(BorderC))
                         {
                             G.DrawRoundedRect_LikeW11(P, AppBtnRect, 3);
                         }
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppImgRect);
-                        using (var br = new SolidBrush(_AppUnderline))
+                        using (SolidBrush br = new(_AppUnderline))
                         {
                             G.FillRoundedRect(br, AppBtnRectUnderline, 2, true);
                         }
 
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, App2ImgRect);
-                        using (var br = new SolidBrush(Color.FromArgb(255, BackC)))
+                        using (SolidBrush br = new(Color.FromArgb(255, BackC)))
                         {
                             G.FillRoundedRect(br, App2BtnRectUnderline, 2, true);
                         }
 
-                        using (var P = new Pen(Color.FromArgb(100, 100, 100, 100)))
+                        using (Pen P = new(Color.FromArgb(100, 100, 100, 100)))
                         {
                             G.DrawLine(P, new Point(0, 0), new Point(Width - 1, 0));
                         }
@@ -923,14 +923,14 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (DarkMode)
                             {
-                                using (var br = new SolidBrush(Color.FromArgb(100, 175, 175, 175)))
+                                using (SolidBrush br = new(Color.FromArgb(100, 175, 175, 175)))
                                 {
                                     G.FillRoundedRect(br, RRect, Radius, true);
                                 }
                             }
                             else
                             {
-                                using (var br = new SolidBrush(Color.FromArgb(120, 185, 185, 185)))
+                                using (SolidBrush br = new(Color.FromArgb(120, 185, 185, 185)))
                                 {
                                     G.FillRoundedRect(br, RRect, Radius, true);
                                 }
@@ -940,22 +940,22 @@ namespace WinPaletter.UI.Simulation
                         }
                         else if (DarkMode)
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(32, 32, 32)))
+                            using (SolidBrush br = new(Color.FromArgb(32, 32, 32)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
-                            using (var P = new Pen(Color.FromArgb(65, 65, 65)))
+                            using (Pen P = new(Color.FromArgb(65, 65, 65)))
                             {
                                 G.DrawRoundedRect(P, RRect, Radius, true);
                             }
                         }
                         else
                         {
-                            using (var br = new SolidBrush(Color.FromArgb(243, 243, 243)))
+                            using (SolidBrush br = new(Color.FromArgb(243, 243, 243)))
                             {
                                 G.FillRoundedRect(br, RRect, Radius, true);
                             }
-                            using (var P = new Pen(Color.FromArgb(171, 171, 171)))
+                            using (Pen P = new(Color.FromArgb(171, 171, 171)))
                             {
                                 G.DrawRoundedRect(P, RRect, Radius, true);
                             }
@@ -993,24 +993,24 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
-                                using (var P = new Pen(Color.FromArgb(75, 182, 237), 3))
+                                using (Pen P = new(Color.FromArgb(75, 182, 237), 3))
                                 {
                                     G.DrawRoundedRect(P, surround, Radius * 2 + 5 / 2, true);
                                 }
                             }
 
-                            using (var br = new SolidBrush(back))
+                            using (SolidBrush br = new(back))
                             {
                                 G.FillRoundedRect(br, r, Radius * 2, true);
                             }
                             G.DrawImage(Properties.Resources.SampleApp_Active, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
 
-                            using (var br = new SolidBrush(Color.FromArgb(150, back2)))
+                            using (SolidBrush br = new(Color.FromArgb(150, back2)))
                             {
                                 G.FillRectangle(br, new Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4));
                             }
 
-                            using (var br = new SolidBrush(back2))
+                            using (SolidBrush br = new(back2))
                             {
                                 G.FillRoundedRect(br, new Rectangle(r.X + 1, r.Y + 5 + 20 + 5, r.Width - 2, r.Height - 5 - 20 - 5), Radius * 2, true);
                             }
@@ -1029,7 +1029,7 @@ namespace WinPaletter.UI.Simulation
                                 G.DrawImage(adaptedBackBlurred, Rect);
                             if (Transparency)
                                 G.FillRectangle(Noise, Rect);
-                            using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                            using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
                                 G.FillRectangle(br, Rect);
                             }
@@ -1042,7 +1042,7 @@ namespace WinPaletter.UI.Simulation
                                 G.DrawImage(adaptedBackBlurred, Rect);
                             if (Transparency)
                                 G.FillRectangle(Noise, Rect);
-                            using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                            using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
                                 G.FillRectangle(br, Rect);
                             }
@@ -1055,7 +1055,7 @@ namespace WinPaletter.UI.Simulation
                                 G.DrawImage(adaptedBackBlurred, Rect);
                             if (Transparency)
                                 G.FillRoundedRect(Noise, Rect, Radius, true);
-                            using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                            using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
                                 G.FillRoundedRect(br, Rect, Radius, true);
                             }
@@ -1076,7 +1076,7 @@ namespace WinPaletter.UI.Simulation
 
                         if (Transparency)
                             G.FillRectangle(Noise, Rect);
-                        using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -1085,25 +1085,25 @@ namespace WinPaletter.UI.Simulation
                         var rect2 = new Rectangle(5, 190, 30, 3);
                         var rect3 = new Rectangle(42, 201, 34, 24);
 
-                        using (var br = new SolidBrush(ActionCenterButton_Normal))
+                        using (SolidBrush br = new(ActionCenterButton_Normal))
                         {
                             G.FillRectangle(br, rect3);
                         }
                         G.DrawImage(DarkMode ? Properties.Resources.AC_10_Dark : Properties.Resources.AC_10_Light, new Rectangle(0, 0, Width - 1, Height - 1));
-                        using (var br = new SolidBrush(LinkColor))
+                        using (SolidBrush br = new(LinkColor))
                         {
                             G.FillRectangle(br, rect1);
                         }
-                        using (var br = new SolidBrush(LinkColor))
+                        using (SolidBrush br = new(LinkColor))
                         {
                             G.FillRectangle(br, rect2);
                         }
-                        using (var P = new Pen(Color.FromArgb(150, 100, 100, 100)))
+                        using (Pen P = new(Color.FromArgb(150, 100, 100, 100)))
                         {
                             G.DrawLine(P, new Point(0, 0), new Point(0, Height - 1));
                         }
 
-                        using (var P = new Pen(Color.FromArgb(150, 76, 76, 76)))
+                        using (Pen P = new(Color.FromArgb(150, 76, 76, 76)))
                         {
                             G.DrawRectangle(P, Rect);
                         }
@@ -1118,7 +1118,7 @@ namespace WinPaletter.UI.Simulation
                         G.SmoothingMode = SmoothingMode.HighSpeed;
                         if (!DesignMode && Transparency && adaptedBackBlurred is not null)
                             G.DrawImage(adaptedBackBlurred, Rect);
-                        using (var br = new SolidBrush(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -1142,7 +1142,7 @@ namespace WinPaletter.UI.Simulation
                         var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
                         var App2BtnRectUnderline = new Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2);
                         Color StartColor = _StartColor;
-                        using (var br = new SolidBrush(StartColor))
+                        using (SolidBrush br = new(StartColor))
                         {
                             G.FillRectangle(br, StartBtnRect);
                         }
@@ -1157,17 +1157,17 @@ namespace WinPaletter.UI.Simulation
                         }
 
                         Color AppColor = _AppBackground;
-                        using (var br = new SolidBrush(AppColor))
+                        using (SolidBrush br = new(AppColor))
                         {
                             G.FillRectangle(br, AppBtnRect);
                         }
-                        using (var br = new SolidBrush(_AppUnderline.Light()))
+                        using (SolidBrush br = new(_AppUnderline.Light()))
                         {
                             G.FillRectangle(br, AppBtnRectUnderline);
                         }
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var br = new SolidBrush(_AppUnderline.Light()))
+                        using (SolidBrush br = new(_AppUnderline.Light()))
                         {
                             G.FillRectangle(br, App2BtnRectUnderline);
                         }
@@ -1181,7 +1181,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         float a = Math.Max(Math.Min(255, (float)((float)BackColorAlpha / 100) * 255), 0);
 
-                        using (var br = new SolidBrush(Color.FromArgb((int)a, 23, 23, 23)))
+                        using (SolidBrush br = new(Color.FromArgb((int)a, 23, 23, 23)))
                         {
                             G.FillRectangle(br, RRect);
                         }
@@ -1217,7 +1217,7 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
-                                using (var P = new Pen(Color.White, 2))
+                                using (Pen P = new(Color.White, 2))
                                 {
                                     G.DrawRectangle(P, surround);
                                 }
@@ -1227,7 +1227,7 @@ namespace WinPaletter.UI.Simulation
 
                             G.FillRectangle(Brushes.White, new Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4));
 
-                            using (var br = new SolidBrush(back))
+                            using (SolidBrush br = new(back))
                             {
                                 G.FillRectangle(br, new Rectangle(r.X + 1, r.Y + 5 + 20 + 5, r.Width - 2, r.Height - 5 - 20 - 5));
                             }
@@ -1243,15 +1243,15 @@ namespace WinPaletter.UI.Simulation
                         Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
                         Color bc = Color.FromArgb(217, 217, 217);
 
-                        using (var P = new Pen(Color.FromArgb(80, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(80, 0, 0, 0)))
                         {
                             G.DrawLine(P, new Point(0, 0), new Point(Width - 1, 0));
                         }
-                        using (var br = new SolidBrush(Color.FromArgb(BackColorAlpha, bc)))
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, bc)))
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
+                        using (SolidBrush br = new(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -1268,30 +1268,30 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(StartORB, StartBtnRect);
 
-                        using (var br = new SolidBrush(Color.FromArgb(100, Color.White)))
+                        using (SolidBrush br = new(Color.FromArgb(100, Color.White)))
                         {
                             G.FillRectangle(br, AppBtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(200, c.CB(-0.5d))))
+                        using (Pen P = new(Color.FromArgb(200, c.CB(-0.5d))))
                         {
                             G.DrawRectangle(P, AppBtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(215, Color.White)))
+                        using (Pen P = new(Color.FromArgb(215, Color.White)))
                         {
                             G.DrawRectangle(P, AppBtnRectInner);
                         }
 
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var br = new SolidBrush(Color.FromArgb(50, Color.White)))
+                        using (SolidBrush br = new(Color.FromArgb(50, Color.White)))
                         {
                             G.FillRectangle(br, App2BtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100, c.CB(-0.5d))))
+                        using (Pen P = new(Color.FromArgb(100, c.CB(-0.5d))))
                         {
                             G.DrawRectangle(P, App2BtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100, Color.White)))
+                        using (Pen P = new(Color.FromArgb(100, Color.White)))
                         {
                             G.DrawRectangle(P, App2BtnRectInner);
                         }
@@ -1307,16 +1307,16 @@ namespace WinPaletter.UI.Simulation
                         Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
                         Color bc = Color.FromArgb(217, 217, 217);
 
-                        using (var P = new Pen(Color.FromArgb(89, 89, 89)))
+                        using (Pen P = new(Color.FromArgb(89, 89, 89)))
                         {
                             G.DrawRectangle(P, new Rectangle(0, 0, Width - 1, Height - 1));
                         }
 
-                        using (var br = new SolidBrush(Color.FromArgb(255, bc)))
+                        using (SolidBrush br = new(Color.FromArgb(255, bc)))
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
+                        using (SolidBrush br = new(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -1333,38 +1333,38 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(StartORB, StartBtnRect);
 
-                        using (var br = new SolidBrush(Color.FromArgb(255, bc.CB(0.5d))))
+                        using (SolidBrush br = new(Color.FromArgb(255, bc.CB(0.5d))))
                         {
                             G.FillRectangle(br, AppBtnRect);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5d))))
+                        using (SolidBrush br = new(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5d))))
                         {
                             G.FillRectangle(br, AppBtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100, bc.CB(-0.5d))))
+                        using (Pen P = new(Color.FromArgb(100, bc.CB(-0.5d))))
                         {
                             G.DrawRectangle(P, AppBtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5d))))
+                        using (Pen P = new(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5d))))
                         {
                             G.DrawRectangle(P, AppBtnRect);
                         }
 
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var br = new SolidBrush(Color.FromArgb(255, bc.Light(0.1f))))
+                        using (SolidBrush br = new(Color.FromArgb(255, bc.Light(0.1f))))
                         {
                             G.FillRectangle(br, App2BtnRect);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1f))))
+                        using (SolidBrush br = new(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1f))))
                         {
                             G.FillRectangle(br, App2BtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100, bc.Dark(0.1f))))
+                        using (Pen P = new(Color.FromArgb(100, bc.Dark(0.1f))))
                         {
                             G.DrawRectangle(P, App2BtnRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1f))))
+                        using (Pen P = new(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1f))))
                         {
                             G.DrawRectangle(P, App2BtnRect);
                         }
@@ -1376,7 +1376,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.AltTab8Aero:
                     #region Alt+Tab 8 Aero
                     {
-                        using (var br = new SolidBrush(Background))
+                        using (SolidBrush br = new(Background))
                         {
                             G.FillRectangle(br, RRect);
                         }
@@ -1410,7 +1410,7 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
-                                using (var P = new Pen(Color.White, 2))
+                                using (Pen P = new(Color.White, 2))
                                 {
                                     G.DrawRectangle(P, surround);
                                 }
@@ -1431,12 +1431,12 @@ namespace WinPaletter.UI.Simulation
                 case Styles.AltTab8AeroLite:
                     #region Alt+Tab 8 Opaque
                     {
-                        using (var br = new SolidBrush(Background))
+                        using (SolidBrush br = new(Background))
                         {
                             G.FillRectangle(br, RRect);
                         }
 
-                        using (var P = new Pen(LinkColor, 2))
+                        using (Pen P = new(LinkColor, 2))
                         {
                             G.DrawRectangle(P, RRect);
                         }
@@ -1470,7 +1470,7 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
-                                using (var P = new Pen(Background2, 2))
+                                using (Pen P = new(Background2, 2))
                                 {
                                     G.DrawRectangle(P, surround);
                                 }
@@ -1483,7 +1483,7 @@ namespace WinPaletter.UI.Simulation
                         }
 
                         var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
-                        using (var br = new SolidBrush(ForeColor))
+                        using (SolidBrush br = new(ForeColor))
                         {
                             G.DrawString("______", Font, br, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
                         }
@@ -1530,11 +1530,11 @@ namespace WinPaletter.UI.Simulation
                     #region Start 7 Opaque
                     {
                         var RestRect = new Rectangle(0, 14, Width - 5, Height - 10);
-                        using (var br = new SolidBrush(Color.White))
+                        using (SolidBrush br = new(Color.White))
                         {
                             G.FillRoundedRect(br, RestRect, 5, true);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb((int)(255 * ((decimal)BackColorAlpha / 100)), Background)))
+                        using (SolidBrush br = new(Color.FromArgb((int)(255 * ((decimal)BackColorAlpha / 100)), Background)))
                         {
                             G.FillRoundedRect(br, RestRect, 5, true);
                         }
@@ -1577,11 +1577,11 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
 
-                        using (var P = new Pen(Color.FromArgb(80, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(80, 0, 0, 0)))
                         {
                             G.DrawLine(P, new Point(0, 0), new Point(Width - 1, 0));
                         }
-                        using (var P = new Pen(Color.FromArgb(80, 255, 255, 255)))
+                        using (Pen P = new(Color.FromArgb(80, 255, 255, 255)))
                         {
                             G.DrawLine(P, new Point(0, 1), new Point(Width - 1, 1));
                         }
@@ -1600,14 +1600,14 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(StartORB, StartBtnRect);
 
-                        using (var P = new Pen(Color.FromArgb(150, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(150, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
                         G.DrawImage(Properties.Resources.Taskbar_ActiveApp7, AppBtnRect);
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var P = new Pen(Color.FromArgb(110, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
@@ -1620,11 +1620,11 @@ namespace WinPaletter.UI.Simulation
                 case Styles.Taskbar7Opaque:
                     #region Taskbar 7 Opaque
                     {
-                        using (var br = new SolidBrush(Color.White))
+                        using (SolidBrush br = new(Color.White))
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb((int)(255 * ((decimal)BackColorAlpha / 100)), Background)))
+                        using (SolidBrush br = new(Color.FromArgb((int)(255 * ((decimal)BackColorAlpha / 100)), Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -1632,11 +1632,11 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
 
-                        using (var P = new Pen(Color.FromArgb(80, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(80, 0, 0, 0)))
                         {
                             G.DrawLine(P, new Point(0, 0), new Point(Width - 1, 0));
                         }
-                        using (var P = new Pen(Color.FromArgb(80, 255, 255, 255)))
+                        using (Pen P = new(Color.FromArgb(80, 255, 255, 255)))
                         {
                             G.DrawLine(P, new Point(0, 1), new Point(Width - 1, 1));
                         }
@@ -1655,14 +1655,14 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(StartORB, StartBtnRect);
 
-                        using (var P = new Pen(Color.FromArgb(150, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(150, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
                         G.DrawImage(Properties.Resources.Taskbar_ActiveApp7, AppBtnRect);
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var P = new Pen(Color.FromArgb(110, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
@@ -1691,14 +1691,14 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(StartORB, StartBtnRect);
 
-                        using (var P = new Pen(Color.FromArgb(150, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(150, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
                         G.DrawImage(Properties.Resources.Taskbar_ActiveApp7, AppBtnRect);
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
 
-                        using (var P = new Pen(Color.FromArgb(110, 0, 0, 0)))
+                        using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
@@ -1727,11 +1727,11 @@ namespace WinPaletter.UI.Simulation
                         }
 
                         G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
-                        using (var P = new Pen(Color.FromArgb(200, 25, 25, 25)))
+                        using (Pen P = new(Color.FromArgb(200, 25, 25, 25)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);
                         }
-                        using (var P = new Pen(Color.FromArgb(70, 200, 200, 200)))
+                        using (Pen P = new(Color.FromArgb(70, 200, 200, 200)))
                         {
                             G.DrawRoundedRect(P, inner, Radius, true);
                         }
@@ -1766,18 +1766,18 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
-                                using (var br = new SolidBrush(Color.FromArgb(75, 200, 200, 200)))
+                                using (SolidBrush br = new(Color.FromArgb(75, 200, 200, 200)))
                                 {
                                     G.FillRoundedRect(br, surround, 1, true);
                                 }
                                 G.DrawRoundImage(Properties.Resources.Win7_TitleTopL.Fade(0.35d), surround, 2, true);
                                 G.DrawRoundImage(Properties.Resources.Win7_TitleTopR.Fade(0.35d), surround, 2, true);
 
-                                using (var P = new Pen(Color1))
+                                using (Pen P = new(Color1))
                                 {
                                     G.DrawRoundedRect(P, surround, 1, true);
                                 }
-                                using (var P = new Pen(Color.FromArgb(229, 240, 250)))
+                                using (Pen P = new(Color.FromArgb(229, 240, 250)))
                                 {
                                     G.DrawRectangle(P, new Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2));
                                 }
@@ -1810,21 +1810,21 @@ namespace WinPaletter.UI.Simulation
                         }
                         var inner = new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
 
-                        using (var br = new SolidBrush(Color.White))
+                        using (SolidBrush br = new(Color.White))
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
-                        using (var br = new SolidBrush(Color.FromArgb((int)(255 * ((decimal)Win7ColorBal / 100)), Background)))
+                        using (SolidBrush br = new(Color.FromArgb((int)(255 * ((decimal)Win7ColorBal / 100)), Background)))
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
 
                         G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
-                        using (var P = new Pen(Color.FromArgb(200, 25, 25, 25)))
+                        using (Pen P = new(Color.FromArgb(200, 25, 25, 25)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);
                         }
-                        using (var P = new Pen(Color.FromArgb(70, 200, 200, 200)))
+                        using (Pen P = new(Color.FromArgb(70, 200, 200, 200)))
                         {
                             G.DrawRoundedRect(P, inner, Radius, true);
                         }
@@ -1858,18 +1858,18 @@ namespace WinPaletter.UI.Simulation
                             if (x == 0)
                             {
                                 var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
-                                using (var br = new SolidBrush(Color.FromArgb(75, 200, 200, 200)))
+                                using (SolidBrush br = new(Color.FromArgb(75, 200, 200, 200)))
                                 {
                                     G.FillRoundedRect(br, surround, 1, true);
                                 }
                                 G.DrawRoundImage(Properties.Resources.Win7_TitleTopL.Fade(0.35d), surround, 2, true);
                                 G.DrawRoundImage(Properties.Resources.Win7_TitleTopR.Fade(0.35d), surround, 2, true);
 
-                                using (var P = new Pen(Background))
+                                using (Pen P = new(Background))
                                 {
                                     G.DrawRoundedRect(P, surround, 1, true);
                                 }
-                                using (var P = new Pen(Color.FromArgb(229, 240, 250)))
+                                using (Pen P = new(Color.FromArgb(229, 240, 250)))
                                 {
                                     G.DrawRectangle(P, new Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2));
                                 }
@@ -1908,40 +1908,40 @@ namespace WinPaletter.UI.Simulation
                         var pth_line = new LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
                         // ### Render Titlebar
                         G.FillRectangle(pth_back, RRect);
-                        using (var P = new Pen(Titlebar_OuterBorder))
+                        using (Pen P = new(Titlebar_OuterBorder))
                         {
                             G.DrawRectangle(P, RRect);
                         }
-                        using (var P = new Pen(Titlebar_InnerBorder))
+                        using (Pen P = new(Titlebar_InnerBorder))
                         {
                             G.DrawRectangle(P, new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2));
                         }
                         G.SetClip(new Rectangle(UpperPart.X + (int)(UpperPart.Width * 0.75), UpperPart.Y, (int)(UpperPart.Width * 0.75), UpperPart.Height));
-                        using (var P = new Pen(pth_line))
+                        using (Pen P = new(pth_line))
                         {
                             G.DrawRectangle(P, new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2));
                         }
                         G.ResetClip();
                         G.ExcludeClip(UpperPart);
                         // ### Render Rest of WindowR
-                        using (var br = new SolidBrush(Titlebar_BackColor2))
+                        using (SolidBrush br = new(Titlebar_BackColor2))
                         {
                             G.FillRectangle(br, RRect);
                         }
-                        using (var P = new Pen(Titlebar_Turquoise))
+                        using (Pen P = new(Titlebar_Turquoise))
                         {
                             G.DrawRectangle(P, new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2));
                         }
-                        using (var P = new Pen(OuterBorder))
+                        using (Pen P = new(OuterBorder))
                         {
                             G.DrawRectangle(P, RRect);
                         }
                         G.ResetClip();
-                        using (var P = new Pen(Color.FromArgb(52, 52, 52)))
+                        using (Pen P = new(Color.FromArgb(52, 52, 52)))
                         {
                             G.DrawRectangle(P, RRect);
                         }
-                        using (var P = new Pen(Color.FromArgb(255, 225, 225, 225)))
+                        using (Pen P = new(Color.FromArgb(255, 225, 225, 225)))
                         {
                             G.DrawRectangle(P, new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2));
                         }
@@ -1998,7 +1998,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawImage(adaptedBackBlurred, Rect);
                         G.ResetClip();
 
-                        using (var br = new SolidBrush(Color.FromArgb(BackColorAlpha, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, Background)))
                         {
                             G.FillRoundedRect(br, RestRect, 4, true);
                         }
@@ -2012,7 +2012,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         var RestRect = new Rectangle(0, 14, Width - 6, Height - 14);
                         G.FillRoundedRect(Brushes.White, RestRect, 4, true);
-                        using (var br = new SolidBrush(Color.FromArgb(BackColorAlpha, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, Background)))
                         {
                             G.FillRoundedRect(br, RestRect, 4, true);
                         }
@@ -2034,7 +2034,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         if (!DesignMode && adaptedBackBlurred is not null)
                             G.DrawImage(adaptedBackBlurred, Rect);
-                        using (var br = new SolidBrush(Color.FromArgb(BackColorAlpha, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
@@ -2066,7 +2066,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         Bitmap orb = Properties.Resources.Vista_StartLowerORB;
                         G.FillRectangle(Brushes.White, Rect);
-                        using (var br = new SolidBrush(Color.FromArgb(BackColorAlpha, Background)))
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }

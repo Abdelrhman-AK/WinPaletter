@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -15,8 +13,8 @@ namespace WinPaletter
         private void Form1_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            BackColor = Color.Black;
-            this.DropEffect();
+            //BackColor = Color.Black;
+            //this.DropEffect();
         }
 
         private void button17_Click(object sender, EventArgs e)
@@ -27,14 +25,14 @@ namespace WinPaletter
             Program.Settings.Appearance.DarkMode = !Program.Settings.Appearance.DarkMode;
             Program.Settings.Appearance.Save();
 
-            Program.Style = new(DefaultColors.Accent, DefaultColors.Secondary, DefaultColors.Tertiary, DefaultColors.Disabled, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, Program.Settings.Appearance.DarkMode, true);
+            Program.Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, Program.Settings.Appearance.DarkMode, true);
 
             GetRoundedCorners();
             GetDarkMode();
             ApplyStyle(this);
 
-            BackColor = Color.Black;
-            this.DropEffect();
+            //BackColor = Color.Black;
+            //this.DropEffect();
 
             Visible = true;
         }
@@ -43,5 +41,6 @@ namespace WinPaletter
         {
             Forms.MainFrm.Show();
         }
+
     }
 }

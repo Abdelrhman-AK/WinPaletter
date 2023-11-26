@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -121,7 +121,7 @@ namespace WinPaletter
             // Button2
             // 
             Button2.BackColor = Color.FromArgb(50, 50, 50);
-            Button2.DrawOnGlass = false;
+
             Button2.Font = new Font("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
@@ -135,7 +135,7 @@ namespace WinPaletter
             // Button12
             // 
             Button1.BackColor = Color.FromArgb(50, 50, 50);
-            Button1.DrawOnGlass = false;
+
             Button1.Font = new Font("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
@@ -284,7 +284,7 @@ namespace WinPaletter
             // Button4
             // 
             Button4.BackColor = Color.FromArgb(50, 50, 50);
-            Button4.DrawOnGlass = false;
+
             Button4.Font = new Font("Segoe UI", 9.0f);
             Button4.ForeColor = Color.White;
             Button4.Image = null;
@@ -348,7 +348,7 @@ namespace WinPaletter
             // Button5
             // 
             Button5.BackColor = Color.FromArgb(50, 50, 50);
-            Button5.DrawOnGlass = false;
+
             Button5.Font = new Font("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
             Button5.Image = null;
@@ -412,7 +412,7 @@ namespace WinPaletter
             // Button3
             // 
             Button3.BackColor = Color.FromArgb(50, 50, 50);
-            Button3.DrawOnGlass = false;
+
             Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;

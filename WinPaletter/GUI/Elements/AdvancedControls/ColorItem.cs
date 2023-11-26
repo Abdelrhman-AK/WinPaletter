@@ -679,7 +679,7 @@ namespace WinPaletter.UI.Controllers
             {
                 // Make ripple effect on dropping a color
 
-                using (var br = new SolidBrush(BeforeDropColor))
+                using (SolidBrush br = new(BeforeDropColor))
                 {
                     G.FillRoundedRect(br, RectInner, R);
                 }
@@ -715,7 +715,7 @@ namespace WinPaletter.UI.Controllers
                 }
                 path.Dispose();
 
-                using (var P = new Pen(LineColor))
+                using (Pen P = new(LineColor))
                 {
                     G.DrawRoundedRect_LikeW11(P, RectInner, R);
                 }
@@ -725,7 +725,7 @@ namespace WinPaletter.UI.Controllers
             {
                 // Make circle hover effect on dragging over a color
 
-                using (var br = new SolidBrush(BackColor))
+                using (SolidBrush br = new(BackColor))
                 {
                     G.FillRoundedRect(br, Rect, R);
                 }
@@ -749,7 +749,7 @@ namespace WinPaletter.UI.Controllers
                     G.ResetClip();
                 }
 
-                using (var P = new Pen(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot })
+                using (Pen P = new(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot })
                 {
                     G.DrawRoundedRect_LikeW11(P, Rect, R);
                 }
@@ -759,20 +759,20 @@ namespace WinPaletter.UI.Controllers
             {
                 // Normal appearance
 
-                using (var br = new SolidBrush(BackColor))
+                using (SolidBrush br = new(BackColor))
                 {
                     G.FillRoundedRect(br, RectInner, R);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha / 255d * BackColor.A), BackColor)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha / 255d * BackColor.A), BackColor)))
                 {
                     G.FillRoundedRect(br, Rect, R);
                 }
 
-                using (var P = new Pen(Color.FromArgb(alpha, LineColor)))
+                using (Pen P = new(Color.FromArgb(alpha, LineColor)))
                 {
                     G.DrawRoundedRect_LikeW11(P, Rect, R);
                 }
-                using (var P = new Pen(Color.FromArgb(255 - alpha, LineColor)))
+                using (Pen P = new(Color.FromArgb(255 - alpha, LineColor)))
                 {
                     G.DrawRoundedRect_LikeW11(P, RectInner, R);
                 }
@@ -782,7 +782,7 @@ namespace WinPaletter.UI.Controllers
             {
                 if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
                 {
-                    using (var br = new SolidBrush(DefaultColor))
+                    using (SolidBrush br = new(DefaultColor))
                     {
 
                         int L = Math.Max(6, RectInner.Height - 10);
@@ -823,13 +823,13 @@ namespace WinPaletter.UI.Controllers
                     RectX.Y += 1;
 
                     var CF = ColorsExtensions.ColorFormat.HEX;
-                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HEX)
+                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HEX)
                         CF = ColorsExtensions.ColorFormat.HEX;
-                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.RGB)
+                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.RGB)
                         CF = ColorsExtensions.ColorFormat.RGB;
-                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.HSL)
+                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HSL)
                         CF = ColorsExtensions.ColorFormat.HSL;
-                    if (Program.Settings.NerdStats.Type == WPSettings.Structures.NerdStats.Formats.Dec)
+                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.Dec)
                         CF = ColorsExtensions.ColorFormat.Dec;
 
                     string S = TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255));
@@ -845,22 +845,22 @@ namespace WinPaletter.UI.Controllers
                         F = new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular);
                     }
 
-                    using (var br = new SolidBrush(FC0))
+                    using (SolidBrush br = new(FC0))
                     {
                         G.DrawString(S, F, br, RectX, ContentAlignment.MiddleCenter.ToStringFormat());
                     }
-                    using (var br = new SolidBrush(FC1))
+                    using (SolidBrush br = new(FC1))
                     {
                         G.DrawString(S, F, br, RectX, ContentAlignment.MiddleCenter.ToStringFormat());
                     }
 
                     if (ColorPickerOpened)
                     {
-                        using (var br = new SolidBrush(FC0))
+                        using (SolidBrush br = new(FC0))
                         {
                             G.DrawString("▼", F, br, new Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), ContentAlignment.MiddleRight.ToStringFormat());
                         }
-                        using (var br = new SolidBrush(FC1))
+                        using (SolidBrush br = new(FC1))
                         {
                             G.DrawString("▼", F, br, new Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), ContentAlignment.MiddleRight.ToStringFormat());
                         }

@@ -18,8 +18,8 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void ExportCursors(Manager TM, TreeView TreeView = null)
         {
-            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             if (!TM.Cursor_Arrow.UseFromFile || (TM.Cursor_Arrow.UseFromFile && !File.Exists(TM.Cursor_Arrow.File))) RenderCursor(Paths.CursorType.Arrow, TM, ReportProgress_Detailed ? TreeView : null);
             if (!TM.Cursor_AppLoading.UseFromFile || (TM.Cursor_AppLoading.UseFromFile && !File.Exists(TM.Cursor_AppLoading.File))) RenderCursor(Paths.CursorType.AppLoading, TM, ReportProgress_Detailed ? TreeView : null);

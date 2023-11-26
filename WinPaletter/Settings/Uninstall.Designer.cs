@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -179,10 +179,8 @@ namespace WinPaletter
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = null;
-            this.RadioImage1.ImageWithText = false;
             this.RadioImage1.Location = new System.Drawing.Point(156, 292);
             this.RadioImage1.Name = "RadioImage1";
-            this.RadioImage1.ShowText = true;
             this.RadioImage1.Size = new System.Drawing.Size(280, 24);
             this.RadioImage1.TabIndex = 12;
             this.RadioImage1.Text = "Do nothing";
@@ -194,10 +192,8 @@ namespace WinPaletter
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = null;
-            this.RadioImage2.ImageWithText = false;
             this.RadioImage2.Location = new System.Drawing.Point(156, 322);
             this.RadioImage2.Name = "RadioImage2";
-            this.RadioImage2.ShowText = true;
             this.RadioImage2.Size = new System.Drawing.Size(280, 24);
             this.RadioImage2.TabIndex = 13;
             this.RadioImage2.Text = "Restore from a theme file you backed-up before";
@@ -209,10 +205,8 @@ namespace WinPaletter
             this.RadioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = null;
-            this.RadioImage3.ImageWithText = false;
             this.RadioImage3.Location = new System.Drawing.Point(156, 352);
             this.RadioImage3.Name = "RadioImage3";
-            this.RadioImage3.ShowText = true;
             this.RadioImage3.Size = new System.Drawing.Size(280, 24);
             this.RadioImage3.TabIndex = 14;
             this.RadioImage3.Text = "Restore to default Windows";
@@ -244,7 +238,6 @@ namespace WinPaletter
             // 
             this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button6.CustomColor = System.Drawing.Color.Empty;
-            this.Button6.DrawOnGlass = false;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
@@ -262,7 +255,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;

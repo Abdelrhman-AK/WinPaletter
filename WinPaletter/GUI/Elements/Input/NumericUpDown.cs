@@ -366,13 +366,13 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
-            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover))) { G.FillRoundedRect(br, SideRect); }
+            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.FillRoundedRect(br, SideRect); }
 
             using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
-            using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+            using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
-            using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_CheckedHover)))
+            using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_Checked_Hover)))
             {
                 using (Font SignFont = new("Marlett", 11f))
                 {

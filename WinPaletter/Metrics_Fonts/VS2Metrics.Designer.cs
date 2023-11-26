@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -53,7 +53,6 @@ namespace WinPaletter
             // 
             this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button16.CustomColor = System.Drawing.Color.Empty;
-            this.Button16.DrawOnGlass = false;
             this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
@@ -69,7 +68,6 @@ namespace WinPaletter
             // 
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(87, 12);
             this.TextBox1.MaxLength = 32767;
@@ -112,7 +110,6 @@ namespace WinPaletter
             // 
             this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.DrawOnGlass = false;
             this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
@@ -130,7 +127,6 @@ namespace WinPaletter
             // 
             this.Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button8.CustomColor = System.Drawing.Color.Empty;
-            this.Button8.DrawOnGlass = false;
             this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;

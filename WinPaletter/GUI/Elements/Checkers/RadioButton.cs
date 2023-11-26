@@ -7,33 +7,27 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed RadioButton for WinPaletter UI")]
     [DefaultEvent("CheckedChanged")]
     public class RadioButton : Control
     {
-
         public RadioButton()
         {
-            Timer1 = new Timer() { Enabled = false, Interval = 1 };
-            Timer2 = new Timer() { Enabled = false, Interval = 1 };
-            SetStyle((ControlStyles)139286, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
             DoubleBuffered = true;
+            BackColor = Color.Transparent;
+
             Font = new Font("Segoe UI", 9f);
             ForeColor = Color.White;
-            MouseEnter += RadioButton_MouseEnter;
-            MouseLeave += RadioButton_MouseLeave;
-            HandleCreated += RadioButton_HandleCreated;
-            HandleDestroyed += RadioButton_HandleDestroyed;
-            Timer1.Tick += Timer1_Tick;
-            Timer2.Tick += Timer2_Tick;
+
+            _shown = false;
+            _alpha = 0;
+            _alpha2 = Checked ? 255 : 0;
         }
 
         #region Variables
-
-        private bool AnimateOnClick = false;
-        private SizeF SZ1;
+        private bool _shown = false;
 
         public MouseState State = MouseState.None;
 
@@ -48,44 +42,39 @@ namespace WinPaletter.UI.WP
 
         #region Properties
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public new Color BackColor { get => Color.Transparent; set {; } }
+
         private bool _Checked;
         public bool Checked
         {
-            get
-            {
-                return _Checked;
-            }
+            get { return _Checked; }
+
             set
             {
                 try
                 {
-                    _Checked = value;
-
-                    if (_Checked)
+                    if (_Checked != value)
                     {
-                        UncheckOthersOnChecked();
-                    }
+                        _Checked = value;
+                        if (_Checked) { UncheckOthersOnChecked(); }
+                        CheckedChanged?.Invoke(this);
 
-                    CheckedChanged?.Invoke(this);
+                        if (_shown)
+                        {
+                            FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        }
+                        else
+                        {
+                            alpha2 = Checked ? 255 : 0;
+                            Refresh();
+                        }
 
-                    if (AnimateOnClick)
-                    {
-                        Timer2.Enabled = true;
-                        Timer2.Start();
                     }
-                    else
-                    {
-                        alpha2 = Checked ? 255 : 0;
-                    }
-
-                    Refresh();
                 }
-                catch
-                {
-                }
+                catch { }
             }
         }
-
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -94,6 +83,22 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -104,104 +109,70 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            Checked = true;
             State = MouseState.Down;
-            Timer1.Enabled = true;
-            Timer1.Start();
+            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
+
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            AnimateOnClick = true;
             Checked = true;
-            State = MouseState.Down;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            Invalidate();
+            FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
             base.OnMouseClick(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            Timer1.Enabled = true;
-            Timer1.Start();
+            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
+
+            base.OnMouseUp(e);
         }
 
-        private void RadioButton_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
-            Timer1.Enabled = true;
-            Timer1.Start();
+            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
+
+            base.OnMouseEnter(e);
         }
 
-        private void RadioButton_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            Timer1.Enabled = true;
-            Timer1.Start();
+            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             Invalidate();
+
+            base.OnMouseLeave(e);
         }
 
-        private void RadioButton_HandleCreated(object sender, EventArgs e)
+        protected override void OnHandleCreated(EventArgs e)
         {
+            try { if (!DesignMode) { FindForm().Shown += Showed; } }
+            catch { }
 
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Shown += Showed;
-                    Parent.BackColorChanged += RefreshColorPalette;
-                    Parent.VisibleChanged += RefreshColorPalette;
-                    Parent.EnabledChanged += RefreshColorPalette;
-                    VisibleChanged += RefreshColorPalette;
-                    EnabledChanged += RefreshColorPalette;
-                }
-            }
-            catch
-            {
-            }
+            try { alpha = 0; alpha2 = Checked ? 255 : 0; }
+            catch { }
 
-            try
-            {
-                alpha = 0;
-                alpha2 = Checked ? 255 : 0;
-            }
-            catch
-            {
-            }
+            base.OnHandleCreated(e);
         }
 
-        private void RadioButton_HandleDestroyed(object sender, EventArgs e)
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Shown -= Showed;
-                    Parent.BackColorChanged -= RefreshColorPalette;
-                    Parent.VisibleChanged -= RefreshColorPalette;
-                    Parent.EnabledChanged -= RefreshColorPalette;
-                    VisibleChanged -= RefreshColorPalette;
-                    EnabledChanged -= RefreshColorPalette;
-                }
-            }
-            catch
-            {
-            }
+            try { if (!DesignMode) { FindForm().Shown -= Showed; } }
+            catch { }
+
+            base.OnHandleDestroyed(e);
         }
 
-        public void Showed(object sender, EventArgs e)
+        public void Showed(object sender, EventArgs e) 
         {
-            Invalidate();
-        }
-
-        public void RefreshColorPalette(object sender, EventArgs e)
-        {
+            _shown = true;
             Invalidate();
         }
 
@@ -227,208 +198,98 @@ namespace WinPaletter.UI.WP
 
         #region Animator
 
-        private int alpha, alpha2;
-        private readonly int Factor = 25;
-        private Timer Timer1, Timer2;
+        private int _alpha = 0;
+        private int _alpha2 = 255;
 
-        private void Timer1_Tick(object sender, EventArgs e)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            if (!DesignMode)
-            {
-
-                if (State == MouseState.Over)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer1.Enabled = false;
-                        Timer1.Stop();
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-
-                if (!(State == MouseState.Over))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer1.Enabled = false;
-                        Timer1.Stop();
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-            }
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
         }
 
-        private void Timer2_Tick(object sender, EventArgs e)
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha2
         {
-            if (!DesignMode)
-            {
-
-                if (Checked)
-                {
-                    if (alpha2 + Factor <= 255)
-                    {
-                        alpha2 += Factor;
-                    }
-                    else if (alpha2 + Factor > 255)
-                    {
-                        alpha2 = 255;
-                        Timer2.Enabled = false;
-                        Timer2.Stop();
-                        AnimateOnClick = false;
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-
-                if (!Checked)
-                {
-                    if (alpha2 - Factor >= 0)
-                    {
-                        alpha2 -= Factor;
-                    }
-                    else if (alpha2 - Factor < 0)
-                    {
-                        alpha2 = 0;
-                        Timer2.Enabled = false;
-                        Timer2.Stop();
-                        AnimateOnClick = false;
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-            }
+            get => _alpha2;
+            set { _alpha2 = value; Refresh(); }
         }
 
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
+            base.OnPaint(e);
+            if (Parent is null) return;
+
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            DoubleBuffered = true;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            // ################################################################################# Customizer
+            bool RTL = (int)RightToLeft == 1;
+            StringFormat format = ContentAlignment.MiddleLeft.ToStringFormat(RTL);
+
+            Rectangle OuterCircle = new(3, 4, Height - 8, Height - 8);
+            Rectangle InnerCircle = new(4, 5, Height - 10, Height - 10);
+            Rectangle CheckCircle = new(7, 8, Height - 16, Height - 16);
+            Rectangle TextRect = new(Height - 1, 1, Width - OuterCircle.Width, Height - 1);
+
+            if (RTL)
             {
-                var G = e.Graphics;
-                if (Parent is null)
-                    return;
-                BackColor = Parent.BackColor;
-                var clr = Program.Style.Schemes.Main.Colors.AccentAlt;
-
-                G = e.Graphics;
-                G.SmoothingMode = SmoothingMode.AntiAlias;
-                G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-                DoubleBuffered = true;
-
-                // ################################################################################# Customizer
-                SZ1 = G.MeasureString(Text, Font);
-
-                var format = new StringFormat();
-                var OuterCircle = new Rectangle(3, 4, Height - 8, Height - 8);
-                var InnerCircle = new Rectangle(4, 5, Height - 10, Height - 10);
-                var CheckCircle = new Rectangle(7, 8, Height - 16, Height - 16);
-                var TextRect = new Rectangle(Height - 1, (int)((long)Math.Round(Height - SZ1.Height) / 2L + 1L), Width - OuterCircle.Width, Height - 1);
-                bool RTL = (int)RightToLeft == 1;
-
-                if (RTL)
-                {
-                    format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
-                    OuterCircle.X = Width - OuterCircle.X - OuterCircle.Width;
-                    InnerCircle.X = Width - InnerCircle.X - InnerCircle.Width;
-                    CheckCircle.X = Width - CheckCircle.X - CheckCircle.Width;
-                    TextRect.Width -= OuterCircle.Width + 13;
-                }
-
-                #region Colors System
-                var HoverCircle_Color = Color.FromArgb(alpha2, Program.Style.Schemes.Main.Colors.Back_Checked);
-                var HoverCheckedCircle_Color = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
-                var CheckCircle_Color = Color.FromArgb(alpha2, Program.Style.Schemes.Main.Colors.AccentAlt);
-                var NonHoverCircle_Color = Program.Style.Schemes.Main.Colors.Back_Hover;
-                var BackCircle_Color = Program.Style.Schemes.Main.Colors.Back;
-                var ParentColor = this.GetParentColor();
-                #endregion
-                // #################################################################################
-
-                G.Clear(ParentColor);
-                using (var br = new SolidBrush(BackCircle_Color))
-                {
-                    G.FillEllipse(br, OuterCircle);
-                }
-
-                if (Checked)
-                {
-                    using (var br = new SolidBrush(HoverCircle_Color))
-                    {
-                        G.FillEllipse(br, OuterCircle);
-                    }
-                    using (var br = new SolidBrush(CheckCircle_Color))
-                    {
-                        G.FillEllipse(br, CheckCircle);
-                    }
-                    using (var P = new Pen(HoverCheckedCircle_Color))
-                    {
-                        G.DrawEllipse(P, OuterCircle);
-                    }
-                }
-                else
-                {
-                    using (var br = new SolidBrush(HoverCircle_Color))
-                    {
-                        G.FillEllipse(br, OuterCircle);
-                    }
-                    using (var br = new SolidBrush(CheckCircle_Color))
-                    {
-                        G.FillEllipse(br, CheckCircle);
-                    }
-                    using (var P = new Pen(Color.FromArgb(255 - alpha, NonHoverCircle_Color)))
-                    {
-                        G.DrawEllipse(P, InnerCircle);
-                    }
-                    using (var P = new Pen(Color.FromArgb(alpha, clr)))
-                    {
-                        G.DrawEllipse(P, OuterCircle);
-                    }
-                }
-
-                #region Strings
-                if (Checked)
-                {
-                    using (var br = new SolidBrush(Color.FromArgb(255 - alpha, ForeColor)))
-                    {
-                        G.DrawString(Text, Font, br, TextRect, format);
-                    }
-                    using (var br = new SolidBrush(Color.FromArgb(alpha, CheckCircle_Color)))
-                    {
-                        G.DrawString(Text, Font, br, TextRect, format);
-                    }
-                }
-                else
-                {
-                    using (var br = new SolidBrush(ForeColor))
-                    {
-                        G.DrawString(Text, Font, br, TextRect, format);
-                    }
-                    #endregion
-                }
+                format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+                OuterCircle.X = Width - OuterCircle.X - OuterCircle.Width;
+                InnerCircle.X = Width - InnerCircle.X - InnerCircle.Width;
+                CheckCircle.X = Width - CheckCircle.X - CheckCircle.Width;
+                TextRect.Width -= OuterCircle.Width + 13;
             }
-            catch
+
+            #region Colors System
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+
+            Color BackCircle_Color = scheme.Colors.Back;
+            Color BackCircle_LineColor = Color.FromArgb(255 - alpha, scheme.Colors.Back_Hover);
+
+            Color BackCircle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover);
+            Color BackCircle_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover);
+
+            Color Checked_Circle_Color = Color.FromArgb(alpha2, scheme.Colors.Back_Checked);
+            Color Checked_Circle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
+
+            Color Checked_Dot_Color = Color.FromArgb(alpha2, scheme.Colors.AccentAlt);
+            #endregion
+            // #################################################################################
+
+            using (SolidBrush br = new(BackCircle_Color)) { G.FillEllipse(br, InnerCircle); }
+
+            using (SolidBrush br = new(Checked_Circle_Color)) { G.FillEllipse(br, OuterCircle); }
+
+            if (_Checked)
             {
-
+                using (SolidBrush br = new(Checked_Circle_Color_Hover)) { G.FillEllipse(br, OuterCircle); }
+                using (Pen P = new(Color.FromArgb(255, Checked_Circle_Color_Hover))) { G.DrawEllipse(P, OuterCircle); }
             }
+            else
+            {
+                using (Pen P = new(BackCircle_LineColor)) { G.DrawEllipse(P, InnerCircle); }
+                using (SolidBrush br = new(BackCircle_Color_Hover)) { G.FillEllipse(br, OuterCircle); }
+                using (Pen P = new(BackCircle_LineColor_Hover)) { G.DrawEllipse(P, OuterCircle); }
+            }
+
+            using (SolidBrush br = new(Checked_Dot_Color)) { G.FillEllipse(br, CheckCircle); }
+
+            #region Strings
+            using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
+
+            using (SolidBrush br = new(Checked_Dot_Color)) { G.DrawString(Text, Font, br, TextRect, format); }
+            #endregion
+
+            format.Dispose();
         }
-
     }
-
 }

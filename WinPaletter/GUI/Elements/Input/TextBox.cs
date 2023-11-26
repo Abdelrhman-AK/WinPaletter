@@ -96,6 +96,9 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Properties
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public override Color BackColor { get; set; }
+
         private HorizontalAlignment _TextAlign = HorizontalAlignment.Left;
 
         [Category("Options")]
@@ -318,7 +321,7 @@ namespace WinPaletter.UI.WP
                 var cpar = base.CreateParams;
                 if (!DesignMode)
                 {
-                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    cpar.ExStyle |= 0x20;
                     return cpar;
                 }
                 else
@@ -618,13 +621,13 @@ namespace WinPaletter.UI.WP
             {
                 G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
 
-                using (var br = new SolidBrush(scheme.Colors.Back)) { G.FillRoundedRect(br, InnerRect); }
+                using (SolidBrush br = new(scheme.Colors.Back)) { G.FillRoundedRect(br, InnerRect); }
 
-                using (var br = new SolidBrush(Color.FromArgb(alpha, scheme.Colors.Back))) { G.FillRoundedRect(br, OuterRect); }
+                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back))) { G.FillRoundedRect(br, OuterRect); }
 
-                using (var P = new Pen(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+                using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
-                using (var P = new Pen(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+                using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
                 _TB.BackColor = scheme.Colors.Back;
             }

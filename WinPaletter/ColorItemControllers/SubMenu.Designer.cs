@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -216,7 +216,6 @@ namespace WinPaletter
             // Button9
             // 
             Button9.BackColor = Color.FromArgb(72, 10, 10);
-            Button9.DrawOnGlass = false;
             Button9.Font = new Font("Segoe UI", 9.0f);
             Button9.ForeColor = Color.White;
             Button9.Image = (Image)resources.GetObject("Button9.Image");
@@ -252,7 +251,6 @@ namespace WinPaletter
             // Button8
             // 
             Button8.BackColor = Color.FromArgb(72, 10, 10);
-            Button8.DrawOnGlass = false;
             Button8.Font = new Font("Segoe UI", 9.0f);
             Button8.ForeColor = Color.White;
             Button8.Image = (Image)resources.GetObject("Button8.Image");
@@ -265,7 +263,6 @@ namespace WinPaletter
             // Button7
             // 
             Button7.BackColor = Color.FromArgb(72, 10, 10);
-            Button7.DrawOnGlass = false;
             Button7.Font = new Font("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = (Image)resources.GetObject("Button7.Image");
@@ -278,7 +275,6 @@ namespace WinPaletter
             // Button6
             // 
             Button6.BackColor = Color.FromArgb(72, 10, 10);
-            Button6.DrawOnGlass = false;
             Button6.Font = new Font("Segoe UI", 9.0f);
             Button6.ForeColor = Color.White;
             Button6.Image = (Image)resources.GetObject("Button6.Image");
@@ -337,7 +333,6 @@ namespace WinPaletter
             // 
             Button4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             Button4.BackColor = Color.FromArgb(72, 10, 10);
-            Button4.DrawOnGlass = false;
             Button4.Font = new Font("Segoe UI", 9.0f);
             Button4.ForeColor = Color.White;
             Button4.Image = null;
@@ -393,7 +388,6 @@ namespace WinPaletter
             // Button10
             // 
             Button10.BackColor = Color.FromArgb(72, 10, 10);
-            Button10.DrawOnGlass = false;
             Button10.Font = new Font("Segoe UI", 9.0f);
             Button10.ForeColor = Color.White;
             Button10.Image = (Image)resources.GetObject("Button10.Image");
@@ -406,7 +400,6 @@ namespace WinPaletter
             // Button2
             // 
             Button2.BackColor = Color.FromArgb(72, 10, 10);
-            Button2.DrawOnGlass = false;
             Button2.Font = new Font("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = (Image)resources.GetObject("Button2.Image");
@@ -419,7 +412,6 @@ namespace WinPaletter
             // Button12
             // 
             Button1.BackColor = Color.FromArgb(72, 10, 10);
-            Button1.DrawOnGlass = false;
             Button1.Font = new Font("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = (Image)resources.GetObject("Button1.Image");
@@ -432,7 +424,6 @@ namespace WinPaletter
             // Button3
             // 
             Button3.BackColor = Color.FromArgb(72, 10, 10);
-            Button3.DrawOnGlass = false;
             Button3.Enabled = false;
             Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
@@ -446,7 +437,6 @@ namespace WinPaletter
             // Button5
             // 
             Button5.BackColor = Color.FromArgb(72, 10, 10);
-            Button5.DrawOnGlass = false;
             Button5.Font = new Font("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
             Button5.Image = (Image)resources.GetObject("Button5.Image");

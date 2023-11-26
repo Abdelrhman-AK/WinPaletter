@@ -292,7 +292,7 @@ namespace WinPaletter.UI.Controllers
             }
             else
             {
-                G.TextRenderingHint = Config.RenderingHint;
+                G.TextRenderingHint = Program.Style.RenderingHint;
             }
 
             DoubleBuffered = true;
@@ -362,7 +362,7 @@ namespace WinPaletter.UI.Controllers
                 G.FillRoundedRect(Noise, rect_inner);
 
             var lC = Color.FromArgb(255 - alpha, State != MouseState.None ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
-            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
+            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_Checked_Hover);
 
             G.DrawRoundedRect_LikeW11(new Pen(lC), rect_inner);
             G.DrawRoundedRect_LikeW11(new Pen(lCC), rect_outer);

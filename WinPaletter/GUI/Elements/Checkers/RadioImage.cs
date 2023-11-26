@@ -7,21 +7,22 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("RadioButton, but with image for WinPaletter UI")]
     [DefaultEvent("CheckedChanged")]
     public class RadioImage : Control
     {
-
         public RadioImage()
         {
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286 | ControlStyles.Selectable, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
+
             Timer = new Timer() { Enabled = false, Interval = 1 };
-            SetStyle((ControlStyles)139286, true);
-            SetStyle(ControlStyles.Selectable, true);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 9f);
             ForeColor = Color.White;
             Text = string.Empty;
+
             MouseEnter += RadioImage_MouseEnter;
             MouseLeave += RadioImage_MouseLeave;
             HandleCreated += RadioImage_HandleCreated;
@@ -45,6 +46,8 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Properties
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public new Color BackColor { get => Color.Transparent; set {; } }
 
         private bool _Checked;
         public bool Checked
@@ -74,6 +77,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private Image _image;
         public Image Image
         {
@@ -89,9 +93,6 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        public bool ShowText { get; set; } = false;
-
-        public bool ImageWithText { get; set; } = false;
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -101,6 +102,26 @@ namespace WinPaletter.UI.WP
         public override string Text { get; set; } = string.Empty;
 
         public ContentAlignment TextAlign { get; set; } = ContentAlignment.MiddleCenter;
+        public ContentAlignment ImageAlign { get; set; } = ContentAlignment.MiddleCenter;
+        public TextImageRelation TextImageRelation { get; set; } = TextImageRelation.ImageAboveText;
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
+
         #endregion
 
         #region Events
@@ -286,92 +307,214 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            base.OnPaint(e);
+            if (Parent is null) return;
 
-            if (Parent is null)
-                return;
-
-            G.Clear(this.GetParentColor());
-
-            G = e.Graphics;
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
 
             var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
             var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
-            var TextRect = new Rectangle(5, 5, Width - 10, Height - 10);
+            Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
+            Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2, Height - 7 - PaddingRect.Height * 2);
 
-            var bkC = _Checked ? Program.Style.Schemes.Main.Colors.Back_Checked : Program.Style.Schemes.Main.Colors.Back;
-            var bkCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Back_Checked);
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
 
-            using (var br = new SolidBrush(bkC)) { G.FillRoundedRect(br, MainRectInner); }
-            using (var br = new SolidBrush(bkCC)) { G.FillRoundedRect(br, MainRect); }
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            var lC = Color.FromArgb(255 - alpha, _Checked ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
-            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_CheckedHover);
+            Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
+            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : scheme.Colors.Line);
+            Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
-            using (var P = new Pen(lC))
+            G.FillRoundedRect(_Checked ? scheme.Brushes.Back_Checked : scheme.Brushes.Back, MainRectInner);
+            using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
+
+            using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, MainRectInner); }
+
+            using (Pen P = new(line_hover)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
+
+            #region Text and Image Render
+            using (StringFormat sf = TextAlign.ToStringFormat((int)base.RightToLeft == 1))
             {
-                G.DrawRoundedRect_LikeW11(P, MainRectInner);
-            }
-            using (var P = new Pen(lCC))
-            {
-                G.DrawRoundedRect_LikeW11(P, MainRect);
-            }
-
-            if (!ImageWithText)
-            {
-                Rectangle CenterRect = new();
-
-                try
+                using (SolidBrush fc = new(ForeColor))
                 {
-                    if (_image != null)
+                    if (Image == null)
                     {
-                        CenterRect = new((int)Math.Round(MainRect.X + (MainRect.Width - _image.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - _image.Height) / 2d), _image.Width, _image.Height);
-                        G.DrawImage(_image, CenterRect);
+                        //Fix label maladjustment in center position
+                        if (TextAlign == ContentAlignment.MiddleCenter)
+                        {
+                            if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
+                            if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
+                        }
+
+                        G.DrawString(Text, Font, fc, TextAndImageRect, sf);
+                    }
+
+                    else if (string.IsNullOrWhiteSpace(Text) && Image != null)
+                    {
+                        Rectangle imageRect = GetImageRectangle(TextAndImageRect, Image.Size, ImageAlign);
+
+                        //Fix image maladjustment in center position
+                        if (ImageAlign == ContentAlignment.MiddleCenter)
+                        {
+                            if (Width % Image.Width != 0) imageRect.Offset(1, 0);
+                            if (Height % Image.Height != 0) imageRect.Offset(0, 1);
+                        }
+
+                        G.DrawImage(Image, imageRect);
+                    }
+
+                    else
+                    {
+                        if (TextImageRelation == TextImageRelation.Overlay)
+                        {
+                            Rectangle imageRect = GetImageRectangle(TextAndImageRect, Image.Size, ImageAlign);
+
+                            //Fix image maladjustment in center position
+                            if (ImageAlign == ContentAlignment.MiddleCenter)
+                            {
+                                if (Width % Image.Width != 0) imageRect.Offset(1, 0);
+                                if (Height % Image.Height != 0) imageRect.Offset(0, 1);
+                            }
+
+                            //Fix label maladjustment in center position
+                            if (TextAlign == ContentAlignment.MiddleCenter)
+                            {
+                                if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
+                                if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
+                            }
+
+                            G.DrawImage(Image, imageRect);
+                            G.DrawString(Text, Font, fc, TextAndImageRect, sf);
+                        }
+                        else
+                        {
+                            int innerSpacing = 5;
+                            Size ImageSize = Image.Size - new Size(1, 1);
+                            SizeF TextSizeF = G.MeasureString(Text, Font, TextAndImageRect.Size, sf);
+                            Size TextSize = new((int)TextSizeF.Width + innerSpacing, (int)TextSizeF.Height);
+
+                            Rectangle space = new();
+                            Rectangle textRect = new();
+                            Rectangle imageRect = new();
+
+                            if (TextImageRelation == TextImageRelation.ImageAboveText)
+                            {
+                                space.Width = Math.Max(ImageSize.Width, TextSize.Width);
+                                space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                imageRect = GetImageRectangle(space, Image.Size, ImageAlign);
+                                imageRect.Y = space.Y;
+
+                                textRect.Width = space.Width;
+                                textRect.Height = TextSize.Height;
+                                textRect.X = space.X;
+                                textRect.Y = imageRect.Bottom + innerSpacing;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.TextAboveImage)
+                            {
+                                space.Width = Math.Max(ImageSize.Width, TextSize.Width);
+                                space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                textRect.Width = space.Width;
+                                textRect.Height = TextSize.Height;
+                                textRect.X = space.X;
+                                textRect.Y = space.Y;
+
+                                imageRect = GetImageRectangle(space, Image.Size, ImageAlign);
+                                imageRect.Y = textRect.Bottom + innerSpacing;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.ImageBeforeText)
+                            {
+                                space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
+                                space.Height = Math.Max(ImageSize.Height, TextSize.Height);
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                imageRect = GetImageRectangle(space, ImageSize, ContentAlignment.MiddleLeft);
+
+                                textRect.X = imageRect.Right + innerSpacing;
+                                textRect.Y = space.Y + 1;
+                                textRect.Width = TextSize.Width;
+                                textRect.Height = space.Height;
+                            }
+
+                            else if (TextImageRelation == TextImageRelation.TextBeforeImage)
+                            {
+                                space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
+                                space.Height = Math.Max(ImageSize.Height, TextSize.Height);
+
+                                space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
+
+                                textRect.X = space.X;
+                                textRect.Y = space.Y;
+                                textRect.Width = TextSize.Width;
+                                textRect.Height = space.Height;
+
+                                imageRect.X = textRect.Right + innerSpacing;
+                                imageRect.Y = space.Y;
+                                imageRect.Width = ImageSize.Width;
+                                imageRect.Height = ImageSize.Height;
+                            }
+
+                            G.DrawImage(Image, new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
+                            G.DrawString(Text, Font, fc, textRect, sf);
+                        }
                     }
                 }
-                catch { }
-
-                if (ShowText)
-                {
-                    using (var br = new SolidBrush(ForeColor))
-                    {
-                        G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat());
-                    }
-                }
             }
-            else
+            #endregion
+        }
+
+        private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
+        {
+            float CenterWidthD = rect.X + (float)(rect.Width - size.Width) / 2;
+            float CenterHeightD = rect.Y + (float)(rect.Height - size.Height) / 2;
+
+            int CenterWidth = (int)Math.Round(CenterWidthD, 2);
+            int CenterHeight = (int)Math.Round(CenterHeightD, 2);
+
+            switch (contentAlignment)
             {
-                int imgX = default, imgY = default;
+                case ContentAlignment.TopLeft:
+                    return new(rect.X, rect.Y, size.Width, size.Height);
 
-                try
-                {
-                    if (_image is not null)
-                    {
-                        imgX = (int)Math.Round((Width - _image.Width) / 2d);
-                        imgY = (int)Math.Round((Height - _image.Height) / 2d);
-                    }
-                }
-                catch { }
+                case ContentAlignment.TopRight:
+                    return new(rect.Right - size.Width, rect.Y, size.Width, size.Height);
 
-                var Rec = new Rectangle(imgY, imgY, _image.Width, _image.Height);
-                int Bo = imgY + _image.Width + imgY - 5;
-                var RecText = new Rectangle(Bo, 5, Width - Bo, Height - 10);
-                var u = Rectangle.Union(Rec, RecText);
-                int innerSpace = RecText.Left - Rec.Right;
+                case ContentAlignment.TopCenter:
+                    return new(CenterWidth, rect.Y, size.Width, size.Height);
 
-                Rec.X = u.Left;
-                RecText.X = u.Left + Rec.Width + innerSpace;
+                case ContentAlignment.MiddleLeft:
+                    return new(rect.X, CenterHeight, size.Width, size.Height);
 
-                G.DrawImage((Bitmap)_image.Clone(), Rec);
-                using (var br = new SolidBrush(ForeColor))
-                {
-                    G.DrawString(Text, Font, br, RecText, TextAlign.ToStringFormat());
-                }
+                case ContentAlignment.MiddleCenter:
+                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
+
+                case ContentAlignment.MiddleRight:
+                    return new(rect.Right - size.Width, CenterHeight, size.Width, size.Height);
+
+                case ContentAlignment.BottomLeft:
+                    return new(rect.X, rect.Bottom - size.Height, size.Width, size.Height);
+
+                case ContentAlignment.BottomCenter:
+                    return new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height);
+
+                case ContentAlignment.BottomRight:
+                    return new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height);
+
+                default:
+                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
             }
         }
     }
-
 }

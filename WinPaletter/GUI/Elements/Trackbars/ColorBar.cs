@@ -587,9 +587,9 @@ namespace WinPaletter.UI.WP
             var smallC1 = new Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             var smallC2 = new Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
-            using (var br = new SolidBrush(color)) { G.FillEllipse(br, smallC1); }
+            using (SolidBrush br = new(color)) { G.FillEllipse(br, smallC1); }
 
-            using (var br = new SolidBrush(Color.FromArgb(alpha, color))) { G.FillEllipse(br, smallC2); }
+            using (SolidBrush br = new(Color.FromArgb(alpha, color))) { G.FillEllipse(br, smallC2); }
         }
 
     }

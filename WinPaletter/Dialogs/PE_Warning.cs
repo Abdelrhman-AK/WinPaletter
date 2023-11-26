@@ -67,14 +67,14 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
             DialogResult = DialogResult.Cancel;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
             Close();
             DialogResult = DialogResult.OK;
         }
@@ -94,7 +94,7 @@ namespace WinPaletter
         private void PE_Warning_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
             try { Forms.BK.Close(); } catch { }
         }
 

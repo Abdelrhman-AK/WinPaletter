@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
 {
@@ -81,7 +82,7 @@ namespace WinPaletter.UI.WP
                 var cpar = base.CreateParams;
                 if (!DesignMode)
                 {
-                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    cpar.ExStyle |= 0x20;
                     return cpar;
                 }
                 else
@@ -101,59 +102,39 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             bool RTL = (int)RightToLeft == 1;
             bool DarkMode = Program.Style.DarkMode;
-            BackColor = Color.Transparent;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme1 = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+            Config.Scheme scheme2 = Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
+            Config.Scheme scheme3 = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
             switch (_alertStyle)
             {
                 case Style.Simple:
                     {
-                        if (DarkMode)
-                        {
-                            borderColor = Color.FromArgb(60, 60, 60);
-                            innerColor = Color.FromArgb(50, 50, 50);
-                            textColor = Color.FromArgb(150, 150, 150);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(210, 210, 210);
-                            innerColor = Color.FromArgb(200, 200, 200);
-                            textColor = Color.FromArgb(50, 50, 50);
-                        }
-
+                        borderColor = scheme1.Colors.Line;
+                        innerColor = scheme1.Colors.Back;
+                        textColor = scheme1.Colors.ForeColor;
                         break;
                     }
 
                 case Style.Success:
                     {
-                        if (DarkMode)
-                        {
-                            borderColor = Color.FromArgb(60, 98, 79);
-                            innerColor = Color.FromArgb(60, 85, 79);
-                            textColor = Color.FromArgb(35, 169, 110);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(160, 198, 179);
-                            innerColor = Color.FromArgb(140, 170, 155);
-                            textColor = Color.FromArgb(135, 255, 210);
-                        }
-
+                        borderColor = scheme3.Colors.Line_Checked_Hover;
+                        innerColor = scheme3.Colors.Back_Checked_Hover;
+                        textColor = scheme3.Colors.ForeColor_Accent;
                         break;
                     }
 
                 case Style.Notice:
                     {
-                        if (DarkMode)
+                        using (Config.Colors_Collection colors = new(Color.FromArgb(115, 113, 6), default, DarkMode))
                         {
-                            borderColor = Color.FromArgb(70, 91, 107);
-                            innerColor = Color.FromArgb(70, 91, 94);
-                            textColor = Color.FromArgb(97, 185, 186);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(170, 191, 207);
-                            innerColor = Color.FromArgb(130, 155, 155);
-                            textColor = Color.FromArgb(180, 255, 255);
+                            borderColor = colors.Line_Checked_Hover;
+                            innerColor = colors.Back_Checked_Hover;
+                            textColor = colors.ForeColor_Accent;
                         }
 
                         break;
@@ -161,54 +142,28 @@ namespace WinPaletter.UI.WP
 
                 case Style.Warning:
                     {
-                        if (DarkMode)
-                        {
-                            borderColor = Color.FromArgb(202, 41, 56);
-                            innerColor = Color.FromArgb(125, 20, 30);
-                            textColor = Color.FromArgb(254, 142, 122);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(255, 100, 100);
-                            innerColor = Color.FromArgb(216, 73, 73);
-                            textColor = Color.FromArgb(255, 175, 175);
-                        }
-
+                        borderColor = scheme2.Colors.Line_Checked;
+                        innerColor = scheme2.Colors.Back_Checked;
+                        textColor = scheme2.Colors.ForeColor_Accent;
                         break;
                     }
 
                 case Style.Information:
                     {
-                        if (DarkMode)
-                        {
-                            borderColor = Color.FromArgb(133, 133, 71);
-                            innerColor = Color.FromArgb(120, 120, 71);
-                            textColor = Color.FromArgb(254, 224, 122);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(233, 233, 171);
-                            innerColor = Color.FromArgb(195, 195, 150);
-                            textColor = Color.FromArgb(250, 250, 150);
-                        }
+                        borderColor = scheme1.Colors.Line_Checked;
+                        innerColor = scheme1.Colors.Back_Checked;
+                        textColor = scheme1.Colors.ForeColor_Accent;
 
                         break;
                     }
 
-
                 case Style.Indigo:
                     {
-                        if (DarkMode)
+                        using (Config.Colors_Collection colors = new(Color.FromArgb(76, 0, 142), default, DarkMode))
                         {
-                            borderColor = Color.FromArgb(65, 0, 170);
-                            innerColor = Color.FromArgb(60, 0, 140);
-                            textColor = Color.FromArgb(140, 0, 255).CB(0.35f);
-                        }
-                        else
-                        {
-                            borderColor = Color.FromArgb(165, 0, 225);
-                            innerColor = Color.FromArgb(129, 0, 200);
-                            textColor = Color.FromArgb(210, 110, 255);
+                            borderColor = colors.Line_Checked_Hover;
+                            innerColor = colors.Back_Checked_Hover;
+                            textColor = colors.ForeColor_Accent;
                         }
 
                         break;
@@ -216,18 +171,11 @@ namespace WinPaletter.UI.WP
 
                 case Style.Custom:
                     {
-
-                        if (DarkMode)
+                        using (Config.Colors_Collection colors = new(CustomColor, default, DarkMode))
                         {
-                            borderColor = CustomColor.CB(0.03f);
-                            innerColor = CustomColor.CB(0.01f);
-                            textColor = CustomColor.LightLight();
-                        }
-                        else
-                        {
-                            borderColor = CustomColor.CB(0.3f);
-                            innerColor = CustomColor.CB(0.1f);
-                            textColor = CustomColor.CB(0.7f);
+                            borderColor = colors.Line_Checked_Hover;
+                            innerColor = colors.Back_Checked_Hover;
+                            textColor = colors.ForeColor_Accent;
                         }
 
                         break;
@@ -237,73 +185,48 @@ namespace WinPaletter.UI.WP
                     {
                         if (Image is not null)
                         {
-                            var cc = Image.AverageColor();
+                            using (Config.Colors_Collection colors = new(Image.AverageColor(), default, DarkMode))
+                            {
+                                borderColor = colors.Line_Checked_Hover;
+                                innerColor = colors.Back_Checked_Hover;
+                                textColor = colors.ForeColor_Accent;
+                            }
 
-                            if (DarkMode)
-                            {
-                                borderColor = cc.Light(0.01f);
-                                innerColor = cc.Dark(0.05f);
-                                textColor = cc.LightLight();
-                            }
-                            else
-                            {
-                                borderColor = cc.Light(1f);
-                                innerColor = cc.LightLight().CB(0.35f);
-                                textColor = cc;
-                            }
+                            break;
                         }
 
-                        else if (DarkMode)
+                        using (Config.Colors_Collection colors = new(CustomColor, default, DarkMode))
                         {
-                            borderColor = CustomColor.CB(0.03f);
-                            innerColor = CustomColor.CB(0.01f);
-                            textColor = CustomColor.LightLight();
-                        }
-                        else
-                        {
-                            borderColor = CustomColor.CB(0.3f);
-                            innerColor = CustomColor.CB(0.1f);
-                            textColor = CustomColor.CB(0.7f);
+                            borderColor = colors.Line_Checked_Hover;
+                            innerColor = colors.Back_Checked_Hover;
+                            textColor = colors.ForeColor_Accent;
                         }
 
                         break;
                     }
-
             }
 
-            using (var br = new SolidBrush(innerColor))
-            {
-                G.FillRoundedRect(br, new Rectangle(0, 0, Width - 1, Height - 1));
-            }
-            using (var P = new Pen(borderColor))
-            {
-                G.DrawRoundedRect_LikeW11(P, new Rectangle(0, 0, Width - 1, Height - 1));
-            }
+            using (SolidBrush br = new(innerColor)) { G.FillRoundedRect(br, new Rectangle(0, 0, Width - 1, Height - 1)); }
+
+            using (Pen P = new(borderColor)) { G.DrawRoundedRect_LikeW11(P, new Rectangle(0, 0, Width - 1, Height - 1)); }
 
             int TextX = 5;
 
-            if (Image is not null)
-                G.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height));
-
+            if (Image is not null) { G.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height)); }
+               
             if (!CenterText)
             {
                 if (Image is null)
                 {
-                    using (var br = new SolidBrush(textColor))
-                    {
-                        G.DrawString(Text, Font, br, new Rectangle(TextX, 0, Width, Height), ContentAlignment.MiddleLeft.ToStringFormat(RTL));
-                    }
+                    using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(TextX, 0, Width, Height), ContentAlignment.MiddleLeft.ToStringFormat(RTL)); }
                 }
                 else if (!RTL)
                 {
-                    using (var br = new SolidBrush(textColor))
-                    {
-                        G.DrawString(Text, Font, br, new Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), ContentAlignment.TopLeft.ToStringFormat());
-                    }
+                    using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), ContentAlignment.TopLeft.ToStringFormat()); }
                 }
                 else
                 {
-                    using (var br = new SolidBrush(textColor))
+                    using (SolidBrush br = new(textColor))
                     {
                         G.DrawString(Text, Font, br, new Rectangle(0, 7, Width - (10 + Image.Width), Height - 10), ContentAlignment.TopLeft.ToStringFormat(RTL));
                     }
@@ -311,14 +234,8 @@ namespace WinPaletter.UI.WP
             }
             else
             {
-                using (var br = new SolidBrush(textColor))
-                {
-                    G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), ContentAlignment.MiddleCenter.ToStringFormat(RTL));
-                }
+                using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), ContentAlignment.MiddleCenter.ToStringFormat(RTL)); }
             }
-
         }
-
     }
-
 }

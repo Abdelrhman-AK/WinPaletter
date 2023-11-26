@@ -318,8 +318,8 @@ namespace WinPaletter.Theme
                     {
                         using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
-                            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-                            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+                            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+                            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
                             _ErrorHappened = false;
 
@@ -690,7 +690,7 @@ namespace WinPaletter.Theme
                             this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, string.Empty, Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
 
                             // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
-                            if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
                                 this.Execute(new MethodInvoker(() =>
                                 {
@@ -701,7 +701,7 @@ namespace WinPaletter.Theme
                                 }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
                             }
 
-                            else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+                            else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
                             {
 
                                 this.Execute(new MethodInvoker(() =>

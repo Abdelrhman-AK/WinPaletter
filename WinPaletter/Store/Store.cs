@@ -563,8 +563,8 @@ namespace WinPaletter
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
             // To prevent effect of a store theme on the other forms
-            Program.Settings = new WPSettings(WPSettings.Mode.Registry);
-            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.Settings = new Settings(Settings.Mode.Registry);
+            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             ApplyStyle(this);
 
@@ -1027,7 +1027,7 @@ namespace WinPaletter
                             ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
                             ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
                             LoadCursorsFromTM(StoreItem.TM);
-                            Config.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                            Program.Style.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                             foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
                             {
@@ -1107,8 +1107,6 @@ namespace WinPaletter
                                 Label26.Text = Program.Lang.Store_ThemeDesignedFor1;
                             }
 
-                            desc_txt.BackColor = desc_txt.GetParentColor();
-
                             if (StoreItem.TM.AppTheme.Enabled)
                             {
                                 desc_txt.ForeColor = StoreItem.TM.AppTheme.DarkMode ? Color.White : Color.Black;
@@ -1168,7 +1166,7 @@ namespace WinPaletter
         #region    Store
         public void Apply_Theme()
         {
-            ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
+            ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
             Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
             Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
             Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
@@ -1438,9 +1436,6 @@ namespace WinPaletter
             }
 
             Titlebar_lbl.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
-            back_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
-            search_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
-            search_filter_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
 
             UpdateTitlebarColors();
         }
@@ -1496,11 +1491,11 @@ namespace WinPaletter
         {
 
             Program.Animator.HideSync(Tabs);
-            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
-                Program.Settings = new WPSettings(WPSettings.Mode.Registry);
+                Program.Settings = new Settings(Settings.Mode.Registry);
                 GetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle(this, true);

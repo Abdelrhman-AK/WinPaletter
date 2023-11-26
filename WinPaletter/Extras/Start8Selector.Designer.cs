@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -71,10 +71,8 @@ namespace WinPaletter
             this.img1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img1.ForeColor = System.Drawing.Color.White;
             this.img1.Image = ((System.Drawing.Image)(resources.GetObject("img1.Image")));
-            this.img1.ImageWithText = false;
             this.img1.Location = new System.Drawing.Point(3, 41);
             this.img1.Name = "img1";
-            this.img1.ShowText = false;
             this.img1.Size = new System.Drawing.Size(80, 80);
             this.img1.TabIndex = 0;
             this.img1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,10 +83,8 @@ namespace WinPaletter
             this.img2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img2.ForeColor = System.Drawing.Color.White;
             this.img2.Image = ((System.Drawing.Image)(resources.GetObject("img2.Image")));
-            this.img2.ImageWithText = false;
             this.img2.Location = new System.Drawing.Point(89, 41);
             this.img2.Name = "img2";
-            this.img2.ShowText = false;
             this.img2.Size = new System.Drawing.Size(80, 80);
             this.img2.TabIndex = 1;
             this.img2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -99,10 +95,8 @@ namespace WinPaletter
             this.img3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img3.ForeColor = System.Drawing.Color.White;
             this.img3.Image = ((System.Drawing.Image)(resources.GetObject("img3.Image")));
-            this.img3.ImageWithText = false;
             this.img3.Location = new System.Drawing.Point(175, 41);
             this.img3.Name = "img3";
-            this.img3.ShowText = false;
             this.img3.Size = new System.Drawing.Size(80, 80);
             this.img3.TabIndex = 2;
             this.img3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -113,10 +107,8 @@ namespace WinPaletter
             this.img7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img7.ForeColor = System.Drawing.Color.White;
             this.img7.Image = ((System.Drawing.Image)(resources.GetObject("img7.Image")));
-            this.img7.ImageWithText = false;
             this.img7.Location = new System.Drawing.Point(175, 127);
             this.img7.Name = "img7";
-            this.img7.ShowText = false;
             this.img7.Size = new System.Drawing.Size(80, 80);
             this.img7.TabIndex = 3;
             this.img7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -127,10 +119,8 @@ namespace WinPaletter
             this.img4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img4.ForeColor = System.Drawing.Color.White;
             this.img4.Image = ((System.Drawing.Image)(resources.GetObject("img4.Image")));
-            this.img4.ImageWithText = false;
             this.img4.Location = new System.Drawing.Point(261, 41);
             this.img4.Name = "img4";
-            this.img4.ShowText = false;
             this.img4.Size = new System.Drawing.Size(80, 80);
             this.img4.TabIndex = 4;
             this.img4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -141,10 +131,8 @@ namespace WinPaletter
             this.img5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img5.ForeColor = System.Drawing.Color.White;
             this.img5.Image = ((System.Drawing.Image)(resources.GetObject("img5.Image")));
-            this.img5.ImageWithText = false;
             this.img5.Location = new System.Drawing.Point(3, 127);
             this.img5.Name = "img5";
-            this.img5.ShowText = false;
             this.img5.Size = new System.Drawing.Size(80, 80);
             this.img5.TabIndex = 5;
             this.img5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -155,10 +143,8 @@ namespace WinPaletter
             this.img6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img6.ForeColor = System.Drawing.Color.White;
             this.img6.Image = ((System.Drawing.Image)(resources.GetObject("img6.Image")));
-            this.img6.ImageWithText = false;
             this.img6.Location = new System.Drawing.Point(89, 127);
             this.img6.Name = "img6";
-            this.img6.ShowText = false;
             this.img6.Size = new System.Drawing.Size(80, 80);
             this.img6.TabIndex = 6;
             this.img6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -169,10 +155,8 @@ namespace WinPaletter
             this.img8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img8.ForeColor = System.Drawing.Color.White;
             this.img8.Image = ((System.Drawing.Image)(resources.GetObject("img8.Image")));
-            this.img8.ImageWithText = false;
             this.img8.Location = new System.Drawing.Point(261, 127);
             this.img8.Name = "img8";
-            this.img8.ShowText = false;
             this.img8.Size = new System.Drawing.Size(80, 80);
             this.img8.TabIndex = 7;
             this.img8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -183,10 +167,8 @@ namespace WinPaletter
             this.img9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img9.ForeColor = System.Drawing.Color.White;
             this.img9.Image = ((System.Drawing.Image)(resources.GetObject("img9.Image")));
-            this.img9.ImageWithText = false;
             this.img9.Location = new System.Drawing.Point(3, 213);
             this.img9.Name = "img9";
-            this.img9.ShowText = false;
             this.img9.Size = new System.Drawing.Size(80, 80);
             this.img9.TabIndex = 8;
             this.img9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -197,10 +179,8 @@ namespace WinPaletter
             this.img15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img15.ForeColor = System.Drawing.Color.White;
             this.img15.Image = ((System.Drawing.Image)(resources.GetObject("img15.Image")));
-            this.img15.ImageWithText = false;
             this.img15.Location = new System.Drawing.Point(175, 299);
             this.img15.Name = "img15";
-            this.img15.ShowText = false;
             this.img15.Size = new System.Drawing.Size(80, 80);
             this.img15.TabIndex = 14;
             this.img15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -211,10 +191,8 @@ namespace WinPaletter
             this.img14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img14.ForeColor = System.Drawing.Color.White;
             this.img14.Image = ((System.Drawing.Image)(resources.GetObject("img14.Image")));
-            this.img14.ImageWithText = false;
             this.img14.Location = new System.Drawing.Point(89, 299);
             this.img14.Name = "img14";
-            this.img14.ShowText = false;
             this.img14.Size = new System.Drawing.Size(80, 80);
             this.img14.TabIndex = 13;
             this.img14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -225,10 +203,8 @@ namespace WinPaletter
             this.img12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img12.ForeColor = System.Drawing.Color.White;
             this.img12.Image = ((System.Drawing.Image)(resources.GetObject("img12.Image")));
-            this.img12.ImageWithText = false;
             this.img12.Location = new System.Drawing.Point(261, 213);
             this.img12.Name = "img12";
-            this.img12.ShowText = false;
             this.img12.Size = new System.Drawing.Size(80, 80);
             this.img12.TabIndex = 12;
             this.img12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -239,10 +215,8 @@ namespace WinPaletter
             this.img11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img11.ForeColor = System.Drawing.Color.White;
             this.img11.Image = ((System.Drawing.Image)(resources.GetObject("img11.Image")));
-            this.img11.ImageWithText = false;
             this.img11.Location = new System.Drawing.Point(175, 213);
             this.img11.Name = "img11";
-            this.img11.ShowText = false;
             this.img11.Size = new System.Drawing.Size(80, 80);
             this.img11.TabIndex = 11;
             this.img11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -253,10 +227,8 @@ namespace WinPaletter
             this.img10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img10.ForeColor = System.Drawing.Color.White;
             this.img10.Image = ((System.Drawing.Image)(resources.GetObject("img10.Image")));
-            this.img10.ImageWithText = false;
             this.img10.Location = new System.Drawing.Point(89, 213);
             this.img10.Name = "img10";
-            this.img10.ShowText = false;
             this.img10.Size = new System.Drawing.Size(80, 80);
             this.img10.TabIndex = 10;
             this.img10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -267,10 +239,8 @@ namespace WinPaletter
             this.img13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img13.ForeColor = System.Drawing.Color.White;
             this.img13.Image = ((System.Drawing.Image)(resources.GetObject("img13.Image")));
-            this.img13.ImageWithText = false;
             this.img13.Location = new System.Drawing.Point(3, 299);
             this.img13.Name = "img13";
-            this.img13.ShowText = false;
             this.img13.Size = new System.Drawing.Size(80, 80);
             this.img13.TabIndex = 9;
             this.img13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -281,10 +251,8 @@ namespace WinPaletter
             this.img18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img18.ForeColor = System.Drawing.Color.White;
             this.img18.Image = ((System.Drawing.Image)(resources.GetObject("img18.Image")));
-            this.img18.ImageWithText = false;
             this.img18.Location = new System.Drawing.Point(89, 385);
             this.img18.Name = "img18";
-            this.img18.ShowText = false;
             this.img18.Size = new System.Drawing.Size(80, 80);
             this.img18.TabIndex = 17;
             this.img18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -295,10 +263,8 @@ namespace WinPaletter
             this.img17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img17.ForeColor = System.Drawing.Color.White;
             this.img17.Image = ((System.Drawing.Image)(resources.GetObject("img17.Image")));
-            this.img17.ImageWithText = false;
             this.img17.Location = new System.Drawing.Point(3, 385);
             this.img17.Name = "img17";
-            this.img17.ShowText = false;
             this.img17.Size = new System.Drawing.Size(80, 80);
             this.img17.TabIndex = 16;
             this.img17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -309,10 +275,8 @@ namespace WinPaletter
             this.img16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img16.ForeColor = System.Drawing.Color.White;
             this.img16.Image = ((System.Drawing.Image)(resources.GetObject("img16.Image")));
-            this.img16.ImageWithText = false;
             this.img16.Location = new System.Drawing.Point(261, 299);
             this.img16.Name = "img16";
-            this.img16.ShowText = false;
             this.img16.Size = new System.Drawing.Size(80, 80);
             this.img16.TabIndex = 15;
             this.img16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -323,10 +287,8 @@ namespace WinPaletter
             this.img20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img20.ForeColor = System.Drawing.Color.White;
             this.img20.Image = null;
-            this.img20.ImageWithText = false;
             this.img20.Location = new System.Drawing.Point(261, 385);
             this.img20.Name = "img20";
-            this.img20.ShowText = false;
             this.img20.Size = new System.Drawing.Size(80, 80);
             this.img20.TabIndex = 19;
             this.img20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -337,10 +299,8 @@ namespace WinPaletter
             this.img19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img19.ForeColor = System.Drawing.Color.White;
             this.img19.Image = null;
-            this.img19.ImageWithText = false;
             this.img19.Location = new System.Drawing.Point(175, 385);
             this.img19.Name = "img19";
-            this.img19.ShowText = false;
             this.img19.Size = new System.Drawing.Size(80, 80);
             this.img19.TabIndex = 18;
             this.img19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -349,7 +309,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -367,7 +326,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;

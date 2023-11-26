@@ -20,7 +20,7 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// Used to make custom controls follow Manager's font smoothing
         /// </summary>
-        public static TextRenderingHint RenderingHint { get; set; } = TextRenderingHint.SystemDefault;
+        public TextRenderingHint RenderingHint { get; set; } = TextRenderingHint.SystemDefault;
 
         public bool DarkMode { get; set; } = true;
 

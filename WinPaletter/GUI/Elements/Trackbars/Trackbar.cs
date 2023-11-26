@@ -14,8 +14,7 @@ namespace WinPaletter.UI.WP
         public Trackbar()
         {
             Timer = new Timer() { Enabled = false, Interval = 1 };
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
-            SetStyle((ControlStyles)139286, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
 
             DoubleBuffered = true;
@@ -26,17 +25,16 @@ namespace WinPaletter.UI.WP
             MouseEnter += Trackbar_MouseEnter;
             MouseLeave += Trackbar_MouseLeave;
             MouseWheel += Trackbar_MouseWheel;
-            HandleCreated += Trackbar_HandleCreated;
-            HandleDestroyed += Trackbar_HandleDestroyed;
             Timer.Tick += Timer_Tick;
+
+            alpha = 0;
+            Invalidate();
         }
 
         #region Variables
 
         private readonly int ButtonSize = 0;
-        private readonly int ThumbSize = 35; // 14 minimum
         private Rectangle LSA;
-        private Rectangle RSA;
         private Rectangle Shaft;
         private Rectangle Thumb;
         private bool ThumbDown;
@@ -110,16 +108,9 @@ namespace WinPaletter.UI.WP
         private int _Value;
         public int Value
         {
-            get
-            {
-
-                return _Value;
-            }
+            get { return _Value; }
             set
             {
-                //if (value == _Value)
-                //    return;
-
                 if (value > _Maximum)
                 {
                     value = _Maximum;
@@ -130,13 +121,15 @@ namespace WinPaletter.UI.WP
                     value = _Minimum;
                 }
 
-                _Value = value;
-                InvalidatePosition();
-                Refresh();
-                Scroll?.Invoke(this);
+                if (_Value != value) 
+                {
+                    _Value = value;
+                    InvalidateLayout();
+                    InvalidatePosition();
+                    Scroll?.Invoke(this);
+                }
             }
         }
-
 
         private int _SmallChange = 1;
         public int SmallChange
@@ -174,7 +167,6 @@ namespace WinPaletter.UI.WP
                 _LargeChange = value;
             }
         }
-
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -216,7 +208,6 @@ namespace WinPaletter.UI.WP
         private void InvalidateLayout()
         {
             LSA = new Rectangle(0, 0, ButtonSize, Height);
-            RSA = new Rectangle(Width - ButtonSize, 0, ButtonSize, Height);
             Shaft = new Rectangle((int)Math.Round(LSA.Right + 1 + 0.5d * Height), 0, Width - Height - 1, Height);
             Thumb = new Rectangle(0, 1, (int)Math.Round(Value / (double)Maximum * Shaft.Width), Height - 3);
             Circle = new Rectangle((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
@@ -330,56 +321,6 @@ namespace WinPaletter.UI.WP
                 else
                     Value -= SmallChange;
             }
-        }
-
-        private void Trackbar_HandleCreated(object sender, EventArgs e)
-        {
-
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Load += Loaded;
-                    FindForm().Shown += Showed;
-                }
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                alpha = 0;
-            }
-            catch
-            {
-            }
-        }
-
-        private void Trackbar_HandleDestroyed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Load -= Loaded;
-                    FindForm().Shown -= Showed;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public void Loaded(object sender, EventArgs e)
-        {
-            _Shown = false;
-        }
-
-        public void Showed(object sender, EventArgs e)
-        {
-            _Shown = true;
-            Invalidate();
         }
 
         #endregion

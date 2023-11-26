@@ -80,9 +80,10 @@ namespace WinPaletter
 
                 RadioImage radio = new()
                 {
-                    ImageWithText = true,
-                    ShowText = true,
+                    ImageAlign = ContentAlignment.MiddleLeft,
                     TextAlign = ContentAlignment.MiddleLeft,
+                    TextImageRelation = TextImageRelation.ImageBeforeText,
+                    Padding = new(5, 0, 0, 0),
                     Checked = (User.SID != null) ? user.Key == User.SID : user.Key == User.AdminSID_GrantedUAC,
                     Size = new Size(250, 70),
                     Tag = user.Key,

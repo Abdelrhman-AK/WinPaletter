@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.UI.WP.Button;
 
 namespace WinPaletter.UI.Style
 {
@@ -160,10 +159,16 @@ namespace WinPaletter.UI.Style
             {
                 BackColor = Program.Settings.Appearance.BackColor;
                 AccentColor = Program.Settings.Appearance.AccentColor;
-                Secondary = Program.Settings.Appearance.SecondaryColor;
-                Tertiary = Program.Settings.Appearance.TertiaryColor;
-                Disabled = Program.Settings.Appearance.DisabledColor;
-                Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
+                //Secondary = Program.Settings.Appearance.SecondaryColor;
+                //Tertiary = Program.Settings.Appearance.TertiaryColor;
+                //Disabled = Program.Settings.Appearance.DisabledColor;
+                //Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
+
+                Secondary = DefaultColors.SecondaryColor;
+                Tertiary = DefaultColors.TertiaryColor;
+                Disabled = DefaultColors.DisabledColor;
+                Disabled_Background = DefaultColors.DisabledBackColor;
+
                 DarkMode = Program.Settings.Appearance.CustomTheme;
                 RoundedCorners = Program.Settings.Appearance.RoundedCorners;
                 CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
@@ -174,10 +179,10 @@ namespace WinPaletter.UI.Style
                 DarkMode = Program.Style.DarkMode;  // Must be before BackColor
                 RoundedCorners = Program.Style.RoundedCorners;
                 BackColor = DarkMode ? DefaultColors.BackColorDark : DefaultColors.BackColorLight;
-                AccentColor = DefaultColors.Accent;
-                Secondary = DefaultColors.Secondary;
-                Tertiary = DefaultColors.Tertiary;
-                Disabled = DefaultColors.Disabled;
+                AccentColor = DefaultColors.PrimaryColor;
+                Secondary = DefaultColors.SecondaryColor;
+                Tertiary = DefaultColors.TertiaryColor;
+                Disabled = DefaultColors.DisabledColor;
                 Disabled_Background = DefaultColors.DisabledBackColor;
                 CustomR = false;
             }
@@ -300,10 +305,8 @@ namespace WinPaletter.UI.Style
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
         {
             // This will make all control have a consistent dark\light mode.
-            var ctrl_theme = DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
-
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
-                SetControlTheme(ctrl.Handle, ctrl_theme);
+                SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
             bool b = false;
             if (ctrl is UI.Retro.ButtonR)
@@ -325,14 +328,12 @@ namespace WinPaletter.UI.Style
                 {
                     case true:
                         {
-                            if (ctrl.ForeColor == Color.Black)
-                                ctrl.ForeColor = Color.White;
+                            if (ctrl.ForeColor == Color.Black) ctrl.ForeColor = Color.White;
                             break;
                         }
                     case false:
                         {
-                            if (ctrl.ForeColor == Color.White)
-                                ctrl.ForeColor = Color.Black;
+                            if (ctrl.ForeColor == Color.White) ctrl.ForeColor = Color.Black;
                             break;
                         }
                 }
@@ -341,11 +342,6 @@ namespace WinPaletter.UI.Style
             if (ctrl is UI.WP.GroupBox)
             {
                 ((UI.WP.GroupBox)ctrl).BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.05d));
-            }
-
-            else if (ctrl is UI.WP.RadioImage)
-            {
-                ((UI.WP.RadioImage)ctrl).BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.05d : -0.05d));
             }
 
             else if (ctrl is UI.WP.Button)
@@ -372,10 +368,8 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is ListView)
             {
-                {
-                    var temp3 = (ListView)ctrl;
-                    temp3.BackColor = ctrl.Parent.BackColor;
-                }
+                var temp3 = (ListView)ctrl;
+                temp3.BackColor = ctrl.Parent.BackColor;
             }
 
             else if (ctrl is ListBox)
@@ -438,10 +432,7 @@ namespace WinPaletter.UI.Style
             {
                 foreach (Control c in ctrl.Controls)
                 {
-                    if (c is TabPage)
-                    {
-                        c.BackColor = ctrl.Parent.BackColor;
-                    }
+                    if (c is TabPage) { c.BackColor = ctrl.Parent.BackColor; }
 
                     ApplyStyleToSubControls(c, DarkMode);
                 }

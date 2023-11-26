@@ -21,12 +21,12 @@ namespace WinPaletter
         }
         public void LoadSettings()
         {
-            WPSettings sets;
+            Settings sets;
 
             if (!_External)
                 sets = Program.Settings;
             else
-                sets = new WPSettings(WPSettings.Mode.File, _File);
+                sets = new Settings(Settings.Mode.File, _File);
             Read(sets);
 
             {
@@ -43,7 +43,7 @@ namespace WinPaletter
                 OpenFileDialog1.FileName = _File;
             TextBox3.Text = Program.Settings.Language.File;
         }
-        public void Read(WPSettings Sets)
+        public void Read(Settings Sets)
         {
             CheckBox1.Checked = Sets.FileTypeManagement.AutoAddExt;
 
@@ -57,7 +57,7 @@ namespace WinPaletter
             CheckBox5.Checked = Sets.Updates.AutoCheck;
             CheckBox9.Checked = Sets.Miscellaneous.Win7LivePreview;
 
-            ComboBox2.SelectedIndex = Sets.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable ? 0 : 1;
+            ComboBox2.SelectedIndex = Sets.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? 0 : 1;
             CheckBox17.Checked = Sets.ThemeApplyingBehavior.ShowSaveConfirmation;
             CheckBox33.Checked = Sets.FileTypeManagement.CompressThemeFile;
 
@@ -78,22 +78,22 @@ namespace WinPaletter
 
             switch (Sets.NerdStats.Type)
             {
-                case WPSettings.Structures.NerdStats.Formats.HEX:
+                case Settings.Structures.NerdStats.Formats.HEX:
                     {
                         ComboBox3.SelectedIndex = 0;
                         break;
                     }
-                case WPSettings.Structures.NerdStats.Formats.RGB:
+                case Settings.Structures.NerdStats.Formats.RGB:
                     {
                         ComboBox3.SelectedIndex = 1;
                         break;
                     }
-                case WPSettings.Structures.NerdStats.Formats.HSL:
+                case Settings.Structures.NerdStats.Formats.HSL:
                     {
                         ComboBox3.SelectedIndex = 2;
                         break;
                     }
-                case WPSettings.Structures.NerdStats.Formats.Dec:
+                case Settings.Structures.NerdStats.Formats.Dec:
                     {
                         ComboBox3.SelectedIndex = 3;
                         break;
@@ -108,13 +108,13 @@ namespace WinPaletter
 
             switch (Sets.ThemeLog.VerboseLevel)
             {
-                case WPSettings.Structures.ThemeLog.VerboseLevels.Basic:
+                case Settings.Structures.ThemeLog.VerboseLevels.Basic:
                     {
                         VL1.Checked = true;
                         break;
                     }
 
-                case WPSettings.Structures.ThemeLog.VerboseLevels.Detailed:
+                case Settings.Structures.ThemeLog.VerboseLevels.Detailed:
                     {
                         VL2.Checked = true;
                         break;
@@ -144,26 +144,26 @@ namespace WinPaletter
 
             CheckBox22.Checked = Sets.ThemeApplyingBehavior.DelayMetrics;
 
-            RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton8.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton10.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
-            RadioButton9.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
-            RadioButton7.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
+            RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton8.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton10.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+            RadioButton9.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+            RadioButton7.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
             CheckBox25.Checked = Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT;
-            RadioButton12.Checked = Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton11.Checked = !(Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton14.Checked = Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton13.Checked = !(Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton16.Checked = Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton15.Checked = !(Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton18.Checked = Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton17.Checked = !(Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton20.Checked = Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton19.Checked = !(Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton22.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton23.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
-            RadioButton21.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+            RadioButton12.Checked = Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton11.Checked = !(Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton14.Checked = Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton13.Checked = !(Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton16.Checked = Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton15.Checked = !(Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton18.Checked = Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton17.Checked = !(Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton20.Checked = Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton19.Checked = !(Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
+            RadioButton22.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            RadioButton23.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+            RadioButton21.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
             CheckBox35_SFC.Checked = Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
             CheckBox36.Checked = Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
             RadioButton25.Checked = Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
@@ -209,7 +209,7 @@ namespace WinPaletter
             //bool ch_WPElevator = false;
 
             {
-                ref WPSettings Settings = ref Program.Settings;
+                ref Settings Settings = ref Program.Settings;
                 if (Settings.Appearance.DarkMode != RadioButton3.Checked)
                     ch_appearance = true;
                 if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
@@ -259,7 +259,7 @@ namespace WinPaletter
                 //    ch_WPElevator = true;
             }
 
-            Write(Program.Settings, WPSettings.Mode.Registry);
+            Write(Program.Settings, Settings.Mode.Registry);
 
             if (ch_appearance)
             {
@@ -367,7 +367,7 @@ namespace WinPaletter
 
             MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public void Write(WPSettings Sets, WPSettings.Mode Mode, string File = "")
+        public void Write(Settings Sets, Settings.Mode Mode, string File = "")
         {
             Sets.FileTypeManagement.AutoAddExt = CheckBox1.Checked;
             Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked;
@@ -377,7 +377,7 @@ namespace WinPaletter
 
             Sets.Updates.AutoCheck = CheckBox5.Checked;
             Sets.Miscellaneous.Win7LivePreview = CheckBox9.Checked;
-            Sets.Updates.Channel = (WPSettings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
+            Sets.Updates.Channel = (Settings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
 
             Sets.Appearance.DarkMode = RadioButton3.Checked;
             Sets.Appearance.AutoDarkMode = CheckBox6.Checked;
@@ -389,7 +389,7 @@ namespace WinPaletter
             Sets.Language.Enabled = CheckBox8.Checked;
             Sets.Language.File = TextBox3.Text;
             Sets.NerdStats.Enabled = CheckBox10.Checked;
-            Sets.NerdStats.Type = (WPSettings.Structures.NerdStats.Formats)ComboBox3.SelectedIndex;
+            Sets.NerdStats.Type = (Settings.Structures.NerdStats.Formats)ComboBox3.SelectedIndex;
             Sets.NerdStats.ShowHexHash = CheckBox11.Checked;
             Sets.NerdStats.MoreLabelTransparency = CheckBox3.Checked;
             Sets.NerdStats.UseWindowsMonospacedFont = CheckBox31.Checked;
@@ -407,13 +407,13 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences = CheckBox15.Checked;
 
             if (VL0.Checked)
-                Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.None;
+                Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.None;
 
             if (VL1.Checked)
-                Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Basic;
+                Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.Basic;
 
             if (VL2.Checked)
-                Sets.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+                Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             Sets.ThemeLog.CountDown = CheckBox18.Checked;
             Sets.ThemeLog.CountDown_Seconds = NumericUpDown1.Value;
@@ -428,57 +428,57 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.DelayMetrics = CheckBox22.Checked;
 
             if (RadioButton5.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton8.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
 
             if (RadioButton10.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton9.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
 
             if (RadioButton7.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
+                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
 
             Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT = CheckBox25.Checked;
 
             if (RadioButton12.Checked)
-                Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton14.Checked)
-                Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton16.Checked)
-                Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton18.Checked)
-                Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton20.Checked)
-                Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             else
-                Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton22.Checked)
-                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
 
             if (RadioButton23.Checked)
-                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
 
             if (RadioButton21.Checked)
-                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+                Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox36.Checked;
@@ -497,12 +497,12 @@ namespace WinPaletter
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            WPSettings NewSets = new WPSettings(WPSettings.Mode.Empty);
+            Settings NewSets = new Settings(Settings.Mode.Empty);
 
             Changed = false;
 
             {
-                ref WPSettings Settings = ref Program.Settings;
+                ref Settings Settings = ref Program.Settings;
                 if (Settings.FileTypeManagement.AutoAddExt != CheckBox1.Checked)
                     Changed = true;
                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
@@ -570,11 +570,11 @@ namespace WinPaletter
                 if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != CheckBox15.Checked)
                     Changed = true;
 
-                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
+                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
                     Changed = true;
-                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Basic & !VL1.Checked)
+                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Basic & !VL1.Checked)
                     Changed = true;
-                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
+                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
                     Changed = true;
                 if (Settings.ThemeLog.CountDown != CheckBox18.Checked)
                     Changed = true;
@@ -599,46 +599,46 @@ namespace WinPaletter
                 if (Settings.ThemeApplyingBehavior.DelayMetrics != CheckBox22.Checked)
                     Changed = true;
 
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton6.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton6.Checked)
                     Changed = true;
 
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton8.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton8.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton10.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton10.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton9.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton9.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT != CheckBox25.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
+                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton11.Checked)
+                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton11.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton14.Checked)
+                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton14.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton13.Checked)
+                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton13.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton16.Checked)
+                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton16.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton15.Checked)
+                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton15.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton18.Checked)
+                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton18.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton17.Checked)
+                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton17.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton20.Checked)
+                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton20.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton19.Checked)
+                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton19.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton22.Checked)
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton22.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton23.Checked)
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton23.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != CheckBox35_SFC.Checked)
                     Changed = true;
@@ -788,8 +788,8 @@ namespace WinPaletter
 
             if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var sets = new WPSettings(WPSettings.Mode.Empty);
-                Write(sets, WPSettings.Mode.File, SaveFileDialog1.FileName);
+                var sets = new Settings(Settings.Mode.Empty);
+                Write(sets, Settings.Mode.File, SaveFileDialog1.FileName);
             }
 
         }
@@ -798,7 +798,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var sets = new WPSettings(WPSettings.Mode.File, OpenFileDialog1.FileName);
+                var sets = new Settings(Settings.Mode.File, OpenFileDialog1.FileName);
                 Read(sets);
             }
         }
@@ -821,7 +821,7 @@ namespace WinPaletter
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            var sets = new WPSettings(WPSettings.Mode.File, files[0]);
+            var sets = new Settings(Settings.Mode.File, files[0]);
             Read(sets);
 
             OpenFileDialog1.FileName = files[0];

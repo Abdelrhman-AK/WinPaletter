@@ -83,7 +83,7 @@ namespace WinPaletter
             themename_lbl.Text = string.Format("{0} ({1})", TM.Info.ThemeName, TM.Info.ThemeVersion);
             author_lbl.Text = string.Format("{0} {1}", Program.Lang.By, TM.Info.Author);
 
-            ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
+            ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
             Appearance.CustomColors = TM.AppTheme.Enabled;
             Appearance.BackColor = TM.AppTheme.BackColor;
             Appearance.AccentColor = TM.AppTheme.AccentColor;
@@ -438,9 +438,9 @@ namespace WinPaletter
             BetaInt = 0;
             UpdateChannel = 0;
             ChannelFixer = 0;
-            if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
+            if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable)
                 ChannelFixer = 0;
-            if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
+            if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Beta)
                 ChannelFixer = 1;
             BackgroundWorker1.RunWorkerAsync();
         }
@@ -692,9 +692,9 @@ namespace WinPaletter
             }
             Program.Settings.General.Save();
 
-            var old = new WPSettings(WPSettings.Mode.Registry);
+            var old = new Settings(Settings.Mode.Registry);
             {
-                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
+                ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = old.Appearance.CustomColors;
                 Appearance.BackColor = old.Appearance.BackColor;
                 Appearance.AccentColor = old.Appearance.AccentColor;

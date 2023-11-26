@@ -96,9 +96,9 @@ namespace WinPaletter
                             }
                         }
 
-                        if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
+                        if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable)
                             UpdateChannel = StableInt;
-                        if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
+                        if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Beta)
                             UpdateChannel = BetaInt;
 
                         ver = ls[UpdateChannel].Split(' ')[1];
@@ -216,7 +216,7 @@ namespace WinPaletter
             UC = new WebClient();
             LinkLabel3.Visible = false;
             string F = Program.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
-            Label3.Text = string.Format(F, Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable ? Program.Lang.Stable : Program.Lang.Beta, Program.Lang.Channel);
+            Label3.Text = string.Format(F, Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? Program.Lang.Stable : Program.Lang.Beta, Program.Lang.Channel);
             CheckBox1.Checked = Program.Settings.Updates.AutoCheck;
             _Shown = false;
             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
@@ -248,9 +248,9 @@ namespace WinPaletter
                     }
                 }
 
-                if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Stable)
+                if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable)
                     UpdateChannel = StableInt;
-                if (Program.Settings.Updates.Channel == WPSettings.Structures.Updates.Channels.Beta)
+                if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Beta)
                     UpdateChannel = BetaInt;
 
                 url = ls[UpdateChannel].Split(' ')[4];

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -95,7 +95,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -113,7 +112,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
@@ -133,10 +131,8 @@ namespace WinPaletter
             this.color24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color24.ForeColor = System.Drawing.Color.White;
             this.color24.Image = null;
-            this.color24.ImageWithText = false;
             this.color24.Location = new System.Drawing.Point(284, 245);
             this.color24.Name = "color24";
-            this.color24.ShowText = false;
             this.color24.Size = new System.Drawing.Size(40, 40);
             this.color24.TabIndex = 54;
             this.color24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -147,10 +143,8 @@ namespace WinPaletter
             this.color23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color23.ForeColor = System.Drawing.Color.White;
             this.color23.Image = null;
-            this.color23.ImageWithText = false;
             this.color23.Location = new System.Drawing.Point(238, 245);
             this.color23.Name = "color23";
-            this.color23.ShowText = false;
             this.color23.Size = new System.Drawing.Size(40, 40);
             this.color23.TabIndex = 53;
             this.color23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -161,10 +155,8 @@ namespace WinPaletter
             this.color22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color22.ForeColor = System.Drawing.Color.White;
             this.color22.Image = null;
-            this.color22.ImageWithText = false;
             this.color22.Location = new System.Drawing.Point(192, 245);
             this.color22.Name = "color22";
-            this.color22.ShowText = false;
             this.color22.Size = new System.Drawing.Size(40, 40);
             this.color22.TabIndex = 52;
             this.color22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -175,10 +167,8 @@ namespace WinPaletter
             this.color21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color21.ForeColor = System.Drawing.Color.White;
             this.color21.Image = null;
-            this.color21.ImageWithText = false;
             this.color21.Location = new System.Drawing.Point(146, 245);
             this.color21.Name = "color21";
-            this.color21.ShowText = false;
             this.color21.Size = new System.Drawing.Size(40, 40);
             this.color21.TabIndex = 51;
             this.color21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -189,10 +179,8 @@ namespace WinPaletter
             this.color20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color20.ForeColor = System.Drawing.Color.White;
             this.color20.Image = null;
-            this.color20.ImageWithText = false;
             this.color20.Location = new System.Drawing.Point(100, 245);
             this.color20.Name = "color20";
-            this.color20.ShowText = false;
             this.color20.Size = new System.Drawing.Size(40, 40);
             this.color20.TabIndex = 50;
             this.color20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -203,10 +191,8 @@ namespace WinPaletter
             this.color19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color19.ForeColor = System.Drawing.Color.White;
             this.color19.Image = null;
-            this.color19.ImageWithText = false;
             this.color19.Location = new System.Drawing.Point(284, 199);
             this.color19.Name = "color19";
-            this.color19.ShowText = false;
             this.color19.Size = new System.Drawing.Size(40, 40);
             this.color19.TabIndex = 49;
             this.color19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -217,10 +203,8 @@ namespace WinPaletter
             this.color18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color18.ForeColor = System.Drawing.Color.White;
             this.color18.Image = null;
-            this.color18.ImageWithText = false;
             this.color18.Location = new System.Drawing.Point(238, 199);
             this.color18.Name = "color18";
-            this.color18.ShowText = false;
             this.color18.Size = new System.Drawing.Size(40, 40);
             this.color18.TabIndex = 48;
             this.color18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -231,10 +215,8 @@ namespace WinPaletter
             this.color17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color17.ForeColor = System.Drawing.Color.White;
             this.color17.Image = null;
-            this.color17.ImageWithText = false;
             this.color17.Location = new System.Drawing.Point(192, 199);
             this.color17.Name = "color17";
-            this.color17.ShowText = false;
             this.color17.Size = new System.Drawing.Size(40, 40);
             this.color17.TabIndex = 47;
             this.color17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -245,10 +227,8 @@ namespace WinPaletter
             this.color16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color16.ForeColor = System.Drawing.Color.White;
             this.color16.Image = null;
-            this.color16.ImageWithText = false;
             this.color16.Location = new System.Drawing.Point(146, 199);
             this.color16.Name = "color16";
-            this.color16.ShowText = false;
             this.color16.Size = new System.Drawing.Size(40, 40);
             this.color16.TabIndex = 46;
             this.color16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -259,10 +239,8 @@ namespace WinPaletter
             this.color15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color15.ForeColor = System.Drawing.Color.White;
             this.color15.Image = null;
-            this.color15.ImageWithText = false;
             this.color15.Location = new System.Drawing.Point(100, 199);
             this.color15.Name = "color15";
-            this.color15.ShowText = false;
             this.color15.Size = new System.Drawing.Size(40, 40);
             this.color15.TabIndex = 45;
             this.color15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -273,10 +251,8 @@ namespace WinPaletter
             this.color14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color14.ForeColor = System.Drawing.Color.White;
             this.color14.Image = null;
-            this.color14.ImageWithText = false;
             this.color14.Location = new System.Drawing.Point(284, 153);
             this.color14.Name = "color14";
-            this.color14.ShowText = false;
             this.color14.Size = new System.Drawing.Size(40, 40);
             this.color14.TabIndex = 44;
             this.color14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -287,10 +263,8 @@ namespace WinPaletter
             this.color13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color13.ForeColor = System.Drawing.Color.White;
             this.color13.Image = null;
-            this.color13.ImageWithText = false;
             this.color13.Location = new System.Drawing.Point(238, 153);
             this.color13.Name = "color13";
-            this.color13.ShowText = false;
             this.color13.Size = new System.Drawing.Size(40, 40);
             this.color13.TabIndex = 43;
             this.color13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -301,10 +275,8 @@ namespace WinPaletter
             this.color12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color12.ForeColor = System.Drawing.Color.White;
             this.color12.Image = null;
-            this.color12.ImageWithText = false;
             this.color12.Location = new System.Drawing.Point(192, 153);
             this.color12.Name = "color12";
-            this.color12.ShowText = false;
             this.color12.Size = new System.Drawing.Size(40, 40);
             this.color12.TabIndex = 42;
             this.color12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -315,10 +287,8 @@ namespace WinPaletter
             this.color11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color11.ForeColor = System.Drawing.Color.White;
             this.color11.Image = null;
-            this.color11.ImageWithText = false;
             this.color11.Location = new System.Drawing.Point(146, 153);
             this.color11.Name = "color11";
-            this.color11.ShowText = false;
             this.color11.Size = new System.Drawing.Size(40, 40);
             this.color11.TabIndex = 41;
             this.color11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -329,10 +299,8 @@ namespace WinPaletter
             this.color10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color10.ForeColor = System.Drawing.Color.White;
             this.color10.Image = null;
-            this.color10.ImageWithText = false;
             this.color10.Location = new System.Drawing.Point(100, 153);
             this.color10.Name = "color10";
-            this.color10.ShowText = false;
             this.color10.Size = new System.Drawing.Size(40, 40);
             this.color10.TabIndex = 40;
             this.color10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -343,10 +311,8 @@ namespace WinPaletter
             this.color9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color9.ForeColor = System.Drawing.Color.White;
             this.color9.Image = null;
-            this.color9.ImageWithText = false;
             this.color9.Location = new System.Drawing.Point(284, 107);
             this.color9.Name = "color9";
-            this.color9.ShowText = false;
             this.color9.Size = new System.Drawing.Size(40, 40);
             this.color9.TabIndex = 39;
             this.color9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -357,10 +323,8 @@ namespace WinPaletter
             this.color8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color8.ForeColor = System.Drawing.Color.White;
             this.color8.Image = null;
-            this.color8.ImageWithText = false;
             this.color8.Location = new System.Drawing.Point(238, 107);
             this.color8.Name = "color8";
-            this.color8.ShowText = false;
             this.color8.Size = new System.Drawing.Size(40, 40);
             this.color8.TabIndex = 38;
             this.color8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -371,10 +335,8 @@ namespace WinPaletter
             this.color7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color7.ForeColor = System.Drawing.Color.White;
             this.color7.Image = null;
-            this.color7.ImageWithText = false;
             this.color7.Location = new System.Drawing.Point(192, 107);
             this.color7.Name = "color7";
-            this.color7.ShowText = false;
             this.color7.Size = new System.Drawing.Size(40, 40);
             this.color7.TabIndex = 37;
             this.color7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -385,10 +347,8 @@ namespace WinPaletter
             this.color6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color6.ForeColor = System.Drawing.Color.White;
             this.color6.Image = null;
-            this.color6.ImageWithText = false;
             this.color6.Location = new System.Drawing.Point(146, 107);
             this.color6.Name = "color6";
-            this.color6.ShowText = false;
             this.color6.Size = new System.Drawing.Size(40, 40);
             this.color6.TabIndex = 36;
             this.color6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -400,10 +360,8 @@ namespace WinPaletter
             this.color5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color5.ForeColor = System.Drawing.Color.White;
             this.color5.Image = null;
-            this.color5.ImageWithText = false;
             this.color5.Location = new System.Drawing.Point(100, 107);
             this.color5.Name = "color5";
-            this.color5.ShowText = false;
             this.color5.Size = new System.Drawing.Size(40, 40);
             this.color5.TabIndex = 35;
             this.color5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -414,10 +372,8 @@ namespace WinPaletter
             this.color4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color4.ForeColor = System.Drawing.Color.White;
             this.color4.Image = null;
-            this.color4.ImageWithText = false;
             this.color4.Location = new System.Drawing.Point(284, 61);
             this.color4.Name = "color4";
-            this.color4.ShowText = false;
             this.color4.Size = new System.Drawing.Size(40, 40);
             this.color4.TabIndex = 34;
             this.color4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -428,10 +384,8 @@ namespace WinPaletter
             this.color3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color3.ForeColor = System.Drawing.Color.White;
             this.color3.Image = null;
-            this.color3.ImageWithText = false;
             this.color3.Location = new System.Drawing.Point(238, 61);
             this.color3.Name = "color3";
-            this.color3.ShowText = false;
             this.color3.Size = new System.Drawing.Size(40, 40);
             this.color3.TabIndex = 33;
             this.color3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -442,10 +396,8 @@ namespace WinPaletter
             this.color2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color2.ForeColor = System.Drawing.Color.White;
             this.color2.Image = null;
-            this.color2.ImageWithText = false;
             this.color2.Location = new System.Drawing.Point(192, 61);
             this.color2.Name = "color2";
-            this.color2.ShowText = false;
             this.color2.Size = new System.Drawing.Size(40, 40);
             this.color2.TabIndex = 32;
             this.color2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -456,10 +408,8 @@ namespace WinPaletter
             this.color1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color1.ForeColor = System.Drawing.Color.White;
             this.color1.Image = null;
-            this.color1.ImageWithText = false;
             this.color1.Location = new System.Drawing.Point(146, 61);
             this.color1.Name = "color1";
-            this.color1.ShowText = false;
             this.color1.Size = new System.Drawing.Size(40, 40);
             this.color1.TabIndex = 31;
             this.color1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -470,10 +420,8 @@ namespace WinPaletter
             this.color0.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.color0.ForeColor = System.Drawing.Color.White;
             this.color0.Image = null;
-            this.color0.ImageWithText = false;
             this.color0.Location = new System.Drawing.Point(100, 61);
             this.color0.Name = "color0";
-            this.color0.ShowText = false;
             this.color0.Size = new System.Drawing.Size(40, 40);
             this.color0.TabIndex = 30;
             this.color0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

@@ -505,7 +505,7 @@ namespace WinPaletter
         private void Button8_Click(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
 
             ApplyToTM(Program.TM);
             Close();
@@ -516,7 +516,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
 
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
 
             var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);

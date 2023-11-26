@@ -448,7 +448,7 @@ namespace WinPaletter
             if (TreeView is null)
                 return;
 
-            if (Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
+            if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
                 string v0 = ValueName;
                 string v1;
@@ -488,7 +488,7 @@ namespace WinPaletter
 
         private static void AddVerboseException(TreeView TreeView, Exception ex, string Key, string ValueName, object Value, RegistryValueKind RegType)
         {
-            if (Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
+            if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
                 string v0 = ValueName;
                 string v1;

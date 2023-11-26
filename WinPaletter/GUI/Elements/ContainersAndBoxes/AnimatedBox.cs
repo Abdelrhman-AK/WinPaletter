@@ -114,7 +114,7 @@ namespace WinPaletter.UI.WP
                 var cpar = base.CreateParams;
                 if (!DesignMode)
                 {
-                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    cpar.ExStyle |= 0x20;
                     return cpar;
                 }
                 else

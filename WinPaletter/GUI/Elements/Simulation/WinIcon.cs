@@ -64,7 +64,7 @@ namespace WinPaletter.UI.Simulation
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
 
             var IconRect = new Rectangle(0, 0, Width - 1, Height - 30);

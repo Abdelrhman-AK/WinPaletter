@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -95,7 +95,6 @@ namespace WinPaletter
             // TextBox3
             // 
             TextBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TextBox3.BackColor = Color.FromArgb(55, 55, 55);
             TextBox3.ForeColor = Color.White;
             TextBox3.Location = new Point(157, 12);
             TextBox3.MaxLength = 32767;
@@ -115,8 +114,6 @@ namespace WinPaletter
             // TextBox4
             // 
             TextBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TextBox4.BackColor = Color.FromArgb(55, 55, 55);
-
             TextBox4.ForeColor = Color.White;
             TextBox4.Location = new Point(157, 42);
             TextBox4.MaxLength = 32767;
@@ -137,7 +134,7 @@ namespace WinPaletter
             // 
             Button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button7.BackColor = Color.FromArgb(34, 34, 34);
-            Button7.DrawOnGlass = false;
+
             Button7.Font = new Font("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
@@ -152,7 +149,7 @@ namespace WinPaletter
             // 
             Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.DrawOnGlass = false;
+
             Button2.Font = new Font("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;

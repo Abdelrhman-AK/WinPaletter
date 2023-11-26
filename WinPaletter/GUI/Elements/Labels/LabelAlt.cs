@@ -124,7 +124,7 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
 
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);

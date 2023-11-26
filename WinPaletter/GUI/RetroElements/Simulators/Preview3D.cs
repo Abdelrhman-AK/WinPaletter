@@ -27,7 +27,7 @@ namespace WinPaletter.UI.Retro
             var B = new Bitmap(Width, Height);
             var G = Graphics.FromImage(B);
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
 
             // ################################################################################# Customizer

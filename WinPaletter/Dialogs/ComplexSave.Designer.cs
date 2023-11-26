@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -112,14 +112,15 @@ namespace WinPaletter
             this.RadioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage3.Image")));
-            this.RadioImage3.ImageWithText = true;
+            this.RadioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage3.Location = new System.Drawing.Point(3, 125);
             this.RadioImage3.Name = "RadioImage3";
-            this.RadioImage3.ShowText = true;
+            this.RadioImage3.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage3.Size = new System.Drawing.Size(470, 35);
             this.RadioImage3.TabIndex = 9;
             this.RadioImage3.Text = "Don\'t save";
             this.RadioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // RadioImage2
             // 
@@ -129,14 +130,15 @@ namespace WinPaletter
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage2.Image")));
-            this.RadioImage2.ImageWithText = true;
+            this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage2.Location = new System.Drawing.Point(3, 84);
             this.RadioImage2.Name = "RadioImage2";
-            this.RadioImage2.ShowText = true;
+            this.RadioImage2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage2.Size = new System.Drawing.Size(470, 35);
             this.RadioImage2.TabIndex = 7;
             this.RadioImage2.Text = "Save as ...";
             this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // RadioImage1
             // 
@@ -146,14 +148,15 @@ namespace WinPaletter
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage1.Image")));
-            this.RadioImage1.ImageWithText = true;
+            this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage1.Location = new System.Drawing.Point(3, 43);
             this.RadioImage1.Name = "RadioImage1";
-            this.RadioImage1.ShowText = true;
+            this.RadioImage1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage1.Size = new System.Drawing.Size(470, 35);
             this.RadioImage1.TabIndex = 5;
             this.RadioImage1.Text = "Save";
             this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // PictureBox2
             // 
@@ -203,14 +206,15 @@ namespace WinPaletter
             this.RadioImage7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage7.ForeColor = System.Drawing.Color.White;
             this.RadioImage7.Image = null;
-            this.RadioImage7.ImageWithText = true;
+            this.RadioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage7.Location = new System.Drawing.Point(3, 125);
             this.RadioImage7.Name = "RadioImage7";
-            this.RadioImage7.ShowText = true;
+            this.RadioImage7.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage7.Size = new System.Drawing.Size(470, 35);
             this.RadioImage7.TabIndex = 17;
             this.RadioImage7.Text = "Default Windows";
             this.RadioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // RadioImage4
             // 
@@ -220,14 +224,15 @@ namespace WinPaletter
             this.RadioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage4.ForeColor = System.Drawing.Color.White;
             this.RadioImage4.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage4.Image")));
-            this.RadioImage4.ImageWithText = true;
+            this.RadioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage4.Location = new System.Drawing.Point(3, 166);
             this.RadioImage4.Name = "RadioImage4";
-            this.RadioImage4.ShowText = true;
+            this.RadioImage4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage4.Size = new System.Drawing.Size(470, 35);
             this.RadioImage4.TabIndex = 15;
             this.RadioImage4.Text = "Don\'t apply";
             this.RadioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // RadioImage5
             // 
@@ -237,14 +242,15 @@ namespace WinPaletter
             this.RadioImage5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage5.ForeColor = System.Drawing.Color.White;
             this.RadioImage5.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage5.Image")));
-            this.RadioImage5.ImageWithText = true;
+            this.RadioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage5.Location = new System.Drawing.Point(3, 84);
             this.RadioImage5.Name = "RadioImage5";
-            this.RadioImage5.ShowText = true;
+            this.RadioImage5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage5.Size = new System.Drawing.Size(470, 35);
             this.RadioImage5.TabIndex = 13;
             this.RadioImage5.Text = "First theme (undo applied changes)";
             this.RadioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // RadioImage6
             // 
@@ -254,14 +260,15 @@ namespace WinPaletter
             this.RadioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage6.ForeColor = System.Drawing.Color.White;
             this.RadioImage6.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage6.Image")));
-            this.RadioImage6.ImageWithText = true;
+            this.RadioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RadioImage6.Location = new System.Drawing.Point(3, 43);
             this.RadioImage6.Name = "RadioImage6";
-            this.RadioImage6.ShowText = true;
+            this.RadioImage6.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.RadioImage6.Size = new System.Drawing.Size(470, 35);
             this.RadioImage6.TabIndex = 11;
             this.RadioImage6.Text = "Current theme";
             this.RadioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RadioImage6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // PictureBox3
             // 
@@ -288,8 +295,8 @@ namespace WinPaletter
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.Button1.DrawOnGlass = false;
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
@@ -304,8 +311,8 @@ namespace WinPaletter
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.Button2.DrawOnGlass = false;
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
@@ -320,8 +327,8 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.Button3.DrawOnGlass = false;
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;

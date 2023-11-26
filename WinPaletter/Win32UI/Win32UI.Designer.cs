@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -452,7 +452,6 @@ namespace WinPaletter
             // 
             this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button10.CustomColor = System.Drawing.Color.Empty;
-            this.Button10.DrawOnGlass = false;
             this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
@@ -505,7 +504,6 @@ namespace WinPaletter
             // Button8
             // 
             this.Button8.CustomColor = System.Drawing.Color.Empty;
-            this.Button8.DrawOnGlass = false;
             this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
@@ -534,7 +532,6 @@ namespace WinPaletter
             // 
             this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button6.CustomColor = System.Drawing.Color.Empty;
-            this.Button6.DrawOnGlass = false;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
@@ -552,7 +549,6 @@ namespace WinPaletter
             // 
             this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -568,7 +564,6 @@ namespace WinPaletter
             // Button7
             // 
             this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.DrawOnGlass = false;
             this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
@@ -596,7 +591,6 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.DrawOnGlass = false;
             this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
@@ -613,7 +607,6 @@ namespace WinPaletter
             // Button5
             // 
             this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.DrawOnGlass = false;
             this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
@@ -642,7 +635,6 @@ namespace WinPaletter
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ImageList = this.ImageList1;
             this.TabControl1.ItemSize = new System.Drawing.Size(34, 140);
-            this.TabControl1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.TabControl1.Location = new System.Drawing.Point(12, 82);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
@@ -708,7 +700,6 @@ namespace WinPaletter
             // Button11
             // 
             this.Button11.CustomColor = System.Drawing.Color.Empty;
-            this.Button11.DrawOnGlass = false;
             this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
@@ -775,7 +766,6 @@ namespace WinPaletter
             // Button9
             // 
             this.Button9.CustomColor = System.Drawing.Color.Empty;
-            this.Button9.DrawOnGlass = false;
             this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
@@ -2473,7 +2463,6 @@ namespace WinPaletter
             this.LabelR13.AutoSize = true;
             this.LabelR13.BackColor = System.Drawing.Color.White;
             this.LabelR13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LabelR13.DrawOnGlass = false;
             this.LabelR13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR13.ForeColor = System.Drawing.Color.Black;
             this.LabelR13.Location = new System.Drawing.Point(184, 77);
@@ -2545,7 +2534,6 @@ namespace WinPaletter
             // 
             this.LabelR9.BackColor = System.Drawing.Color.Transparent;
             this.LabelR9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR9.DrawOnGlass = false;
             this.LabelR9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR9.ForeColor = System.Drawing.Color.DimGray;
             this.LabelR9.Location = new System.Drawing.Point(21, 0);
@@ -2581,7 +2569,6 @@ namespace WinPaletter
             // 
             this.LabelR5.BackColor = System.Drawing.Color.Transparent;
             this.LabelR5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR5.DrawOnGlass = false;
             this.LabelR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR5.ForeColor = System.Drawing.Color.White;
             this.LabelR5.Location = new System.Drawing.Point(21, 0);
@@ -2607,7 +2594,6 @@ namespace WinPaletter
             // 
             this.LabelR6.BackColor = System.Drawing.Color.Transparent;
             this.LabelR6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR6.DrawOnGlass = false;
             this.LabelR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR6.ForeColor = System.Drawing.Color.Black;
             this.LabelR6.Location = new System.Drawing.Point(21, 0);
@@ -2681,7 +2667,6 @@ namespace WinPaletter
             this.LabelR4.AutoSize = true;
             this.LabelR4.BackColor = System.Drawing.Color.Transparent;
             this.LabelR4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LabelR4.DrawOnGlass = false;
             this.LabelR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR4.ForeColor = System.Drawing.Color.Black;
             this.LabelR4.Location = new System.Drawing.Point(4, 22);
@@ -2782,7 +2767,6 @@ namespace WinPaletter
             // 
             this.LabelR3.BackColor = System.Drawing.Color.Transparent;
             this.LabelR3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR3.DrawOnGlass = false;
             this.LabelR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR3.ForeColor = System.Drawing.Color.Black;
             this.LabelR3.Location = new System.Drawing.Point(1, 3);
@@ -2796,7 +2780,6 @@ namespace WinPaletter
             // 
             this.LabelR2.BackColor = System.Drawing.Color.Transparent;
             this.LabelR2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelR2.DrawOnGlass = false;
             this.LabelR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.LabelR2.Location = new System.Drawing.Point(40, 0);
@@ -2811,7 +2794,6 @@ namespace WinPaletter
             // 
             this.LabelR1.BackColor = System.Drawing.Color.Transparent;
             this.LabelR1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelR1.DrawOnGlass = false;
             this.LabelR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR1.ForeColor = System.Drawing.Color.Black;
             this.LabelR1.Location = new System.Drawing.Point(0, 0);
@@ -2990,7 +2972,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -3008,7 +2989,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;

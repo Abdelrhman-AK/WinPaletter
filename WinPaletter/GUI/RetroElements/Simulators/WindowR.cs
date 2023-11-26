@@ -421,7 +421,7 @@ namespace WinPaletter.UI.Retro
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
 
             // ################################################################################# Customizer

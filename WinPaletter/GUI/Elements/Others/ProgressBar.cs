@@ -145,7 +145,7 @@ namespace WinPaletter.UI.WP
                 {
                     case ProgressBarState.Normal:
                         {
-                            color = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
+                            color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
                             break;
                         }
 
@@ -163,7 +163,7 @@ namespace WinPaletter.UI.WP
 
                     default:
                         {
-                            color = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
+                            color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
                             break;
                         }
                 }
@@ -275,7 +275,7 @@ namespace WinPaletter.UI.WP
 
         private int _animatedValue = 0;
 
-        private Color _StateColor = Program.Style.Schemes.Main.Colors.Line_CheckedHover;
+        private Color _StateColor = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]

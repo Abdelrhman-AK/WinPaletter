@@ -769,7 +769,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Config.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Forms.MainFrm.Visible = true;
         }
 
@@ -884,7 +884,7 @@ namespace WinPaletter
 
         private void CheckBox1_CheckedChanged(object sender)
         {
-            Config.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Window1.Refresh();
             Window2.Refresh();
             Window4.Refresh();

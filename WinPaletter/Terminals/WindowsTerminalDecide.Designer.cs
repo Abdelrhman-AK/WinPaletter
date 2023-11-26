@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -132,7 +132,6 @@ namespace WinPaletter
             RadioImage2.Image = (Image)resources.GetObject("RadioImage2.Image");
             RadioImage2.Location = new Point(213, 130);
             RadioImage2.Name = "RadioImage2";
-            RadioImage2.ShowText = false;
             RadioImage2.Size = new Size(64, 64);
             RadioImage2.TabIndex = 87;
             // 
@@ -144,7 +143,6 @@ namespace WinPaletter
             RadioImage1.Image = (Image)resources.GetObject("RadioImage1.Image");
             RadioImage1.Location = new Point(131, 130);
             RadioImage1.Name = "RadioImage1";
-            RadioImage1.ShowText = false;
             RadioImage1.Size = new Size(64, 64);
             RadioImage1.TabIndex = 86;
             // 

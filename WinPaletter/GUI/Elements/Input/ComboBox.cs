@@ -17,7 +17,7 @@ namespace WinPaletter.UI.WP
             Timer1 = new Timer() { Enabled = false, Interval = 1 };
             Timer2 = new Timer() { Enabled = false, Interval = 1 };
 
-            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
@@ -28,17 +28,38 @@ namespace WinPaletter.UI.WP
             ForeColor = Color.White;
             DropDownStyle = ComboBoxStyle.DropDownList;
             Font = new Font("Segoe UI", 9f);
+
             MouseWheel += ComboBox_MouseWheel;
             MouseDown += ComboBox_MouseDown;
             MouseUp += ComboBox_Click;
             HandleCreated += ComboBox_HandleCreated;
-            HandleDestroyed += ComboBox_HandleDestroyed;
             DropDown += ComboBox_DropDown;
             DropDownClosed += ComboBox_DropDownClosed;
-            DrawItem += ComboBox_DrawItem;
             Timer1.Tick += Timer1_Tick;
             Timer2.Tick += Timer2_Tick;
         }
+
+        #region Properties
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public override Color BackColor { get; set; }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
+        #endregion
 
         #region Variables
 
@@ -59,7 +80,6 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Voids
-
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {
             var points = new List<Point>() { FirstPoint, SecondPoint, ThirdPoint };
@@ -68,24 +88,6 @@ namespace WinPaletter.UI.WP
                 G.FillPolygon(br, points.ToArray());
             }
         }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                var cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
-
         #endregion
 
         #region Events
@@ -134,9 +136,7 @@ namespace WinPaletter.UI.WP
                         SelectedIndex -= 1;
                 }
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private void ComboBox_MouseDown(object sender, MouseEventArgs e)
@@ -159,59 +159,17 @@ namespace WinPaletter.UI.WP
 
         private void ComboBox_HandleCreated(object sender, EventArgs e)
         {
-            alpha = 0;
-            alpha2 = 0;
-            try
-            {
-                if (!DesignMode)
-                {
-                    if (Parent is not null)
-                        Parent.BackColorChanged += Invalidator;
-                    BackColorChanged += Invalidator;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        private void ComboBox_HandleDestroyed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    if (Parent is not null)
-                        Parent.BackColorChanged -= Invalidator;
-                    BackColorChanged -= Invalidator;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public void Invalidator(object sender, EventArgs e)
-        {
-            Invalidate();
+            alpha = 0; alpha2 = 0;
         }
 
         private void ComboBox_DropDown(object sender, EventArgs e)
         {
-            if (_Shown)
-            {
-                Timer2.Enabled = true;
-                Timer2.Start();
-            }
+            if (_Shown) { Timer2.Enabled = true; Timer2.Start(); }
         }
 
         private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            if (_Shown)
-            {
-                Timer2.Enabled = true;
-                Timer2.Start();
-            }
+            if (_Shown) { Timer2.Enabled = true; Timer2.Start(); }
         }
 
         #endregion
@@ -318,8 +276,10 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        public void ComboBox_DrawItem(object sender, DrawItemEventArgs e)
+        protected override void OnDrawItem(DrawItemEventArgs e)
         {
+            base.OnDrawItem(e);
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -362,7 +322,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
@@ -376,12 +336,12 @@ namespace WinPaletter.UI.WP
             Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
             Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
-            Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_CheckedHover);
+            Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_Checked);
             Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line);
 
             G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
 
-            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover))) { G.FillRoundedRect(br, OuterRect); }
+            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
             G.FillRoundedRect(Noise, InnerRect);
 
@@ -389,7 +349,7 @@ namespace WinPaletter.UI.WP
 
             using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
-            int ArrowHeight = 4;
+            int ArrowHeight = 5;
             int Arrow_Y_1 = (int)Math.Round((Height - ArrowHeight) / 2d - 1d);
             int Arrow_Y_2 = Arrow_Y_1 + ArrowHeight;
 
@@ -400,25 +360,21 @@ namespace WinPaletter.UI.WP
             Point point_BottomLeft = new(Width - 10, Arrow_Y_2);
 
             Point point_CenterBottom = new(Width - 14, Arrow_Y_2);
-            Point point_CenterBottomFixer = new(point_CenterBottom.X, point_CenterBottom.Y + 1);
 
             Point point_CenterTop = new(Width - 14, Arrow_Y_1);
-            Point point_CenterTopFixer = new(point_CenterTop.X, point_CenterTop.Y + 1);
 
-            if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_CheckedHover, OuterRect); }
+            if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_Checked, OuterRect); }
 
-            using (Pen P = new(Color.FromArgb(255 - alpha2, !Focused ? ForeColor : FadeInColor), 2f))
+            Color Triangle1 = Color.FromArgb(255 - alpha2, !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
+            using (Pen P = new(Triangle1, 2f))
             {
-                G.DrawLine(P, point_TopRight, point_CenterBottom);
-                G.DrawLine(P, point_CenterBottom, point_TopLeft);
-                G.DrawLine(P, point_CenterBottomFixer, point_CenterBottom);
+                DrawTriangle(Triangle1, point_TopRight, point_CenterBottom, point_TopLeft, G);
             }
 
-            using (Pen P = new(Color.FromArgb(alpha2, FadeInColor), 2f))
+            Color Triangle2 = Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover);
+            using (Pen P = new(Triangle2, 2f))
             {
-                G.DrawLine(P, point_BottomRight, point_CenterTop);
-                G.DrawLine(P, point_CenterTop, point_BottomLeft);
-                G.DrawLine(P, point_CenterTopFixer, point_CenterTop);
+                DrawTriangle(Triangle2, point_BottomRight, point_CenterTop, point_BottomLeft, G);
             }
 
             using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })

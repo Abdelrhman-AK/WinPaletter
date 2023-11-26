@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -232,7 +232,6 @@ namespace WinPaletter
             // 
             this.search_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.search_btn.CustomColor = System.Drawing.Color.Empty;
-            this.search_btn.DrawOnGlass = true;
             this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_btn.ForeColor = System.Drawing.Color.White;
@@ -248,7 +247,6 @@ namespace WinPaletter
             // 
             this.search_box.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_box.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.search_box.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.search_box.Location = new System.Drawing.Point(3, 3);
             this.search_box.MaxLength = 32767;
@@ -270,7 +268,6 @@ namespace WinPaletter
             // 
             this.search_filter_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.search_filter_btn.CustomColor = System.Drawing.Color.Empty;
-            this.search_filter_btn.DrawOnGlass = true;
             this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_filter_btn.ForeColor = System.Drawing.Color.White;
@@ -287,7 +284,7 @@ namespace WinPaletter
             this.Titlebar_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.Titlebar_lbl.DrawOnGlass = true;
+            this.Titlebar_lbl.DrawOnGlass = false;
             this.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Titlebar_lbl.Location = new System.Drawing.Point(78, 1);
@@ -302,7 +299,6 @@ namespace WinPaletter
             // back_btn
             // 
             this.back_btn.CustomColor = System.Drawing.Color.Empty;
-            this.back_btn.DrawOnGlass = true;
             this.back_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.back_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.back_btn.ForeColor = System.Drawing.Color.White;
@@ -514,7 +510,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
@@ -546,7 +541,6 @@ namespace WinPaletter
             this.desc_txt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.desc_txt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.desc_txt.ForeColor = System.Drawing.Color.White;
             this.desc_txt.Location = new System.Drawing.Point(14, 382);
             this.desc_txt.MaxLength = 32767;
@@ -567,7 +561,6 @@ namespace WinPaletter
             // 
             this.author_url_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.author_url_button.CustomColor = System.Drawing.Color.Empty;
-            this.author_url_button.DrawOnGlass = false;
             this.author_url_button.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.author_url_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.author_url_button.ForeColor = System.Drawing.Color.White;
@@ -584,7 +577,6 @@ namespace WinPaletter
             // 
             this.RestartExplorer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RestartExplorer.CustomColor = System.Drawing.Color.Empty;
-            this.RestartExplorer.DrawOnGlass = false;
             this.RestartExplorer.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.RestartExplorer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RestartExplorer.ForeColor = System.Drawing.Color.White;
@@ -656,7 +648,6 @@ namespace WinPaletter
             // 
             this.Apply_btn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Apply_btn.CustomColor = System.Drawing.Color.Empty;
-            this.Apply_btn.DrawOnGlass = false;
             this.Apply_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Apply_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Apply_btn.ForeColor = System.Drawing.Color.White;
@@ -687,7 +678,6 @@ namespace WinPaletter
             // 
             this.Edit_btn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Edit_btn.CustomColor = System.Drawing.Color.Empty;
-            this.Edit_btn.DrawOnGlass = false;
             this.Edit_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Edit_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Edit_btn.ForeColor = System.Drawing.Color.White;
@@ -1856,7 +1846,6 @@ namespace WinPaletter
             // cur_anim_btn
             // 
             this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
-            this.cur_anim_btn.DrawOnGlass = false;
             this.cur_anim_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
@@ -2631,7 +2620,6 @@ namespace WinPaletter
             // cur_tip_btn
             // 
             this.cur_tip_btn.CustomColor = System.Drawing.Color.Empty;
-            this.cur_tip_btn.DrawOnGlass = false;
             this.cur_tip_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.cur_tip_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_tip_btn.ForeColor = System.Drawing.Color.White;

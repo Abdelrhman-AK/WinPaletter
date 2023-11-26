@@ -485,21 +485,21 @@ namespace WinPaletter.UI.Simulation
 
             if (!Raster)
             {
-                using (var br = new SolidBrush(FC))
+                using (SolidBrush br = new(FC))
                 {
                     G.DrawString(S, F, br, RectCMD.Location);
                 }
 
-                using (var br = new SolidBrush(PCB))
+                using (SolidBrush br = new(PCB))
                 {
                     G.FillRectangle(br, RectMiddle);
                 }
-                using (var P = new Pen(PCF))
+                using (Pen P = new(PCF))
                 {
                     G.DrawRectangle(P, RectMiddleBorder);
                 }
 
-                using (var br = new SolidBrush(PCF))
+                using (SolidBrush br = new(PCF))
                 {
                     G.DrawString(Program.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat());
                 }
@@ -673,11 +673,11 @@ namespace WinPaletter.UI.Simulation
                 RectMiddle = new Rectangle((int)Math.Round(Rect.X + (Rect.Width - pW) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - 36) / 2d), pW, pH);
                 RectMiddleBorder = new Rectangle(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
 
-                using (var br = new SolidBrush(PCB))
+                using (SolidBrush br = new(PCB))
                 {
                     G.FillRectangle(br, RectMiddle);
                 }
-                using (var P = new Pen(PCF))
+                using (Pen P = new(PCF))
                 {
                     G.DrawRectangle(P, RectMiddleBorder);
                 }

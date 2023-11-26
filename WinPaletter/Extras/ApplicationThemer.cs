@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -11,10 +12,7 @@ namespace WinPaletter
 
     public partial class ApplicationThemer
     {
-
-        private WPSettings BackupSettings;
         private bool _Shown = false;
-        private bool CloseAndApply = false;
         public bool FixLanguageDarkModeBug = true;
 
         public ApplicationThemer()
@@ -25,12 +23,10 @@ namespace WinPaletter
         private void ApplicationThemer_Editor_Load(object sender, EventArgs e)
         {
             _Shown = false;
-            BackupSettings = new WPSettings(WPSettings.Mode.Registry);
             this.LoadLanguage();
             ApplyStyle(this);
             ApplyFromTM(Program.TM);
             AdjustPreview();
-            CloseAndApply = false;
         }
 
         private void ApplicationThemer_Shown(object sender, EventArgs e)
@@ -40,37 +36,16 @@ namespace WinPaletter
 
         private void ApplicationThemer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CloseAndApply) // Restore previous settings
-            {
-                {
-                    ref WPSettings.Structures.Appearance appearance = ref Program.Settings.Appearance;
-                    appearance.CustomColors = BackupSettings.Appearance.CustomColors;
-                    appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                    appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                    appearance.BackColor = BackupSettings.Appearance.BackColor;
-                    appearance.AccentColor = BackupSettings.Appearance.AccentColor;
-                    appearance.Save();
-                }
-
-                GetDarkMode();
-                GetRoundedCorners();
-                ApplyStyle();
-            }
-
             FixLanguageDarkModeBug = true;
         }
 
         public void ApplyFromTM(Theme.Manager TM)
         {
-            {
-                ref Theme.Structures.AppTheme AppTheme = ref TM.AppTheme;
-                AppThemeEnabled.Checked = AppTheme.Enabled;
-                appearance_dark.Checked = AppTheme.DarkMode;
-                RoundedCorners.Checked = AppTheme.RoundCorners;
-                BackColorPick.BackColor = AppTheme.BackColor;
-                AccentColor.BackColor = AppTheme.AccentColor;
-            }
-
+            AppThemeEnabled.Checked = TM.AppTheme.Enabled;
+            appearance_dark.Checked = TM.AppTheme.DarkMode;
+            RoundedCorners.Checked = TM.AppTheme.RoundCorners;
+            BackColorPick.BackColor = TM.AppTheme.BackColor;
+            AccentColor.BackColor = TM.AppTheme.AccentColor;
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -87,16 +62,13 @@ namespace WinPaletter
             if (FixLanguageDarkModeBug)
                 return;
 
-            {
-                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                Appearance.CustomColors = true;
-                Appearance.CustomTheme = appearance_dark.Checked;
-                Appearance.RoundedCorners = RoundedCorners.Checked;
-                Appearance.BackColor = BackColorPick.BackColor;
-                Appearance.AccentColor = AccentColor.BackColor;
-            }
+            Config.Scheme scheme = new(AccentColor.BackColor, BackColorPick.BackColor, appearance_dark.Checked);
 
-            ApplyStyle(this);
+            foreach (UI.WP.TestControl testControl in Controls.OfType<UI.WP.TestControl>())
+            {
+                testControl.Scheme = scheme;
+                testControl.Refresh();
+            }
 
             foreach (Control ctrl in Controls)
                 ctrl.Invalidate();
@@ -136,7 +108,6 @@ namespace WinPaletter
         private void Button8_Click(object sender, EventArgs e)
         {
             ApplyToTM(Program.TM);
-            CloseAndApply = false;
             Close();
         }
 
@@ -147,15 +118,12 @@ namespace WinPaletter
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             TMx.AppTheme.Apply();
-            CloseAndApply = true;
-            BackupSettings = new WPSettings(WPSettings.Mode.Registry);
             TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            CloseAndApply = false;
             Close();
         }
 
@@ -176,21 +144,13 @@ namespace WinPaletter
             if (e is DragEventArgs)
                 return;
 
-            {
-                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
-                Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                Appearance.BackColor = BackupSettings.Appearance.BackColor;
-                Appearance.AccentColor = BackupSettings.Appearance.AccentColor;
-            }
-
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 AccentColor.BackColor = Forms.SubMenu.ShowMenu(AccentColor);
                 AdjustPreview();
                 return;
             }
+
             var clist = new List<Control>() { AccentColor };
             Forms.ColorPickerDlg.Pick(clist);
             clist.Clear();
@@ -200,15 +160,6 @@ namespace WinPaletter
 
         private void BackColorPick_Click(object sender, EventArgs e)
         {
-            {
-                ref WPSettings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
-                Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                Appearance.BackColor = BackupSettings.Appearance.BackColor;
-                Appearance.AccentColor = BackupSettings.Appearance.AccentColor;
-            }
-
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 BackColorPick.BackColor = Forms.SubMenu.ShowMenu(BackColorPick);
@@ -216,7 +167,7 @@ namespace WinPaletter
                 return;
             }
 
-            var clist = new List<Control>() { BackColorPick, this };
+            var clist = new List<Control>() { BackColorPick };
             Forms.ColorPickerDlg.Pick(clist);
             clist.Clear();
 
@@ -238,7 +189,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.Accent;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor;
                             BackColorPick.BackColor = DefaultColors.BackColorDark;
                             break;
                         }
@@ -247,7 +198,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.Accent;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor;
                             BackColorPick.BackColor = DefaultColors.BackColorLight;
                             break;
                         }
@@ -256,7 +207,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.Accent;
+                            AccentColor.BackColor = Color.FromArgb(0, 77, 193);
                             BackColorPick.BackColor = Color.Black;
                             break;
                         }
@@ -265,7 +216,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.Accent;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor;
                             BackColorPick.BackColor = Color.White;
                             break;
                         }
@@ -301,7 +252,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(255, 70, 0);
+                            AccentColor.BackColor = Color.FromArgb(216, 49, 3);
                             BackColorPick.BackColor = Color.FromArgb(242, 242, 242);
                             break;
                         }
@@ -310,7 +261,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = false;
-                            AccentColor.BackColor = Color.FromArgb(65, 71, 78);
+                            AccentColor.BackColor = Color.FromArgb(35, 69, 117);
                             BackColorPick.BackColor = Color.FromArgb(32, 34, 38);
                             break;
                         }
@@ -319,9 +270,9 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = false;
-                            AccentColor.BackColor = Color.FromArgb(138, 140, 143);
+                            AccentColor.BackColor = Color.FromArgb(130, 132, 135);
                             BackColorPick.BackColor = Color.FromArgb(255, 255, 255);
-                            break;
+                            break; 
                         }
 
                 }

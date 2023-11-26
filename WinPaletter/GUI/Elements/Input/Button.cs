@@ -31,6 +31,7 @@ namespace WinPaletter.UI.WP
             HandleDestroyed += Button_HandleDestroyed;
             Timer.Tick += Timer_Tick;
             Timer_Hover.Tick += Timer_Hover_Tick;
+            LocationChanged += Button_LocationChanged;
         }
 
         #region Variables
@@ -60,17 +61,8 @@ namespace WinPaletter.UI.WP
 
         #region Properties
 
-        public new Color BackColor
-        {
-            get
-            {
-                return Color.Transparent;
-            }
-            set
-            {
-
-            }
-        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public new Color BackColor { get => Color.Transparent; set {; } }
 
         private Image _image;
         public new Image Image
@@ -98,9 +90,6 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
-
-
-        public bool DrawOnGlass { get; set; } = false;
 
         private Color _color;
 
@@ -371,10 +360,10 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
-                if (DrawOnGlass & !DesignMode)
+                CreateParams cpar = base.CreateParams;
+                if (!DesignMode)
                 {
-                    cpar.ExStyle = cpar.ExStyle | 0x20;
+                    cpar.ExStyle |= 0x20;
                     return cpar;
                 }
                 else
@@ -428,8 +417,8 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (_Shown) 
-            { 
+            if (_Shown)
+            {
                 Timer.Enabled = true; Timer.Start();
                 Invalidate();
             }
@@ -476,8 +465,8 @@ namespace WinPaletter.UI.WP
             hoverSize = Math.Max(Width, Height);
             hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
 
-            if (_Shown) 
-            { 
+            if (_Shown)
+            {
                 Timer.Enabled = true; Timer.Start();
                 Invalidate();
             }
@@ -614,6 +603,11 @@ namespace WinPaletter.UI.WP
             catch { }
         }
 
+        private void Button_LocationChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
         public void Loaded(object sender, EventArgs e)
         {
             _Shown = false;
@@ -635,7 +629,6 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Animator
-
         private void Animate()
         {
             if (!DesignMode & _Shown)
@@ -741,7 +734,6 @@ namespace WinPaletter.UI.WP
             {
             }
         }
-
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
@@ -763,21 +755,16 @@ namespace WinPaletter.UI.WP
 
             #region Button render
             //Color.FromArgb(150, Color)
-            using (var br = new SolidBrush(Color.FromArgb(255, Color)))
-            {
-                G.FillRoundedRect(br, RectInner);
-            }
+            using (SolidBrush br = new(Color.FromArgb(255, Color))) { G.FillRoundedRect(br, RectInner); }
 
-            using (var br = new SolidBrush(Color.FromArgb(alpha, Color)))
-            {
-                G.FillRoundedRect(br, Rect);
-            }
+            using (SolidBrush br = new(Color.FromArgb(alpha, Color))) { G.FillRoundedRect(br, Rect); }
 
             if (!(State == MouseState.None))
             {
                 if (_ripple)
                 {
                     GraphicsPath path = Program.Style.RoundedCorners ? Rect.Round() : new GraphicsPath();
+                    if (!Program.Style.RoundedCorners) { path.AddRectangle(Rect); }
 
                     G.SetClip(path);
 
@@ -799,15 +786,9 @@ namespace WinPaletter.UI.WP
                 G.FillRoundedRect(Noise, Rect);
             }
 
-            using (var P = new Pen(Color.FromArgb(255 - alpha, _lineColor)))
-            {
-                G.DrawRoundedRect_LikeW11(P, RectInner);
-            }
+            using (Pen P = new(Color.FromArgb(255 - alpha, _lineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
 
-            using (var P = new Pen(Color.FromArgb(alpha, _lineColor)))
-            {
-                G.DrawRoundedRect_LikeW11(P, Rect);
-            }
+            using (Pen P = new(Color.FromArgb(alpha, _lineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
             #endregion
 
             #region Text and Image Render
@@ -815,7 +796,7 @@ namespace WinPaletter.UI.WP
             {
                 using (SolidBrush fc = new(ForeColor))
                 {
-                    if (Image == null) 
+                    if (Image == null)
                     {
                         //Fix label maladjustment in center position
                         if (TextAlign == ContentAlignment.MiddleCenter)
@@ -824,7 +805,21 @@ namespace WinPaletter.UI.WP
                             if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
                         }
 
-                        G.DrawString(Text, Font, fc, TextAndImageRect, sf); 
+                        G.DrawString(Text, Font, fc, TextAndImageRect, sf);
+                    }
+
+                    else if (string.IsNullOrWhiteSpace(Text) && Image != null)
+                    {
+                        Rectangle imageRect = GetImageRectangle(TextAndImageRect, Image.Size, ImageAlign);
+
+                        //Fix image maladjustment in center position
+                        if (ImageAlign == ContentAlignment.MiddleCenter)
+                        {
+                            if (Width % Image.Width != 0) imageRect.Offset(1, 0);
+                            if (Height % Image.Height != 0) imageRect.Offset(0, 1);
+                        }
+
+                        G.DrawImage(Image, imageRect);
                     }
 
                     else

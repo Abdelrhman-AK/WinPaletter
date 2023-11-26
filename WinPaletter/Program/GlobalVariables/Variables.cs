@@ -51,12 +51,12 @@ namespace WinPaletter
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.Accent, DefaultColors.Secondary, DefaultColors.Tertiary, DefaultColors.Disabled, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, true, true);
+        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, true, true);
 
         /// <summary>
         /// A class that represents WinPaletter's Settings
         /// </summary>
-        public static WPSettings Settings = new(WPSettings.Mode.Registry);
+        public static Settings Settings = new(Settings.Mode.Registry);
 
         /// <summary>
         /// A class that represents WinPaletter's Language Strings (Loaded at application startup)

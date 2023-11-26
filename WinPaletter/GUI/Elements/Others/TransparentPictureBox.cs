@@ -18,10 +18,10 @@ namespace WinPaletter.UI.WP
             {
                 int index = Parent.Controls.GetChildIndex(this);
 
-                for (int i = Parent.Controls.Count - 1, loopTo = index + 1; i >= loopTo; i -= 1)
+                for (int i = Parent.Controls.Count - 1; i >= index + 1; i -= 1)
                 {
                     var c = Parent.Controls[i];
-                    if (c.Bounds.IntersectsWith(Bounds) && c.Visible == true)
+                    if (c.Bounds.IntersectsWith(Bounds) && c.Visible)
                     {
                         var bmp = new Bitmap(c.Width, c.Height, e.Graphics);
                         c.DrawToBitmap(bmp, c.ClientRectangle);

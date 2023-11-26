@@ -451,7 +451,7 @@ namespace WinPaletter.UI.Simulation
             {
                 G.DrawRoundImage(adaptedBackBlurred, Rect);
                 G.FillRoundedRect(Noise, Rect);
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
                 {
                     G.FillRoundedRect(br, Rect);
                 }
@@ -461,7 +461,7 @@ namespace WinPaletter.UI.Simulation
             else
             {
                 G.DrawRoundImage(adaptedBack, Rect);
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
                 {
                     G.FillRoundedRect(br, Rect);
                 }
@@ -486,14 +486,14 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (Program.Style.RoundedCorners)
                     {
-                        using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
+                        using (SolidBrush br = new(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
                         {
                             FillSemiRect(G, br, Rect_Titlebar);
                         }
                     }
                     else
                     {
-                        using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
+                        using (SolidBrush br = new(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
                         {
                             G.FillRectangle(br, Rect_Titlebar);
                         }
@@ -501,14 +501,14 @@ namespace WinPaletter.UI.Simulation
                 }
                 else if (Program.Style.RoundedCorners)
                 {
-                    using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
+                    using (SolidBrush br = new(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
                     {
                         FillSemiRect(G, br, Rect_Titlebar);
                     }
                 }
                 else
                 {
-                    using (var br = new SolidBrush(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
+                    using (SolidBrush br = new(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
                     {
                         G.FillRectangle(br, Rect_Titlebar);
                     }
@@ -520,14 +520,14 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Program.Style.RoundedCorners)
                 {
-                    using (var br = new SolidBrush(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
+                    using (SolidBrush br = new(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
                     {
                         FillSemiRect(G, br, Rect_Titlebar);
                     }
                 }
                 else
                 {
-                    using (var br = new SolidBrush(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
+                    using (SolidBrush br = new(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
                     {
                         G.FillRectangle(br, Rect_Titlebar);
                     }
@@ -564,12 +564,12 @@ namespace WinPaletter.UI.Simulation
             if (IsFocused)
             {
                 G.SmoothingMode = SmoothingMode.Default;
-                using (var br = new SolidBrush(TabFocusedFinalColor))
+                using (SolidBrush br = new(TabFocusedFinalColor))
                 {
                     G.FillPath(br, RR(Rect_Tab0, Radius));
                 }
                 G.SmoothingMode = SmoothingMode.AntiAlias;
-                using (var P = new Pen(TabFocusedFinalColor))
+                using (Pen P = new(TabFocusedFinalColor))
                 {
                     G.DrawPath(P, RRNoLine(Rect_Tab0, Radius));
                 }
@@ -577,14 +577,14 @@ namespace WinPaletter.UI.Simulation
 
                 if (!UseAcrylicOnTitlebar)
                 {
-                    using (var br = new SolidBrush(Color_TabUnFocused))
+                    using (SolidBrush br = new(Color_TabUnFocused))
                     {
                         G.FillPath(br, RR(Rect_Tab1, Radius));
                     }
                 }
                 else if (Color_TabUnFocused != Color_Titlebar)
                 {
-                    using (var br = new SolidBrush(Color_TabUnFocused))
+                    using (SolidBrush br = new(Color_TabUnFocused))
                     {
                         G.FillPath(br, RR(Rect_Tab1, Radius));
                     }
@@ -608,13 +608,13 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                using (var br = new SolidBrush(FC0))
+                using (SolidBrush br = new(FC0))
                 {
                     G.DrawString(TabIconButItIsString, fx, br, IconRect0, ContentAlignment.TopCenter.ToStringFormat());
                 }
             }
 
-            using (var br = new SolidBrush(FC1))
+            using (SolidBrush br = new(FC1))
             {
                 G.DrawString(TabIconButItIsString, fx, br, IconRect1, ContentAlignment.TopCenter.ToStringFormat());
             }
@@ -623,31 +623,31 @@ namespace WinPaletter.UI.Simulation
             TextRenderer.DrawText(G, Program.Lang.Terminal_Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
 
-            using (var br = new SolidBrush(FC0))
+            using (SolidBrush br = new(FC0))
             {
                 G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab0, ContentAlignment.MiddleCenter.ToStringFormat());
             }
-            using (var br = new SolidBrush(FC1))
+            using (SolidBrush br = new(FC1))
             {
                 G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab1, ContentAlignment.MiddleCenter.ToStringFormat());
             }
 
-            using (var br = new SolidBrush(Color_Foreground))
+            using (SolidBrush br = new(Color_Foreground))
             {
                 G.DrawString(s1, Font, br, Rect_ConsoleText0, ContentAlignment.TopLeft.ToStringFormat());
             }
 
-            using (var br = new SolidBrush(Color.FromArgb(125, Color_Selection)))
+            using (SolidBrush br = new(Color.FromArgb(125, Color_Selection)))
             {
                 G.FillRectangle(br, Rect_ConsoleText1);
             }
 
-            using (var br = new SolidBrush(Color.FromArgb(255 - 125, Color_Foreground)))
+            using (SolidBrush br = new(Color.FromArgb(255 - 125, Color_Foreground)))
             {
                 G.DrawString(s2, Font, br, Rect_ConsoleText1, ContentAlignment.TopLeft.ToStringFormat());
             }
 
-            using (var br = new SolidBrush(Color_Foreground))
+            using (SolidBrush br = new(Color_Foreground))
             {
                 G.DrawString(s3, Font, br, Rect_ConsoleText2, ContentAlignment.TopLeft.ToStringFormat());
             }
@@ -656,7 +656,7 @@ namespace WinPaletter.UI.Simulation
             {
                 G.SmoothingMode = SmoothingMode.HighSpeed;
 
-                using (var br = new SolidBrush(Color_Cursor))
+                using (SolidBrush br = new(Color_Cursor))
                 {
 
                     switch (CursorType)
@@ -676,7 +676,7 @@ namespace WinPaletter.UI.Simulation
 
                         case CursorShape_Enum.emptyBox:
                             {
-                                using (var p = new Pen(Color_Cursor))
+                                using (Pen p = new(Color_Cursor))
                                 {
                                     G.DrawRectangle(p, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), Rect_ConsoleCursor.Height));
                                 }
@@ -714,7 +714,7 @@ namespace WinPaletter.UI.Simulation
                 G.SmoothingMode = SmoothingMode.AntiAlias;
             }
 
-            using (var P = new Pen(Color.FromArgb(45, 45, 45)))
+            using (Pen P = new(Color.FromArgb(45, 45, 45)))
             {
                 G.DrawRoundedRect(P, Rect);
             }

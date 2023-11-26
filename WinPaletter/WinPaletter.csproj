@@ -267,6 +267,15 @@
     <Compile Include="GUI\Elements\Others\ProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Elements\TabControls\TabControlHelpers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Style\TestControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Style\TestControl.Designer.cs">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Languages.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\Consoles.cs" />
@@ -319,6 +328,7 @@
     <Compile Include="Program\TypesExtensions\StringFormats.cs" />
     <Compile Include="Program\TypesExtensions\StringLists.cs" />
     <Compile Include="Program\TypesExtensions\Strings.cs" />
+    <Compile Include="Program\TypesExtensions\Structures.cs" />
     <Compile Include="Program\TypesExtensions\TreeViews.cs" />
     <Compile Include="Program\Users\SetSystemCursor.cs" />
     <Compile Include="Program\NativeMethods\User32.cs" />
@@ -383,6 +393,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
@@ -531,7 +542,7 @@
     <Compile Include="GUI\Elements\Checkers\Toggle.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\ContainersAndBoxes\TablessControl.cs">
+    <Compile Include="GUI\Elements\TabControls\TablessControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\ContainersAndBoxes\AlertBox.cs">
@@ -543,7 +554,7 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\GroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\ContainersAndBoxes\TabControl.cs">
+    <Compile Include="GUI\Elements\TabControls\TabControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Input\Button.cs">
@@ -639,7 +650,6 @@
     <Compile Include="PaletteGenerator\PaletteGenerateDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings\WPSettings.cs" />
     <Compile Include="ColorItemControllers\ColorPickerDlg.Designer.cs">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
     </Compile>

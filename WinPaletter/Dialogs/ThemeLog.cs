@@ -58,7 +58,7 @@ namespace WinPaletter.Dialogs
 
             OpenForms.Clear();
 
-            if (Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None)
+            if (Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None)
             {
                 foreach (Form f in Application.OpenForms)
                 {
@@ -74,7 +74,7 @@ namespace WinPaletter.Dialogs
 
             Apply_Thread = new Thread(() =>
             {
-                bool LogEnabled = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None;
+                bool LogEnabled = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None;
 
                 animatedBox1.Color1 = TM.Info.Color1;
                 animatedBox1.Color2 = TM.Info.Color2;
@@ -143,7 +143,7 @@ namespace WinPaletter.Dialogs
                         Button14.Visible = true;
                     }));
                 }
-                else if (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.Detailed)
+                else if (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed)
                 {
                     log_lbl.SetText(string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds));
                     elapsedSecs = 1;

@@ -22,8 +22,8 @@ namespace WinPaletter.Theme
         public void Apply_LogonUI7(Theme.Structures.LogonUI7 LogonElement, string RegEntryHint = "LogonUI", TreeView TreeView = null)
         {
 
-            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             EditReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonElement.Enabled ? 1 : 0);
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonElement.Enabled ? 1 : 0);
@@ -191,8 +191,8 @@ namespace WinPaletter.Theme
         public void Apply_LogonUI_8(TreeView TreeView = null)
         {
 
-            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             string lockimg = PathsExt.appData + @"\LockScreen.png";
 
@@ -342,7 +342,7 @@ namespace WinPaletter.Theme
                 if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
                     Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
 
-                if (Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", string.Empty, CommandPrompt, TreeView);
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt, TreeView);
@@ -359,7 +359,7 @@ namespace WinPaletter.Theme
             if (PowerShellx86.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
-                if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
                 }
@@ -375,7 +375,7 @@ namespace WinPaletter.Theme
             if (PowerShellx64.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
-                if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Theme.Structures.Console.Save_Console_To_Registry(@"HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
                 }
@@ -391,8 +391,8 @@ namespace WinPaletter.Theme
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != WPSettings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
-                bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed;
+                bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+                bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
                 EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Cursor_Enabled);
 
@@ -440,7 +440,7 @@ namespace WinPaletter.Theme
 
                             ApplyCursorsToReg(this, "HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
 
-                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
                                 EditReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails);
                                 ApplyCursorsToReg(this, @"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
@@ -457,14 +457,14 @@ namespace WinPaletter.Theme
                     if (!OS.WXP)
                     {
                         ResetCursorsToAero("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
-                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                     }
 
                     else
                     {
                         ResetCursorsToNone_XP("HKEY_CURRENT_USER", ReportProgress_Detailed ? TreeView : null);
-                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                        if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
                     }
                 }

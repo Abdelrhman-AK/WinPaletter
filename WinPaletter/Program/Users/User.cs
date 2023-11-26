@@ -85,7 +85,7 @@ namespace WinPaletter
             {
                 case User.UserChangeEventArgs.Timings.BeforeChange:
                     {
-                        Program.Settings.Save(WPSettings.Mode.Registry);
+                        Program.Settings.Save(Settings.Mode.Registry);
                         break;
                     }
 
@@ -108,7 +108,7 @@ namespace WinPaletter
                             }
 
                             User.UpdatePathsFromSID(User.SID);
-                            Program.Settings = new(WPSettings.Mode.Registry);
+                            Program.Settings = new(Settings.Mode.Registry);
 
                             if (MainFormIsOpened)
                             {
@@ -452,7 +452,7 @@ namespace WinPaletter
             Dictionary<string, string> UsersList = GetUsers();
 
             // Save settings into current user before reloading settings for new user
-            Program.Settings.Save(WPSettings.Mode.Registry);
+            Program.Settings.Save(Settings.Mode.Registry);
 
             if (ForceShow || UsersList.Count > 1) { Forms.UserSwitch.PickUser(UsersList); }
 
@@ -544,7 +544,14 @@ namespace WinPaletter
                 }
                 else
                 {
-                    throw new Exception(string.Format("User with SID '{0}' not found.", SID));
+                    try
+                    {
+                        SecurityIdentifier userSid = new(SID);
+                        SecurityIdentifier adminSid = new(WellKnownSidType.BuiltinAdministratorsSid, null);
+
+                        return userSid.Equals(adminSid);
+                    }
+                    catch { return false; }
                 }
             }
 

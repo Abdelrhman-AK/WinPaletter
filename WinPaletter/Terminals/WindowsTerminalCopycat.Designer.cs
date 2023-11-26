@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -71,7 +71,6 @@ namespace WinPaletter
             // ComboBox1
             // 
             ComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox1.BackColor = Color.FromArgb(55, 55, 55);
             ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboBox1.Font = new Font("Segoe UI", 9.0f);

@@ -38,7 +38,7 @@ namespace WinPaletter.TypesExtensions
                     G.DrawImage(b, ClientRect, 0, 0, b.Width, b.Height, GraphicsUnit.Pixel);
 
                     G.SmoothingMode = SmoothingMode.AntiAlias;
-                    using (var br = new SolidBrush(ForeColor))
+                    using (SolidBrush br = new(ForeColor))
                     {
                         G.DrawString(Text, Font, br, Rect, FormatX);
                     }
@@ -66,7 +66,7 @@ namespace WinPaletter.TypesExtensions
                     {
                         var Rect2 = new Rectangle(1, 1, bm.Width, bm.Height);
 
-                        using (var br = new SolidBrush(GlowColor))
+                        using (SolidBrush br = new(GlowColor))
                         {
                             G2.FillRectangle(br, Rect2);
                         }
@@ -87,11 +87,11 @@ namespace WinPaletter.TypesExtensions
                 if (BackgroundBlurred != null)
                     G.DrawRoundImage(BackgroundBlurred, Rect, Radius, true);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
@@ -99,11 +99,11 @@ namespace WinPaletter.TypesExtensions
                 var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
                 var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
@@ -113,11 +113,11 @@ namespace WinPaletter.TypesExtensions
                 if (BackgroundBlurred is not null)
                     G.DrawImage(BackgroundBlurred, Rect);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
                 {
                     G.FillRectangle(br, Rect);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
                 {
                     G.FillRectangle(br, Rect);
                 }
@@ -125,11 +125,11 @@ namespace WinPaletter.TypesExtensions
                 var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
                 var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
                     G.FillRectangle(br, Rect);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
+                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
                 {
                     G.FillRectangle(br, Rect);
                 }

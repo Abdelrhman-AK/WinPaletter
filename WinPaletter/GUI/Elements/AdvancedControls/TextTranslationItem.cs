@@ -130,7 +130,7 @@ namespace WinPaletter.UI.Controllers
         {
             var G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = Config.RenderingHint;
+            G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
@@ -203,7 +203,7 @@ namespace WinPaletter.UI.Controllers
                 {
                     try
                     {
-                        using (var br = new SolidBrush(ForeColor))
+                        using (SolidBrush br = new(ForeColor))
                         using (var sf = TextAlign.ToStringFormat(RTL))
                         {
                             var r = new Rectangle(1, 0, Width, Height);
@@ -239,7 +239,7 @@ namespace WinPaletter.UI.Controllers
                                         }
                                     }
 
-                                    using (var br = new SolidBrush(ForeColor))
+                                    using (SolidBrush br = new(ForeColor))
                                     {
                                         var r = new Rectangle(0, alx + 9 + img.Height, Width, Height);
                                         G.DrawString(Text, Font, br, r, ButtonString);
@@ -273,7 +273,7 @@ namespace WinPaletter.UI.Controllers
                                 }
 
                                 G.DrawImage((Bitmap)img.Clone(), Rec);
-                                using (var br = new SolidBrush(ForeColor))
+                                using (SolidBrush br = new(ForeColor))
                                 {
                                     G.DrawString(Text, Font, br, RecText, ButtonString);
                                 }
@@ -301,7 +301,7 @@ namespace WinPaletter.UI.Controllers
                                 }
 
                                 G.DrawImage((Bitmap)img.Clone(), Rec);
-                                using (var br = new SolidBrush(ForeColor))
+                                using (SolidBrush br = new(ForeColor))
                                 {
                                     G.DrawString(Text, Font, br, RecText, ButtonString);
                                 }

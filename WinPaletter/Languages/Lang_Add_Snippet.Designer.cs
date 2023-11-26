@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -87,7 +87,6 @@ namespace WinPaletter
             // ComboBox2
             // 
             ComboBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox2.BackColor = Color.FromArgb(55, 55, 55);
             ComboBox2.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox2.DropDownHeight = 250;
             ComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -118,7 +117,6 @@ namespace WinPaletter
             // ComboBox1
             // 
             ComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox1.BackColor = Color.FromArgb(55, 55, 55);
             ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox1.DropDownHeight = 250;
             ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;

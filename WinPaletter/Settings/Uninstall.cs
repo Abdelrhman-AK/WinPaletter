@@ -58,14 +58,14 @@ namespace WinPaletter
                         if (!OS.WXP)
                         {
                             Theme.Manager.ResetCursorsToAero();
-                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                                 Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                         }
 
                         else
                         {
                             Theme.Manager.ResetCursorsToNone_XP();
-                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                            if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                                 Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                         }

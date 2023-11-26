@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -55,10 +55,8 @@ namespace WinPaletter
             this.img4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img4.ForeColor = System.Drawing.Color.White;
             this.img4.Image = ((System.Drawing.Image)(resources.GetObject("img4.Image")));
-            this.img4.ImageWithText = false;
             this.img4.Location = new System.Drawing.Point(146, 187);
             this.img4.Name = "img4";
-            this.img4.ShowText = false;
             this.img4.Size = new System.Drawing.Size(128, 128);
             this.img4.TabIndex = 41;
             this.img4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -69,10 +67,8 @@ namespace WinPaletter
             this.img2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img2.ForeColor = System.Drawing.Color.White;
             this.img2.Image = ((System.Drawing.Image)(resources.GetObject("img2.Image")));
-            this.img2.ImageWithText = false;
             this.img2.Location = new System.Drawing.Point(280, 53);
             this.img2.Name = "img2";
-            this.img2.ShowText = false;
             this.img2.Size = new System.Drawing.Size(128, 128);
             this.img2.TabIndex = 40;
             this.img2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -83,10 +79,8 @@ namespace WinPaletter
             this.img3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img3.ForeColor = System.Drawing.Color.White;
             this.img3.Image = ((System.Drawing.Image)(resources.GetObject("img3.Image")));
-            this.img3.ImageWithText = false;
             this.img3.Location = new System.Drawing.Point(12, 187);
             this.img3.Name = "img3";
-            this.img3.ShowText = false;
             this.img3.Size = new System.Drawing.Size(128, 128);
             this.img3.TabIndex = 39;
             this.img3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -97,10 +91,8 @@ namespace WinPaletter
             this.img1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img1.ForeColor = System.Drawing.Color.White;
             this.img1.Image = ((System.Drawing.Image)(resources.GetObject("img1.Image")));
-            this.img1.ImageWithText = false;
             this.img1.Location = new System.Drawing.Point(146, 53);
             this.img1.Name = "img1";
-            this.img1.ShowText = false;
             this.img1.Size = new System.Drawing.Size(128, 128);
             this.img1.TabIndex = 38;
             this.img1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -111,10 +103,8 @@ namespace WinPaletter
             this.img0.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img0.ForeColor = System.Drawing.Color.White;
             this.img0.Image = ((System.Drawing.Image)(resources.GetObject("img0.Image")));
-            this.img0.ImageWithText = false;
             this.img0.Location = new System.Drawing.Point(12, 53);
             this.img0.Name = "img0";
-            this.img0.ShowText = false;
             this.img0.Size = new System.Drawing.Size(128, 128);
             this.img0.TabIndex = 37;
             this.img0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -148,10 +138,8 @@ namespace WinPaletter
             this.img5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.img5.ForeColor = System.Drawing.Color.White;
             this.img5.Image = ((System.Drawing.Image)(resources.GetObject("img5.Image")));
-            this.img5.ImageWithText = false;
             this.img5.Location = new System.Drawing.Point(280, 187);
             this.img5.Name = "img5";
-            this.img5.ShowText = false;
             this.img5.Size = new System.Drawing.Size(128, 128);
             this.img5.TabIndex = 42;
             this.img5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -160,7 +148,6 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.DrawOnGlass = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
@@ -178,7 +165,6 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.DrawOnGlass = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;

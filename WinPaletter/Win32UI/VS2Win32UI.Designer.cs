@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -66,7 +66,6 @@ namespace WinPaletter
             // TextBox1
             // 
             TextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TextBox1.BackColor = Color.FromArgb(55, 55, 55);
             TextBox1.ForeColor = Color.White;
             TextBox1.Location = new Point(87, 12);
             TextBox1.MaxLength = 32767;
