@@ -164,7 +164,7 @@ public class EOIcoCurWriter
         m_type = type;
 
         // Prepare and write the header
-        IcoHeader hdr = new IcoHeader(type);
+        IcoHeader hdr = new(type);
         hdr.Count = (ushort)imageCount;
         hdr.WriteToStream(m_writer);
 
@@ -180,7 +180,7 @@ public class EOIcoCurWriter
         int BitsPerMaskRow = MaskRowSize * 8;
         int w = AlphaImg.Width;
         int h = AlphaImg.Height;
-        Rectangle rect = new Rectangle(0, 0, w, h);
+        Rectangle rect = new(0, 0, w, h);
         BitmapData bd = AlphaImg.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         for (int y = 0; y < h; y++)
         {
@@ -258,7 +258,7 @@ public class EOIcoCurWriter
         MemoryStream pngStream = null;
         if (img.Width >= 256 || img.Height >= 256)
         {
-            pngStream = new MemoryStream();
+            pngStream = new();
             img.Save(pngStream, ImageFormat.Png);
         }
 
@@ -317,7 +317,7 @@ public class EOIcoCurWriter
         else
         {
             // Create and write the bitmap info header
-            BITMAPINFOHEADER bih = new BITMAPINFOHEADER(w, h * 2, bpp);
+            BITMAPINFOHEADER bih = new(w, h * 2, bpp);
             bih.WriteToStream(m_writer);
 
             // Write palette data if need be
@@ -334,7 +334,7 @@ public class EOIcoCurWriter
 
             // Write bitmap data
             img.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = img.LockBits(rect, ImageLockMode.ReadOnly, img.PixelFormat);
             unsafe
             {

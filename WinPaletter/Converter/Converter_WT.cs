@@ -33,9 +33,9 @@ namespace WinPaletter
 
                 case Mode.WinPaletterFile:
                     {
-                        var Collected = new List<string>();
+                        List<string> Collected = new();
+                        List<string> lst = new();
 
-                        var lst = new List<string>();
                         lst.Clear();
                         lst = str.CList();
 
@@ -69,10 +69,10 @@ namespace WinPaletter
 
                         }
 
-                        var Defs = new List<string>();
-                        List<string> CollectedColors = new List<string>(), EnumColors = new List<string>();
-                        List<string> CollectedProfiles = new List<string>(), EnumProfiles = new List<string>();
-                        List<string> CollectedThemes = new List<string>(), EnumThemes = new List<string>();
+                        List<string> Defs = new();
+                        List<string> CollectedColors = new(), EnumColors = new();
+                        List<string> CollectedProfiles = new(), EnumProfiles = new();
+                        List<string> CollectedThemes = new(), EnumThemes = new();
 
                         Defs.Clear();
 
@@ -611,7 +611,7 @@ namespace WinPaletter
 
                         }
 
-                        var S = new List<string>();
+                        List<string> S = new();
                         S.Clear();
 
                         try
@@ -757,7 +757,7 @@ namespace WinPaletter
 
         public string ToString(string Signature, Version Edition)
         {
-            var tx = new List<string>();
+            List<string> tx = new();
             tx.Clear();
             tx.Add(string.Format("<{0}>", Signature));
             tx.Add(Save(string.Empty, Mode.WinPaletterFile, Edition));

@@ -13,19 +13,16 @@ namespace WinPaletter.UI.Simulation
     [DefaultEvent("Click")]
     public class WinTerminal : ContainerControl
     {
-
         public WinTerminal()
         {
             Text = string.Empty;
             DoubleBuffered = true;
-            HandleCreated += WinTerminal_HandleCreated;
-            HandleDestroyed += WinTerminal_HandleDestroyed;
-            Timer.Tick += Timer_Tick;
         }
 
         #region Variables
+        Timer Timer = new() { Enabled = false, Interval = 500 };
 
-        private TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.15d));
+        private TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.15d));
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
         private bool tick = false;
@@ -48,14 +45,10 @@ namespace WinPaletter.UI.Simulation
         private float _Opacity = 1f;
         public float Opacity
         {
-            get
-            {
-                return _Opacity;
-            }
-
+            get => _Opacity;
             set
             {
-                if (!(value == _Opacity))
+                if (value != _Opacity)
                 {
                     _Opacity = value;
                     Invalidate();
@@ -66,14 +59,10 @@ namespace WinPaletter.UI.Simulation
         private float _OpacityBackImage = 100f;
         public float OpacityBackImage
         {
-            get
-            {
-                return _OpacityBackImage;
-            }
-
+            get => _OpacityBackImage;
             set
             {
-                if (!(value == _OpacityBackImage))
+                if (value != _OpacityBackImage)
                 {
                     _OpacityBackImage = value;
                     Invalidate();
@@ -84,11 +73,7 @@ namespace WinPaletter.UI.Simulation
         private Image _BackImage;
         public Image BackImage
         {
-            get
-            {
-                return _BackImage;
-            }
-
+            get => _BackImage;
             set
             {
                 if (value != _BackImage)
@@ -124,44 +109,38 @@ namespace WinPaletter.UI.Simulation
 
         #region Events
 
-        private void WinTerminal_HandleCreated(object sender, EventArgs e)
+        protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode)
             {
-                Timer.Enabled = true;
-                Timer.Start();
-
-                try
-                {
-                    SizeChanged += ProcessBack_EventHandler;
-                }
-                catch
-                {
-                }
                 ProcessBack();
+
+                try { Timer.Tick += Timer_Tick; } catch { }
+
+                Timer.Enabled = true; Timer.Start();
             }
-            else
-            {
-                Timer.Enabled = false;
-                Timer.Stop();
-            }
+            else { Timer.Enabled = false; Timer.Stop(); }
+
+            base.OnHandleCreated(e);
         }
 
-        private void WinTerminal_HandleDestroyed(object sender, EventArgs e)
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            if (!DesignMode)
-            {
-                try
-                {
-                    SizeChanged -= ProcessBack_EventHandler;
-                }
-                catch
-                {
-                }
-            }
+            if (!DesignMode) { try { Timer.Tick -= Timer_Tick; } catch { } }
+
+            Timer.Enabled = false; Timer.Stop();
+
+            base.OnHandleDestroyed(e);
         }
 
-        public void UpdateOpacityBackImageChanged()
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            ProcessBack();
+
+            base.OnSizeChanged(e);
+        }
+
+        private void UpdateOpacityBackImageChanged()
         {
             if (BackImage is not null)
             {
@@ -170,12 +149,7 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        private void ProcessBack_EventHandler(object sender, EventArgs e)
-        {
-            ProcessBack();
-        }
-
-        public void ProcessBack()
+        private void ProcessBack()
         {
             GetBack();
             NoiseBack();
@@ -185,19 +159,19 @@ namespace WinPaletter.UI.Simulation
 
         #region Voids/Functions
 
-        public GraphicsPath RR(Rectangle r, int radius)
+        private GraphicsPath RR(Rectangle r, int radius)
         {
             try
             {
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 int d = radius * 2;
                 float f0 = 0.5f;
                 float f1 = 2f - f0;
 
-                var R1 = new Rectangle((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-                var R2 = new Rectangle((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-                var R3 = new Rectangle((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-                var R4 = new Rectangle((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+                Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
+                Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
+                Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+                Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
 
                 path.AddArc(R4, 90f, 90f);
                 path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
@@ -216,19 +190,19 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public GraphicsPath RRNoLine(Rectangle r, int radius)
+        private GraphicsPath RRNoLine(Rectangle r, int radius)
         {
             try
             {
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 int d = radius * 2;
                 float f0 = 0.5f;
                 float f1 = 2f - f0;
 
-                var R1 = new Rectangle((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-                var R2 = new Rectangle((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-                var R3 = new Rectangle((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-                var R4 = new Rectangle((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+                Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
+                Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
+                Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+                Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
 
                 path.AddArc(R4, 90f, 90f);
                 path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
@@ -247,7 +221,7 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public void FillSemiRect(Graphics Graphics, Brush Brush, Rectangle Rectangle, int Radius = -1)
+        private void FillSemiRect(Graphics Graphics, Brush Brush, Rectangle Rectangle, int Radius = -1)
         {
             try
             {
@@ -257,7 +231,7 @@ namespace WinPaletter.UI.Simulation
                 if (Graphics is null)
                     throw new ArgumentNullException("graphics");
 
-                using (var path = RoundedSemiRectangle(Rectangle, Radius))
+                using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
                 {
                     Graphics.FillPath(Brush, path);
                 }
@@ -267,11 +241,11 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public GraphicsPath RoundedSemiRectangle(Rectangle r, int radius)
+        private GraphicsPath RoundedSemiRectangle(Rectangle r, int radius)
         {
             try
             {
-                var path = new GraphicsPath();
+                GraphicsPath path = new();
                 int d = radius * 2;
 
                 path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
@@ -293,7 +267,7 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public void FillSemiImg(Graphics Graphics, Image Image, Rectangle Rectangle, int Radius = -1, bool ForcedRoundCorner = false)
+        private void FillSemiImg(Graphics Graphics, Image Image, Rectangle Rectangle, int Radius = -1, bool ForcedRoundCorner = false)
         {
             try
             {
@@ -305,9 +279,9 @@ namespace WinPaletter.UI.Simulation
 
                 if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
-                    using (var path = RoundedSemiRectangle(Rectangle, Radius))
+                    using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
                     {
-                        var reg = new Region(path);
+                        Region reg = new(path);
                         Graphics.Clip = reg;
                         Graphics.DrawImage(Image, Rectangle);
                         Graphics.ResetClip();
@@ -323,45 +297,33 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public void GetBack()
+        private void GetBack()
         {
             adaptedBack = Program.Wallpaper;
             adaptedBackBlurred = BitmapExtensions.Blur(new Bitmap(adaptedBack), 13);
         }
 
-        public void NoiseBack()
+        private void NoiseBack()
         {
-            Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.5d));
+            Noise = new(Properties.Resources.GaussianBlur.Fade(0.5d));
         }
 
         #endregion
 
         #region Animator
 
-        Timer Timer = new Timer() { Enabled = false, Interval = 500 };
-
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (IsFocused)
-            {
-                if (tick)
-                {
-                    tick = false;
-                }
-                else
-                {
-                    tick = true;
-                }
-
-                Refresh();
-            }
+            if (IsFocused) { tick = !tick; Refresh(); }
         }
 
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
 
@@ -430,22 +392,22 @@ namespace WinPaletter.UI.Simulation
             }
 
 
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var Rect_Titlebar = new Rectangle(0, 0, Width - 1, 32);
-            var Rect_Console = new Rectangle(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle Rect_Titlebar = new(0, 0, Width - 1, 32);
+            Rectangle Rect_Console = new(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
 
             string s1 = Program.Lang.Terminal_ConsoleSample;
             string s2 = Program.Lang.Terminal_ThisIsASelection;
-            string s3 = PathsExt.System32 + ">";
+            string s3 = $"{PathsExt.System32}>";
 
-            var s1X = s1.Measure(Font) + new SizeF(5f, 0f);
-            var s2X = s2.Measure(Font) + new SizeF(2f, 0f);
-            var s3X = s3.Measure(Font) + new SizeF(2f, 0f);
-            var Rect_ConsoleText0 = new Rectangle(8, Rect_Titlebar.Bottom + 8, (int)Math.Round(s1X.Width), (int)Math.Round(s1X.Height));
-            var Rect_ConsoleText1 = new Rectangle(8, Rect_ConsoleText0.Bottom + 3, (int)Math.Round(s2X.Width), (int)Math.Round(s2X.Height));
-            var Rect_ConsoleText2 = new Rectangle(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, (int)Math.Round(s3X.Width), (int)Math.Round(s3X.Height));
+            SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
+            SizeF s2X = s2.Measure(Font) + new SizeF(2f, 0f);
+            SizeF s3X = s3.Measure(Font) + new SizeF(2f, 0f);
+            Rectangle Rect_ConsoleText0 = new(8, Rect_Titlebar.Bottom + 8, (int)Math.Round(s1X.Width), (int)Math.Round(s1X.Height));
+            Rectangle Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, (int)Math.Round(s2X.Width), (int)Math.Round(s2X.Height));
+            Rectangle Rect_ConsoleText2 = new(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, (int)Math.Round(s3X.Width), (int)Math.Round(s3X.Height));
 
-            var Rect_ConsoleCursor = new Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1);
+            Rectangle Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1);
 
             if (UseAcrylic)
             {
@@ -547,19 +509,19 @@ namespace WinPaletter.UI.Simulation
 
             int Radius = 5;
             int TabHeight = 22;
-            var Rect_Tab0 = new Rectangle(10, Rect_Titlebar.Bottom - TabHeight, 150, TabHeight);
-            var Rect_Tab1 = Rect_Tab0;
+            Rectangle Rect_Tab0 = new(10, Rect_Titlebar.Bottom - TabHeight, 150, TabHeight);
+            Rectangle Rect_Tab1 = Rect_Tab0;
             Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius;
 
-            var IconRect0 = new Rectangle(Rect_Tab0.X + 10, Rect_Tab0.Y + 3, 16, 16);
-            var FC0 = TabFocusedFinalColor.IsDark() ? Color.White : Color.Black;
-            var RectText_Tab0 = new Rectangle(IconRect0.Right + 1, IconRect0.Y + 1, Rect_Tab0.Width - 35 - IconRect0.Width, IconRect0.Height);
-            var RectClose_Tab0 = new Rectangle(RectText_Tab0.Right + 2, RectText_Tab0.Y - 1, 15, RectText_Tab0.Height);
+            Rectangle IconRect0 = new(Rect_Tab0.X + 10, Rect_Tab0.Y + 3, 16, 16);
+            Color FC0 = TabFocusedFinalColor.IsDark() ? Color.White : Color.Black;
+            Rectangle RectText_Tab0 = new(IconRect0.Right + 1, IconRect0.Y + 1, Rect_Tab0.Width - 35 - IconRect0.Width, IconRect0.Height);
+            Rectangle RectClose_Tab0 = new(RectText_Tab0.Right + 2, RectText_Tab0.Y - 1, 15, RectText_Tab0.Height);
 
-            var IconRect1 = new Rectangle(Rect_Tab1.X + 10, Rect_Tab1.Y + 3, 16, 16);
-            var FC1 = Color_TabUnFocused.IsDark() ? Color.White : Color.Black;
-            var RectText_Tab1 = new Rectangle(IconRect1.Right + 1, IconRect1.Y + 1, Rect_Tab1.Width - 35 - IconRect1.Width, IconRect1.Height);
-            var RectClose_Tab1 = new Rectangle(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height);
+            Rectangle IconRect1 = new(Rect_Tab1.X + 10, Rect_Tab1.Y + 3, 16, 16);
+            Color FC1 = Color_TabUnFocused.IsDark() ? Color.White : Color.Black;
+            Rectangle RectText_Tab1 = new(IconRect1.Right + 1, IconRect1.Y + 1, Rect_Tab1.Width - 35 - IconRect1.Width, IconRect1.Height);
+            Rectangle RectClose_Tab1 = new(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height);
 
             if (IsFocused)
             {
@@ -595,11 +557,11 @@ namespace WinPaletter.UI.Simulation
 
             if (OS.W12 || OS.W11)
             {
-                fx = new Font("Segoe Fluent Icons", 12f);
+                fx = new("Segoe Fluent Icons", 12f);
             }
             else
             {
-                fx = new Font("Segoe MDL2 Assets", 12f);
+                fx = new("Segoe MDL2 Assets", 12f);
             }
 
             if (TabIcon is not null)
@@ -608,50 +570,59 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                using (SolidBrush br = new(FC0))
+                using (StringFormat sf = ContentAlignment.TopCenter.ToStringFormat())
                 {
-                    G.DrawString(TabIconButItIsString, fx, br, IconRect0, ContentAlignment.TopCenter.ToStringFormat());
+                    using (SolidBrush br = new(FC0))
+                    {
+                        G.DrawString(TabIconButItIsString, fx, br, IconRect0, sf);
+                    }
                 }
             }
 
-            using (SolidBrush br = new(FC1))
+            using (StringFormat sf = ContentAlignment.TopCenter.ToStringFormat())
             {
-                G.DrawString(TabIconButItIsString, fx, br, IconRect1, ContentAlignment.TopCenter.ToStringFormat());
+                using (SolidBrush br = new(FC1))
+                {
+                    G.DrawString(TabIconButItIsString, fx, br, IconRect1, sf);
+                }
             }
-
             TextRenderer.DrawText(G, TabTitle, new Font("Segoe UI", 8f, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
             TextRenderer.DrawText(G, Program.Lang.Terminal_Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
-
-            using (SolidBrush br = new(FC0))
+            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
             {
-                G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab0, ContentAlignment.MiddleCenter.ToStringFormat());
-            }
-            using (SolidBrush br = new(FC1))
-            {
-                G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab1, ContentAlignment.MiddleCenter.ToStringFormat());
-            }
-
-            using (SolidBrush br = new(Color_Foreground))
-            {
-                G.DrawString(s1, Font, br, Rect_ConsoleText0, ContentAlignment.TopLeft.ToStringFormat());
+                using (SolidBrush br = new(FC0))
+                {
+                    G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab0, sf);
+                }
+                using (SolidBrush br = new(FC1))
+                {
+                    G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab1, sf);
+                }
             }
 
-            using (SolidBrush br = new(Color.FromArgb(125, Color_Selection)))
+            using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat())
             {
-                G.FillRectangle(br, Rect_ConsoleText1);
-            }
+                using (SolidBrush br = new(Color_Foreground))
+                {
+                    G.DrawString(s1, Font, br, Rect_ConsoleText0, sf);
+                }
 
-            using (SolidBrush br = new(Color.FromArgb(255 - 125, Color_Foreground)))
-            {
-                G.DrawString(s2, Font, br, Rect_ConsoleText1, ContentAlignment.TopLeft.ToStringFormat());
-            }
+                using (SolidBrush br = new(Color.FromArgb(125, Color_Selection)))
+                {
+                    G.FillRectangle(br, Rect_ConsoleText1);
+                }
 
-            using (SolidBrush br = new(Color_Foreground))
-            {
-                G.DrawString(s3, Font, br, Rect_ConsoleText2, ContentAlignment.TopLeft.ToStringFormat());
-            }
+                using (SolidBrush br = new(Color.FromArgb(255 - 125, Color_Foreground)))
+                {
+                    G.DrawString(s2, Font, br, Rect_ConsoleText1, sf);
+                }
 
+                using (SolidBrush br = new(Color_Foreground))
+                {
+                    G.DrawString(s3, Font, br, Rect_ConsoleText2, sf);
+                }
+            }
             if (tick & IsFocused)
             {
                 G.SmoothingMode = SmoothingMode.HighSpeed;
@@ -718,8 +689,8 @@ namespace WinPaletter.UI.Simulation
             {
                 G.DrawRoundedRect(P, Rect);
             }
+
+            base.OnPaint(e);
         }
-
     }
-
 }

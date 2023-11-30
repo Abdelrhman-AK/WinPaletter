@@ -81,8 +81,8 @@ namespace WinPaletter.TypesExtensions
                 {
                     G.SmoothingMode = SmoothingMode.AntiAlias;
 
-                    var att = new ImageAttributes();
-                    var m = new ColorMatrix() { Matrix33 = 0.4f };
+                    ImageAttributes att = new();
+                    ColorMatrix m = new() { Matrix33 = 0.4f };
                     att.SetColorMatrix(m);
 
                     for (double x = -BlurForce, loopTo = BlurForce; x <= loopTo; x += 0.5d)
@@ -105,22 +105,22 @@ namespace WinPaletter.TypesExtensions
         {
             try
             {
-                var g = Graphics.FromImage(bmp);
+                Graphics G = Graphics.FromImage(bmp);
 
                 if (NoiseMode == NoiseMode.Acrylic)
                 {
                     TextureBrush br;
-                    br = new TextureBrush(Properties.Resources.GaussianBlur.Fade((double)opacity));
-                    g.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    br = new(Properties.Resources.GaussianBlur.Fade((double)opacity));
+                    G.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
                 }
                 else if (NoiseMode == NoiseMode.Aero)
                 {
-                    g.DrawImage(Properties.Resources.AeroGlass.Fade((double)opacity), new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    G.DrawImage(Properties.Resources.AeroGlass.Fade((double)opacity), new Rectangle(0, 0, bmp.Width, bmp.Height));
                 }
 
-                g.Save();
+                G.Save();
                 return bmp;
-                g.Dispose();
+                G.Dispose();
                 bmp.Dispose();
             }
             catch
@@ -139,9 +139,8 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color NewColor)
         {
-            var outputImage = new Bitmap(inputImage.Width, inputImage.Height);
-            var G = Graphics.FromImage(outputImage);
-
+            Bitmap outputImage = new(inputImage.Width, inputImage.Height);
+            Graphics G = Graphics.FromImage(outputImage);
 
             for (int y = 0, loopTo = inputImage.Height - 1; y <= loopTo; y++)
             {
@@ -166,7 +165,6 @@ namespace WinPaletter.TypesExtensions
             G.Dispose();
             return outputImage;
             outputImage.Dispose();
-
         }
 
         /// <summary>
@@ -208,7 +206,7 @@ namespace WinPaletter.TypesExtensions
                 int destWidth = (int)Math.Round(sourceWidth * nPercent);
                 int destHeight = (int)Math.Round(sourceHeight * nPercent);
 
-                var bmPhoto = new Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
+                Bitmap bmPhoto  = new(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
                 bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution);
                 var grPhoto = Graphics.FromImage(bmPhoto);
                 grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -262,9 +260,9 @@ namespace WinPaletter.TypesExtensions
             if (bmSource is null)
                 return null;
 
-            using (var B = new Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb))
+            using (Bitmap B = new(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb))
             {
-                using (var G = Graphics.FromImage(B))
+                using (Graphics G = Graphics.FromImage(B))
                 {
                     G.Clear(Color.Transparent);
                     G.CompositingQuality = CompositingQuality.HighQuality;
@@ -353,8 +351,8 @@ namespace WinPaletter.TypesExtensions
                 k += 4;
             }
 
-            var resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
-            var resultData = resultBitmap.LockBits(new Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            Bitmap resultBitmap = new(sourceBitmap.Width, sourceBitmap.Height);
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
             resultBitmap.UnlockBits(resultData);
             return resultBitmap;
@@ -370,8 +368,8 @@ namespace WinPaletter.TypesExtensions
             {
                 using (var gfx = Graphics.FromImage(bmp))
                 {
-                    var matrix = new ColorMatrix() { Matrix33 = (float)opacity };
-                    var attributes = new ImageAttributes();
+                    ColorMatrix matrix = new() { Matrix33 = (float)opacity };
+                    ImageAttributes attributes = new();
                     attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
                     gfx.DrawImage(originalBitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
                 }
@@ -400,16 +398,16 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap Grayscale(this Bitmap original)
         {
-            var newBitmap = new Bitmap(original.Width, original.Height);
+            Bitmap newBitmap = new(original.Width, original.Height);
 
-            using (var g = Graphics.FromImage(newBitmap))
+            using (Graphics G = Graphics.FromImage(newBitmap))
             {
-                var colorMatrix = new ColorMatrix(new float[][] { new float[] { 0.3f, 0.3f, 0.3f, 0f, 0f }, new float[] { 0.59f, 0.59f, 0.59f, 0f, 0f }, new float[] { 0.11f, 0.11f, 0.11f, 0f, 0f }, new float[] { 0f, 0f, 0f, 1f, 0f }, new float[] { 0f, 0f, 0f, 0f, 1f } });
+                ColorMatrix colorMatrix = new(new float[][] { new float[] { 0.3f, 0.3f, 0.3f, 0f, 0f }, new float[] { 0.59f, 0.59f, 0.59f, 0f, 0f }, new float[] { 0.11f, 0.11f, 0.11f, 0f, 0f }, new float[] { 0f, 0f, 0f, 1f, 0f }, new float[] { 0f, 0f, 0f, 0f, 1f } });
 
-                using (var attributes = new ImageAttributes())
+                using (ImageAttributes attributes = new())
                 {
                     attributes.SetColorMatrix(colorMatrix);
-                    g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                    G.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
                 }
             }
 
@@ -423,9 +421,9 @@ namespace WinPaletter.TypesExtensions
         {
             Bitmap bmpDest = null;
 
-            using (var bmpSource = new Bitmap(bmp))
+            using (Bitmap bmpSource = new(bmp))
             {
-                bmpDest = new Bitmap(bmpSource.Width, bmpSource.Height);
+                bmpDest  = new(bmpSource.Width, bmpSource.Height);
 
                 for (int x = 0, loopTo = bmpSource.Width - 1; x <= loopTo; x++)
                 {
@@ -447,11 +445,11 @@ namespace WinPaletter.TypesExtensions
         /// <returns></returns>
         public static Bitmap Tile(this Bitmap bmp, Size Size)
         {
-            using (var B = new Bitmap(Size.Width, Size.Height))
+            using (Bitmap B = new(Size.Width, Size.Height))
             {
-                var G = Graphics.FromImage(B);
+                Graphics G = Graphics.FromImage(B);
                 G.SmoothingMode = SmoothingMode.HighSpeed;
-                var tb = new TextureBrush(bmp);
+                TextureBrush tb = new(bmp);
                 G.FillRectangle(tb, new Rectangle(0, 0, Size.Width, Size.Height));
                 G.Save();
                 return (Bitmap)B.Clone();

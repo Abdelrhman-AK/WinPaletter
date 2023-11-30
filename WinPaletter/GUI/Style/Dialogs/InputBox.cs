@@ -12,7 +12,7 @@ namespace WinPaletter.UI.Style
             {
                 if (!OS.WXP)
                 {
-                    var ib = new InputDialog()
+                    InputDialog ib = new()
                     {
                         MainInstruction = Instruction,
                         Input = Value,

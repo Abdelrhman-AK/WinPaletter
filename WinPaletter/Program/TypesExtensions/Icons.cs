@@ -8,7 +8,7 @@ namespace WinPaletter.TypesExtensions
 
         public static byte[] ToByteArray(this Icon icon)
         {
-            using (var ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
                 icon.Save(ms);
                 byte[] b = ms.ToArray();
@@ -19,7 +19,7 @@ namespace WinPaletter.TypesExtensions
 
         public static Icon ToIcon(this byte[] bytes)
         {
-            using (var ms = new MemoryStream(bytes))
+            using (MemoryStream ms = new(bytes))
             {
                 return new Icon(ms);
             }

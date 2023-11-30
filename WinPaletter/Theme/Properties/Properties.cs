@@ -355,12 +355,12 @@ namespace WinPaletter.Theme
             ShellIconSize = 32,
             ShellSmallIconSize = 16,
             Fonts_SingleBitPP = false,
-            CaptionFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            IconFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            MenuFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            MessageFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            SmCaptionFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            StatusFont = new Font("Segoe UI", 9f, FontStyle.Regular),
+            CaptionFont = new("Segoe UI", 9f, FontStyle.Regular),
+            IconFont = new("Segoe UI", 9f, FontStyle.Regular),
+            MenuFont = new("Segoe UI", 9f, FontStyle.Regular),
+            MessageFont = new("Segoe UI", 9f, FontStyle.Regular),
+            SmCaptionFont = new("Segoe UI", 9f, FontStyle.Regular),
+            StatusFont = new("Segoe UI", 9f, FontStyle.Regular),
             FontSubstitute_MSShellDlg = "Microsoft Sans Serif",
             FontSubstitute_MSShellDlg2 = "Tahoma",
             FontSubstitute_SegoeUI = string.Empty
@@ -549,9 +549,9 @@ namespace WinPaletter.Theme
         };
 
         /// <summary>Object derived of class that has data about Windows Terminal Stable, and it can be customized.</summary>
-        public WinTerminal Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal Terminal = new(string.Empty, WinTerminal.Mode.Empty);
 
         /// <summary>Object derived of class that has data about Windows Terminal Preview, and it can be customized.</summary>
-        public WinTerminal TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
     }
 }

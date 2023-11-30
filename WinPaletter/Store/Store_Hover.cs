@@ -14,11 +14,11 @@ namespace WinPaletter
         {
             get
             {
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle = cp.ExStyle | 33554432;
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432;
                     return cp;
                 }
                 else
@@ -102,9 +102,9 @@ namespace WinPaletter
             }
 
             if (p.X + Width > Program.Computer.Screen.Bounds.Width)
-                p = new Point(Program.Computer.Screen.Bounds.Width - Width, p.Y);
+                p = new(Program.Computer.Screen.Bounds.Width - Width, p.Y);
             if (p.Y + Height > Program.Computer.Screen.Bounds.Height)
-                p = new Point(p.X, Program.Computer.Screen.Bounds.Height - Height);
+                p = new(p.X, Program.Computer.Screen.Bounds.Height - Height);
             Location = p;
 
             _shown = false;

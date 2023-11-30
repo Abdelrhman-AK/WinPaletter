@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
@@ -325,15 +326,15 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorBack1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorBack1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_PrimaryColor1 = c;
+            _SelectedControl.Prop_PrimaryColor1 = C;
             _SelectedControl.Invalidate();
 
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -360,14 +361,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorBack2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorBack2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_PrimaryColor2 = c;
+            _SelectedControl.Prop_PrimaryColor2 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -395,14 +396,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorLine1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorLine1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_SecondaryColor1 = c;
+            _SelectedControl.Prop_SecondaryColor1 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -430,14 +431,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorLine2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorLine2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_SecondaryColor2 = c;
+            _SelectedControl.Prop_SecondaryColor2 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -465,14 +466,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircle1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorCircle1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_LoadingCircleBack1 = c;
+            _SelectedControl.Prop_LoadingCircleBack1 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -638,14 +639,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircle2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorCircle2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_LoadingCircleBack2 = c;
+            _SelectedControl.Prop_LoadingCircleBack2 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -673,14 +674,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircleHot1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorCircleHot1 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_LoadingCircleHot1 = c;
+            _SelectedControl.Prop_LoadingCircleHot1 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -708,14 +709,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorCircleHot2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition, true);
+            Conditions _conditions = new() { CursorCircleHot2 = true, Win7 = false, LivePreview_AfterGlow = false, LivePreview_Colorization = false };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions, true);
 
-            _SelectedControl.Prop_LoadingCircleHot2 = c;
+            _SelectedControl.Prop_LoadingCircleHot2 = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -827,13 +828,13 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 LoadFromTM(TMx);
                 TMx.Dispose();
 
                 foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
                 {
-                    if (x._Focused)
+                    if (x.Focused)
                     {
                         ApplyColorsFromCursor(x);
                         break;
@@ -845,13 +846,13 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
 
             foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
-                if (x._Focused)
+                if (x.Focused)
                 {
                     ApplyColorsFromCursor(x);
                     break;
@@ -868,7 +869,7 @@ namespace WinPaletter
 
             foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
-                if (x._Focused)
+                if (x.Focused)
                 {
                     ApplyColorsFromCursor(x);
                     break;
@@ -884,7 +885,7 @@ namespace WinPaletter
         private void Button11_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             SaveToTM(TMx);
             SaveToTM(Program.TM);
             TMx.Apply_Cursors();
@@ -1061,14 +1062,14 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (UI.Controllers.ColorItem)sender, _SelectedControl };
+            List<Control> CList = new() { (UI.Controllers.ColorItem)sender, _SelectedControl };
 
-            var _Condition = new Conditions() { CursorShadow = true };
-            var c = Forms.ColorPickerDlg.Pick(CList, _Condition);
+            Conditions _conditions = new() { CursorShadow = true };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
-            _SelectedControl.Prop_Shadow_Color = c;
+            _SelectedControl.Prop_Shadow_Color = C;
             _SelectedControl.Invalidate();
-            ((UI.Controllers.ColorItem)sender).BackColor = c;
+            ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
 
             CList.Clear();
@@ -1240,6 +1241,51 @@ namespace WinPaletter
                 tabControl1.TabPages[2].GetAllControls().ToList().ForEach(x => x.Enabled = false);
                 tabControl1.TabPages[3].GetAllControls().ToList().ForEach(x => x.Enabled = true);
             }
+        }
+
+        private void GroupBox8_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox10_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox7_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox9_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox5_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox4_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void GroupBox3_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void TaskbarFrontAndFoldersOnStart_picker_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void ColorItem1_Click(object sender, DragEventArgs e)
+        {
+
         }
     }
 }

@@ -19,35 +19,28 @@ namespace WinPaletter.UI.WP
             _color = Colorize();
             _lineColor = LineColor(_color);
 
-            hoverSize = Math.Max(Width, Height) + hoverFactor;
-            hoverFactor = hoverSize / 8;
+            _hoverSize = 0;
 
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
             Image = base.Image;
             if (Image is not null) { Flag = Flags.TintedOnHover; }
 
-            LostFocus += Button_LostFocus;
-            HandleCreated += Button_HandleCreated;
-            HandleDestroyed += Button_HandleDestroyed;
-            Timer.Tick += Timer_Tick;
-            Timer_Hover.Tick += Timer_Hover_Tick;
-            LocationChanged += Button_LocationChanged;
+            _alpha = 0;
         }
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
         private Config.Scheme scheme1 = Program.Style.Schemes.Main;
         private Config.Scheme scheme2 = Program.Style.Schemes.Secondary;
         private Config.Scheme scheme3 = Program.Style.Schemes.Tertiary;
 
         private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.6d));
-        private bool _Shown = false;
         private Color imageColor;
 
         public MouseState State = MouseState.None;
         private Point hoverPosition;
         private Rectangle hoverRect;
-        private int hoverSize;
-        private int hoverFactor = 0;
 
         public enum MouseState
         {
@@ -56,7 +49,7 @@ namespace WinPaletter.UI.WP
             Down
         }
 
-        private bool _ripple = true;
+        private bool _ripple = false;
         #endregion
 
         #region Properties
@@ -67,10 +60,7 @@ namespace WinPaletter.UI.WP
         private Image _image;
         public new Image Image
         {
-            get
-            {
-                return _image;
-            }
+            get => _image;
             set
             {
                 if (_image != value)
@@ -91,17 +81,13 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private Color _color;
 
+        private Color _color;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Color Color
         {
-            get
-            {
-                return _color;
-            }
-
+            get => _color;
             set
             {
                 if (_color != value)
@@ -117,11 +103,7 @@ namespace WinPaletter.UI.WP
         private Color _customColor;
         public Color CustomColor
         {
-            get
-            {
-                return _customColor;
-            }
-
+            get => _customColor;
             set
             {
                 if (_customColor != value)
@@ -133,7 +115,6 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
-
 
         private Color _lineColor;
         private Color _rippleColor;
@@ -376,10 +357,7 @@ namespace WinPaletter.UI.WP
         private Flags _flag = Flags.None;
         public Flags Flag
         {
-            get
-            {
-                return _flag;
-            }
+            get => _flag;
             set
             {
                 if (_flag != value)
@@ -417,10 +395,19 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (_Shown)
+            if (CanAnimate)
             {
-                Timer.Enabled = true; Timer.Start();
-                Invalidate();
+                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+            }
+            else
+            {
+                alpha = 255;
+                HoverSize = Math.Max(Width, Height);
             }
 
             base.OnMouseEnter(e);
@@ -432,11 +419,19 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (_Shown)
+            if (CanAnimate)
             {
-                Timer.Enabled = true;
-                Timer.Start();
-                Invalidate();
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+            }
+            else
+            {
+                alpha = 0;
+                HoverSize = 0;
             }
 
             base.OnMouseLeave(e);
@@ -448,11 +443,19 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (_Shown)
+            if (CanAnimate)
             {
-                Timer.Enabled = true; Timer.Start();
-                Timer_Hover.Enabled = true; Timer_Hover.Start();
-                Invalidate();
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                }
+            }
+            else
+            {
+                alpha = 0;
+                HoverSize = Math.Max(Width, Height) * 5;
             }
 
             base.OnMouseDown(e);
@@ -462,17 +465,20 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            hoverSize = Math.Max(Width, Height);
-            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
-
-            if (_Shown)
+            if (CanAnimate)
             {
-                Timer.Enabled = true; Timer.Start();
-                Invalidate();
+                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
             }
-
-            Animate();
-
+            else
+            {
+                alpha = 255;
+                HoverSize = Math.Max(Width, Height);
+            }
 
             base.OnMouseUp(e);
         }
@@ -485,9 +491,20 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            Timer_Hover.Enabled = true; Timer_Hover.Start();
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
-            Invalidate();
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                }
+            }
+            else
+            {
+                alpha = 0;
+                HoverSize = Math.Max(Width, Height) * 5;
+            }
 
             base.OnKeyDown(e);
         }
@@ -496,14 +513,11 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.None;
 
-            hoverSize = Math.Max(Width, Height);
-            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+            _hoverSize = Math.Max(Width, Height);
+            hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
 
-            if (_Shown) { Timer.Enabled = true; Timer.Start(); }
-
-            Animate();
-
-            Invalidate();
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
 
             base.OnKeyUp(e);
         }
@@ -515,45 +529,61 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (_Shown) { Invalidate(); }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
             base.OnLeave(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs mevent)
         {
-            if (_Shown && _ripple && State != MouseState.None)
+            if (CanAnimate && _ripple && State != MouseState.None)
             {
                 hoverPosition = this.PointToClient(MousePosition);
-                hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
+                hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
+                hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
                 Refresh();
             }
 
             base.OnMouseMove(mevent);
         }
 
-        private void Button_LostFocus(object sender, EventArgs e)
+        protected override void OnLostFocus(EventArgs e)
         {
             State = MouseState.None;
 
             Animate();
 
-            if (_Shown) { Invalidate(); }
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                if (_ripple)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+            }
+            else
+            {
+                alpha = 0;
+                HoverSize = 0;
+            }
+
+            base.OnLostFocus(e);
         }
 
-        protected override void OnSizeChanged(EventArgs e)
+        protected override void OnEnabledChanged(EventArgs e)
         {
-            hoverSize = Math.Max(Width, Height);
-            hoverFactor = hoverSize / 8;
-            base.OnSizeChanged(e);
+            UpdateStyleSchemes();
+            Refresh();
+
+            base.OnEnabledChanged(e);
         }
 
         public void UpdateStyleSchemes()
         {
-            Timer.Enabled = false; Timer.Stop();
-            Timer_Hover.Enabled = false; Timer_Hover.Stop();
-
             alpha = 0;
+            HoverSize = 0;
             State = MouseState.None;
 
             scheme1 = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
@@ -566,178 +596,56 @@ namespace WinPaletter.UI.WP
             Animate();
         }
 
-        private void Button_HandleCreated(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    try
-                    {
-                        FindForm().Load += Loaded;
-                        FindForm().Shown += Showed;
-                        FindForm().FormClosed += Closed;
-                    }
-                    catch { }
-                }
-                alpha = 0;
-            }
-            catch { }
-        }
-
-        private void Button_HandleDestroyed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    try
-                    {
-                        FindForm().Load -= Loaded;
-                        FindForm().Shown -= Showed;
-                        FindForm().FormClosed -= Closed;
-                    }
-                    catch { }
-                }
-            }
-            catch { }
-        }
-
-        private void Button_LocationChanged(object sender, EventArgs e)
+        protected override void OnLocationChanged(EventArgs e)
         {
             Refresh();
-        }
 
-        public void Loaded(object sender, EventArgs e)
-        {
-            _Shown = false;
-            Timer.Enabled = false; Timer.Stop();
-            Timer_Hover.Enabled = false; Timer_Hover.Stop();
-        }
-
-        public void Showed(object sender, EventArgs e)
-        {
-            _Shown = true;
-        }
-
-        public void Closed(object sender, EventArgs e)
-        {
-            _Shown = false;
-            Timer.Enabled = false; Timer.Stop();
-            Timer_Hover.Enabled = false; Timer_Hover.Stop();
+            base.OnLocationChanged(e);
         }
         #endregion
 
         #region Animator
         private void Animate()
         {
-            if (!DesignMode & _Shown)
+            if (CanAnimate)
             {
-                if (State != MouseState.None)
-                {
-                    hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
-                }
+                if (State != MouseState.None) { hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize); }
 
                 FluentTransitions.Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
-        }
-
-        private int alpha;
-        private readonly int Factor = 15;
-        private readonly Timer Timer = new() { Enabled = false, Interval = 1 };
-        private readonly Timer Timer_Hover = new() { Enabled = false, Interval = 1 };
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            try
+            else
             {
-                if (!DesignMode)
-                {
-
-                    if (State == MouseState.Over)
-                    {
-                        if (alpha + Factor <= 255)
-                        {
-                            alpha += Factor;
-                        }
-                        else if (alpha + Factor > 255)
-                        {
-                            alpha = 255;
-                            Timer.Enabled = false;
-                            Timer.Stop();
-                        }
-
-                        if (_Shown)
-                        {
-                            System.Threading.Thread.Sleep(1);
-                            Invalidate();
-                        }
-                    }
-
-                    if (!(State == MouseState.Over))
-                    {
-                        if (alpha - Factor >= 0)
-                        {
-                            alpha -= Factor;
-                        }
-                        else if (alpha - Factor < 0)
-                        {
-                            alpha = 0;
-                            Timer.Enabled = false;
-                            Timer.Stop();
-                        }
-
-                        if (_Shown)
-                        {
-                            System.Threading.Thread.Sleep(1);
-                            Invalidate();
-                        }
-
-                    }
-                }
-            }
-            catch
-            {
+                Color = Colorize();
             }
         }
 
-        private void Timer_Hover_Tick(object sender, EventArgs e)
+        private int _alpha = 0;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            try
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
+        }
+
+        private int _hoverSize;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int HoverSize
+        {
+            get => _hoverSize;
+            set
             {
-                if (!DesignMode)
-                {
-
-                    if (State == MouseState.Down)
-                    {
-                        hoverSize += hoverFactor;
-                        hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
-
-                        if (hoverSize > Math.Max(Width, Height) * 5)
-                        {
-                            hoverSize = Math.Max(Width, Height);
-                            hoverRect = new((int)(hoverPosition.X - 0.5d * hoverSize), (int)(hoverPosition.Y - 0.5d * hoverSize), hoverSize, hoverSize);
-
-                            Timer_Hover.Enabled = false;
-                            Timer_Hover.Stop();
-                        }
-
-                        if (_Shown)
-                        {
-                            System.Threading.Thread.Sleep(1);
-                            Refresh();
-                        }
-                    }
-                }
-            }
-            catch
-            {
+                _hoverSize = value;
+                hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
             }
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
@@ -761,7 +669,7 @@ namespace WinPaletter.UI.WP
 
             if (!(State == MouseState.None))
             {
-                if (_ripple)
+                if (_ripple && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
                     GraphicsPath path = Program.Style.RoundedCorners ? Rect.Round() : new GraphicsPath();
                     if (!Program.Style.RoundedCorners) { path.AddRectangle(Rect); }
@@ -819,7 +727,7 @@ namespace WinPaletter.UI.WP
                             if (Height % Image.Height != 0) imageRect.Offset(0, 1);
                         }
 
-                        G.DrawImage(Image, imageRect);
+                        G.DrawImage(Enabled ? _image : _image.Grayscale(), imageRect);
                     }
 
                     else
@@ -842,7 +750,7 @@ namespace WinPaletter.UI.WP
                                 if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
                             }
 
-                            G.DrawImage(Image, imageRect);
+                            G.DrawImage(Enabled ? _image : _image.Grayscale(), imageRect);
                             G.DrawString(Text, Font, fc, TextAndImageRect, sf);
                         }
                         else
@@ -921,13 +829,16 @@ namespace WinPaletter.UI.WP
                                 imageRect.Height = ImageSize.Height;
                             }
 
-                            G.DrawImage(Image, new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
+                            G.DrawImage(Enabled ? _image : _image.Grayscale(), new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
                             G.DrawString(Text, Font, fc, textRect, sf);
                         }
                     }
                 }
             }
             #endregion
+
+            // Never use base.OnPaint(e) for buttons, it will overwrite the previous graphics
+            // base.OnPaint(e);
         }
 
         private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)

@@ -18,16 +18,14 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
             ForeColor = Color.White;
 
-            _shown = false;
-            _alpha = 0;
-            _alpha2 = Checked ? 255 : 0;
+            alpha = 0; alpha2 = Checked ? 255 : 0;
         }
 
         #region Variables
-        private bool _shown = false;
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         public MouseState State = MouseState.None;
 
@@ -48,22 +46,16 @@ namespace WinPaletter.UI.WP
         private bool _Checked;
         public bool Checked
         {
-            get { return _Checked; }
+            get => _Checked;
             set
             {
-                if (_Checked != value)
+                if (value != _Checked)
                 {
                     _Checked = value;
                     CheckedChanged?.Invoke(this);
-                    if (_shown)
-                    {
-                        FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    }
-                    else
-                    {
-                        alpha2 = Checked ? 255 : 0;
-                        Refresh();
-                    }
+
+                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                    else { alpha2 = Checked ? 255 : 0; }
                 }
             }
         }
@@ -79,7 +71,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -103,8 +95,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
-            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
             base.OnMouseDown(e);
         }
@@ -112,7 +105,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseClick(MouseEventArgs e)
         {
             Checked = !Checked;
-            FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha2 = Checked ? 255 : 0; }
 
             base.OnMouseClick(e);
         }
@@ -120,8 +115,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
 
             base.OnMouseUp(e);
         }
@@ -129,8 +125,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
-            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
 
             base.OnMouseEnter(e);
         }
@@ -138,37 +135,12 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
             base.OnMouseLeave(e);
         }
-
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            try { if (!DesignMode) { FindForm().Shown += Showed; } }
-            catch { }
-
-            try { alpha = 0; alpha2 = Checked ? 255 : 0; }
-            catch { }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            try { if (!DesignMode) { FindForm().Shown -= Showed; } }
-            catch { }
-
-            base.OnHandleDestroyed(e);
-        }
-
-        public void Showed(object sender, EventArgs e) 
-        {
-            _shown = true;
-            Invalidate();
-        }
-
         #endregion
 
         #region Animator
@@ -195,9 +167,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
-            if (Parent is null) return;
+            if (this == null) return;
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -211,9 +181,9 @@ namespace WinPaletter.UI.WP
             bool RTL = (int)RightToLeft == 1;
             StringFormat format = ContentAlignment.MiddleLeft.ToStringFormat(RTL);
 
-            var OuterRect = new Rectangle(3, 4, Height - 8, Height - 8);
-            var InnerRect = new Rectangle(4, 5, Height - 10, Height - 10);
-            var TextRect = new Rectangle(Height - 1, 1, Width - InnerRect.Width, Height - 1);
+            Rectangle OuterRect = new(3, 4, Height - 8, Height - 8);
+            Rectangle InnerRect = new(4, 5, Height - 10, Height - 10);
+            Rectangle TextRect = new(Height - 1, 1, Width - InnerRect.Width, Height - 1);
 
             #region Colors System
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
@@ -232,7 +202,7 @@ namespace WinPaletter.UI.WP
 
             if (RTL)
             {
-                format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+                format = new(StringFormatFlags.DirectionRightToLeft);
                 OuterRect.X = Width - OuterRect.X - OuterRect.Width;
                 InnerRect.X = Width - InnerRect.X - InnerRect.Width;
                 TextRect.Width = Width - InnerRect.Width - 10;
@@ -282,6 +252,8 @@ namespace WinPaletter.UI.WP
             #endregion
 
             format.Dispose();
+
+            base.OnPaint(e);
         }
     }
 }

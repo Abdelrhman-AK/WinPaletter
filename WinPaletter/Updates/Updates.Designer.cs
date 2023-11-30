@@ -35,382 +35,397 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(Updates));
-            Label2 = new Label();
-            Panel1 = new Panel();
-            LinkLabel3 = new UI.WP.LinkLabel();
-            LinkLabel3.LinkClicked += new LinkLabelLinkClickedEventHandler(LinkLabel3_LinkClicked);
-            RadioButton2 = new UI.WP.RadioButton();
-            RadioButton3 = new UI.WP.RadioButton();
-            RadioButton1 = new UI.WP.RadioButton();
-            ProgressBar1 = new UI.WP.ProgressBar();
-            SaveFileDialog1 = new SaveFileDialog();
-            Label1 = new Label();
-            PictureBox2 = new PictureBox();
-            PictureBox4 = new PictureBox();
-            Label6 = new Label();
-            Label7 = new Label();
-            PictureBox5 = new PictureBox();
-            Label8 = new Label();
-            Label9 = new Label();
-            AnimatedBox1 = new UI.WP.AnimatedBox();
-            Label3 = new UI.WP.LinkLabel();
-            Label3.LinkClicked += new LinkLabelLinkClickedEventHandler(Label3_LinkClicked);
-            PictureBox1 = new PictureBox();
-            Label17 = new Label();
-            CheckBox1 = new UI.WP.CheckBox();
-            CheckBox1.CheckedChanged += new UI.WP.CheckBox.CheckedChangedEventHandler(CheckBox1_CheckedChanged);
-            AlertBox2 = new UI.WP.AlertBox();
-            Separator1 = new UI.WP.SeparatorH();
-            Button3 = new UI.WP.Button();
-            Button3.Click += new EventHandler(Button3_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            Panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox5).BeginInit();
-            AnimatedBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).BeginInit();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Updates));
+            this.Label2 = new System.Windows.Forms.Label();
+            this.Panel1 = new System.Windows.Forms.Panel();
+            this.LinkLabel3 = new WinPaletter.UI.WP.LinkLabel();
+            this.RadioButton2 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton3 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton1 = new WinPaletter.UI.WP.RadioButton();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
+            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Label1 = new System.Windows.Forms.Label();
+            this.PictureBox2 = new System.Windows.Forms.PictureBox();
+            this.PictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Label6 = new System.Windows.Forms.Label();
+            this.Label7 = new System.Windows.Forms.Label();
+            this.PictureBox5 = new System.Windows.Forms.PictureBox();
+            this.Label8 = new System.Windows.Forms.Label();
+            this.Label9 = new System.Windows.Forms.Label();
+            this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
+            this.Label3 = new WinPaletter.UI.WP.LinkLabel();
+            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Label17 = new System.Windows.Forms.Label();
+            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
+            this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
+            this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
+            this.Button3 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
+            this.AnimatedBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.SuspendLayout();
             // 
             // Label2
             // 
-            Label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label2.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label2.Location = new Point(174, 78);
-            Label2.Name = "Label2";
-            Label2.Size = new Size(233, 24);
-            Label2.TabIndex = 16;
-            Label2.Text = "0.0.0.0";
-            Label2.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label2.Location = new System.Drawing.Point(174, 78);
+            this.Label2.Name = "Label2";
+            this.Label2.Size = new System.Drawing.Size(233, 24);
+            this.Label2.TabIndex = 16;
+            this.Label2.Text = "0.0.0.0";
+            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Panel1
             // 
-            Panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Panel1.Controls.Add(LinkLabel3);
-            Panel1.Controls.Add(RadioButton2);
-            Panel1.Controls.Add(RadioButton3);
-            Panel1.Controls.Add(RadioButton1);
-            Panel1.Location = new Point(11, 241);
-            Panel1.Name = "Panel1";
-            Panel1.Size = new Size(395, 117);
-            Panel1.TabIndex = 18;
-            Panel1.Visible = false;
+            this.Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel1.Controls.Add(this.LinkLabel3);
+            this.Panel1.Controls.Add(this.RadioButton2);
+            this.Panel1.Controls.Add(this.RadioButton3);
+            this.Panel1.Controls.Add(this.RadioButton1);
+            this.Panel1.Location = new System.Drawing.Point(11, 241);
+            this.Panel1.Name = "Panel1";
+            this.Panel1.Size = new System.Drawing.Size(395, 117);
+            this.Panel1.TabIndex = 18;
+            this.Panel1.Visible = false;
             // 
             // LinkLabel3
             // 
-            LinkLabel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            LinkLabel3.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            LinkLabel3.ForeColor = Color.DodgerBlue;
-            LinkLabel3.LinkBehavior = LinkBehavior.NeverUnderline;
-            LinkLabel3.LinkColor = Color.DodgerBlue;
-            LinkLabel3.Location = new Point(16, 90);
-            LinkLabel3.Name = "LinkLabel3";
-            LinkLabel3.Size = new Size(376, 24);
-            LinkLabel3.TabIndex = 33;
-            LinkLabel3.TabStop = true;
-            LinkLabel3.Text = "• What's new?";
-            LinkLabel3.TextAlign = ContentAlignment.MiddleLeft;
-            LinkLabel3.Visible = false;
+            this.LinkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LinkLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LinkLabel3.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue;
+            this.LinkLabel3.Location = new System.Drawing.Point(16, 90);
+            this.LinkLabel3.Name = "LinkLabel3";
+            this.LinkLabel3.Size = new System.Drawing.Size(376, 24);
+            this.LinkLabel3.TabIndex = 33;
+            this.LinkLabel3.TabStop = true;
+            this.LinkLabel3.Text = "• What\'s new?";
+            this.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LinkLabel3.Visible = false;
+            this.LinkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3_LinkClicked);
             // 
             // RadioButton2
             // 
-            RadioButton2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            RadioButton2.BackColor = Color.FromArgb(25, 25, 25);
-            RadioButton2.Checked = false;
-            RadioButton2.Font = new Font("Segoe UI", 9.0f);
-            RadioButton2.ForeColor = Color.White;
-            RadioButton2.Location = new Point(3, 32);
-            RadioButton2.Name = "RadioButton2";
-            RadioButton2.Size = new Size(389, 23);
-            RadioButton2.TabIndex = 2;
-            RadioButton2.Text = "Save download as...";
+            this.RadioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton2.Checked = false;
+            this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton2.ForeColor = System.Drawing.Color.White;
+            this.RadioButton2.Location = new System.Drawing.Point(3, 32);
+            this.RadioButton2.Name = "RadioButton2";
+            this.RadioButton2.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton2.TabIndex = 2;
+            this.RadioButton2.Text = "Save download as...";
             // 
             // RadioButton3
             // 
-            RadioButton3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            RadioButton3.BackColor = Color.FromArgb(25, 25, 25);
-            RadioButton3.Checked = false;
-            RadioButton3.Font = new Font("Segoe UI", 9.0f);
-            RadioButton3.ForeColor = Color.White;
-            RadioButton3.Location = new Point(3, 61);
-            RadioButton3.Name = "RadioButton3";
-            RadioButton3.Size = new Size(389, 23);
-            RadioButton3.TabIndex = 1;
-            RadioButton3.Text = "Just download from the browser";
+            this.RadioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton3.Checked = false;
+            this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton3.ForeColor = System.Drawing.Color.White;
+            this.RadioButton3.Location = new System.Drawing.Point(3, 61);
+            this.RadioButton3.Name = "RadioButton3";
+            this.RadioButton3.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton3.TabIndex = 1;
+            this.RadioButton3.Text = "Just download from the browser";
             // 
             // RadioButton1
             // 
-            RadioButton1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            RadioButton1.BackColor = Color.FromArgb(25, 25, 25);
-            RadioButton1.Checked = true;
-            RadioButton1.Font = new Font("Segoe UI", 9.0f);
-            RadioButton1.ForeColor = Color.White;
-            RadioButton1.Location = new Point(3, 3);
-            RadioButton1.Name = "RadioButton1";
-            RadioButton1.Size = new Size(389, 23);
-            RadioButton1.TabIndex = 0;
-            RadioButton1.Text = "Download then close WinPaletter and replace it by the new update";
+            this.RadioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton1.Checked = true;
+            this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton1.ForeColor = System.Drawing.Color.White;
+            this.RadioButton1.Location = new System.Drawing.Point(3, 3);
+            this.RadioButton1.Name = "RadioButton1";
+            this.RadioButton1.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton1.TabIndex = 0;
+            this.RadioButton1.Text = "Download then close WinPaletter and replace it by the new update";
             // 
             // ProgressBar1
             // 
-            ProgressBar1.Location = new Point(11, 364);
-            ProgressBar1.Name = "ProgressBar1";
-            ProgressBar1.Size = new Size(395, 10);
-            ProgressBar1.TabIndex = 3;
-            ProgressBar1.Visible = false;
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar1.Location = new System.Drawing.Point(11, 364);
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(395, 10);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.ProgressBar1.TabIndex = 3;
+            this.ProgressBar1.TaskbarBroadcast = true;
+            this.ProgressBar1.Visible = false;
             // 
             // SaveFileDialog1
             // 
-            SaveFileDialog1.FileName = "WinPaletter";
-            SaveFileDialog1.Filter = "Executable File|*.exe";
+            this.SaveFileDialog1.FileName = "WinPaletter";
+            this.SaveFileDialog1.Filter = "Executable File|*.exe";
             // 
             // Label1
             // 
-            Label1.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label1.Location = new Point(42, 78);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(126, 24);
-            Label1.TabIndex = 20;
-            Label1.Text = "Current version:";
-            Label1.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.Location = new System.Drawing.Point(42, 78);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(126, 24);
+            this.Label1.TabIndex = 20;
+            this.Label1.Text = "Current version:";
+            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox2
             // 
-            PictureBox2.Image = (Image)resources.GetObject("PictureBox2.Image");
-            PictureBox2.Location = new Point(12, 78);
-            PictureBox2.Name = "PictureBox2";
-            PictureBox2.Size = new Size(24, 24);
-            PictureBox2.TabIndex = 21;
-            PictureBox2.TabStop = false;
+            this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
+            this.PictureBox2.Location = new System.Drawing.Point(12, 78);
+            this.PictureBox2.Name = "PictureBox2";
+            this.PictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox2.TabIndex = 21;
+            this.PictureBox2.TabStop = false;
             // 
             // PictureBox4
             // 
-            PictureBox4.Image = (Image)resources.GetObject("PictureBox4.Image");
-            PictureBox4.Location = new Point(12, 108);
-            PictureBox4.Name = "PictureBox4";
-            PictureBox4.Size = new Size(24, 24);
-            PictureBox4.TabIndex = 27;
-            PictureBox4.TabStop = false;
+            this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
+            this.PictureBox4.Location = new System.Drawing.Point(12, 108);
+            this.PictureBox4.Name = "PictureBox4";
+            this.PictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox4.TabIndex = 27;
+            this.PictureBox4.TabStop = false;
             // 
             // Label6
             // 
-            Label6.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label6.Location = new Point(42, 108);
-            Label6.Name = "Label6";
-            Label6.Size = new Size(126, 24);
-            Label6.TabIndex = 26;
-            Label6.Text = "Update size:";
-            Label6.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label6.Location = new System.Drawing.Point(42, 108);
+            this.Label6.Name = "Label6";
+            this.Label6.Size = new System.Drawing.Size(126, 24);
+            this.Label6.TabIndex = 26;
+            this.Label6.Text = "Update size:";
+            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label7
             // 
-            Label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label7.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label7.Location = new Point(174, 108);
-            Label7.Name = "Label7";
-            Label7.Size = new Size(233, 24);
-            Label7.TabIndex = 25;
-            Label7.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label7.Location = new System.Drawing.Point(174, 108);
+            this.Label7.Name = "Label7";
+            this.Label7.Size = new System.Drawing.Size(233, 24);
+            this.Label7.TabIndex = 25;
+            this.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox5
             // 
-            PictureBox5.Image = (Image)resources.GetObject("PictureBox5.Image");
-            PictureBox5.Location = new Point(12, 138);
-            PictureBox5.Name = "PictureBox5";
-            PictureBox5.Size = new Size(24, 24);
-            PictureBox5.TabIndex = 30;
-            PictureBox5.TabStop = false;
+            this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
+            this.PictureBox5.Location = new System.Drawing.Point(12, 138);
+            this.PictureBox5.Name = "PictureBox5";
+            this.PictureBox5.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox5.TabIndex = 30;
+            this.PictureBox5.TabStop = false;
             // 
             // Label8
             // 
-            Label8.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label8.Location = new Point(42, 138);
-            Label8.Name = "Label8";
-            Label8.Size = new Size(126, 24);
-            Label8.TabIndex = 29;
-            Label8.Text = "Release date:";
-            Label8.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label8.Location = new System.Drawing.Point(42, 138);
+            this.Label8.Name = "Label8";
+            this.Label8.Size = new System.Drawing.Size(126, 24);
+            this.Label8.TabIndex = 29;
+            this.Label8.Text = "Release date:";
+            this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label9
             // 
-            Label9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label9.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label9.Location = new Point(174, 138);
-            Label9.Name = "Label9";
-            Label9.Size = new Size(233, 24);
-            Label9.TabIndex = 28;
-            Label9.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label9.Location = new System.Drawing.Point(174, 138);
+            this.Label9.Name = "Label9";
+            this.Label9.Size = new System.Drawing.Size(233, 24);
+            this.Label9.TabIndex = 28;
+            this.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // AnimatedBox1
             // 
-            AnimatedBox1.Color1 = Color.DodgerBlue;
-            AnimatedBox1.Color2 = Color.Crimson;
-            AnimatedBox1.Controls.Add(Label3);
-            AnimatedBox1.Controls.Add(PictureBox1);
-            AnimatedBox1.Controls.Add(Label17);
-            AnimatedBox1.Dock = DockStyle.Top;
-            AnimatedBox1.Location = new Point(0, 0);
-            AnimatedBox1.Name = "AnimatedBox1";
-            AnimatedBox1.Size = new Size(421, 68);
-            AnimatedBox1.Style = UI.WP.AnimatedBox.Styles.SwapColors;
-            AnimatedBox1.TabIndex = 32;
+            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
+            this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
+            this.AnimatedBox1.Controls.Add(this.Label3);
+            this.AnimatedBox1.Controls.Add(this.PictureBox1);
+            this.AnimatedBox1.Controls.Add(this.Label17);
+            this.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.AnimatedBox1.Location = new System.Drawing.Point(0, 0);
+            this.AnimatedBox1.Name = "AnimatedBox1";
+            this.AnimatedBox1.Size = new System.Drawing.Size(421, 68);
+            this.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors;
+            this.AnimatedBox1.TabIndex = 32;
             // 
             // Label3
             // 
-            Label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Label3.BackColor = Color.Transparent;
-            Label3.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label3.ForeColor = Color.DodgerBlue;
-            Label3.LinkBehavior = LinkBehavior.NeverUnderline;
-            Label3.LinkColor = Color.DodgerBlue;
-            Label3.Location = new Point(316, 22);
-            Label3.Name = "Label3";
-            Label3.Size = new Size(93, 24);
-            Label3.TabIndex = 17;
-            Label3.TabStop = true;
-            Label3.Text = "Stable channel";
-            Label3.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label3.BackColor = System.Drawing.Color.Transparent;
+            this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label3.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.Label3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.Label3.LinkColor = System.Drawing.Color.DodgerBlue;
+            this.Label3.Location = new System.Drawing.Point(316, 22);
+            this.Label3.Name = "Label3";
+            this.Label3.Size = new System.Drawing.Size(93, 24);
+            this.Label3.TabIndex = 17;
+            this.Label3.TabStop = true;
+            this.Label3.Text = "Stable channel";
+            this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Label3_LinkClicked);
             // 
             // PictureBox1
             // 
-            PictureBox1.BackColor = Color.Transparent;
-            PictureBox1.Image = (Image)resources.GetObject("PictureBox1.Image");
-            PictureBox1.Location = new Point(10, 10);
-            PictureBox1.Name = "PictureBox1";
-            PictureBox1.Size = new Size(48, 48);
-            PictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox1.TabIndex = 8;
-            PictureBox1.TabStop = false;
+            this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
+            this.PictureBox1.Location = new System.Drawing.Point(10, 10);
+            this.PictureBox1.Name = "PictureBox1";
+            this.PictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox1.TabIndex = 8;
+            this.PictureBox1.TabStop = false;
             // 
             // Label17
             // 
-            Label17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label17.BackColor = Color.Transparent;
-            Label17.Font = new Font("Segoe UI Semibold", 14.25f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label17.Location = new Point(65, 10);
-            Label17.Name = "Label17";
-            Label17.Size = new Size(245, 48);
-            Label17.TabIndex = 9;
-            Label17.Text = "Updates";
-            Label17.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label17.BackColor = System.Drawing.Color.Transparent;
+            this.Label17.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label17.Location = new System.Drawing.Point(65, 10);
+            this.Label17.Name = "Label17";
+            this.Label17.Size = new System.Drawing.Size(245, 48);
+            this.Label17.TabIndex = 9;
+            this.Label17.Text = "Updates";
+            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CheckBox1
             // 
-            CheckBox1.BackColor = Color.FromArgb(25, 25, 25);
-            CheckBox1.Checked = true;
-            CheckBox1.Font = new Font("Segoe UI", 9.0f);
-            CheckBox1.ForeColor = Color.White;
-            CheckBox1.Location = new Point(12, 168);
-            CheckBox1.Name = "CheckBox1";
-            CheckBox1.Size = new Size(395, 23);
-            CheckBox1.TabIndex = 31;
-            CheckBox1.Text = "Automatic check for updates";
+            this.CheckBox1.Checked = true;
+            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox1.ForeColor = System.Drawing.Color.White;
+            this.CheckBox1.Location = new System.Drawing.Point(12, 168);
+            this.CheckBox1.Name = "CheckBox1";
+            this.CheckBox1.Size = new System.Drawing.Size(395, 23);
+            this.CheckBox1.TabIndex = 31;
+            this.CheckBox1.Text = "Automatic check for updates";
+            this.CheckBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox1_CheckedChanged);
             // 
             // AlertBox2
             // 
-            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
-            AlertBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AlertBox2.BackColor = Color.FromArgb(125, 20, 30);
-            AlertBox2.CenterText = true;
-            AlertBox2.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox2.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            AlertBox2.Image = null;
-            AlertBox2.Location = new Point(12, 205);
-            AlertBox2.Name = "AlertBox2";
-            AlertBox2.Size = new Size(395, 31);
-            AlertBox2.TabIndex = 12;
-            AlertBox2.TabStop = false;
-            AlertBox2.Text = "Update available";
-            AlertBox2.Visible = false;
+            this.AlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
+            this.AlertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox2.CenterText = true;
+            this.AlertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AlertBox2.Image = null;
+            this.AlertBox2.Location = new System.Drawing.Point(12, 205);
+            this.AlertBox2.Name = "AlertBox2";
+            this.AlertBox2.Size = new System.Drawing.Size(395, 31);
+            this.AlertBox2.TabIndex = 12;
+            this.AlertBox2.TabStop = false;
+            this.AlertBox2.Text = "Update available";
+            this.AlertBox2.Visible = false;
             // 
             // Separator1
             // 
-            Separator1.AlternativeLook = false;
-            Separator1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Separator1.Location = new Point(12, 198);
-            Separator1.Name = "Separator1";
-            Separator1.Size = new Size(395, 1);
-            Separator1.TabIndex = 8;
-            Separator1.TabStop = false;
+            this.Separator1.AlternativeLook = false;
+            this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Separator1.BackColor = System.Drawing.Color.Transparent;
+            this.Separator1.Location = new System.Drawing.Point(12, 198);
+            this.Separator1.Name = "Separator1";
+            this.Separator1.Size = new System.Drawing.Size(395, 1);
+            this.Separator1.TabIndex = 8;
+            this.Separator1.TabStop = false;
             // 
             // Button3
             // 
-            Button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button3.BackColor = Color.FromArgb(34, 34, 34);
-
-            Button3.Font = new Font("Segoe UI", 9.0f);
-            Button3.ForeColor = Color.White;
-            Button3.Image = null;
-            Button3.Location = new Point(162, 382);
-            Button3.Name = "Button3";
-            Button3.Size = new Size(80, 34);
-            Button3.TabIndex = 2;
-            Button3.Text = "Cancel";
-            Button3.UseVisualStyleBackColor = false;
+            this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button3.ForeColor = System.Drawing.Color.White;
+            this.Button3.Image = null;
+            this.Button3.Location = new System.Drawing.Point(162, 382);
+            this.Button3.Name = "Button3";
+            this.Button3.Size = new System.Drawing.Size(80, 34);
+            this.Button3.TabIndex = 2;
+            this.Button3.Text = "Cancel";
+            this.Button3.UseVisualStyleBackColor = false;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(34, 34, 34);
-
-            Button1.Font = new Font("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = null;
-            Button1.ImageAlign = ContentAlignment.MiddleLeft;
-            Button1.Location = new Point(248, 382);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(161, 34);
-            Button1.TabIndex = 0;
-            Button1.Text = "Check for updates";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = null;
+            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button1.Location = new System.Drawing.Point(248, 382);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(161, 34);
+            this.Button1.TabIndex = 0;
+            this.Button1.Text = "Check for updates";
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // Updates
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(421, 428);
-            Controls.Add(AnimatedBox1);
-            Controls.Add(CheckBox1);
-            Controls.Add(PictureBox5);
-            Controls.Add(Label8);
-            Controls.Add(Label9);
-            Controls.Add(PictureBox4);
-            Controls.Add(Label6);
-            Controls.Add(Label7);
-            Controls.Add(PictureBox2);
-            Controls.Add(Label1);
-            Controls.Add(ProgressBar1);
-            Controls.Add(Panel1);
-            Controls.Add(Label2);
-            Controls.Add(AlertBox2);
-            Controls.Add(Separator1);
-            Controls.Add(Button3);
-            Controls.Add(Button1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Updates";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Updates";
-            TopMost = true;
-            Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)PictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox5).EndInit();
-            AnimatedBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).EndInit();
-            Load += new EventHandler(Updates_Load);
-            Shown += new EventHandler(Updates_Shown);
-            FormClosing += new FormClosingEventHandler(Updates_FormClosing);
-            FormClosed += new FormClosedEventHandler(Updates_FormClosed);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(421, 428);
+            this.Controls.Add(this.AnimatedBox1);
+            this.Controls.Add(this.CheckBox1);
+            this.Controls.Add(this.PictureBox5);
+            this.Controls.Add(this.Label8);
+            this.Controls.Add(this.Label9);
+            this.Controls.Add(this.PictureBox4);
+            this.Controls.Add(this.Label6);
+            this.Controls.Add(this.Label7);
+            this.Controls.Add(this.PictureBox2);
+            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.ProgressBar1);
+            this.Controls.Add(this.Panel1);
+            this.Controls.Add(this.Label2);
+            this.Controls.Add(this.AlertBox2);
+            this.Controls.Add(this.Separator1);
+            this.Controls.Add(this.Button3);
+            this.Controls.Add(this.Button1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Updates";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Updates";
+            this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Updates_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Updates_FormClosed);
+            this.Load += new System.EventHandler(this.Updates_Load);
+            this.Shown += new System.EventHandler(this.Updates_Shown);
+            this.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
+            this.AnimatedBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.ResumeLayout(false);
 
         }
 

@@ -75,7 +75,7 @@ namespace WinPaletter.NativeMethods
             try
             {
                 // Initialize a SHSTOCKICONINFO structure.
-                var sii = new Shell32.SHSTOCKICONINFO() { cbSize = (uint)Marshal.SizeOf(typeof(Shell32.SHSTOCKICONINFO)) };
+                Shell32.SHSTOCKICONINFO sii = new() { cbSize = (uint)Marshal.SizeOf(typeof(Shell32.SHSTOCKICONINFO)) };
 
                 // Call SHGetStockIconInfo to get system icon information.
                 Shell32.SHGetStockIconInfo(_Icon, _Type, ref sii);
@@ -130,7 +130,7 @@ namespace WinPaletter.NativeMethods
         public static void RemoveFormTitlebarTextAndIcon(IntPtr handle)
         {
             // Set the non-client rendering options to remove the titlebar text and icon
-            var options = new UxTheme.WTA_OPTIONS()
+            UxTheme.WTA_OPTIONS options = new()
             {
                 Flags = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON,
                 Mask = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON

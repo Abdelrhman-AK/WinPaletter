@@ -504,7 +504,7 @@ namespace WinPaletter
             this.TerTitlebarActive.AllowDrop = true;
             this.TerTitlebarActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerTitlebarActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerTitlebarActive.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerTitlebarActive.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerTitlebarActive.DontShowInfo = false;
             this.TerTitlebarActive.Location = new System.Drawing.Point(242, 3);
             this.TerTitlebarActive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -519,7 +519,7 @@ namespace WinPaletter
             this.TerTitlebarInactive.AllowDrop = true;
             this.TerTitlebarInactive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerTitlebarInactive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerTitlebarInactive.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerTitlebarInactive.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerTitlebarInactive.DontShowInfo = false;
             this.TerTitlebarInactive.Location = new System.Drawing.Point(242, 33);
             this.TerTitlebarInactive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -557,7 +557,7 @@ namespace WinPaletter
             this.TerTabActive.AllowDrop = true;
             this.TerTabActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerTabActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerTabActive.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerTabActive.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerTabActive.DontShowInfo = false;
             this.TerTabActive.Location = new System.Drawing.Point(242, 63);
             this.TerTabActive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -572,7 +572,7 @@ namespace WinPaletter
             this.TerTabInactive.AllowDrop = true;
             this.TerTabInactive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerTabInactive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerTabInactive.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerTabInactive.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerTabInactive.DontShowInfo = false;
             this.TerTabInactive.Location = new System.Drawing.Point(242, 93);
             this.TerTabInactive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1019,7 +1019,7 @@ namespace WinPaletter
             this.TerCursor.AllowDrop = true;
             this.TerCursor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerCursor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerCursor.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerCursor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerCursor.DontShowInfo = false;
             this.TerCursor.Location = new System.Drawing.Point(245, 153);
             this.TerCursor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1034,7 +1034,7 @@ namespace WinPaletter
             this.TerWhiteB.AllowDrop = true;
             this.TerWhiteB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerWhiteB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.TerWhiteB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.TerWhiteB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.TerWhiteB.DontShowInfo = false;
             this.TerWhiteB.Location = new System.Drawing.Point(245, 401);
             this.TerWhiteB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1062,7 +1062,7 @@ namespace WinPaletter
             this.TerBlue.AllowDrop = true;
             this.TerBlue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerBlue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
-            this.TerBlue.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
+            this.TerBlue.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.TerBlue.DontShowInfo = false;
             this.TerBlue.Location = new System.Drawing.Point(140, 222);
             this.TerBlue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1090,7 +1090,7 @@ namespace WinPaletter
             this.TerSelection.AllowDrop = true;
             this.TerSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerSelection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerSelection.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerSelection.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerSelection.DontShowInfo = false;
             this.TerSelection.Location = new System.Drawing.Point(245, 123);
             this.TerSelection.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1131,7 +1131,7 @@ namespace WinPaletter
             this.TerWhite.AllowDrop = true;
             this.TerWhite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerWhite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.TerWhite.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.TerWhite.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.TerWhite.DontShowInfo = false;
             this.TerWhite.Location = new System.Drawing.Point(140, 401);
             this.TerWhite.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1146,7 +1146,7 @@ namespace WinPaletter
             this.TerForeground.AllowDrop = true;
             this.TerForeground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerForeground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerForeground.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerForeground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerForeground.DontShowInfo = false;
             this.TerForeground.Location = new System.Drawing.Point(245, 93);
             this.TerForeground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1161,7 +1161,7 @@ namespace WinPaletter
             this.TerCyanB.AllowDrop = true;
             this.TerCyanB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerCyanB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
-            this.TerCyanB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
+            this.TerCyanB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.TerCyanB.DontShowInfo = false;
             this.TerCyanB.Location = new System.Drawing.Point(245, 251);
             this.TerCyanB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1189,7 +1189,7 @@ namespace WinPaletter
             this.TerCyan.AllowDrop = true;
             this.TerCyan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerCyan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
-            this.TerCyan.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
+            this.TerCyan.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.TerCyan.DontShowInfo = false;
             this.TerCyan.Location = new System.Drawing.Point(140, 251);
             this.TerCyan.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1204,7 +1204,7 @@ namespace WinPaletter
             this.TerGreen.AllowDrop = true;
             this.TerGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerGreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
-            this.TerGreen.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
+            this.TerGreen.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.TerGreen.DontShowInfo = false;
             this.TerGreen.Location = new System.Drawing.Point(140, 281);
             this.TerGreen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1232,7 +1232,7 @@ namespace WinPaletter
             this.TerBackground.AllowDrop = true;
             this.TerBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerBackground.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerBackground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBackground.DontShowInfo = false;
             this.TerBackground.Location = new System.Drawing.Point(245, 63);
             this.TerBackground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1247,7 +1247,7 @@ namespace WinPaletter
             this.TerYellow.AllowDrop = true;
             this.TerYellow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerYellow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
-            this.TerYellow.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
+            this.TerYellow.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.TerYellow.DontShowInfo = false;
             this.TerYellow.Location = new System.Drawing.Point(140, 371);
             this.TerYellow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1262,7 +1262,7 @@ namespace WinPaletter
             this.TerGreenB.AllowDrop = true;
             this.TerGreenB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerGreenB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
-            this.TerGreenB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
+            this.TerGreenB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.TerGreenB.DontShowInfo = false;
             this.TerGreenB.Location = new System.Drawing.Point(245, 281);
             this.TerGreenB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1303,7 +1303,7 @@ namespace WinPaletter
             this.TerBlack.AllowDrop = true;
             this.TerBlack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerBlack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerBlack.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerBlack.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBlack.DontShowInfo = false;
             this.TerBlack.Location = new System.Drawing.Point(140, 191);
             this.TerBlack.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1318,7 +1318,7 @@ namespace WinPaletter
             this.TerYellowB.AllowDrop = true;
             this.TerYellowB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerYellowB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
-            this.TerYellowB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
+            this.TerYellowB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.TerYellowB.DontShowInfo = false;
             this.TerYellowB.Location = new System.Drawing.Point(245, 371);
             this.TerYellowB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1346,7 +1346,7 @@ namespace WinPaletter
             this.TerBlackB.AllowDrop = true;
             this.TerBlackB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerBlackB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            this.TerBlackB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            this.TerBlackB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.TerBlackB.DontShowInfo = false;
             this.TerBlackB.Location = new System.Drawing.Point(245, 191);
             this.TerBlackB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1361,7 +1361,7 @@ namespace WinPaletter
             this.TerPurple.AllowDrop = true;
             this.TerPurple.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerPurple.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
-            this.TerPurple.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
+            this.TerPurple.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.TerPurple.DontShowInfo = false;
             this.TerPurple.Location = new System.Drawing.Point(140, 341);
             this.TerPurple.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1389,7 +1389,7 @@ namespace WinPaletter
             this.TerPurpleB.AllowDrop = true;
             this.TerPurpleB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerPurpleB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
-            this.TerPurpleB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
+            this.TerPurpleB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.TerPurpleB.DontShowInfo = false;
             this.TerPurpleB.Location = new System.Drawing.Point(245, 341);
             this.TerPurpleB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1404,7 +1404,7 @@ namespace WinPaletter
             this.TerBlueB.AllowDrop = true;
             this.TerBlueB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerBlueB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
-            this.TerBlueB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
+            this.TerBlueB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.TerBlueB.DontShowInfo = false;
             this.TerBlueB.Location = new System.Drawing.Point(245, 222);
             this.TerBlueB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1445,7 +1445,7 @@ namespace WinPaletter
             this.TerRedB.AllowDrop = true;
             this.TerRedB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerRedB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
-            this.TerRedB.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
+            this.TerRedB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.TerRedB.DontShowInfo = false;
             this.TerRedB.Location = new System.Drawing.Point(245, 311);
             this.TerRedB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1460,7 +1460,7 @@ namespace WinPaletter
             this.TerRed.AllowDrop = true;
             this.TerRed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TerRed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
-            this.TerRed.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
+            this.TerRed.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.TerRed.DontShowInfo = false;
             this.TerRed.Location = new System.Drawing.Point(140, 311);
             this.TerRed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

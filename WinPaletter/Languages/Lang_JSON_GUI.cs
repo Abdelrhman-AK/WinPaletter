@@ -18,10 +18,10 @@ namespace WinPaletter
         public static event EventHandler ControlSelection;
 
         private Control _SelectedItem;
-        private List<Form> FormsList = new List<Form>();
+        private List<Form> FormsList = new();
 
         private string LangFile;
-        private Localizer Lang = new Localizer();
+        private Localizer Lang = new();
 
         private bool EditingTag = true;
         private bool AllowEditing = false;
@@ -43,7 +43,7 @@ namespace WinPaletter
         #region Helpers Voids/functions
         public void OpenFile()
         {
-            Lang = new Localizer();
+            Lang = new();
             Lang.Load(LangFile);
 
             Label9.Text = LangFile;
@@ -71,7 +71,7 @@ namespace WinPaletter
             data.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             int row_index = 0;
-            var rows = new List<DataGridViewRow>();
+            List<DataGridViewRow> rows = new();
             rows.Clear();
 
             JObject JObject = (JObject)JToken.Parse(System.IO.File.ReadAllText(LangFile))["Global Strings"];
@@ -82,7 +82,7 @@ namespace WinPaletter
                 if (!string.IsNullOrWhiteSpace(property.GetValue(Program.Lang).ToString()) & !((property.Name.ToLower() ?? string.Empty) == ("Name".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("TranslationVersion".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("Lang".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("LangCode".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("AppVer".ToLower() ?? string.Empty)) & !((property.Name.ToLower() ?? string.Empty) == ("RightToLeft".ToLower() ?? string.Empty)))
                 {
 
-                    var row = new DataGridViewRow();
+                    DataGridViewRow row = new();
                     row.CreateCells(data);
 
                     row.Cells[0].Value = property.Name.ToLower();
@@ -147,7 +147,7 @@ namespace WinPaletter
             if (Th is not null && Th.IsAlive)
                 Th.Abort();
 
-            Th = new Thread(LoadAllMiniFormsIntoList_Thread) { Priority = ThreadPriority.Highest, IsBackground = true };
+            Th = new(LoadAllMiniFormsIntoList_Thread) { Priority = ThreadPriority.Highest, IsBackground = true };
             Th.Start();
         }
 
@@ -203,7 +203,7 @@ namespace WinPaletter
 
         public Form CreateMiniForm(Form Form, Form OriginalForm)
         {
-            Form Child = new Form()
+            Form Child = new()
             {
                 Name = Form.Name,
                 Text = Form.Text,
@@ -227,7 +227,7 @@ namespace WinPaletter
             };
 
             if (Form.FormBorderStyle == FormBorderStyle.None)
-                Child.Size += new Size(4 * 4 + 2, 24 * 2 - 6);
+                Child.Size += new Size (4 * 4 + 2, 24 * 2 - 6);
 
             PopulateSubControls(Form, Child, OriginalForm);
 
@@ -251,7 +251,7 @@ namespace WinPaletter
 
                     if (ctrl is TabControl)
                     {
-                        var tabs = new TabControl()
+                        TabControl tabs = new()
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
@@ -266,9 +266,9 @@ namespace WinPaletter
                             Alignment = ((TabControl)ctrl).Alignment
                         };
 
-                        for (int i = 0, loopTo = ((TabControl)ctrl).TabPages.Count - 1; i <= loopTo; i++)
+                        for (int i = 0; i <= ((TabControl)ctrl).TabPages.Count - 1; i++)
                         {
-                            var TP = new TabPage()
+                            TabPage TP = new()
                             {
                                 Name = ((TabControl)ctrl).TabPages[i].Name,
                                 Text = ((TabControl)ctrl).TabPages[i].Text,
@@ -296,7 +296,7 @@ namespace WinPaletter
 
                     else if (ctrl is UI.Simulation.Window)
                     {
-                        var c = new UI.Controllers.TextTranslationItem()
+                        UI.Controllers.TextTranslationItem c = new()
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
@@ -321,7 +321,7 @@ namespace WinPaletter
 
                     else
                     {
-                        var pnl = new Panel()
+                        Panel pnl = new()
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
@@ -354,7 +354,7 @@ namespace WinPaletter
 
                     if (Condition0 | Condition1 && Condition2)
                     {
-                        var c = new UI.Controllers.TextTranslationItem()
+                        UI.Controllers.TextTranslationItem c = new()
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
@@ -374,7 +374,7 @@ namespace WinPaletter
                         if (ctrl is Label)
                         {
                             {
-                                var temp = (Label)ctrl;
+                                Label temp = (Label)ctrl;
                                 c.TextAlign = temp.TextAlign;
                                 c.ImageAlign = temp.ImageAlign;
                             }
@@ -383,7 +383,7 @@ namespace WinPaletter
                         else if (ctrl is UI.WP.Button)
                         {
                             {
-                                var temp1 = (UI.WP.Button)ctrl;
+                                UI.WP.Button temp1 = (UI.WP.Button)ctrl;
                                 c.TextAlign = temp1.TextAlign;
                                 c.ImageAlign = temp1.ImageAlign;
                                 c.Image = temp1.Image;
@@ -393,7 +393,7 @@ namespace WinPaletter
                         else if (ctrl is Button)
                         {
                             {
-                                var temp2 = (Button)ctrl;
+                                Button temp2 = (Button)ctrl;
                                 c.TextAlign = temp2.TextAlign;
                                 c.ImageAlign = temp2.ImageAlign;
                                 c.Image = temp2.Image;
@@ -403,7 +403,7 @@ namespace WinPaletter
                         else if (ctrl is UI.WP.RadioImage)
                         {
                             {
-                                var temp3 = (UI.WP.RadioImage)ctrl;
+                                UI.WP.RadioImage temp3 = (UI.WP.RadioImage)ctrl;
                                 c.Text = !string.IsNullOrWhiteSpace(temp3.Text) ? temp3.Text : string.Empty;
                                 c.Image = temp3.Image;
                             }
@@ -417,7 +417,7 @@ namespace WinPaletter
                         else if (ctrl is UI.WP.AlertBox)
                         {
                             {
-                                var temp4 = (UI.WP.AlertBox)ctrl;
+                                UI.WP.AlertBox temp4 = (UI.WP.AlertBox)ctrl;
                                 c.Image = null;
                                 c.TextAlign = ContentAlignment.MiddleLeft;
                             }
@@ -433,7 +433,7 @@ namespace WinPaletter
                     else if (Condition3)
                     {
 
-                        var c = new PictureBox()
+                        PictureBox c = new()
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
@@ -621,7 +621,7 @@ namespace WinPaletter
 
                 SolidBrush br = new(e.CellStyle.ForeColor);
 
-                var textMetricSize = new SizeF(0f, 0f);
+                SizeF textMetricSize = new(0f, 0f);
                 if (keyPos >= 1)
                 {
                     string textMetric = text.Substring(0, keyPos);
@@ -630,9 +630,9 @@ namespace WinPaletter
 
                 var keySize = e.Graphics.MeasureString(text.Substring(keyPos, SearchText.Length), Font, e.CellBounds.Width, sf);
                 float left = e.CellBounds.Left + (keyPos <= 0 ? 0f : textMetricSize.Width); // + 2
-                var keyRect = new RectangleF(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
+                RectangleF keyRect = new(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
 
-                var fillBrush = new SolidBrush(Program.Style.Schemes.Tertiary.Colors.Line_Hover);
+                SolidBrush fillBrush = new(Program.Style.Schemes.Tertiary.Colors.Line_Hover);
                 e.Graphics.FillRectangle(fillBrush, keyRect);
                 fillBrush.Dispose();
 
@@ -836,7 +836,7 @@ namespace WinPaletter
                 AlertBox1.Visible = false;
                 TabControl1.Visible = false;
                 Cursor = Cursors.WaitCursor;
-                using (var LangX = new Localizer())
+                using (Localizer LangX = new())
                 {
                     LangX.ExportJSON(SaveJSONDlg.FileName);
                 }
@@ -852,7 +852,7 @@ namespace WinPaletter
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
-                using (var LangX = new Localizer())
+                using (Localizer LangX = new())
                 {
                     LangX.ExportJSON(SaveJSONDlg.FileName);
                 }
@@ -873,9 +873,9 @@ namespace WinPaletter
 
                 JObject JObj = (JObject)JToken.Parse(System.IO.File.ReadAllText(LangFile));
 
-                var j_info = new JObject() { { "Name".ToLower(), TextBox5.Text ?? string.Empty }, { "TranslationVersion".ToLower(), TextBox6.Text ?? string.Empty }, { "Lang".ToLower(), TextBox3.Text ?? string.Empty }, { "LangCode".ToLower(), TextBox4.Text ?? string.Empty }, { "AppVer".ToLower(), TextBox7.Text ?? string.Empty }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
+                JObject j_info = new() { { "Name".ToLower(), TextBox5.Text ?? string.Empty }, { "TranslationVersion".ToLower(), TextBox6.Text ?? string.Empty }, { "Lang".ToLower(), TextBox3.Text ?? string.Empty }, { "LangCode".ToLower(), TextBox4.Text ?? string.Empty }, { "AppVer".ToLower(), TextBox7.Text ?? string.Empty }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
 
-                var j_globalstrings = new JObject();
+                JObject j_globalstrings = new();
                 for (int r = 0, loopTo = data.Rows.Count - 1; r <= loopTo; r++)
                     j_globalstrings[data[0, r].Value.ToString().ToLower()] = (data[1, r].Value ?? string.Empty).ToString();
 

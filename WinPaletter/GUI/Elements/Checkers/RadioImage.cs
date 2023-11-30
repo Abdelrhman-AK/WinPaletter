@@ -17,22 +17,16 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            Timer = new Timer() { Enabled = false, Interval = 1 };
             DoubleBuffered = true;
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
             ForeColor = Color.White;
             Text = string.Empty;
 
-            MouseEnter += RadioImage_MouseEnter;
-            MouseLeave += RadioImage_MouseLeave;
-            HandleCreated += RadioImage_HandleCreated;
-            HandleDestroyed += RadioImage_HandleDestroyed;
-            Timer.Tick += Timer_Tick;
+            _alpha = 0; _alpha2 = _Checked ? 255 : 0;
         }
 
         #region Variables
-
-        private bool AnimateOnClick = false;
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         public MouseState State = MouseState.None;
 
@@ -52,27 +46,21 @@ namespace WinPaletter.UI.WP
         private bool _Checked;
         public bool Checked
         {
-            get
-            {
-                return _Checked;
-            }
+            get => _Checked;
             set
             {
-                try
+                if (value != _Checked)
                 {
                     _Checked = value;
+                    if (_Checked) { UncheckOthersOnChecked(); }
 
-                    if (_Checked)
+                    if (CanAnimate)
                     {
-                        UncheckOthersOnChecked();
+                        FluentTransitions.Transition.With(this, nameof(alpha2), _Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
+                    else { alpha2 = Checked ? 255 : 0; }
 
                     CheckedChanged?.Invoke(this);
-
-                    Invalidate();
-                }
-                catch
-                {
                 }
             }
         }
@@ -81,15 +69,14 @@ namespace WinPaletter.UI.WP
         private Image _image;
         public Image Image
         {
-            get
-            {
-                return _image;
-            }
-
+            get => _image;
             set
             {
-                _image = value;
-                Invalidate();
+                if (value != _image)
+                {
+                    _image = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -109,7 +96,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -141,98 +128,49 @@ namespace WinPaletter.UI.WP
             {
                 return;
             }
+
             base.OnDragOver(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            AnimateOnClick = true;
             Checked = true;
             State = MouseState.Down;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseUp(e);
         }
 
-        private void RadioImage_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseEnter(e);
         }
 
-        private void RadioImage_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
-        }
 
-        private void RadioImage_HandleCreated(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Shown += Showed;
-                    Parent.BackColorChanged += RefreshColorPalette;
-                    Parent.VisibleChanged += RefreshColorPalette;
-                    Parent.EnabledChanged += RefreshColorPalette;
-                    VisibleChanged += RefreshColorPalette;
-                    EnabledChanged += RefreshColorPalette;
-                }
-            }
-            catch
-            {
-            }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
-            try
-            {
-                alpha = 0;
-            }
-            catch
-            {
-            }
-        }
-
-        private void RadioImage_HandleDestroyed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    FindForm().Shown -= Showed;
-                    Parent.BackColorChanged -= RefreshColorPalette;
-                    Parent.VisibleChanged -= RefreshColorPalette;
-                    Parent.EnabledChanged -= RefreshColorPalette;
-                    VisibleChanged -= RefreshColorPalette;
-                    EnabledChanged -= RefreshColorPalette;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public void Showed(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        public void RefreshColorPalette(object sender, EventArgs e)
-        {
-            Invalidate();
+            base.OnMouseLeave(e);
         }
 
         #endregion
@@ -255,68 +193,36 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Animator
+        private int _alpha = 0;
 
-        private int alpha;
-        private readonly int Factor = 25;
-        private Timer Timer;
-
-        private void Timer_Tick(object sender, EventArgs e)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            if (!DesignMode)
-            {
-
-                if (State == MouseState.Over)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                        AnimateOnClick = false;
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-
-                if (!(State == MouseState.Over))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                        AnimateOnClick = false;
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-            }
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
         }
 
+        private int _alpha2 = 0;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha2
+        {
+            get => _alpha2;
+            set { _alpha2 = value; Refresh(); }
+        }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            if (Parent is null) return;
+            if (this == null) return;
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
 
-            var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
+            Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
+            Rectangle MainRectInner = new(1, 1, Width - 3, Height - 3);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
             Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2, Height - 7 - PaddingRect.Height * 2);
 
@@ -326,10 +232,13 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
-            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : scheme.Colors.Line);
+            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line : scheme.Colors.Line_Checked_Hover);
             Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
-            G.FillRoundedRect(_Checked ? scheme.Brushes.Back_Checked : scheme.Brushes.Back, MainRectInner);
+            using (SolidBrush br = new(Color.FromArgb(_alpha2, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, MainRect); }
+
+            using (SolidBrush br = new(Color.FromArgb(255 - _alpha2, scheme.Colors.Back))) { G.FillRoundedRect(br, MainRectInner); }
+
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 
             using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, MainRectInner); }
@@ -473,6 +382,8 @@ namespace WinPaletter.UI.WP
                 }
             }
             #endregion
+
+            base.OnPaint(e);
         }
 
         private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)

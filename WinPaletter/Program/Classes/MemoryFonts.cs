@@ -13,7 +13,7 @@ namespace WinPaletter
         static MemoryFonts()
         {
             if (Pfc is null)
-                Pfc = new PrivateFontCollection();
+                Pfc = new();
         }
 
         public static void AddMemoryFont(byte[] fontResource)

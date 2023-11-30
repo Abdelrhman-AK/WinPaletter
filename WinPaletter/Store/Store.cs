@@ -30,18 +30,18 @@ namespace WinPaletter
         public UI.Controllers.StoreItem selectedItem;
 
         private bool _Shown = false;
-        private readonly List<UI.Controllers.CursorControl> AnimateList = new List<UI.Controllers.CursorControl>();
+        private readonly List<UI.Controllers.CursorControl> AnimateList = new();
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
         private WebClient WebCL;
 
-        private readonly Converter _Converter = new Converter();
+        private readonly Converter _Converter = new();
         private bool ApplyOrEditToggle = true;
 
         public Store()
         {
-            WebCL = new WebClient();
+            WebCL = new();
             InitializeComponent();
         }
         #endregion
@@ -67,12 +67,12 @@ namespace WinPaletter
             RetroShadow1.Size = Menu_Window.Size;
             RetroShadow1.Location = Menu_Window.Location + (Size)new Point(6, 5);
 
-            var b = new Bitmap(RetroShadow1.Width, RetroShadow1.Height);
-            var g = Graphics.FromImage(b);
-            g.DrawGlow(new Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
-            g.Save();
+            Bitmap b = new(RetroShadow1.Width, RetroShadow1.Height);
+            Graphics G = Graphics.FromImage(b);
+            G.DrawGlow(new Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
+            G.Save();
             RetroShadow1.Image = b;
-            g.Dispose();
+            G.Dispose();
 
             RetroShadow1.BringToFront();
             Menu_Window.BringToFront();
@@ -87,7 +87,7 @@ namespace WinPaletter
                 {
                     if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
+                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
                         {
                             TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                         }
@@ -95,7 +95,7 @@ namespace WinPaletter
 
                     if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
+                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
                         {
                             TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
@@ -132,7 +132,7 @@ namespace WinPaletter
 
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
             int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
-            var _Padding = new System.Windows.Forms.Padding(iP, iT, iP, iP);
+            System.Windows.Forms.Padding _Padding = new(iP, iT, iP, iP);
 
             foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
             {
@@ -172,7 +172,7 @@ namespace WinPaletter
                 {
                     if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                     {
-                        using (var vs = new VisualStyleFile(PathsExt.MSTheme))
+                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
                         {
                             TM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
                         }
@@ -361,7 +361,7 @@ namespace WinPaletter
             {
                 {
                     var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
-                    CMD.Font = new Font(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
+                    CMD.Font = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
 
@@ -537,7 +537,7 @@ namespace WinPaletter
 
             WXP_Alert2.Text = Forms.MainFrm.WXP_Alert2.Text;
             WXP_Alert2.Size = WXP_Alert2.Parent.Size - new Size(40, 40);
-            WXP_Alert2.Location = new Point(20, 20);
+            WXP_Alert2.Location = new(20, 20);
 
             pnl_preview.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
             pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage;
@@ -563,7 +563,7 @@ namespace WinPaletter
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
             // To prevent effect of a store theme on the other forms
-            Program.Settings = new Settings(Settings.Mode.Registry);
+            Program.Settings = new(Settings.Mode.Registry);
             Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             ApplyStyle(this);
@@ -589,11 +589,11 @@ namespace WinPaletter
         {
             Dnsapi.DnsFlushResolverCache();
 
-            var response = new List<string>();
+            List<string> response = new();
             response.Clear();
-            var repos_list = new List<string>();
+            List<string> repos_list = new();
             repos_list.Clear();
-            var items = new List<string>();
+            List<string> items = new();
             items.Clear();
 
             // Check by Ping if repos DB URL is accessible or not
@@ -737,17 +737,17 @@ namespace WinPaletter
                         {
                             Status_lbl.SetText(string.Format(Program.Lang.Store_LoadingTheme, FileName));
 
-                            using (var TM = new Theme.Manager(Theme.Manager.Source.File, Dir + @"\" + FileName, true))
+                            using (Theme.Manager TM = new(Theme.Manager.Source.File, Dir + @"\" + FileName, true))
                             {
 
-                                var ctrl = new UI.Controllers.StoreItem()
+                                UI.Controllers.StoreItem ctrl = new()
                                 {
                                     FileName = Dir + @"\" + FileName,
                                     TM = TM,
                                     MD5_ThemeFile = MD5_ThemeFile,
                                     MD5_PackFile = MD5_PackFile,
                                     DoneByWinPaletter = (DB.ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? string.Empty),
-                                    Size = new Size(w, h),
+                                    Size = new(w, h),
                                     URL_ThemeFile = URL_ThemeFile,
                                     URL_PackFile = URL_PackFile
                                 };
@@ -830,7 +830,7 @@ namespace WinPaletter
 
                                 Status_lbl.SetText("Enumerating themes: \"" + file + "\"");
 
-                                using (var TMx = new Theme.Manager(Theme.Manager.Source.File, file, true))
+                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, true))
                                 {
                                     TMList.Add(file, TMx);
                                 }
@@ -853,13 +853,13 @@ namespace WinPaletter
             {
                 Status_lbl.SetText("Loading theme \"" + StoreItem.Value.Info.ThemeName + "\"");
 
-                var ctrl = new UI.Controllers.StoreItem()
+                UI.Controllers.StoreItem ctrl = new()
                 {
                     FileName = StoreItem.Key,
                     TM = StoreItem.Value,
                     MD5_ThemeFile = CalculateMD5(StoreItem.Key),
                     DoneByWinPaletter = false,
-                    Size = new Size(w, h),
+                    Size = new(w, h),
                     URL_ThemeFile = new System.IO.FileInfo(StoreItem.Key).FullName
                 };
 
@@ -992,17 +992,17 @@ namespace WinPaletter
                             Titlebar_lbl.Text = StoreItem.TM.Info.ThemeName + " - " + Program.Lang.By + " " + StoreItem.TM.Info.Author;
                             if (Theme.Manager.IsFontInstalled(StoreItem.TM.MetricsFonts.CaptionFont.Name))
                             {
-                                Titlebar_lbl.Font = new Font(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+                                Titlebar_lbl.Font = new(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }
                             else
                             {
-                                Titlebar_lbl.Font = new Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+                                Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }
 
                             if (StoreItem.TM.AppTheme.Enabled)
                             {
                                 Program.Settings.Appearance.CustomColors = StoreItem.TM.AppTheme.Enabled;
-                                Program.Settings.Appearance.CustomTheme = StoreItem.TM.AppTheme.DarkMode;
+                                Program.Settings.Appearance.CustomTheme_DarkMode = StoreItem.TM.AppTheme.DarkMode;
                                 Program.Settings.Appearance.RoundedCorners = StoreItem.TM.AppTheme.RoundCorners;
                                 Program.Settings.Appearance.BackColor = StoreItem.TM.AppTheme.BackColor;
                                 Program.Settings.Appearance.AccentColor = StoreItem.TM.AppTheme.AccentColor;
@@ -1066,7 +1066,7 @@ namespace WinPaletter
                                 VersionAlert_lbl.Text = string.Format(Program.Lang.Store_LowAppVersionAlert, StoreItem.TM.Info.AppVersion, Program.Version);
                             }
 
-                            var os_list = new List<string>();
+                            List<string> os_list = new();
                             os_list.Clear();
 
                             if (StoreItem.TM.Info.DesignedFor_Win11)
@@ -1170,11 +1170,11 @@ namespace WinPaletter
             Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
             Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
             Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
-            Appearance.CustomTheme = selectedItem.TM.AppTheme.DarkMode;
+            Appearance.CustomTheme_DarkMode = selectedItem.TM.AppTheme.DarkMode;
             Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
             ApplyStyle(null, true);
 
-            using (var TMx = new Theme.Manager(Theme.Manager.Source.File, selectedItem.FileName))
+            using (Theme.Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName))
             {
                 if (selectedItem.DoneByWinPaletter)
                     TMx.Info.Author = Application.CompanyName;
@@ -1212,7 +1212,7 @@ namespace WinPaletter
                 WindowState = FormWindowState.Minimized;
                 Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, null, null, null);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                Program.TM = new Theme.Manager(Theme.Manager.Source.File, selectedItem.FileName);
+                Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
                     Program.TM.Info.Author = Application.CompanyName;
                 Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
@@ -1246,7 +1246,7 @@ namespace WinPaletter
             if (string.IsNullOrWhiteSpace(search_text))
                 return;
 
-            var lst = new Dictionary<string, UI.Controllers.StoreItem>();
+            Dictionary<string, UI.Controllers.StoreItem> lst = new();
             lst.Clear();
 
             foreach (var st_itm in store_container.Controls.OfType<UI.Controllers.StoreItem>())
@@ -1264,13 +1264,13 @@ namespace WinPaletter
 
                     found_sum += 1;
 
-                    var ctrl = new UI.Controllers.StoreItem()
+                    UI.Controllers.StoreItem ctrl = new()
                     {
                         FileName = st_item.Key,
                         TM = st_item.Value.TM,
                         MD5_ThemeFile = CalculateMD5(st_item.Key),
                         DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
-                        Size = new Size(w, h),
+                        Size = new(w, h),
                         URL_ThemeFile = st_item.Value.URL_ThemeFile
                     };
 
@@ -1349,13 +1349,13 @@ namespace WinPaletter
 
         public void UpdateExtendedTitlebar()
         {
-            var Pd = new System.Windows.Forms.Padding(0, Titlebar_panel.Height, 0, 0);
+            System.Windows.Forms.Padding Pd = new(0, Titlebar_panel.Height, 0, 0);
             Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0);
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
 
             if (OS.W12 || OS.W11 || OS.W10)
             {
-                CompositionEnabled = CompositionEnabled & Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
+                CompositionEnabled &= Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
             }
 
             if (CompositionEnabled)
@@ -1495,7 +1495,7 @@ namespace WinPaletter
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
-                Program.Settings = new Settings(Settings.Mode.Registry);
+                Program.Settings = new(Settings.Mode.Registry);
                 GetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle(this, true);
@@ -1503,7 +1503,7 @@ namespace WinPaletter
 
             RemoveAllStoreItems(search_results);
 
-            Titlebar_lbl.Font = new Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+            Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
             Tabs.SelectedIndex = 0;
             Program.Animator.HideSync(back_btn);
 
@@ -1663,8 +1663,8 @@ namespace WinPaletter
                 PerformSearch();
         }
 
-        private Point newPoint = new Point();
-        private Point oldPoint = new Point();
+        private Point newPoint = new();
+        private Point oldPoint = new();
 
         private void CustomTitlebar_MouseDown(object sender, MouseEventArgs e)
         {
@@ -1707,7 +1707,7 @@ namespace WinPaletter
                     return;
             }
 
-            using (var FD = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog())
+            using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
             {
                 if (FD.ShowDialog() == DialogResult.OK)
                 {

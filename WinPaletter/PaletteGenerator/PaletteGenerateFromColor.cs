@@ -11,7 +11,7 @@ namespace WinPaletter
     public partial class PaletteGenerateFromColor
     {
 
-        private List<Color> Colors_List = new List<Color>();
+        private List<Color> Colors_List = new();
         private Theme.Manager TM_Backup;
 
         private bool PickerOpened = false;
@@ -26,7 +26,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             Icon = Forms.PaletteGenerateFromImage.Icon;
-            TM_Backup = new Theme.Manager(Theme.Manager.Source.Registry);
+            TM_Backup = new(Theme.Manager.Source.Registry);
         }
         private void SelectedColor_DragDrop(object sender, DragEventArgs e)
         {
@@ -146,12 +146,12 @@ namespace WinPaletter
 
             foreach (Color c in Colors_List)
             {
-                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                UI.Controllers.ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
-                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 ImgPaletteContainer.Controls.Add(MiniColorItem);
             }

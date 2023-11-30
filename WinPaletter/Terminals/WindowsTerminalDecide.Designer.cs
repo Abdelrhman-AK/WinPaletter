@@ -66,7 +66,7 @@ namespace WinPaletter
             // 
             Label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Label7.BackColor = Color.Transparent;
-            Label7.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label7.Font = new("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label7.Location = new Point(53, 12);
             Label7.Name = "Label7";
             Label7.Size = new Size(344, 89);
@@ -76,7 +76,7 @@ namespace WinPaletter
             // Label144
             // 
             Label144.BackColor = Color.Transparent;
-            Label144.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label144.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label144.Location = new Point(131, 197);
             Label144.Name = "Label144";
             Label144.Size = new Size(64, 20);
@@ -87,7 +87,7 @@ namespace WinPaletter
             // Label1
             // 
             Label1.BackColor = Color.Transparent;
-            Label1.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label1.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label1.Location = new Point(213, 197);
             Label1.Name = "Label1";
             Label1.Size = new Size(64, 20);
@@ -99,7 +99,7 @@ namespace WinPaletter
             // 
             Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(14, 51, 75);
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.Location = new Point(231, 305);
@@ -113,7 +113,7 @@ namespace WinPaletter
             // 
             Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button1.BackColor = Color.FromArgb(14, 51, 75);
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.ImageAlign = ContentAlignment.MiddleLeft;
@@ -127,7 +127,7 @@ namespace WinPaletter
             // RadioImage2
             // 
             RadioImage2.Checked = false;
-            RadioImage2.Font = new Font("Segoe UI", 9.0f);
+            RadioImage2.Font = new("Segoe UI", 9.0f);
             RadioImage2.ForeColor = Color.White;
             RadioImage2.Image = (Image)resources.GetObject("RadioImage2.Image");
             RadioImage2.Location = new Point(213, 130);
@@ -138,7 +138,7 @@ namespace WinPaletter
             // RadioImage1
             // 
             RadioImage1.Checked = false;
-            RadioImage1.Font = new Font("Segoe UI", 9.0f);
+            RadioImage1.Font = new("Segoe UI", 9.0f);
             RadioImage1.ForeColor = Color.White;
             RadioImage1.Image = (Image)resources.GetObject("RadioImage1.Image");
             RadioImage1.Location = new Point(131, 130);
@@ -164,7 +164,7 @@ namespace WinPaletter
             AlertBox1.BackColor = Color.FromArgb(70, 51, 2);
             AlertBox1.CenterText = false;
             AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new Font("Segoe UI", 9.0f);
+            AlertBox1.Font = new("Segoe UI", 9.0f);
             AlertBox1.Image = Properties.Resources.notify_warning;
             AlertBox1.Location = new Point(12, 248);
             AlertBox1.Name = "AlertBox1";
@@ -188,11 +188,11 @@ namespace WinPaletter
             Controls.Add(RadioImage2);
             Controls.Add(RadioImage1);
             Controls.Add(Panel1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "WindowsTerminalDecide";

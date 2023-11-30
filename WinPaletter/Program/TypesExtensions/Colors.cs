@@ -48,7 +48,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static HSL_Structure ToHSL(this Color Color)
         {
-            var _hsl = new HSL_Structure();
+            HSL_Structure _hsl = new();
 
             float r = Color.R / 255.0f;
             float g = Color.G / 255.0f;
@@ -274,12 +274,12 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap ToBitmap(this Color Color, Size Size)
         {
-            var b = new Bitmap(Size.Width, Size.Height);
-            var g = Graphics.FromImage(b);
-            g.Clear(Color);
-            g.Save();
+            Bitmap b = new(Size.Width, Size.Height);
+            Graphics G = Graphics.FromImage(b);
+            G.Clear(Color);
+            G.Save();
             return b;
-            g.Dispose();
+            G.Dispose();
             b.Dispose();
         }
 

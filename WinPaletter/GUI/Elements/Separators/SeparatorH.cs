@@ -6,18 +6,15 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Horizontal separator for WinPaletter UI")]
     public class SeparatorH : Control
     {
-
         public SeparatorH()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
             TabStop = false;
-            DoubleBuffered = true;
             Text = string.Empty;
         }
 
@@ -36,7 +33,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode && !AlternativeLook)
                 {
                     cpar.ExStyle |= 0x20;
@@ -54,15 +51,18 @@ namespace WinPaletter.UI.WP
 
         protected override void OnResize(EventArgs e)
         {
+            Size = new(Width, !AlternativeLook ? 1 : 2);
+
             base.OnResize(e);
-            Size = new Size(Width, !AlternativeLook ? 1 : 2);
         }
 
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             DoubleBuffered = true;
 

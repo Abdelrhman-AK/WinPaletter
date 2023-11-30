@@ -56,7 +56,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            var TMx = new Theme.Manager(Theme.Manager.Source.File, arg);
+                            Theme.Manager TMx = new(Theme.Manager.Source.File, arg);
                             TMx.Save(Theme.Manager.Source.Registry, arg);
                             if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                                 RestartExplorer();
@@ -81,7 +81,7 @@ namespace WinPaletter
                     File = File.Replace("\"", string.Empty);
                     if (System.IO.File.Exists(File))
                     {
-                        var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
+                        Theme.Manager TMx = new(Theme.Manager.Source.File, File);
                         TMx.Save(Theme.Manager.Source.Registry);
                         if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                             RestartExplorer();
@@ -139,7 +139,7 @@ namespace WinPaletter
                             {
                                 Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
-                                TM = new Theme.Manager(Theme.Manager.Source.File, arg);
+                                TM = new(Theme.Manager.Source.File, arg);
                                 TM_Original = (Theme.Manager)TM.Clone();
                                 Forms.MainFrm.OpenFileDialog1.FileName = arg;
                                 Forms.MainFrm.SaveFileDialog1.FileName = arg;
@@ -168,7 +168,7 @@ namespace WinPaletter
                                 File = File.Replace("\"", string.Empty);
                                 if (System.IO.File.Exists(File))
                                 {
-                                    var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
+                                    Theme.Manager TMx = new(Theme.Manager.Source.File, File);
                                     TMx.Save(Theme.Manager.Source.Registry);
                                     if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                                         RestartExplorer();
@@ -182,7 +182,7 @@ namespace WinPaletter
 
                                 Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
-                                TM = new Theme.Manager(Theme.Manager.Source.File, File);
+                                TM = new(Theme.Manager.Source.File, File);
                                 TM_Original = (Theme.Manager)TM.Clone();
                                 Forms.MainFrm.OpenFileDialog1.FileName = File;
                                 Forms.MainFrm.SaveFileDialog1.FileName = File;

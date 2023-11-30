@@ -45,7 +45,7 @@ namespace WinPaletter
 
                 if ((File.Exists(TextBox1.Text) && File.Exists(theme)) & !string.IsNullOrEmpty(theme))
                 {
-                    var vs = new VisualStyleFile(theme);
+                    VisualStyleFile vs = new(theme);
                     LoadColors(vs.Metrics);
                     Forms.Win32UI.ApplyRetroPreview();
                     Close();

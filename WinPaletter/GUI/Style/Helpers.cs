@@ -107,7 +107,7 @@ namespace WinPaletter.UI.Style
                     // Check if appearance is managed by theme and custom colors are enabled
                     if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
                     {
-                        Program.Style.DarkMode = Program.Settings.Appearance.CustomTheme;
+                        Program.Style.DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
                     }
                     else
                     {
@@ -145,6 +145,8 @@ namespace WinPaletter.UI.Style
         {
             bool DarkMode;
             bool RoundedCorners;
+            bool Animations = true;
+
             Color AccentColor;
             Color Secondary;
             Color Tertiary;
@@ -157,37 +159,41 @@ namespace WinPaletter.UI.Style
             // Check if appearance is managed by theme and custom colors are enabled
             if (Form == Forms.ApplicationThemer || (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors))
             {
+                DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
+                RoundedCorners = Program.Settings.Appearance.RoundedCorners;
+                //Animations = Program.Settings.Appearance.Animations;
+                Animations = Program.Style.Animations;
+
                 BackColor = Program.Settings.Appearance.BackColor;
                 AccentColor = Program.Settings.Appearance.AccentColor;
                 //Secondary = Program.Settings.Appearance.SecondaryColor;
                 //Tertiary = Program.Settings.Appearance.TertiaryColor;
                 //Disabled = Program.Settings.Appearance.DisabledColor;
                 //Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
-
                 Secondary = DefaultColors.SecondaryColor;
                 Tertiary = DefaultColors.TertiaryColor;
-                Disabled = DefaultColors.DisabledColor;
-                Disabled_Background = DefaultColors.DisabledBackColor;
+                Disabled = DarkMode ? DefaultColors.DisabledColor_Dark : DefaultColors.DisabledColor_Light;
+                Disabled_Background = DarkMode ? DefaultColors.DisabledBackColor_Dark : DefaultColors.DisabledBackColor_Light;
 
-                DarkMode = Program.Settings.Appearance.CustomTheme;
-                RoundedCorners = Program.Settings.Appearance.RoundedCorners;
                 CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
             }
             else
             {
-                // Use default values if custom colors are not enabled
-                DarkMode = Program.Style.DarkMode;  // Must be before BackColor
+                DarkMode = Program.Style.DarkMode;
                 RoundedCorners = Program.Style.RoundedCorners;
+                Animations = Program.Style.Animations;
+
                 BackColor = DarkMode ? DefaultColors.BackColorDark : DefaultColors.BackColorLight;
                 AccentColor = DefaultColors.PrimaryColor;
                 Secondary = DefaultColors.SecondaryColor;
                 Tertiary = DefaultColors.TertiaryColor;
-                Disabled = DefaultColors.DisabledColor;
-                Disabled_Background = DefaultColors.DisabledBackColor;
+                Disabled = DarkMode ? DefaultColors.DisabledColor_Dark : DefaultColors.DisabledColor_Light;
+                Disabled_Background = DarkMode ? DefaultColors.DisabledBackColor_Dark : DefaultColors.DisabledBackColor_Light;
+
                 CustomR = false;
             }
 
-            Program.Style = new Config(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners);
+            Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations);
 
             // Apply the style to the specified form or all open forms
             if (Form is null)

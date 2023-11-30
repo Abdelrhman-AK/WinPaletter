@@ -60,8 +60,7 @@ namespace WinPaletter
         /// <param name="pic9"></param>
         public static void ApplyWin10xLegends(Theme.Manager TM, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
         {
-            if (ExplorerPatcher.IsAllowed())
-                Program.EP = new ExplorerPatcher();
+            if (ExplorerPatcher.IsAllowed()) Program.EP = new();
 
             switch (Style)
             {
@@ -367,8 +366,7 @@ namespace WinPaletter
         /// <param name="Link_preview"></param>
         public static void ApplyWinElementsColors(Theme.Manager TM, WindowStyle Style, bool AnimateColorChange, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.WP.LabelAlt setting_icon_preview, UI.WP.LabelAlt settings_label, UI.WP.LabelAlt Link_preview)
         {
-            if (ExplorerPatcher.IsAllowed())
-                Program.EP = new ExplorerPatcher();
+            if (ExplorerPatcher.IsAllowed()) Program.EP = new();
 
             Program.Style.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
@@ -1076,7 +1074,7 @@ namespace WinPaletter
 
             if (!Theme.Manager.IsFontInstalled("Segoe MDL2 Assets"))
             {
-                setting_icon_preview.Font = new Font("Arial", 28f, FontStyle.Regular);
+                setting_icon_preview.Font = new("Arial", 28f, FontStyle.Regular);
                 setting_icon_preview.Text = "♣";
             }
 
@@ -1257,7 +1255,7 @@ namespace WinPaletter
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
                                     System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
+                                    Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1265,7 +1263,7 @@ namespace WinPaletter
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
                                     System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
+                                    Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1273,7 +1271,7 @@ namespace WinPaletter
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
                                     System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
+                                    Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1291,7 +1289,7 @@ namespace WinPaletter
                                             System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
                                         }
                                     }
-                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
+                                    Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1299,7 +1297,7 @@ namespace WinPaletter
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
                                     System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-                                    Program.resVS = new VisualStylesRes(PathsExt.MSTheme);
+                                    Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
 
@@ -1309,7 +1307,7 @@ namespace WinPaletter
                         {
                             if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
+                                Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(PathsExt.MSTheme);
                                 TM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
                             }
                         }
@@ -1318,7 +1316,7 @@ namespace WinPaletter
                         {
                             if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
+                                Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(PathsExt.MSTheme);
                                 TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                             }
                         }
@@ -1327,7 +1325,7 @@ namespace WinPaletter
                         {
                             if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
                             {
-                                var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(PathsExt.MSTheme);
+                                Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(PathsExt.MSTheme);
                                 TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                             }
                         }
@@ -1368,9 +1366,9 @@ namespace WinPaletter
                 ClassicAppButton1.Text = string.Empty;
                 ClassicAppButton2.Text = string.Empty;
                 ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                ClassicAppButton1.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                ClassicAppButton2.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                ClassicStartButton.Font = new(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                 ClassicAppButton1.HatchBrush = false;
             }
 
@@ -1378,8 +1376,7 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        if (OS.W12 || OS.W11)
-                            Program.EP = new ExplorerPatcher();
+                        if (OS.W12 || OS.W11) Program.EP = new();
 
                         if (ExplorerPatcher.IsAllowed())
                         {
@@ -1404,8 +1401,8 @@ namespace WinPaletter
                                 {
                                     Start.BlurPower = 6;
                                     Start.NoisePower = 0.3f;
-                                    Start.Size = new Size(135, 200);
-                                    Start.Location = new Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
+                                    Start.Size = new(135, 200);
+                                    Start.Location = new(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
                                 }
                                 else
                                 {
@@ -1416,7 +1413,7 @@ namespace WinPaletter
                                     {
                                         case ExplorerPatcher.StartStyles.NotRounded:
                                             {
-                                                Start.Size = new Size(182, 201);
+                                                Start.Size = new(182, 201);
                                                 Start.Left = 0;
                                                 Start.Top = Taskbar.Bottom - Taskbar.Height - Start.Height;
                                                 Start.UseWin11RoundedCorners_WithWin10_Level1 = false;
@@ -1426,7 +1423,7 @@ namespace WinPaletter
 
                                         case ExplorerPatcher.StartStyles.RoundedCornersDockedMenu:
                                             {
-                                                Start.Size = new Size(182, 201);
+                                                Start.Size = new(182, 201);
                                                 Start.Left = 0;
                                                 Start.Top = Taskbar.Bottom - Taskbar.Height - Start.Height;
                                                 Start.UseWin11RoundedCorners_WithWin10_Level1 = true;
@@ -1436,8 +1433,8 @@ namespace WinPaletter
 
                                         case ExplorerPatcher.StartStyles.RoundedCornersFloatingMenu:
                                             {
-                                                Start.Size = new Size(182, 201);
-                                                Start.Location = new Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
+                                                Start.Size = new(182, 201);
+                                                Start.Location = new(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
                                                 Start.UseWin11RoundedCorners_WithWin10_Level1 = false;
                                                 Start.UseWin11RoundedCorners_WithWin10_Level2 = true;
                                                 break;
@@ -1455,15 +1452,15 @@ namespace WinPaletter
                             // ########################
                             Start.BlurPower = 6;
                             Start.NoisePower = 0.3f;
-                            Start.Size = new Size(135, 200);
-                            Start.Location = new Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
+                            Start.Size = new(135, 200);
+                            Start.Location = new(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10);
                         }
 
                         ActionCenter.Dock = default;
                         ActionCenter.BlurPower = 6;
                         ActionCenter.NoisePower = 0.3f;
-                        ActionCenter.Size = new Size(120, 85);
-                        ActionCenter.Location = new Point(ActionCenter.Parent.Width - ActionCenter.Width - 10, ActionCenter.Parent.Height - ActionCenter.Height - Taskbar.Height - 10);
+                        ActionCenter.Size = new(120, 85);
+                        ActionCenter.Location = new(ActionCenter.Parent.Width - ActionCenter.Width - 10, ActionCenter.Parent.Height - ActionCenter.Height - Taskbar.Height - 10);
                         break;
                     }
 
@@ -1481,7 +1478,7 @@ namespace WinPaletter
 
                         Taskbar.Height = 35;
                         Taskbar.UseWin11ORB_WithWin10 = false;
-                        Start.Size = new Size(182, 201);
+                        Start.Size = new(182, 201);
                         Start.Left = 0;
                         Start.Top = Taskbar.Bottom - Taskbar.Height - Start.Height;
                         Start.UseWin11RoundedCorners_WithWin10_Level1 = false;
@@ -1547,9 +1544,9 @@ namespace WinPaletter
                         ClassicAppButton1.Text = ClassicWindow1.Text;
                         ClassicAppButton2.Text = ClassicWindow2.Text;
                         ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                        ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                        ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                        ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                        ClassicAppButton1.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                        ClassicAppButton2.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                        ClassicStartButton.Font = new(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                         ClassicAppButton1.HatchBrush = true;
                         break;
                     }
@@ -1573,9 +1570,9 @@ namespace WinPaletter
                         ClassicAppButton1.Text = ClassicWindow1.Text;
                         ClassicAppButton2.Text = ClassicWindow2.Text;
                         ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                        ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                        ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                        ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                        ClassicAppButton1.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                        ClassicAppButton2.Font = new(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                        ClassicStartButton.Font = new(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                         ClassicAppButton1.HatchBrush = true;
                         break;
                     }
@@ -1633,8 +1630,7 @@ namespace WinPaletter
             Window1.Active = true;
             Window2.Active = false;
 
-            if (ExplorerPatcher.IsAllowed())
-                Program.EP = new ExplorerPatcher();
+            if (ExplorerPatcher.IsAllowed()) Program.EP = new();
 
             Window1.SuspendRefresh = true;
             Window2.SuspendRefresh = true;
@@ -2342,7 +2338,7 @@ namespace WinPaletter
                 }
             }
 
-            using (var ImgF = new ImageProcessor.ImageFactory())
+            using (ImageProcessor.ImageFactory ImgF = new())
             {
                 ImgF.Load(WT.Image);
                 ImgF.Hue(WT.H, true);

@@ -72,7 +72,7 @@ namespace WinPaletter.Dialogs
                 this.Show();
             }
 
-            Apply_Thread = new Thread(() =>
+            Apply_Thread = new(() =>
             {
                 bool LogEnabled = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None;
 
@@ -120,7 +120,7 @@ namespace WinPaletter.Dialogs
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
-                Program.TM_Original = new Theme.Manager(Theme.Manager.Source.Registry);
+                Program.TM_Original = new(Theme.Manager.Source.Registry);
 
                 Cursor = Cursors.Default;
 
@@ -195,7 +195,7 @@ namespace WinPaletter.Dialogs
 
             if (Forms.MainFrm.SaveFileDialog3.ShowDialog() == DialogResult.OK)
             {
-                var sb = new StringBuilder();
+                StringBuilder sb = new();
                 sb.Clear();
 
                 foreach (TreeNode N in TreeView1.Nodes)

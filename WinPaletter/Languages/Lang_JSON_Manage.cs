@@ -163,7 +163,7 @@ namespace WinPaletter
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
-                var Lang = new Localizer();
+                Localizer Lang = new();
                 Lang.ExportJSON(SaveJSONDlg.FileName);
                 Lang.Dispose();
                 TreeView1.FromJSON(SaveJSONDlg.FileName, Path.GetFileName(SaveJSONDlg.FileName));
@@ -176,7 +176,7 @@ namespace WinPaletter
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
-                var Lang = new Localizer();
+                Localizer Lang = new();
                 Lang.ExportJSON(SaveJSONDlg.FileName);
                 Lang.Dispose();
                 Cursor = Cursors.Default;

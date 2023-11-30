@@ -19,13 +19,13 @@ namespace WinPaletter
     public partial class Wallpaper_Editor
     {
 
-        public Theme.Structures.WallpaperTone WT = new Theme.Structures.WallpaperTone();
+        public Theme.Structures.WallpaperTone WT = new();
         private Bitmap img, img_filled, img_tile;
         private Bitmap img_untouched_forTint, img_tinted, img_tinted_filled, img_tinted_tile;
 
         private int index = 0;
-        private List<string> ImgLs1 = new List<string>();
-        private List<string> ImgLs2 = new List<string>();
+        private List<string> ImgLs1 = new();
+        private List<string> ImgLs2 = new();
 
         public Wallpaper_Editor()
         {
@@ -272,7 +272,7 @@ namespace WinPaletter
 
         public void ApplyWT()
         {
-            WT = new Theme.Structures.WallpaperTone()
+            WT = new()
             {
                 Enabled = source_wallpapertone.Checked,
                 Image = TextBox3.Text,
@@ -332,7 +332,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 TMx.Dispose();
             }
@@ -340,7 +340,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             TMx.Dispose();
         }
@@ -364,7 +364,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             ApplyWT();
@@ -425,9 +425,8 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
-                if (dlg.ShowDialog() == DialogResult.OK)
-                    TextBox2.Text = dlg.SelectedPath;
+                Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new();
+                if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
                 dlg.Dispose();
             }
             else if (FolderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -458,7 +457,7 @@ namespace WinPaletter
         {
             if (ListBox1.SelectedItem is not null)
             {
-                var items = new ArrayList(ListBox1.SelectedItems);
+                ArrayList items = new(ListBox1.SelectedItems);
                 foreach (var item in items)
                     ListBox1.Items.Remove(item);
             }
@@ -523,7 +522,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    using (var bmp = new Bitmap(Bitmap_Mgr.Load(file)))
+                    using (Bitmap bmp = new(Bitmap_Mgr.Load(file)))
                     {
 
                         float ScaleW = 1f;
@@ -762,8 +761,8 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { pnl_preview };
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            List<Control> CList = new() { pnl_preview };
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
             CList.Clear();
@@ -838,7 +837,7 @@ namespace WinPaletter
         {
             if (source_wallpapertone.Enabled && img_untouched_forTint is not null)
             {
-                using (var ImgF = new ImageProcessor.ImageFactory())
+                using (ImageProcessor.ImageFactory ImgF = new())
                 {
                     ImgF.Load(img_untouched_forTint);
                     ImgF.Hue(HBar.Value, true);
@@ -858,7 +857,7 @@ namespace WinPaletter
         {
             HB.Text = ((UI.WP.ColorBar)sender).Value.ToString();
 
-            var HSL_ = new ColorsExtensions.HSL_Structure();
+            ColorsExtensions.HSL_Structure HSL_ = new();
             HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
             HSL_.H = Conversions.ToInteger(((UI.WP.ColorBar)sender).Value);
             HSL_.S = 1f;
@@ -897,7 +896,7 @@ namespace WinPaletter
         {
             if (File.Exists(TextBox3.Text) && SaveFileDialog2.ShowDialog() == DialogResult.OK)
             {
-                using (var ImgF = new ImageProcessor.ImageFactory())
+                using (ImageProcessor.ImageFactory ImgF = new())
                 {
                     ImgF.Load(TextBox3.Text);
                     ImgF.Hue(HBar.Value, true);

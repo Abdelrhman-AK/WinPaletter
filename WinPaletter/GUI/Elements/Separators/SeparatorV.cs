@@ -17,7 +17,6 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
             TabStop = false;
-            DoubleBuffered = true;
             Text = string.Empty;
         }
 
@@ -35,7 +34,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode && !AlternativeLook)
                 {
                     cpar.ExStyle |= 0x20;
@@ -54,15 +53,18 @@ namespace WinPaletter.UI.WP
 
         protected override void OnResize(EventArgs e)
         {
+            Size = new(!AlternativeLook ? 1 : 2, Height);
+
             base.OnResize(e);
-            Size = new Size(!AlternativeLook ? 1 : 2, Height);
         }
 
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             DoubleBuffered = true;
 

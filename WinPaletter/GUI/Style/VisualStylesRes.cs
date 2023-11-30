@@ -7,7 +7,7 @@ namespace WinPaletter
     {
         public VisualStylesRes(string themeFile)
         {
-            _VisualStyleFile = new VisualStyleFile(themeFile);
+            _VisualStyleFile = new(themeFile);
             try
             {
                 Colors = _VisualStyleFile.Metrics.Colors;
@@ -27,8 +27,8 @@ namespace WinPaletter
         }
 
         private VisualStyleFile _VisualStyleFile;
-        public VisualStyleMetricColors Colors { get; set; } = new VisualStyleMetricColors();
-        public VisualStyleMetricSizes Metrics { get; set; } = new VisualStyleMetricSizes();
+        public VisualStyleMetricColors Colors { get; set; } = new();
+        public VisualStyleMetricSizes Metrics { get; set; } = new();
 
         public enum Element
         {
@@ -145,7 +145,7 @@ namespace WinPaletter
 
             try
             {
-                var renderer = new VisualStyleRenderer(el);
+                VisualStyleRenderer renderer = new(el);
                 renderer.DrawBackground(G, Rectangle);
             }
             catch

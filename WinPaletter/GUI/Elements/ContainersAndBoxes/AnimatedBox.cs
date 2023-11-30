@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("AnimatedBox with two colors for WinPaletter UI")]
     [DefaultEvent("Click")]
     public class AnimatedBox : ContainerControl
@@ -18,10 +17,6 @@ namespace WinPaletter.UI.WP
             Text = string.Empty;
             BackColor = Color.Transparent;
             SetColors();
-            HandleCreated += AnimatedBox_HandleCreated;
-            HandleDestroyed += AnimatedBox_HandleDestroyed;
-            Timer.Tick += Timer_Tick;
-            ControlAdded += AnimatedBox_ControlAdded;
         }
 
         #region Variables
@@ -42,28 +37,28 @@ namespace WinPaletter.UI.WP
         private Color _Color1 = Color.DodgerBlue;
         public Color Color1
         {
-            get
-            {
-                return _Color1;
-            }
+            get => _Color1;
             set
             {
-                _Color1 = value;
-                SetColors();
+                if (value != _Color1)
+                {
+                    _Color1 = value;
+                    SetColors();
+                }
             }
         }
 
         private Color _Color2 = Color.Crimson;
         public Color Color2
         {
-            get
-            {
-                return _Color2;
-            }
+            get => _Color2;
             set
             {
-                _Color2 = value;
-                SetColors();
+                if (value != _Color2)
+                {
+                    _Color2 = value;
+                    SetColors();
+                }
             }
         }
 
@@ -87,8 +82,11 @@ namespace WinPaletter.UI.WP
 
             set
             {
-                _Color = value;
-                SetColors();
+                if (value != _Color)
+                {
+                    _Color = value;
+                    SetColors();
+                }
             }
         }
 
@@ -111,7 +109,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -161,10 +159,13 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events
-        private void AnimatedBox_HandleCreated(object sender, EventArgs e)
+        protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode)
             {
+                try { Timer.Tick += Timer_Tick; }
+                catch { }
+
                 try { FindForm().Activated += Form_GotFocus; }
                 catch { }
 
@@ -182,12 +183,17 @@ namespace WinPaletter.UI.WP
                 Timer.Enabled = false;
                 Timer.Stop();
             }
+
+            base.OnHandleCreated(e);
         }
 
-        private void AnimatedBox_HandleDestroyed(object sender, EventArgs e)
+        protected override void OnHandleDestroyed(EventArgs e)
         {
             if (!DesignMode)
             {
+                try { Timer.Tick -= Timer_Tick; }
+                catch { }
+
                 try { FindForm().Activated -= Form_GotFocus; }
                 catch { }
 
@@ -197,6 +203,8 @@ namespace WinPaletter.UI.WP
                 try { FindForm().Deactivate -= Form_LostFocus; }
                 catch { }
             }
+
+            base.OnHandleDestroyed(e);
         }
 
         public void Form_GotFocus(object sender, EventArgs e)
@@ -224,14 +232,18 @@ namespace WinPaletter.UI.WP
             Invalidate();
         }
 
-        private void AnimatedBox_ControlAdded(object sender, ControlEventArgs e)
+        protected override void OnControlAdded(ControlEventArgs e)
         {
             e.Control.DoubleBuffer();
+
+            base.OnControlAdded(e);
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             Rectangle Rect = new(0, 0, Width, Height);
@@ -263,5 +275,4 @@ namespace WinPaletter.UI.WP
             base.OnPaint(e);
         }
     }
-
 }

@@ -44,9 +44,9 @@ namespace WinPaletter
             BackColor = Color.Black;
             ClientSize = new Size(617, 362);
             ControlBox = false;
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "BK";

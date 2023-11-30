@@ -19,12 +19,12 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
             taskbarList.HrInit();
-            HandleCreated += ProgressBar_HandleCreated;
-            HandleDestroyed += ProgressBar_HandleDestroyed;
             StyleChanged += ProgressBar_StyleChanged;
         }
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
         readonly Interfaces.ITaskbarList3 taskbarList = (Interfaces.ITaskbarList3)new Interfaces.CTaskbarList();
         private IntPtr FormHwnd = IntPtr.Zero;
         private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur);
@@ -34,15 +34,19 @@ namespace WinPaletter.UI.WP
         public event EventHandler StyleChanged;
         public event EventHandler ValueChanged;
 
-        private void ProgressBar_HandleCreated(object sender, EventArgs e)
+        protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode) FormHwnd = FindForm().Handle;
+
+            base.OnHandleCreated(e);
         }
 
-        private void ProgressBar_HandleDestroyed(object sender, EventArgs e)
+        protected override void OnHandleDestroyed(EventArgs e)
         {
             SetProgressValue(0);
             SetProgressState(TaskbarProgressBarState.NoProgress);
+
+            base.OnHandleDestroyed(e);
         }
 
         protected virtual void OnStyleChanged(EventArgs e)
@@ -59,13 +63,15 @@ namespace WinPaletter.UI.WP
             DoMarqueeAnimation1();
             Refresh();
             StyleChanged?.Invoke(this, e);
+
+            base.OnStyleChanged(e);
         }
 
         private void DoMarqueeAnimation1()
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                var t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new FluentTransitions.Methods.ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new FluentTransitions.Methods.ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
                 t1.Run();
             }
         }
@@ -74,7 +80,7 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                var t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
                 t1.Run();
             }
         }
@@ -96,10 +102,7 @@ namespace WinPaletter.UI.WP
         private int _value = 0;
         public int Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 if (_value != value)
@@ -111,14 +114,11 @@ namespace WinPaletter.UI.WP
                     else { _value = value; }
 
 
-                    if (!DesignMode && Style != ProgressBarStyle.Marquee)
+                    if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
                         FluentTransitions.Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(AnimationDuration));
                     }
-                    else
-                    {
-                        Value_Animation = Value;
-                    }
+                    else { Value_Animation = _value; }
 
                     UpdateTaskbar();
 
@@ -131,54 +131,48 @@ namespace WinPaletter.UI.WP
         private ProgressBarState _state = ProgressBarState.Normal;
         public ProgressBarState State
         {
-            get
-            {
-                return _state;
-            }
+            get => _state;
             set
             {
-                _state = value;
-
-                Color color = default;
-
-                switch (value)
+                if (value != _state)
                 {
-                    case ProgressBarState.Normal:
-                        {
-                            color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
-                            break;
-                        }
+                    _state = value;
 
-                    case ProgressBarState.Error:
-                        {
-                            color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
-                            break;
-                        }
+                    Color color;
 
-                    case ProgressBarState.Pause:
-                        {
-                            color = Program.Style.Schemes.Main.Colors.Back_Hover;
-                            break;
-                        }
+                    switch (value)
+                    {
+                        case ProgressBarState.Normal:
+                            {
+                                color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
+                                break;
+                            }
 
-                    default:
-                        {
-                            color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
-                            break;
-                        }
+                        case ProgressBarState.Error:
+                            {
+                                color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                                break;
+                            }
+
+                        case ProgressBarState.Pause:
+                            {
+                                color = Program.Style.Schemes.Main.Colors.Back_Hover;
+                                break;
+                            }
+
+                        default:
+                            {
+                                color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
+                                break;
+                            }
+                    }
+
+                    if (!DesignMode) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(AnimationDuration)); }
+                    else { StateColor = color; }
+
+                    UpdateTaskbar();
+                    Refresh();
                 }
-
-                if (!DesignMode)
-                {
-                    FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(AnimationDuration));
-                }
-                else
-                {
-                    StateColor = color;
-                }
-
-                UpdateTaskbar();
-                Refresh();
             }
         }
 
@@ -186,14 +180,14 @@ namespace WinPaletter.UI.WP
         private ProgressBarAppearance _appearance = ProgressBarAppearance.Bar;
         public ProgressBarAppearance Appearance
         {
-            get
-            {
-                return _appearance;
-            }
+            get => _appearance;
             set
             {
-                _appearance = value;
-                Refresh();
+                if (value != _appearance)
+                {
+                    _appearance = value;
+                    Refresh();
+                }
             }
         }
 
@@ -204,18 +198,21 @@ namespace WinPaletter.UI.WP
         private bool _TaskbarBroadcast = true;
         public bool TaskbarBroadcast
         {
-            get { return _TaskbarBroadcast; }
+            get => _TaskbarBroadcast;
 
             set
             {
-                _TaskbarBroadcast = value;
-
-                if (Parent != null && value == true)
+                if (value != TaskbarBroadcast)
                 {
-                    foreach (ProgressBar PB in FindForm().GetAllControls().OfType<ProgressBar>()) { if (PB != this) PB.TaskbarBroadcast = false; }
-                }
+                    _TaskbarBroadcast = value;
 
-                UpdateTaskbar();
+                    if (Parent != null && value == true)
+                    {
+                        foreach (ProgressBar PB in FindForm().GetAllControls().OfType<ProgressBar>()) { if (PB != this) PB.TaskbarBroadcast = false; }
+                    }
+
+                    UpdateTaskbar();
+                }
             }
         }
 
@@ -223,10 +220,7 @@ namespace WinPaletter.UI.WP
         private ProgressBarStyle _style;
         public new ProgressBarStyle Style
         {
-            get
-            {
-                return _style;
-            }
+            get => _style;
             set
             {
                 if (_style != value)
@@ -234,7 +228,6 @@ namespace WinPaletter.UI.WP
                     _style = value;
                     OnStyleChanged(EventArgs.Empty);
                 }
-                _style = value;
             }
         }
 
@@ -242,7 +235,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -262,14 +255,14 @@ namespace WinPaletter.UI.WP
         [Browsable(false)]
         public int Value_Animation
         {
-            get
-            {
-                return _animatedValue;
-            }
+            get => _animatedValue;
             set
             {
-                _animatedValue = value;
-                Refresh();
+                if (value != _animatedValue)
+                {
+                    _animatedValue = value;
+                    Refresh();
+                }
             }
         }
 
@@ -281,14 +274,14 @@ namespace WinPaletter.UI.WP
         [Browsable(false)]
         public Color StateColor
         {
-            get
-            {
-                return _StateColor;
-            }
+            get => _StateColor;
             set
             {
-                _StateColor = value;
-                Refresh();
+                if (value != _StateColor)
+                {
+                    _StateColor = value;
+                    Refresh();
+                }
             }
         }
         #endregion
@@ -457,6 +450,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 

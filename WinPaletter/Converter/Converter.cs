@@ -11,7 +11,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Converter_CP = new Converter_CP(File);
+                Converter_CP = new(File);
                 return Format;
             }
             else
@@ -24,7 +24,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Converter_CP = new Converter_CP(File);
+                Converter_CP = new(File);
 
                 switch (Format)
                 {

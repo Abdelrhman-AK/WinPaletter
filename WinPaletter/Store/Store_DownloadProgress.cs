@@ -14,7 +14,7 @@ namespace WinPaletter
         public string ThemeName;
         public string ThemeVersion;
 
-        private Stopwatch SW = new Stopwatch();
+        private Stopwatch SW = new();
         private WebClient _ThemeDownloader;
 
         private WebClient ThemeDownloader
@@ -45,7 +45,7 @@ namespace WinPaletter
 
         public Store_DownloadProgress()
         {
-            ThemeDownloader = new WebClient();
+            ThemeDownloader = new();
             InitializeComponent();
         }
 
@@ -64,7 +64,7 @@ namespace WinPaletter
             SW.Reset();
             SW.Start();
 
-            ThemeDownloader = new WebClient();
+            ThemeDownloader = new();
             ThemeDownloader.DownloadFileAsync(new Uri(URL), File);
         }
 

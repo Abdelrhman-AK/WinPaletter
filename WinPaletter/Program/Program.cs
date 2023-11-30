@@ -34,16 +34,14 @@ namespace WinPaletter
 
             InitializeApplication(true);
 
-            Application.Run(new Form1());
-
-            //SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
+            SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
         }
 
         public static void InitializeApplication(bool ShowLoginDialog)
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
+                Animator = new() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
 
                 if (!System.IO.Directory.Exists(PathsExt.ProgramFilesData)) { System.IO.Directory.CreateDirectory(PathsExt.ProgramFilesData); }
 

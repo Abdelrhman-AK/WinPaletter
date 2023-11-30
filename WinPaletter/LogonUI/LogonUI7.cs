@@ -470,12 +470,12 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, pnl_preview };
+            List<Control> CList = new() { (Control)sender, pnl_preview };
 
             if (RadioButton3.Checked)
                 pnl_preview.BackgroundImage = null;
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
@@ -515,7 +515,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 LoadFromTM(TMx);
                 TMx.Dispose();
             }
@@ -523,7 +523,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }

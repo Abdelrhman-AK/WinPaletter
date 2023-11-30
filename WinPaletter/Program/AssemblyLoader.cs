@@ -21,13 +21,13 @@ namespace WinPaletter
 
             byte[] b = null;
 
-            using (var ms = new System.IO.MemoryStream(Properties.Resources.Assemblies))
+            using (System.IO.MemoryStream ms = new(Properties.Resources.Assemblies))
             {
-                using (var zip = new ZipArchive(ms))
+                using (ZipArchive zip = new(ms))
                 {
                     if (zip.Entries.Any(entry => entry.Name.EndsWith(Name + ".dll", StringComparison.OrdinalIgnoreCase)))
                     {
-                        using (var _as = new System.IO.MemoryStream())
+                        using (System.IO.MemoryStream _as = new())
                         {
                             zip.GetEntry(Name + ".dll").Open().CopyTo(_as);
                             _as.Seek(0L, System.IO.SeekOrigin.Begin);

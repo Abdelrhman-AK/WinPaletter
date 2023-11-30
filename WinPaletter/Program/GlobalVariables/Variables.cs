@@ -51,7 +51,7 @@ namespace WinPaletter
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor, true, true);
+        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor_Dark, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor_Dark, true, true, true);
 
         /// <summary>
         /// A class that represents WinPaletter's Settings
@@ -83,7 +83,7 @@ namespace WinPaletter
         /// </summary>
         public static readonly Process ExplorerKiller = new()
         {
-            StartInfo = new ProcessStartInfo()
+            StartInfo = new()
             {
                 FileName = PathsExt.System32 + @"\taskkill.exe",
                 Verb = !OS.WXP ? "runas" : string.Empty,
@@ -98,7 +98,7 @@ namespace WinPaletter
         /// </summary>
         public static readonly Process Explorer_exe = new()
         {
-            StartInfo = new ProcessStartInfo()
+            StartInfo = new()
             {
                 FileName = PathsExt.explorer,
                 WindowStyle = ProcessWindowStyle.Normal,

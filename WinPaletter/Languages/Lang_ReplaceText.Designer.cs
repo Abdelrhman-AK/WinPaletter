@@ -64,7 +64,7 @@ namespace WinPaletter
             // 
             // Label20
             // 
-            Label20.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label20.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label20.Location = new Point(42, 12);
             Label20.Name = "Label20";
             Label20.Size = new Size(109, 24);
@@ -84,7 +84,7 @@ namespace WinPaletter
             // 
             // Label18
             // 
-            Label18.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label18.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label18.Location = new Point(42, 42);
             Label18.Name = "Label18";
             Label18.Size = new Size(109, 24);
@@ -135,7 +135,7 @@ namespace WinPaletter
             Button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button7.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button7.Font = new Font("Segoe UI", 9.0f);
+            Button7.Font = new("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
             Button7.Location = new Point(266, 175);
@@ -150,7 +150,7 @@ namespace WinPaletter
             Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.ImageAlign = ContentAlignment.MiddleLeft;
@@ -165,7 +165,7 @@ namespace WinPaletter
             // 
             CheckBox1.BackColor = Color.FromArgb(25, 25, 25);
             CheckBox1.Checked = false;
-            CheckBox1.Font = new Font("Segoe UI", 9.0f);
+            CheckBox1.Font = new("Segoe UI", 9.0f);
             CheckBox1.ForeColor = Color.White;
             CheckBox1.Location = new Point(157, 72);
             CheckBox1.Name = "CheckBox1";
@@ -177,7 +177,7 @@ namespace WinPaletter
             // 
             CheckBox2.BackColor = Color.FromArgb(25, 25, 25);
             CheckBox2.Checked = false;
-            CheckBox2.Font = new Font("Segoe UI", 9.0f);
+            CheckBox2.Font = new("Segoe UI", 9.0f);
             CheckBox2.ForeColor = Color.White;
             CheckBox2.Location = new Point(157, 101);
             CheckBox2.Name = "CheckBox2";
@@ -201,9 +201,9 @@ namespace WinPaletter
             Controls.Add(Label18);
             Controls.Add(TextBox3);
             Controls.Add(TextBox4);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Lang_ReplaceText";

@@ -854,7 +854,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable00.AllowDrop = true;
             this.ExtTerminal_ColorTable00.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.ExtTerminal_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.ExtTerminal_ColorTable00.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.ExtTerminal_ColorTable00.DontShowInfo = false;
             this.ExtTerminal_ColorTable00.Location = new System.Drawing.Point(28, 36);
             this.ExtTerminal_ColorTable00.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -890,7 +890,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable01.AllowDrop = true;
             this.ExtTerminal_ColorTable01.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
-            this.ExtTerminal_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
+            this.ExtTerminal_ColorTable01.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.ExtTerminal_ColorTable01.DontShowInfo = false;
             this.ExtTerminal_ColorTable01.Location = new System.Drawing.Point(28, 67);
             this.ExtTerminal_ColorTable01.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -915,7 +915,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable02.AllowDrop = true;
             this.ExtTerminal_ColorTable02.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
-            this.ExtTerminal_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
+            this.ExtTerminal_ColorTable02.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.ExtTerminal_ColorTable02.DontShowInfo = false;
             this.ExtTerminal_ColorTable02.Location = new System.Drawing.Point(28, 98);
             this.ExtTerminal_ColorTable02.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -929,7 +929,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable03.AllowDrop = true;
             this.ExtTerminal_ColorTable03.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
-            this.ExtTerminal_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
+            this.ExtTerminal_ColorTable03.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.ExtTerminal_ColorTable03.DontShowInfo = false;
             this.ExtTerminal_ColorTable03.Location = new System.Drawing.Point(28, 129);
             this.ExtTerminal_ColorTable03.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -976,7 +976,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable04.AllowDrop = true;
             this.ExtTerminal_ColorTable04.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
-            this.ExtTerminal_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
+            this.ExtTerminal_ColorTable04.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.ExtTerminal_ColorTable04.DontShowInfo = false;
             this.ExtTerminal_ColorTable04.Location = new System.Drawing.Point(28, 160);
             this.ExtTerminal_ColorTable04.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1012,7 +1012,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable05.AllowDrop = true;
             this.ExtTerminal_ColorTable05.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
-            this.ExtTerminal_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
+            this.ExtTerminal_ColorTable05.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.ExtTerminal_ColorTable05.DontShowInfo = false;
             this.ExtTerminal_ColorTable05.Location = new System.Drawing.Point(28, 191);
             this.ExtTerminal_ColorTable05.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1037,7 +1037,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable06.AllowDrop = true;
             this.ExtTerminal_ColorTable06.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
-            this.ExtTerminal_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
+            this.ExtTerminal_ColorTable06.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.ExtTerminal_ColorTable06.DontShowInfo = false;
             this.ExtTerminal_ColorTable06.Location = new System.Drawing.Point(28, 222);
             this.ExtTerminal_ColorTable06.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1073,7 +1073,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable15.AllowDrop = true;
             this.ExtTerminal_ColorTable15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.ExtTerminal_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.ExtTerminal_ColorTable15.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.ExtTerminal_ColorTable15.DontShowInfo = false;
             this.ExtTerminal_ColorTable15.Location = new System.Drawing.Point(189, 253);
             this.ExtTerminal_ColorTable15.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1087,7 +1087,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable07.AllowDrop = true;
             this.ExtTerminal_ColorTable07.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.ExtTerminal_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.ExtTerminal_ColorTable07.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.ExtTerminal_ColorTable07.DontShowInfo = false;
             this.ExtTerminal_ColorTable07.Location = new System.Drawing.Point(28, 253);
             this.ExtTerminal_ColorTable07.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1112,7 +1112,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable08.AllowDrop = true;
             this.ExtTerminal_ColorTable08.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            this.ExtTerminal_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            this.ExtTerminal_ColorTable08.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.ExtTerminal_ColorTable08.DontShowInfo = false;
             this.ExtTerminal_ColorTable08.Location = new System.Drawing.Point(189, 36);
             this.ExtTerminal_ColorTable08.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1126,7 +1126,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable14.AllowDrop = true;
             this.ExtTerminal_ColorTable14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
-            this.ExtTerminal_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
+            this.ExtTerminal_ColorTable14.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.ExtTerminal_ColorTable14.DontShowInfo = false;
             this.ExtTerminal_ColorTable14.Location = new System.Drawing.Point(189, 222);
             this.ExtTerminal_ColorTable14.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1162,7 +1162,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable09.AllowDrop = true;
             this.ExtTerminal_ColorTable09.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
-            this.ExtTerminal_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
+            this.ExtTerminal_ColorTable09.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.ExtTerminal_ColorTable09.DontShowInfo = false;
             this.ExtTerminal_ColorTable09.Location = new System.Drawing.Point(189, 67);
             this.ExtTerminal_ColorTable09.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1176,7 +1176,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable13.AllowDrop = true;
             this.ExtTerminal_ColorTable13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
-            this.ExtTerminal_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
+            this.ExtTerminal_ColorTable13.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.ExtTerminal_ColorTable13.DontShowInfo = false;
             this.ExtTerminal_ColorTable13.Location = new System.Drawing.Point(189, 191);
             this.ExtTerminal_ColorTable13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1201,7 +1201,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable12.AllowDrop = true;
             this.ExtTerminal_ColorTable12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
-            this.ExtTerminal_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
+            this.ExtTerminal_ColorTable12.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.ExtTerminal_ColorTable12.DontShowInfo = false;
             this.ExtTerminal_ColorTable12.Location = new System.Drawing.Point(189, 160);
             this.ExtTerminal_ColorTable12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1215,7 +1215,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable10.AllowDrop = true;
             this.ExtTerminal_ColorTable10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
-            this.ExtTerminal_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
+            this.ExtTerminal_ColorTable10.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.ExtTerminal_ColorTable10.DontShowInfo = false;
             this.ExtTerminal_ColorTable10.Location = new System.Drawing.Point(189, 98);
             this.ExtTerminal_ColorTable10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1229,7 +1229,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_ColorTable11.AllowDrop = true;
             this.ExtTerminal_ColorTable11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
-            this.ExtTerminal_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
+            this.ExtTerminal_ColorTable11.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.ExtTerminal_ColorTable11.DontShowInfo = false;
             this.ExtTerminal_ColorTable11.Location = new System.Drawing.Point(189, 129);
             this.ExtTerminal_ColorTable11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1703,7 +1703,7 @@ namespace WinPaletter
             this.ExtTerminal_CursorColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ExtTerminal_CursorColor.BackColor = System.Drawing.Color.White;
-            this.ExtTerminal_CursorColor.DefaultColor = System.Drawing.Color.White;
+            this.ExtTerminal_CursorColor.DefaultBackColor = System.Drawing.Color.White;
             this.ExtTerminal_CursorColor.DontShowInfo = false;
             this.ExtTerminal_CursorColor.Location = new System.Drawing.Point(97, 6);
             this.ExtTerminal_CursorColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

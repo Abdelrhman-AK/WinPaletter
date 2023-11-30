@@ -6,14 +6,12 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed TrackBar for WinPaletter UI")]
     [DefaultEvent("Scroll")]
     public class Trackbar : Control
     {
         public Trackbar()
         {
-            Timer = new Timer() { Enabled = false, Interval = 1 };
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
 
@@ -21,17 +19,13 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
             Height = 19;
             Text = string.Empty;
-            MouseUp += Trackbar_MouseUp;
-            MouseEnter += Trackbar_MouseEnter;
-            MouseLeave += Trackbar_MouseLeave;
-            MouseWheel += Trackbar_MouseWheel;
-            Timer.Tick += Timer_Tick;
 
-            alpha = 0;
+            _alpha = 0;
             Invalidate();
         }
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         private readonly int ButtonSize = 0;
         private Rectangle LSA;
@@ -39,7 +33,6 @@ namespace WinPaletter.UI.WP
         private Rectangle Thumb;
         private bool ThumbDown;
         private Rectangle Circle;
-        private bool _Shown = false;
         private int I1;
 
         public MouseState State = MouseState.None;
@@ -58,52 +51,40 @@ namespace WinPaletter.UI.WP
         private int _Minimum;
         public int Minimum
         {
-            get
-            {
-                return _Minimum;
-            }
+            get { return _Minimum; }
             set
             {
-                if (value < 0)
+                if (value != _Minimum)
                 {
-                    throw new Exception("Property value is not valid.");
+                    _Minimum = value;
+
+                    if (value > _Maximum) _Maximum = value;
+
+                    if (value > _Value) _Value = value;
+
+                    InvalidateLayout();
                 }
-
-                _Minimum = value;
-                if (value > _Value)
-                    _Value = value;
-                if (value > _Maximum)
-                    _Maximum = value;
-
-                InvalidateLayout();
             }
         }
-
 
         private int _Maximum = 100;
         public int Maximum
         {
-            get
-            {
-                return _Maximum;
-            }
+            get { return _Maximum; }
             set
             {
-                if (value < 0)
+                if (value != _Maximum)
                 {
-                    throw new Exception("Property value is not valid.");
+                    _Maximum = value;
+
+                    if (value < _Value) _Value = value;
+
+                    if (value < _Minimum) _Minimum = value;
+
+                    InvalidateLayout();
                 }
-
-                _Maximum = value;
-                if (value < _Value)
-                    _Value = value;
-                if (value < _Minimum)
-                    _Minimum = value;
-
-                InvalidateLayout();
             }
         }
-
 
         private int _Value;
         public int Value
@@ -121,7 +102,7 @@ namespace WinPaletter.UI.WP
                     value = _Minimum;
                 }
 
-                if (_Value != value) 
+                if (_Value != value)
                 {
                     _Value = value;
                     InvalidateLayout();
@@ -134,37 +115,30 @@ namespace WinPaletter.UI.WP
         private int _SmallChange = 1;
         public int SmallChange
         {
-            get
-            {
-                return _SmallChange;
-            }
+            get { return _SmallChange; }
             set
             {
-                if (value < 1)
-                {
-                    throw new Exception("Property value is not valid.");
-                }
+                if (value < 1) value = 1;
 
-                _SmallChange = value;
+                if (value != _SmallChange)
+                {
+                    _SmallChange = value;
+                }
             }
         }
-
 
         private int _LargeChange = 10;
         public int LargeChange
         {
-            get
-            {
-                return _LargeChange;
-            }
+            get { return _LargeChange; }
             set
             {
-                if (value < 1)
-                {
-                    throw new Exception("Property value is not valid.");
-                }
+                if (value < 1) value = 1;
 
-                _LargeChange = value;
+                if (value != _LargeChange)
+                {
+                    _LargeChange = value;
+                }
             }
         }
 
@@ -179,7 +153,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -203,22 +177,8 @@ namespace WinPaletter.UI.WP
         {
             Height = 19;
             InvalidateLayout();
-        }
 
-        private void InvalidateLayout()
-        {
-            LSA = new Rectangle(0, 0, ButtonSize, Height);
-            Shaft = new Rectangle((int)Math.Round(LSA.Right + 1 + 0.5d * Height), 0, Width - Height - 1, Height);
-            Thumb = new Rectangle(0, 1, (int)Math.Round(Value / (double)Maximum * Shaft.Width), Height - 3);
-            Circle = new Rectangle((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
-            Scroll?.Invoke(this);
-            InvalidatePosition();
-        }
-
-        private void InvalidatePosition()
-        {
-            Thumb.Width = (int)Math.Round(Value / (double)Maximum * Width);
-            Refresh();
+            base.OnSizeChanged(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -226,8 +186,12 @@ namespace WinPaletter.UI.WP
             if (e.Button == MouseButtons.Left)
             {
                 State = MouseState.Down;
-                Timer.Enabled = true;
-                Timer.Start();
+
+                if (CanAnimate)
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                }
+                else { alpha = 0; }
 
                 if (Circle.Contains(e.Location))
                 {
@@ -248,6 +212,8 @@ namespace WinPaletter.UI.WP
 
                 InvalidatePosition();
             }
+
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -261,7 +227,6 @@ namespace WinPaletter.UI.WP
             else
                 State = MouseState.None;
 
-
             Invalidate();
 
             if (ThumbDown)
@@ -270,39 +235,50 @@ namespace WinPaletter.UI.WP
                 InvalidatePosition();
             }
 
-            Timer.Enabled = true;
-            Timer.Start();
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(alpha), Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else { alpha = Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0; }
+
+            base.OnMouseMove(e);
         }
 
-        private void Trackbar_MouseUp(object sender, MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             ThumbDown = false;
             State = MouseState.None;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseUp(e);
         }
 
-        private void Trackbar_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
-            if (Thumb.Contains(MousePosition))
+            if (Circle.Contains(this.PointToClient(MousePosition)))
             {
                 State = MouseState.Over;
-                Invalidate();
-                Timer.Enabled = true;
-                Timer.Start();
+
+                if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                else { alpha = 255; }
             }
+
+            base.OnMouseEnter(e);
         }
 
-        private void Trackbar_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
+            base.OnMouseLeave(e);
         }
 
-        private void Trackbar_MouseWheel(object sender, MouseEventArgs e)
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
             if (e.Delta < 0)
             {
@@ -321,61 +297,45 @@ namespace WinPaletter.UI.WP
                 else
                     Value -= SmallChange;
             }
+
+            base.OnMouseWheel(e);
+        }
+
+        #endregion
+
+        #region Voids
+        private void InvalidateLayout()
+        {
+            LSA = new(0, 0, ButtonSize, Height);
+            Shaft = new((int)Math.Round(LSA.Right + 1 + 0.5d * Height), 0, Width - Height - 1, Height);
+            Thumb = new(0, 1, (int)Math.Round(Value / (double)Maximum * Shaft.Width), Height - 3);
+            Circle = new((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
+            Scroll?.Invoke(this);
+            InvalidatePosition();
+        }
+
+        private void InvalidatePosition()
+        {
+            Thumb.Width = (int)Math.Round(Value / (double)Maximum * Width);
+            Refresh();
         }
 
         #endregion
 
         #region Animator
-
-        private int alpha;
-        private readonly int Factor = 25;
-        private Timer Timer;
-
-        private void Timer_Tick(object sender, EventArgs e)
+        private int _alpha = 0;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            if (!DesignMode)
-            {
-
-                if (State == MouseState.Over & _Shown)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-
-                if (_Shown & (!(State == MouseState.Over) | State == MouseState.Down))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-            }
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
         }
-
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -395,18 +355,19 @@ namespace WinPaletter.UI.WP
 
             G.ResetClip();
 
-            Circle = new Rectangle((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
+            Circle = new((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
 
             G.FillEllipse(scheme.Brushes.Line, Circle);
 
-            var smallC1 = new Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
-            var smallC2 = new Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
+            Rectangle smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
+            Rectangle smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
             G.FillEllipse(scheme.Brushes.AccentAlt, smallC1);
 
             using SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt));
             G.FillEllipse(br, smallC2);
 
+            base.OnPaint(e);
         }
     }
 }

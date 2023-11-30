@@ -49,12 +49,12 @@ namespace WinPaletter
         public decimal UpdateSize;
         public DateTime ReleaseDate;
         private bool _Shown = false;
-        public List<string> ls = new List<string>();
+        public List<string> ls = new();
 
         public Updates()
         {
-            WebCL = new WebClient();
-            UC = new WebClient();
+            WebCL = new();
+            UC = new();
             InitializeComponent();
         }
 
@@ -213,7 +213,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            UC = new WebClient();
+            UC = new();
             LinkLabel3.Visible = false;
             string F = Program.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
             Label3.Text = string.Format(F, Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? Program.Lang.Stable : Program.Lang.Beta, Program.Lang.Channel);
@@ -290,7 +290,7 @@ namespace WinPaletter
 
         private void Label3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var f = new Updates();
+            Updates f = new();
             Close();
             Forms.SettingsX.ShowDialog();
             f.ShowDialog();

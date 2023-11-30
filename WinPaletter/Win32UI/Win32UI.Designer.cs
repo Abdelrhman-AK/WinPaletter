@@ -401,7 +401,6 @@ namespace WinPaletter
             // Toggle1
             // 
             this.Toggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Toggle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.Toggle1.Checked = true;
             this.Toggle1.DarkLight_Toggler = false;
             this.Toggle1.Location = new System.Drawing.Point(447, 66);
@@ -426,7 +425,6 @@ namespace WinPaletter
             // Toggle2
             // 
             this.Toggle2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Toggle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.Toggle2.Checked = true;
             this.Toggle2.DarkLight_Toggler = false;
             this.Toggle2.Location = new System.Drawing.Point(447, 36);
@@ -755,7 +753,7 @@ namespace WinPaletter
             this.btnface_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnface_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btnface_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btnface_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btnface_pick.DontShowInfo = false;
             this.btnface_pick.Location = new System.Drawing.Point(3, 24);
             this.btnface_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -816,7 +814,7 @@ namespace WinPaletter
             // 
             this.btnlight_pick.AllowDrop = true;
             this.btnlight_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btnlight_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btnlight_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btnlight_pick.DontShowInfo = false;
             this.btnlight_pick.Location = new System.Drawing.Point(3, 24);
             this.btnlight_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -852,7 +850,7 @@ namespace WinPaletter
             // 
             this.btnhilight_pick.AllowDrop = true;
             this.btnhilight_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btnhilight_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btnhilight_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btnhilight_pick.DontShowInfo = false;
             this.btnhilight_pick.Location = new System.Drawing.Point(3, 24);
             this.btnhilight_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -888,7 +886,7 @@ namespace WinPaletter
             // 
             this.Frame_pick.AllowDrop = true;
             this.Frame_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.Frame_pick.DefaultColor = System.Drawing.Color.Black;
+            this.Frame_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.Frame_pick.DontShowInfo = false;
             this.Frame_pick.Location = new System.Drawing.Point(3, 24);
             this.Frame_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -924,7 +922,7 @@ namespace WinPaletter
             // 
             this.btntext_pick.AllowDrop = true;
             this.btntext_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btntext_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btntext_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btntext_pick.DontShowInfo = false;
             this.btntext_pick.Location = new System.Drawing.Point(3, 24);
             this.btntext_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -960,7 +958,7 @@ namespace WinPaletter
             // 
             this.btndkshadow_pick.AllowDrop = true;
             this.btndkshadow_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btndkshadow_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btndkshadow_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btndkshadow_pick.DontShowInfo = false;
             this.btndkshadow_pick.Location = new System.Drawing.Point(3, 24);
             this.btndkshadow_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -996,7 +994,7 @@ namespace WinPaletter
             // 
             this.btnshadow_pick.AllowDrop = true;
             this.btnshadow_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btnshadow_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btnshadow_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btnshadow_pick.DontShowInfo = false;
             this.btnshadow_pick.Location = new System.Drawing.Point(3, 24);
             this.btnshadow_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1155,7 +1153,7 @@ namespace WinPaletter
             this.GActivetitle_pick.AllowDrop = true;
             this.GActivetitle_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GActivetitle_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.GActivetitle_pick.DefaultColor = System.Drawing.Color.Black;
+            this.GActivetitle_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.GActivetitle_pick.DontShowInfo = false;
             this.GActivetitle_pick.Location = new System.Drawing.Point(251, 4);
             this.GActivetitle_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1168,7 +1166,7 @@ namespace WinPaletter
             this.activetitle_pick.AllowDrop = true;
             this.activetitle_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.activetitle_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.activetitle_pick.DefaultColor = System.Drawing.Color.Black;
+            this.activetitle_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.activetitle_pick.DontShowInfo = false;
             this.activetitle_pick.Location = new System.Drawing.Point(159, 4);
             this.activetitle_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1221,7 +1219,7 @@ namespace WinPaletter
             this.TitleText_pick.AllowDrop = true;
             this.TitleText_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TitleText_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.TitleText_pick.DefaultColor = System.Drawing.Color.Black;
+            this.TitleText_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.TitleText_pick.DontShowInfo = false;
             this.TitleText_pick.Location = new System.Drawing.Point(251, 4);
             this.TitleText_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1274,7 +1272,7 @@ namespace WinPaletter
             this.ActiveBorder_pick.AllowDrop = true;
             this.ActiveBorder_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ActiveBorder_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.ActiveBorder_pick.DefaultColor = System.Drawing.Color.Black;
+            this.ActiveBorder_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.ActiveBorder_pick.DontShowInfo = false;
             this.ActiveBorder_pick.Location = new System.Drawing.Point(251, 4);
             this.ActiveBorder_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1327,7 +1325,7 @@ namespace WinPaletter
             this.InactivetitleText_pick.AllowDrop = true;
             this.InactivetitleText_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InactivetitleText_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.InactivetitleText_pick.DefaultColor = System.Drawing.Color.Black;
+            this.InactivetitleText_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.InactivetitleText_pick.DontShowInfo = false;
             this.InactivetitleText_pick.Location = new System.Drawing.Point(251, 4);
             this.InactivetitleText_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1367,7 +1365,7 @@ namespace WinPaletter
             this.GInactivetitle_pick.AllowDrop = true;
             this.GInactivetitle_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GInactivetitle_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.GInactivetitle_pick.DefaultColor = System.Drawing.Color.Black;
+            this.GInactivetitle_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.GInactivetitle_pick.DontShowInfo = false;
             this.GInactivetitle_pick.Location = new System.Drawing.Point(251, 4);
             this.GInactivetitle_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1394,7 +1392,7 @@ namespace WinPaletter
             this.InactiveTitle_pick.AllowDrop = true;
             this.InactiveTitle_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InactiveTitle_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.InactiveTitle_pick.DefaultColor = System.Drawing.Color.Black;
+            this.InactiveTitle_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.InactiveTitle_pick.DontShowInfo = false;
             this.InactiveTitle_pick.Location = new System.Drawing.Point(159, 4);
             this.InactiveTitle_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1447,7 +1445,7 @@ namespace WinPaletter
             this.InactiveBorder_pick.AllowDrop = true;
             this.InactiveBorder_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InactiveBorder_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.InactiveBorder_pick.DefaultColor = System.Drawing.Color.Black;
+            this.InactiveBorder_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.InactiveBorder_pick.DontShowInfo = false;
             this.InactiveBorder_pick.Location = new System.Drawing.Point(251, 4);
             this.InactiveBorder_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1517,7 +1515,7 @@ namespace WinPaletter
             this.menu_pick.AllowDrop = true;
             this.menu_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.menu_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.menu_pick.DefaultColor = System.Drawing.Color.Black;
+            this.menu_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.menu_pick.DontShowInfo = false;
             this.menu_pick.Location = new System.Drawing.Point(251, 4);
             this.menu_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1570,7 +1568,7 @@ namespace WinPaletter
             this.menubar_pick.AllowDrop = true;
             this.menubar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.menubar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.menubar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.menubar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.menubar_pick.DontShowInfo = false;
             this.menubar_pick.Location = new System.Drawing.Point(251, 4);
             this.menubar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1623,7 +1621,7 @@ namespace WinPaletter
             this.menuhilight_pick.AllowDrop = true;
             this.menuhilight_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.menuhilight_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.menuhilight_pick.DefaultColor = System.Drawing.Color.Black;
+            this.menuhilight_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.menuhilight_pick.DontShowInfo = false;
             this.menuhilight_pick.Location = new System.Drawing.Point(251, 4);
             this.menuhilight_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1676,7 +1674,7 @@ namespace WinPaletter
             this.hottracking_pick.AllowDrop = true;
             this.hottracking_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.hottracking_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.hottracking_pick.DefaultColor = System.Drawing.Color.Black;
+            this.hottracking_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.hottracking_pick.DontShowInfo = false;
             this.hottracking_pick.Location = new System.Drawing.Point(251, 4);
             this.hottracking_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1729,7 +1727,7 @@ namespace WinPaletter
             this.hilighttext_pick.AllowDrop = true;
             this.hilighttext_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.hilighttext_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.hilighttext_pick.DefaultColor = System.Drawing.Color.Black;
+            this.hilighttext_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.hilighttext_pick.DontShowInfo = false;
             this.hilighttext_pick.Location = new System.Drawing.Point(251, 4);
             this.hilighttext_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1782,7 +1780,7 @@ namespace WinPaletter
             this.hilight_pick.AllowDrop = true;
             this.hilight_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.hilight_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.hilight_pick.DefaultColor = System.Drawing.Color.Black;
+            this.hilight_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.hilight_pick.DontShowInfo = false;
             this.hilight_pick.Location = new System.Drawing.Point(251, 4);
             this.hilight_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1835,7 +1833,7 @@ namespace WinPaletter
             this.menutext_pick.AllowDrop = true;
             this.menutext_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.menutext_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.menutext_pick.DefaultColor = System.Drawing.Color.Black;
+            this.menutext_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.menutext_pick.DontShowInfo = false;
             this.menutext_pick.Location = new System.Drawing.Point(251, 4);
             this.menutext_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1905,7 +1903,7 @@ namespace WinPaletter
             this.Window_pick.AllowDrop = true;
             this.Window_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Window_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.Window_pick.DefaultColor = System.Drawing.Color.Black;
+            this.Window_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.Window_pick.DontShowInfo = false;
             this.Window_pick.Location = new System.Drawing.Point(251, 4);
             this.Window_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1958,7 +1956,7 @@ namespace WinPaletter
             this.InfoWindow_pick.AllowDrop = true;
             this.InfoWindow_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InfoWindow_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.InfoWindow_pick.DefaultColor = System.Drawing.Color.Black;
+            this.InfoWindow_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.InfoWindow_pick.DontShowInfo = false;
             this.InfoWindow_pick.Location = new System.Drawing.Point(251, 4);
             this.InfoWindow_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2011,7 +2009,7 @@ namespace WinPaletter
             this.InfoText_pick.AllowDrop = true;
             this.InfoText_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InfoText_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.InfoText_pick.DefaultColor = System.Drawing.Color.Black;
+            this.InfoText_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.InfoText_pick.DontShowInfo = false;
             this.InfoText_pick.Location = new System.Drawing.Point(251, 4);
             this.InfoText_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2064,7 +2062,7 @@ namespace WinPaletter
             this.AppWorkspace_pick.AllowDrop = true;
             this.AppWorkspace_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AppWorkspace_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.AppWorkspace_pick.DefaultColor = System.Drawing.Color.Black;
+            this.AppWorkspace_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.AppWorkspace_pick.DontShowInfo = false;
             this.AppWorkspace_pick.Location = new System.Drawing.Point(251, 4);
             this.AppWorkspace_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2117,7 +2115,7 @@ namespace WinPaletter
             this.background_pick.AllowDrop = true;
             this.background_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.background_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.background_pick.DefaultColor = System.Drawing.Color.Black;
+            this.background_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.background_pick.DontShowInfo = false;
             this.background_pick.Location = new System.Drawing.Point(251, 4);
             this.background_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2170,7 +2168,7 @@ namespace WinPaletter
             this.GrayText_pick.AllowDrop = true;
             this.GrayText_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GrayText_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.GrayText_pick.DefaultColor = System.Drawing.Color.Black;
+            this.GrayText_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.GrayText_pick.DontShowInfo = false;
             this.GrayText_pick.Location = new System.Drawing.Point(251, 4);
             this.GrayText_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2223,7 +2221,7 @@ namespace WinPaletter
             this.WindowText_pick.AllowDrop = true;
             this.WindowText_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WindowText_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.WindowText_pick.DefaultColor = System.Drawing.Color.Black;
+            this.WindowText_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.WindowText_pick.DontShowInfo = false;
             this.WindowText_pick.Location = new System.Drawing.Point(251, 4);
             this.WindowText_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2263,7 +2261,7 @@ namespace WinPaletter
             this.btnaltface_pick.AllowDrop = true;
             this.btnaltface_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnaltface_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.btnaltface_pick.DefaultColor = System.Drawing.Color.Black;
+            this.btnaltface_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.btnaltface_pick.DontShowInfo = false;
             this.btnaltface_pick.Location = new System.Drawing.Point(251, 4);
             this.btnaltface_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2341,7 +2339,7 @@ namespace WinPaletter
             this.desktop_pick.AllowDrop = true;
             this.desktop_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.desktop_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.desktop_pick.DefaultColor = System.Drawing.Color.Black;
+            this.desktop_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.desktop_pick.DontShowInfo = false;
             this.desktop_pick.Location = new System.Drawing.Point(251, 4);
             this.desktop_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2394,7 +2392,7 @@ namespace WinPaletter
             this.Scrollbar_pick.AllowDrop = true;
             this.Scrollbar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Scrollbar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.Scrollbar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.Scrollbar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.Scrollbar_pick.DontShowInfo = false;
             this.Scrollbar_pick.Location = new System.Drawing.Point(251, 4);
             this.Scrollbar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2463,6 +2461,7 @@ namespace WinPaletter
             this.LabelR13.AutoSize = true;
             this.LabelR13.BackColor = System.Drawing.Color.White;
             this.LabelR13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LabelR13.DrawOnGlass = false;
             this.LabelR13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR13.ForeColor = System.Drawing.Color.Black;
             this.LabelR13.Location = new System.Drawing.Point(184, 77);
@@ -2534,6 +2533,7 @@ namespace WinPaletter
             // 
             this.LabelR9.BackColor = System.Drawing.Color.Transparent;
             this.LabelR9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LabelR9.DrawOnGlass = false;
             this.LabelR9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR9.ForeColor = System.Drawing.Color.DimGray;
             this.LabelR9.Location = new System.Drawing.Point(21, 0);
@@ -2569,6 +2569,7 @@ namespace WinPaletter
             // 
             this.LabelR5.BackColor = System.Drawing.Color.Transparent;
             this.LabelR5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LabelR5.DrawOnGlass = false;
             this.LabelR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR5.ForeColor = System.Drawing.Color.White;
             this.LabelR5.Location = new System.Drawing.Point(21, 0);
@@ -2594,6 +2595,7 @@ namespace WinPaletter
             // 
             this.LabelR6.BackColor = System.Drawing.Color.Transparent;
             this.LabelR6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LabelR6.DrawOnGlass = false;
             this.LabelR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR6.ForeColor = System.Drawing.Color.Black;
             this.LabelR6.Location = new System.Drawing.Point(21, 0);
@@ -2667,6 +2669,7 @@ namespace WinPaletter
             this.LabelR4.AutoSize = true;
             this.LabelR4.BackColor = System.Drawing.Color.Transparent;
             this.LabelR4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LabelR4.DrawOnGlass = false;
             this.LabelR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR4.ForeColor = System.Drawing.Color.Black;
             this.LabelR4.Location = new System.Drawing.Point(4, 22);
@@ -2767,6 +2770,7 @@ namespace WinPaletter
             // 
             this.LabelR3.BackColor = System.Drawing.Color.Transparent;
             this.LabelR3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LabelR3.DrawOnGlass = false;
             this.LabelR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR3.ForeColor = System.Drawing.Color.Black;
             this.LabelR3.Location = new System.Drawing.Point(1, 3);
@@ -2780,6 +2784,7 @@ namespace WinPaletter
             // 
             this.LabelR2.BackColor = System.Drawing.Color.Transparent;
             this.LabelR2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LabelR2.DrawOnGlass = false;
             this.LabelR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.LabelR2.Location = new System.Drawing.Point(40, 0);
@@ -2794,6 +2799,7 @@ namespace WinPaletter
             // 
             this.LabelR1.BackColor = System.Drawing.Color.Transparent;
             this.LabelR1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LabelR1.DrawOnGlass = false;
             this.LabelR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR1.ForeColor = System.Drawing.Color.Black;
             this.LabelR1.Location = new System.Drawing.Point(0, 0);

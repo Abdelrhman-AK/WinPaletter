@@ -181,7 +181,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            using (var bmp = new Bitmap(Bitmap_Mgr.Load(ImageFile)))
+                            using (Bitmap bmp = new(Bitmap_Mgr.Load(ImageFile)))
                             {
                                 if (bmp.RawFormat != System.Drawing.Imaging.ImageFormat.Bmp)
                                 {
@@ -214,7 +214,7 @@ namespace WinPaletter.Theme.Structures
 
                     if (!SkipSettingWallpaper)
                     {
-                        using (var _ini = new INI(slideshow_ini))
+                        using (INI _ini = new(slideshow_ini))
                         {
 
                             if (TreeView is not null)

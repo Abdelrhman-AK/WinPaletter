@@ -227,7 +227,7 @@ public class EOIcoCurLoader
 
         // Pull out hotspot data, even though it may not be valid if this
         // resource is an icon and not a cursor.
-        HotSpot = new Point(idEntries[ImageIndex].Planes_XHotspot,
+        HotSpot = new(idEntries[ImageIndex].Planes_XHotspot,
             idEntries[ImageIndex].BitCount_YHotspot);
 
         // Make sure the image offset is within the length of the stream
@@ -254,7 +254,7 @@ public class EOIcoCurLoader
 
             try
             {
-                bm = new Bitmap(os);
+                bm  = new(os);
                 bm.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
             catch (ArgumentException)
@@ -364,11 +364,11 @@ public class EOIcoCurLoader
             m_reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
             // Create an offset stream so .NET can load
-            var os = new EOFC.OffsetStream(m_reader.BaseStream);
+            EOFC.OffsetStream os = new(m_reader.BaseStream);
 
             try
             {
-                using (Bitmap bm = new Bitmap(os))
+                using (Bitmap bm  = new(os))
                 {
                     out_Width = (uint)bm.Width;
                     out_Height = (uint)bm.Height;
@@ -384,7 +384,7 @@ public class EOIcoCurLoader
         m_reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
         // Load BITMAPINFOHEADER structure
-        BITMAPINFOHEADER bih = new BITMAPINFOHEADER();
+        BITMAPINFOHEADER bih = new();
         bih.ReadFromStream(m_reader);
 
         // Get bits per pixel

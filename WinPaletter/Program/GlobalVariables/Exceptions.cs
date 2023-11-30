@@ -8,11 +8,11 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// List of exceptions thrown during theme applying
         /// </summary>
-        public static List<Tuple<string, Exception>> ThemeApply = new List<Tuple<string, Exception>>();
+        public static List<Tuple<string, Exception>> ThemeApply = new();
 
         /// <summary>
         /// List of exceptions thrown during theme loading
         /// </summary>
-        public static List<Tuple<string, Exception>> ThemeLoad = new List<Tuple<string, Exception>>();
+        public static List<Tuple<string, Exception>> ThemeLoad = new();
     }
 }

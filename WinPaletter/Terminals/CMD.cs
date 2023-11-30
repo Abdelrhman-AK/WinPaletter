@@ -13,7 +13,7 @@ namespace WinPaletter
 
     public partial class CMD
     {
-        private Font F_cmd = new Font("Consolas", 18f, FontStyle.Regular);
+        private Font F_cmd = new("Consolas", 18f, FontStyle.Regular);
         private bool _Shown = false;
         public Edition _Edition = Edition.CMD;
 
@@ -107,7 +107,7 @@ namespace WinPaletter
             if (CMDEnabled.Checked)
             {
                 Cursor = Cursors.WaitCursor;
-                var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+                Theme.Manager TMx = new(Theme.Manager.Source.Registry);
                 ApplyToTM(TMx, _Edition);
                 ApplyToTM(Program.TM, _Edition);
 
@@ -169,7 +169,7 @@ namespace WinPaletter
         public void ApplyCursorShape()
         {
             CMD_PreviewCursorInner.Dock = DockStyle.Fill;
-            CMD_PreviewCUR2.Padding = new Padding(1, 1, 1, 1);
+            CMD_PreviewCUR2.Padding = new(1, 1, 1, 1);
 
             if (CMD_CursorStyle.SelectedIndex == 0)
             {
@@ -227,7 +227,7 @@ namespace WinPaletter
             if (CMD_CursorStyle.SelectedIndex == 5)
             {
                 CMD_PreviewCursorInner.Dock = DockStyle.None;
-                CMD_PreviewCUR2.Padding = new Padding(0, 0, 0, 0);
+                CMD_PreviewCUR2.Padding = new(0, 0, 0, 0);
                 CMD_PreviewCursorInner.Width = CMD_PreviewCUR2.Width;
                 CMD_PreviewCursorInner.Height = 1;
                 CMD_PreviewCursorInner.BackColor = CMD_PreviewCUR.BackColor;
@@ -268,7 +268,7 @@ namespace WinPaletter
             CMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
             CMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
             CMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
-            CMD1.Font = new Font(F_cmd.Name, F_cmd.Size, F_cmd.Style);
+            CMD1.Font = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
             CMD1.PowerShell = _Edition == Edition.PowerShellx64 | _Edition == Edition.PowerShellx86;
             CMD1.Raster = CMD_RasterToggle.Checked;
             switch (RasterList.SelectedItem)
@@ -354,7 +354,7 @@ namespace WinPaletter
             }
 
             FontName.Text = F_cmd.Name;
-            FontName.Font = new Font(F_cmd.Name, 9f, F_cmd.Style);
+            FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
             CMD1.Refresh();
         }
@@ -792,8 +792,8 @@ namespace WinPaletter
             ColorTable14.BackColor = Console.ColorTable14;
             ColorTable15.BackColor = Console.ColorTable15;
 
-            ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152);
-            ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0);
+            ColorTable05.DefaultBackColor = Color.FromArgb(136, 23, 152);
+            ColorTable06.DefaultBackColor = Color.FromArgb(193, 156, 0);
 
             CMD_PopupForegroundBar.Value = Console.PopupForeground;
             CMD_PopupBackgroundBar.Value = Console.PopupBackground;
@@ -876,12 +876,12 @@ namespace WinPaletter
             {
                 {
                     var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
-                    F_cmd = new Font(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
+                    F_cmd = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
 
             FontName.Text = F_cmd.Name;
-            FontName.Font = new Font(F_cmd.Name, 9f, F_cmd.Style);
+            FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
             CMD_FontSizeBar.Value = (int)Math.Round(F_cmd.Size);
             CMD_FontSizeVal.Text = F_cmd.Size.ToString();
 
@@ -930,7 +930,7 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM, Edition Edition)
         {
-            var Console = new Theme.Structures.Console()
+            Theme.Structures.Console Console = new()
             {
                 Enabled = CMDEnabled.Checked,
                 ColorTable00 = ColorTable00.BackColor,
@@ -1195,9 +1195,9 @@ namespace WinPaletter
             {
                 case Edition.CMD:
                     {
-                        var prc = new Process()
+                        Process prc = new()
                         {
-                            StartInfo = new ProcessStartInfo()
+                            StartInfo = new()
                             {
                                 FileName = PathsExt.CMD,
                                 Verb = "runas",
@@ -1210,9 +1210,9 @@ namespace WinPaletter
 
                 case Edition.PowerShellx86:
                     {
-                        var prc = new Process()
+                        Process prc = new()
                         {
-                            StartInfo = new ProcessStartInfo()
+                            StartInfo = new()
                             {
                                 FileName = PathsExt.PS86_app,
                                 Verb = "runas",
@@ -1225,9 +1225,9 @@ namespace WinPaletter
 
                 case Edition.PowerShellx64:
                     {
-                        var prc = new Process()
+                        Process prc = new()
                         {
-                            StartInfo = new ProcessStartInfo()
+                            StartInfo = new()
                             {
                                 FileName = PathsExt.PS64_app,
                                 Verb = "runas",
@@ -1260,12 +1260,12 @@ namespace WinPaletter
             if (!_Shown)
                 return;
             NativeMethods.GDI32.LogFont fx = new();
-            F_cmd = new Font(F_cmd.Name, F_cmd.Size, F_cmd.Style);
+            F_cmd = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
             F_cmd.ToLogFont(fx);
             fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
             {
                 var temp = Font.FromLogFont(fx);
-                F_cmd = new Font(temp.Name, F_cmd.Size, temp.Style);
+                F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
             }
             ApplyPreview();
         }
@@ -1274,7 +1274,7 @@ namespace WinPaletter
         {
             if (_Shown)
             {
-                F_cmd = new Font(FontName.Font.Name, F_cmd.Size, F_cmd.Style);
+                F_cmd = new(FontName.Font.Name, F_cmd.Size, F_cmd.Style);
                 ApplyPreview();
             }
 
@@ -1285,7 +1285,7 @@ namespace WinPaletter
             CMD_FontSizeVal.Text = CMD_FontSizeBar.Value.ToString();
             if (_Shown)
             {
-                F_cmd = new Font(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style);
+                F_cmd = new(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style);
                 ApplyPreview();
             }
         }
@@ -1323,9 +1323,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, CMD_PreviewCUR2 };
+            List<Control> CList = new() { (Control)sender, CMD_PreviewCUR2 };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             CMD_PreviewCUR2.BackColor = C;
             ((UI.Controllers.ColorItem)sender).BackColor = C;
@@ -1364,43 +1364,43 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, CMD1 };
+            List<Control> CList = new() { (Control)sender, CMD1 };
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                _Conditions.CMD_ColorTable00 = true;
+                _conditions.CMD_ColorTable00 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                _Conditions.CMD_ColorTable01 = true;
+                _conditions.CMD_ColorTable01 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                _Conditions.CMD_ColorTable02 = true;
+                _conditions.CMD_ColorTable02 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                _Conditions.CMD_ColorTable03 = true;
+                _conditions.CMD_ColorTable03 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                _Conditions.CMD_ColorTable04 = true;
+                _conditions.CMD_ColorTable04 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                _Conditions.CMD_ColorTable05 = true;
+                _conditions.CMD_ColorTable05 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                _Conditions.CMD_ColorTable06 = true;
+                _conditions.CMD_ColorTable06 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                _Conditions.CMD_ColorTable07 = true;
+                _conditions.CMD_ColorTable07 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                _Conditions.CMD_ColorTable08 = true;
+                _conditions.CMD_ColorTable08 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                _Conditions.CMD_ColorTable09 = true;
+                _conditions.CMD_ColorTable09 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                _Conditions.CMD_ColorTable10 = true;
+                _conditions.CMD_ColorTable10 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                _Conditions.CMD_ColorTable11 = true;
+                _conditions.CMD_ColorTable11 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                _Conditions.CMD_ColorTable12 = true;
+                _conditions.CMD_ColorTable12 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                _Conditions.CMD_ColorTable13 = true;
+                _conditions.CMD_ColorTable13 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                _Conditions.CMD_ColorTable14 = true;
+                _conditions.CMD_ColorTable14 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                _Conditions.CMD_ColorTable15 = true;
+                _conditions.CMD_ColorTable15 = true;
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -1429,7 +1429,7 @@ namespace WinPaletter
         {
             if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
                 bool ee = CMDEnabled.Checked;
                 ApplyFromTM(TMx, _Edition);
                 ApplyPreview();
@@ -1445,7 +1445,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             bool ee = CMDEnabled.Checked;
             ApplyFromTM(TMx, _Edition);
             ApplyPreview();
@@ -1493,9 +1493,9 @@ namespace WinPaletter
                 fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
                 {
                     var temp = Font.FromLogFont(fx);
-                    F_cmd = new Font(temp.Name, F_cmd.Size, temp.Style);
+                    F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
                 }
-                FontName.Font = new Font(FontDialog1.Font.Name, 9f, F_cmd.Style);
+                FontName.Font = new(FontDialog1.Font.Name, 9f, F_cmd.Style);
             }
 
         }

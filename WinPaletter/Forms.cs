@@ -1225,7 +1225,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    m_FormBeingCreated = new Hashtable();
+                    m_FormBeingCreated = new();
                 }
                 m_FormBeingCreated.Add(typeof(T), null);
                 try

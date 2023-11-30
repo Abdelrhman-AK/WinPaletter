@@ -258,12 +258,6 @@
     <Compile Include="Dialogs\UserPassword.Designer.cs">
       <DependentUpon>UserPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Elements\Others\ProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1191,9 +1185,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\Sounds_Editor.resx">
       <DependentUpon>Sounds_Editor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>

@@ -121,7 +121,6 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
 
-
         /// <summary>
         /// Creates an icon or cursor from an ICONINFO structure.
         /// </summary>

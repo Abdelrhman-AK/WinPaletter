@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -8,26 +9,20 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
-
     public class CursorControl : ContainerControl
     {
-
         public CursorControl()
         {
-            Timer = new Timer() { Enabled = false, Interval = 1 };
-            MouseEnter += CursorControl_MouseEnter;
-            MouseLeave += CursorControl_MouseLeave;
-            Click += CursorControl_Click;
-            Timer.Tick += Timer_Tick;
-
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
         }
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        public bool _Focused = false;
         private Bitmap bmp;
         public float Angle = 180f;
-        private bool AnimateOnClick = false;
 
         public MouseState State = MouseState.None;
 
@@ -41,6 +36,9 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Properties
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public new Color BackColor { get => Color.Transparent; set {; } }
+
         public string Prop_File { get; set; } = string.Empty;
         public bool Prop_UseFromFile { get; set; } = false;
         public Paths.CursorType Prop_Cursor { get; set; } = Paths.CursorType.Arrow;
@@ -83,118 +81,151 @@ namespace WinPaletter.UI.Controllers
 
         public float Prop_Scale { get; set; } = 1f;
 
+
+        private bool _focused = false;
+        public bool Focused
+        {
+            get => _focused;
+            set
+            {
+                if (_focused != value)
+                {
+                    _focused = value;
+
+                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), _focused ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                    else { alpha2 = _focused ? 255 : 0; }
+                }
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
+            }
+        }
         #endregion
 
         #region Events
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            AnimateOnClick = true;
-            _Focused = true;
+            Focused = true;
             State = MouseState.Down;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
             base.OnMouseDown(e);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            if (CanAnimate) Invalidate();
+
+            base.OnSizeChanged(e);
+        }
+
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            if (CanAnimate) Invalidate();
+
+            base.OnLocationChanged(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseUp(e);
         }
 
-        private void CursorControl_MouseEnter(object sender, EventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseEnter(e);
         }
 
-        private void CursorControl_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
+            base.OnMouseLeave(e);
         }
 
-        private void CursorControl_Click(object sender, EventArgs e)
+        protected override void OnClick(EventArgs e)
         {
-
             foreach (CursorControl c in Parent.Controls.OfType<CursorControl>())
             {
-                if (c == sender)
+                if (c == this)
                 {
-                    c._Focused = true;
+                    c.Focused = true;
                     c.Invalidate();
                 }
                 else
                 {
-                    c._Focused = false;
+                    c.Focused = false;
                     c.Invalidate();
                 }
             }
 
+            base.OnClick(e);
         }
 
         #endregion
 
         #region Animator
-        private int alpha;
-        private readonly int Factor = 25;
-        private Timer Timer;
+        private int _alpha = 0;
 
-        private void Timer_Tick(object sender, EventArgs e)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            if (!DesignMode)
-            {
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
+        }
 
-                if (State == MouseState.Over)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                        AnimateOnClick = false;
-                    }
+        private int _alpha2 = 0;
 
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-
-                if (!(State == MouseState.Over))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                        AnimateOnClick = false;
-                    }
-
-                    System.Threading.Thread.Sleep(1);
-                    Invalidate();
-                }
-            }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha2
+        {
+            get => _alpha2;
+            set { _alpha2 = value; Refresh(); }
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var CurOptions = new CursorOptions()
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
+
+            //Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
+
+            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+
+            CursorOptions CurOptions = new()
             {
                 UseFromFile = Prop_UseFromFile,
                 File = Prop_File,
@@ -227,7 +258,7 @@ namespace WinPaletter.UI.Controllers
                 LoadingCircleHotNoiseOpacity = Prop_LoadingCircleHotNoiseOpacity,
                 LineThickness = 1f,
                 Scale = Prop_Scale,
-                _Angle = Angle,
+                Angle = Angle,
                 Shadow_Enabled = Prop_Shadow_Enabled,
                 Shadow_Blur = Prop_Shadow_Blur,
                 Shadow_Color = Prop_Shadow_Color,
@@ -236,47 +267,35 @@ namespace WinPaletter.UI.Controllers
                 Shadow_OffsetY = Prop_Shadow_OffsetY
             };
 
-            bmp = new Bitmap((int)Math.Round(32f * Prop_Scale), (int)Math.Round(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
+            bmp  = new((int)Math.Round(32f * Prop_Scale), (int)Math.Round(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
 
             bmp = Paths.Draw(CurOptions);
 
             DoubleBuffered = true;
 
-            var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var MainRectInner = new Rectangle(1, 1, Width - 3, Height - 3);
+            Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
+            Rectangle MainRectInner = new(1, 1, Width - 3, Height - 3);
+            Rectangle CenterRect = new((int)Math.Round(MainRect.X + (MainRect.Width - bmp.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - bmp.Height) / 2d), bmp.Width, bmp.Height);
 
-            var CenterRect = new Rectangle((int)Math.Round(MainRect.X + (MainRect.Width - bmp.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - bmp.Height) / 2d), bmp.Width, bmp.Height);
+            Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
+            Color line = Color.FromArgb(255 - alpha, Focused ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line : scheme.Colors.Line_Checked_Hover);
+            Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
+            using (SolidBrush br = new(Color.FromArgb(_alpha2, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, MainRect); }
 
-            var bkC = _Focused ? Program.Style.Schemes.Main.Colors.Back_Checked : Program.Style.Schemes.Main.Colors.Back;
-            var bkCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Back_Checked);
+            using (SolidBrush br = new(Color.FromArgb(255 - _alpha2, scheme.Colors.Back))) { G.FillRoundedRect(br, MainRectInner); }
 
-            using (SolidBrush br = new(bkC))
-            {
-                e.Graphics.FillRoundedRect(br, MainRectInner);
-            }
-            using (SolidBrush br = new(bkCC))
-            {
-                e.Graphics.FillRoundedRect(br, MainRect);
-            }
+            using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 
-            var lC = Color.FromArgb(255 - alpha, _Focused ? Program.Style.Schemes.Main.Colors.Line_Checked : Program.Style.Schemes.Main.Colors.Line);
-            var lCC = Color.FromArgb(alpha, Program.Style.Schemes.Main.Colors.Line_Checked_Hover);
+            using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, MainRectInner); }
 
-            using (Pen P = new(lC))
-            {
-                e.Graphics.DrawRoundedRect_LikeW11(P, MainRectInner);
-            }
-            using (Pen P = new(lCC))
-            {
-                e.Graphics.DrawRoundedRect_LikeW11(P, MainRect);
-            }
+            using (Pen P = new(line_hover)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
 
             if (CurOptions.UseFromFile && System.IO.File.Exists(CurOptions.File) && System.IO.Path.GetExtension(CurOptions.File).ToUpper() == ".ANI")
             {
                 float _Angle = 0;
-                if (CurOptions._Angle >= 180) { _Angle = CurOptions._Angle - 180f; }
-                else if (CurOptions._Angle < 180) { _Angle = CurOptions._Angle + 180f; }
+                if (CurOptions.Angle >= 180) { _Angle = CurOptions.Angle - 180f; }
+                else if (CurOptions.Angle < 180) { _Angle = CurOptions.Angle + 180f; }
 
                 int frames = GetTotalFramesFromANI(CurOptions.File);
 
@@ -287,16 +306,17 @@ namespace WinPaletter.UI.Controllers
 
                 IntPtr hCursor = User32.LoadCursorFromFile(CurOptions.File);
 
-                IntPtr hdc = e.Graphics.GetHdc();
+                IntPtr hdc = G.GetHdc();
                 User32.DrawIconEx(hdc, location.X, location.Y, hCursor, size.Width, size.Height, AngleToFrame, IntPtr.Zero, (int)(User32.DrawIconExFlags.DI_NORMAL | User32.DrawIconExFlags.DI_COMPAT));
-                e.Graphics.ReleaseHdc(hdc);
+                G.ReleaseHdc(hdc);
                 User32.DestroyIcon(hCursor);
             }
             else
             {
-                e.Graphics.DrawImage(bmp, CenterRect);
+                G.DrawImage(bmp, CenterRect);
             }
 
+            base.OnPaint(e);
         }
 
         private static int GetTotalFramesFromANI(string filePath)

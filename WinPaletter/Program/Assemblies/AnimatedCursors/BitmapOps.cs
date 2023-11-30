@@ -12,7 +12,7 @@ namespace EOFC
     {
         public static void AddToAlpha(Bitmap bm, int amount)
         {
-            Rectangle r = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle r = new(0, 0, bm.Width, bm.Height);
             BitmapData bd = bm.LockBits(r, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             unsafe
             {
@@ -44,7 +44,7 @@ namespace EOFC
 
         public static bool Get32BitPixelData(Bitmap bm, uint[] output)
         {
-            Rectangle r = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle r = new(0, 0, bm.Width, bm.Height);
             int pxlCount = bm.Width * bm.Height;
 
             // The simple case is if it's already 32-bit
@@ -101,7 +101,7 @@ namespace EOFC
             int x = 0;
             int w = bm.Width;
             int h = bm.Height;
-            Rectangle rect = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle rect = new(0, 0, bm.Width, bm.Height);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* endimg = &((uint*)bd.Scan0.ToPointer())[w * h];
             for (x = 0; x < w; x++) // Loop through columns
@@ -128,7 +128,7 @@ namespace EOFC
             int x = 0;
             int w = bm.Width;
             int h = bm.Height;
-            Rectangle rect = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle rect = new(0, 0, bm.Width, bm.Height);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* endimg = &((uint*)bd.Scan0.ToPointer())[w * h];
             for (x = w - 1; x >= 0; x--) // Loop through columns
@@ -157,7 +157,7 @@ namespace EOFC
             int y = 0;
             int w = bm.Width;
             int h = bm.Height;
-            Rectangle rect = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle rect = new(0, 0, bm.Width, bm.Height);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             unsafe
             {
@@ -189,7 +189,7 @@ namespace EOFC
             int y = 0;
             int w = bm.Width;
             int h = bm.Height;
-            Rectangle rect = new Rectangle(0, 0, bm.Width, bm.Height);
+            Rectangle rect = new(0, 0, bm.Width, bm.Height);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             unsafe
             {
@@ -240,7 +240,7 @@ namespace EOFC
             int h = bm.Height - (y1 + y2) + 1;
 
             // Allocate the new bitmap
-            Bitmap bm2 = new Bitmap(w, h, PixelFormat.Format32bppArgb);
+            Bitmap bm2  = new(w, h, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
@@ -267,7 +267,7 @@ namespace EOFC
             int w = bm.Width - (x1 + x2) + 1;
 
             // Allocate the new bitmap
-            Bitmap bm2 = new Bitmap(w, bm.Height, PixelFormat.Format32bppArgb);
+            Bitmap bm2  = new(w, bm.Height, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
@@ -285,7 +285,7 @@ namespace EOFC
             // Fills the "bits" array with 32-bit image data from the bitmap
 
             int PixelCount = w * h;
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* ui = (uint*)bd.Scan0.ToPointer();
             int i = 0;
@@ -329,7 +329,7 @@ namespace EOFC
 
             uint imgsize = ComputeSize((uint)w, (uint)h, (uint)bpp, true);
             PixelFormat pf = FormatFrombpp(bpp);
-            Bitmap bm = new Bitmap(w, h);
+            Bitmap bm  = new(w, h);
             BitmapData bd = bm.LockBits(new Rectangle(0, 0, w, h), ImageLockMode.ReadWrite, pf);
             byte* BMbits = (byte*)bd.Scan0.ToPointer();
 
@@ -347,8 +347,8 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the 24-bit data
-            Bitmap bm = new Bitmap(w, h);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Bitmap bm  = new(w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             // Compute the source row size
@@ -394,8 +394,8 @@ namespace EOFC
         public static unsafe Bitmap FromRawBits32(uint* bits, int w, int h)
         {
             int PixelCount = w * h;
-            Bitmap bm = new Bitmap(w, h);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Bitmap bm  = new(w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* ui = (uint*)bd.Scan0.ToPointer();
             int i = 0;
@@ -412,8 +412,8 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm = new Bitmap(w, h);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Bitmap bm  = new(w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             // Compute the source row size
@@ -453,8 +453,8 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm = new Bitmap(w, h);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Bitmap bm  = new(w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             // Compute the source row size
@@ -486,8 +486,8 @@ namespace EOFC
         public static unsafe Bitmap FromRawBitsBinary(void* bits, int w, int h, bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm = new Bitmap(w, h);
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Bitmap bm  = new(w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             // Compute the source row size
@@ -573,7 +573,7 @@ namespace EOFC
             int w = bm.Width;
             int h = bm.Height;
             int PixelCount = w * h;
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect,
                 System.Drawing.Imaging.ImageLockMode.WriteOnly,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -595,7 +595,7 @@ namespace EOFC
             int w = bm.Width;
             int h = bm.Height;
             int PixelCount = w * h;
-            Rectangle rect = new Rectangle(0, 0, w, h);
+            Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect,
                 System.Drawing.Imaging.ImageLockMode.WriteOnly,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -623,7 +623,7 @@ namespace EOFC
             // Gather information about the images and lock them
             int h = srcBM.Height;
             int w = srcBM.Width;
-            Rectangle Rect = new Rectangle(0, 0, w, h);
+            Rectangle Rect = new(0, 0, w, h);
             uint* MaskBits = null;
             uint* NewBits = null;
             BitmapData MaskBD = null;
@@ -674,12 +674,12 @@ namespace EOFC
             // Gather information about the original image and lock it
             int OldHeight = bm.Height;
             int OldWidth = bm.Width;
-            Rectangle OldRect = new Rectangle(0, 0, OldWidth, OldHeight);
+            Rectangle OldRect = new(0, 0, OldWidth, OldHeight);
             BitmapData OldBD = bm.LockBits(OldRect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             uint* OldBits = (uint*)OldBD.Scan0.ToPointer();
 
-            Bitmap NewBM = new Bitmap(NewWidth, NewHeight);
-            Rectangle NewRect = new Rectangle(0, 0, NewWidth, NewHeight);
+            Bitmap NewBM  = new(NewWidth, NewHeight);
+            Rectangle NewRect = new(0, 0, NewWidth, NewHeight);
             BitmapData NewBD = NewBM.LockBits(NewRect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* NewBits = (uint*)NewBD.Scan0.ToPointer();
 

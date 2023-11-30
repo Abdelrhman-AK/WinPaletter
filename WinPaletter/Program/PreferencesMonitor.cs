@@ -40,7 +40,7 @@ namespace WinPaletter
 
         private static void UpdateWallpaperForPreview()
         {
-            using (var wall_New = new Bitmap((Bitmap)GetWallpaperFromRegistry().Clone()))
+            using (Bitmap wall_New = new((Bitmap)GetWallpaperFromRegistry().Clone()))
             {
 
                 Wallpaper_Unscaled = (Bitmap)wall_New.Clone();
@@ -248,7 +248,7 @@ namespace WinPaletter
         public static void WallpaperType_Changed(object sender, EventArrivedEventArgs e)
         {
             int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
-            var S = new Stopwatch();
+            Stopwatch S = new();
             if (WallpaperType != 1)
             {
                 S.Reset();
@@ -273,14 +273,14 @@ namespace WinPaletter
             KeyPath = @"Control Panel\Desktop";
             valueName = "Wallpaper";
             Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
-            var query1 = new WqlEventQuery(Base);
-            WallMon_Watcher1 = new ManagementEventWatcher(query1);
+            WqlEventQuery query1 = new(Base);
+            WallMon_Watcher1 = new(query1);
 
             KeyPath = @"Control Panel\Colors";
             valueName = "Background";
             Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
-            var query2 = new WqlEventQuery(Base);
-            WallMon_Watcher2 = new ManagementEventWatcher(query2);
+            WqlEventQuery query2 = new(Base);
+            WallMon_Watcher2 = new(query2);
 
             WallMon_Watcher1.EventArrived += Wallpaper_Changed_EventHandler;
             WallMon_Watcher1.Start();
@@ -293,14 +293,14 @@ namespace WinPaletter
                 KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
                 valueName = "BackgroundType";
                 Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
-                var query3 = new WqlEventQuery(Base);
-                WallMon_Watcher3 = new ManagementEventWatcher(query3);
+                WqlEventQuery query3 = new(Base);
+                WallMon_Watcher3 = new(query3);
 
                 KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
                 valueName = "AppsUseLightTheme";
                 Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
-                var query4 = new WqlEventQuery(Base);
-                WallMon_Watcher4 = new ManagementEventWatcher(query4);
+                WqlEventQuery query4 = new(Base);
+                WallMon_Watcher4 = new(query4);
 
                 WallMon_Watcher3.EventArrived += WallpaperType_Changed;
                 WallMon_Watcher3.Start();

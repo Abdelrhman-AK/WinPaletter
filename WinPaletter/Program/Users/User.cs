@@ -251,7 +251,7 @@ namespace WinPaletter
             if (result)
             {
                 Token = token;
-                Identity = new WindowsIdentity(Token);
+                Identity = new(Token);
                 EditReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
                 return true;
             }
@@ -528,11 +528,11 @@ namespace WinPaletter
         /// <returns><c>true</c> if user is an Administrator, <c>false</c> otherwise.</returns>
         public static bool IsAdmin(string SID)
         {
-            var AdminGroupSID = new SecurityIdentifier("S-1-5-32-544");
+            SecurityIdentifier AdminGroupSID = new("S-1-5-32-544");
 
-            var pContext = new PrincipalContext(ContextType.Machine);
-            var pUser = new UserPrincipal(pContext);
-            var pSearcher = new PrincipalSearcher(pUser);
+            PrincipalContext pContext = new(ContextType.Machine);
+            UserPrincipal pUser = new(pContext);
+            PrincipalSearcher pSearcher = new(pUser);
 
             Principal User = (from u in pSearcher.FindAll() where u.Sid.ToString().Equals(SID, StringComparison.OrdinalIgnoreCase) select u).FirstOrDefault();
 

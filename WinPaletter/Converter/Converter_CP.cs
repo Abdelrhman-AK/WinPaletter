@@ -31,7 +31,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<General>");
                     tx.Add("*Palette Name= " + ThemeName);
@@ -81,7 +81,7 @@ namespace WinPaletter
 
                 public string ToString(string Signature, string MiniSignature)
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add(string.Format("<{0}>", Signature));
                     tx.Add(string.Format("*{0}_Color_Index0= {1}", MiniSignature, Color_Index0.ToArgb()));
@@ -225,7 +225,7 @@ namespace WinPaletter
                 public int LockScreenSystemID;
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Metro>");
                     tx.Add("*Metro_ColorizationColor= " + ColorizationColor.ToArgb());
@@ -300,7 +300,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Aero>");
                     tx.Add("*Aero_ColorizationColor= " + ColorizationColor.ToArgb());
@@ -361,7 +361,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Vista>");
                     tx.Add("*Vista_ColorizationColor= " + ColorizationColor.ToArgb());
@@ -403,7 +403,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<WinXP>");
                     tx.Add("*WinXP_Theme= " + (int)Theme);
@@ -474,7 +474,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
 
                     tx.Add("<Win32UI>");
@@ -663,7 +663,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<WindowsEffects>");
                     tx.Add("*WinEffects_Enabled= " + Enabled);
@@ -817,7 +817,7 @@ namespace WinPaletter
 
                 public string ToString(string Signature)
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add(string.Format("<WallpaperTone_{0}>", Signature));
                     tx.Add(string.Format("*WallpaperTone_{0}_Enabled= {1}", Signature, Enabled));
@@ -860,7 +860,7 @@ namespace WinPaletter
 
                 public string AddFontsToThemeFile(string PropName, Font Font)
                 {
-                    var s = new List<string>();
+                    List<string> s = new();
                     s.Clear();
                     s.Add(string.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name));
                     s.Add(string.Format("*Fonts_{0}_{1}= {2}", PropName, "Size", Font.SizeInPoints));
@@ -870,7 +870,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Metrics&Fonts>");
                     tx.Add("*MetricsFonts_Enabled= " + Enabled);
@@ -903,7 +903,7 @@ namespace WinPaletter
 
                 public void FromListOfString(IEnumerable<string> Lines)
                 {
-                    var fonts = new List<string>();
+                    List<string> fonts = new();
                     fonts.Clear();
 
                     foreach (string line in Lines)
@@ -1002,7 +1002,7 @@ namespace WinPaletter
 
                 public Font SetToFont(string PropName, string PropValue, Font Font)
                 {
-                    var F = new Font(Font.Name, Font.Size, Font.Style);
+                    Font F = new(Font.Name, Font.Size, Font.Style);
 
                     switch (PropName.ToLower() ?? string.Empty)
                     {
@@ -1010,19 +1010,19 @@ namespace WinPaletter
                             {
                                 if (PropValue.ToUpper() == "MS SANS SERIF")
                                     PropValue = "Microsoft Sans Serif";
-                                F = new Font(PropValue, Font.Size, Font.Style);
+                                F = new(PropValue, Font.Size, Font.Style);
                                 break;
                             }
 
                         case var case1 when case1 == ("Size".ToLower() ?? string.Empty):
                             {
-                                F = new Font(Font.Name, Conversions.ToSingle(PropValue), Font.Style);
+                                F = new(Font.Name, Conversions.ToSingle(PropValue), Font.Style);
                                 break;
                             }
 
                         case var case2 when case2 == ("Style".ToLower() ?? string.Empty):
                             {
-                                F = new Font(Font.Name, Font.Size, ReturnFontStyle(PropValue));
+                                F = new(Font.Name, Font.Size, ReturnFontStyle(PropValue));
                                 break;
                             }
 
@@ -1145,7 +1145,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<AltTab>");
                     tx.Add("*AltTab_Enabled= " + Enabled);
@@ -1178,7 +1178,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_10_11>");
                     tx.Add("*LogonUI_DisableAcrylicBackgroundOnLogon= " + DisableAcrylicBackgroundOnLogon);
@@ -1232,7 +1232,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_7_8>");
                     tx.Add("*LogonUI7_Enabled= " + Enabled);
@@ -1293,7 +1293,7 @@ namespace WinPaletter
 
                 public override string ToString()
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_XP>");
                     tx.Add("*LogonUIXP_Enabled= " + Enabled);
@@ -1358,7 +1358,7 @@ namespace WinPaletter
 
                 public string ToString(string Signature)
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add(string.Format("<{0}>", Signature));
                     tx.Add(string.Format("*Terminal_{0}_Enabled= {1}", Signature, Enabled));
@@ -1761,7 +1761,7 @@ namespace WinPaletter
 
                 public string ToString(string Signature)
                 {
-                    var tx = new List<string>();
+                    List<string> tx = new();
                     tx.Clear();
                     tx.Add(string.Format("<{0}>", Signature));
                     tx.Add(string.Format("*Cursor_{0}_ArrowStyle= {1}", Signature, (int)ArrowStyle));
@@ -2070,12 +2070,12 @@ namespace WinPaletter
             SmCaptionWidth = 22,
             DesktopIconSize = 48,
             ShellIconSize = 32,
-            CaptionFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            IconFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            MenuFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            MessageFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            SmCaptionFont = new Font("Segoe UI", 9f, FontStyle.Regular),
-            StatusFont = new Font("Segoe UI", 9f, FontStyle.Regular),
+            CaptionFont = new("Segoe UI", 9f, FontStyle.Regular),
+            IconFont = new("Segoe UI", 9f, FontStyle.Regular),
+            MenuFont = new("Segoe UI", 9f, FontStyle.Regular),
+            MessageFont = new("Segoe UI", 9f, FontStyle.Regular),
+            SmCaptionFont = new("Segoe UI", 9f, FontStyle.Regular),
+            StatusFont = new("Segoe UI", 9f, FontStyle.Regular),
             FontSubstitute_MSShellDlg = "Microsoft Sans Serif",
             FontSubstitute_MSShellDlg2 = "Tahoma",
             FontSubstitute_SegoeUI = string.Empty
@@ -2191,9 +2191,9 @@ namespace WinPaletter
             W10_1909_WindowAlpha = 255
         };
 
-        public WinTerminal_Converter Terminal = new WinTerminal_Converter(string.Empty, WinTerminal_Converter.Mode.Empty);
+        public WinTerminal_Converter Terminal = new(string.Empty, WinTerminal_Converter.Mode.Empty);
 
-        public WinTerminal_Converter TerminalPreview = new WinTerminal_Converter(string.Empty, WinTerminal_Converter.Mode.Empty);
+        public WinTerminal_Converter TerminalPreview = new(string.Empty, WinTerminal_Converter.Mode.Empty);
 
         #region Cursors
         public bool Cursor_Enabled = false;
@@ -2889,7 +2889,7 @@ namespace WinPaletter
 
         public void LoadFromOldWPTHFile(string File)
         {
-            var txt = new List<string>();
+            List<string> txt = new();
             txt.Clear();
             txt = (List<string>)Decompress(File);
 
@@ -3124,8 +3124,8 @@ namespace WinPaletter
             string str_stable, str_preview;
             str_stable = string.Join("\r\n", txt.Where(l => l.StartsWith("terminal.", StringComparison.OrdinalIgnoreCase)));
             str_preview = string.Join("\r\n", txt.Where(l => l.StartsWith("terminalpreview.", StringComparison.OrdinalIgnoreCase)));
-            Terminal = new WinTerminal_Converter(str_stable, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Stable);
-            TerminalPreview = new WinTerminal_Converter(str_preview, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Preview);
+            Terminal = new(str_stable, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Stable);
+            TerminalPreview = new(str_preview, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Preview);
 
             WallpaperTone_W11.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win11_", StringComparison.OrdinalIgnoreCase)));
             WallpaperTone_W10.FromListOfString(txt.Where(l => l.StartsWith("*WallpaperTone_Win10_", StringComparison.OrdinalIgnoreCase)));
@@ -3184,7 +3184,7 @@ namespace WinPaletter
 
         public string ToString(bool OldWPTH1069)
         {
-            var tx = new List<string>();
+            List<string> tx = new();
             tx.Clear();
             tx.Add("<WinPaletter - Programmed by Abdelrhman-AK>");
             tx.Add("*Created from App Version= " + Info.AppVersion);
@@ -3318,7 +3318,7 @@ namespace WinPaletter
 
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
-            var j = new JObject();
+            JObject j = new();
 
             j.RemoveAll();
 
@@ -3343,13 +3343,13 @@ namespace WinPaletter
 
         public string ToJSON()
         {
-            var JSON_Overall = new JObject();
+            JObject JSON_Overall = new();
 
             JSON_Overall.RemoveAll();
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
             {
-                var type = field.FieldType;
+                Type type = field.FieldType;
 
                 if (IsStructure(type))
                 {

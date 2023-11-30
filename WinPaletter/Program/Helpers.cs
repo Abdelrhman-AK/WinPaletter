@@ -18,9 +18,9 @@ namespace WinPaletter
     {
         public static void SendCommand(string command, bool Wait = true)
         {
-            using (var process = new Process()
+            using (Process process = new()
             {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new()
                 {
                     FileName = command.Split(' ')[0],
                     Verb = OS.WXP ? string.Empty : "runas",
@@ -82,11 +82,11 @@ namespace WinPaletter
             // Load Manager
             if (!ExternalLink)
             {
-                TM = new Theme.Manager(Theme.Manager.Source.Registry);
+                TM = new(Theme.Manager.Source.Registry);
             }
             else
             {
-                TM = new Theme.Manager(Theme.Manager.Source.File, ExternalLink_File);
+                TM = new(Theme.Manager.Source.File, ExternalLink_File);
                 Forms.MainFrm.OpenFileDialog1.FileName = ExternalLink_File;
                 Forms.MainFrm.SaveFileDialog1.FileName = ExternalLink_File;
                 ExternalLink = false;
@@ -122,9 +122,9 @@ namespace WinPaletter
             }
             catch
             {
-                Fonts.Console = new Font("Lucida Console", 7.5f);
-                Fonts.ConsoleMedium = new Font("Lucida Console", 9f);
-                Fonts.ConsoleLarge = new Font("Lucida Console", 10f);
+                Fonts.Console = new("Lucida Console", 7.5f);
+                Fonts.ConsoleMedium = new("Lucida Console", 9f);
+                Fonts.ConsoleLarge = new("Lucida Console", 10f);
             }
         }
 
@@ -142,7 +142,7 @@ namespace WinPaletter
                 if (arr.Count() == 4)
                     OldWPTH = arr[3];
 
-                var _Convert = new Converter();
+                Converter _Convert = new();
 
                 if (System.IO.File.Exists(Source) && !(_Convert.GetFormat(Source) == Converter_CP.WP_Format.Error))
                 {
@@ -171,7 +171,7 @@ namespace WinPaletter
             try
             {
                 string source = arg.Remove(0, "/convert-list:".Count());
-                var _Convert = new Converter();
+                Converter _Convert = new();
 
                 if (System.IO.File.Exists(source))
                 {
@@ -197,7 +197,7 @@ namespace WinPaletter
                                     compress = arr[2];
                             }
 
-                            var FI = new System.IO.FileInfo(f);
+                            System.IO.FileInfo FI = new(f);
                             string Name = System.IO.Path.GetFileNameWithoutExtension(FI.Name);
                             string Dir = FI.FullName.Replace(FI.FullName.Split('\\').Last(), "WinPaletterConversion");
                             string SaveAs = Dir + @"\" + Name + ".wpth";
@@ -360,7 +360,7 @@ namespace WinPaletter
 
                 using (System.IO.FileStream s = new(PathsExt.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
-                    using (var z = new System.IO.Compression.ZipArchive(s, System.IO.Compression.ZipArchiveMode.Read))
+                    using (System.IO.Compression.ZipArchive z = new(s, System.IO.Compression.ZipArchiveMode.Read))
                     {
                         foreach (System.IO.Compression.ZipArchiveEntry entry in z.Entries)
                         {
@@ -432,7 +432,7 @@ namespace WinPaletter
                 // ### Pop up WhatsNew
                 ShowWhatsNew = true;
 
-                var ver = new List<string>();
+                List<string> ver = new();
                 ver.Clear();
                 ver.Add(Version);
 
@@ -507,7 +507,7 @@ namespace WinPaletter
                 {
                     if (TreeView is not null)
                         Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.KillingExplorer), "info");
-                    var sw = new Stopwatch();
+                    Stopwatch sw = new();
                     sw.Reset();
                     sw.Start();
 

@@ -12,9 +12,9 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static void FromJSON(this TreeView TreeView, string JSON_File, string rootName)
         {
-            var reader = new StreamReader(JSON_File);
-            var jsonReader = new JsonTextReader(reader);
-            var root = JToken.Load(jsonReader);
+            StreamReader reader = new(JSON_File);
+            JsonTextReader jsonReader = new(reader);
+            JToken root = JToken.Load(jsonReader);
             reader.Close();
 
             TreeView.BeginUpdate();
@@ -85,13 +85,13 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string ToJSON(this TreeNode TreeNode)
         {
-            var J_All = new JObject();
+            JObject J_All = new();
             J_All.RemoveAll();
 
             foreach (TreeNode N in TreeNode.Nodes)
             {
 
-                var J = new JObject();
+                JObject J = new();
                 J.RemoveAll();
                 LoopThroughNodes(N, N, J);
 

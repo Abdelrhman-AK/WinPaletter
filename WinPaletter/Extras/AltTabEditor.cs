@@ -190,11 +190,11 @@ namespace WinPaletter
 
             if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab7Basic)
             {
-                WinElement1.Size = new Size(360, 100);
+                WinElement1.Size = new(360, 100);
             }
             else
             {
-                WinElement1.Size = new Size(450, 150);
+                WinElement1.Size = new(450, 150);
             }
 
             WinElement1.Left = (int)Math.Round((WinElement1.Parent.Width - WinElement1.Width) / 2d);
@@ -227,7 +227,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 TMx.Dispose();
             }
@@ -235,7 +235,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             TMx.Dispose();
         }
@@ -256,7 +256,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             TMx.AltTab.Apply();

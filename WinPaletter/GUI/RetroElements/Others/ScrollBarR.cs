@@ -30,10 +30,10 @@ namespace WinPaletter.UI.Retro
             DoubleBuffered = true;
 
             // ################################################################################# Customizer
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             // #################################################################################
             G.Clear(BackColor);
-            var b = new HatchBrush(HatchStyle.Percent50, ButtonHilight, BackColor);
+            HatchBrush b = new(HatchStyle.Percent50, ButtonHilight, BackColor);
             G.FillRectangle(b, Rect);
         }
 

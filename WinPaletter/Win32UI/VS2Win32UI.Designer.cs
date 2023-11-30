@@ -54,7 +54,7 @@ namespace WinPaletter
             // 
             Button16.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button16.BackColor = Color.FromArgb(34, 34, 34);
-            Button16.Font = new Font("Segoe UI", 9.0f);
+            Button16.Font = new("Segoe UI", 9.0f);
             Button16.ForeColor = Color.White;
             Button16.Image = (Image)resources.GetObject("Button16.Image");
             Button16.Location = new Point(466, 12);
@@ -95,7 +95,7 @@ namespace WinPaletter
             // Label102
             // 
             Label102.BackColor = Color.Transparent;
-            Label102.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label102.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label102.ForeColor = Color.White;
             Label102.Location = new Point(42, 12);
             Label102.Name = "Label102";
@@ -108,7 +108,7 @@ namespace WinPaletter
             // 
             Button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button7.BackColor = Color.FromArgb(34, 34, 34);
-            Button7.Font = new Font("Segoe UI", 9.0f);
+            Button7.Font = new("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
             Button7.Location = new Point(242, 94);
@@ -122,7 +122,7 @@ namespace WinPaletter
             // 
             Button8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button8.BackColor = Color.FromArgb(34, 34, 34);
-            Button8.Font = new Font("Segoe UI", 9.0f);
+            Button8.Font = new("Segoe UI", 9.0f);
             Button8.ForeColor = Color.White;
             Button8.Image = (Image)resources.GetObject("Button8.Image");
             Button8.ImageAlign = ContentAlignment.MiddleLeft;
@@ -141,7 +141,7 @@ namespace WinPaletter
             // Label1
             // 
             Label1.BackColor = Color.Transparent;
-            Label1.Font = new Font("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
+            Label1.Font = new("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
             Label1.ForeColor = Color.White;
             Label1.Location = new Point(84, 39);
             Label1.Name = "Label1";
@@ -163,10 +163,10 @@ namespace WinPaletter
             Controls.Add(TextBox1);
             Controls.Add(PictureBox17);
             Controls.Add(Label102);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "VS2Win32UI";

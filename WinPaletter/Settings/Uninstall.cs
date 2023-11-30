@@ -92,7 +92,7 @@ namespace WinPaletter
             {
                 if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                    Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                     TMx.Save(Theme.Manager.Source.Registry);
 
                     if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)

@@ -18,7 +18,7 @@ namespace WinPaletter
         {
             if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
             {
-                Margins = new Padding(-1, -1, -1, -1);
+                Margins = new(-1, -1, -1, -1);
             }
 
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
@@ -118,7 +118,7 @@ namespace WinPaletter
         {
             if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
             {
-                Margins = new Padding(-1, -1, -1, -1);
+                Margins = new(-1, -1, -1, -1);
             }
 
             FormStyle FS = FormStyle.Mica;
@@ -126,7 +126,7 @@ namespace WinPaletter
             if (Style == MicaStyle.Tabbed && (OS.W11_22523 || OS.W12))
                 FS = FormStyle.Tabbed;
 
-            var DWM_Margins = new DWMAPI.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
             int argpvAttribute = (int)FS;
 
             DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
@@ -166,7 +166,7 @@ namespace WinPaletter
         {
             if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
             {
-                Margins = new Padding(-1, -1, -1, -1);
+                Margins = new(-1, -1, -1, -1);
             }
 
             DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };

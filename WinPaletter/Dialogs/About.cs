@@ -61,7 +61,7 @@ namespace WinPaletter
 
         private void LinkLabel7_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // #####
+            Process.Start("https://github.com/awaescher/FluentTransitions");
         }
 
         private void LinkLabel6_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

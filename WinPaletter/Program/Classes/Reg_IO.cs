@@ -670,9 +670,9 @@ namespace WinPaletter
             IntPtr intPtr = IntPtr.Zero;
             Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
-            using (var process = new Process()
+            using (Process process = new()
             {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new()
                 {
                     FileName = PathsExt.System32 + "\\cmd.exe",
                     Verb = "runas",

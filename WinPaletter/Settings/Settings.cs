@@ -146,15 +146,15 @@ namespace WinPaletter
                 {
                     AutoRestartExplorer = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", true));
                     ShowSaveConfirmation = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true));
-                    ClassicColors_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite));
-                    ClassicColors_HKLM_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase));
+                    ClassicColors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite));
+                    ClassicColors_HKLM_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase));
                     UPM_HKU_DEFAULT = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", true));
-                    Metrics_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    Cursors_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    CMD_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    PS86_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    PS64_HKU_DEFAULT_Prefs = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    Desktop_HKU_DEFAULT = (OverwriteOptions)Conversions.ToInteger(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
+                    Metrics_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    Cursors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    CMD_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    PS86_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    PS64_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    Desktop_HKU_DEFAULT = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
                     CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
                     AutoApplyCursors = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", true));
                     ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
@@ -193,13 +193,13 @@ namespace WinPaletter
                 public bool DarkMode;
                 public bool AutoDarkMode;
                 public bool CustomColors;
-                public bool CustomTheme;
+                public bool CustomTheme_DarkMode;
                 public Color AccentColor;
-                public Color SecondaryColor;
-                public Color TertiaryColor;
-                public Color DisabledColor;
+                //public Color SecondaryColor;
+                //public Color TertiaryColor;
+                //public Color DisabledColor;
                 public Color BackColor;
-                public Color DisabledBackColor;
+                //public Color DisabledBackColor;
                 public bool RoundedCorners;
                 public bool ManagedByTheme;
 
@@ -208,13 +208,13 @@ namespace WinPaletter
                     DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "DarkMode", true));
                     AutoDarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "AutoDarkMode", true));
                     CustomColors = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomColors", false));
-                    CustomTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
-                    AccentColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor.ToArgb())));
-                    BackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColorDark.ToArgb())));
-                    //SecondaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
-                    //TertiaryColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
-                    //DisabledColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
-                    DisabledBackColor = Color.FromArgb(Conversions.ToInteger(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor.ToArgb())));
+                    CustomTheme_DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
+                    AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor.ToArgb())));
+                    BackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColorDark.ToArgb())));
+                    //SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
+                    //TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
+                    //DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
+                    //DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor.ToArgb())));
                     RoundedCorners = Conversions.ToBoolean(GetReg(REG_Appearance, "RoundedCorners", true));
                     ManagedByTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "ManagedByTheme", true));
                 }
@@ -224,13 +224,13 @@ namespace WinPaletter
                     EditReg(REG_Appearance, "DarkMode", DarkMode, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "AutoDarkMode", AutoDarkMode, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "CustomColors", CustomColors, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "CustomTheme", CustomTheme, RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "CustomTheme", CustomTheme_DarkMode, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "AccentColor", AccentColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "BackColor", BackColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
+                    //EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
+                    //EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
+                    //EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
+                    //EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
                 }
@@ -271,7 +271,7 @@ namespace WinPaletter
                     UseStart10 = Conversions.ToBoolean(GetReg(REG_EP, "UseStart10", false));
                     UseTaskbar10 = Conversions.ToBoolean(GetReg(REG_EP, "UseTaskbar10", false));
                     TaskbarButton10 = Conversions.ToBoolean(GetReg(REG_EP, "TaskbarButton10", false));
-                    StartStyle = (ExplorerPatcher.StartStyles)Conversions.ToInteger(GetReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded));
+                    StartStyle = (ExplorerPatcher.StartStyles)Convert.ToInt32(GetReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded));
                 }
 
                 public void Save()
@@ -306,10 +306,10 @@ namespace WinPaletter
 
                 public void Load()
                 {
-                    VerboseLevel = (VerboseLevels)Conversions.ToInteger(GetReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic));
+                    VerboseLevel = (VerboseLevels)Convert.ToInt32(GetReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic));
                     ShowSkippedItemsOnDetailedVerbose = Conversions.ToBoolean(GetReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", false));
                     CountDown = Conversions.ToBoolean(GetReg(REG_ThemeLog, "CountDown", true));
-                    CountDown_Seconds = Conversions.ToInteger(GetReg(REG_ThemeLog, "CountDown_Seconds", 20));
+                    CountDown_Seconds = Convert.ToInt32(GetReg(REG_ThemeLog, "CountDown_Seconds", 20));
                 }
 
                 public void Save()
@@ -436,7 +436,7 @@ namespace WinPaletter
                 {
                     Enabled = Conversions.ToBoolean(GetReg(REG_NerdStats, string.Empty, true));
                     ShowHexHash = Conversions.ToBoolean(GetReg(REG_NerdStats, "ShowHexHash", true));
-                    Type = (Formats)Conversions.ToInteger(GetReg(REG_NerdStats, "Type", Formats.HEX));
+                    Type = (Formats)Convert.ToInt32(GetReg(REG_NerdStats, "Type", Formats.HEX));
                     UseWindowsMonospacedFont = Conversions.ToBoolean(GetReg(REG_NerdStats, "UseWindowsMonospacedFont", false));
                     MoreLabelTransparency = Conversions.ToBoolean(GetReg(REG_NerdStats, "MoreLabelTransparency", false));
                     DotDefaultChangedIndicator = Conversions.ToBoolean(GetReg(REG_NerdStats, "DotDefaultChangedIndicator", true));
@@ -495,7 +495,7 @@ namespace WinPaletter
             }
         }
 
-        public Structures.General General = new Structures.General()
+        public Structures.General General = new()
         {
             LicenseAccepted = false,
             ComplexSaveResult = "2.1",
@@ -505,20 +505,20 @@ namespace WinPaletter
             WhatsNewRecord = new[] { string.Empty }
         };
 
-        public Structures.Updates Updates = new Structures.Updates()
+        public Structures.Updates Updates = new()
         {
             AutoCheck = true,
             Channel = Program.IsBeta ? Structures.Updates.Channels.Beta : Structures.Updates.Channels.Stable
         };
 
-        public Structures.FileTypeMgr FileTypeManagement = new Structures.FileTypeMgr()
+        public Structures.FileTypeMgr FileTypeManagement = new()
         {
             AutoAddExt = true,
             OpeningPreviewInApp_or_AppliesIt = true,
             CompressThemeFile = true
         };
 
-        public Structures.ThemeApplyingBehavior ThemeApplyingBehavior = new Structures.ThemeApplyingBehavior()
+        public Structures.ThemeApplyingBehavior ThemeApplyingBehavior = new()
         {
             AutoRestartExplorer = true,
             ShowSaveConfirmation = true,
@@ -540,29 +540,29 @@ namespace WinPaletter
             PE_ModifyByDefault = true
         };
 
-        public Structures.Appearance Appearance = new Structures.Appearance()
+        public Structures.Appearance Appearance = new()
         {
             DarkMode = true,
             AutoDarkMode = true,
             CustomColors = false,
-            CustomTheme = true,
+            CustomTheme_DarkMode = true,
             AccentColor = DefaultColors.PrimaryColor,
             BackColor = DefaultColors.BackColorDark,
             //SecondaryColor = DefaultColors.Secondary,
             //TertiaryColor = DefaultColors.Tertiary,
             //DisabledColor = DefaultColors.Disabled,
-            DisabledBackColor = DefaultColors.DisabledBackColor,
+            //DisabledBackColor = DefaultColors.DisabledBackColor,
             RoundedCorners = true,
             ManagedByTheme = true
         };
 
-        public Structures.Language Language = new Structures.Language()
+        public Structures.Language Language = new()
         {
             Enabled = false,
             File = null
         };
 
-        public Structures.EP ExplorerPatcher = new Structures.EP()
+        public Structures.EP ExplorerPatcher = new()
         {
             Enabled = true,
             Enabled_Force = false,
@@ -572,7 +572,7 @@ namespace WinPaletter
             StartStyle = WinPaletter.ExplorerPatcher.StartStyles.NotRounded
         };
 
-        public Structures.ThemeLog ThemeLog = new Structures.ThemeLog()
+        public Structures.ThemeLog ThemeLog = new()
         {
             VerboseLevel = Structures.ThemeLog.VerboseLevels.Basic,
             ShowSkippedItemsOnDetailedVerbose = false,
@@ -580,7 +580,7 @@ namespace WinPaletter
             CountDown_Seconds = 20
         };
 
-        public Structures.WindowsTerminal WindowsTerminals = new Structures.WindowsTerminal()
+        public Structures.WindowsTerminal WindowsTerminals = new()
         {
             Bypass = false,
             ListAllFonts = false,
@@ -589,7 +589,7 @@ namespace WinPaletter
             Terminal_Preview_Path = PathsExt.TerminalPreviewJSON
         };
 
-        public Structures.Store Store = new Structures.Store()
+        public Structures.Store Store = new()
         {
             Search_ThemeNames = true,
             Search_AuthorsNames = true,
@@ -601,7 +601,7 @@ namespace WinPaletter
             ShowTips = true
         };
 
-        public Structures.NerdStats NerdStats = new Structures.NerdStats()
+        public Structures.NerdStats NerdStats = new()
         {
             Enabled = true,
             Type = Structures.NerdStats.Formats.HEX,
@@ -620,7 +620,7 @@ namespace WinPaletter
             ShowSysEventsSoundsInstaller = true,
         };
 
-        public Structures.Miscellaneous Miscellaneous = new Structures.Miscellaneous()
+        public Structures.Miscellaneous Miscellaneous = new()
         {
             Win7LivePreview = true,
         };
@@ -670,8 +670,8 @@ namespace WinPaletter
 
                                     foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                     {
-                                        var type = field.FieldType;
-                                        var JSet = new JsonSerializerSettings();
+                                        Type type = field.FieldType;
+                                        JsonSerializerSettings JSet = new();
 
                                         if (J[field.Name] is not null)
                                         {
@@ -759,14 +759,14 @@ namespace WinPaletter
 
         public override string ToString()
         {
-            var JSON_Overall = new JObject();
+            JObject JSON_Overall = new();
             JSON_Overall.RemoveAll();
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
             {
                 if (field.Name.Trim().ToUpper() != "GENERAL")
                 {
-                    var type = field.FieldType;
+                    Type type = field.FieldType;
 
                     if (IsStructure(type))
                     {
@@ -784,7 +784,7 @@ namespace WinPaletter
 
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
-            var j = new JObject();
+            JObject j = new();
 
             j.RemoveAll();
 

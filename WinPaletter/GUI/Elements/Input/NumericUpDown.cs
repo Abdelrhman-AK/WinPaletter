@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed NumericUpDown for WinPaletter UI")]
     public class NumericUpDown : Control
     {
@@ -16,19 +15,12 @@ namespace WinPaletter.UI.WP
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
-            Timer = new Timer() { Enabled = false, Interval = 1 };
-
-            Enabled = true;
-            MouseDown += NumericUpDown_MouseDown;
-            HandleCreated += NumericUpDown_HandleCreated;
-            HandleDestroyed += NumericUpDown_HandleDestroyed;
-            Timer.Tick += Timer_Tick;
         }
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private bool _Shown = false;
-        private Rectangle SideRect = new Rectangle();
+        private Rectangle SideRect = new();
 
         private MouseState State = MouseState.None;
 
@@ -48,77 +40,47 @@ namespace WinPaletter.UI.WP
         private int _Value;
         public int Value
         {
-            get
-            {
-                return _Value;
-            }
+            get => _Value;
             set
             {
-                switch (value)
+                if (value != _Value)
                 {
-                    case var @case when @case > Maximum:
-                        {
-                            value = Maximum;
-                            Invalidate();
-                            break;
-                        }
-
-                    case var case1 when case1 < Minimum:
-                        {
-                            value = Minimum;
-                            Invalidate();
-                            break;
-                        }
+                    if (value > Maximum) value = Maximum;
+                    if (value > Minimum) value = Minimum;
+                    _Value = value;
+                    Invalidate();
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
                 }
-                _Value = value;
-                Invalidate();
-                ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-
 
         private int _Max = 100;
         public int Maximum
         {
-            get
-            {
-                return _Max;
-            }
+            get => _Max;
             set
             {
-                switch (value)
+                if (value != _Max)
                 {
-                    case var @case when @case < _Value:
-                        {
-                            _Value = value;
-                            break;
-                        }
+                    _Max = value;
+                    if (value < _Value) Value = value;
+                    Invalidate();
                 }
-                _Max = value;
-                Invalidate();
             }
         }
-
 
         private int _Min;
         public int Minimum
         {
-            get
-            {
-                return _Min;
-            }
+            get => _Min;
             set
             {
-                switch (value)
+                if (value != _Min)
                 {
-                    case var @case when @case > _Value:
-                        {
-                            _Value = value;
-                            break;
-                        }
+                    _Min = value;
+                    if (value > _Value) Value = value;
+                    Invalidate();
                 }
-                _Min = value;
-                Invalidate();
             }
         }
 
@@ -133,7 +95,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -147,63 +109,7 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
-        #region Animator
-
-        private int alpha;
-        private readonly int Factor = 20;
-        private Timer Timer;
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (!DesignMode)
-            {
-
-                if (State == MouseState.Over)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-
-                if (!(State == MouseState.Over))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer.Enabled = false;
-                        Timer.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-            }
-        }
-
-        #endregion
-
         #region Events
-
         public event ValueChangedEventHandler ValueChanged;
 
         public delegate void ValueChangedEventHandler(object sender, EventArgs e);
@@ -212,55 +118,49 @@ namespace WinPaletter.UI.WP
         {
             if (e.Delta < 0)
             {
-                if (Value < Maximum)
-                {
-                    if (e.Delta <= -240)
-                        Value = Math.Max(Minimum, Value - UpDownStep * 2);
-                    else
-                        Value = Math.Max(Minimum, Value - UpDownStep);
-                }
+                if (e.Delta <= -240)
+                    Value = Math.Max(Minimum, Value - UpDownStep * 2);
+                else
+                    Value = Math.Max(Minimum, Value - UpDownStep);
             }
             else
             {
-                if (Value > Minimum)
-                {
-                    if (e.Delta >= 240)
-                        Value = Math.Min(Maximum, Value + UpDownStep * 2);
-                    else
-                        Value = Math.Min(Maximum, Value + UpDownStep);
-                }
+                if (e.Delta >= 240)
+                    Value = Math.Min(Maximum, Value + UpDownStep * 2);
+                else
+                    Value = Math.Min(Maximum, Value + UpDownStep);
             }
+
             base.OnMouseWheel(e);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            base.OnMouseEnter(e);
             State = MouseState.Over;
-            _Shown = true;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            base.OnMouseLeave(e);
             State = MouseState.None;
-            _Shown = true;
-            Timer.Enabled = true;
-            Timer.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
+            base.OnMouseLeave(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            _Shown = true;
-            Timer.Enabled = true;
-            Timer.Start();
 
-            base.OnMouseUp(e);
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
 
             if (Enabled)
             {
@@ -273,72 +173,46 @@ namespace WinPaletter.UI.WP
                     Value -= UpDownStep;
                 }
             }
+
+            base.OnMouseUp(e);
         }
 
         protected override void OnResize(EventArgs e)
         {
             Invalidate();
+
+            base.OnResize(e);
         }
 
-        private void NumericUpDown_MouseDown(object sender, MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
-            _Shown = true;
 
             if (Enabled & SideRect.Contains(e.Location))
             {
-                Timer.Enabled = true;
-                Timer.Start();
+                if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                else { alpha = 0; }
             }
+
+            base.OnMouseDown(e);
         }
+        #endregion
 
-        private void NumericUpDown_HandleCreated(object sender, EventArgs e)
+        #region Animator
+        private int _alpha = 0;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            alpha = 0;
-
-            if (!DesignMode)
-            {
-                try
-                {
-                    FindForm().Load += Loaded;
-                    FindForm().Shown += Showed;
-                }
-                catch
-                {
-                }
-            }
-        }
-
-        private void NumericUpDown_HandleDestroyed(object sender, EventArgs e)
-        {
-            if (!DesignMode)
-            {
-                try
-                {
-                    FindForm().Load -= Loaded;
-                    FindForm().Shown -= Showed;
-                }
-                catch
-                {
-                }
-            }
-        }
-
-        public void Loaded(object sender, EventArgs e)
-        {
-            _Shown = false;
-        }
-
-        public void Showed(object sender, EventArgs e)
-        {
-            _Shown = true;
-            Invalidate();
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
@@ -350,9 +224,9 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             // ################################################################################# Customizer
-            var OuterRect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var InnerRect = new Rectangle(1, 1, Width - 3, Height - 3);
-            SideRect = new Rectangle(Width - 18, 0, 17, Height);
+            Rectangle OuterRect = new(0, 0, Width - 1, Height - 1);
+            Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
+            SideRect = new(Width - 18, 0, 17, Height);
 
             if (RTL)
             {
@@ -384,8 +258,15 @@ namespace WinPaletter.UI.WP
                 }
             }
 
-            using (SolidBrush TextColor = new(ForeColor)) { G.DrawString($"{Value}", Fonts.ConsoleMedium, TextColor, new Rectangle(0, 1, Width - SideRect.Width, Height), ContentAlignment.MiddleCenter.ToStringFormat()); }
+            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+            {
+                using (SolidBrush TextColor = new(ForeColor))
+                {
+                    G.DrawString($"{Value}", Fonts.ConsoleMedium, TextColor, new Rectangle(0, 1, Width - SideRect.Width, Height), sf);
+                }
+            }
+
+            base.OnPaint(e);
         }
     }
-
 }

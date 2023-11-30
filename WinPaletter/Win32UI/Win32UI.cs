@@ -114,38 +114,38 @@ namespace WinPaletter
         {
             using (Theme.Manager DefTM = Theme.Default.Get())
             {
-                ActiveBorder_pick.DefaultColor = DefTM.Win32.ActiveBorder;
-                activetitle_pick.DefaultColor = DefTM.Win32.ActiveTitle;
-                AppWorkspace_pick.DefaultColor = DefTM.Win32.AppWorkspace;
-                background_pick.DefaultColor = DefTM.Win32.Background;
-                btnaltface_pick.DefaultColor = DefTM.Win32.ButtonAlternateFace;
-                btndkshadow_pick.DefaultColor = DefTM.Win32.ButtonDkShadow;
-                btnface_pick.DefaultColor = DefTM.Win32.ButtonFace;
-                btnhilight_pick.DefaultColor = DefTM.Win32.ButtonHilight;
-                btnlight_pick.DefaultColor = DefTM.Win32.ButtonLight;
-                btnshadow_pick.DefaultColor = DefTM.Win32.ButtonShadow;
-                btntext_pick.DefaultColor = DefTM.Win32.ButtonText;
-                GActivetitle_pick.DefaultColor = DefTM.Win32.GradientActiveTitle;
-                GInactivetitle_pick.DefaultColor = DefTM.Win32.GradientInactiveTitle;
-                GrayText_pick.DefaultColor = DefTM.Win32.GrayText;
-                hilighttext_pick.DefaultColor = DefTM.Win32.HilightText;
-                hottracking_pick.DefaultColor = DefTM.Win32.HotTrackingColor;
-                InactiveBorder_pick.DefaultColor = DefTM.Win32.InactiveBorder;
-                InactiveTitle_pick.DefaultColor = DefTM.Win32.InactiveTitle;
-                InactivetitleText_pick.DefaultColor = DefTM.Win32.InactiveTitleText;
-                InfoText_pick.DefaultColor = DefTM.Win32.InfoText;
-                InfoWindow_pick.DefaultColor = DefTM.Win32.InfoWindow;
-                menu_pick.DefaultColor = DefTM.Win32.Menu;
-                menubar_pick.DefaultColor = DefTM.Win32.MenuBar;
-                menutext_pick.DefaultColor = DefTM.Win32.MenuText;
-                Scrollbar_pick.DefaultColor = DefTM.Win32.Scrollbar;
-                TitleText_pick.DefaultColor = DefTM.Win32.TitleText;
-                Window_pick.DefaultColor = DefTM.Win32.Window;
-                Frame_pick.DefaultColor = DefTM.Win32.WindowFrame;
-                WindowText_pick.DefaultColor = DefTM.Win32.WindowText;
-                hilight_pick.DefaultColor = DefTM.Win32.Hilight;
-                menuhilight_pick.DefaultColor = DefTM.Win32.MenuHilight;
-                desktop_pick.DefaultColor = DefTM.Win32.Desktop;
+                ActiveBorder_pick.DefaultBackColor = DefTM.Win32.ActiveBorder;
+                activetitle_pick.DefaultBackColor = DefTM.Win32.ActiveTitle;
+                AppWorkspace_pick.DefaultBackColor = DefTM.Win32.AppWorkspace;
+                background_pick.DefaultBackColor = DefTM.Win32.Background;
+                btnaltface_pick.DefaultBackColor = DefTM.Win32.ButtonAlternateFace;
+                btndkshadow_pick.DefaultBackColor = DefTM.Win32.ButtonDkShadow;
+                btnface_pick.DefaultBackColor = DefTM.Win32.ButtonFace;
+                btnhilight_pick.DefaultBackColor = DefTM.Win32.ButtonHilight;
+                btnlight_pick.DefaultBackColor = DefTM.Win32.ButtonLight;
+                btnshadow_pick.DefaultBackColor = DefTM.Win32.ButtonShadow;
+                btntext_pick.DefaultBackColor = DefTM.Win32.ButtonText;
+                GActivetitle_pick.DefaultBackColor = DefTM.Win32.GradientActiveTitle;
+                GInactivetitle_pick.DefaultBackColor = DefTM.Win32.GradientInactiveTitle;
+                GrayText_pick.DefaultBackColor = DefTM.Win32.GrayText;
+                hilighttext_pick.DefaultBackColor = DefTM.Win32.HilightText;
+                hottracking_pick.DefaultBackColor = DefTM.Win32.HotTrackingColor;
+                InactiveBorder_pick.DefaultBackColor = DefTM.Win32.InactiveBorder;
+                InactiveTitle_pick.DefaultBackColor = DefTM.Win32.InactiveTitle;
+                InactivetitleText_pick.DefaultBackColor = DefTM.Win32.InactiveTitleText;
+                InfoText_pick.DefaultBackColor = DefTM.Win32.InfoText;
+                InfoWindow_pick.DefaultBackColor = DefTM.Win32.InfoWindow;
+                menu_pick.DefaultBackColor = DefTM.Win32.Menu;
+                menubar_pick.DefaultBackColor = DefTM.Win32.MenuBar;
+                menutext_pick.DefaultBackColor = DefTM.Win32.MenuText;
+                Scrollbar_pick.DefaultBackColor = DefTM.Win32.Scrollbar;
+                TitleText_pick.DefaultBackColor = DefTM.Win32.TitleText;
+                Window_pick.DefaultBackColor = DefTM.Win32.Window;
+                Frame_pick.DefaultBackColor = DefTM.Win32.WindowFrame;
+                WindowText_pick.DefaultBackColor = DefTM.Win32.WindowText;
+                hilight_pick.DefaultBackColor = DefTM.Win32.Hilight;
+                menuhilight_pick.DefaultBackColor = DefTM.Win32.MenuHilight;
+                desktop_pick.DefaultBackColor = DefTM.Win32.Desktop;
             }
         }
 
@@ -203,9 +203,7 @@ namespace WinPaletter
 
         private void ColorItem_Click(object sender, EventArgs e)
         {
-
-            if (e is DragEventArgs)
-                return;
+            if (e is DragEventArgs) return;
 
             try
             {
@@ -219,476 +217,439 @@ namespace WinPaletter
                     return;
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new();
+            CList.Add((Control)sender);
 
             Color C = ((UI.Controllers.ColorItem)sender).BackColor;
+            string CtrlName = ((UI.Controllers.ColorItem)sender).Name.ToString().ToLower();
 
-            switch (((UI.Controllers.ColorItem)sender).ToString().ToLower() ?? string.Empty)
+            if (CtrlName == "activetitle_pick".ToLower())
             {
-                case var @case when @case == ("activetitle_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR2);
-                        CList.Add(WindowR3);
-                        CList.Add(WindowR4);
-
-                        var _Conditions = new Conditions() { WindowRColor1 = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR2.Color1 = C;
-                        WindowR3.Color1 = C;
-                        WindowR4.Color1 = C;
-                        break;
-                    }
-
-                case var case1 when case1 == ("GActivetitle_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR2);
-                        CList.Add(WindowR3);
-                        CList.Add(WindowR4);
-
-                        var _Conditions = new Conditions() { WindowRColor2 = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR2.Color2 = C;
-                        WindowR3.Color2 = C;
-                        WindowR4.Color2 = C;
-                        break;
-                    }
-
-                case var case2 when case2 == ("TitleText_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR2);
-                        CList.Add(WindowR3);
-                        CList.Add(WindowR4);
-
-                        var _Conditions = new Conditions() { WindowRForeColor = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR2.ForeColor = C;
-                        WindowR3.ForeColor = C;
-                        WindowR4.ForeColor = C;
-                        break;
-                    }
-
-                case var case3 when case3 == ("InactiveTitle_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR1);
-                        var _Conditions = new Conditions() { WindowRColor1 = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR1.Color1 = C;
-                        break;
-                    }
-
-                case var case4 when case4 == ("GInactivetitle_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR1);
-                        var _Conditions = new Conditions() { WindowRColor2 = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR1.Color2 = C;
-                        break;
-                    }
-
-                case var case5 when case5 == ("InactivetitleText_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR1);
-                        var _Conditions = new Conditions() { WindowRForeColor = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR1.ForeColor = C;
-                        break;
-                    }
-
-                case var case6 when case6 == ("ActiveBorder_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR2);
-                        CList.Add(WindowR3);
-                        CList.Add(WindowR4);
-
-                        var _Conditions = new Conditions() { WindowRBorder = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR2.ColorBorder = C;
-                        WindowR3.ColorBorder = C;
-                        WindowR4.ColorBorder = C;
-                        break;
-                    }
-
-                case var case7 when case7 == ("InactiveBorder_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(WindowR1);
-                        var _Conditions = new Conditions() { WindowRBorder = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        WindowR1.ColorBorder = C;
-                        break;
-                    }
-
-                case var case8 when case8 == ("Frame_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-
-                        var _Conditions = new Conditions() { WindowRFrame = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.WindowFrame = C;
-
-                        Retro3DPreview1.WindowFrame = C;
-                        break;
-                    }
-
-                case var case9 when case9 == ("btnface_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        CList.Add(PanelR2);
-                        var _Conditions = new Conditions() { ButtonRFace = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                        {
-                            if (!WindowR.UseItAsMenu)
-                                WindowR.BackColor = C;
-                            else
-                                WindowR.ButtonFace = C;
-                        }
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.BackColor = C;
-
-                        Retro3DPreview1.BackColor = C;
-                        PanelR2.BackColor = C;
-                        break;
-                    }
-
-                case var case10 when case10 == ("btndkshadow_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        CList.Add(TextBoxR1);
-
-                        var _Conditions = new Conditions() { ButtonRDkShadow = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            WindowR.ButtonDkShadow = C;
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.ButtonDkShadow = C;
-
-                        Retro3DPreview1.ButtonDkShadow = C;
-                        TextBoxR1.ButtonDkShadow = C;
-                        break;
-                    }
-
-                case var case11 when case11 == ("btnhilight_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-                        foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        CList.Add(TextBoxR1);
-                        CList.Add(PanelR1);
-                        CList.Add(PanelR2);
-
-                        var _Conditions = new Conditions() { ButtonRHilight = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            WindowR.ButtonHilight = C;
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.ButtonHilight = C;
-                        foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                            ButtonR.ButtonHilight = C;
-
-                        TextBoxR1.ButtonHilight = C;
-                        PanelR1.ButtonHilight = C;
-                        PanelR2.ButtonHilight = C;
-                        Retro3DPreview1.ButtonHilight = C;
-                        break;
-                    }
-
-                case var case12 when case12 == ("btnlight_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        CList.Add(TextBoxR1);
-
-                        var _Conditions = new Conditions() { ButtonRLight = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            WindowR.ButtonLight = C;
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.ButtonLight = C;
-
-                        TextBoxR1.ButtonLight = C;
-                        Retro3DPreview1.ButtonLight = C;
-                        break;
-                    }
-
-                case var case13 when case13 == ("btnshadow_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-                        foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        CList.Add(TextBoxR1);
-                        CList.Add(PanelR1);
-
-                        var _Conditions = new Conditions() { ButtonRShadow = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            WindowR.ButtonShadow = C;
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.ButtonShadow = C;
-                        foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                            ButtonR.ButtonShadow = C;
-
-                        Retro3DPreview1.ButtonShadow = C;
-                        TextBoxR1.ButtonShadow = C;
-                        PanelR1.ButtonShadow = C;
-                        break;
-                    }
-
-                case var case14 when case14 == ("btntext_pick".ToLower() ?? string.Empty):
-                    {
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            CList.Add(WindowR);
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            CList.Add(ButtonR);
-
-                        CList.Add(Retro3DPreview1);
-                        var _Conditions = new Conditions() { ButtonRText = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-
-                        foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                            WindowR.ButtonText = C;
-                        foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                            ButtonR.ForeColor = C;
-
-                        Retro3DPreview1.ForeColor = C;
-                        break;
-                    }
-
-                case var case15 when case15 == ("AppWorkspace_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(programcontainer);
-                        var _Conditions = new Conditions() { RetroAppWorkspace = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        programcontainer.BackColor = C;
-                        break;
-                    }
-
-                case var case16 when case16 == ("background_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(pnl_preview);
-                        var _Conditions = new Conditions() { RetroBackground = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        pnl_preview.BackColor = C;
-                        break;
-                    }
-
-                case var case17 when case17 == ("menu_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(Menu_Window);
-
-                        if (!Toggle1.Checked)
-                            CList.Add(PanelR1);
-                        if (!Toggle1.Checked)
-                            CList.Add(menucontainer0);
-
-                        var _Conditions = new Conditions() { RetroBackground = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        Menu_Window.BackColor = C;
-                        Menu_Window.Invalidate();
-
-                        if (!Toggle1.Checked)
-                            PanelR1.BackColor = C;
-                        if (!Toggle1.Checked)
-                            menucontainer0.BackColor = C;
-                        break;
-                    }
-
-                case var case18 when case18 == ("menubar_pick".ToLower() ?? string.Empty):
-                    {
-                        if (Toggle1.Checked)
-                        {
-                            CList.Add(menucontainer0);
-                            var _Conditions = new Conditions() { RetroBackground = true };
-                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                            menucontainer0.BackColor = C;
-                        }
-                        else
-                        {
-                            C = Forms.ColorPickerDlg.Pick(CList);
-                            ((UI.Controllers.ColorItem)sender).BackColor = C;
-                        }
-
-                        break;
-                    }
-
-                case var case19 when case19 == ("hilight_pick".ToLower() ?? string.Empty):
-                    {
-                        if (Toggle1.Checked)
-                        {
-                            CList.Add(highlight);
-                            CList.Add(PanelR1);
-                            var _Conditions = new Conditions() { ButtonRShadow = true, RetroBackground = true, RetroHighlight17BitFixer = true };
-                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                            highlight.BackColor = C;
-                            PanelR1.ButtonShadow = C;
-                        }
-                        else
-                        {
-                            CList.Add(highlight);
-                            CList.Add(menuhilight);
-                            var _Conditions = new Conditions() { RetroBackground = true };
-                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                            highlight.BackColor = C;
-                            menuhilight.BackColor = C;
-                        }
-
-                        break;
-                    }
-
-
-                case var case20 when case20 == ("menuhilight_pick".ToLower() ?? string.Empty):
-                    {
-                        if (Toggle1.Checked)
-                        {
-                            CList.Add(menuhilight);
-                            CList.Add(PanelR1);
-                            var _Conditions = new Conditions() { RetroBackground = true };
-                            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                            menuhilight.BackColor = C;
-                            PanelR1.BackColor = C;
-                        }
-                        else
-                        {
-                            C = Forms.ColorPickerDlg.Pick(CList);
-                            ((UI.Controllers.ColorItem)sender).BackColor = C;
-                        }
-
-                        break;
-                    }
-
-                case var case21 when case21 == ("menutext_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(LabelR1);
-                        if (!Toggle1.Checked)
-                            CList.Add(LabelR3);
-                        CList.Add(LabelR6);
-
-                        C = Forms.ColorPickerDlg.Pick(CList);
-
-                        LabelR1.ForeColor = C;
-                        if (!Toggle1.Checked)
-                            LabelR3.ForeColor = C;
-                        LabelR6.ForeColor = C;
-                        break;
-                    }
-
-                case var case22 when case22 == ("hilighttext_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(LabelR5);
-                        if (Toggle1.Checked)
-                            CList.Add(LabelR3);
-
-                        C = Forms.ColorPickerDlg.Pick(CList);
-                        LabelR5.ForeColor = C;
-                        if (Toggle1.Checked)
-                            LabelR3.ForeColor = C;
-                        break;
-                    }
-
-                case var case23 when case23 == ("GrayText_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(LabelR2);
-                        CList.Add(LabelR9);
-
-                        C = Forms.ColorPickerDlg.Pick(CList);
-                        LabelR2.ForeColor = C;
-                        LabelR9.ForeColor = C;
-                        break;
-                    }
-
-                case var case24 when case24 == ("Window_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(TextBoxR1);
-                        var _Conditions = new Conditions() { RetroBackground = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        TextBoxR1.BackColor = C;
-                        break;
-                    }
-
-                case var case25 when case25 == ("WindowText_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(TextBoxR1);
-                        CList.Add(LabelR4);
-
-                        var _Conditions = new Conditions() { WindowRText = true, WindowRForeColor = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        TextBoxR1.ForeColor = C;
-                        LabelR4.ForeColor = C;
-                        break;
-                    }
-
-                case var case26 when case26 == ("InfoWindow_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(LabelR13);
-                        var _Conditions = new Conditions() { RetroBackground = true };
-                        C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
-                        LabelR13.BackColor = C;
-                        break;
-                    }
-
-                case var case27 when case27 == ("InfoText_pick".ToLower() ?? string.Empty):
-                    {
-                        CList.Add(LabelR13);
-                        C = Forms.ColorPickerDlg.Pick(CList);
-                        LabelR13.ForeColor = C;
-                        break;
-                    }
-
-                case var case28 when case28 == ("Scrollbar_pick".ToLower() ?? string.Empty):
-                    {
-                        C = Forms.ColorPickerDlg.Pick(CList);
-                        break;
-                    }
-
-                default:
-                    {
-                        C = Forms.ColorPickerDlg.Pick(CList);
-                        break;
-                    }
-
-
-            } ((ColorItem)sender).BackColor = C;
-
-            foreach (var Ctrl in CList)
-                Ctrl.Refresh();
-
+                CList.Add(WindowR2);
+                CList.Add(WindowR3);
+                CList.Add(WindowR4);
+
+                Conditions _conditions = new() { WindowRColor1 = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR2.Color1 = C;
+                WindowR3.Color1 = C;
+                WindowR4.Color1 = C;
+            }
+
+            else if (CtrlName == "GActivetitle_pick".ToLower())
+            {
+                CList.Add(WindowR2);
+                CList.Add(WindowR3);
+                CList.Add(WindowR4);
+
+                Conditions _conditions = new() { WindowRColor2 = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR2.Color2 = C;
+                WindowR3.Color2 = C;
+                WindowR4.Color2 = C;
+            }
+
+            else if (CtrlName == "TitleText_pick".ToLower())
+            {
+                CList.Add(WindowR2);
+                CList.Add(WindowR3);
+                CList.Add(WindowR4);
+
+                Conditions _conditions = new() { WindowRForeColor = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR2.ForeColor = C;
+                WindowR3.ForeColor = C;
+                WindowR4.ForeColor = C;
+            }
+
+            else if (CtrlName == "InactiveTitle_pick".ToLower())
+            {
+                CList.Add(WindowR1);
+                Conditions _conditions = new() { WindowRColor1 = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR1.Color1 = C;
+            }
+
+            else if (CtrlName == "GInactivetitle_pick".ToLower())
+            {
+                CList.Add(WindowR1);
+                Conditions _conditions = new() { WindowRColor2 = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR1.Color2 = C;
+            }
+
+            else if (CtrlName == "InactivetitleText_pick".ToLower())
+            {
+                CList.Add(WindowR1);
+                Conditions _conditions = new() { WindowRForeColor = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR1.ForeColor = C;
+            }
+
+            else if (CtrlName == "ActiveBorder_pick".ToLower())
+            {
+                CList.Add(WindowR2);
+                CList.Add(WindowR3);
+                CList.Add(WindowR4);
+
+                Conditions _conditions = new() { WindowRBorder = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR2.ColorBorder = C;
+                WindowR3.ColorBorder = C;
+                WindowR4.ColorBorder = C;
+            }
+
+            else if (CtrlName == "InactiveBorder_pick".ToLower())
+            {
+                CList.Add(WindowR1);
+                Conditions _conditions = new() { WindowRBorder = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                WindowR1.ColorBorder = C;
+            }
+
+            else if (CtrlName == "Frame_pick".ToLower())
+            {
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+
+                Conditions _conditions = new() { WindowRFrame = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.WindowFrame = C;
+
+                Retro3DPreview1.WindowFrame = C;
+            }
+
+            else if (CtrlName == "btnface_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                CList.Add(PanelR2);
+                Conditions _conditions = new() { ButtonRFace = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                {
+                    if (!WindowR.UseItAsMenu)
+                        WindowR.BackColor = C;
+                    else
+                        WindowR.ButtonFace = C;
+                }
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.BackColor = C;
+
+                Retro3DPreview1.BackColor = C;
+                PanelR2.BackColor = C;
+            }
+
+            else if (CtrlName == "btndkshadow_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                CList.Add(TextBoxR1);
+
+                Conditions _conditions = new() { ButtonRDkShadow = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    WindowR.ButtonDkShadow = C;
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.ButtonDkShadow = C;
+
+                Retro3DPreview1.ButtonDkShadow = C;
+                TextBoxR1.ButtonDkShadow = C;
+            }
+
+            else if (CtrlName == "btnhilight_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                CList.Add(TextBoxR1);
+                CList.Add(PanelR1);
+                CList.Add(PanelR2);
+
+                Conditions _conditions = new() { ButtonRHilight = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    WindowR.ButtonHilight = C;
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.ButtonHilight = C;
+                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
+                    ButtonR.ButtonHilight = C;
+
+                TextBoxR1.ButtonHilight = C;
+                PanelR1.ButtonHilight = C;
+                PanelR2.ButtonHilight = C;
+                Retro3DPreview1.ButtonHilight = C;
+            }
+
+            else if (CtrlName == "btnlight_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                CList.Add(TextBoxR1);
+
+                Conditions _conditions = new() { ButtonRLight = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    WindowR.ButtonLight = C;
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.ButtonLight = C;
+
+                TextBoxR1.ButtonLight = C;
+                Retro3DPreview1.ButtonLight = C;
+            }
+
+            else if (CtrlName == "btnshadow_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                CList.Add(TextBoxR1);
+                CList.Add(PanelR1);
+
+                Conditions _conditions = new() { ButtonRShadow = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    WindowR.ButtonShadow = C;
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.ButtonShadow = C;
+                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
+                    ButtonR.ButtonShadow = C;
+
+                Retro3DPreview1.ButtonShadow = C;
+                TextBoxR1.ButtonShadow = C;
+                PanelR1.ButtonShadow = C;
+            }
+
+            else if (CtrlName == "btntext_pick".ToLower())
+            {
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    CList.Add(WindowR);
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    CList.Add(ButtonR);
+
+                CList.Add(Retro3DPreview1);
+                Conditions _conditions = new() { ButtonRText = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
+                    WindowR.ButtonText = C;
+                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
+                    ButtonR.ForeColor = C;
+
+                Retro3DPreview1.ForeColor = C;
+            }
+
+            else if (CtrlName == "AppWorkspace_pick".ToLower())
+            {
+                CList.Add(programcontainer);
+                Conditions _conditions = new() { RetroAppWorkspace = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                programcontainer.BackColor = C;
+            }
+
+            else if (CtrlName == "background_pick".ToLower())
+            {
+                CList.Add(pnl_preview);
+                Conditions _conditions = new() { RetroBackground = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                pnl_preview.BackColor = C;
+            }
+
+            else if (CtrlName == "menu_pick".ToLower())
+            {
+                CList.Add(Menu_Window);
+
+                if (!Toggle1.Checked)
+                    CList.Add(PanelR1);
+                if (!Toggle1.Checked)
+                    CList.Add(menucontainer0);
+
+                Conditions _conditions = new() { RetroBackground = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                Menu_Window.BackColor = C;
+                Menu_Window.Invalidate();
+
+                if (!Toggle1.Checked)
+                    PanelR1.BackColor = C;
+                if (!Toggle1.Checked)
+                    menucontainer0.BackColor = C;
+            }
+
+            else if (CtrlName == "menubar_pick".ToLower())
+            {
+                if (Toggle1.Checked)
+                {
+                    CList.Add(menucontainer0);
+                    Conditions _conditions = new() { RetroBackground = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                    menucontainer0.BackColor = C;
+                }
+                else
+                {
+                    C = Forms.ColorPickerDlg.Pick(CList);
+                    ((UI.Controllers.ColorItem)sender).BackColor = C;
+                }
+            }
+
+            else if (CtrlName == "hilight_pick".ToLower())
+            {
+                if (Toggle1.Checked)
+                {
+                    CList.Add(highlight);
+                    CList.Add(PanelR1);
+                    Conditions _conditions = new() { ButtonRShadow = true, RetroBackground = true, RetroHighlight17BitFixer = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                    highlight.BackColor = C;
+                    PanelR1.ButtonShadow = C;
+                }
+                else
+                {
+                    CList.Add(highlight);
+                    CList.Add(menuhilight);
+                    Conditions _conditions = new() { RetroBackground = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                    highlight.BackColor = C;
+                    menuhilight.BackColor = C;
+                }
+
+            }
+
+            else if (CtrlName == "menuhilight_pick".ToLower())
+            {
+                if (Toggle1.Checked)
+                {
+                    CList.Add(menuhilight);
+                    CList.Add(PanelR1);
+                    Conditions _conditions = new() { RetroBackground = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                    menuhilight.BackColor = C;
+                    PanelR1.BackColor = C;
+                }
+                else
+                {
+                    C = Forms.ColorPickerDlg.Pick(CList);
+                    ((UI.Controllers.ColorItem)sender).BackColor = C;
+                }
+
+            }
+
+            else if (CtrlName == "menutext_pick".ToLower())
+            {
+                CList.Add(LabelR1);
+                if (!Toggle1.Checked)
+                    CList.Add(LabelR3);
+                CList.Add(LabelR6);
+
+                C = Forms.ColorPickerDlg.Pick(CList);
+
+                LabelR1.ForeColor = C;
+                if (!Toggle1.Checked)
+                    LabelR3.ForeColor = C;
+                LabelR6.ForeColor = C;
+            }
+
+            else if (CtrlName == "hilighttext_pick".ToLower())
+            {
+                CList.Add(LabelR5);
+                if (Toggle1.Checked)
+                    CList.Add(LabelR3);
+
+                C = Forms.ColorPickerDlg.Pick(CList);
+                LabelR5.ForeColor = C;
+                if (Toggle1.Checked)
+                    LabelR3.ForeColor = C;
+            }
+
+            else if (CtrlName == "GrayText_pick".ToLower())
+            {
+                CList.Add(LabelR2);
+                CList.Add(LabelR9);
+
+                C = Forms.ColorPickerDlg.Pick(CList);
+                LabelR2.ForeColor = C;
+                LabelR9.ForeColor = C;
+            }
+
+            else if (CtrlName == "Window_pick".ToLower())
+            {
+                CList.Add(TextBoxR1);
+                Conditions _conditions = new() { RetroBackground = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                TextBoxR1.BackColor = C;
+            }
+
+            else if (CtrlName == "WindowText_pick".ToLower())
+            {
+                CList.Add(TextBoxR1);
+                CList.Add(LabelR4);
+
+                Conditions _conditions = new() { WindowRText = true, WindowRForeColor = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                TextBoxR1.ForeColor = C;
+                LabelR4.ForeColor = C;
+            }
+
+            else if (CtrlName == "InfoWindow_pick".ToLower())
+            {
+                CList.Add(LabelR13);
+                Conditions _conditions = new() { RetroBackground = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+                LabelR13.BackColor = C;
+            }
+
+            else if (CtrlName == "InfoText_pick".ToLower())
+            {
+                CList.Add(LabelR13);
+                C = Forms.ColorPickerDlg.Pick(CList);
+                LabelR13.ForeColor = C;
+            }
+
+            else if (CtrlName == "Scrollbar_pick".ToLower())
+            {
+                C = Forms.ColorPickerDlg.Pick(CList);
+            }
+
+            else
+            {
+                C = Forms.ColorPickerDlg.Pick(CList);
+            }
+
+            ((ColorItem)sender).BackColor = C;
+
+            foreach (Control Ctrl in CList) { Ctrl.Refresh(); }
             CList.Clear();
 
             WindowR1.Invalidate();
@@ -831,7 +792,7 @@ namespace WinPaletter
             if (System.IO.File.Exists(File))
             {
 
-                using (var _ini = new INI(File))
+                using (INI _ini = new(File))
                 {
                     string Section = @"Control Panel\Colors";
 
@@ -911,12 +872,12 @@ namespace WinPaletter
                 return;
             }
 
-            var ls = new List<Color>();
+            List<string> ls = new();
             ls.Clear();
 
-            var AllThemes = String.CList();
+            List<string> AllThemes = String.CList();
             string SelectedTheme = string.Empty;
-            var SelectedThemeList = new List<string>();
+            List<string> SelectedThemeList = new();
 
             bool Found = false;
 
@@ -1060,7 +1021,7 @@ namespace WinPaletter
 
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
             int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
-            var _Padding = new Padding(iP, iT, iP, iP);
+            Padding _Padding = new(iP, iT, iP, iP);
 
             foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
             {
@@ -1260,7 +1221,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 LoadTM(TMx);
                 TMx.Dispose();
             }
@@ -1268,7 +1229,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             LoadTM(TMx);
             TMx.Dispose();
         }
@@ -1289,7 +1250,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
 
@@ -1314,7 +1275,7 @@ namespace WinPaletter
         {
             if (SaveFileDialog2.ShowDialog() == DialogResult.OK)
             {
-                var s = new List<string>();
+                List<string> s = new();
                 s.Clear();
                 s.Add("; " + string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year));
                 s.Add("; " + string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName));
@@ -1510,12 +1471,15 @@ namespace WinPaletter
             RetroShadow1.Size = Menu_Window.Size;
             RetroShadow1.Location = Menu_Window.Location + (Size)new Point(6, 5);
 
-            var b = new Bitmap(RetroShadow1.Width, RetroShadow1.Height);
-            var g = Graphics.FromImage(b);
-            g.DrawGlow(new Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
-            g.Save();
-            RetroShadow1.Image = b;
-            g.Dispose();
+            using (Bitmap b = new(RetroShadow1.Width, RetroShadow1.Height))
+            using (Graphics G = Graphics.FromImage(b))
+            {
+                G.Clear(Color.Transparent);
+                G.DrawGlow(new(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
+                G.Save();
+                G.Dispose();
+                RetroShadow1.Image = new Bitmap(b);
+            }
 
             RetroShadow1.BringToFront();
             Menu_Window.BringToFront();
@@ -1543,6 +1507,5 @@ namespace WinPaletter
         {
             Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-classic-colors");
         }
-
     }
 }

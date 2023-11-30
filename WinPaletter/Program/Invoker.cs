@@ -47,7 +47,7 @@ namespace WinPaletter
             lock (_invokeLocker)
             {
                 object objectToGet = null;
-                var invoker = new SendOrPostCallback((data) => Microsoft.VisualBasic.CompilerServices.Operators.ConditionalCompareObjectEqual(objectToGet, method.DynamicInvoke(args), false));
+                SendOrPostCallback invoker = new((data) => Microsoft.VisualBasic.CompilerServices.Operators.ConditionalCompareObjectEqual(objectToGet, method.DynamicInvoke(args), false));
                 _currentContext.Send(invoker, method.Target);
                 return objectToGet;
             }

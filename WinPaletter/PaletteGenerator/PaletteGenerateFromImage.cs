@@ -11,7 +11,7 @@ namespace WinPaletter
     public partial class PaletteGenerateFromImage
     {
 
-        private List<Color> Colors_List = new List<Color>();
+        private List<Color> Colors_List = new();
         private Theme.Manager TM_Backup;
 
         public PaletteGenerateFromImage()
@@ -23,7 +23,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            TM_Backup = new Theme.Manager(Theme.Manager.Source.Registry);
+            TM_Backup = new(Theme.Manager.Source.Registry);
             TextBox1.Text = Program.TM.Wallpaper.ImageFile;
         }
 
@@ -131,8 +131,8 @@ namespace WinPaletter
             {
                 Source = (Bitmap)Source.GetThumbnailImage(Forms.MainFrm.pnl_preview.Width, Forms.MainFrm.pnl_preview.Height, null, IntPtr.Zero);
                 Colors_List.Clear();
-                var ColorThiefX = new ColorThiefDotNet.ColorThief();
-                var Colors = ColorThiefX.GetPalette(Source, Math.Max(13, Trackbar1.Value), Trackbar2.Value, CheckBox1.Checked);
+                ColorThiefDotNet.ColorThief ColorThiefX = new();
+                List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette(Source, Math.Max(13, Trackbar1.Value), Trackbar2.Value, CheckBox1.Checked);
 
                 foreach (ColorThiefDotNet.QuantizedColor C in Colors)
                 {
@@ -172,12 +172,12 @@ namespace WinPaletter
 
                 foreach (Color c in Colors_List)
                 {
-                    UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                    UI.Controllers.ColorItem MiniColorItem = new();
                     MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                     MiniColorItem.AllowDrop = false;
                     MiniColorItem.PauseColorsHistory = true;
                     MiniColorItem.BackColor = c;
-                    MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                    MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                     ImgPaletteContainer.Controls.Add(MiniColorItem);
                 }
@@ -268,7 +268,7 @@ namespace WinPaletter
             Forms.MainFrm.ApplyColorsToElements(Program.TM);
         }
 
-        private static Random StaticRandom = new Random();
+        private static Random StaticRandom = new();
 
         public static List<int> GetUniqueRandomNumbers(int Start, int Count)
         {

@@ -101,7 +101,7 @@ namespace WinPaletter.Theme.Structures
             if (TreeView is not null)
                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_SettingHSLImage, path), "pe_patch");
 
-            using (var ImgF = new ImageProcessor.ImageFactory())
+            using (ImageProcessor.ImageFactory ImgF = new())
             {
                 ImgF.Load(Image);
                 ImgF.Hue(H, true);

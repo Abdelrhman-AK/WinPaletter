@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("PictureBox that supports transparent background")]
     public class TransparentPictureBox : PictureBox
     {
@@ -12,27 +11,26 @@ namespace WinPaletter.UI.WP
         {
             base.OnPaintBackground(e);
 
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             DoubleBuffered = true;
 
-            if (Parent is not null)
-            {
-                int index = Parent.Controls.GetChildIndex(this);
+            int index = Parent.Controls.GetChildIndex(this);
 
-                for (int i = Parent.Controls.Count - 1; i >= index + 1; i -= 1)
+            for (int i = Parent.Controls.Count - 1; i >= index + 1; i -= 1)
+            {
+                Control c = Parent.Controls[i];
+                if (c.Bounds.IntersectsWith(Bounds) && c.Visible)
                 {
-                    var c = Parent.Controls[i];
-                    if (c.Bounds.IntersectsWith(Bounds) && c.Visible)
-                    {
-                        var bmp = new Bitmap(c.Width, c.Height, e.Graphics);
-                        c.DrawToBitmap(bmp, c.ClientRectangle);
-                        e.Graphics.TranslateTransform(c.Left - Left, c.Top - Top);
-                        e.Graphics.DrawImageUnscaled(bmp, Point.Empty);
-                        e.Graphics.TranslateTransform(Left - c.Left, Top - c.Top);
-                        bmp.Dispose();
-                    }
+                    Bitmap bmp = new(c.Width, c.Height, G);
+                    c.DrawToBitmap(bmp, c.ClientRectangle);
+                    G.TranslateTransform(c.Left - Left, c.Top - Top);
+                    G.DrawImageUnscaled(bmp, Point.Empty);
+                    G.TranslateTransform(Left - c.Left, Top - c.Top);
+                    bmp.Dispose();
                 }
             }
         }
     }
-
 }

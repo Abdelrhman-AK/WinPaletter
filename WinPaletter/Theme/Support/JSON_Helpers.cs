@@ -9,7 +9,7 @@ namespace WinPaletter.Theme
     {
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
-            var j = new JObject();
+            JObject j = new();
 
             j.RemoveAll();
 

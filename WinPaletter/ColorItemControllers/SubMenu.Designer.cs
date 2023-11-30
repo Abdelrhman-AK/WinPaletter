@@ -52,7 +52,7 @@ namespace WinPaletter
             Button9.Click += new EventHandler(Button9_Click);
             Trackbar4 = new UI.WP.Trackbar();
             Trackbar4.Scroll += new UI.WP.Trackbar.ScrollEventHandler(Trackbar4_Scroll);
-            PreviousColor = new UI.Controllers.ColorItem();
+            PreviousColor = new();
             PreviousColor.Click += new EventHandler(PreviousColor_Click);
             Button8 = new UI.WP.Button();
             Button8.Click += new EventHandler(Button8_Click);
@@ -70,11 +70,11 @@ namespace WinPaletter
             Button4 = new UI.WP.Button();
             Button4.Click += new EventHandler(Button4_Click);
             Separator3 = new UI.WP.SeparatorH();
-            InvertedColor = new UI.Controllers.ColorItem();
+            InvertedColor = new();
             InvertedColor.Click += new EventHandler(MainColor_Click);
-            DefaultColor = new UI.Controllers.ColorItem();
+            DefaultColor = new();
             DefaultColor.Click += new EventHandler(MainColor_Click);
-            MainColor = new UI.Controllers.ColorItem();
+            MainColor = new();
             MainColor.Click += new EventHandler(MainColor_Click);
             Button10 = new UI.WP.Button();
             Button10.Click += new EventHandler(Button10_Click);
@@ -177,7 +177,7 @@ namespace WinPaletter
             // Label2
             // 
             Label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label2.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label2.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label2.Location = new Point(200, 7);
             Label2.Name = "Label2";
             Label2.Size = new Size(207, 24);
@@ -216,7 +216,7 @@ namespace WinPaletter
             // Button9
             // 
             Button9.BackColor = Color.FromArgb(72, 10, 10);
-            Button9.Font = new Font("Segoe UI", 9.0f);
+            Button9.Font = new("Segoe UI", 9.0f);
             Button9.ForeColor = Color.White;
             Button9.Image = (Image)resources.GetObject("Button9.Image");
             Button9.Location = new Point(157, 180);
@@ -240,10 +240,10 @@ namespace WinPaletter
             // PreviousColor
             // 
             PreviousColor.BackColor = Color.Crimson;
-            PreviousColor.DefaultColor = Color.Black;
+            PreviousColor.DefaultBackColor = Color.Black;
             PreviousColor.DontShowInfo = false;
             PreviousColor.Location = new Point(97, 156);
-            PreviousColor.Margin = new Padding(4, 3, 4, 3);
+            PreviousColor.Margin = new(4, 3, 4, 3);
             PreviousColor.Name = "PreviousColor";
             PreviousColor.Size = new Size(85, 20);
             PreviousColor.TabIndex = 71;
@@ -251,7 +251,7 @@ namespace WinPaletter
             // Button8
             // 
             Button8.BackColor = Color.FromArgb(72, 10, 10);
-            Button8.Font = new Font("Segoe UI", 9.0f);
+            Button8.Font = new("Segoe UI", 9.0f);
             Button8.ForeColor = Color.White;
             Button8.Image = (Image)resources.GetObject("Button8.Image");
             Button8.Location = new Point(157, 236);
@@ -263,7 +263,7 @@ namespace WinPaletter
             // Button7
             // 
             Button7.BackColor = Color.FromArgb(72, 10, 10);
-            Button7.Font = new Font("Segoe UI", 9.0f);
+            Button7.Font = new("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = (Image)resources.GetObject("Button7.Image");
             Button7.Location = new Point(157, 123);
@@ -275,7 +275,7 @@ namespace WinPaletter
             // Button6
             // 
             Button6.BackColor = Color.FromArgb(72, 10, 10);
-            Button6.Font = new Font("Segoe UI", 9.0f);
+            Button6.Font = new("Segoe UI", 9.0f);
             Button6.ForeColor = Color.White;
             Button6.Image = (Image)resources.GetObject("Button6.Image");
             Button6.Location = new Point(157, 68);
@@ -333,7 +333,7 @@ namespace WinPaletter
             // 
             Button4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             Button4.BackColor = Color.FromArgb(72, 10, 10);
-            Button4.Font = new Font("Segoe UI", 9.0f);
+            Button4.Font = new("Segoe UI", 9.0f);
             Button4.ForeColor = Color.White;
             Button4.Image = null;
             Button4.Location = new Point(187, 42);
@@ -355,10 +355,10 @@ namespace WinPaletter
             // InvertedColor
             // 
             InvertedColor.BackColor = Color.Crimson;
-            InvertedColor.DefaultColor = Color.Black;
+            InvertedColor.DefaultBackColor = Color.Black;
             InvertedColor.DontShowInfo = false;
             InvertedColor.Location = new Point(97, 212);
-            InvertedColor.Margin = new Padding(4, 3, 4, 3);
+            InvertedColor.Margin = new(4, 3, 4, 3);
             InvertedColor.Name = "InvertedColor";
             InvertedColor.Size = new Size(85, 20);
             InvertedColor.TabIndex = 25;
@@ -366,10 +366,10 @@ namespace WinPaletter
             // DefaultColor
             // 
             DefaultColor.BackColor = Color.Crimson;
-            DefaultColor.DefaultColor = Color.Black;
+            DefaultColor.DefaultBackColor = Color.Black;
             DefaultColor.DontShowInfo = false;
             DefaultColor.Location = new Point(97, 99);
-            DefaultColor.Margin = new Padding(4, 3, 4, 3);
+            DefaultColor.Margin = new(4, 3, 4, 3);
             DefaultColor.Name = "DefaultColor";
             DefaultColor.Size = new Size(85, 20);
             DefaultColor.TabIndex = 19;
@@ -377,10 +377,10 @@ namespace WinPaletter
             // MainColor
             // 
             MainColor.BackColor = Color.Crimson;
-            MainColor.DefaultColor = Color.Black;
+            MainColor.DefaultBackColor = Color.Black;
             MainColor.DontShowInfo = false;
             MainColor.Location = new Point(97, 44);
-            MainColor.Margin = new Padding(4, 3, 4, 3);
+            MainColor.Margin = new(4, 3, 4, 3);
             MainColor.Name = "MainColor";
             MainColor.Size = new Size(85, 20);
             MainColor.TabIndex = 4;
@@ -388,7 +388,7 @@ namespace WinPaletter
             // Button10
             // 
             Button10.BackColor = Color.FromArgb(72, 10, 10);
-            Button10.Font = new Font("Segoe UI", 9.0f);
+            Button10.Font = new("Segoe UI", 9.0f);
             Button10.ForeColor = Color.White;
             Button10.Image = (Image)resources.GetObject("Button10.Image");
             Button10.Location = new Point(100, 4);
@@ -400,7 +400,7 @@ namespace WinPaletter
             // Button2
             // 
             Button2.BackColor = Color.FromArgb(72, 10, 10);
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = (Image)resources.GetObject("Button2.Image");
             Button2.Location = new Point(4, 4);
@@ -412,7 +412,7 @@ namespace WinPaletter
             // Button12
             // 
             Button1.BackColor = Color.FromArgb(72, 10, 10);
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = (Image)resources.GetObject("Button1.Image");
             Button1.Location = new Point(36, 4);
@@ -425,7 +425,7 @@ namespace WinPaletter
             // 
             Button3.BackColor = Color.FromArgb(72, 10, 10);
             Button3.Enabled = false;
-            Button3.Font = new Font("Segoe UI", 9.0f);
+            Button3.Font = new("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = (Image)resources.GetObject("Button3.Image");
             Button3.Location = new Point(68, 4);
@@ -437,7 +437,7 @@ namespace WinPaletter
             // Button5
             // 
             Button5.BackColor = Color.FromArgb(72, 10, 10);
-            Button5.Font = new Font("Segoe UI", 9.0f);
+            Button5.Font = new("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
             Button5.Image = (Image)resources.GetObject("Button5.Image");
             Button5.Location = new Point(132, 4);
@@ -478,11 +478,11 @@ namespace WinPaletter
             Controls.Add(PictureBox3);
             Controls.Add(MainColor);
             Controls.Add(Panel1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SubMenu";

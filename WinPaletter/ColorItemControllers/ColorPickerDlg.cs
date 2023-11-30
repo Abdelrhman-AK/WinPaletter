@@ -21,11 +21,11 @@ namespace WinPaletter
     {
         private Color InitColor;
         private Image img;
-        private readonly List<Control> ChildControls_List = new List<Control>();
-        private List<Control> ColorControls_List = new List<Control>();
-        private readonly List<Form> Forms_List = new List<Form>();
-        private List<Color> Colors_List = new List<Color>();
-        private Conditions _Conditions = new Conditions();
+        private readonly List<Control> ChildControls_List = new();
+        private List<Control> ColorControls_List = new();
+        private readonly List<Form> Forms_List = new();
+        private List<Color> Colors_List = new();
+        private Conditions _conditions = new();
         private readonly int _Speed = 40;
         private bool _EnableAlpha;
 
@@ -34,11 +34,11 @@ namespace WinPaletter
         {
             get
             {
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle = cp.ExStyle | 33554432;
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432;
                     return cp;
                 }
                 else
@@ -81,8 +81,8 @@ namespace WinPaletter
         }
         #endregion
 
-        private Point newPoint = new Point();
-        private Point xPoint = new Point();
+        private Point newPoint = new();
+        private Point xPoint = new();
 
         private void ColorPicker_MouseDown(object sender, MouseEventArgs e)
         {
@@ -129,12 +129,12 @@ namespace WinPaletter
             foreach (Color c in ColorItem.ColorsHistory)
             {
 
-                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                UI.Controllers.ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
-                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 FlowLayoutPanel1.Controls.Add(MiniColorItem);
                 MiniColorItem.Click += MiniColorItem_click;
@@ -159,12 +159,12 @@ namespace WinPaletter
             foreach (Color c in TM.Colors())
             {
 
-                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                UI.Controllers.ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
-                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 PaletteContainer.Controls.Add(MiniColorItem);
                 MiniColorItem.Click += MiniColorItem_click;
@@ -217,7 +217,7 @@ namespace WinPaletter
         {
             if (!Program.Settings.NerdStats.Classic_Color_Picker)
             {
-                var c = Ctrl[0].BackColor;
+                Color c = Ctrl[0].BackColor;
                 ColorEditorManager1.Color = Ctrl[0].BackColor;
                 InitColor = Ctrl[0].BackColor;
                 _EnableAlpha = EnableAlpha;
@@ -236,20 +236,17 @@ namespace WinPaletter
                     }
                 }
 
-                if (Conditions is null)
-                    _Conditions = new Conditions();
-                else
-                    _Conditions = Conditions;
-
+                _conditions = Conditions is null ? new() : Conditions;
+                   
                 Location = Ctrl[0].PointToScreen(Point.Empty) + (Size)new Point(-Width + Ctrl[0].Width + 5, Ctrl[0].Height - 1);
                 if (Location.Y + Height > Program.Computer.Screen.Bounds.Height)
-                    Location = new Point(Location.X, Program.Computer.Screen.Bounds.Height - Height);
+                    Location = new(Location.X, Program.Computer.Screen.Bounds.Height - Height);
                 if (Location.Y < 0)
-                    Location = new Point(Location.X, 0);
+                    Location = new(Location.X, 0);
                 if (Location.X + Width > Program.Computer.Screen.Bounds.Width)
-                    Location = new Point(Program.Computer.Screen.Bounds.Width - Width, Location.Y);
+                    Location = new(Program.Computer.Screen.Bounds.Width - Width, Location.Y);
                 if (Location.X < 0)
-                    Location = new Point(0, Location.Y);
+                    Location = new(0, Location.Y);
 
                 if (ShowDialog() == DialogResult.OK)
                     c = ColorEditorManager1.Color;
@@ -257,7 +254,7 @@ namespace WinPaletter
                 if (Ctrl[0] is UI.Controllers.ColorItem)
                 {
                     {
-                        var ColorItem = (UI.Controllers.ColorItem)Ctrl[0];
+                        UI.Controllers.ColorItem ColorItem = (UI.Controllers.ColorItem)Ctrl[0];
                         ColorItem.Refresh();
                         ColorItem.PauseColorsHistory = false;
                         ColorItem.ColorPickerOpened = false;
@@ -278,7 +275,7 @@ namespace WinPaletter
             else
             {
                 var c = Color.FromArgb(Ctrl[0].BackColor.A, Ctrl[0].BackColor);
-                using (var CCP = new ColorDialog() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false })
+                using (ColorDialog CCP = new() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false })
                 {
                     if (CCP.ShowDialog() == DialogResult.OK)
                     {
@@ -318,12 +315,12 @@ namespace WinPaletter
                 {
                     var Window = (UI.Simulation.Window)control;
 
-                    if (!_Conditions.Win7)
+                    if (!_conditions.Win7)
                     {
-                        if (_Conditions.Window_ActiveTitlebar)
+                        if (_conditions.Window_ActiveTitlebar)
                             Window.AccentColor_Active = color;
 
-                        else if (_Conditions.Window_InactiveTitlebar)
+                        else if (_conditions.Window_InactiveTitlebar)
                             Window.AccentColor_Inactive = color;
 
                         else
@@ -331,13 +328,13 @@ namespace WinPaletter
 
                     }
 
-                    else if (_Conditions.Color1)
+                    else if (_conditions.Color1)
                     {
                         Window.AccentColor_Active = color;
                         Window.AccentColor_Inactive = color;
                     }
 
-                    else if (_Conditions.Color2)
+                    else if (_conditions.Color2)
                     {
                         Window.AccentColor2_Active = color;
                         Window.AccentColor2_Inactive = color;
@@ -353,32 +350,32 @@ namespace WinPaletter
 
                         if (WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar11 | WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar10)
                         {
-                            if (_Conditions.AppUnderlineOnly)
+                            if (_conditions.AppUnderlineOnly)
                             {
                                 FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppUnderline), color.Light()).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
 
-                            else if (_Conditions.AppUnderlineWithTaskbar)
+                            else if (_conditions.AppUnderlineWithTaskbar)
                             {
                                 FluentTransitions.Transition.With(WinElement, nameof(WinElement.Background), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                                 FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppUnderline), color.Light()).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
 
-                            else if (_Conditions.AppBackgroundOnly)
+                            else if (_conditions.AppBackgroundOnly)
                             {
                                 FluentTransitions.Transition.With(WinElement, nameof(WinElement.AppBackground), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
-                            else if (_Conditions.StartColorOnly)
+                            else if (_conditions.StartColorOnly)
                             {
                                 FluentTransitions.Transition.With(WinElement, nameof(WinElement.StartColor), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                             }
                             else
                             {
-                                if (_Conditions.Background)
+                                if (_conditions.Background)
                                 {
                                     WinElement.Background = color;
                                 }
-                                else if (_Conditions.Background2)
+                                else if (_conditions.Background2)
                                 {
                                     WinElement.Background2 = color;
                                 }
@@ -389,23 +386,23 @@ namespace WinPaletter
                             }
                         }
 
-                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter11 & _Conditions.ActionCenterBtn)
+                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter11 & _conditions.ActionCenterBtn)
                         {
                             FluentTransitions.Transition.With(WinElement, nameof(WinElement.ActionCenterButton_Normal), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
 
-                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter10 & _Conditions.ActionCenterLink)
+                        else if (WinElement.Style == UI.Simulation.WinElement.Styles.ActionCenter10 & _conditions.ActionCenterLink)
                         {
                             FluentTransitions.Transition.With(WinElement, nameof(WinElement.LinkColor), color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
 
                         else
                         {
-                            if (_Conditions.Background)
+                            if (_conditions.Background)
                             {
                                 WinElement.Background = color;
                             }
-                            else if (_Conditions.Background2)
+                            else if (_conditions.Background2)
                             {
                                 WinElement.Background2 = color;
                             }
@@ -423,11 +420,11 @@ namespace WinPaletter
                 else if (control is UI.Controllers.StoreItem)
                 {
                     var StoreItem = (UI.Controllers.StoreItem)control;
-                    if (_Conditions.Background)
+                    if (_conditions.Background)
                     {
                         StoreItem.TM.Info.Color1 = color;
                     }
-                    else if (_Conditions.Background2)
+                    else if (_conditions.Background2)
                     {
                         StoreItem.TM.Info.Color2 = color;
 
@@ -437,7 +434,7 @@ namespace WinPaletter
 
                 else if (control is Label)
                 {
-                    if (_Conditions.RetroAppWorkspace | _Conditions.RetroBackground)
+                    if (_conditions.RetroAppWorkspace | _conditions.RetroBackground)
                     {
                         control.BackColor = Color.FromArgb(255, color);
                     }
@@ -450,31 +447,31 @@ namespace WinPaletter
                 else if (control is UI.Retro.WindowR)
                 {
                     var WindowR = (UI.Retro.WindowR)control;
-                    if (_Conditions.WindowRColor1)
+                    if (_conditions.WindowRColor1)
                         WindowR.Color1 = color;
 
-                    if (_Conditions.WindowRColor2)
+                    if (_conditions.WindowRColor2)
                         WindowR.Color2 = color;
 
-                    if (_Conditions.WindowRForeColor)
+                    if (_conditions.WindowRForeColor)
                         WindowR.ForeColor = color;
 
-                    if (_Conditions.WindowRBorder)
+                    if (_conditions.WindowRBorder)
                         WindowR.ColorBorder = color;
 
-                    if (_Conditions.ButtonRShadow)
+                    if (_conditions.ButtonRShadow)
                         WindowR.ButtonShadow = color;
 
-                    if (_Conditions.ButtonRDkShadow)
+                    if (_conditions.ButtonRDkShadow)
                         WindowR.ButtonDkShadow = color;
 
-                    if (_Conditions.ButtonRHilight)
+                    if (_conditions.ButtonRHilight)
                         WindowR.ButtonHilight = color;
 
-                    if (_Conditions.ButtonRLight)
+                    if (_conditions.ButtonRLight)
                         WindowR.ButtonLight = color;
 
-                    if (_Conditions.ButtonRFace)
+                    if (_conditions.ButtonRFace)
                     {
                         if (!WindowR.UseItAsMenu)
                         {
@@ -486,7 +483,7 @@ namespace WinPaletter
                         }
                     }
 
-                    if (_Conditions.RetroBackground)
+                    if (_conditions.RetroBackground)
                         WindowR.BackColor = color;
 
                     WindowR.Refresh();
@@ -495,25 +492,25 @@ namespace WinPaletter
                 else if (control is UI.Retro.Preview3D)
                 {
                     var Preview3D = (UI.Retro.Preview3D)control;
-                    if (_Conditions.ButtonRFace)
+                    if (_conditions.ButtonRFace)
                         Preview3D.BackColor = color;
 
-                    if (_Conditions.WindowRFrame)
+                    if (_conditions.WindowRFrame)
                         Preview3D.WindowFrame = color;
 
-                    if (_Conditions.ButtonRText)
+                    if (_conditions.ButtonRText)
                         Preview3D.ForeColor = color;
 
-                    if (_Conditions.ButtonRShadow)
+                    if (_conditions.ButtonRShadow)
                         Preview3D.ButtonShadow = color;
 
-                    if (_Conditions.ButtonRDkShadow)
+                    if (_conditions.ButtonRDkShadow)
                         Preview3D.ButtonDkShadow = color;
 
-                    if (_Conditions.ButtonRHilight)
+                    if (_conditions.ButtonRHilight)
                         Preview3D.ButtonHilight = color;
 
-                    if (_Conditions.ButtonRLight)
+                    if (_conditions.ButtonRLight)
                         Preview3D.ButtonLight = color;
 
                     Preview3D.Refresh();
@@ -522,25 +519,25 @@ namespace WinPaletter
                 else if (control is UI.Retro.TextBoxR)
                 {
                     var TextBoxR = (UI.Retro.TextBoxR)control;
-                    if (_Conditions.WindowRForeColor)
+                    if (_conditions.WindowRForeColor)
                         TextBoxR.ForeColor = color;
 
-                    if (_Conditions.ButtonRShadow)
+                    if (_conditions.ButtonRShadow)
                         TextBoxR.ButtonShadow = color;
 
-                    if (_Conditions.ButtonRDkShadow)
+                    if (_conditions.ButtonRDkShadow)
                         TextBoxR.ButtonDkShadow = color;
 
-                    if (_Conditions.ButtonRHilight)
+                    if (_conditions.ButtonRHilight)
                         TextBoxR.ButtonHilight = color;
 
-                    if (_Conditions.ButtonRLight)
+                    if (_conditions.ButtonRLight)
                         TextBoxR.ButtonLight = color;
 
-                    if (_Conditions.ButtonRFace)
+                    if (_conditions.ButtonRFace)
                         TextBoxR.BackColor = color;
 
-                    if (_Conditions.RetroBackground)
+                    if (_conditions.RetroBackground)
                         TextBoxR.BackColor = color;
 
                     TextBoxR.Refresh();
@@ -549,25 +546,25 @@ namespace WinPaletter
                 else if (control is UI.Retro.ButtonR)
                 {
                     var ButtonR = (UI.Retro.ButtonR)control;
-                    if (_Conditions.ButtonRFace)
+                    if (_conditions.ButtonRFace)
                         ButtonR.BackColor = color;
 
-                    if (_Conditions.WindowRFrame)
+                    if (_conditions.WindowRFrame)
                         ButtonR.WindowFrame = color;
 
-                    if (_Conditions.ButtonRText)
+                    if (_conditions.ButtonRText)
                         ButtonR.ForeColor = color;
 
-                    if (_Conditions.ButtonRShadow)
+                    if (_conditions.ButtonRShadow)
                         ButtonR.ButtonShadow = color;
 
-                    if (_Conditions.ButtonRDkShadow)
+                    if (_conditions.ButtonRDkShadow)
                         ButtonR.ButtonDkShadow = color;
 
-                    if (_Conditions.ButtonRHilight)
+                    if (_conditions.ButtonRHilight)
                         ButtonR.ButtonHilight = color;
 
-                    if (_Conditions.ButtonRLight)
+                    if (_conditions.ButtonRLight)
                         ButtonR.ButtonLight = color;
 
                     ButtonR.Refresh();
@@ -577,7 +574,7 @@ namespace WinPaletter
                 {
                     var ScrollBarR = (UI.Retro.ScrollBarR)control;
 
-                    if (_Conditions.ButtonRHilight)
+                    if (_conditions.ButtonRHilight)
                         ScrollBarR.ButtonHilight = color;
 
                     else
@@ -588,22 +585,22 @@ namespace WinPaletter
 
                 else if (control is Panel)
                 {
-                    if (_Conditions.RetroHighlight17BitFixer && control is UI.Retro.PanelR)
+                    if (_conditions.RetroHighlight17BitFixer && control is UI.Retro.PanelR)
                     {
                         ((UI.Retro.PanelR)control).ButtonShadow = color;
                     }
 
                     else if (control is not UI.WP.GroupBox && control is not UI.Controllers.ColorItem)
                     {
-                        if (_Conditions.RetroAppWorkspace | _Conditions.RetroBackground)
+                        if (_conditions.RetroAppWorkspace | _conditions.RetroBackground)
                             control.BackColor = color;
 
                         if (control is UI.Retro.PanelR)
                         {
-                            if (_Conditions.ButtonRHilight)
+                            if (_conditions.ButtonRHilight)
                                 ((UI.Retro.PanelR)control).ButtonHilight = color;
 
-                            if (_Conditions.ButtonRShadow)
+                            if (_conditions.ButtonRShadow)
                                 ((UI.Retro.PanelR)control).ButtonShadow = color;
                         }
 
@@ -625,7 +622,7 @@ namespace WinPaletter
                 {
                     var TextBoxR = (UI.Retro.TextBoxR)control;
 
-                    if (_Conditions.WindowRText)
+                    if (_conditions.WindowRText)
                     {
                         TextBoxR.ForeColor = Color.FromArgb(control.ForeColor.A, color);
                     }
@@ -642,47 +639,47 @@ namespace WinPaletter
                 {
                     var WinTerminal = (UI.Simulation.WinTerminal)control;
 
-                    if (_Conditions.Terminal_Back)
+                    if (_conditions.Terminal_Back)
                     {
                         WinTerminal.Color_Background = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_Fore)
+                    else if (_conditions.Terminal_Fore)
                     {
                         WinTerminal.Color_Foreground = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_Selection)
+                    else if (_conditions.Terminal_Selection)
                     {
                         WinTerminal.Color_Selection = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_Cursor)
+                    else if (_conditions.Terminal_Cursor)
                     {
                         WinTerminal.Color_Cursor = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_TabColor)
+                    else if (_conditions.Terminal_TabColor)
                     {
                         WinTerminal.TabColor = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_TabActive)
+                    else if (_conditions.Terminal_TabActive)
                     {
                         WinTerminal.Color_TabFocused = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_TabInactive)
+                    else if (_conditions.Terminal_TabInactive)
                     {
                         WinTerminal.Color_TabUnFocused = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_TitlebarActive)
+                    else if (_conditions.Terminal_TitlebarActive)
                     {
                         WinTerminal.Color_Titlebar = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.Terminal_TitlebarInactive)
+                    else if (_conditions.Terminal_TitlebarInactive)
                     {
                         WinTerminal.Color_Titlebar_Unfocused = Color.FromArgb(255, color);
                     }
@@ -693,95 +690,95 @@ namespace WinPaletter
                 else if (control is UI.Simulation.WinCMD)
                 {
                     var WinCMD = (UI.Simulation.WinCMD)control;
-                    if (_Conditions.CMD_ColorTable00)
+                    if (_conditions.CMD_ColorTable00)
                     {
                         WinCMD.CMD_ColorTable00 = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.CMD_ColorTable01)
+                    else if (_conditions.CMD_ColorTable01)
                     {
                         WinCMD.CMD_ColorTable01 = Color.FromArgb(255, color);
                     }
 
-                    else if (_Conditions.CMD_ColorTable02)
+                    else if (_conditions.CMD_ColorTable02)
                     {
                         WinCMD.CMD_ColorTable02 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable03)
+                    else if (_conditions.CMD_ColorTable03)
                     {
                         WinCMD.CMD_ColorTable03 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable04)
+                    else if (_conditions.CMD_ColorTable04)
                     {
                         WinCMD.CMD_ColorTable04 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable05)
+                    else if (_conditions.CMD_ColorTable05)
                     {
                         WinCMD.CMD_ColorTable05 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable06)
+                    else if (_conditions.CMD_ColorTable06)
                     {
                         WinCMD.CMD_ColorTable06 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable07)
+                    else if (_conditions.CMD_ColorTable07)
                     {
                         WinCMD.CMD_ColorTable07 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable08)
+                    else if (_conditions.CMD_ColorTable08)
                     {
                         WinCMD.CMD_ColorTable08 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable09)
+                    else if (_conditions.CMD_ColorTable09)
                     {
                         WinCMD.CMD_ColorTable09 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable10)
+                    else if (_conditions.CMD_ColorTable10)
                     {
                         WinCMD.CMD_ColorTable10 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable11)
+                    else if (_conditions.CMD_ColorTable11)
                     {
                         WinCMD.CMD_ColorTable11 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable12)
+                    else if (_conditions.CMD_ColorTable12)
                     {
                         WinCMD.CMD_ColorTable12 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable13)
+                    else if (_conditions.CMD_ColorTable13)
                     {
                         WinCMD.CMD_ColorTable13 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable14)
+                    else if (_conditions.CMD_ColorTable14)
                     {
                         WinCMD.CMD_ColorTable14 = Color.FromArgb(255, color);
                     }
 
 
-                    else if (_Conditions.CMD_ColorTable15)
+                    else if (_conditions.CMD_ColorTable15)
                     {
                         WinCMD.CMD_ColorTable15 = Color.FromArgb(255, color);
                     }
@@ -797,43 +794,43 @@ namespace WinPaletter
                 {
                     var CursorControl = (UI.Controllers.CursorControl)control;
 
-                    if (_Conditions.CursorBack1)
+                    if (_conditions.CursorBack1)
                     {
                         CursorControl.Prop_PrimaryColor1 = color;
                     }
-                    else if (_Conditions.CursorBack2)
+                    else if (_conditions.CursorBack2)
                     {
                         CursorControl.Prop_PrimaryColor2 = color;
                     }
 
-                    else if (_Conditions.CursorLine1)
+                    else if (_conditions.CursorLine1)
                     {
                         CursorControl.Prop_SecondaryColor1 = color;
                     }
-                    else if (_Conditions.CursorLine2)
+                    else if (_conditions.CursorLine2)
                     {
                         CursorControl.Prop_SecondaryColor2 = color;
                     }
 
-                    else if (_Conditions.CursorCircle1)
+                    else if (_conditions.CursorCircle1)
                     {
                         CursorControl.Prop_LoadingCircleBack1 = color;
                     }
-                    else if (_Conditions.CursorCircle2)
+                    else if (_conditions.CursorCircle2)
                     {
                         CursorControl.Prop_LoadingCircleBack2 = color;
                     }
 
-                    else if (_Conditions.CursorCircleHot1)
+                    else if (_conditions.CursorCircleHot1)
                     {
                         CursorControl.Prop_LoadingCircleHot1 = color;
                     }
-                    else if (_Conditions.CursorCircleHot2)
+                    else if (_conditions.CursorCircleHot2)
                     {
                         CursorControl.Prop_LoadingCircleHot2 = color;
                     }
 
-                    else if (_Conditions.CursorShadow)
+                    else if (_conditions.CursorShadow)
                     {
                         CursorControl.Prop_Shadow_Color = color;
 
@@ -855,12 +852,12 @@ namespace WinPaletter
 
             if ((OS.WVista || OS.W7 || OS.W8 || OS.W81) && Program.Settings.Miscellaneous.Win7LivePreview)
             {
-                if (_Conditions.LivePreview_Colorization)
+                if (_conditions.LivePreview_Colorization)
                 {
                     UpdateDWMPreview(ColorEditorManager1.Color, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
-                if (_Conditions.LivePreview_AfterGlow)
+                if (_conditions.LivePreview_AfterGlow)
                 {
                     UpdateDWMPreview(Program.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
                 }
@@ -878,7 +875,7 @@ namespace WinPaletter
                     {
                         if (DWMAPI.IsCompositionEnabled())
                         {
-                            var DCP = new DWMAPI.DWM_COLORIZATION_PARAMS()
+                            DWMAPI.DWM_COLORIZATION_PARAMS DCP = new()
                             {
                                 clrColor = (uint)Color1.ToArgb(),
                                 clrAfterGlow = (uint)Color2.ToArgb()
@@ -959,10 +956,12 @@ namespace WinPaletter
         {
             if (img is not null)
             {
-                var ColorThiefX = new ColorThiefDotNet.ColorThief();
-                var Colors = ColorThiefX.GetPalette((Bitmap)img, Trackbar1.Value, Trackbar2.Value, CheckBox1.Checked);
+                ColorThiefDotNet.ColorThief ColorThiefX = new();
+                List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette((Bitmap)img, Trackbar1.Value, Trackbar2.Value, CheckBox1.Checked);
+
                 foreach (ColorThiefDotNet.QuantizedColor C in Colors)
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B));
+
                 GC.Collect();
                 GC.SuppressFinalize(Colors);
                 GC.SuppressFinalize(ColorThiefX);
@@ -985,12 +984,12 @@ namespace WinPaletter
 
             foreach (Color C in Colors_List)
             {
-                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                UI.Controllers.ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = Color.FromArgb(255, C);
-                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 ImgPaletteContainer.Controls.Add(MiniColorItem);
                 MiniColorItem.Click += MiniColorItem_click;
@@ -1095,12 +1094,12 @@ namespace WinPaletter
         {
             if (DialogResult != DialogResult.OK & (OS.WVista | OS.W7 | OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
             {
-                if (_Conditions.LivePreview_Colorization)
+                if (_conditions.LivePreview_Colorization)
                 {
                     UpdateDWMPreview(InitColor, Program.TM.Windows7.ColorizationAfterglow);
                 }
 
-                if (_Conditions.LivePreview_AfterGlow)
+                if (_conditions.LivePreview_AfterGlow)
                 {
                     UpdateDWMPreview(Program.TM.Windows7.ColorizationColor, InitColor);
                 }
@@ -1128,12 +1127,12 @@ namespace WinPaletter
                 {
                     foreach (Color C in Theme.Manager.GetPaletteFromString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
                     {
-                        UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                        UI.Controllers.ColorItem MiniColorItem = new();
                         MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                         MiniColorItem.AllowDrop = false;
                         MiniColorItem.PauseColorsHistory = true;
                         MiniColorItem.BackColor = Color.FromArgb(255, C);
-                        MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                        MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                         ThemePaletteContainer.Controls.Add(MiniColorItem);
                         MiniColorItem.Click += MiniColorItem_click;
@@ -1190,12 +1189,12 @@ namespace WinPaletter
                     {
                         foreach (Color C in Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text))
                         {
-                            UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                            UI.Controllers.ColorItem MiniColorItem = new();
                             MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                             MiniColorItem.AllowDrop = false;
                             MiniColorItem.PauseColorsHistory = true;
                             MiniColorItem.BackColor = Color.FromArgb(255, C);
-                            MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                            MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                             ThemePaletteContainer.Controls.Add(MiniColorItem);
                             MiniColorItem.Click += MiniColorItem_click;
@@ -1213,19 +1212,19 @@ namespace WinPaletter
                     {
                         System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
 
-                        var vs = new VisualStyleFile(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme");
+                        VisualStyleFile vs = new(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme");
 
                         foreach (var field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                         {
                             if (field.FieldType.Name.ToLower() == "color")
                             {
 
-                                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                                UI.Controllers.ColorItem MiniColorItem = new();
                                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                                 MiniColorItem.AllowDrop = false;
                                 MiniColorItem.PauseColorsHistory = true;
                                 MiniColorItem.BackColor = (Color)field.GetValue(vs.Metrics.Colors);
-                                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                                 ThemePaletteContainer.Controls.Add(MiniColorItem);
                                 MiniColorItem.Click += MiniColorItem_click;

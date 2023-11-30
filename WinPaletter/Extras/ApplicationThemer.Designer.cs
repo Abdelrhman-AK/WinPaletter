@@ -143,7 +143,7 @@ namespace WinPaletter
             // 
             this.BackColorPick.AllowDrop = true;
             this.BackColorPick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.BackColorPick.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.BackColorPick.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.BackColorPick.DontShowInfo = false;
             this.BackColorPick.Location = new System.Drawing.Point(178, 181);
             this.BackColorPick.Name = "BackColorPick";
@@ -156,7 +156,7 @@ namespace WinPaletter
             // 
             this.AccentColor.AllowDrop = true;
             this.AccentColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AccentColor.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AccentColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AccentColor.DontShowInfo = false;
             this.AccentColor.Location = new System.Drawing.Point(178, 151);
             this.AccentColor.Name = "AccentColor";

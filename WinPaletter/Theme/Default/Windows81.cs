@@ -6,7 +6,7 @@ namespace WinPaletter.Theme
     {
         public static Manager Windows81()
         {
-            var TM = new Manager(Manager.Source.Empty);
+            Manager TM = new(Manager.Source.Empty);
 
             {
                 ref Structures.Info Info = ref TM.Info;
@@ -109,8 +109,8 @@ namespace WinPaletter.Theme
                 MetricsFonts.SmCaptionWidth = 22;
                 MetricsFonts.DesktopIconSize = 48;
                 MetricsFonts.ShellIconSize = 32;
-                MetricsFonts.CaptionFont = new Font("Segoe UI", 11.25f, FontStyle.Regular);
-                MetricsFonts.SmCaptionFont = new Font("Segoe UI", 11.25f, FontStyle.Regular);
+                MetricsFonts.CaptionFont = new("Segoe UI", 11.25f, FontStyle.Regular);
+                MetricsFonts.SmCaptionFont = new("Segoe UI", 11.25f, FontStyle.Regular);
             }
 
             {
@@ -123,8 +123,8 @@ namespace WinPaletter.Theme
                 WinEffects.SysListView32 = false;
             }
 
-            TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursor_Enabled = true;
             TM.Cursor_Shadow = false;

@@ -109,7 +109,7 @@ namespace WinPaletter
             CheckBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CheckBox1.BackColor = Color.FromArgb(25, 25, 25);
             CheckBox1.Checked = true;
-            CheckBox1.Font = new Font("Segoe UI", 9.0f);
+            CheckBox1.Font = new("Segoe UI", 9.0f);
             CheckBox1.ForeColor = Color.White;
             CheckBox1.Location = new Point(12, 13);
             CheckBox1.Name = "CheckBox1";
@@ -122,7 +122,7 @@ namespace WinPaletter
             // 
             Button2.BackColor = Color.FromArgb(50, 50, 50);
 
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.Location = new Point(482, 10);
@@ -136,7 +136,7 @@ namespace WinPaletter
             // 
             Button1.BackColor = Color.FromArgb(50, 50, 50);
 
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.Location = new Point(568, 10);
@@ -189,7 +189,7 @@ namespace WinPaletter
             // Label2
             // 
             Label2.BackColor = Color.Transparent;
-            Label2.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label2.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label2.Location = new Point(117, 227);
             Label2.Name = "Label2";
             Label2.Size = new Size(419, 24);
@@ -211,7 +211,7 @@ namespace WinPaletter
             // Label1
             // 
             Label1.BackColor = Color.Transparent;
-            Label1.Font = new Font("Segoe UI", 14.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label1.Font = new("Segoe UI", 14.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label1.Location = new Point(149, 187);
             Label1.Name = "Label1";
             Label1.Size = new Size(355, 40);
@@ -235,10 +235,10 @@ namespace WinPaletter
             // 
             Label4.BackColor = Color.Transparent;
             Label4.Dock = DockStyle.Fill;
-            Label4.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label4.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label4.Location = new Point(0, 40);
             Label4.Name = "Label4";
-            Label4.Padding = new Padding(20, 10, 0, 0);
+            Label4.Padding = new(20, 10, 0, 0);
             Label4.Size = new Size(412, 262);
             Label4.TabIndex = 3;
             Label4.Text = resources.GetString("Label4.Text");
@@ -259,10 +259,10 @@ namespace WinPaletter
             // 
             Label3.BackColor = Color.FromArgb(50, 100, 100, 100);
             Label3.Dock = DockStyle.Top;
-            Label3.Font = new Font("Segoe UI", 12.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label3.Font = new("Segoe UI", 12.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label3.Location = new Point(0, 0);
             Label3.Name = "Label3";
-            Label3.Padding = new Padding(5, 5, 0, 0);
+            Label3.Padding = new(5, 5, 0, 0);
             Label3.Size = new Size(652, 40);
             Label3.TabIndex = 2;
             Label3.Text = "There are two ways for WinPaletter Store";
@@ -285,7 +285,7 @@ namespace WinPaletter
             // 
             Button4.BackColor = Color.FromArgb(50, 50, 50);
 
-            Button4.Font = new Font("Segoe UI", 9.0f);
+            Button4.Font = new("Segoe UI", 9.0f);
             Button4.ForeColor = Color.White;
             Button4.Image = null;
             Button4.Location = new Point(23, 105);
@@ -299,10 +299,10 @@ namespace WinPaletter
             // 
             Label7.BackColor = Color.Transparent;
             Label7.Dock = DockStyle.Fill;
-            Label7.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label7.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label7.Location = new Point(0, 40);
             Label7.Name = "Label7";
-            Label7.Padding = new Padding(20, 10, 0, 0);
+            Label7.Padding = new(20, 10, 0, 0);
             Label7.Size = new Size(412, 262);
             Label7.TabIndex = 7;
             Label7.Text = "Visit this documentation to know how to upload your themes to WinPaletter Store G" + "itHub repository";
@@ -323,10 +323,10 @@ namespace WinPaletter
             // 
             Label8.BackColor = Color.FromArgb(50, 100, 100, 100);
             Label8.Dock = DockStyle.Top;
-            Label8.Font = new Font("Segoe UI", 12.75f, FontStyle.Bold);
+            Label8.Font = new("Segoe UI", 12.75f, FontStyle.Bold);
             Label8.Location = new Point(0, 0);
             Label8.Name = "Label8";
-            Label8.Padding = new Padding(5, 5, 0, 0);
+            Label8.Padding = new(5, 5, 0, 0);
             Label8.Size = new Size(652, 40);
             Label8.TabIndex = 6;
             Label8.Text = "You can upload your themes to WinPaletter Store repository";
@@ -349,7 +349,7 @@ namespace WinPaletter
             // 
             Button5.BackColor = Color.FromArgb(50, 50, 50);
 
-            Button5.Font = new Font("Segoe UI", 9.0f);
+            Button5.Font = new("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
             Button5.Image = null;
             Button5.Location = new Point(23, 145);
@@ -363,10 +363,10 @@ namespace WinPaletter
             // 
             Label14.BackColor = Color.Transparent;
             Label14.Dock = DockStyle.Fill;
-            Label14.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label14.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label14.Location = new Point(0, 40);
             Label14.Name = "Label14";
-            Label14.Padding = new Padding(20, 10, 0, 0);
+            Label14.Padding = new(20, 10, 0, 0);
             Label14.Size = new Size(412, 262);
             Label14.TabIndex = 9;
             Label14.Text = @"You can add links of servers\GitHub repositories to get more themes through WinPa" + "letter Store. Visit this documentation to know more about Store source extension" + "";
@@ -387,10 +387,10 @@ namespace WinPaletter
             // 
             Label15.BackColor = Color.FromArgb(50, 100, 100, 100);
             Label15.Dock = DockStyle.Top;
-            Label15.Font = new Font("Segoe UI", 12.75f, FontStyle.Bold);
+            Label15.Font = new("Segoe UI", 12.75f, FontStyle.Bold);
             Label15.Location = new Point(0, 0);
             Label15.Name = "Label15";
-            Label15.Padding = new Padding(5, 5, 0, 0);
+            Label15.Padding = new(5, 5, 0, 0);
             Label15.Size = new Size(652, 40);
             Label15.TabIndex = 8;
             Label15.Text = "You can extend the sources from which WinPaletter Store can get themes!";
@@ -413,7 +413,7 @@ namespace WinPaletter
             // 
             Button3.BackColor = Color.FromArgb(50, 50, 50);
 
-            Button3.Font = new Font("Segoe UI", 9.0f);
+            Button3.Font = new("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
             Button3.Location = new Point(23, 121);
@@ -427,10 +427,10 @@ namespace WinPaletter
             // 
             Label5.BackColor = Color.Transparent;
             Label5.Dock = DockStyle.Fill;
-            Label5.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label5.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label5.Location = new Point(0, 40);
             Label5.Name = "Label5";
-            Label5.Padding = new Padding(20, 10, 0, 0);
+            Label5.Padding = new(20, 10, 0, 0);
             Label5.Size = new Size(412, 262);
             Label5.TabIndex = 5;
             Label5.Text = "This is an optional feature. Visit this documentation to know more about Store se" + @"rver\GitHub repository creation.";
@@ -451,10 +451,10 @@ namespace WinPaletter
             // 
             Label6.BackColor = Color.FromArgb(50, 100, 100, 100);
             Label6.Dock = DockStyle.Top;
-            Label6.Font = new Font("Segoe UI", 12.75f, FontStyle.Bold);
+            Label6.Font = new("Segoe UI", 12.75f, FontStyle.Bold);
             Label6.Location = new Point(0, 0);
             Label6.Name = "Label6";
-            Label6.Padding = new Padding(5, 5, 0, 0);
+            Label6.Padding = new(5, 5, 0, 0);
             Label6.Size = new Size(652, 40);
             Label6.TabIndex = 4;
             Label6.Text = "You can create your own WinPaletter Store online source!";
@@ -488,7 +488,7 @@ namespace WinPaletter
             // Label11
             // 
             Label11.BackColor = Color.Transparent;
-            Label11.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label11.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label11.Location = new Point(176, 227);
             Label11.Name = "Label11";
             Label11.Size = new Size(301, 24);
@@ -510,7 +510,7 @@ namespace WinPaletter
             // Label12
             // 
             Label12.BackColor = Color.Transparent;
-            Label12.Font = new Font("Segoe UI", 14.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label12.Font = new("Segoe UI", 14.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label12.Location = new Point(176, 187);
             Label12.Name = "Label12";
             Label12.Size = new Size(301, 40);
@@ -526,11 +526,11 @@ namespace WinPaletter
             ClientSize = new Size(660, 380);
             Controls.Add(TablessControl1);
             Controls.Add(Panel1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             HelpButton = true;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Store_Intro";

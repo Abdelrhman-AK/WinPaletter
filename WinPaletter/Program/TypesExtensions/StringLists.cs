@@ -9,7 +9,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static List<string> DeDuplicate(this List<string> List)
         {
-            var Result = new List<string>();
+            List<string> Result = new();
 
             bool Exist;
 

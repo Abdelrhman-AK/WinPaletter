@@ -94,7 +94,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (OS.W12 || OS.W11 || OS.W10)
             {
-                var Colors = new List<Color>();
+                List<Color> Colors = new();
                 Colors.Clear();
 
                 byte[] x;

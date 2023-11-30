@@ -58,7 +58,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                var bmpList = new List<Bitmap>();
+                List<Bitmap> bmpList = new();
                 bmpList.Clear();
 
                 if (ReportProgress_Detailed)
@@ -95,7 +95,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
-                            using (Bitmap b = new Bitmap(Program.GetWallpaperFromRegistry()))
+                            using (Bitmap b  = new(Program.GetWallpaperFromRegistry()))
                             {
                                 bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
                             }
@@ -126,8 +126,8 @@ namespace WinPaletter.Theme
                         if (ReportProgress_Detailed)
                             AddNode(TreeView, Program.Lang.Verbose_BlurringLogonUIImg, "apply");
 
-                        var imgF = new ImageProcessor.ImageFactory();
-                        using (var b = new Bitmap(bmpList[x]))
+                        ImageProcessor.ImageFactory imgF = new();
+                        using (Bitmap b = new(bmpList[x]))
                         {
                             imgF.Load(b);
                             imgF.GaussianBlur(LogonElement.Blur_Intensity);
@@ -268,7 +268,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
-                            using (var b = new Bitmap(Program.GetWallpaperFromRegistry()))
+                            using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
                             {
                                 bmp = (Bitmap)b.Clone();
                             }
@@ -301,12 +301,12 @@ namespace WinPaletter.Theme
                 {
                     if (ReportProgress_Detailed)
                         AddNode(TreeView, Program.Lang.Verbose_BlurringLockScreenImg, "apply");
-                    var imgF = new ImageProcessor.ImageFactory();
-                    using (var b = new Bitmap(bmp))
+                    ImageProcessor.ImageFactory ImgF = new();
+                    using (Bitmap b = new(bmp))
                     {
-                        imgF.Load(b);
-                        imgF.GaussianBlur(LogonUI7.Blur_Intensity);
-                        bmp = (Bitmap)imgF.Image;
+                        ImgF.Load(b);
+                        ImgF.GaussianBlur(LogonUI7.Blur_Intensity);
+                        bmp = (Bitmap)ImgF.Image;
                     }
 
                 }
@@ -396,7 +396,7 @@ namespace WinPaletter.Theme
 
                 EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Cursor_Enabled);
 
-                var sw = new Stopwatch();
+                Stopwatch sw = new();
                 if (ReportProgress)
                     AddNode(TreeView, string.Format("{0}: " + Program.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
 

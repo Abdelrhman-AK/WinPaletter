@@ -81,7 +81,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 AdjustPreview();
                 TMx.Dispose();
@@ -90,7 +90,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             AdjustPreview();
             TMx.Dispose();
@@ -114,7 +114,7 @@ namespace WinPaletter
         private void Button10_Click_1(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             TMx.AppTheme.Apply();
@@ -151,9 +151,9 @@ namespace WinPaletter
                 return;
             }
 
-            var clist = new List<Control>() { AccentColor };
-            Forms.ColorPickerDlg.Pick(clist);
-            clist.Clear();
+            List<Control> CList = new() { AccentColor };
+            Forms.ColorPickerDlg.Pick(CList);
+            CList.Clear();
 
             AdjustPreview();
         }
@@ -167,9 +167,9 @@ namespace WinPaletter
                 return;
             }
 
-            var clist = new List<Control>() { BackColorPick };
-            Forms.ColorPickerDlg.Pick(clist);
-            clist.Clear();
+            List<Control> CList = new() { BackColorPick };
+            Forms.ColorPickerDlg.Pick(CList);
+            CList.Clear();
 
             AdjustPreview();
         }
@@ -272,7 +272,7 @@ namespace WinPaletter
                             RoundedCorners.Checked = false;
                             AccentColor.BackColor = Color.FromArgb(130, 132, 135);
                             BackColorPick.BackColor = Color.FromArgb(255, 255, 255);
-                            break; 
+                            break;
                         }
 
                 }

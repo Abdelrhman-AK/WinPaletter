@@ -4,11 +4,9 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("LinkLabel but with a proper hand cursor")]
     public class LinkLabel : System.Windows.Forms.LinkLabel
     {
-
         private const int WM_SETCURSOR = 32;
         private const int IDC_HAND = 32649;
 
@@ -24,7 +22,5 @@ namespace WinPaletter.UI.WP
 
             base.WndProc(ref m);
         }
-
     }
-
 }

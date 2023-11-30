@@ -6,7 +6,7 @@ namespace WinPaletter.TypesExtensions
     {
         public static StringFormat ToStringFormat(this ContentAlignment TextAlign, bool RightToLeft = false)
         {
-            var SF = new StringFormat();
+            StringFormat SF = new();
             switch (TextAlign)
             {
                 case ContentAlignment.TopLeft:

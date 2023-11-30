@@ -24,35 +24,35 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var B = new Bitmap(Width, Height);
-            var G = Graphics.FromImage(B);
+            Bitmap B = new(Width, Height);
+            Graphics G = Graphics.FromImage(B);
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
 
             // ################################################################################# Customizer
-            var BrushDkShadow = new SolidBrush(ButtonDkShadow);
-            var BrushShadow = new SolidBrush(ButtonShadow);
-            var BrushHilight = new SolidBrush(ButtonHilight);
-            var BrushLight = new SolidBrush(ButtonLight);
+            SolidBrush BrushDkShadow = new(ButtonDkShadow);
+            SolidBrush BrushShadow = new(ButtonShadow);
+            SolidBrush BrushHilight = new(ButtonHilight);
+            SolidBrush BrushLight = new(ButtonLight);
 
-            var HilightTopRect = new Rectangle(LineSize, LineSize, Width - LineSize * 2, LineSize);
-            var HilightLeftRect = new Rectangle(LineSize, LineSize, LineSize, Height - LineSize * 2);
+            Rectangle HilightTopRect = new(LineSize, LineSize, Width - LineSize * 2, LineSize);
+            Rectangle HilightLeftRect = new(LineSize, LineSize, LineSize, Height - LineSize * 2);
 
-            var LightTopRect = new Rectangle(LineSize * 2, LineSize * 2, Width - LineSize * 4, LineSize);
-            var LightLeftRect = new Rectangle(LineSize * 2, LineSize * 2, LineSize, Height - LineSize * 4);
+            Rectangle LightTopRect = new(LineSize * 2, LineSize * 2, Width - LineSize * 4, LineSize);
+            Rectangle LightLeftRect = new(LineSize * 2, LineSize * 2, LineSize, Height - LineSize * 4);
 
-            var DkShadowRightRect = new Rectangle(Width - LineSize * 2, LineSize, LineSize, Height - LineSize * 2);
-            var DkShadowBottomRect = new Rectangle(LineSize, Height - LineSize * 2, Width - LineSize * 2, LineSize);
+            Rectangle DkShadowRightRect = new(Width - LineSize * 2, LineSize, LineSize, Height - LineSize * 2);
+            Rectangle DkShadowBottomRect = new(LineSize, Height - LineSize * 2, Width - LineSize * 2, LineSize);
 
-            var ShadowRightRect = new Rectangle(Width - LineSize * 3, LineSize * 2, LineSize, Height - LineSize * 4);
-            var ShadowBottomRect = new Rectangle(LineSize * 2, Height - LineSize * 3, Width - LineSize * 4, LineSize);
+            Rectangle ShadowRightRect = new(Width - LineSize * 3, LineSize * 2, LineSize, Height - LineSize * 4);
+            Rectangle ShadowBottomRect = new(LineSize * 2, Height - LineSize * 3, Width - LineSize * 4, LineSize);
 
-            var Filling = new Rectangle(LightLeftRect.Right, LightTopRect.Bottom, ShadowRightRect.Left - LightLeftRect.Right, ShadowBottomRect.Top - LightTopRect.Bottom);
+            Rectangle Filling = new(LightLeftRect.Right, LightTopRect.Bottom, ShadowRightRect.Left - LightLeftRect.Right, ShadowBottomRect.Top - LightTopRect.Bottom);
 
             int tw = (int)Math.Round(Filling.Width / 2d);
             int th = (int)Math.Round(LineSize * 1.75d);
-            var TextRect = new Rectangle((int)Math.Round(Filling.X + (Filling.Width - tw) / 2d), (int)Math.Round(Filling.Y + (Filling.Height - th) / 2d), tw, th);
+            Rectangle TextRect = new((int)Math.Round(Filling.X + (Filling.Width - tw) / 2d), (int)Math.Round(Filling.Y + (Filling.Height - th) / 2d), tw, th);
 
             // #################################################################################
 

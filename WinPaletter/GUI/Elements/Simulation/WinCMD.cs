@@ -7,12 +7,10 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Simulation
 {
-
     [Description("A simulated Windows Command Prompt/PS")]
     [DefaultEvent("Click")]
     public class WinCMD : ContainerControl
     {
-
         public WinCMD()
         {
             Text = string.Empty;
@@ -22,7 +20,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
 
         private readonly string S1 = "(c) Microsoft Corporation. All rights reserved.";
-        private readonly string S2 = PathsExt.System32 + ">";
+        private readonly string S2 = $"{PathsExt.System32}>";
         private readonly string CV = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
 
         public enum Raster_Sizes
@@ -42,7 +40,6 @@ namespace WinPaletter.UI.Simulation
         #endregion
 
         #region Properties
-
         public Color CMD_ColorTable00 { get; set; }
         public Color CMD_ColorTable01 { get; set; }
         public Color CMD_ColorTable02 { get; set; }
@@ -72,13 +69,15 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
 
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
-            var RectCMD = new Rectangle(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10);
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle RectCMD = new(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10);
 
             int pW0, pH0, pX0, pY0;
             pW0 = (int)Math.Round(240f * (Font.Size / 18f));
@@ -86,23 +85,23 @@ namespace WinPaletter.UI.Simulation
             pX0 = (int)Math.Round(5f * (Font.Size / 18f));
             pY0 = (int)Math.Round(10f * (Font.Size / 18f));
 
-            var RectMiddle = new Rectangle((int)Math.Round(Rect.X + (Rect.Width - pW0) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - pH0) / 2d), pW0, pH0);
-            var RectMiddleBorder = new Rectangle(RectMiddle.X + pX0, RectMiddle.Y + pY0, RectMiddle.Width - pX0 * 2, RectMiddle.Height - pY0 * 2);
+            Rectangle RectMiddle = new((int)Math.Round(Rect.X + (Rect.Width - pW0) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - pH0) / 2d), pW0, pH0);
+            Rectangle RectMiddleBorder = new(RectMiddle.X + pX0, RectMiddle.Y + pY0, RectMiddle.Width - pX0 * 2, RectMiddle.Height - pY0 * 2);
 
             Color FC = default, BK = default, PCF = default, PCB = default;
             string S;
 
-            var F = Font;
+            Font F = Font;
 
             if (!Raster)
             {
                 if (!PowerShell)
                 {
-                    F = new Font(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
+                    F = new(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
                 }
                 else
                 {
-                    F = new Font(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
+                    F = new(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
                 }
             }
 
@@ -460,27 +459,27 @@ namespace WinPaletter.UI.Simulation
                     string sx = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
                     sx = sx.Replace("S", string.Empty).Trim();
 
-                    string sy = "." + Microsoft.Win32.Registry.GetValue(CV, "UBR", 0).ToString();
+                    string sy = $".{(Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))}";
                     if (sy == ".0")
                         sy = string.Empty;
 
-                    S = string.Format("Microsoft Windows [Version {0}{1}]", sx, sy) + "\r\n" + S1 + "\r\n" + "\r\n" + S2;
+                    S = $"{($"Microsoft Windows [Version {sx}{sy}]")}\r\n{S1}\r\n\r\n{S2}";
                 }
 
                 else
                 {
-                    S = "Windows PowerShell" + "\r\n" + S1 + "\r\n" + "\r\n" + "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" + "\r\n" + "\r\n" + "PS " + S2;
+                    S = $"Windows PowerShell\r\n{S1}\r\n\r\nInstall the latest PowerShell for new features and improvements! https://aka.ms/PSWindows\r\n\r\nPS {S2}";
                 }
             }
             else
             {
-                S = Program.Lang.CMDSimulator_Alert0 + "\r\n" + "\r\n" + S2;
+                S = $"{Program.Lang.CMDSimulator_Alert0}\r\n\r\n{S2}";
             }
 
 
             if (Raster)
             {
-                S += "\r\n" + "\r\n" + Program.Lang.CMDSimulator_Alert1;
+                S += $"\r\n\r\n{Program.Lang.CMDSimulator_Alert1}";
             }
 
             if (!Raster)
@@ -499,9 +498,12 @@ namespace WinPaletter.UI.Simulation
                     G.DrawRectangle(P, RectMiddleBorder);
                 }
 
-                using (SolidBrush br = new(PCF))
+                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                 {
-                    G.DrawString(Program.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat());
+                    using (SolidBrush br = new(PCF))
+                    {
+                        G.DrawString(Program.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
+                    }
                 }
             }
 
@@ -670,8 +672,8 @@ namespace WinPaletter.UI.Simulation
 
                 G.DrawImage(i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC), new Point(0, 1));
 
-                RectMiddle = new Rectangle((int)Math.Round(Rect.X + (Rect.Width - pW) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - 36) / 2d), pW, pH);
-                RectMiddleBorder = new Rectangle(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
+                RectMiddle = new((int)Math.Round(Rect.X + (Rect.Width - pW) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - 36) / 2d), pW, pH);
+                RectMiddleBorder = new(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
 
                 using (SolidBrush br = new(PCB))
                 {
@@ -686,8 +688,8 @@ namespace WinPaletter.UI.Simulation
                 G.DrawImage(i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF), new Point((int)Math.Round(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2d), (int)Math.Round(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2d)));
 
             }
+
+            base.OnPaint(e);
         }
-
     }
-
 }

@@ -3,22 +3,19 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("AlertBox for WinPaletter UI")]
     public class AlertBox : ContainerControl
     {
-
         public AlertBox()
         {
             TabStop = false;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
-            Font = new Font("Segoe UI", 9f);
-            Size = new Size(200, 40);
+            Font = new("Segoe UI", 9f);
+            Size = new(200, 40);
             CenterText = false;
             CustomColor = Color.FromArgb(0, 81, 210);
             BackColor = Color.Transparent;
@@ -53,14 +50,14 @@ namespace WinPaletter.UI.WP
         private Style _alertStyle;
         public Style AlertStyle
         {
-            get
-            {
-                return _alertStyle;
-            }
+            get => _alertStyle;
             set
             {
-                _alertStyle = value;
-                Invalidate();
+                if (value != _alertStyle)
+                {
+                    _alertStyle = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -79,7 +76,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -95,8 +92,9 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
             DoubleBuffered = true;
@@ -213,29 +211,52 @@ namespace WinPaletter.UI.WP
             int TextX = 5;
 
             if (Image is not null) { G.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height)); }
-               
+
             if (!CenterText)
             {
                 if (Image is null)
                 {
-                    using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(TextX, 0, Width, Height), ContentAlignment.MiddleLeft.ToStringFormat(RTL)); }
+                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
+                    {
+                        using (SolidBrush br = new(textColor))
+                        {
+                            G.DrawString(Text, Font, br, new Rectangle(TextX, 0, Width, Height), sf);
+                        }
+                    }
                 }
                 else if (!RTL)
                 {
-                    using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), ContentAlignment.TopLeft.ToStringFormat()); }
+                    using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat())
+                    {
+                        using (SolidBrush br = new(textColor))
+                        {
+                            G.DrawString(Text, Font, br, new Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), sf);
+                        }
+                    }
                 }
                 else
                 {
-                    using (SolidBrush br = new(textColor))
+                    using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat(RTL))
                     {
-                        G.DrawString(Text, Font, br, new Rectangle(0, 7, Width - (10 + Image.Width), Height - 10), ContentAlignment.TopLeft.ToStringFormat(RTL));
+                        using (SolidBrush br = new(textColor))
+                        {
+                            G.DrawString(Text, Font, br, new Rectangle(0, 7, Width - (10 + Image.Width), Height - 10), sf);
+                        }
                     }
                 }
             }
             else
             {
-                using (SolidBrush br = new(textColor)) { G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), ContentAlignment.MiddleCenter.ToStringFormat(RTL)); }
+                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
+                {
+                    using (SolidBrush br = new(textColor))
+                    {
+                        G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), sf);
+                    }
+                }
             }
+
+            base.OnPaint(e);
         }
     }
 }

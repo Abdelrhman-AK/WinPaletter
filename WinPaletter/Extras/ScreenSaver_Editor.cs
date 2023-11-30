@@ -47,7 +47,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 TMx.Dispose();
             }
@@ -55,7 +55,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             TMx.Dispose();
         }
@@ -77,7 +77,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             TMx.ScreenSaver.Apply();
@@ -180,7 +180,7 @@ namespace WinPaletter
 
         public void GetFromClassicThemeFile(string File, Theme.Structures.ScreenSaver _DefaultScrSvr)
         {
-            using (var _ini = new INI(File))
+            using (INI _ini = new(File))
             {
                 TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
             }

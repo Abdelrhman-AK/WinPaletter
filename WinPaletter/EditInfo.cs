@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -142,14 +143,14 @@ namespace WinPaletter
                 return;
             }
 
-            var _conditions = new Conditions() { Background = true };
-            var clist = new List<Control>() { color1, StoreItem1 };
-            var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
+            Conditions _conditions = new(){ Background = true };
+            List<Control> CList = new() { color1, StoreItem1 };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
-            StoreItem1.TM.Info.Color1 = c;
-            color1.BackColor = c;
+            StoreItem1.TM.Info.Color1 = C;
+            color1.BackColor = C;
 
-            clist.Clear();
+            CList.Clear();
         }
 
         private void Color2_Click(object sender, EventArgs e)
@@ -161,14 +162,14 @@ namespace WinPaletter
                 return;
             }
 
-            var _conditions = new Conditions() { Background2 = true };
-            var clist = new List<Control>() { color2, StoreItem1 };
-            var c = Forms.ColorPickerDlg.Pick(clist, _conditions);
+            Conditions _conditions = new(){ Background2 = true };
+            List<Control> CList = new() { color2, StoreItem1 };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
-            StoreItem1.TM.Info.Color2 = c;
-            color2.BackColor = c;
+            StoreItem1.TM.Info.Color2 = C;
+            color2.BackColor = C;
 
-            clist.Clear();
+            CList.Clear();
         }
 
         private void CheckBox1_CheckedChanged(object sender)

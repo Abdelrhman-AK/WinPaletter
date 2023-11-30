@@ -130,7 +130,7 @@ namespace WinPaletter
             AlertBox11.Text = Forms.MainFrm.WXP_Alert2.Text;
             AlertBox11.Visible = Forms.MainFrm.WXP_Alert2.Visible;
             AlertBox11.Size = AlertBox11.Parent.Size - new Size(40, 40);
-            AlertBox11.Location = new Point(20, 20);
+            AlertBox11.Location = new(20, 20);
 
             AlertBox12.Text = AlertBox11.Text;
             AlertBox12.Visible = AlertBox11.Visible;
@@ -449,7 +449,7 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             SetModernWindowMetrics(TMx, Forms.MainFrm.Window1);
@@ -632,7 +632,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 TMx.Dispose();
             }
@@ -640,7 +640,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             TMx.Dispose();
         }
@@ -775,7 +775,7 @@ namespace WinPaletter
 
         private void Button14_Click_1(object sender, EventArgs e)
         {
-            var F = new Font(TextBox1.Text, 9f, FontStyle.Regular);
+            Font F = new(TextBox1.Text, 9f, FontStyle.Regular);
             FontDialog2.Font = F;
             if (FontDialog2.ShowDialog() == DialogResult.OK)
             {
@@ -785,7 +785,7 @@ namespace WinPaletter
 
         private void Button15_Click_1(object sender, EventArgs e)
         {
-            var F = new Font(TextBox2.Text, 9f, FontStyle.Regular);
+            Font F = new(TextBox2.Text, 9f, FontStyle.Regular);
             FontDialog2.Font = F;
             if (FontDialog2.ShowDialog() == DialogResult.OK)
             {
@@ -795,7 +795,7 @@ namespace WinPaletter
 
         private void Button17_Click(object sender, EventArgs e)
         {
-            var F = new Font(TextBox3.Text, 9f, FontStyle.Regular);
+            Font F = new(TextBox3.Text, 9f, FontStyle.Regular);
             FontDialog2.Font = F;
             if (FontDialog2.ShowDialog() == DialogResult.OK)
             {
@@ -823,11 +823,11 @@ namespace WinPaletter
 
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
-                ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
             else
             {
-                ((UI.WP.TextBox)sender).Font = new Font("Microsoft Sans Serif", 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new("Microsoft Sans Serif", 9f, FontStyle.Regular);
             }
 
         }
@@ -837,11 +837,11 @@ namespace WinPaletter
 
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
-                ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
             else
             {
-                ((UI.WP.TextBox)sender).Font = new Font("Tahoma", 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new("Tahoma", 9f, FontStyle.Regular);
             }
 
         }
@@ -851,11 +851,11 @@ namespace WinPaletter
 
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
-                ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
             else
             {
-                ((UI.WP.TextBox)sender).Font = new Font("Segoe UI", 9f, FontStyle.Regular);
+                ((UI.WP.TextBox)sender).Font = new("Segoe UI", 9f, FontStyle.Regular);
             }
 
         }

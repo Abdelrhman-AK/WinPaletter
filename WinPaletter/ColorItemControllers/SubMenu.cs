@@ -23,11 +23,11 @@ namespace WinPaletter
         {
             get
             {
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle = cp.ExStyle | 33554432;
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432;
                     return cp;
                 }
                 else
@@ -81,25 +81,25 @@ namespace WinPaletter
             Button5.Visible = EnableDelete;
 
             MainColor.BackColor = ColorItem.BackColor.CB((float)((Trackbar1.Value - 100) / 100d));
-            DefaultColor.BackColor = ColorItem.DefaultColor.CB((float)((Trackbar2.Value - 100) / 100d));
+            DefaultColor.BackColor = ColorItem.DefaultBackColor.CB((float)((Trackbar2.Value - 100) / 100d));
             InvertedColor.BackColor = ColorItem.BackColor.Invert().CB((float)((Trackbar3.Value - 100) / 100d));
 
-            MainColor.DefaultColor = ColorItem.BackColor;
-            DefaultColor.DefaultColor = ColorItem.DefaultColor;
-            InvertedColor.DefaultColor = ColorItem.BackColor.Invert();
+            MainColor.DefaultBackColor = ColorItem.BackColor;
+            DefaultColor.DefaultBackColor = ColorItem.DefaultBackColor;
+            InvertedColor.DefaultBackColor = ColorItem.BackColor.Invert();
 
             if (ColorItem.ColorsHistory.Count > 1)
             {
                 PreviousColor.BackColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2].CB((float)((Trackbar4.Value - 100) / 100d));
-                PreviousColor.DefaultColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2];
+                PreviousColor.DefaultBackColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2];
             }
             else
             {
                 PreviousColor.BackColor = ColorItem.BackColor.CB((float)((Trackbar4.Value - 100) / 100d));
-                PreviousColor.DefaultColor = ColorItem.BackColor;
+                PreviousColor.DefaultBackColor = ColorItem.BackColor;
             }
 
-            PreviousClr = PreviousColor.DefaultColor;
+            PreviousClr = PreviousColor.DefaultBackColor;
 
             GetHistoryColors(ColorItem);
 
@@ -140,7 +140,7 @@ namespace WinPaletter
 
                     case ColorClipboard.MenuEvent.None:
                         {
-                            return MainColor.DefaultColor;
+                            return MainColor.DefaultBackColor;
                         }
 
                 }
@@ -148,7 +148,7 @@ namespace WinPaletter
             else
             {
                 ColorClipboard.Event = ColorClipboard.MenuEvent.None;
-                return MainColor.DefaultColor;
+                return MainColor.DefaultBackColor;
             } // Nothing
 
             return default;
@@ -313,10 +313,10 @@ namespace WinPaletter
         public void MiniColorItem_Clicked(object sender, EventArgs e)
         {
             MainColor.BackColor = ((UI.Controllers.ColorItem)sender).BackColor;
-            MainColor.DefaultColor = ((UI.Controllers.ColorItem)sender).BackColor;
+            MainColor.DefaultBackColor = ((UI.Controllers.ColorItem)sender).BackColor;
 
             InvertedColor.BackColor = MainColor.BackColor.Invert().CB((float)((Trackbar3.Value - 100) / 100d));
-            InvertedColor.DefaultColor = MainColor.BackColor.Invert();
+            InvertedColor.DefaultBackColor = MainColor.BackColor.Invert();
 
             Collapse_Expand();
         }
@@ -336,12 +336,12 @@ namespace WinPaletter
 
             foreach (Color c in ColorItem.ColorsHistory)
             {
-                UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
+                UI.Controllers.ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
-                MiniColorItem.DefaultColor = MiniColorItem.BackColor;
+                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 PaletteContainer.Controls.Add(MiniColorItem);
                 MiniColorItem.Click += MiniColorItem_Clicked;
@@ -352,7 +352,7 @@ namespace WinPaletter
 
         public void Update_Variants()
         {
-            InvertedColor.DefaultColor = MainColor.DefaultColor.Invert();
+            InvertedColor.DefaultBackColor = MainColor.DefaultBackColor.Invert();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -404,17 +404,17 @@ namespace WinPaletter
 
         private void Trackbar1_Scroll(object sender)
         {
-            MainColor.BackColor = MainColor.DefaultColor.CB((float)((Trackbar1.Value - 100) / 100d));
+            MainColor.BackColor = MainColor.DefaultBackColor.CB((float)((Trackbar1.Value - 100) / 100d));
         }
 
         private void Trackbar2_Scroll(object sender)
         {
-            DefaultColor.BackColor = DefaultColor.DefaultColor.CB((float)((Trackbar2.Value - 100) / 100d));
+            DefaultColor.BackColor = DefaultColor.DefaultBackColor.CB((float)((Trackbar2.Value - 100) / 100d));
         }
 
         private void Trackbar3_Scroll(object sender)
         {
-            InvertedColor.BackColor = InvertedColor.DefaultColor.CB((float)((Trackbar3.Value - 100) / 100d));
+            InvertedColor.BackColor = InvertedColor.DefaultBackColor.CB((float)((Trackbar3.Value - 100) / 100d));
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -434,7 +434,7 @@ namespace WinPaletter
 
         private void Trackbar4_Scroll(object sender)
         {
-            PreviousColor.BackColor = PreviousColor.DefaultColor.CB((float)((Trackbar4.Value - 100) / 100d));
+            PreviousColor.BackColor = PreviousColor.DefaultBackColor.CB((float)((Trackbar4.Value - 100) / 100d));
         }
 
         private void Button9_Click(object sender, EventArgs e)

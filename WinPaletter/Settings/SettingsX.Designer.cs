@@ -673,7 +673,6 @@ namespace WinPaletter
             // 
             this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox5.Checked = true;
             this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox5.ForeColor = System.Drawing.Color.White;
@@ -750,10 +749,10 @@ namespace WinPaletter
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = ((System.Drawing.Image)(resources.GetObject("Button11.Image")));
             this.Button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button11.Location = new System.Drawing.Point(509, 190);
+            this.Button11.Location = new System.Drawing.Point(509, 195);
             this.Button11.Name = "Button11";
             this.Button11.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button11.Size = new System.Drawing.Size(308, 24);
+            this.Button11.Size = new System.Drawing.Size(308, 29);
             this.Button11.TabIndex = 40;
             this.Button11.Text = "Language development tools";
             this.Button11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -792,9 +791,9 @@ namespace WinPaletter
             this.Button10.Location = new System.Drawing.Point(509, 160);
             this.Button10.Name = "Button10";
             this.Button10.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button10.Size = new System.Drawing.Size(308, 24);
+            this.Button10.Size = new System.Drawing.Size(308, 29);
             this.Button10.TabIndex = 32;
-            this.Button10.Text = "Download language";
+            this.Button10.Text = "Download a language file";
             this.Button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button10.UseVisualStyleBackColor = false;
             this.Button10.Click += new System.EventHandler(this.Button10_Click);
@@ -808,12 +807,12 @@ namespace WinPaletter
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
             this.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button8.Location = new System.Drawing.Point(509, 220);
+            this.Button8.Location = new System.Drawing.Point(509, 230);
             this.Button8.Name = "Button8";
             this.Button8.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button8.Size = new System.Drawing.Size(308, 24);
+            this.Button8.Size = new System.Drawing.Size(308, 29);
             this.Button8.TabIndex = 31;
-            this.Button8.Text = "See how to contribute in language development";
+            this.Button8.Text = "See how to contribute in language file creation";
             this.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button8.UseVisualStyleBackColor = false;
             this.Button8.Click += new System.EventHandler(this.Button8_Click);
@@ -867,10 +866,11 @@ namespace WinPaletter
             // 
             this.Label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label14.BackColor = System.Drawing.Color.Transparent;
             this.Label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label14.Location = new System.Drawing.Point(182, 123);
             this.Label14.Name = "Label14";
-            this.Label14.Size = new System.Drawing.Size(215, 24);
+            this.Label14.Size = new System.Drawing.Size(221, 24);
             this.Label14.TabIndex = 35;
             this.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -878,16 +878,18 @@ namespace WinPaletter
             // 
             this.Label22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label22.BackColor = System.Drawing.Color.Transparent;
             this.Label22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label22.Location = new System.Drawing.Point(33, 153);
             this.Label22.Name = "Label22";
-            this.Label22.Size = new System.Drawing.Size(364, 24);
+            this.Label22.Size = new System.Drawing.Size(370, 24);
             this.Label22.TabIndex = 43;
             this.Label22.Text = "It has left to right layout";
             this.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label15
             // 
+            this.Label15.BackColor = System.Drawing.Color.Transparent;
             this.Label15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label15.Location = new System.Drawing.Point(33, 123);
             this.Label15.Name = "Label15";
@@ -898,6 +900,7 @@ namespace WinPaletter
             // 
             // PictureBox26
             // 
+            this.PictureBox26.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
             this.PictureBox26.Location = new System.Drawing.Point(3, 153);
             this.PictureBox26.Name = "PictureBox26";
@@ -908,6 +911,7 @@ namespace WinPaletter
             // 
             // PictureBox23
             // 
+            this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
             this.PictureBox23.Location = new System.Drawing.Point(3, 123);
             this.PictureBox23.Name = "PictureBox23";
@@ -920,10 +924,11 @@ namespace WinPaletter
             // 
             this.Label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label16.BackColor = System.Drawing.Color.Transparent;
             this.Label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label16.Location = new System.Drawing.Point(182, 33);
             this.Label16.Name = "Label16";
-            this.Label16.Size = new System.Drawing.Size(215, 24);
+            this.Label16.Size = new System.Drawing.Size(221, 24);
             this.Label16.TabIndex = 41;
             this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -931,15 +936,17 @@ namespace WinPaletter
             // 
             this.Label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label12.BackColor = System.Drawing.Color.Transparent;
             this.Label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label12.Location = new System.Drawing.Point(182, 93);
             this.Label12.Name = "Label12";
-            this.Label12.Size = new System.Drawing.Size(215, 24);
+            this.Label12.Size = new System.Drawing.Size(221, 24);
             this.Label12.TabIndex = 32;
             this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label18
             // 
+            this.Label18.BackColor = System.Drawing.Color.Transparent;
             this.Label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label18.Location = new System.Drawing.Point(33, 33);
             this.Label18.Name = "Label18";
@@ -950,6 +957,7 @@ namespace WinPaletter
             // 
             // Label13
             // 
+            this.Label13.BackColor = System.Drawing.Color.Transparent;
             this.Label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label13.Location = new System.Drawing.Point(33, 93);
             this.Label13.Name = "Label13";
@@ -960,6 +968,7 @@ namespace WinPaletter
             // 
             // PictureBox24
             // 
+            this.PictureBox24.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox24.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox24.Image")));
             this.PictureBox24.Location = new System.Drawing.Point(3, 33);
             this.PictureBox24.Name = "PictureBox24";
@@ -970,6 +979,7 @@ namespace WinPaletter
             // 
             // PictureBox22
             // 
+            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
             this.PictureBox22.Location = new System.Drawing.Point(3, 93);
             this.PictureBox22.Name = "PictureBox22";
@@ -982,10 +992,11 @@ namespace WinPaletter
             // 
             this.Label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label19.BackColor = System.Drawing.Color.Transparent;
             this.Label19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label19.Location = new System.Drawing.Point(182, 3);
             this.Label19.Name = "Label19";
-            this.Label19.Size = new System.Drawing.Size(215, 24);
+            this.Label19.Size = new System.Drawing.Size(221, 24);
             this.Label19.TabIndex = 38;
             this.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -993,15 +1004,17 @@ namespace WinPaletter
             // 
             this.Label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label11.BackColor = System.Drawing.Color.Transparent;
             this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label11.Location = new System.Drawing.Point(182, 63);
             this.Label11.Name = "Label11";
-            this.Label11.Size = new System.Drawing.Size(215, 24);
+            this.Label11.Size = new System.Drawing.Size(221, 24);
             this.Label11.TabIndex = 29;
             this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label20
             // 
+            this.Label20.BackColor = System.Drawing.Color.Transparent;
             this.Label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label20.Location = new System.Drawing.Point(33, 3);
             this.Label20.Name = "Label20";
@@ -1012,6 +1025,7 @@ namespace WinPaletter
             // 
             // Label10
             // 
+            this.Label10.BackColor = System.Drawing.Color.Transparent;
             this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label10.Location = new System.Drawing.Point(33, 63);
             this.Label10.Name = "Label10";
@@ -1022,6 +1036,7 @@ namespace WinPaletter
             // 
             // PictureBox25
             // 
+            this.PictureBox25.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox25.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox25.Image")));
             this.PictureBox25.Location = new System.Drawing.Point(3, 3);
             this.PictureBox25.Name = "PictureBox25";
@@ -1032,6 +1047,7 @@ namespace WinPaletter
             // 
             // PictureBox21
             // 
+            this.PictureBox21.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox21.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox21.Image")));
             this.PictureBox21.Location = new System.Drawing.Point(3, 63);
             this.PictureBox21.Name = "PictureBox21";
@@ -1091,7 +1107,6 @@ namespace WinPaletter
             // 
             this.CheckBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox8.Checked = false;
             this.CheckBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox8.ForeColor = System.Drawing.Color.White;
@@ -1160,7 +1175,6 @@ namespace WinPaletter
             // 
             this.CheckBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox30.Checked = true;
             this.CheckBox30.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox30.ForeColor = System.Drawing.Color.White;
@@ -1249,7 +1263,6 @@ namespace WinPaletter
             // 
             this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox6.Checked = true;
             this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox6.ForeColor = System.Drawing.Color.White;
@@ -1263,7 +1276,6 @@ namespace WinPaletter
             // 
             this.RadioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.RadioButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton3.Checked = true;
             this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton3.ForeColor = System.Drawing.Color.White;
@@ -1277,7 +1289,6 @@ namespace WinPaletter
             // 
             this.RadioButton4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.RadioButton4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton4.Checked = false;
             this.RadioButton4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton4.ForeColor = System.Drawing.Color.White;
@@ -1330,7 +1341,6 @@ namespace WinPaletter
             // 
             // CheckBox33
             // 
-            this.CheckBox33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox33.Checked = true;
             this.CheckBox33.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox33.ForeColor = System.Drawing.Color.White;
@@ -1396,7 +1406,6 @@ namespace WinPaletter
             // 
             // CheckBox1
             // 
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = true;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
@@ -1434,7 +1443,6 @@ namespace WinPaletter
             // 
             // RadioButton2
             // 
-            this.RadioButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton2.Checked = false;
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
@@ -1447,7 +1455,6 @@ namespace WinPaletter
             // 
             // RadioButton1
             // 
-            this.RadioButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton1.Checked = true;
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
@@ -1570,7 +1577,6 @@ namespace WinPaletter
             // 
             // RadioButton23
             // 
-            this.RadioButton23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton23.Checked = false;
             this.RadioButton23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton23.ForeColor = System.Drawing.Color.White;
@@ -1582,7 +1588,6 @@ namespace WinPaletter
             // 
             // RadioButton21
             // 
-            this.RadioButton21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton21.Checked = true;
             this.RadioButton21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton21.ForeColor = System.Drawing.Color.White;
@@ -1594,7 +1599,6 @@ namespace WinPaletter
             // 
             // RadioButton22
             // 
-            this.RadioButton22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton22.Checked = false;
             this.RadioButton22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton22.ForeColor = System.Drawing.Color.White;
@@ -1648,7 +1652,6 @@ namespace WinPaletter
             // 
             this.CheckBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox25.Checked = false;
             this.CheckBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox25.ForeColor = System.Drawing.Color.White;
@@ -1663,7 +1666,6 @@ namespace WinPaletter
             // 
             this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox2.Checked = false;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
@@ -1723,7 +1725,6 @@ namespace WinPaletter
             // 
             this.CheckBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox17.Checked = true;
             this.CheckBox17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox17.ForeColor = System.Drawing.Color.White;
@@ -1817,7 +1818,6 @@ namespace WinPaletter
             // 
             // RadioButton10
             // 
-            this.RadioButton10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton10.Checked = false;
             this.RadioButton10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton10.ForeColor = System.Drawing.Color.White;
@@ -1829,7 +1829,6 @@ namespace WinPaletter
             // 
             // RadioButton9
             // 
-            this.RadioButton9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton9.Checked = false;
             this.RadioButton9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton9.ForeColor = System.Drawing.Color.White;
@@ -1841,7 +1840,6 @@ namespace WinPaletter
             // 
             // RadioButton7
             // 
-            this.RadioButton7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton7.Checked = true;
             this.RadioButton7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton7.ForeColor = System.Drawing.Color.White;
@@ -1853,7 +1851,6 @@ namespace WinPaletter
             // 
             // RadioButton8
             // 
-            this.RadioButton8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton8.Checked = false;
             this.RadioButton8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton8.ForeColor = System.Drawing.Color.White;
@@ -1886,7 +1883,6 @@ namespace WinPaletter
             // 
             // RadioButton6
             // 
-            this.RadioButton6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton6.Checked = false;
             this.RadioButton6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton6.ForeColor = System.Drawing.Color.White;
@@ -1898,7 +1894,6 @@ namespace WinPaletter
             // 
             // RadioButton5
             // 
-            this.RadioButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton5.Checked = true;
             this.RadioButton5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton5.ForeColor = System.Drawing.Color.White;
@@ -1990,7 +1985,6 @@ namespace WinPaletter
             // 
             // RadioButton11
             // 
-            this.RadioButton11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton11.Checked = true;
             this.RadioButton11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton11.ForeColor = System.Drawing.Color.White;
@@ -2002,7 +1996,6 @@ namespace WinPaletter
             // 
             // RadioButton12
             // 
-            this.RadioButton12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton12.Checked = false;
             this.RadioButton12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton12.ForeColor = System.Drawing.Color.White;
@@ -2038,7 +2031,6 @@ namespace WinPaletter
             // 
             this.CheckBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox22.Checked = false;
             this.CheckBox22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox22.ForeColor = System.Drawing.Color.White;
@@ -2099,7 +2091,6 @@ namespace WinPaletter
             // 
             this.CheckBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox16.Checked = false;
             this.CheckBox16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox16.ForeColor = System.Drawing.Color.White;
@@ -2145,7 +2136,6 @@ namespace WinPaletter
             // 
             // RadioButton13
             // 
-            this.RadioButton13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton13.Checked = true;
             this.RadioButton13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton13.ForeColor = System.Drawing.Color.White;
@@ -2157,7 +2147,6 @@ namespace WinPaletter
             // 
             // RadioButton14
             // 
-            this.RadioButton14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton14.Checked = false;
             this.RadioButton14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton14.ForeColor = System.Drawing.Color.White;
@@ -2193,7 +2182,6 @@ namespace WinPaletter
             // 
             this.CheckBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox7.Checked = true;
             this.CheckBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox7.ForeColor = System.Drawing.Color.White;
@@ -2242,7 +2230,6 @@ namespace WinPaletter
             // 
             this.CheckBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox15.Checked = false;
             this.CheckBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox15.ForeColor = System.Drawing.Color.White;
@@ -2306,7 +2293,6 @@ namespace WinPaletter
             // 
             // RadioButton19
             // 
-            this.RadioButton19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton19.Checked = true;
             this.RadioButton19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton19.ForeColor = System.Drawing.Color.White;
@@ -2318,7 +2304,6 @@ namespace WinPaletter
             // 
             // RadioButton20
             // 
-            this.RadioButton20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton20.Checked = false;
             this.RadioButton20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton20.ForeColor = System.Drawing.Color.White;
@@ -2376,7 +2361,6 @@ namespace WinPaletter
             // 
             // RadioButton17
             // 
-            this.RadioButton17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton17.Checked = true;
             this.RadioButton17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton17.ForeColor = System.Drawing.Color.White;
@@ -2388,7 +2372,6 @@ namespace WinPaletter
             // 
             // RadioButton18
             // 
-            this.RadioButton18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton18.Checked = false;
             this.RadioButton18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton18.ForeColor = System.Drawing.Color.White;
@@ -2445,7 +2428,6 @@ namespace WinPaletter
             // 
             // RadioButton15
             // 
-            this.RadioButton15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton15.Checked = true;
             this.RadioButton15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton15.ForeColor = System.Drawing.Color.White;
@@ -2457,7 +2439,6 @@ namespace WinPaletter
             // 
             // RadioButton16
             // 
-            this.RadioButton16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RadioButton16.Checked = false;
             this.RadioButton16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton16.ForeColor = System.Drawing.Color.White;
@@ -2525,7 +2506,6 @@ namespace WinPaletter
             // 
             // RadioButton24
             // 
-            this.RadioButton24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.RadioButton24.Checked = false;
             this.RadioButton24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton24.ForeColor = System.Drawing.Color.White;
@@ -2537,7 +2517,6 @@ namespace WinPaletter
             // 
             // RadioButton25
             // 
-            this.RadioButton25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.RadioButton25.Checked = true;
             this.RadioButton25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton25.ForeColor = System.Drawing.Color.White;
@@ -2551,7 +2530,6 @@ namespace WinPaletter
             // 
             this.CheckBox36.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.CheckBox36.Checked = false;
             this.CheckBox36.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox36.ForeColor = System.Drawing.Color.White;
@@ -2576,7 +2554,6 @@ namespace WinPaletter
             // 
             this.CheckBox35_SFC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox35_SFC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.CheckBox35_SFC.Checked = false;
             this.CheckBox35_SFC.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox35_SFC.ForeColor = System.Drawing.Color.White;
@@ -2737,7 +2714,6 @@ namespace WinPaletter
             // 
             this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox4.Checked = true;
             this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox4.ForeColor = System.Drawing.Color.White;
@@ -2761,7 +2737,6 @@ namespace WinPaletter
             // 
             this.CheckBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox29.Checked = true;
             this.CheckBox29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox29.ForeColor = System.Drawing.Color.White;
@@ -2841,11 +2816,13 @@ namespace WinPaletter
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage1.Image")));
+            this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage1.Location = new System.Drawing.Point(41, 40);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.Size = new System.Drawing.Size(64, 64);
             this.RadioImage1.TabIndex = 49;
             this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // ListBox2
             // 
@@ -2867,11 +2844,13 @@ namespace WinPaletter
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage2.Image")));
+            this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage2.Location = new System.Drawing.Point(41, 152);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.Size = new System.Drawing.Size(64, 64);
             this.RadioImage2.TabIndex = 50;
             this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Button15
             // 
@@ -3096,7 +3075,6 @@ namespace WinPaletter
             // 
             this.CheckBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox26.Checked = true;
             this.CheckBox26.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox26.ForeColor = System.Drawing.Color.White;
@@ -3120,7 +3098,6 @@ namespace WinPaletter
             // 
             this.CheckBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox27.Checked = true;
             this.CheckBox27.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox27.ForeColor = System.Drawing.Color.White;
@@ -3146,7 +3123,6 @@ namespace WinPaletter
             // 
             this.CheckBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox28.Checked = true;
             this.CheckBox28.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox28.ForeColor = System.Drawing.Color.White;
@@ -3193,7 +3169,6 @@ namespace WinPaletter
             // 
             // CheckBox19_ShowSkippedItemsOnDetailedVerbose
             // 
-            this.CheckBox19_ShowSkippedItemsOnDetailedVerbose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked = false;
             this.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox19_ShowSkippedItemsOnDetailedVerbose.ForeColor = System.Drawing.Color.White;
@@ -3210,6 +3185,7 @@ namespace WinPaletter
             this.VL2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.VL2.ForeColor = System.Drawing.Color.White;
             this.VL2.Image = null;
+            this.VL2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VL2.Location = new System.Drawing.Point(53, 142);
             this.VL2.Name = "VL2";
             this.VL2.Size = new System.Drawing.Size(515, 24);
@@ -3217,6 +3193,7 @@ namespace WinPaletter
             this.VL2.Text = "Advanced details; shows all registry keys modified (applying operation will take " +
     "longer time)";
             this.VL2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.VL2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // VL1
             // 
@@ -3224,12 +3201,14 @@ namespace WinPaletter
             this.VL1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.VL1.ForeColor = System.Drawing.Color.White;
             this.VL1.Image = null;
+            this.VL1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VL1.Location = new System.Drawing.Point(53, 112);
             this.VL1.Name = "VL1";
             this.VL1.Size = new System.Drawing.Size(515, 24);
             this.VL1.TabIndex = 51;
             this.VL1.Text = "Basic details; shows if applying, skipping Windows aspects or errors happened";
             this.VL1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.VL1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // VL0
             // 
@@ -3237,12 +3216,14 @@ namespace WinPaletter
             this.VL0.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.VL0.ForeColor = System.Drawing.Color.White;
             this.VL0.Image = null;
+            this.VL0.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VL0.Location = new System.Drawing.Point(53, 82);
             this.VL0.Name = "VL0";
             this.VL0.Size = new System.Drawing.Size(515, 24);
             this.VL0.TabIndex = 50;
             this.VL0.Text = "None";
             this.VL0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.VL0.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Label25
             // 
@@ -3304,7 +3285,6 @@ namespace WinPaletter
             // 
             this.CheckBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox18.Checked = true;
             this.CheckBox18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox18.ForeColor = System.Drawing.Color.White;
@@ -3545,7 +3525,6 @@ namespace WinPaletter
             // 
             this.CheckBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox14.Checked = false;
             this.CheckBox14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox14.ForeColor = System.Drawing.Color.White;
@@ -3604,7 +3583,6 @@ namespace WinPaletter
             // 
             this.CheckBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox13.Checked = false;
             this.CheckBox13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox13.ForeColor = System.Drawing.Color.White;
@@ -3646,7 +3624,6 @@ namespace WinPaletter
             // 
             this.CheckBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox12.Checked = false;
             this.CheckBox12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox12.ForeColor = System.Drawing.Color.White;
@@ -3743,11 +3720,13 @@ namespace WinPaletter
             this.EP_ORB_11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_ORB_11.ForeColor = System.Drawing.Color.White;
             this.EP_ORB_11.Image = null;
+            this.EP_ORB_11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_ORB_11.Location = new System.Drawing.Point(3, 3);
             this.EP_ORB_11.Name = "EP_ORB_11";
             this.EP_ORB_11.Size = new System.Drawing.Size(30, 30);
             this.EP_ORB_11.TabIndex = 45;
             this.EP_ORB_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_ORB_11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // EP_ORB_10
             // 
@@ -3755,11 +3734,13 @@ namespace WinPaletter
             this.EP_ORB_10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_ORB_10.ForeColor = System.Drawing.Color.White;
             this.EP_ORB_10.Image = null;
+            this.EP_ORB_10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_ORB_10.Location = new System.Drawing.Point(39, 3);
             this.EP_ORB_10.Name = "EP_ORB_10";
             this.EP_ORB_10.Size = new System.Drawing.Size(30, 30);
             this.EP_ORB_10.TabIndex = 46;
             this.EP_ORB_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_ORB_10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Panel2
             // 
@@ -3777,11 +3758,13 @@ namespace WinPaletter
             this.EP_Taskbar_11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Taskbar_11.ForeColor = System.Drawing.Color.White;
             this.EP_Taskbar_11.Image = null;
+            this.EP_Taskbar_11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_Taskbar_11.Location = new System.Drawing.Point(3, 3);
             this.EP_Taskbar_11.Name = "EP_Taskbar_11";
             this.EP_Taskbar_11.Size = new System.Drawing.Size(30, 30);
             this.EP_Taskbar_11.TabIndex = 42;
             this.EP_Taskbar_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_Taskbar_11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // EP_Taskbar_10
             // 
@@ -3789,11 +3772,13 @@ namespace WinPaletter
             this.EP_Taskbar_10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Taskbar_10.ForeColor = System.Drawing.Color.White;
             this.EP_Taskbar_10.Image = null;
+            this.EP_Taskbar_10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_Taskbar_10.Location = new System.Drawing.Point(39, 3);
             this.EP_Taskbar_10.Name = "EP_Taskbar_10";
             this.EP_Taskbar_10.Size = new System.Drawing.Size(30, 30);
             this.EP_Taskbar_10.TabIndex = 43;
             this.EP_Taskbar_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_Taskbar_10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Panel1
             // 
@@ -3811,11 +3796,13 @@ namespace WinPaletter
             this.EP_Start_11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Start_11.ForeColor = System.Drawing.Color.White;
             this.EP_Start_11.Image = null;
+            this.EP_Start_11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_Start_11.Location = new System.Drawing.Point(3, 3);
             this.EP_Start_11.Name = "EP_Start_11";
             this.EP_Start_11.Size = new System.Drawing.Size(30, 30);
             this.EP_Start_11.TabIndex = 39;
             this.EP_Start_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_Start_11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // EP_Start_10
             // 
@@ -3823,11 +3810,13 @@ namespace WinPaletter
             this.EP_Start_10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Start_10.ForeColor = System.Drawing.Color.White;
             this.EP_Start_10.Image = null;
+            this.EP_Start_10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EP_Start_10.Location = new System.Drawing.Point(39, 3);
             this.EP_Start_10.Name = "EP_Start_10";
             this.EP_Start_10.Size = new System.Drawing.Size(30, 30);
             this.EP_Start_10.TabIndex = 40;
             this.EP_Start_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EP_Start_10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // EP_Start_10_Type
             // 
@@ -3848,6 +3837,7 @@ namespace WinPaletter
             // 
             // Label34
             // 
+            this.Label34.BackColor = System.Drawing.Color.Transparent;
             this.Label34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label34.Location = new System.Drawing.Point(45, 102);
             this.Label34.Name = "Label34";
@@ -3858,6 +3848,7 @@ namespace WinPaletter
             // 
             // Label32
             // 
+            this.Label32.BackColor = System.Drawing.Color.Transparent;
             this.Label32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label32.Location = new System.Drawing.Point(45, 30);
             this.Label32.Name = "Label32";
@@ -3870,6 +3861,7 @@ namespace WinPaletter
             // 
             this.Label31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label31.BackColor = System.Drawing.Color.Transparent;
             this.Label31.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label31.Location = new System.Drawing.Point(5, 4);
             this.Label31.Name = "Label31";
@@ -3880,6 +3872,7 @@ namespace WinPaletter
             // 
             // Label33
             // 
+            this.Label33.BackColor = System.Drawing.Color.Transparent;
             this.Label33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label33.Location = new System.Drawing.Point(45, 66);
             this.Label33.Name = "Label33";
@@ -3902,7 +3895,6 @@ namespace WinPaletter
             // 
             this.CheckBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox21.Checked = false;
             this.CheckBox21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox21.ForeColor = System.Drawing.Color.White;
@@ -3927,7 +3919,6 @@ namespace WinPaletter
             // 
             this.CheckBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox20.Checked = true;
             this.CheckBox20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox20.ForeColor = System.Drawing.Color.White;
@@ -4017,7 +4008,6 @@ namespace WinPaletter
             // 
             this.CheckBox38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox38.Checked = false;
             this.CheckBox38.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox38.ForeColor = System.Drawing.Color.White;
@@ -4041,7 +4031,6 @@ namespace WinPaletter
             // 
             this.CheckBox37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox37.Checked = false;
             this.CheckBox37.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox37.ForeColor = System.Drawing.Color.White;
@@ -4065,7 +4054,6 @@ namespace WinPaletter
             // 
             this.CheckBox35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox35.Checked = false;
             this.CheckBox35.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox35.ForeColor = System.Drawing.Color.White;
@@ -4139,7 +4127,6 @@ namespace WinPaletter
             // 
             this.CheckBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox32.Checked = false;
             this.CheckBox32.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox32.ForeColor = System.Drawing.Color.White;
@@ -4188,7 +4175,6 @@ namespace WinPaletter
             // 
             this.CheckBox34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox34.Checked = false;
             this.CheckBox34.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox34.ForeColor = System.Drawing.Color.White;
@@ -4203,7 +4189,6 @@ namespace WinPaletter
             // 
             this.CheckBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox11.Checked = false;
             this.CheckBox11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox11.ForeColor = System.Drawing.Color.White;
@@ -4217,7 +4202,6 @@ namespace WinPaletter
             // 
             this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox3.Checked = false;
             this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox3.ForeColor = System.Drawing.Color.White;
@@ -4231,7 +4215,6 @@ namespace WinPaletter
             // 
             this.CheckBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox31.Checked = false;
             this.CheckBox31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox31.ForeColor = System.Drawing.Color.White;
@@ -4265,7 +4248,6 @@ namespace WinPaletter
             // 
             this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox10.Checked = false;
             this.CheckBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox10.ForeColor = System.Drawing.Color.White;
@@ -4468,7 +4450,6 @@ namespace WinPaletter
             // 
             this.CheckBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox9.Checked = false;
             this.CheckBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox9.ForeColor = System.Drawing.Color.White;

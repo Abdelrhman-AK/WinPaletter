@@ -14,7 +14,7 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
             DoubleBuffered = true;
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
             Text = string.Empty;
         }
 
@@ -67,7 +67,7 @@ namespace WinPaletter.UI.WP
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            var MainRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
 
             Color bkC = default; Color lC = default;
 

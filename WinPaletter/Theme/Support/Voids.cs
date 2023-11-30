@@ -81,7 +81,8 @@ namespace WinPaletter.Theme
         {
 
             bool ReportProgress = TreeView is not null;
-            var sw = new Stopwatch();
+            Stopwatch sw = new();
+
             sw.Reset();
             sw.Stop();
             sw.Start();

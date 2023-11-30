@@ -6,18 +6,14 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers
 {
-
     [ToolboxItem(false)]
     public class TextTranslationItem : ContainerControl
     {
-
         public TextTranslationItem()
         {
             DoubleBuffered = true;
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             BackColor = Color.Transparent;
-            LostFocus += TextTranslationItem_LostFocus;
-            GotFocus += TextTranslationItem_GotFocus;
         }
 
         #region Properties
@@ -26,28 +22,28 @@ namespace WinPaletter.UI.Controllers
         private ContentAlignment _TextAlign = ContentAlignment.MiddleCenter;
         public ContentAlignment TextAlign
         {
-            get
-            {
-                return _TextAlign;
-            }
+            get => _TextAlign;
             set
             {
-                _TextAlign = value;
-                Invalidate();
+                if (value != _TextAlign)
+                {
+                    _TextAlign = value;
+                    Invalidate();
+                }
             }
         }
 
         private ContentAlignment _ImageAlign = ContentAlignment.MiddleCenter;
         public ContentAlignment ImageAlign
         {
-            get
-            {
-                return _ImageAlign;
-            }
+            get => _ImageAlign;
             set
             {
-                _ImageAlign = value;
-                Invalidate();
+                if (value != _ImageAlign)
+                {
+                    _ImageAlign = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -59,14 +55,14 @@ namespace WinPaletter.UI.Controllers
         [Bindable(true)]
         public override string Text
         {
-            get
-            {
-                return _Text;
-            }
+            get => _Text;
             set
             {
-                _Text = value;
-                Invalidate();
+                if (value != _Text)
+                {
+                    _Text = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -77,14 +73,14 @@ namespace WinPaletter.UI.Controllers
         private string _SearchHighlight;
         public string SearchHighlight
         {
-            get
-            {
-                return _SearchHighlight;
-            }
+            get => _SearchHighlight;
             set
             {
-                _SearchHighlight = value;
-                Refresh();
+                if (value != _SearchHighlight)
+                {
+                    _SearchHighlight = value;
+                    Refresh();
+                }
             }
         }
 
@@ -92,9 +88,16 @@ namespace WinPaletter.UI.Controllers
         {
             get
             {
-                var cp = base.CreateParams;
-                cp.ExStyle = cp.ExStyle | 0x20;
-                return cp;
+                CreateParams cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
             }
         }
         #endregion
@@ -103,36 +106,42 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
             Pressed = true;
             BringToFront();
             Focus();
             Invalidate();
+
+            base.OnMouseDown(e);
         }
 
-        private void TextTranslationItem_LostFocus(object sender, EventArgs e)
+        protected override void OnLostFocus(EventArgs e)
         {
             Pressed = false;
             Invalidate();
+
+            base.OnLostFocus(e);
         }
 
-        private void TextTranslationItem_GotFocus(object sender, EventArgs e)
+        protected override void OnGotFocus(EventArgs e)
         {
             Pressed = true;
             BringToFront();
             Focus();
             Invalidate();
-        }
 
+            base.OnGotFocus(e);
+        }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
             G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
-            var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
             if (_SearchHighlight is not null && !string.IsNullOrWhiteSpace(_SearchHighlight) && Text.ToLower().Trim().Contains(_SearchHighlight.ToLower().Trim()))
             {
@@ -152,15 +161,15 @@ namespace WinPaletter.UI.Controllers
             if (Pressed)
             {
                 G.FillRectangle(Program.Style.Schemes.Main.Brushes.Back_Checked, rect);
-                G.DrawRectangle(new Pen(Program.Style.DarkMode ? Color.White : Color.Black, 2f) { DashStyle = DashStyle.Dot }, rect);
+                using (Pen P = new(Program.Style.DarkMode ? Color.White : Color.Black, 2f) { DashStyle = DashStyle.Dot }) { G.DrawRectangle(P, rect); }
             }
             else
             {
-                G.DrawRectangle(new Pen(Color.FromArgb(100, Program.Style.DarkMode ? Color.White : Color.Black), 1f), rect);
+                using (Pen P = new(Color.FromArgb(100, Program.Style.DarkMode ? Color.White : Color.Black), 1f)) { G.DrawRectangle(P, rect); }
             }
 
             #region Text and Image Render
-            using (var ButtonString = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            using (StringFormat ButtonString = new() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
             {
                 bool RTL = (int)RightToLeft == 1;
                 if (RTL)
@@ -204,9 +213,9 @@ namespace WinPaletter.UI.Controllers
                     try
                     {
                         using (SolidBrush br = new(ForeColor))
-                        using (var sf = TextAlign.ToStringFormat(RTL))
+                        using (StringFormat sf = TextAlign.ToStringFormat(RTL))
                         {
-                            var r = new Rectangle(1, 0, Width, Height);
+                            Rectangle r = new(1, 0, Width, Height);
                             G.DrawString(Text, Font, br, r, sf);
                         }
                     }
@@ -241,7 +250,7 @@ namespace WinPaletter.UI.Controllers
 
                                     using (SolidBrush br = new(ForeColor))
                                     {
-                                        var r = new Rectangle(0, alx + 9 + img.Height, Width, Height);
+                                        Rectangle r = new(0, alx + 9 + img.Height, Width, Height);
                                         G.DrawString(Text, Font, br, r, ButtonString);
                                     }
                                 }
@@ -254,10 +263,10 @@ namespace WinPaletter.UI.Controllers
 
                         case ContentAlignment.MiddleLeft:
                             {
-                                var Rec = new Rectangle(imgY, imgY, img.Width, img.Height);
+                                Rectangle Rec = new(imgY, imgY, img.Width, img.Height);
                                 int Bo = imgY + img.Width + imgY - 5;
-                                var RecText = new Rectangle(Bo, imgY, (int)Math.Round(Text.Measure(Font).Width + 15f - imgY), img.Height);
-                                var u = Rectangle.Union(Rec, RecText);
+                                Rectangle RecText = new(Bo, imgY, (int)Math.Round(Text.Measure(Font).Width + 15f - imgY), img.Height);
+                                Rectangle u = Rectangle.Union(Rec, RecText);
                                 u.X = (int)Math.Round((Width - u.Width) / 2d);
                                 int innerSpace = RecText.Left - Rec.Right;
 
@@ -283,10 +292,10 @@ namespace WinPaletter.UI.Controllers
 
                         case ContentAlignment.MiddleRight:
                             {
-                                var Rec = new Rectangle(imgY, imgY, img.Width, img.Height);
+                                Rectangle Rec = new(imgY, imgY, img.Width, img.Height);
                                 int Bo = imgY + img.Width + imgY - 5;
-                                var RecText = new Rectangle(Bo, imgY, Width - Bo, img.Height);
-                                var u = Rectangle.Union(Rec, RecText);
+                                Rectangle RecText = new(Bo, imgY, Width - Bo, img.Height);
+                                Rectangle u = Rectangle.Union(Rec, RecText);
                                 int innerSpace = RecText.Left - Rec.Right;
 
                                 if (!RTL)
@@ -313,6 +322,7 @@ namespace WinPaletter.UI.Controllers
             }
             #endregion
 
+            base.OnPaint(e);
         }
     }
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel.Design;
 using System.ComponentModel;
-using System.Windows.Forms.Design;
-using System.Windows.Forms;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace WinPaletter.UI.WP
 {
@@ -27,7 +27,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -42,6 +42,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             if (!DesignMode)
             {
                 //Makes background drawn properly, and transparent
@@ -175,7 +177,7 @@ namespace WinPaletter.UI.WP
         {
             base.InitializeNewComponent(defaultValues);
 
-            var newTab = new TransparentTabPage() { Text = "New tab" };
+            TransparentTabPage newTab = new() { Text = "New tab" };
             ((System.Windows.Forms.TabControl)Control).TabPages.Add(newTab);
         }
 

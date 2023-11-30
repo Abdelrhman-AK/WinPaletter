@@ -224,7 +224,7 @@ namespace WinPaletter
             // 
             this.TerTabColor.AllowDrop = true;
             this.TerTabColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
-            this.TerTabColor.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
+            this.TerTabColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerTabColor.DontShowInfo = false;
             this.TerTabColor.Location = new System.Drawing.Point(120, 101);
             this.TerTabColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

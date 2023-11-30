@@ -15,11 +15,11 @@ namespace WinPaletter
         {
             get
             {
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle = cp.ExStyle | 33554432;
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432;
                     return cp;
                 }
                 else

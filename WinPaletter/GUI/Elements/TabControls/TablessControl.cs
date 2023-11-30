@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
-{ 
+{
     [Designer(typeof(TransparentTabPagesHostDesigner))]
     [Description("TabControl but without tabs for WinPaletter UI")]
     public class TablessControl : System.Windows.Forms.TabControl

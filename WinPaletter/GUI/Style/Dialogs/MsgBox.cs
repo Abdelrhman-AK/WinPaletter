@@ -56,7 +56,7 @@ namespace WinPaletter.UI.Style
             if (String == null)
                 return String;
 
-            var c = new List<string>();
+            List<string> c = new();
             foreach (string x in String.Split(' '))
             {
                 if (Uri.IsWellFormedUriString(x, UriKind.Absolute))
@@ -115,13 +115,13 @@ namespace WinPaletter.UI.Style
                     else
                         TD.CustomFooterIcon = FooterCustomIcon;
 
-                    var okButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.OK, ElevationRequired = RequireElevation };
-                    var yesButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Yes, ElevationRequired = RequireElevation };
-                    var noButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.No };
-                    var cancelButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Cancel };
-                    var retryButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Retry, ElevationRequired = RequireElevation };
-                    var closeButton = new TaskDialogButton(ButtonType.Custom) { Text = Program.Lang.Close };
-                    var customButton = new TaskDialogButton(ButtonType.Custom);
+                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Lang.OK, ElevationRequired = RequireElevation };
+                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Lang.Yes, ElevationRequired = RequireElevation };
+                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Lang.No };
+                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Lang.Cancel };
+                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Lang.Retry, ElevationRequired = RequireElevation };
+                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Lang.Close };
+                    TaskDialogButton customButton = new(ButtonType.Custom);
                     TaskDialogIcon icon;
 
                     if (Buttons == MessageBoxButtons.YesNoCancel)

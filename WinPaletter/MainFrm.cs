@@ -14,7 +14,6 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class MainFrm
     {
         private bool _Shown = false;
@@ -87,7 +86,7 @@ namespace WinPaletter
             Appearance.CustomColors = TM.AppTheme.Enabled;
             Appearance.BackColor = TM.AppTheme.BackColor;
             Appearance.AccentColor = TM.AppTheme.AccentColor;
-            Appearance.CustomTheme = TM.AppTheme.DarkMode;
+            Appearance.CustomTheme_DarkMode = TM.AppTheme.DarkMode;
             Appearance.RoundedCorners = TM.AppTheme.RoundCorners;
             ApplyStyle(this);
 
@@ -302,40 +301,40 @@ namespace WinPaletter
         {
             using (Theme.Manager DefTM = Theme.Default.Get())
             {
-                W11_ActiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Active;
-                W11_InactiveTitlebar_pick.DefaultColor = DefTM.Windows11.Titlebar_Inactive;
-                W11_Color_Index5.DefaultColor = DefTM.Windows11.StartMenu_Accent;
-                W11_Color_Index4.DefaultColor = DefTM.Windows11.Color_Index2;
-                W11_Color_Index6.DefaultColor = DefTM.Windows11.Color_Index6;
-                W11_Color_Index1.DefaultColor = DefTM.Windows11.Color_Index1;
-                W11_Color_Index2.DefaultColor = DefTM.Windows11.Color_Index4;
-                W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows11.Color_Index5;
-                W11_Color_Index0.DefaultColor = DefTM.Windows11.Color_Index0;
-                W11_Color_Index3.DefaultColor = DefTM.Windows11.Color_Index3;
-                W11_Color_Index7.DefaultColor = DefTM.Windows11.Color_Index7;
+                W11_ActiveTitlebar_pick.DefaultBackColor = DefTM.Windows11.Titlebar_Active;
+                W11_InactiveTitlebar_pick.DefaultBackColor = DefTM.Windows11.Titlebar_Inactive;
+                W11_Color_Index5.DefaultBackColor = DefTM.Windows11.StartMenu_Accent;
+                W11_Color_Index4.DefaultBackColor = DefTM.Windows11.Color_Index2;
+                W11_Color_Index6.DefaultBackColor = DefTM.Windows11.Color_Index6;
+                W11_Color_Index1.DefaultBackColor = DefTM.Windows11.Color_Index1;
+                W11_Color_Index2.DefaultBackColor = DefTM.Windows11.Color_Index4;
+                W11_TaskbarFrontAndFoldersOnStart_pick.DefaultBackColor = DefTM.Windows11.Color_Index5;
+                W11_Color_Index0.DefaultBackColor = DefTM.Windows11.Color_Index0;
+                W11_Color_Index3.DefaultBackColor = DefTM.Windows11.Color_Index3;
+                W11_Color_Index7.DefaultBackColor = DefTM.Windows11.Color_Index7;
 
-                W10_ActiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Active;
-                W10_InactiveTitlebar_pick.DefaultColor = DefTM.Windows10.Titlebar_Inactive;
-                W10_Color_Index5.DefaultColor = DefTM.Windows10.StartMenu_Accent;
-                W10_Color_Index4.DefaultColor = DefTM.Windows10.Color_Index2;
-                W10_Color_Index6.DefaultColor = DefTM.Windows10.Color_Index6;
-                W10_Color_Index1.DefaultColor = DefTM.Windows10.Color_Index1;
-                W10_Color_Index2.DefaultColor = DefTM.Windows10.Color_Index4;
-                W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefTM.Windows10.Color_Index5;
-                W10_Color_Index0.DefaultColor = DefTM.Windows10.Color_Index0;
-                W10_Color_Index3.DefaultColor = DefTM.Windows10.Color_Index3;
-                W10_Color_Index7.DefaultColor = DefTM.Windows10.Color_Index7;
+                W10_ActiveTitlebar_pick.DefaultBackColor = DefTM.Windows10.Titlebar_Active;
+                W10_InactiveTitlebar_pick.DefaultBackColor = DefTM.Windows10.Titlebar_Inactive;
+                W10_Color_Index5.DefaultBackColor = DefTM.Windows10.StartMenu_Accent;
+                W10_Color_Index4.DefaultBackColor = DefTM.Windows10.Color_Index2;
+                W10_Color_Index6.DefaultBackColor = DefTM.Windows10.Color_Index6;
+                W10_Color_Index1.DefaultBackColor = DefTM.Windows10.Color_Index1;
+                W10_Color_Index2.DefaultBackColor = DefTM.Windows10.Color_Index4;
+                W10_TaskbarFrontAndFoldersOnStart_pick.DefaultBackColor = DefTM.Windows10.Color_Index5;
+                W10_Color_Index0.DefaultBackColor = DefTM.Windows10.Color_Index0;
+                W10_Color_Index3.DefaultBackColor = DefTM.Windows10.Color_Index3;
+                W10_Color_Index7.DefaultBackColor = DefTM.Windows10.Color_Index7;
 
-                W81_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
-                W81_start_pick.DefaultColor = DefTM.Windows81.StartColor;
-                W81_accent_pick.DefaultColor = DefTM.Windows81.AccentColor;
-                W81_personalcls_background_pick.DefaultColor = DefTM.Windows81.PersonalColors_Background;
-                W81_personalcolor_accent_pick.DefaultColor = DefTM.Windows81.PersonalColors_Accent;
+                W81_ColorizationColor_pick.DefaultBackColor = DefTM.Windows7.ColorizationColor;
+                W81_start_pick.DefaultBackColor = DefTM.Windows81.StartColor;
+                W81_accent_pick.DefaultBackColor = DefTM.Windows81.AccentColor;
+                W81_personalcls_background_pick.DefaultBackColor = DefTM.Windows81.PersonalColors_Background;
+                W81_personalcolor_accent_pick.DefaultBackColor = DefTM.Windows81.PersonalColors_Accent;
 
-                W7_ColorizationColor_pick.DefaultColor = DefTM.Windows7.ColorizationColor;
-                W7_ColorizationAfterglow_pick.DefaultColor = DefTM.Windows7.ColorizationAfterglow;
+                W7_ColorizationColor_pick.DefaultBackColor = DefTM.Windows7.ColorizationColor;
+                W7_ColorizationAfterglow_pick.DefaultBackColor = DefTM.Windows7.ColorizationAfterglow;
 
-                WVista_ColorizationColor_pick.DefaultColor = DefTM.WindowsVista.ColorizationColor;
+                WVista_ColorizationColor_pick.DefaultBackColor = DefTM.WindowsVista.ColorizationColor;
             }
         }
 
@@ -451,7 +450,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    var WebCL = new WebClient();
+                    WebClient WebCL = new();
                     RaiseUpdate = false;
                     ver = string.Empty;
 
@@ -531,7 +530,7 @@ namespace WinPaletter
 
             NotifyUpdates.Icon = Icon;
 
-            Size = new Size(Conversions.ToInteger(Program.Settings.General.MainFormWidth), Conversions.ToInteger(Program.Settings.General.MainFormHeight));
+            Size = new(Conversions.ToInteger(Program.Settings.General.MainFormWidth), Conversions.ToInteger(Program.Settings.General.MainFormHeight));
             WindowState = (FormWindowState)Conversions.ToInteger(Program.Settings.General.MainFormStatus);
 
             Select_W11.Image = Properties.Resources.Native11;
@@ -599,7 +598,7 @@ namespace WinPaletter
             LoadData();
 
             WXP_Alert2.Size = WXP_Alert2.Parent.Size - new Size(40, 40);
-            WXP_Alert2.Location = new Point(20, 20);
+            WXP_Alert2.Location = new(20, 20);
 
             Visible = true;
 
@@ -692,13 +691,13 @@ namespace WinPaletter
             }
             Program.Settings.General.Save();
 
-            var old = new Settings(Settings.Mode.Registry);
+            Settings old = new(Settings.Mode.Registry);
             {
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = old.Appearance.CustomColors;
                 Appearance.BackColor = old.Appearance.BackColor;
                 Appearance.AccentColor = old.Appearance.AccentColor;
-                Appearance.CustomTheme = old.Appearance.CustomTheme;
+                Appearance.CustomTheme_DarkMode = old.Appearance.CustomTheme_DarkMode;
                 Appearance.RoundedCorners = old.Appearance.RoundedCorners;
                 Appearance.Save();
             }
@@ -846,9 +845,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, Window1 };
+            List<Control> CList = new() { (Control)sender, Window1 };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows11.Titlebar_Active = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
                 ApplyColorsToElements(Program.TM);
@@ -874,10 +873,10 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, Window2 };
+            List<Control> CList = new() { (Control)sender, Window2 };
 
-            var _Conditions = new Conditions() { Window_InactiveTitlebar = true };
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Conditions _conditions = new(){ Window_InactiveTitlebar = true };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows11.Titlebar_Inactive = Color.FromArgb(255, C);
 
@@ -989,7 +988,7 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
             CList.Add((Control)sender);
 
@@ -1000,13 +999,13 @@ namespace WinPaletter
                 if (!Program.TM.Windows11.WinMode_Light)
                 {
                     CList.Add(ActionCenter);
-                    var _Conditions = new Conditions() { AppUnderlineOnly = true, ActionCenterBtn = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                    Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
                 else
                 {
-                    var _Conditions = new Conditions() { AppUnderlineWithTaskbar = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                    Conditions _conditions = new(){ AppUnderlineWithTaskbar = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
             }
             else if (!Program.TM.Windows11.WinMode_Light)
@@ -1014,8 +1013,8 @@ namespace WinPaletter
                 CList.Add(ActionCenter);
                 CList.Add(taskbar);
 
-                var _Conditions = new Conditions() { AppUnderlineOnly = true, ActionCenterBtn = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
             else
             {
@@ -1046,7 +1045,7 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
             if (ExplorerPatcher.IsAllowed())
             {
@@ -1077,7 +1076,7 @@ namespace WinPaletter
                 CList.Add(lnk_preview);
             }
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows11.Color_Index5 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
                 ApplyColorsToElements(Program.TM);
@@ -1102,7 +1101,7 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
@@ -1116,8 +1115,8 @@ namespace WinPaletter
             else
             {
                 CList.Add(lnk_preview);
-                var _Conditions = new Conditions() { AppUnderlineOnly = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                Conditions _conditions = new(){ AppUnderlineOnly = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
 
             Program.TM.Windows11.Color_Index0 = Color.FromArgb(255, C);
@@ -1145,15 +1144,15 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
             CList.Add(taskbar);
             CList.Add(setting_icon_preview);
 
-            var _Conditions = new Conditions() { AppUnderlineOnly = true };
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Conditions _conditions = new(){ AppUnderlineOnly = true };
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows11.Color_Index3 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -1179,19 +1178,19 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             if (!ExplorerPatcher.IsAllowed())
             {
                 CList.Add(taskbar);
-                _Conditions = new Conditions() { AppBackgroundOnly = true };
+                _conditions = new() { AppBackgroundOnly = true };
             }
 
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows11.Color_Index6 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
@@ -1218,9 +1217,9 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows11.StartMenu_Accent = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
                 ApplyColorsToElements(Program.TM);
@@ -1247,9 +1246,9 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows11.Color_Index2 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W11)
                 ApplyColorsToElements(Program.TM);
@@ -1275,7 +1274,7 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
             Color C;
 
@@ -1291,15 +1290,15 @@ namespace WinPaletter
                 {
                     CList.Add(ActionCenter);
 
-                    var _Conditions = new Conditions() { ActionCenterBtn = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                    Conditions _conditions = new(){ ActionCenterBtn = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
                 else
                 {
                     CList.Add(start);
 
-                    var _Conditions = new Conditions() { StartColorOnly = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                    Conditions _conditions = new(){ StartColorOnly = true };
+                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
             }
 
@@ -1308,16 +1307,16 @@ namespace WinPaletter
                 CList.Add(ActionCenter);
                 CList.Add(taskbar);
 
-                var _Conditions = new Conditions() { AppUnderlineOnly = true, ActionCenterBtn = true };
+                Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
 
-                C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
             else
             {
                 CList.Add(start);
 
-                var _Conditions = new Conditions() { StartColorOnly = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+                Conditions _conditions = new(){ StartColorOnly = true };
+                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             }
 
@@ -1340,8 +1339,8 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            List<Control> CList = new() { (Control)sender };
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows11.Color_Index7 = Color.FromArgb(255, C);
 
@@ -1401,10 +1400,10 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, Window1 };
+            List<Control> CList = new() { (Control)sender, Window1 };
 
-            var _Conditions = new Conditions() { Window_ActiveTitlebar = true };
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Conditions _conditions = new(){ Window_ActiveTitlebar = true };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Titlebar_Active = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1430,10 +1429,10 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, Window2 };
+            List<Control> CList = new() { (Control)sender, Window2 };
 
-            var _Conditions = new Conditions() { Window_InactiveTitlebar = true };
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Conditions _conditions = new(){ Window_InactiveTitlebar = true };
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Titlebar_Inactive = Color.FromArgb(255, C);
 
@@ -1555,18 +1554,18 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
             CList.Add((Control)sender);
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             switch (!Program.TM.Windows10.WinMode_Light)
             {
                 case true:
                     {
                         CList.Add(taskbar);  // 'AppUnderline
-                        _Conditions.AppUnderlineOnly = true;
+                        _conditions.AppUnderlineOnly = true;
                         break;
                     }
                 case false:
@@ -1574,14 +1573,14 @@ namespace WinPaletter
                         if (Program.TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                         {
                             CList.Add(taskbar);  // 'AppUnderline
-                            _Conditions.AppUnderlineOnly = true;
+                            _conditions.AppUnderlineOnly = true;
                         }
 
                         break;
                     }
             }
 
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Color_Index1 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1607,7 +1606,7 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
             if (Program.TM.Windows10.Transparency)
             {
@@ -1618,7 +1617,7 @@ namespace WinPaletter
                 CList.Add(taskbar);
             }
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows10.Color_Index5 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
                 ApplyColorsToElements(Program.TM);
@@ -1644,20 +1643,20 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
 
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             switch (!Program.TM.Windows10.WinMode_Light)
             {
                 case true:
                     {
                         CList.Add(ActionCenter); // 'Link
-                        _Conditions.ActionCenterLink = true;
+                        _conditions.ActionCenterLink = true;
                         break;
                     }
 
@@ -1666,14 +1665,14 @@ namespace WinPaletter
                         if (Program.TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC)
                         {
                             CList.Add(ActionCenter); // 'Link
-                            _Conditions.ActionCenterLink = true;
+                            _conditions.ActionCenterLink = true;
                         }
 
                         break;
                     }
             }
 
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Color_Index0 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1700,12 +1699,12 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             switch (!Program.TM.Windows10.WinMode_Light)
             {
@@ -1715,12 +1714,12 @@ namespace WinPaletter
                         {
                             CList.Add(setting_icon_preview);
                             CList.Add(ActionCenter);
-                            _Conditions.ActionCenterBtn = true;
+                            _conditions.ActionCenterBtn = true;
                             CList.Add(lnk_preview);
                             if (Program.TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                             {
                                 CList.Add(taskbar);  // 'AppBackground
-                                _Conditions.AppBackgroundOnly = true;
+                                _conditions.AppBackgroundOnly = true;
 
                             }
                         }
@@ -1728,7 +1727,7 @@ namespace WinPaletter
                         {
                             CList.Add(setting_icon_preview);
                             CList.Add(ActionCenter);
-                            _Conditions.ActionCenterBtn = true;
+                            _conditions.ActionCenterBtn = true;
                             CList.Add(lnk_preview);
                         }
 
@@ -1738,21 +1737,21 @@ namespace WinPaletter
                     {
                         CList.Add(setting_icon_preview);
                         CList.Add(ActionCenter);
-                        _Conditions.ActionCenterBtn = true;
+                        _conditions.ActionCenterBtn = true;
                         CList.Add(lnk_preview);
 
                         if (Program.TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                         {
                             CList.Add(taskbar);  // 'AppBackground
-                            _Conditions.AppBackgroundOnly = true;
-                            _Conditions.AppUnderlineOnly = true;
+                            _conditions.AppBackgroundOnly = true;
+                            _conditions.AppUnderlineOnly = true;
 
                         }
 
                         break;
                     }
             }
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Color_Index3 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1778,12 +1777,12 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>();
+            List<Control> CList = new();
             Color C;
 
             CList.Add((Control)sender);
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             switch (!Program.TM.Windows10.WinMode_Light)
             {
@@ -1808,14 +1807,14 @@ namespace WinPaletter
                             if (Program.TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC)
                             {
                                 CList.Add(ActionCenter); // 'ActionCenterLinks
-                                _Conditions.ActionCenterLink = true;
+                                _conditions.ActionCenterLink = true;
                             }
                         }
 
                         else if (Program.TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC)
                         {
                             CList.Add(ActionCenter); // 'ActionCenterLinks
-                            _Conditions.ActionCenterLink = true;
+                            _conditions.ActionCenterLink = true;
 
                         }
 
@@ -1823,7 +1822,7 @@ namespace WinPaletter
                     }
             }
 
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Color_Index6 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1850,10 +1849,10 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows10.StartMenu_Accent = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
                 ApplyColorsToElements(Program.TM);
@@ -1880,14 +1879,14 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
             if (Program.PreviewStyle == WindowStyle.W10)
             {
                 // ColorControls_List.Add(taskbar) 'Start Icon Hover
             }
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
             Program.TM.Windows10.Color_Index2 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
                 ApplyColorsToElements(Program.TM);
@@ -1914,12 +1913,12 @@ namespace WinPaletter
             }
 
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
             Color C;
 
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
 
             switch (!Program.TM.Windows10.WinMode_Light)
             {
@@ -1936,7 +1935,7 @@ namespace WinPaletter
                             CList.Add(start);
                             CList.Add(ActionCenter);
                             CList.Add(taskbar);  // AppBackground
-                            _Conditions.AppBackgroundOnly = true;
+                            _conditions.AppBackgroundOnly = true;
                         }
 
                         break;
@@ -1959,21 +1958,21 @@ namespace WinPaletter
                             CList.Add(start);
                             CList.Add(ActionCenter);
                             CList.Add(taskbar);  // Start ButtonR Hover
-                            _Conditions.StartColorOnly = true;
+                            _conditions.StartColorOnly = true;
                         }
                         else
                         {
                             CList.Add(start);
                             CList.Add(ActionCenter);
                             CList.Add(taskbar);  // AppBackground
-                            _Conditions.AppBackgroundOnly = true;
+                            _conditions.AppBackgroundOnly = true;
                         }
 
                         break;
                     }
             }
 
-            C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Color_Index4 = Color.FromArgb(255, C);
             if (Program.PreviewStyle == WindowStyle.W10)
@@ -1993,8 +1992,8 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            List<Control> CList = new() { (Control)sender };
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows10.Color_Index7 = Color.FromArgb(255, C);
 
@@ -2064,11 +2063,11 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
+            List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, LivePreview_Colorization = true };
+            Conditions _conditions = new(){ Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, LivePreview_Colorization = true };
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows81.ColorizationColor = Color.FromArgb(255, C);
 
@@ -2106,9 +2105,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows81.StartColor = Color.FromArgb(255, C);
 
@@ -2135,9 +2134,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows81.AccentColor = Color.FromArgb(255, C);
 
@@ -2164,9 +2163,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows81.PersonalColors_Background = Color.FromArgb(255, C);
 
@@ -2193,9 +2192,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender };
+            List<Control> CList = new() { (Control)sender };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Program.TM.Windows81.PersonalColors_Accent = Color.FromArgb(255, C);
 
@@ -2275,11 +2274,11 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
+            List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true };
+            Conditions _conditions = new(){ Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true };
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows7.ColorizationColor = Color.FromArgb(255, C);
 
@@ -2305,11 +2304,11 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
+            List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color2 = true, Background2 = true, LivePreview_AfterGlow = true };
+            Conditions _conditions = new(){ Win7 = true, Color2 = true, Background2 = true, LivePreview_AfterGlow = true };
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows7.ColorizationAfterglow = Color.FromArgb(255, C);
 
@@ -2484,11 +2483,11 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, start, taskbar, Window1, Window2 };
+            List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            var _Conditions = new Conditions() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true, LivePreview_AfterGlow = true };
+            Conditions _conditions = new(){ Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true, LivePreview_AfterGlow = true };
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.WindowsVista.ColorizationColor = Color.FromArgb(255, C);
 
@@ -2652,7 +2651,7 @@ namespace WinPaletter
             if ((System.IO.File.Exists(WXP_VS_textbox.Text) && System.IO.File.Exists(theme)) & !string.IsNullOrEmpty(theme))
             {
 
-                var vs = new VisualStyleFile(theme);
+                VisualStyleFile vs = new(theme);
 
                 WXP_VS_ColorsList.Items.Clear();
 
@@ -2751,7 +2750,7 @@ namespace WinPaletter
                 Forms.ComplexSave.GetResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
                 SaveFileDialog1.FileName = OpenFileDialog1.FileName;
-                Program.TM = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Program.TM = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
 
                 ApplyStylesToElements(Program.TM, false);
@@ -2773,7 +2772,7 @@ namespace WinPaletter
 
             Forms.ComplexSave.GetResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
-            Program.TM = new Theme.Manager(Theme.Manager.Source.Registry);
+            Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
             SaveFileDialog1.FileName = null;
             ApplyStylesToElements(Program.TM, false);

@@ -63,7 +63,7 @@ namespace WinPaletter
             Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button1.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.Location = new Point(368, 303);
@@ -78,7 +78,7 @@ namespace WinPaletter
             Button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button7.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button7.Font = new Font("Segoe UI", 9.0f);
+            Button7.Font = new("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
             Button7.Location = new Point(175, 303);
@@ -92,7 +92,7 @@ namespace WinPaletter
             // 
             Label17.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Label17.BackColor = Color.Transparent;
-            Label17.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label17.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label17.Location = new Point(42, 12);
             Label17.Name = "Label17";
             Label17.Size = new Size(513, 35);
@@ -114,7 +114,7 @@ namespace WinPaletter
             Button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button3.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button3.Font = new Font("Segoe UI", 9.0f);
+            Button3.Font = new("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
             Button3.Location = new Point(89, 303);
@@ -137,10 +137,10 @@ namespace WinPaletter
             Controls.Add(Button7);
             Controls.Add(Button1);
             Controls.Add(CheckedListBox1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Store_CPToggles";

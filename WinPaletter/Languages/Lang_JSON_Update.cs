@@ -42,7 +42,7 @@ namespace WinPaletter
             if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
-                var Lang = new Localizer();
+                Localizer Lang = new();
                 Lang.ExportJSON(SaveJSONDlg.FileName);
                 Lang.Dispose();
                 TextBox2.Text = SaveJSONDlg.FileName;
@@ -59,19 +59,19 @@ namespace WinPaletter
 
                 string _output = SaveJSONDlg.FileName;
 
-                var _Old_File = new StreamReader(TextBox1.Text);
+                StreamReader _Old_File = new(TextBox1.Text);
                 JObject J_Old = JObject.Parse(_Old_File.ReadToEnd());
                 _Old_File.Close();
 
-                var _New_File = new StreamReader(TextBox2.Text);
+                StreamReader _New_File = new(TextBox2.Text);
                 JObject J_New = JObject.Parse(_New_File.ReadToEnd());
                 _New_File.Close();
 
                 // Add information from the New File
-                var J_Output = new JObject() { { "Information", J_New["Information"] } };
+                JObject J_Output = new() { { "Information", J_New["Information"] } };
 
                 // Manage Global Strings
-                var J_GlobalStrings = new JObject();
+                JObject J_GlobalStrings = new();
                 JObject x_old = (JObject)J_Old["Global Strings"];
                 JObject x_new = (JObject)J_New["Global Strings"];
                 foreach (var j in x_new.Properties())
@@ -96,7 +96,7 @@ namespace WinPaletter
                 J_Output.Add("Global Strings", J_GlobalStrings);
 
                 // Manage Forms
-                var J_Forms = new JObject();
+                JObject J_Forms = new();
                 x_old = (JObject)J_Old["Forms Strings"];
                 x_new = (JObject)J_New["Forms Strings"];
 
@@ -112,7 +112,7 @@ namespace WinPaletter
                     {
                         JObject c_old = (JObject)x_old[j.Name]["Controls"];
                         JObject c_new = (JObject)x_new[j.Name]["Controls"];
-                        var c = new JObject();
+                        JObject c = new();
 
                         foreach (var jj in c_new.Properties())
                         {

@@ -13,7 +13,7 @@ namespace WinPaletter
     public partial class Sounds_Editor
     {
         private string snd;
-        private SoundPlayer SP = new SoundPlayer();
+        private SoundPlayer SP = new();
         private bool AltPlayingMethod = false;
 
         public Sounds_Editor()
@@ -36,9 +36,9 @@ namespace WinPaletter
                     byte[] SoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                     try
                     {
-                        using (var ms = new MemoryStream(SoundBytes))
+                        using (MemoryStream ms = new(SoundBytes))
                         {
-                            SP = new SoundPlayer(ms);
+                            SP = new(ms);
                             SP.Load();
                             SP.Play();
                         }
@@ -63,9 +63,9 @@ namespace WinPaletter
 
                     try
                     {
-                        using (var FS = new FileStream(PathsExt.appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
+                        using (FileStream FS = new(PathsExt.appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
                         {
-                            SP = new SoundPlayer(FS);
+                            SP = new(FS);
                             SP.Load();
                             SP.Play();
                         }
@@ -93,9 +93,9 @@ namespace WinPaletter
 
                     try
                     {
-                        using (var FS = new FileStream(snd, FileMode.Open, FileAccess.Read))
+                        using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                         {
-                            SP = new SoundPlayer(FS);
+                            SP = new(FS);
                             SP.Load();
                             SP.Play();
                         }
@@ -142,9 +142,9 @@ namespace WinPaletter
 
                 try
                 {
-                    using (var FS = new FileStream(snd, FileMode.Open, FileAccess.Read))
+                    using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                     {
-                        SP = new SoundPlayer(FS);
+                        SP = new(FS);
                         SP.Load();
                         SP.Play();
                     }
@@ -199,9 +199,9 @@ namespace WinPaletter
                 ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text = snd;
                 try
                 {
-                    using (var FS = new FileStream(snd, FileMode.Open, FileAccess.Read))
+                    using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                     {
-                        SP = new SoundPlayer(FS);
+                        SP = new(FS);
                         SP.Load();
                         SP.Play();
                     }
@@ -481,7 +481,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
                 ApplyFromTM(TMx);
                 TMx.Dispose();
             }
@@ -489,7 +489,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             TMx.Dispose();
         }
@@ -518,7 +518,7 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Program.Settings.Save(Settings.Mode.Registry);
 
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
             TMx.Sounds.Apply();
@@ -559,9 +559,9 @@ namespace WinPaletter
 
         public void GetFromClassicThemeFile(string File, Theme.Structures.Sounds _DefaultSounds)
         {
-            using (var _ini = new INI(File))
+            using (INI _ini = new(File))
             {
-                var snd = new Theme.Structures.Sounds();
+                Theme.Structures.Sounds snd = new();
 
                 string Scope_Win = @"AppEvents\Schemes\Apps\.Default\{0}\.Current";
                 snd.Snd_Win_Default = _ini.Read(string.Format(Scope_Win, ".Default"), "DefaultValue", _DefaultSounds.Snd_Win_Default).PhrasePath();
@@ -617,10 +617,7 @@ namespace WinPaletter
                 snd.Snd_Win_SystemExclamation = _ini.Read(string.Format(Scope_Win, "SystemExclamation"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExclamation).PhrasePath();
                 snd.Snd_Win_SystemExit = _ini.Read(string.Format(Scope_Win, "SystemExit"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExit).PhrasePath();
                 snd.Snd_Win_SystemStart = _ini.Read(string.Format(Scope_Win, "SystemStart"), "DefaultValue", _DefaultSounds.Snd_Win_SystemStart).PhrasePath();
-                if (System.IO.File.Exists(snd.Snd_Win_SystemStart))
-                    snd.Snd_Imageres_SystemStart = snd.Snd_Win_SystemStart;
-                else
-                    snd.Snd_Imageres_SystemStart = "Current";
+                snd.Snd_Imageres_SystemStart = System.IO.File.Exists(snd.Snd_Win_SystemStart) ? snd.Snd_Win_SystemStart : "Current";
                 snd.Snd_Win_SystemHand = _ini.Read(string.Format(Scope_Win, "SystemHand"), "DefaultValue", _DefaultSounds.Snd_Win_SystemHand).PhrasePath();
                 snd.Snd_Win_SystemNotification = _ini.Read(string.Format(Scope_Win, "SystemNotification"), "DefaultValue", _DefaultSounds.Snd_Win_SystemNotification).PhrasePath();
                 snd.Snd_Win_SystemQuestion = _ini.Read(string.Format(Scope_Win, "SystemQuestion"), "DefaultValue", _DefaultSounds.Snd_Win_SystemQuestion).PhrasePath();

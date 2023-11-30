@@ -9,7 +9,7 @@ namespace WinPaletter
     public partial class Converter_Form
     {
 
-        private readonly Converter _Convert = new Converter();
+        private readonly Converter _Convert = new();
 
         public Converter_Form()
         {

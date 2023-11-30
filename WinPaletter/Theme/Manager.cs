@@ -108,16 +108,16 @@ namespace WinPaletter.Theme
                                         else { TerPreDir = PathsExt.TerminalPreviewJSON; }
                                     }
 
-                                    if (System.IO.File.Exists(TerDir)) { Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile); }
-                                    else { Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty); }
+                                    if (System.IO.File.Exists(TerDir)) { Terminal = new(TerDir, WinTerminal.Mode.JSONFile); }
+                                    else { Terminal = new(string.Empty, WinTerminal.Mode.Empty); }
 
-                                    if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
-                                    else { TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
+                                    if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
+                                    else { TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
                                 else
                                 {
-                                    Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-                                    TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                                    Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+                                    TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                                 }
                                 #endregion
 
@@ -190,7 +190,7 @@ namespace WinPaletter.Theme
                                 }
                             }
 
-                            var txt = new List<string>();
+                            List<string> txt = new();
                             txt.Clear();
                             string Pack = new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp";
                             bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && converter.GetFormat(File) == Converter_CP.WP_Format.JSON;
@@ -204,9 +204,9 @@ namespace WinPaletter.Theme
                                     if (!Directory.Exists(cache))
                                         Directory.CreateDirectory(cache);
 
-                                    using (var s = new FileStream(Pack, FileMode.Open, FileAccess.Read))
+                                    using (FileStream s = new(Pack, FileMode.Open, FileAccess.Read))
                                     {
-                                        using (var archive = new ZipArchive(s, ZipArchiveMode.Read))
+                                        using (ZipArchive archive = new(s, ZipArchiveMode.Read))
                                         {
                                             foreach (ZipArchiveEntry entry in archive.Entries)
                                             {
@@ -279,8 +279,8 @@ namespace WinPaletter.Theme
 
                                 foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                 {
-                                    var type = field.FieldType;
-                                    var JSet = new JsonSerializerSettings();
+                                    Type type = field.FieldType;
+                                    JsonSerializerSettings JSet = new();
 
                                     if (J[field.Name] is not null)
                                         field.SetValue(this, J[field.Name].ToObject(type));
@@ -323,7 +323,7 @@ namespace WinPaletter.Theme
 
                             _ErrorHappened = false;
 
-                            var sw_all = new Stopwatch();
+                            Stopwatch sw_all = new();
                             sw_all.Reset();
                             sw_all.Start();
 
@@ -525,7 +525,7 @@ namespace WinPaletter.Theme
                             #endregion
 
                             #region Windows Terminal
-                            var sw = new Stopwatch();
+                            Stopwatch sw = new();
                             sw.Reset();
                             sw.Start();
                             if (OS.W12 || OS.W11 || OS.W10)
@@ -786,7 +786,7 @@ namespace WinPaletter.Theme
         /// <returns></returns>
         public string ToString(bool IgnoreCompression = false)
         {
-            var JSON_Overall = new JObject();
+            JObject JSON_Overall = new();
             JSON_Overall.RemoveAll();
 
             Info.AppVersion = Program.Version;
@@ -825,7 +825,7 @@ namespace WinPaletter.Theme
         public void PackThemeResources(Manager TM, string ThemeFile, string Pack)
         {
             string cache = @"%WinPaletterAppData%\ThemeResPack_Cache\" + string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + @"\";
-            var filesList = new Dictionary<string, string>();
+            Dictionary<string, string> filesList = new();
             filesList.Clear();
             string x;
             string ZipEntry;

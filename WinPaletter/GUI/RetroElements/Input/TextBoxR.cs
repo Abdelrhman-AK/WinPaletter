@@ -20,12 +20,12 @@ namespace WinPaletter.UI.Retro
             DoubleBuffered = true;
             ForeColor = Color.Black;
             BackColor = Color.White;
-            Font = new Font("Microsoft Sans Serif", 8f);
+            Font = new("Microsoft Sans Serif", 8f);
 
-            TB = new TextBox()
+            TB = new()
             {
                 Visible = true,
-                Font = new Font("Microsoft Sans Serif", 8f),
+                Font = new("Microsoft Sans Serif", 8f),
                 Text = Text,
                 ForeColor = Color.White,
                 MaxLength = _MaxLength,
@@ -33,7 +33,7 @@ namespace WinPaletter.UI.Retro
                 ReadOnly = _ReadOnly,
                 UseSystemPasswordChar = _UseSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
-                Location = new Point(1, 0),
+                Location = new(1, 0),
                 Width = Width - 1
             };
 
@@ -233,7 +233,7 @@ namespace WinPaletter.UI.Retro
                 if (TB is not null)
                 {
                     TB.Font = value;
-                    TB.Location = new Point(4, 4);
+                    TB.Location = new(4, 4);
                     TB.Width = Width - 8;
                     if (!_Multiline)
                     {
@@ -311,7 +311,7 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnResize(EventArgs e)
         {
-            TB.Location = new Point(4, 4);
+            TB.Location = new(4, 4);
             TB.Width = Width - 8;
 
             if (_Multiline)
@@ -366,38 +366,47 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var B = new Bitmap(Width, Height);
-            var G = Graphics.FromImage(B);
-            G = Graphics.FromImage(B);
+            Bitmap B = new(Width, Height);
+            Graphics G = Graphics.FromImage(B);
+
             DoubleBuffered = true;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
 
-            base.OnPaint(e);
             TB.ForeColor = ForeColor;
 
             // ################################################################################# Customizer
-            var CheckRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle CheckRect = new(0, 0, Width - 1, Height - 1);
             // #################################################################################
 
             G.Clear(BackColor);
 
-            G.DrawLine(new Pen(ButtonShadow), new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.Width - 1, CheckRect.Y));
-            G.DrawLine(new Pen(ButtonShadow), new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.X, CheckRect.Height - 1));
-            G.DrawLine(new Pen(ButtonDkShadow), new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.Width - 2, CheckRect.Y + 1));
-            G.DrawLine(new Pen(ButtonDkShadow), new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.X + 1, CheckRect.Height - 2));
-            G.DrawLine(new Pen(ButtonLight), new Point(CheckRect.Width - 1, 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
-            G.DrawLine(new Pen(ButtonLight), new Point(1, CheckRect.Height - 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
-            G.DrawLine(new Pen(ButtonHilight), new Point(CheckRect.Width, CheckRect.X), new Point(CheckRect.Width, CheckRect.Height));
-            G.DrawLine(new Pen(ButtonHilight), new Point(CheckRect.X, CheckRect.Height), new Point(CheckRect.Width, CheckRect.Height));
+            using (Pen penButtonShadow = new(ButtonShadow))
+            using (Pen penButtonDkShadow = new(ButtonDkShadow))
+            using (Pen penButtonLight = new(ButtonLight))
+            using (Pen penButtonHilight = new(ButtonHilight))
+            using (SolidBrush br = new(ForeColor))
+            {
+                G.DrawLine(penButtonShadow, new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.Width - 1, CheckRect.Y));
+                G.DrawLine(penButtonShadow, new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.X, CheckRect.Height - 1));
 
-            G.DrawString(TB.Text, Font, new SolidBrush(ForeColor), new Point(2, 4));
+                G.DrawLine(penButtonDkShadow, new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.Width - 2, CheckRect.Y + 1));
+                G.DrawLine(penButtonDkShadow, new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.X + 1, CheckRect.Height - 2));
+
+                G.DrawLine(penButtonLight, new Point(CheckRect.Width - 1, 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
+                G.DrawLine(penButtonLight, new Point(1, CheckRect.Height - 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
+
+                G.DrawLine(penButtonHilight, new Point(CheckRect.Width, CheckRect.X), new Point(CheckRect.Width, CheckRect.Height));
+                G.DrawLine(penButtonHilight, new Point(CheckRect.X, CheckRect.Height), new Point(CheckRect.Width, CheckRect.Height));
+
+                G.DrawString(TB.Text, Font, br, new Point(2, 4));
+            }
 
             G.Dispose();
             e.Graphics.DrawImageUnscaled(B, 0, 0);
             B.Dispose();
+
+            base.OnPaint(e);
         }
-
     }
-
 }

@@ -280,9 +280,9 @@ namespace WinPaletter.Theme.Structures
 
                 if (!Program.Settings.ThemeApplyingBehavior.DelayMetrics)
                 {
-                    NONCLIENTMETRICS NCM = new NONCLIENTMETRICS();
+                    NONCLIENTMETRICS NCM = new();
                     NCM.cbSize = Marshal.SizeOf(NCM);
-                    ICONMETRICS ICO = new ICONMETRICS();
+                    ICONMETRICS ICO = new();
                     ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
                     SystemParametersInfo(TreeView, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);

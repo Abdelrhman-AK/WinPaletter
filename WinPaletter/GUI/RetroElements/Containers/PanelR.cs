@@ -13,7 +13,7 @@ namespace WinPaletter.UI.Retro
         public PanelR()
         {
             DoubleBuffered = true;
-            Font = new Font("Microsoft Sans Serif", 8f);
+            Font = new("Microsoft Sans Serif", 8f);
             BackColor = Color.FromArgb(192, 192, 192);
             ForeColor = Color.Black;
             BorderStyle = BorderStyle.None;
@@ -34,7 +34,7 @@ namespace WinPaletter.UI.Retro
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
 
             G.Clear(BackColor);
 

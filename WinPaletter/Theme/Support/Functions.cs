@@ -19,10 +19,10 @@ namespace WinPaletter.Theme
             if (System.IO.File.Exists(Filename))
             {
 
-                var ls = new List<Color>();
+                List<Color> ls = new();
                 ls.Clear();
 
-                var tx = System.IO.File.ReadAllText(Filename).CList();
+                List<string> tx = System.IO.File.ReadAllText(Filename).CList();
 
                 foreach (string x in tx)
                 {
@@ -72,7 +72,7 @@ namespace WinPaletter.Theme
         {
             if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) { return null; }
 
-            var ls = new List<Color>();
+            List<Color> ls = new();
             ls.Clear();
 
             var AllThemes = String.CList();
@@ -133,7 +133,7 @@ namespace WinPaletter.Theme
         public List<Color> Colors(bool DontMergeRepeatedColors = false)
         {
 
-            var CL = new List<Color>();
+            List<Color> CL = new();
             CL.Clear();
 
             foreach (var field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
@@ -374,7 +374,7 @@ namespace WinPaletter.Theme
             try
             {
 
-                using (var testFont = new Font(fontName, emSize, style))
+                using (Font testFont = new(fontName, emSize, style))
                 {
                     installed = 0 == string.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase);
                 }

@@ -15,7 +15,7 @@ namespace WinPaletter
     public partial class ExternalTerminal
     {
         private bool _Shown = false;
-        private Font f_extterminal = new Font("Consolas", 18f, FontStyle.Regular);
+        private Font f_extterminal = new("Consolas", 18f, FontStyle.Regular);
 
         public ExternalTerminal()
         {
@@ -232,16 +232,16 @@ namespace WinPaletter
                     {
                         {
                             var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = y_cmd.ToString(), lfWeight = fw });
-                            f_extterminal = new Font(temp.FontFamily, ExtTerminal_FontSizeBar.Value, temp.Style);
+                            f_extterminal = new(temp.FontFamily, ExtTerminal_FontSizeBar.Value, temp.Style);
                         }
                         FontName.Text = f_extterminal.Name;
-                        FontName.Font = new Font(f_extterminal.Name, 9f, f_extterminal.Style);
+                        FontName.Font = new(f_extterminal.Name, 9f, f_extterminal.Style);
                     }
                 }
                 else
                 {
                     FontName.Text = "Consolas";
-                    FontName.Font = new Font("Consolas", 9f, f_extterminal.Style);
+                    FontName.Font = new("Consolas", 9f, f_extterminal.Style);
                 }
 
                 ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "CursorColor", _Def.CommandPrompt.W10_1909_CursorColor.Reverse().ToArgb()))).Reverse());
@@ -521,12 +521,12 @@ namespace WinPaletter
                 return;
 
             NativeMethods.GDI32.LogFont fx = new();
-            f_extterminal = new Font(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
+            f_extterminal = new(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
             f_extterminal.ToLogFont(fx);
             fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
             {
                 var temp = Font.FromLogFont(fx);
-                f_extterminal = new Font(temp.Name, f_extterminal.Size, temp.Style);
+                f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
             }
             FontName.Text = f_extterminal.Name;
             ApplyPreview();
@@ -536,7 +536,7 @@ namespace WinPaletter
         {
             if (_Shown)
             {
-                f_extterminal = new Font(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
+                f_extterminal = new(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
                 ApplyPreview();
             }
 
@@ -547,7 +547,7 @@ namespace WinPaletter
             ExtTerminal_FontSizeVal.Text = ExtTerminal_FontSizeBar.Value.ToString();
             if (_Shown)
             {
-                f_extterminal = new Font(f_extterminal.Name, ExtTerminal_FontSizeBar.Value, f_extterminal.Style);
+                f_extterminal = new(f_extterminal.Name, ExtTerminal_FontSizeBar.Value, f_extterminal.Style);
                 ApplyPreview();
             }
         }
@@ -576,9 +576,9 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, ExtTerminal_PreviewCUR2 };
+            List<Control> CList = new() { (Control)sender, ExtTerminal_PreviewCUR2 };
 
-            var C = Forms.ColorPickerDlg.Pick(CList);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -640,44 +640,44 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, CMD4 };
+            List<Control> CList = new() { (Control)sender, CMD4 };
 
-            var _Conditions = new Conditions();
+            Conditions _conditions = new();
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                _Conditions.CMD_ColorTable00 = true;
+                _conditions.CMD_ColorTable00 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                _Conditions.CMD_ColorTable01 = true;
+                _conditions.CMD_ColorTable01 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                _Conditions.CMD_ColorTable02 = true;
+                _conditions.CMD_ColorTable02 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                _Conditions.CMD_ColorTable03 = true;
+                _conditions.CMD_ColorTable03 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                _Conditions.CMD_ColorTable04 = true;
+                _conditions.CMD_ColorTable04 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                _Conditions.CMD_ColorTable05 = true;
+                _conditions.CMD_ColorTable05 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                _Conditions.CMD_ColorTable06 = true;
+                _conditions.CMD_ColorTable06 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                _Conditions.CMD_ColorTable07 = true;
+                _conditions.CMD_ColorTable07 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                _Conditions.CMD_ColorTable08 = true;
+                _conditions.CMD_ColorTable08 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                _Conditions.CMD_ColorTable09 = true;
+                _conditions.CMD_ColorTable09 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                _Conditions.CMD_ColorTable10 = true;
+                _conditions.CMD_ColorTable10 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                _Conditions.CMD_ColorTable11 = true;
+                _conditions.CMD_ColorTable11 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                _Conditions.CMD_ColorTable12 = true;
+                _conditions.CMD_ColorTable12 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                _Conditions.CMD_ColorTable13 = true;
+                _conditions.CMD_ColorTable13 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                _Conditions.CMD_ColorTable14 = true;
+                _conditions.CMD_ColorTable14 = true;
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                _Conditions.CMD_ColorTable15 = true;
+                _conditions.CMD_ColorTable15 = true;
 
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             ((UI.Controllers.ColorItem)sender).BackColor = C;
             ((UI.Controllers.ColorItem)sender).Invalidate();
@@ -696,7 +696,7 @@ namespace WinPaletter
         {
 
             ExtTerminal_PreviewCursorInner.Dock = DockStyle.Fill;
-            ExtTerminal_PreviewCUR2.Padding = new Padding(1, 1, 1, 1);
+            ExtTerminal_PreviewCUR2.Padding = new(1, 1, 1, 1);
 
             if (ExtTerminal_CursorStyle.SelectedIndex == 0)
             {
@@ -754,7 +754,7 @@ namespace WinPaletter
             if (ExtTerminal_CursorStyle.SelectedIndex == 5)
             {
                 ExtTerminal_PreviewCursorInner.Dock = DockStyle.None;
-                ExtTerminal_PreviewCUR2.Padding = new Padding(0, 0, 0, 0);
+                ExtTerminal_PreviewCUR2.Padding = new(0, 0, 0, 0);
                 ExtTerminal_PreviewCursorInner.Width = ExtTerminal_PreviewCUR2.Width;
                 ExtTerminal_PreviewCursorInner.Height = 1;
                 ExtTerminal_PreviewCursorInner.BackColor = ExtTerminal_PreviewCUR.BackColor;
@@ -797,7 +797,7 @@ namespace WinPaletter
             CMD4.CMD_PopupBackground = ExtTerminal_PopupBackgroundBar.Value;
             CMD4.CMD_ScreenColorsForeground = ExtTerminal_AccentForegroundBar.Value;
             CMD4.CMD_ScreenColorsBackground = ExtTerminal_AccentBackgroundBar.Value;
-            CMD4.Font = new Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style);
+            CMD4.Font = new(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style);
             CMD4.Raster = ExtTerminal_RasterToggle.Checked;
 
             switch (RasterList.SelectedItem)
@@ -1269,7 +1269,7 @@ namespace WinPaletter
                 ExtTerminal_AccentForegroundBar.Invalidate();
 
                 FontName.Text = f_extterminal.Name;
-                FontName.Font = new Font(f_extterminal.Name, 9f, f_extterminal.Style);
+                FontName.Font = new(f_extterminal.Name, 9f, f_extterminal.Style);
             }
         }
         #endregion
@@ -1328,8 +1328,8 @@ namespace WinPaletter
             ExtTerminal_ColorTable14.BackColor = TM.CommandPrompt.ColorTable14;
             ExtTerminal_ColorTable15.BackColor = TM.CommandPrompt.ColorTable15;
 
-            ExtTerminal_ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152);
-            ExtTerminal_ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0);
+            ExtTerminal_ColorTable05.DefaultBackColor = Color.FromArgb(136, 23, 152);
+            ExtTerminal_ColorTable06.DefaultBackColor = Color.FromArgb(193, 156, 0);
 
             ExtTerminal_PopupForegroundBar.Value = TM.CommandPrompt.PopupForeground;
             ExtTerminal_PopupBackgroundBar.Value = TM.CommandPrompt.PopupBackground;
@@ -1412,12 +1412,12 @@ namespace WinPaletter
             {
                 {
                     var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight });
-                    f_extterminal = new Font(temp.FontFamily, (int)Math.Round(TM.CommandPrompt.FontSize / 65536d), temp.Style);
+                    f_extterminal = new(temp.FontFamily, (int)Math.Round(TM.CommandPrompt.FontSize / 65536d), temp.Style);
                 }
             }
 
             FontName.Text = f_extterminal.Name;
-            FontName.Font = new Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style);
+            FontName.Font = new(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style);
             ExtTerminal_FontSizeBar.Value = (int)Math.Round(f_extterminal.Size);
             ExtTerminal_FontSizeVal.Text = f_extterminal.Size.ToString();
 
@@ -1471,7 +1471,7 @@ namespace WinPaletter
 
             if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
             {
-                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
                 ApplyFromTM(TMx);
                 ApplyPreview();
                 TMx.Dispose();
@@ -1486,7 +1486,7 @@ namespace WinPaletter
                 return;
             }
 
-            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyFromTM(TMx);
             ApplyPreview();
             TMx.Dispose();
@@ -1542,9 +1542,9 @@ namespace WinPaletter
                 fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
                 {
                     var temp = Font.FromLogFont(fx);
-                    f_extterminal = new Font(temp.Name, f_extterminal.Size, temp.Style);
+                    f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
                 }
-                FontName.Font = new Font(FontDialog1.Font.Name, 9f, f_extterminal.Style);
+                FontName.Font = new(FontDialog1.Font.Name, 9f, f_extterminal.Style);
             }
         }
 

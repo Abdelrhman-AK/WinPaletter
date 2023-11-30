@@ -18,16 +18,15 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
             ForeColor = Color.White;
 
-            _shown = false;
             _alpha = 0;
             _alpha2 = Checked ? 255 : 0;
         }
 
         #region Variables
-        private bool _shown = false;
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         public MouseState State = MouseState.None;
 
@@ -48,31 +47,21 @@ namespace WinPaletter.UI.WP
         private bool _Checked;
         public bool Checked
         {
-            get { return _Checked; }
-
+            get => _Checked;
             set
             {
-                try
+                if (_Checked != value)
                 {
-                    if (_Checked != value)
+                    _Checked = value;
+                    if (_Checked) { UncheckOthersOnChecked(); }
+                    CheckedChanged?.Invoke(this);
+
+                    if (CanAnimate)
                     {
-                        _Checked = value;
-                        if (_Checked) { UncheckOthersOnChecked(); }
-                        CheckedChanged?.Invoke(this);
-
-                        if (_shown)
-                        {
-                            FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                        }
-                        else
-                        {
-                            alpha2 = Checked ? 255 : 0;
-                            Refresh();
-                        }
-
+                        FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
+                    else { alpha2 = Checked ? 255 : 0; }
                 }
-                catch { }
             }
         }
 
@@ -87,7 +76,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -151,31 +140,6 @@ namespace WinPaletter.UI.WP
             base.OnMouseLeave(e);
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            try { if (!DesignMode) { FindForm().Shown += Showed; } }
-            catch { }
-
-            try { alpha = 0; alpha2 = Checked ? 255 : 0; }
-            catch { }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            try { if (!DesignMode) { FindForm().Shown -= Showed; } }
-            catch { }
-
-            base.OnHandleDestroyed(e);
-        }
-
-        public void Showed(object sender, EventArgs e) 
-        {
-            _shown = true;
-            Invalidate();
-        }
-
         #endregion
 
         #region Voids/Functions
@@ -220,8 +184,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            if (Parent is null) return;
+            if (this == null) return;
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -242,7 +205,7 @@ namespace WinPaletter.UI.WP
 
             if (RTL)
             {
-                format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+                format = new(StringFormatFlags.DirectionRightToLeft);
                 OuterCircle.X = Width - OuterCircle.X - OuterCircle.Width;
                 InnerCircle.X = Width - InnerCircle.X - InnerCircle.Width;
                 CheckCircle.X = Width - CheckCircle.X - CheckCircle.Width;
@@ -290,6 +253,8 @@ namespace WinPaletter.UI.WP
             #endregion
 
             format.Dispose();
+
+            base.OnPaint(e);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WinPaletter.Theme
     {
         public static Manager Windows12()
         {
-            var TM = new Manager(Manager.Source.Empty);
+            Manager TM = new(Manager.Source.Empty);
 
             TM.Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32);
 
@@ -90,8 +90,8 @@ namespace WinPaletter.Theme
                 WinEffects.SysListView32 = false;
             }
 
-            TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursor_Enabled = true;
             TM.Cursor_Shadow = false;

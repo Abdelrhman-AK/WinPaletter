@@ -15,11 +15,11 @@ namespace WinPaletter
         {
             get
             {
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 if (!DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle = cp.ClassStyle | DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle = cp.ExStyle | 33554432;
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432;
                     return cp;
                 }
                 else
@@ -82,7 +82,7 @@ namespace WinPaletter
 
         private void Color_From_BackColorChanged(object sender, EventArgs e)
         {
-            var Color = ((Panel)sender).BackColor;
+            Color Color = ((Panel)sender).BackColor;
             BackColor = Program.Style.DarkMode ? Color.Dark(_dark) : Color.LightLight();
 
             Label6.Text = Color.ReturnFormat(ColorsExtensions.ColorFormat.RGB, true, Color.A < 255).Replace(" ", ", ");
@@ -98,7 +98,7 @@ namespace WinPaletter
 
         private void Color_To_BackColorChanged(object sender, EventArgs e)
         {
-            var Color = ((Panel)sender).BackColor;
+            Color Color = ((Panel)sender).BackColor;
 
             Label13.Text = Color.ReturnFormat(ColorsExtensions.ColorFormat.RGB, true, Color.A < 255).Replace(" ", ", ");
             Label12.Text = Color.ReturnFormat(ColorsExtensions.ColorFormat.HEX, true, Color.A < 255).Replace(" ", ", ");

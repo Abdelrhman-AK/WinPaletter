@@ -19,6 +19,7 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
+
         public void LoadSettings()
         {
             Settings sets;
@@ -26,7 +27,7 @@ namespace WinPaletter
             if (!_External)
                 sets = Program.Settings;
             else
-                sets = new Settings(Settings.Mode.File, _File);
+                sets = new(Settings.Mode.File, _File);
             Read(sets);
 
             {
@@ -310,27 +311,27 @@ namespace WinPaletter
 
                     if (File.Exists(TerDir))
                     {
-                        Program.TM.Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
+                        Program.TM.Terminal = new(TerDir, WinTerminal.Mode.JSONFile);
                     }
                     else
                     {
-                        Program.TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+                        Program.TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
                     }
 
                     if (File.Exists(TerPreDir))
                     {
-                        Program.TM.TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
                     else
                     {
-                        Program.TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                     }
                 }
 
                 else
                 {
-                    Program.TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-                    Program.TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                    Program.TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+                    Program.TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                 }
             }
 
@@ -338,7 +339,7 @@ namespace WinPaletter
             {
                 if (CheckBox8.Checked)
                 {
-                    Program.Lang = new Localizer();
+                    Program.Lang = new();
                     Program.Lang.Load(Program.Settings.Language.File);
                     foreach (Form f in Application.OpenForms)
                         f.LoadLanguage();
@@ -352,7 +353,7 @@ namespace WinPaletter
 
             if (ch_EP)
             {
-                Program.EP = new ExplorerPatcher();
+                Program.EP = new();
                 Forms.MainFrm.ApplyColorsToElements(Program.TM);
                 Forms.MainFrm.LoadFromTM(Program.TM);
                 Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
@@ -497,7 +498,7 @@ namespace WinPaletter
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Settings NewSets = new Settings(Settings.Mode.Empty);
+            Settings NewSets = new(Settings.Mode.Empty);
 
             Changed = false;
 
@@ -788,7 +789,7 @@ namespace WinPaletter
 
             if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var sets = new Settings(Settings.Mode.Empty);
+                Settings sets = new(Settings.Mode.Empty);
                 Write(sets, Settings.Mode.File, SaveFileDialog1.FileName);
             }
 
@@ -798,7 +799,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var sets = new Settings(Settings.Mode.File, OpenFileDialog1.FileName);
+                Settings sets = new(Settings.Mode.File, OpenFileDialog1.FileName);
                 Read(sets);
             }
         }
@@ -821,7 +822,7 @@ namespace WinPaletter
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            var sets = new Settings(Settings.Mode.File, files[0]);
+            Settings sets = new(Settings.Mode.File, files[0]);
             Read(sets);
 
             OpenFileDialog1.FileName = files[0];
@@ -853,7 +854,7 @@ namespace WinPaletter
 
                 try
                 {
-                    var _File = new StreamReader(TextBox3.Text);
+                    StreamReader _File = new(TextBox3.Text);
                     JObject J = JObject.Parse(_File.ReadToEnd());
                     _File.Close();
 
@@ -940,7 +941,7 @@ namespace WinPaletter
 
             if (!OS.WXP)
             {
-                var dlg = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
+                Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     if (!ListBox2.Items.Contains(dlg.SelectedPath))

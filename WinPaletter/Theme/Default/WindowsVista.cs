@@ -6,7 +6,7 @@ namespace WinPaletter.Theme
     {
         public static Manager WindowsVista()
         {
-            var TM = new Manager(Manager.Source.Empty);
+            Manager TM = new(Manager.Source.Empty);
 
             {
                 ref Structures.Info Info = ref TM.Info;
@@ -164,8 +164,8 @@ namespace WinPaletter.Theme
                 WinEffects.SysListView32 = true;
             }
 
-            TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursor_Enabled = true;
             TM.Cursor_Shadow = true;

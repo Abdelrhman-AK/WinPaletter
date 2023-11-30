@@ -428,7 +428,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                ANIMATIONINFO anim = new ANIMATIONINFO();
+                ANIMATIONINFO anim = new();
                 anim.cbSize = (uint)Marshal.SizeOf(anim);
                 anim.IMinAnimate = WindowAnimation ? 1 : 0;
 

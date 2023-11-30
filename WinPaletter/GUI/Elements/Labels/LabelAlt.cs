@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -18,13 +17,6 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
         }
 
-        #region Variables
-
-        private IntPtr _textHdc = IntPtr.Zero;
-        private IntPtr _dibSectionRef;
-
-        #endregion
-
         #region Properties
 
         public bool DrawOnGlass { get; set; } = false;
@@ -33,8 +25,8 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
-                if (!DesignMode)
+                CreateParams cpar = base.CreateParams;
+                if (!DesignMode && DrawOnGlass)
                 {
                     cpar.ExStyle |= 0x20;
                     return cpar;
@@ -50,7 +42,7 @@ namespace WinPaletter.UI.WP
         #region Voids/Functions
         protected TextFormatFlags ReturnFormatFlags(string Text = "")
         {
-            var format = TextFormatFlags.Default;
+            TextFormatFlags format = TextFormatFlags.Default;
 
             if (TextAlign == ContentAlignment.BottomCenter)
             {
@@ -121,8 +113,9 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics G = e.Graphics;
+            if (this == null) return;
 
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
 
@@ -135,7 +128,13 @@ namespace WinPaletter.UI.WP
             {
                 if (DesignMode || !DrawOnGlass)
                 {
-                    using (SolidBrush br = new(ForeColor)) { G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat()); }
+                    using (StringFormat sf = TextAlign.ToStringFormat())
+                    {
+                        using (SolidBrush br = new(ForeColor))
+                        {
+                            G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                        }
+                    }
                 }
 
                 else if (!DesignMode & DrawOnGlass)
@@ -145,10 +144,17 @@ namespace WinPaletter.UI.WP
             }
             catch
             {
-                using (SolidBrush br = new(ForeColor)) { G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat()); }
+                using (StringFormat sf = TextAlign.ToStringFormat())
+                {
+                    using (SolidBrush br = new(ForeColor))
+                    {
+                        G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                    }
+                }
             }
+
+            // Don't use base.OnPaint(e) to avoid doubling graphics bug
+            //// base.OnPaint(e);
         }
-
     }
-
 }

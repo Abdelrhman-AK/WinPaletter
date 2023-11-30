@@ -85,7 +85,7 @@ namespace WinPaletter
             Button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button1.BackColor = Color.FromArgb(43, 43, 43);
 
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.Location = new Point(521, 20);
@@ -98,7 +98,7 @@ namespace WinPaletter
             // Label2
             // 
             Label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label2.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label2.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label2.Location = new Point(75, 25);
             Label2.Name = "Label2";
             Label2.Size = new Size(440, 35);
@@ -109,7 +109,7 @@ namespace WinPaletter
             // Label1
             // 
             Label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label1.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label1.Font = new("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label1.Location = new Point(65, 5);
             Label1.Name = "Label1";
             Label1.Size = new Size(413, 19);
@@ -145,7 +145,7 @@ namespace WinPaletter
             Button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(43, 43, 43);
 
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.Location = new Point(521, 20);
@@ -158,7 +158,7 @@ namespace WinPaletter
             // Label3
             // 
             Label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label3.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label3.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label3.Location = new Point(75, 25);
             Label3.Name = "Label3";
             Label3.Size = new Size(440, 35);
@@ -169,7 +169,7 @@ namespace WinPaletter
             // Label4
             // 
             Label4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label4.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label4.Font = new("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label4.Location = new Point(65, 5);
             Label4.Name = "Label4";
             Label4.Size = new Size(413, 19);
@@ -192,7 +192,7 @@ namespace WinPaletter
             Button7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button7.BackColor = Color.FromArgb(34, 34, 34);
 
-            Button7.Font = new Font("Segoe UI", 9.0f);
+            Button7.Font = new("Segoe UI", 9.0f);
             Button7.ForeColor = Color.White;
             Button7.Image = null;
             Button7.Location = new Point(542, 305);
@@ -221,7 +221,7 @@ namespace WinPaletter
             Button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button3.BackColor = Color.FromArgb(43, 43, 43);
 
-            Button3.Font = new Font("Segoe UI", 9.0f);
+            Button3.Font = new("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
             Button3.Location = new Point(521, 20);
@@ -234,7 +234,7 @@ namespace WinPaletter
             // Label5
             // 
             Label5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label5.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label5.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label5.Location = new Point(75, 25);
             Label5.Name = "Label5";
             Label5.Size = new Size(440, 35);
@@ -245,7 +245,7 @@ namespace WinPaletter
             // Label6
             // 
             Label6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label6.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label6.Font = new("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label6.Location = new Point(65, 5);
             Label6.Name = "Label6";
             Label6.Size = new Size(230, 19);
@@ -279,7 +279,7 @@ namespace WinPaletter
             AlertBox1.BackColor = Color.FromArgb(60, 85, 79);
             AlertBox1.CenterText = true;
             AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new Font("Segoe UI", 9.0f);
+            AlertBox1.Font = new("Segoe UI", 9.0f);
             AlertBox1.Image = null;
             AlertBox1.Location = new Point(302, 5);
             AlertBox1.Name = "AlertBox1";
@@ -295,7 +295,7 @@ namespace WinPaletter
             AlertBox2.BackColor = Color.FromArgb(125, 20, 30);
             AlertBox2.CenterText = false;
             AlertBox2.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox2.Font = new Font("Segoe UI", 9.0f);
+            AlertBox2.Font = new("Segoe UI", 9.0f);
             AlertBox2.Image = null;
             AlertBox2.Location = new Point(12, 229);
             AlertBox2.Name = "AlertBox2";
@@ -316,11 +316,11 @@ namespace WinPaletter
             Controls.Add(Button7);
             Controls.Add(GroupBox2);
             Controls.Add(GroupBox1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             HelpButton = true;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Lang_Dashboard";

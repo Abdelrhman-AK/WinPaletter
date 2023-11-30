@@ -50,7 +50,7 @@ namespace WinPaletter
             // 
             Label163.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Label163.BackColor = Color.Transparent;
-            Label163.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label163.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label163.Location = new Point(42, 12);
             Label163.Name = "Label163";
             Label163.Size = new Size(418, 24);
@@ -73,7 +73,7 @@ namespace WinPaletter
             ComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox1.Font = new Font("Segoe UI", 9.0f);
+            ComboBox1.Font = new("Segoe UI", 9.0f);
             ComboBox1.ForeColor = Color.White;
             ComboBox1.FormattingEnabled = true;
             ComboBox1.ItemHeight = 20;
@@ -86,7 +86,7 @@ namespace WinPaletter
             // 
             Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.Location = new Point(294, 75);
@@ -100,7 +100,7 @@ namespace WinPaletter
             // 
             Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.ImageAlign = ContentAlignment.MiddleLeft;
@@ -122,10 +122,10 @@ namespace WinPaletter
             Controls.Add(ComboBox1);
             Controls.Add(Label163);
             Controls.Add(PictureBox33);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "WindowsTerminalCopycat";

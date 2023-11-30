@@ -235,7 +235,7 @@
   <data name="add_win12" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAA6hJREFUSEu1lV9MU2cYxksmSA+MtgpFaCpmGDWZf9jFvHKLGWIGyKhWQVFh2dQL
+        vgAADr4B6kKxwAAAA6hJREFUSEu1lV9MU2cYxksmSA+MtgpFaCpmGDWZf9jFvHKLGWIGyKhWQVFh2dQL
         TRSYJjOL0SHGbJI4TWRkrOjAEYgQlSim6oWJ0SnEROQCyAoKR6GOc3qs0F2s7Xl8v9JWz7EqOH2SX5q8
         OXl+fft9J9VkZGS8FxSJ9MC7QBE24Hk+ShCEfGLb63A4HOvVZa9CETYYHR3NpBK8ic7OTrS3t19WF0ZC
         ETagAou6MBJMYrPZmOgvdakaRdiACqYkCYpuqYtfRBE2oIIpS4Ki2+ryEIqwARVMStLV1YW6ujqFyG63
@@ -17595,7 +17595,7 @@
   <data name="LogonUI_2000" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAALK5JREFUeF7tnAd0Hdd555/kKM462SS7cexzvImTTXHiHHt3EzsusSVZki3bUlSs
+        wAAADsABataJCQAALK5JREFUeF7tnAd0Hdd555/kKM462SS7cexzvImTTXHiHHt3EzsusSVZki3bUlSs
         SlWKvYsEO9gAEARA9N4r0QgQvZEAAbAD7CBIgAQIogNE7/U9AMR//9+8N+AAfKRESkpEZr5zfufOmxnM
         3Ln3P9/33TszMOimm2666aabbrrppptuuummm2666aabbrrppptuuummm2666aabbrrppptuuummm266
         6aabbrrppptuuummm2666aabbrrppptuuummm2666aabbrrppptuuummm2666aabbrrp9lDY4yuN+OPN
@@ -17997,7 +17997,7 @@
   <data name="Native12" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAA7tJREFUSEvtlMtvG1UYxe+MPU/37wGBoJSUVCFNQx+gRiW8hMSCxQiVPZZQd0hg
+        vwAADr8BOAVTJAAAA7tJREFUSEvtlMtvG1UYxe+MPU/37wGBoJSUVCFNQx+gRiW8hMSCxQiVPZZQd0hg
         QYughLqhpKENCqVQUHmIBTsMRE0fCXGTOk4cO3Wc2M4kUTKeezg3HijIigX7ftLRnbE8v3Pm3JkR9+d/
         jfmT/Nn6Eb9a3yFjfoNM/DI1KjPxi2HGOC+vxwfkK9oGXtd8OU5ltDpVCzNaVWbECpR+F8u4FOFax/xB
         btnfA/ZV6mvAvCRhjErER6jzQGxAvqlvyvfEOqCtAfoqf6txrfJ85W/lI1zrWFfhb8O/BayvCFcGnxN+
@@ -28316,17 +28316,5 @@
         K1jE3nRXsOVucEsqhPvHF0oFSXmkw7Z7bRaeKxd5/IcKD6ngo3M7eesv8u3uIbG7ODcB7z/LwouMJfdf
         sgAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="XML_Logoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Logoff.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
-  </data>
-  <data name="XML_Logon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Logon.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
-  </data>
-  <data name="XML_Shutdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Shutdown.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
-  </data>
-  <data name="XML_Unlock" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Unlock.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
   </data>
 </root>

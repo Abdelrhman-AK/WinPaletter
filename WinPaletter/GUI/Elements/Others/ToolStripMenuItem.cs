@@ -9,13 +9,22 @@ namespace WinPaletter.UI.WP
     {
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            e.Graphics.TextRenderingHint = Program.Style.RenderingHint;
-            e.Graphics.Clear(BackColor);
-            using (SolidBrush br = new(ForeColor))
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
+
+            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.Clear(BackColor);
+
+            using (StringFormat sf = base.TextAlign.ToStringFormat())
             {
-                e.Graphics.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), base.TextAlign.ToStringFormat());
+                using (SolidBrush br = new(ForeColor))
+                {
+                    G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                }
             }
+
+            base.OnPaint(e);
         }
     }
 }

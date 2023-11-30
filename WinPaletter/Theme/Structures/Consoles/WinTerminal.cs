@@ -52,7 +52,7 @@ namespace WinPaletter
                     {
                         if (System.IO.File.Exists(File))
                         {
-                            var St = new StreamReader(File);
+                            StreamReader St = new(File);
                             string JSON_String = St.ReadToEnd();
 
                             try
@@ -66,7 +66,7 @@ namespace WinPaletter
 
 
                                 #region Getting Default Profile
-                                DefaultProf = new TProfile();
+                                DefaultProf = new();
 
                                 if (JSonFile["profiles"] is not null)
                                 {
@@ -115,7 +115,7 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting Profiles
-                                Profiles = new List<TProfile>();
+                                Profiles = new();
                                 Profiles.Clear();
 
                                 if (JSonFile["profiles"] is not null)
@@ -124,7 +124,7 @@ namespace WinPaletter
                                     {
                                         foreach (var item in JSonFile["profiles"]["list"])
                                         {
-                                            var P = new TProfile();
+                                            TProfile P = new();
                                             if (item["name"] is not null)
                                                 P.Name = item["name"].ToString();
                                             if (item["backgroundImage"] is not null)
@@ -171,14 +171,14 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting All Colors Schemes
-                                Colors = new List<TColors>();
+                                Colors = new();
                                 Colors.Clear();
 
                                 if (JSonFile["schemes"] is not null)
                                 {
                                     foreach (var item in JSonFile["schemes"])
                                     {
-                                        var TC = new TColors();
+                                        TColors TC = new();
 
                                         if (item["background"] is not null)
                                             TC.Background = HEX2RGB(item["background"].ToString());
@@ -258,14 +258,14 @@ namespace WinPaletter
                                 #endregion
 
                                 #region Getting All Themes
-                                Themes = new List<TTheme>();
+                                Themes = new();
                                 Themes.Clear();
 
                                 if (JSonFile["themes"] is not null)
                                 {
                                     foreach (var item in JSonFile["themes"])
                                     {
-                                        var Th = new TTheme();
+                                        TTheme Th = new();
                                         if (item["name"] is not null)
                                             Th.Name = item["name"].ToString();
 
@@ -307,12 +307,12 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Profiles = new List<TProfile>();
-                            Colors = new List<TColors>();
-                            DefaultProf = new TProfile();
-                            Themes = new List<TTheme>();
+                            Profiles = new();
+                            Colors = new();
+                            DefaultProf = new();
+                            Themes = new();
 
-                            Colors.Add(new TColors()
+                            Colors.Add(new()
                             {
                                 Name = "Campbell",
                                 Background = "FF0C0C0C".FromHEXToColor(true),
@@ -343,7 +343,7 @@ namespace WinPaletter
 
                 case Mode.WinPaletterFile:
                     {
-                        using (var TBx = new Theme.Manager(WinPaletter.Theme.Manager.Source.File, File))
+                        using (Theme.Manager TBx = new(WinPaletter.Theme.Manager.Source.File, File))
                         {
 
                             switch (Version)
@@ -381,12 +381,12 @@ namespace WinPaletter
                 case Mode.Empty:
                     {
 
-                        Profiles = new List<TProfile>();
-                        Colors = new List<TColors>();
-                        DefaultProf = new TProfile();
-                        Themes = new List<TTheme>();
+                        Profiles = new();
+                        Colors = new();
+                        DefaultProf = new();
+                        Themes = new();
 
-                        Colors.Add(new TColors()
+                        Colors.Add(new()
                         {
                             Name = "Campbell",
                             Background = "FF0C0C0C".FromHEXToColor(true),
@@ -498,7 +498,7 @@ namespace WinPaletter
                         }
 
 
-                        var St = new StreamReader(SettingsFile);
+                        StreamReader St = new(SettingsFile);
                         string JSON_String = St.ReadToEnd();
                         JObject JSonFile = JObject.Parse(JSON_String);
                         JObject JSonFileUntouched = JObject.Parse(JSON_String);
@@ -515,7 +515,7 @@ namespace WinPaletter
                             JSonFile["schemes"] = new JArray();
                         for (int x = 0, loopTo = Colors.Count - 1; x <= loopTo; x++)
                         {
-                            var JS = new JObject();
+                            JObject JS = new();
                             JS["background"] = RGB2HEX(Colors[x].Background);
                             JS["black"] = RGB2HEX(Colors[x].Black);
                             JS["blue"] = RGB2HEX(Colors[x].Blue);
@@ -612,7 +612,7 @@ namespace WinPaletter
                         if (!((JObject)JSonFile["profiles"]["defaults"]).ContainsKey("font"))
                         {
                             // JFont.Add("font"]
-                            var JFont = new JObject();
+                            JObject JFont = new();
                             if (DefaultProf.Font.Weight! < 0)
                                 JFont["weight"] = FontWeight_ReturnToString(DefaultProf.Font.Weight);
                             if (!string.IsNullOrEmpty(DefaultProf.Font.Face))
@@ -641,7 +641,7 @@ namespace WinPaletter
 
                         for (int x = 0, loopTo1 = Profiles.Count - 1; x <= loopTo1; x++)
                         {
-                            var JS = new JObject();
+                            JObject JS = new();
                             JS["name"] = Profiles[x].Name;
 
                             JS["backgroundImage"] = Profiles[x].BackgroundImage;
@@ -664,7 +664,7 @@ namespace WinPaletter
 
                             JS["useAcrylic"] = Profiles[x].UseAcrylic;
 
-                            var JS_Font = new JObject();
+                            JObject JS_Font = new();
                             JS_Font["weight"] = FontWeight_ReturnToString(Profiles[x].Font.Weight);
                             if (Profiles[x].Font.Face is not null)
                                 JS_Font["face"] = Profiles[x].Font.Face;
@@ -730,26 +730,26 @@ namespace WinPaletter
 
                             for (int x = 0, loopTo2 = Themes.Count - 1; x <= loopTo2; x++)
                             {
-                                var JS = new JObject();
+                                JObject JS = new();
 
                                 if (!string.IsNullOrEmpty(Themes[x].Name))
                                     JS["name"] = Themes[x].Name;
 
-                                var JS_Tabs = new JObject();
+                                JObject JS_Tabs = new();
                                 if (Themes[x].Tab_Active != Color.FromArgb(0, 0, 0, 0))
                                     JS_Tabs["background"] = RGB2HEX(Themes[x].Tab_Active);
                                 if (Themes[x].Tab_Inactive != Color.FromArgb(0, 0, 0, 0))
                                     JS_Tabs["unfocusedBackground"] = RGB2HEX(Themes[x].Tab_Inactive);
                                 JS["tab"] = JS_Tabs;
 
-                                var JS_TabRow = new JObject();
+                                JObject JS_TabRow = new();
                                 if (Themes[x].Titlebar_Active != Color.FromArgb(0, 0, 0, 0))
                                     JS_TabRow["background"] = RGB2HEX(Themes[x].Titlebar_Active);
                                 if (Themes[x].Titlebar_Inactive != Color.FromArgb(0, 0, 0, 0))
                                     JS_TabRow["unfocusedBackground"] = RGB2HEX(Themes[x].Titlebar_Inactive);
                                 JS["tabRow"] = JS_TabRow;
 
-                                var JS_Window = new JObject();
+                                JObject JS_Window = new();
                                 if (!string.IsNullOrEmpty(Themes[x].Style))
                                     JS_Window["applicationTheme"] = Themes[x].Style;
                                 JS["window"] = JS_Window;
@@ -779,7 +779,7 @@ namespace WinPaletter
         /// </summary>
         public static void TakeOwnership(string filepath)
         {
-            var proc = new Process();
+            Process proc = new();
             proc.StartInfo.FileName = "takeown.exe";
             proc.StartInfo.Arguments = "/R /F \"" + filepath + "\"";
             proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -1170,7 +1170,7 @@ namespace WinPaletter
         public int Opacity { get; set; } = 100;
 
         /// <summary>Object dependent on Windows Terminal font class. This object has data of font name, size and weight.</summary>
-        public TFont Font { get; set; } = new TFont();
+        public TFont Font { get; set; } = new();
 
         /// <summary>Background image path for this profile</summary>
         public string BackgroundImage { get; set; } = string.Empty;

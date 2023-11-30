@@ -11,14 +11,14 @@ namespace WinPaletter
     public static class PE
     {
 
-        private readonly static SecurityIdentifier identifier = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null);
+        private readonly static SecurityIdentifier identifier = new(WellKnownSidType.BuiltinAdministratorsSid, null);
         private readonly static NTAccount AdminAccount = (NTAccount)identifier.Translate(typeof(NTAccount));
-        private readonly static FileSystemAccessRule AccessRule = new FileSystemAccessRule(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
+        private readonly static FileSystemAccessRule AccessRule = new(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
 
         public static byte[] GetResource(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
-            var PE_File = new PortableExecutable(SourceFile);
-            return PE_File.GetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
+            PortableExecutable PE_File = new(SourceFile);
+            return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
         }
 
         public static void ReplaceResource(TreeView TreeView, string SourceFile, string ResourceType, int ID, byte[] NewRes, ushort LangID = 1033)
@@ -58,8 +58,8 @@ namespace WinPaletter
 
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
-                            var PE_File = new PortableExecutable(SourceFile);
-                            PE_File.SetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                            PortableExecutable PE_File = new(SourceFile);
+                            PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
 
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
@@ -76,8 +76,8 @@ namespace WinPaletter
                 // It isn't in system directory and can be modified without changing rights/permissions.
                 if (TreeView is not null)
                     Theme.Manager.AddNode(TreeView, string.Format("Replacing '{0}' resources", System.IO.Path.GetFileName(SourceFile)), "pe_patch");
-                var PE_File = new PortableExecutable(SourceFile);
-                PE_File.SetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                PortableExecutable PE_File = new(SourceFile);
+                PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
             }
 
         }
@@ -161,7 +161,7 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(File))
                 {
-                    using (var ms = new System.IO.MemoryStream(PE.GetResource(File, ResourceType, ResourceID)))
+                    using (System.IO.MemoryStream ms = new(PE.GetResource(File, ResourceType, ResourceID)))
                     {
                         return (Bitmap)Image.FromStream(ms);
                     }

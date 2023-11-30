@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageProcessor;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -19,15 +20,10 @@ namespace WinPaletter.UI.Simulation
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             BackColor = Color.Transparent;
-            this.MouseMove += WinElement_MouseMove;
-            this.MouseDown += WinElement_MouseMove;
-            this.MouseUp += WinElement_MouseMove;
-            this.MouseLeave += WinElement_MouseLeave;
-            this.HandleCreated += WinElement_HandleCreated;
         }
 
         #region Variables
-        private TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.15d));
+        private TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.15d));
         private Bitmap Noise7 = Properties.Resources.AeroGlass;
         private Bitmap Noise7Start = Properties.Resources.Start7Glass;
         private Bitmap adaptedBack;
@@ -80,137 +76,110 @@ namespace WinPaletter.UI.Simulation
         #region Properties
         public Styles Style
         {
-            get
-            {
-                return _Style;
-            }
+            get => _Style;
             set
             {
-                _Style = value;
-                ProcessBack();
-                Refresh();
+                if (value != _Style)
+                {
+                    _Style = value;
+                    ProcessBack();
+                    Refresh();
+                }
             }
         }
 
         private int _BackColorAlpha = 130;
         public int BackColorAlpha
         {
-            get
-            {
-                return _BackColorAlpha;
-            }
+            get => _BackColorAlpha;
             set
             {
-                _BackColorAlpha = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _BackColorAlpha)
+                {
+                    _BackColorAlpha = value;
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private float _NoisePower = 0.15f;
         public float NoisePower
         {
-            get
-            {
-                return _NoisePower;
-            }
+            get => _NoisePower;
             set
             {
-                _NoisePower = value;
-
-                if (Style == Styles.Taskbar7Aero)
+                if (value != _BackColorAlpha)
                 {
-                    try
+                    _NoisePower = value;
+
+                    if (Style == Styles.Taskbar7Aero) { try { Noise7 = Properties.Resources.AeroGlass.Fade(NoisePower / 100f); } catch { } }
+
+                    else if (Style == Styles.Start7Aero) { try { Noise7 = Properties.Resources.Start7Glass.Fade(NoisePower / 100f); } catch { } }
+
+                    if (!SuspendRefresh)
                     {
-                        Noise7 = Properties.Resources.AeroGlass.Fade(NoisePower / 100f);
-                    }
-                    catch
-                    {
+                        NoiseBack();
+                        Refresh();
                     }
                 }
-
-                if (Style == Styles.Start7Aero)
-                {
-                    try
-                    {
-                        Noise7Start = Properties.Resources.Start7Glass.Fade(NoisePower / 100f);
-                    }
-                    catch
-                    {
-                    }
-                }
-
-                if (!SuspendRefresh)
-                    NoiseBack();
-                if (!SuspendRefresh)
-                    Refresh();
             }
         }
 
         private int _BlurPower = 8;
         public int BlurPower
         {
-            get
-            {
-                return _BlurPower;
-            }
+            get => _BlurPower;
             set
             {
-                _BlurPower = value;
-                BlurBack();
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _BlurPower)
+                {
+                    _BlurPower = value;
+                    BlurBack();
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private bool _Transparency = true;
         public bool Transparency
         {
-            get
-            {
-                return _Transparency;
-            }
+            get => _Transparency;
             set
             {
-                _Transparency = value;
-                ProcessBack();
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _Transparency)
+                {
+                    _Transparency = value;
+                    ProcessBack();
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private bool _DarkMode = true;
         public bool DarkMode
         {
-            get
-            {
-                return _DarkMode;
-            }
+            get => _DarkMode;
             set
             {
-                _DarkMode = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _DarkMode)
+                {
+                    _DarkMode = value;
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private Color _AppUnderline;
         public Color AppUnderline
         {
-            get
-            {
-                return _AppUnderline;
-            }
+            get => _AppUnderline;
             set
             {
-                _AppUnderline = value;
-                try
+                if (value != _AppUnderline)
                 {
-                    if (!SuspendRefresh)
-                        Refresh();
-                }
-                catch
-                {
+                    _AppUnderline = value;
+
+                    if (!SuspendRefresh) Refresh();
                 }
             }
         }
@@ -218,20 +187,14 @@ namespace WinPaletter.UI.Simulation
         private Color _AppBackground;
         public Color AppBackground
         {
-            get
-            {
-                return _AppBackground;
-            }
+            get => _AppBackground;
             set
             {
-                _AppBackground = value;
-                try
+                if (value != _AppBackground)
                 {
-                    if (!SuspendRefresh)
-                        Refresh();
-                }
-                catch
-                {
+                    _AppBackground = value;
+
+                    if (!SuspendRefresh) Refresh();
                 }
             }
         }
@@ -239,20 +202,14 @@ namespace WinPaletter.UI.Simulation
         private Color _ActionCenterButton_Normal;
         public Color ActionCenterButton_Normal
         {
-            get
-            {
-                return _ActionCenterButton_Normal;
-            }
+            get => _ActionCenterButton_Normal;
             set
             {
-                _ActionCenterButton_Normal = value;
-                try
+                if (value != _ActionCenterButton_Normal)
                 {
-                    if (!SuspendRefresh)
-                        Refresh();
-                }
-                catch
-                {
+                    _ActionCenterButton_Normal = value;
+
+                    if (!SuspendRefresh) Refresh();
                 }
             }
         }
@@ -260,20 +217,14 @@ namespace WinPaletter.UI.Simulation
         private Color _ActionCenterButton_Hover;
         public Color ActionCenterButton_Hover
         {
-            get
-            {
-                return _ActionCenterButton_Hover;
-            }
+            get => _ActionCenterButton_Hover;
             set
             {
-                _ActionCenterButton_Hover = value;
-                try
+                if (value != _ActionCenterButton_Hover)
                 {
-                    if (!SuspendRefresh)
-                        Refresh();
-                }
-                catch
-                {
+                    _ActionCenterButton_Hover = value;
+
+                    if (!SuspendRefresh) Refresh();
                 }
             }
         }
@@ -281,20 +232,14 @@ namespace WinPaletter.UI.Simulation
         private Color _ActionCenterButton_Pressed;
         public Color ActionCenterButton_Pressed
         {
-            get
-            {
-                return _ActionCenterButton_Pressed;
-            }
+            get => _ActionCenterButton_Pressed;
             set
             {
-                _ActionCenterButton_Pressed = value;
-                try
+                if (value != _ActionCenterButton_Pressed)
                 {
-                    if (!SuspendRefresh)
-                        Refresh();
-                }
-                catch
-                {
+                    _ActionCenterButton_Pressed = value;
+
+                    if (!SuspendRefresh) Refresh();
                 }
             }
         }
@@ -302,90 +247,90 @@ namespace WinPaletter.UI.Simulation
         private Color _StartColor;
         public Color StartColor
         {
-            get
-            {
-                return _StartColor;
-            }
+            get => _StartColor;
             set
             {
-                _StartColor = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _StartColor)
+                {
+                    _StartColor = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private Color _LinkColor;
         public Color LinkColor
         {
-            get
-            {
-                return _LinkColor;
-            }
+            get => _LinkColor;
             set
             {
-                _LinkColor = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _LinkColor)
+                {
+                    _LinkColor = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private Color _Background;
         public Color Background
         {
-            get
-            {
-                return _Background;
-            }
+            get => _Background;
             set
             {
-                _Background = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _Background)
+                {
+                    _Background = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private Color _Background2;
         public Color Background2
         {
-            get
-            {
-                return _Background2;
-            }
+            get => _Background2;
             set
             {
-                _Background2 = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _Background2)
+                {
+                    _Background2 = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private int _Win7ColorBal = (int)Math.Round(0.15);
         public int Win7ColorBal
         {
-            get
-            {
-                return _Win7ColorBal;
-            }
+            get => _Win7ColorBal;
             set
             {
-                _Win7ColorBal = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _Win7ColorBal)
+                {
+                    _Win7ColorBal = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
 
         private int _Win7GlowBal = (int)Math.Round(0.15);
         public int Win7GlowBal
         {
-            get
-            {
-                return _Win7GlowBal;
-            }
+            get => _Win7GlowBal;
             set
             {
-                _Win7GlowBal = value;
-                if (!SuspendRefresh)
-                    Refresh();
+                if (value != _Win7GlowBal)
+                {
+                    _Win7GlowBal = value;
+
+                    if (!SuspendRefresh) Refresh();
+                }
             }
         }
         public bool UseWin11ORB_WithWin10 { get; set; } = false;
@@ -397,9 +342,16 @@ namespace WinPaletter.UI.Simulation
         {
             get
             {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle = cp.ExStyle | 0x20;
-                return cp;
+                CreateParams cpar = base.CreateParams;
+                if (!DesignMode)
+                {
+                    cpar.ExStyle |= 0x20;
+                    return cpar;
+                }
+                else
+                {
+                    return cpar;
+                }
             }
         }
         #endregion
@@ -473,7 +425,7 @@ namespace WinPaletter.UI.Simulation
             {
                 //if (Style == Styles.Start7Aero | Style == Styles.Taskbar7Aero | Style == Styles.StartVistaAero | Style == Styles.TaskbarVistaAero | Style == Styles.AltTab7Aero)
                 //{
-                //    adaptedBackBlurred = new Bitmap(adaptedBack).Blur(1);
+                //    adaptedBackBlurred  = new(adaptedBack).Blur(1);
                 //}
             }
             catch { }
@@ -495,7 +447,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 if (b is not null)
                                 {
-                                    using (var ImgF = new ImageProcessor.ImageFactory())
+                                    using (ImageFactory ImgF = new())
                                     {
                                         ImgF.Load(b);
                                         ImgF.Saturation(60);
@@ -536,13 +488,13 @@ namespace WinPaletter.UI.Simulation
             if (Style == Styles.ActionCenter11 | Style == Styles.Start11 | Style == Styles.Taskbar11 | Style == Styles.AltTab11)
             {
                 if (Transparency)
-                    Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(NoisePower));
+                    Noise = new(Properties.Resources.GaussianBlur.Fade(NoisePower));
             }
 
             else if (Style == Styles.ActionCenter10 | Style == Styles.Start10 | Style == Styles.Taskbar10)
             {
                 if (Transparency)
-                    Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(NoisePower));
+                    Noise = new(Properties.Resources.GaussianBlur.Fade(NoisePower));
             }
 
             else if (Style == Styles.Start7Aero | Style == Styles.Taskbar7Aero | Style == Styles.AltTab7Aero | Style == Styles.AltTab7Opaque)
@@ -563,10 +515,8 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-        #endregion
 
-        #region Events
-        private void WinElement_MouseMove(object sender, MouseEventArgs e)
+        private void OnMouseMove_Down_Up(MouseEventArgs e)
         {
             if (Style == Styles.ActionCenter11)
             {
@@ -602,10 +552,33 @@ namespace WinPaletter.UI.Simulation
                     if (!SuspendRefresh)
                         Refresh();
                 }
-
             }
         }
-        private void WinElement_MouseLeave(object sender, EventArgs e)
+        #endregion
+
+        #region Events
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            OnMouseMove_Down_Up(e);
+
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            OnMouseMove_Down_Up(e);
+
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            OnMouseMove_Down_Up(e);
+
+            base.OnMouseUp(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
         {
             if (Style == Styles.ActionCenter11)
             {
@@ -614,50 +587,49 @@ namespace WinPaletter.UI.Simulation
                 if (!SuspendRefresh)
                     Refresh();
             }
-        }
-        private void WinElement_HandleCreated(object sender, EventArgs e)
-        {
-            if (!DesignMode)
-            {
-                try
-                {
-                    Parent.BackgroundImageChanged += ProcessBack_EventHandler;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    SizeChanged += ProcessBack_EventHandler;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    LocationChanged += ProcessBack_EventHandler;
-                }
-                catch
-                {
-                }
 
-                ProcessBack();
-            }
+            base.OnMouseLeave(e);
         }
-        public void ProcessBack_EventHandler(object sender, EventArgs e)
+
+        protected override void OnHandleCreated(EventArgs e)
         {
-            ProcessBack();
+            if (!DesignMode) ProcessBack();
+
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnBackgroundImageChanged(EventArgs e)
+        {
+            if (!DesignMode) ProcessBack();
+
+            base.OnBackgroundImageChanged(e);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            if (!DesignMode) ProcessBack();
+
+            base.OnSizeChanged(e);
+        }
+
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            if (!DesignMode) ProcessBack();
+
+            base.OnLocationChanged(e);
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;
-            var Rect = new Rectangle(-1, -1, Width + 2, Height + 2);
-            var RRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle Rect = new(-1, -1, Width + 2, Height + 2);
+            Rectangle RRect = new(0, 0, Width - 1, Height - 1);
             int Radius = 5;
 
             switch (Style)
@@ -689,7 +661,7 @@ namespace WinPaletter.UI.Simulation
                         }
                         if (Transparency)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
-                        var SearchRect = new Rectangle(8, 10, Width - 8 * 2, 15);
+                        Rectangle SearchRect = new(8, 10, Width - 8 * 2, 15);
 
                         G.DrawRoundImage(DarkMode ? Properties.Resources.Start11_Dark : Properties.Resources.Start11_Light, RRect, Radius, true);
 
@@ -750,8 +722,8 @@ namespace WinPaletter.UI.Simulation
                         }
                         if (Transparency)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
-                        Button1 = new Rectangle(8, 8, 49, 20);
-                        Button2 = new Rectangle(62, 8, 49, 20);
+                        Button1 = new(8, 8, 49, 20);
+                        Button2 = new(62, 8, 49, 20);
 
                         G.DrawRoundImage(DarkMode ? Properties.Resources.AC_11_Dark : Properties.Resources.AC_11_Light, RRect, Radius, true);
 
@@ -849,16 +821,16 @@ namespace WinPaletter.UI.Simulation
                         if (Transparency)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
 
-                        var StartBtnRect = new Rectangle(8, 3, 36, 36);
-                        var StartImgRect = new Rectangle(8, 3, 37, 37);
+                        Rectangle StartBtnRect = new(8, 3, 36, 36);
+                        Rectangle StartImgRect = new(8, 3, 37, 37);
 
-                        var App2BtnRect = new Rectangle(StartBtnRect.Right + 5, 3, 36, 36);
-                        var App2ImgRect = new Rectangle(StartBtnRect.Right + 5, 3, 37, 37);
-                        var App2BtnRectUnderline = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3);
+                        Rectangle App2BtnRect = new(StartBtnRect.Right + 5, 3, 36, 36);
+                        Rectangle App2ImgRect = new(StartBtnRect.Right + 5, 3, 37, 37);
+                        Rectangle App2BtnRectUnderline = new(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3);
 
-                        var AppBtnRect = new Rectangle(App2BtnRect.Right + 5, 3, 36, 36);
-                        var AppImgRect = new Rectangle(App2BtnRect.Right + 5, 3, 37, 37);
-                        var AppBtnRectUnderline = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - 18) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 18, 3);
+                        Rectangle AppBtnRect = new(App2BtnRect.Right + 5, 3, 36, 36);
+                        Rectangle AppImgRect = new(App2BtnRect.Right + 5, 3, 37, 37);
+                        Rectangle AppBtnRectUnderline = new(AppBtnRect.X + (AppBtnRect.Width - 18) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 18, 3);
 
                         Color BackC;
                         Color BorderC;
@@ -968,7 +940,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo = appsNumber - 1; x <= loopTo; x++)
@@ -985,14 +957,14 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo1 = Rects.Count - 1; x <= loopTo1; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             Color back = DarkMode ? Color.FromArgb(23, 23, 23) : Color.FromArgb(233, 234, 234);
                             Color back2 = DarkMode ? Color.FromArgb(39, 39, 39) : Color.FromArgb(255, 255, 255);
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
+                                Rectangle surround = new(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
                                 using (Pen P = new(Color.FromArgb(75, 182, 237), 3))
                                 {
                                     G.DrawRoundedRect(P, surround, Radius * 2 + 5 / 2, true);
@@ -1081,9 +1053,9 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        var rect1 = new Rectangle(85, 6, 30, 3);
-                        var rect2 = new Rectangle(5, 190, 30, 3);
-                        var rect3 = new Rectangle(42, 201, 34, 24);
+                        Rectangle rect1 = new(85, 6, 30, 3);
+                        Rectangle rect2 = new(5, 190, 30, 3);
+                        Rectangle rect3 = new(42, 201, 34, 24);
 
                         using (SolidBrush br = new(ActionCenterButton_Normal))
                         {
@@ -1123,24 +1095,24 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        var StartBtnRect = new Rectangle(-1, -1, 42, Height + 2);
-                        var StartBtnImgRect = new Rectangle();
+                        Rectangle StartBtnRect = new(-1, -1, 42, Height + 2);
+                        Rectangle StartBtnImgRect = new();
 
                         if (!UseWin11ORB_WithWin10)
                         {
-                            StartBtnImgRect = new Rectangle(StartBtnRect.X + (StartBtnRect.Width - Properties.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Properties.Resources.StartBtn_10Dark.Height) / 2, Properties.Resources.StartBtn_10Dark.Width, Properties.Resources.StartBtn_10Dark.Height);
+                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Properties.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Properties.Resources.StartBtn_10Dark.Height) / 2, Properties.Resources.StartBtn_10Dark.Width, Properties.Resources.StartBtn_10Dark.Height);
                         }
                         else
                         {
-                            StartBtnImgRect = new Rectangle(StartBtnRect.X + (StartBtnRect.Width - Properties.Resources.StartBtn_11_EP.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Properties.Resources.StartBtn_11_EP.Height) / 2, Properties.Resources.StartBtn_11_EP.Width, Properties.Resources.StartBtn_11_EP.Height);
+                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Properties.Resources.StartBtn_11_EP.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Properties.Resources.StartBtn_11_EP.Height) / 2, Properties.Resources.StartBtn_11_EP.Width, Properties.Resources.StartBtn_11_EP.Height);
                         }
 
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right, -1, 40, Height + 2);
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
-                        var AppBtnRectUnderline = new Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2);
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right, -1, 40, Height + 2);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
-                        var App2BtnRectUnderline = new Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right, -1, 40, Height + 2);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnRectUnderline = new(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right, -1, 40, Height + 2);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnRectUnderline = new(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2);
                         Color StartColor = _StartColor;
                         using (SolidBrush br = new(StartColor))
                         {
@@ -1179,7 +1151,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.AltTab10:
                     #region Alt+Tab 10
                     {
-                        float a = Math.Max(Math.Min(255, (float)((float)BackColorAlpha / 100) * 255), 0);
+                        float a = Math.Max(Math.Min(255, (float)BackColorAlpha / 100 * 255), 0);
 
                         using (SolidBrush br = new(Color.FromArgb((int)a, 23, 23, 23)))
                         {
@@ -1193,7 +1165,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo2 = appsNumber - 1; x <= loopTo2; x++)
@@ -1210,13 +1182,13 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo3 = Rects.Count - 1; x <= loopTo3; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             Color back = DarkMode ? Color.FromArgb(60, 60, 60) : Color.FromArgb(255, 255, 255);
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
+                                Rectangle surround = new(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10);
                                 using (Pen P = new(Color.White, 2))
                                 {
                                     G.DrawRectangle(P, surround);
@@ -1256,15 +1228,15 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        var StartORB = new Bitmap(Properties.Resources.Win8ORB);
-                        var StartBtnRect = new Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1);
-                        var AppBtnRectInner = new Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
+                        Bitmap StartORB  = new(Properties.Resources.Win8ORB);
+                        Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
+                        Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1);
-                        var App2BtnRectInner = new Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
+                        Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1321,15 +1293,15 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        var StartORB = new Bitmap(Properties.Resources.Win8ORB);
-                        var StartBtnRect = new Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1);
-                        var AppBtnRectInner = new Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
+                        Bitmap StartORB  = new(Properties.Resources.Win8ORB);
+                        Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
+                        Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1);
-                        var App2BtnRectInner = new Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
+                        Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1388,7 +1360,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo4 = appsNumber - 1; x <= loopTo4; x++)
@@ -1405,11 +1377,11 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo5 = Rects.Count - 1; x <= loopTo5; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
+                                Rectangle surround = new(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
                                 using (Pen P = new(Color.White, 2))
                                 {
                                     G.DrawRectangle(P, surround);
@@ -1418,12 +1390,15 @@ namespace WinPaletter.UI.Simulation
 
                             G.FillRectangle(Brushes.White, r);
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
-                            var icon_rect = new Rectangle(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
+                            Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
                             G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
                         }
 
-                        var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
-                        G.DrawString("______", Font, Brushes.White, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
+                        Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                        {
+                            G.DrawString("______", Font, Brushes.White, TextRect, sf);
+                        }
                         break;
                     }
                 #endregion
@@ -1448,7 +1423,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo6 = appsNumber - 1; x <= loopTo6; x++)
@@ -1465,11 +1440,11 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo7 = Rects.Count - 1; x <= loopTo7; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
+                                Rectangle surround = new(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
                                 using (Pen P = new(Background2, 2))
                                 {
                                     G.DrawRectangle(P, surround);
@@ -1478,16 +1453,18 @@ namespace WinPaletter.UI.Simulation
 
                             G.FillRectangle(Brushes.White, r);
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
-                            var icon_rect = new Rectangle(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
+                            Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
                             G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
                         }
 
-                        var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
-                        using (SolidBrush br = new(ForeColor))
+                        Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString("______", Font, br, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
+                            using (SolidBrush br = new(ForeColor))
+                            {
+                                G.DrawString("______", Font, br, TextRect, sf);
+                            }
                         }
-
                         break;
                     }
                 #endregion
@@ -1495,7 +1472,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.Start7Aero:
                     #region Start 7 Aero
                     {
-                        var RestRect = new Rectangle(0, 14, Width - 5, Height - 10);
+                        Rectangle RestRect = new(0, 14, Width - 5, Height - 10);
 
                         if (!DesignMode && adaptedBackBlurred is not null)
                         {
@@ -1529,7 +1506,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.Start7Opaque:
                     #region Start 7 Opaque
                     {
-                        var RestRect = new Rectangle(0, 14, Width - 5, Height - 10);
+                        Rectangle RestRect = new(0, 14, Width - 5, Height - 10);
                         using (SolidBrush br = new(Color.White))
                         {
                             G.FillRoundedRect(br, RestRect, 5, true);
@@ -1588,15 +1565,15 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        var StartORB = new Bitmap(Properties.Resources.Win7ORB);
+                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
 
-                        var StartBtnRect = new Rectangle(3, -3, 39, 39);
+                        Rectangle StartBtnRect = new(3, -3, 39, 39);
 
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right + 5, 0, 45, 35);
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 45, 35);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
 
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right + 1, 0, 45, 35);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 45, 35);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1643,15 +1620,15 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        var StartORB = new Bitmap(Properties.Resources.Win7ORB);
+                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
 
-                        var StartBtnRect = new Rectangle(3, -3, 39, 39);
+                        Rectangle StartBtnRect = new(3, -3, 39, 39);
 
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right + 5, 0, 45, 35);
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 45, 35);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
 
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right + 1, 0, 45, 35);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 45, 35);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1679,15 +1656,15 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        var StartORB = new Bitmap(Properties.Resources.Win7ORB);
+                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
 
-                        var StartBtnRect = new Rectangle(3, -3, 39, 39);
+                        Rectangle StartBtnRect = new(3, -3, 39, 39);
 
-                        var AppBtnRect = new Rectangle(StartBtnRect.Right + 5, 0, 45, 35);
-                        var AppBtnImgRect = new Rectangle(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 45, 35);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
 
-                        var App2BtnRect = new Rectangle(AppBtnRect.Right + 1, 0, 45, 35);
-                        var App2BtnImgRect = new Rectangle(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 45, 35);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1714,7 +1691,7 @@ namespace WinPaletter.UI.Simulation
                         if (Shadow & !DesignMode)
                             G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15);
 
-                        var inner = new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
+                        Rectangle inner = new(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
                         Color Color1 = Background;
                         Color Color2 = Background2;
 
@@ -1744,7 +1721,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo8 = appsNumber - 1; x <= loopTo8; x++)
@@ -1761,11 +1738,11 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo9 = Rects.Count - 1; x <= loopTo9; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
+                                Rectangle surround = new(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
                                 using (SolidBrush br = new(Color.FromArgb(75, 200, 200, 200)))
                                 {
                                     G.FillRoundedRect(br, surround, 1, true);
@@ -1789,13 +1766,16 @@ namespace WinPaletter.UI.Simulation
 
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
 
-                            var icon_rect = new Rectangle(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
+                            Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
                             G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
                         }
 
-                        var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
-                        G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
+                        Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                        {
+                            G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                        }
                         break;
                     }
 
@@ -1808,7 +1788,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15);
                         }
-                        var inner = new Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
+                        Rectangle inner = new(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
 
                         using (SolidBrush br = new(Color.White))
                         {
@@ -1836,7 +1816,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo10 = appsNumber - 1; x <= loopTo10; x++)
@@ -1853,11 +1833,11 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo11 = Rects.Count - 1; x <= loopTo11; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
 
                             if (x == 0)
                             {
-                                var surround = new Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
+                                Rectangle surround = new(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20);
                                 using (SolidBrush br = new(Color.FromArgb(75, 200, 200, 200)))
                                 {
                                     G.FillRoundedRect(br, surround, 1, true);
@@ -1881,13 +1861,16 @@ namespace WinPaletter.UI.Simulation
 
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
 
-                            var icon_rect = new Rectangle(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
+                            Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
                             G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
                         }
 
-                        var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
-                        G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
+                        Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                        {
+                            G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                        }
                         break;
                     }
 
@@ -1902,10 +1885,10 @@ namespace WinPaletter.UI.Simulation
                         Color Titlebar_InnerBorder = Color.FromArgb(255, 255, 255);
                         Color Titlebar_Turquoise = Color.FromArgb(40, 207, 228);
                         Color OuterBorder = Color.FromArgb(0, 0, 0);
-                        var UpperPart = new Rectangle(RRect.X, RRect.Y, RRect.Width + 1, 25);
+                        Rectangle UpperPart = new(RRect.X, RRect.Y, RRect.Width + 1, 25);
                         G.SetClip(UpperPart);
-                        var pth_back = new LinearGradientBrush(UpperPart, Titlebar_Background1, Titlebar_BackColor2, LinearGradientMode.Vertical);
-                        var pth_line = new LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
+                        LinearGradientBrush pth_back = new(UpperPart, Titlebar_Background1, Titlebar_BackColor2, LinearGradientMode.Vertical);
+                        LinearGradientBrush pth_line = new(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
                         // ### Render Titlebar
                         G.FillRectangle(pth_back, RRect);
                         using (Pen P = new(Titlebar_OuterBorder))
@@ -1955,7 +1938,7 @@ namespace WinPaletter.UI.Simulation
 
                         int _paddingOuter = (RRect.Width - AppWidth * appsNumber - _padding * (appsNumber - 1)) / 2;
 
-                        var Rects = new List<Rectangle>();
+                        List<Rectangle> Rects = new();
                         Rects.Clear();
 
                         for (int x = 0, loopTo12 = appsNumber - 1; x <= loopTo12; x++)
@@ -1972,17 +1955,20 @@ namespace WinPaletter.UI.Simulation
 
                         for (int x = 0, loopTo13 = Rects.Count - 1; x <= loopTo13; x++)
                         {
-                            var r = Rects[x];
+                            Rectangle r = Rects[x];
                             if (x == 0)
                                 G.DrawImage(Properties.Resources.Win7AltTabBasicButton, r);
 
-                            var imgrect = new Rectangle(r.X + (r.Width - Properties.Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                            Rectangle imgrect = new(r.X + (r.Width - Properties.Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
 
                             G.DrawImage(Properties.Resources.SampleApp_Active, imgrect);
                         }
 
-                        var TextRect = new Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
-                        G.DrawString("______", Font, Brushes.Black, TextRect, ContentAlignment.MiddleCenter.ToStringFormat());
+                        Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                        {
+                            G.DrawString("______", Font, Brushes.Black, TextRect, sf);
+                        }
                         break;
                     }
                 #endregion
@@ -1990,7 +1976,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.StartVistaAero:
                     #region Start Vista Aero
                     {
-                        var RestRect = new Rectangle(0, 14, Width - 6, Height - 14);
+                        Rectangle RestRect = new(0, 14, Width - 6, Height - 14);
 
                         // To dismiss upper part above start menu and make there is no blur bug
                         G.SetClip(RestRect);
@@ -2010,7 +1996,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.StartVistaOpaque:
                     #region Start Vista Opaque
                     {
-                        var RestRect = new Rectangle(0, 14, Width - 6, Height - 14);
+                        Rectangle RestRect = new(0, 14, Width - 6, Height - 14);
                         G.FillRoundedRect(Brushes.White, RestRect, 4, true);
                         using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, Background)))
                         {
@@ -2042,12 +2028,12 @@ namespace WinPaletter.UI.Simulation
                         Bitmap orb = Properties.Resources.Vista_StartLowerORB;
                         G.DrawImage(orb, new Rectangle(0, 0, orb.Width, Height));
 
-                        var apprect1 = new Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4);
-                        var apprect2 = new Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4);
-                        var appIcon1 = new Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
-                        var appIcon2 = new Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
-                        var appLabel1 = new Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
-                        var appLabel2 = new Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
+                        Rectangle apprect1 = new(Rect.X + 60, 1, 140, Rect.Height - 4);
+                        Rectangle apprect2 = new(apprect1.Right + 2, 1, 140, Rect.Height - 4);
+                        Rectangle appIcon1 = new(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
+                        Rectangle appIcon2 = new(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
+                        Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
+                        Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
                         G.DrawImage(Properties.Resources.Vista_ActiveApp, apprect1);
                         G.DrawImage(Properties.Resources.Vista_InactiveApp, apprect2);
@@ -2055,8 +2041,11 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                        {
+                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                        }
                         break;
                     }
                 #endregion
@@ -2073,12 +2062,12 @@ namespace WinPaletter.UI.Simulation
                         G.FillRectangle(new TextureBrush(Properties.Resources.Vista_Taskbar), Rect);
                         G.DrawImage(orb, new Rectangle(0, 0, orb.Width, Height));
 
-                        var apprect1 = new Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4);
-                        var apprect2 = new Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4);
-                        var appIcon1 = new Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
-                        var appIcon2 = new Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
-                        var appLabel1 = new Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
-                        var appLabel2 = new Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
+                        Rectangle apprect1 = new(Rect.X + 60, 1, 140, Rect.Height - 4);
+                        Rectangle apprect2 = new(apprect1.Right + 2, 1, 140, Rect.Height - 4);
+                        Rectangle appIcon1 = new(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
+                        Rectangle appIcon2 = new(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
+                        Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
+                        Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
                         G.DrawImage(Properties.Resources.Vista_ActiveApp, apprect1);
                         G.DrawImage(Properties.Resources.Vista_InactiveApp, apprect2);
@@ -2086,8 +2075,11 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                        {
+                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                        }
                         break;
                     }
                 #endregion
@@ -2100,12 +2092,12 @@ namespace WinPaletter.UI.Simulation
                         G.FillRectangle(new TextureBrush(Properties.Resources.Vista_Taskbar), Rect);
                         G.DrawImage(orb, new Rectangle(0, 0, orb.Width, Height));
 
-                        var apprect1 = new Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4);
-                        var apprect2 = new Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4);
-                        var appIcon1 = new Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
-                        var appIcon2 = new Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
-                        var appLabel1 = new Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
-                        var appLabel2 = new Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
+                        Rectangle apprect1 = new(Rect.X + 60, 1, 140, Rect.Height - 4);
+                        Rectangle apprect2 = new(apprect1.Right + 2, 1, 140, Rect.Height - 4);
+                        Rectangle appIcon1 = new(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20);
+                        Rectangle appIcon2 = new(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20);
+                        Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
+                        Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
                         G.DrawImage(Properties.Resources.Vista_ActiveApp, apprect1);
                         G.DrawImage(Properties.Resources.Vista_InactiveApp, apprect2);
@@ -2113,8 +2105,11 @@ namespace WinPaletter.UI.Simulation
                         G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
                         G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
 
-                        G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat());
-                        G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat());
+                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                        {
+                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                        }
                         break;
                     }
                 #endregion
@@ -2136,6 +2131,8 @@ namespace WinPaletter.UI.Simulation
                     }
                     #endregion
             }
+
+            base.OnPaint(e);
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed GroupBox for WinPaletter UI")]
     [DefaultEvent("Click")]
     public class GroupBox : Panel
@@ -31,7 +29,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -47,8 +45,9 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            var G = e.Graphics;
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
             DoubleBuffered = true;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -56,7 +55,7 @@ namespace WinPaletter.UI.WP
 
             if (!DesignMode)
             {
-                var ParentColor = this.GetParentColor();
+                Color ParentColor = this.GetParentColor();
 
                 G.Clear(ParentColor);
                 BackColor = ParentColor.CB((float)(ParentColor.IsDark() ? 0.04d : -0.05d));
@@ -69,6 +68,8 @@ namespace WinPaletter.UI.WP
             {
                 G.FillRectangle(Program.Style.Schemes.Main.Brushes.Back, Rect);
             }
+
+            base.OnPaint(e);
         }
     }
 }

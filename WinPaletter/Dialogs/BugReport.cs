@@ -21,7 +21,7 @@ namespace WinPaletter
 
         private void Center()
         {
-            Location = new Point(Location.X - 15, Location.Y - 15);
+            Location = new(Location.X - 15, Location.Y - 15);
 
             Task.Delay(10).ContinueWith(_ =>
             {
@@ -215,7 +215,7 @@ namespace WinPaletter
 
         public string GetDetails()
         {
-            var SB = new StringBuilder();
+            StringBuilder SB = new();
             SB.Clear();
             SB.AppendLine("```cs");
             SB.AppendLine("//General information");

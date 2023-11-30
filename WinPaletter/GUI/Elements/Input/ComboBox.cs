@@ -8,35 +8,24 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-
     [Description("Themed ComboBox for WinPaletter UI")]
     public class ComboBox : System.Windows.Forms.ComboBox
     {
         public ComboBox()
         {
-            Timer1 = new Timer() { Enabled = false, Interval = 1 };
-            Timer2 = new Timer() { Enabled = false, Interval = 1 };
-
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            Size = new Size(190, 27);
+            Size = new(190, 27);
             DrawMode = DrawMode.OwnerDrawVariable;
             ItemHeight = 20;
 
             ForeColor = Color.White;
             DropDownStyle = ComboBoxStyle.DropDownList;
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
 
-            MouseWheel += ComboBox_MouseWheel;
-            MouseDown += ComboBox_MouseDown;
-            MouseUp += ComboBox_Click;
-            HandleCreated += ComboBox_HandleCreated;
-            DropDown += ComboBox_DropDown;
-            DropDownClosed += ComboBox_DropDownClosed;
-            Timer1.Tick += Timer1_Tick;
-            Timer2.Tick += Timer2_Tick;
+            _alpha = 0; _alpha2 = 0;
         }
 
         #region Properties
@@ -47,7 +36,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -62,11 +51,10 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Variables
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.4d));
         private readonly TextureBrush Noise2 = new(Properties.Resources.GaussianBlur.Fade(0.9d));
-
-        private bool _Shown = false;
 
         private MouseState State = MouseState.None;
 
@@ -82,7 +70,7 @@ namespace WinPaletter.UI.WP
         #region Voids
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {
-            var points = new List<Point>() { FirstPoint, SecondPoint, ThirdPoint };
+            List<Point> points = new() { FirstPoint, SecondPoint, ThirdPoint };
             using (SolidBrush br = new(Clr))
             {
                 G.FillPolygon(br, points.ToArray());
@@ -91,34 +79,44 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events
-
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space) { this.DroppedDown = !this.DroppedDown; }
+
             base.OnKeyDown(e);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            base.OnMouseEnter(e);
             State = MouseState.Over;
-            _Shown = true;
-            Timer1.Enabled = true;
-            Timer1.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
+
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            State = MouseState.Down;
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            base.OnMouseLeave(e);
             State = MouseState.None;
-            _Shown = true;
-            Timer1.Enabled = true;
-            Timer1.Start();
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
+
+            base.OnMouseLeave(e);
         }
 
-        private void ComboBox_MouseWheel(object sender, MouseEventArgs e)
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
             try
             {
@@ -137,148 +135,51 @@ namespace WinPaletter.UI.WP
                 }
             }
             catch { }
+
+            base.OnMouseWheel(e);
         }
 
-        private void ComboBox_MouseDown(object sender, MouseEventArgs e)
+        protected override void OnDropDown(EventArgs e)
         {
-            State = MouseState.Down;
-            _Shown = true;
-            Timer1.Enabled = true;
-            Timer1.Start();
-            Invalidate();
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha2 = 0; }
+
+            base.OnDropDown(e);
         }
 
-        private void ComboBox_Click(object sender, EventArgs e)
+        protected override void OnDropDownClosed(EventArgs e)
         {
-            State = MouseState.Over;
-            _Shown = true;
-            Timer1.Enabled = true;
-            Timer1.Start();
-            Invalidate();
-        }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha2 = 255; }
 
-        private void ComboBox_HandleCreated(object sender, EventArgs e)
-        {
-            alpha = 0; alpha2 = 0;
+            base.OnDropDownClosed(e);
         }
-
-        private void ComboBox_DropDown(object sender, EventArgs e)
-        {
-            if (_Shown) { Timer2.Enabled = true; Timer2.Start(); }
-        }
-
-        private void ComboBox_DropDownClosed(object sender, EventArgs e)
-        {
-            if (_Shown) { Timer2.Enabled = true; Timer2.Start(); }
-        }
-
         #endregion
 
         #region Animator
 
-        private int alpha, alpha2;
-        private readonly int Factor = 20;
-        private Timer Timer1, Timer2;
+        private int _alpha = 0;
+        private int _alpha2 = 255;
 
-        private void Timer1_Tick(object sender, EventArgs e)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha
         {
-            if (!DesignMode)
-            {
-
-                if (State == MouseState.Over)
-                {
-                    if (alpha + Factor <= 255)
-                    {
-                        alpha += Factor;
-                    }
-                    else if (alpha + Factor > 255)
-                    {
-                        alpha = 255;
-                        Timer1.Enabled = false;
-                        Timer1.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-
-                if (!(State == MouseState.Over))
-                {
-                    if (alpha - Factor >= 0)
-                    {
-                        alpha -= Factor;
-                    }
-                    else if (alpha - Factor < 0)
-                    {
-                        alpha = 0;
-                        Timer1.Enabled = false;
-                        Timer1.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-            }
+            get => _alpha;
+            set { _alpha = value; Refresh(); }
         }
 
-        private void Timer2_Tick(object sender, EventArgs e)
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int alpha2
         {
-            if (!DesignMode)
-            {
-
-                if (DroppedDown)
-                {
-                    if (alpha2 + Factor <= 255)
-                    {
-                        alpha2 += Factor;
-                    }
-                    else if (alpha2 + Factor > 255)
-                    {
-                        alpha2 = 255;
-                        Timer2.Enabled = false;
-                        Timer2.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-
-                if (!DroppedDown)
-                {
-                    if (alpha2 - Factor >= 0)
-                    {
-                        alpha2 -= Factor;
-                    }
-                    else if (alpha2 - Factor < 0)
-                    {
-                        alpha2 = 0;
-                        Timer2.Enabled = false;
-                        Timer2.Stop();
-                    }
-
-                    if (_Shown)
-                    {
-                        System.Threading.Thread.Sleep(1);
-                        Invalidate();
-                    }
-                }
-            }
+            get => _alpha2;
+            set { _alpha2 = value; Refresh(); }
         }
-
         #endregion
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-            base.OnDrawItem(e);
+            if (this == null) return;
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -307,7 +208,7 @@ namespace WinPaletter.UI.WP
 
             if (e.Index >= 0)
             {
-                var Rect = e.Bounds; Rect.X += 2; Rect.Y += 1; Rect.Width -= 2;
+                Rectangle Rect = e.Bounds; Rect.X += 2; Rect.Y += 1; Rect.Width -= 2;
 
                 using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
                 {
@@ -318,10 +219,14 @@ namespace WinPaletter.UI.WP
                     }
                 }
             }
+
+            base.OnDrawItem(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -363,7 +268,7 @@ namespace WinPaletter.UI.WP
 
             Point point_CenterTop = new(Width - 14, Arrow_Y_1);
 
-            if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_Checked, OuterRect); }
+            if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_Checked, InnerRect); }
 
             Color Triangle1 = Color.FromArgb(255 - alpha2, !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
             using (Pen P = new(Triangle1, 2f))
@@ -381,9 +286,11 @@ namespace WinPaletter.UI.WP
             {
                 using (SolidBrush br = new(ForeColor))
                 {
-                    G.DrawString((SelectedItem ?? "").ToString(), Font, br, TextRect, sf);
+                    G.DrawString((SelectedItem ?? string.Empty).ToString(), Font, br, TextRect, sf);
                 }
             }
+
+            base.OnPaint(e);
         }
     }
 }

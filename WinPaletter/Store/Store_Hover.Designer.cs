@@ -44,10 +44,10 @@ namespace WinPaletter
             BackColor = Color.FromArgb(25, 25, 25);
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(528, 297);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Store_Hover";

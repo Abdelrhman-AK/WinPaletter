@@ -112,8 +112,8 @@ namespace WinPaletter.NativeMethods
         public static bool EnablePrivilege(string privilege, bool disable)
         {
             long value = Process.GetCurrentProcess().Handle.ToInt32();
-            var h = new IntPtr(value);
-            var phtok = IntPtr.Zero;
+            IntPtr h = new(value);
+            IntPtr phtok = IntPtr.Zero;
             bool flag = OpenProcessToken(h, 40, ref phtok);
             TokPriv1Luid newst = default;
             newst.Count = 1;

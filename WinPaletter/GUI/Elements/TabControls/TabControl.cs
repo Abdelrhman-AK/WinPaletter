@@ -16,10 +16,10 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            ItemSize = new Size(35, 140);
+            ItemSize = new(35, 140);
             DrawMode = TabDrawMode.OwnerDrawFixed;
             SizeMode = TabSizeMode.Fixed;
-            Font = new Font("Segoe UI", 9f);
+            Font = new("Segoe UI", 9f);
         }
 
         #region Variables
@@ -31,7 +31,7 @@ namespace WinPaletter.UI.WP
         {
             get
             {
-                var cpar = base.CreateParams;
+                CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
                     cpar.ExStyle |= 0x20;
@@ -70,8 +70,6 @@ namespace WinPaletter.UI.WP
 
         protected override void CreateHandle()
         {
-            base.CreateHandle();
-
             int X1 = ItemSize.Width;
             int X2 = ItemSize.Height;
 
@@ -79,26 +77,30 @@ namespace WinPaletter.UI.WP
             {
                 if (X1 >= X2)
                 {
-                    ItemSize = new Size(X1, X2);
+                    ItemSize = new(X1, X2);
                 }
                 else
                 {
-                    ItemSize = new Size(X2, X1);
+                    ItemSize = new(X2, X1);
                 }
             }
             else if (X2 >= X1)
             {
-                ItemSize = new Size(X1, X2);
+                ItemSize = new(X1, X2);
             }
             else
             {
-                ItemSize = new Size(X2, X1);
+                ItemSize = new(X2, X1);
             }
+
+            base.CreateHandle();
         }
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (this == null) return;
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.RenderingHint;
@@ -183,11 +185,23 @@ namespace WinPaletter.UI.WP
 
                         Rectangle tr = new(xPoint, TabRect.Y, TabRect.Width - Fixer, TabRect.Height);
 
-                        using (SolidBrush br = new(TextColor)) { G.DrawString(TabPages[i].Text, Font, br, tr, ContentAlignment.MiddleLeft.ToStringFormat(RTL)); }
+                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
+                        {
+                            using (SolidBrush br = new(TextColor))
+                            {
+                                G.DrawString(TabPages[i].Text, Font, br, tr, sf);
+                            }
+                        }
                     }
                     else
                     {
-                        using (SolidBrush br = new(TextColor)) { G.DrawString(TabPages[i].Text, Font, br, TabRect, ContentAlignment.MiddleCenter.ToStringFormat(RTL)); }
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
+                        {
+                            using (SolidBrush br = new(TextColor))
+                            {
+                                G.DrawString(TabPages[i].Text, Font, br, TabRect, sf);
+                            }
+                        }
                     }
 
                     if (RTL) img.RotateFlip(RotateFlipType.Rotate180FlipY);
@@ -198,24 +212,35 @@ namespace WinPaletter.UI.WP
                 {
                     if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
                     {
-                        using (SolidBrush br = new(TextColor))
+                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
                         {
-                            int LTFixer0 = !RTL ? SideTape.Width + 7 : 0;
-                            int LTFixer1 = SideTape.Width + 7;
+                            using (SolidBrush br = new(TextColor))
+                            {
+                                int LTFixer0 = !RTL ? SideTape.Width + 7 : 0;
+                                int LTFixer1 = SideTape.Width + 7;
 
-                            int xPoint = TabRect.X + LTFixer0;
+                                int xPoint = TabRect.X + LTFixer0;
 
-                            Rectangle tr = new(xPoint, TabRect.Y + 1, TabRect.Width - LTFixer1, TabRect.Height);
+                                Rectangle tr = new(xPoint, TabRect.Y + 1, TabRect.Width - LTFixer1, TabRect.Height);
 
-                            G.DrawString(TabPages[i].Text, Font, br, tr, ContentAlignment.MiddleLeft.ToStringFormat(RTL));
+                                G.DrawString(TabPages[i].Text, Font, br, tr, sf);
+                            }
                         }
                     }
                     else
                     {
-                        using (SolidBrush br = new(TextColor)) { G.DrawString(TabPages[i].Text, Font, br, TabRect, ContentAlignment.MiddleCenter.ToStringFormat(RTL)); }
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
+                        {
+                            using (SolidBrush br = new(TextColor))
+                            {
+                                G.DrawString(TabPages[i].Text, Font, br, TabRect, sf);
+                            }
+                        }
                     }
                 }
             }
+
+            base.OnPaint(e);
         }
     }
 }

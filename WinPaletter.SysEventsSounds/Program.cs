@@ -10,7 +10,7 @@ namespace WinPaletter.SysEventsSounds
         static void Main()
         {
             ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            ServicesToRun = new[]
             {
                 new Service1()
             };

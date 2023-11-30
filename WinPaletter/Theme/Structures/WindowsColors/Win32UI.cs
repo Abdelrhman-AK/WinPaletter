@@ -489,7 +489,7 @@ namespace WinPaletter.Theme.Structures
             bool isClassic = string.IsNullOrEmpty(UxTheme.GetCurrentVS().Item1);
 
             // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
-            var fl = new List<Form>();
+            List<Form> fl = new();
             fl.Clear();
             if (isClassic)
             {
@@ -504,8 +504,8 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            var C1 = new List<int>();
-            var C2 = new List<uint>();
+            List<int> C1 = new();
+            List<uint> C2 = new();
 
             C1.Clear();
             C2.Clear();

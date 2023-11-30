@@ -30,11 +30,11 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AppTheme data structure</param>
         public void Load(AppTheme @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", @default.Enabled));
-            BackColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", @default.BackColor.ToArgb())));
-            AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", @default.AccentColor.ToArgb())));
-            DarkMode = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", @default.DarkMode));
-            RoundCorners = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", @default.RoundCorners));
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomColors", @default.Enabled));
+            BackColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "BackColor", @default.BackColor.ToArgb())));
+            AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "AccentColor", @default.AccentColor.ToArgb())));
+            DarkMode = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomTheme", @default.DarkMode));
+            RoundCorners = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "RoundedCorners", @default.RoundCorners));
         }
 
         /// <summary>
@@ -43,18 +43,18 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", Enabled);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", BackColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", AccentColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", DarkMode);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", RoundCorners);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomColors", Enabled);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "BackColor", BackColor.ToArgb());
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "AccentColor", AccentColor.ToArgb());
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomTheme", DarkMode);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "RoundedCorners", RoundCorners);
 
             {
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = Enabled;
                 Appearance.BackColor = BackColor;
                 Appearance.AccentColor = AccentColor;
-                Appearance.CustomTheme = DarkMode;
+                Appearance.CustomTheme_DarkMode = DarkMode;
                 Appearance.RoundedCorners = RoundCorners;
             }
 

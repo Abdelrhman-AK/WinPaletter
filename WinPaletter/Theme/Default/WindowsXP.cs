@@ -6,7 +6,7 @@ namespace WinPaletter.Theme
     {
         public static Manager WindowsXP()
         {
-            var TM = new Manager(Manager.Source.Empty);
+            Manager TM = new(Manager.Source.Empty);
 
             {
                 ref Structures.Info Info = ref TM.Info;
@@ -155,12 +155,12 @@ namespace WinPaletter.Theme
                 MetricsFonts.DesktopIconSize = 48;
                 MetricsFonts.ShellIconSize = 32;
                 MetricsFonts.Fonts_SingleBitPP = true;
-                MetricsFonts.CaptionFont = new Font("Trebuchet MS", 9.75f, FontStyle.Bold);
-                MetricsFonts.SmCaptionFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
-                MetricsFonts.IconFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
-                MetricsFonts.MenuFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
-                MetricsFonts.MessageFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
-                MetricsFonts.StatusFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
+                MetricsFonts.CaptionFont = new("Trebuchet MS", 9.75f, FontStyle.Bold);
+                MetricsFonts.SmCaptionFont = new("Tahoma", 8.25f, FontStyle.Regular);
+                MetricsFonts.IconFont = new("Tahoma", 8.25f, FontStyle.Regular);
+                MetricsFonts.MenuFont = new("Tahoma", 8.25f, FontStyle.Regular);
+                MetricsFonts.MessageFont = new("Tahoma", 8.25f, FontStyle.Regular);
+                MetricsFonts.StatusFont = new("Tahoma", 8.25f, FontStyle.Regular);
             }
 
             TM.Cursor_Shadow = true;
@@ -582,8 +582,8 @@ namespace WinPaletter.Theme
                 WinEffects.SysListView32 = true;
             }
 
-            TM.Terminal = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new WinTerminal(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursor_Enabled = true;
             TM.Cursor_Shadow = true;

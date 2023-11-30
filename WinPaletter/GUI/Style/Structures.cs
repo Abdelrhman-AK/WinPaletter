@@ -29,7 +29,7 @@ namespace WinPaletter.UI.Style
 
                 Scheme Tertiary = new(DefaultColors.TertiaryColor, DefaultColors.BackColorDark, true);
 
-                Scheme Disabled = new(DefaultColors.DisabledColor, DefaultColors.DisabledBackColor, true);
+                Scheme Disabled = new(DefaultColors.DisabledColor_Dark, DefaultColors.DisabledBackColor_Dark, true);
             }
 
             public Scheme Main;
@@ -76,9 +76,9 @@ namespace WinPaletter.UI.Style
                 {
                     AccentAlt = accent.Light(0.65f);                    //<----------------
 
-                    Button = backcolor.CB(0.07f); 
-                    Button_Over = backcolor.CB(0.1f); 
-                    Button_Down = backcolor.CB(0.07f);  
+                    Button = backcolor.CB(0.07f);
+                    Button_Over = backcolor.CB(0.1f);
+                    Button_Down = backcolor.CB(0.07f);
 
                     Back = backcolor.CB(0.07f);
                     Line = backcolor.CB(0.08f);
@@ -103,27 +103,27 @@ namespace WinPaletter.UI.Style
                 {
                     AccentAlt = accent.Light(0.5f);                     //<----------------
 
-                    Button = backcolor.CB(-0.04f);                    
-                    Button_Over = backcolor.CB(-0.1f);                 
+                    Button = backcolor.CB(-0.04f);
+                    Button_Over = backcolor.CB(-0.1f);
                     Button_Down = backcolor.CB(-0.04f);
 
-                    Back = backcolor.CB(-0.05f);
-                    Line = backcolor.CB(-0.09f);
+                    Back = backcolor.CB(-0.15f);
+                    Line = backcolor.CB(-0.18f);
 
                     Back_Hover = backcolor.CB(-0.03f);
                     Line_Hover = backcolor.CB(-0.15f);
 
-                    Back_Max = backcolor.CB(-0.3f);                     //<----------------
-                    Line_Max = backcolor.CB(-0.35);                     //<----------------
+                    Back_Max = backcolor.CB(-0.45f);                     //<----------------
+                    Line_Max = backcolor.CB(-0.5f);                      //<----------------
 
-                    Back_Checked = accent.CB(0.45f);
-                    Line_Checked = accent.CB(0.45f);
+                    Back_Checked = accent.CB(0.65f);
+                    Line_Checked = accent.CB(0.62f);
 
-                    Back_Checked_Hover = accent.CB(0.3f);
-                    Line_Checked_Hover = accent.CB(0.25f);
+                    Back_Checked_Hover = accent.CB(0.45f);
+                    Line_Checked_Hover = accent.CB(0.4f);
 
-                    ForeColor = backcolor.Dark(0.3f);
-                    ForeColor_Accent = accent.Dark(0.3f);
+                    ForeColor = backcolor.Dark(0.4f);
+                    ForeColor_Accent = accent.Dark(0.5f);
                 }
             }
 
@@ -207,7 +207,7 @@ namespace WinPaletter.UI.Style
 
                 Back_Checked_Hover = new(scheme.Colors.Back_Checked_Hover);
                 Line_Checked_Hover = new(scheme.Colors.Line_Checked_Hover);
-                 
+
                 ForeColor = new(scheme.Colors.ForeColor);
                 ForeColor_Accent = new(scheme.Colors.ForeColor_Accent);
             }

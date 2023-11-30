@@ -1440,7 +1440,7 @@ namespace WinPaletter
             this.W11_Color_Index7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index7.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index7.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index7.DontShowInfo = false;
             this.W11_Color_Index7.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1509,7 +1509,7 @@ namespace WinPaletter
             this.W11_Color_Index6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index6.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index6.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index6.DontShowInfo = false;
             this.W11_Color_Index6.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1578,7 +1578,7 @@ namespace WinPaletter
             this.W11_Color_Index5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index5.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index5.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index5.DontShowInfo = false;
             this.W11_Color_Index5.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1647,7 +1647,7 @@ namespace WinPaletter
             this.W11_Color_Index2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index2.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index2.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index2.DontShowInfo = false;
             this.W11_Color_Index2.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1727,7 +1727,7 @@ namespace WinPaletter
             this.W11_Color_Index4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index4.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index4.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index4.DontShowInfo = false;
             this.W11_Color_Index4.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1782,7 +1782,7 @@ namespace WinPaletter
             this.W11_TaskbarFrontAndFoldersOnStart_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_TaskbarFrontAndFoldersOnStart_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W11_TaskbarFrontAndFoldersOnStart_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_TaskbarFrontAndFoldersOnStart_pick.DontShowInfo = false;
             this.W11_TaskbarFrontAndFoldersOnStart_pick.Location = new System.Drawing.Point(420, 4);
             this.W11_TaskbarFrontAndFoldersOnStart_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1851,7 +1851,7 @@ namespace WinPaletter
             this.W11_Color_Index1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index1.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index1.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index1.DontShowInfo = false;
             this.W11_Color_Index1.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1923,7 +1923,7 @@ namespace WinPaletter
             this.W11_Color_Index0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index0.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index0.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index0.DontShowInfo = false;
             this.W11_Color_Index0.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index0.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2016,7 +2016,7 @@ namespace WinPaletter
             this.W11_Color_Index3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_Color_Index3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_Color_Index3.DefaultColor = System.Drawing.Color.Black;
+            this.W11_Color_Index3.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_Color_Index3.DontShowInfo = false;
             this.W11_Color_Index3.Location = new System.Drawing.Point(420, 4);
             this.W11_Color_Index3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2397,7 +2397,7 @@ namespace WinPaletter
             this.W11_InactiveTitlebar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W11_InactiveTitlebar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_InactiveTitlebar_pick.DontShowInfo = false;
             this.W11_InactiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W11_InactiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2475,7 +2475,7 @@ namespace WinPaletter
             this.W11_ActiveTitlebar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W11_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W11_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W11_ActiveTitlebar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W11_ActiveTitlebar_pick.DontShowInfo = false;
             this.W11_ActiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W11_ActiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2607,7 +2607,7 @@ namespace WinPaletter
             this.W10_Color_Index7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index7.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index7.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index7.DontShowInfo = false;
             this.W10_Color_Index7.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2676,7 +2676,7 @@ namespace WinPaletter
             this.W10_Color_Index6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index6.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index6.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index6.DontShowInfo = false;
             this.W10_Color_Index6.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2745,7 +2745,7 @@ namespace WinPaletter
             this.W10_Color_Index5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index5.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index5.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index5.DontShowInfo = false;
             this.W10_Color_Index5.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2814,7 +2814,7 @@ namespace WinPaletter
             this.W10_Color_Index2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index2.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index2.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index2.DontShowInfo = false;
             this.W10_Color_Index2.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2894,7 +2894,7 @@ namespace WinPaletter
             this.W10_Color_Index4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index4.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index4.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index4.DontShowInfo = false;
             this.W10_Color_Index4.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2949,7 +2949,7 @@ namespace WinPaletter
             this.W10_TaskbarFrontAndFoldersOnStart_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_TaskbarFrontAndFoldersOnStart_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W10_TaskbarFrontAndFoldersOnStart_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_TaskbarFrontAndFoldersOnStart_pick.DontShowInfo = false;
             this.W10_TaskbarFrontAndFoldersOnStart_pick.Location = new System.Drawing.Point(420, 4);
             this.W10_TaskbarFrontAndFoldersOnStart_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3018,7 +3018,7 @@ namespace WinPaletter
             this.W10_Color_Index1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index1.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index1.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index1.DontShowInfo = false;
             this.W10_Color_Index1.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3090,7 +3090,7 @@ namespace WinPaletter
             this.W10_Color_Index0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index0.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index0.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index0.DontShowInfo = false;
             this.W10_Color_Index0.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index0.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3183,7 +3183,7 @@ namespace WinPaletter
             this.W10_Color_Index3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_Color_Index3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_Color_Index3.DefaultColor = System.Drawing.Color.Black;
+            this.W10_Color_Index3.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_Color_Index3.DontShowInfo = false;
             this.W10_Color_Index3.Location = new System.Drawing.Point(420, 4);
             this.W10_Color_Index3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3645,7 +3645,7 @@ namespace WinPaletter
             this.W10_InactiveTitlebar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W10_InactiveTitlebar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_InactiveTitlebar_pick.DontShowInfo = false;
             this.W10_InactiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W10_InactiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3723,7 +3723,7 @@ namespace WinPaletter
             this.W10_ActiveTitlebar_pick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.W10_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W10_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W10_ActiveTitlebar_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W10_ActiveTitlebar_pick.DontShowInfo = false;
             this.W10_ActiveTitlebar_pick.Location = new System.Drawing.Point(162, 4);
             this.W10_ActiveTitlebar_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -3962,7 +3962,7 @@ namespace WinPaletter
             this.W81_personalcolor_accent_pick.AllowDrop = true;
             this.W81_personalcolor_accent_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W81_personalcolor_accent_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W81_personalcolor_accent_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W81_personalcolor_accent_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W81_personalcolor_accent_pick.DontShowInfo = false;
             this.W81_personalcolor_accent_pick.Location = new System.Drawing.Point(401, 4);
             this.W81_personalcolor_accent_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4016,7 +4016,7 @@ namespace WinPaletter
             this.W81_personalcls_background_pick.AllowDrop = true;
             this.W81_personalcls_background_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W81_personalcls_background_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W81_personalcls_background_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W81_personalcls_background_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W81_personalcls_background_pick.DontShowInfo = false;
             this.W81_personalcls_background_pick.Location = new System.Drawing.Point(401, 4);
             this.W81_personalcls_background_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4070,7 +4070,7 @@ namespace WinPaletter
             this.W81_start_pick.AllowDrop = true;
             this.W81_start_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W81_start_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W81_start_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W81_start_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W81_start_pick.DontShowInfo = false;
             this.W81_start_pick.Location = new System.Drawing.Point(401, 4);
             this.W81_start_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4157,7 +4157,7 @@ namespace WinPaletter
             this.W81_ColorizationColor_pick.AllowDrop = true;
             this.W81_ColorizationColor_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W81_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W81_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W81_ColorizationColor_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W81_ColorizationColor_pick.DontShowInfo = false;
             this.W81_ColorizationColor_pick.Location = new System.Drawing.Point(401, 4);
             this.W81_ColorizationColor_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4211,7 +4211,7 @@ namespace WinPaletter
             this.W81_accent_pick.AllowDrop = true;
             this.W81_accent_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W81_accent_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W81_accent_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W81_accent_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W81_accent_pick.DontShowInfo = false;
             this.W81_accent_pick.Location = new System.Drawing.Point(401, 4);
             this.W81_accent_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4801,7 +4801,7 @@ namespace WinPaletter
             this.W7_ColorizationColor_pick.AllowDrop = true;
             this.W7_ColorizationColor_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W7_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W7_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W7_ColorizationColor_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W7_ColorizationColor_pick.DontShowInfo = false;
             this.W7_ColorizationColor_pick.Location = new System.Drawing.Point(401, 3);
             this.W7_ColorizationColor_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -4875,7 +4875,7 @@ namespace WinPaletter
             this.W7_ColorizationAfterglow_pick.AllowDrop = true;
             this.W7_ColorizationAfterglow_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.W7_ColorizationAfterglow_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.W7_ColorizationAfterglow_pick.DefaultColor = System.Drawing.Color.Black;
+            this.W7_ColorizationAfterglow_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.W7_ColorizationAfterglow_pick.DontShowInfo = false;
             this.W7_ColorizationAfterglow_pick.Location = new System.Drawing.Point(401, 4);
             this.W7_ColorizationAfterglow_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -5006,7 +5006,7 @@ namespace WinPaletter
             this.WVista_ColorizationColor_pick.AllowDrop = true;
             this.WVista_ColorizationColor_pick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WVista_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
-            this.WVista_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black;
+            this.WVista_ColorizationColor_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.WVista_ColorizationColor_pick.DontShowInfo = false;
             this.WVista_ColorizationColor_pick.Location = new System.Drawing.Point(404, 38);
             this.WVista_ColorizationColor_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

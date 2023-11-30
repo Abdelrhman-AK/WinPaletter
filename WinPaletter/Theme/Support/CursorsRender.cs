@@ -81,143 +81,142 @@ namespace WinPaletter.Theme
 
                 string Path = string.Format(PathsExt.CursorsWP + @"\{0}.cur", CurName);
 
-                var fs = new FileStream(Path, FileMode.Create);
-                var EO = new EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor);
+                FileStream FS = new(Path, FileMode.Create);
+                EOIcoCurWriter EO = new(FS, 7, EOIcoCurWriter.IcoCurType.Cursor);
 
                 for (float i = 1f; i <= 4f; i += 0.5f)
                 {
-                    var bmp = new Bitmap((int)Math.Round(32f * i), (int)Math.Round(32f * i), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-                    var HotPoint = new Point(1, 1);
+                    Bitmap bmp = new((int)Math.Round(32f * i), (int)Math.Round(32f * i), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                    Point HotPoint = new(1, 1);
 
                     switch (Type)
                     {
                         case Paths.CursorType.Arrow:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Arrow) { Cursor = Paths.CursorType.Arrow, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Arrow) { Cursor = Paths.CursorType.Arrow, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1, 1);
+                                HotPoint = new(1, 1);
                                 break;
                             }
 
                         case Paths.CursorType.Help:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Help) { Cursor = Paths.CursorType.Help, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Help) { Cursor = Paths.CursorType.Help, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1, 1);
+                                HotPoint = new(1, 1);
                                 break;
                             }
 
                         case Paths.CursorType.None:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_None) { Cursor = Paths.CursorType.None, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_None) { Cursor = Paths.CursorType.None, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                 break;
                             }
 
                         case Paths.CursorType.Move:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Move) { Cursor = Paths.CursorType.Move, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Move) { Cursor = Paths.CursorType.Move, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
+                                HotPoint = new(1 + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
                                 break;
                             }
 
                         case Paths.CursorType.Up:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Up) { Cursor = Paths.CursorType.Up, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Up) { Cursor = Paths.CursorType.Up, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(4f * i), 1);
+                                HotPoint = new(1 + (int)Math.Round(4f * i), 1);
                                 break;
                             }
 
                         case Paths.CursorType.NS:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_NS) { Cursor = Paths.CursorType.NS, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_NS) { Cursor = Paths.CursorType.NS, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(11f * i));
+                                HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(11f * i));
                                 break;
                             }
 
                         case Paths.CursorType.EW:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_EW) { Cursor = Paths.CursorType.EW, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_EW) { Cursor = Paths.CursorType.EW, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point((int)Math.Round(1f + 11f * i), (int)Math.Round(1f + 4f * i));
+                                HotPoint = new((int)Math.Round(1f + 11f * i), (int)Math.Round(1f + 4f * i));
                                 break;
                             }
 
                         case Paths.CursorType.NESW:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_NESW) { Cursor = Paths.CursorType.NESW, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_NESW) { Cursor = Paths.CursorType.NESW, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                 break;
                             }
 
                         case Paths.CursorType.NWSE:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_NWSE) { Cursor = Paths.CursorType.NWSE, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_NWSE) { Cursor = Paths.CursorType.NWSE, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                 break;
                             }
 
                         case Paths.CursorType.Pen:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Pen) { Cursor = Paths.CursorType.Pen, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Pen) { Cursor = Paths.CursorType.Pen, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1, 1);
+                                HotPoint = new(1, 1);
                                 break;
                             }
 
                         case Paths.CursorType.Link:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Link) { Cursor = Paths.CursorType.Link, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Link) { Cursor = Paths.CursorType.Link, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                 break;
                             }
 
                         case Paths.CursorType.Pin:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Pin) { Cursor = Paths.CursorType.Pin, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Pin) { Cursor = Paths.CursorType.Pin, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                 break;
                             }
 
                         case Paths.CursorType.Person:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Person) { Cursor = Paths.CursorType.Person, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Person) { Cursor = Paths.CursorType.Person, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                 break;
                             }
 
                         case Paths.CursorType.IBeam:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_IBeam) { Cursor = Paths.CursorType.IBeam, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_IBeam) { Cursor = Paths.CursorType.IBeam, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(9f * i));
+                                HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(9f * i));
                                 break;
                             }
 
                         case Paths.CursorType.Cross:
                             {
-                                var CurOptions = new CursorOptions(TM.Cursor_Cross) { Cursor = Paths.CursorType.Cross, LineThickness = 1f, Scale = i, _Angle = 0f };
+                                CursorOptions CurOptions = new(TM.Cursor_Cross) { Cursor = Paths.CursorType.Cross, LineThickness = 1f, Scale = i, Angle = 0f };
                                 bmp = Paths.Draw(CurOptions);
-                                HotPoint = new Point(1 + (int)Math.Round(9f * i), 1 + (int)Math.Round(9f * i));
+                                HotPoint = new(1 + (int)Math.Round(9f * i), 1 + (int)Math.Round(9f * i));
                                 break;
                             }
 
                     }
 
                     EO.WriteBitmap(bmp, null, HotPoint);
-
                 }
 
-                fs.Close();
+                FS.Close();
 
                 if (TreeView is not null)
                     AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, Path), "info");
@@ -251,16 +250,16 @@ namespace WinPaletter.Theme
 
                         if (Type == Paths.CursorType.AppLoading)
                         {
-                            CursorOptions CurOptions = new(TM.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = factor, _Angle = angle };
-                            bm = new Bitmap(Paths.Draw(CurOptions));
-                            HotPoint = new Point(1, 1 + (int)Math.Round(8f * factor));
+                            CursorOptions CurOptions = new(TM.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = factor, Angle = angle };
+                            bm  = new(Paths.Draw(CurOptions));
+                            HotPoint = new(1, 1 + (int)Math.Round(8f * factor));
                         }
 
                         else if (Type == Paths.CursorType.Busy)
                         {
-                            CursorOptions CurOptions = new(TM.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = factor, _Angle = angle };
-                            bm = new Bitmap(Paths.Draw(CurOptions));
-                            HotPoint = new Point((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * factor), 1 + (int)Math.Round(11f * factor));
+                            CursorOptions CurOptions = new(TM.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = factor, Angle = angle };
+                            bm  = new(Paths.Draw(CurOptions));
+                            HotPoint = new((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * factor), 1 + (int)Math.Round(11f * factor));
                         }
 
                         if (bm != null) { BMPList.Add(bm); }

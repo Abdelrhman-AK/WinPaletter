@@ -69,9 +69,9 @@ namespace WinPaletter
                     St.Close();
                 }
 
-                J_Information = new JObject();
-                J_GlobalStrings = new JObject();
-                J_Forms = new JObject();
+                J_Information= new();
+                J_GlobalStrings= new();
+                J_Forms= new();
 
                 bool Valid = JObj.ContainsKey("Information") & JObj.ContainsKey("Global Strings") & JObj.ContainsKey("Forms Strings");
 
@@ -131,7 +131,7 @@ namespace WinPaletter
 
                     // Get one form node
                     // There is only one specific property "Text"
-                    var J_Specific_Form = new JObject();
+                    JObject J_Specific_Form = new();
                     J_Specific_Form = (JObject)JSON_Forms[F.Key];
                     FormName = F.Key.ToString();
                     ControlName = string.Empty;
@@ -153,7 +153,7 @@ namespace WinPaletter
                     {
 
                         // JObj nodes of all child controls
-                        var J_Controls = new JObject();
+                        JObject J_Controls = new();
                         if (J_Specific_Form.ContainsKey("Controls"))
                             J_Controls = (JObject)J_Specific_Form["Controls"];
                         if (J_Specific_Form.ContainsKey("controls"))
@@ -300,10 +300,10 @@ namespace WinPaletter
 
         public void ExportJSON(string File, Form[] Forms = null)
         {
-            var JSON_Overall = new JObject();
-            var newL = new Localizer();
+            JObject JSON_Overall= new();
+            Localizer newL = new();
 
-            var j_info = new JObject();
+            JObject j_info = new();
             j_info.RemoveAll();
             j_info.Add("Name".ToLower(), newL.Name);
             j_info.Add("TranslationVersion".ToLower(), newL.TranslationVersion);
@@ -312,7 +312,7 @@ namespace WinPaletter
             j_info.Add("AppVer".ToLower(), Program.Version);
             j_info.Add("RightToLeft".ToLower(), newL.RightToLeft);
 
-            var j_globalstrings = new JObject();
+            JObject j_globalstrings = new();
 
             var type1 = newL.GetType();
             PropertyInfo[] properties1 = type1.GetProperties();
@@ -325,7 +325,7 @@ namespace WinPaletter
                 }
             }
 
-            var j_Forms = new JObject();
+            JObject j_Forms = new();
 
             if (Forms is null)
             {
@@ -336,7 +336,7 @@ namespace WinPaletter
 
                     if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
-                        JObject j_ctrl = new JObject(), j_child = new JObject();
+                        JObject j_ctrl= new(), j_child= new();
                         j_ctrl.RemoveAll();
                         j_child.RemoveAll();
 
@@ -399,7 +399,7 @@ namespace WinPaletter
                 {
                     if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
-                        JObject j_ctrl = new JObject(), j_child = new JObject();
+                        JObject j_ctrl= new(), j_child= new();
                         j_ctrl.RemoveAll();
                         j_child.RemoveAll();
 

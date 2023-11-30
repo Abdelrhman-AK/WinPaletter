@@ -79,9 +79,9 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static List<string> CList(this string String)
         {
-            var List = new List<string>();
+            List<string> List = new();
             List.Clear();
-            using (var Reader = new StringReader(String))
+            using (StringReader Reader = new(String))
             {
                 while (Reader.Peek() >= 0)
                     List.Add(Reader.ReadLine());
@@ -99,16 +99,13 @@ namespace WinPaletter.TypesExtensions
 
             try
             {
-                var TextBitmap = new Bitmap(1, 1);
-                var TextGraphics = Graphics.FromImage(TextBitmap);
+                Bitmap TextBitmap = new(1, 1);
+                Graphics TextGraphics = Graphics.FromImage(TextBitmap);
                 return TextGraphics.MeasureString(text, font);
             }
-            catch
-            {
-            }
+            catch { }
 
             return default;
-
         }
 
 
@@ -139,11 +136,11 @@ namespace WinPaletter.TypesExtensions
         {
             byte[] compressedBytes;
 
-            using (var uncompressedStream = new MemoryStream(Encoding.UTF8.GetBytes(uncompressedString)))
+            using (MemoryStream uncompressedStream = new(Encoding.UTF8.GetBytes(uncompressedString)))
             {
-                using (var compressedStream = new MemoryStream())
+                using (MemoryStream compressedStream = new())
                 {
-                    using (var compressorStream = new DeflateStream(compressedStream, CompressionLevel.Fastest, true))
+                    using (DeflateStream compressorStream = new(compressedStream, CompressionLevel.Fastest, true))
                     {
                         uncompressedStream.CopyTo(compressorStream);
                     }
@@ -158,11 +155,11 @@ namespace WinPaletter.TypesExtensions
         public static string Decompress(this string compressedString)
         {
             byte[] decompressedBytes;
-            var compressedStream = new MemoryStream(Convert.FromBase64String(compressedString));
+            MemoryStream compressedStream = new(Convert.FromBase64String(compressedString));
 
-            using (var decompressorStream = new DeflateStream(compressedStream, CompressionMode.Decompress))
+            using (DeflateStream decompressorStream = new(compressedStream, CompressionMode.Decompress))
             {
-                using (var decompressedStream = new MemoryStream())
+                using (MemoryStream decompressedStream = new())
                 {
                     decompressorStream.CopyTo(decompressedStream);
                     decompressedBytes = decompressedStream.ToArray();
@@ -177,7 +174,7 @@ namespace WinPaletter.TypesExtensions
         {
             s += " ";
             int wordSt;
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
             while (s.IndexOf(word, stringComparison) > -1)
             {
                 wordSt = s.IndexOf(word, stringComparison);

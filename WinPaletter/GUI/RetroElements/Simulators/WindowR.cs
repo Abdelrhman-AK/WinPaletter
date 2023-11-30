@@ -14,12 +14,12 @@ namespace WinPaletter.UI.Retro
 
         public WindowR()
         {
-            Font = new Font("Microsoft Sans Serif", 8f);
+            Font = new("Microsoft Sans Serif", 8f);
             TitleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
 
-            _CloseBtn = new ButtonR() { Name = "CloseBtn", Text = "r", Font = new Font("Marlett", 7.8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MinBtn = new ButtonR() { Name = "MinBtn", Text = "1", Font = new Font("Marlett", 8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MaxBtn = new ButtonR() { Name = "MaxBtn", Text = "0", Font = new Font("Marlett", 8f), Size = new Size(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _CloseBtn = new() { Name = "CloseBtn", Text = "r", Font = new("Marlett", 7.8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _MinBtn = new() { Name = "MinBtn", Text = "1", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _MaxBtn = new() { Name = "MaxBtn", Text = "0", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             BtnHeight = Metrics_CaptionHeight + TitleHeight - 4;
             BtnWidth = Metrics_CaptionWidth - 2;
             DoubleBuffered = true;
@@ -345,9 +345,9 @@ namespace WinPaletter.UI.Retro
             BtnHeight = Conversions.ToInteger(Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5));
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
 
-            _CloseBtn.Size = new Size(BtnWidth, BtnHeight);
-            _MinBtn.Size = new Size(BtnWidth, BtnHeight);
-            _MaxBtn.Size = new Size(BtnWidth, BtnHeight);
+            _CloseBtn.Size = new(BtnWidth, BtnHeight);
+            _MinBtn.Size = new(BtnWidth, BtnHeight);
+            _MaxBtn.Size = new(BtnWidth, BtnHeight);
             Refresh();
         }
 
@@ -385,22 +385,19 @@ namespace WinPaletter.UI.Retro
                 float i0, iFx;
                 i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
                 iFx = i0 / Math.Abs(Math.Min(17, 18));
-                var f = new Font("Marlett", (float)(6.8d * (double)iFx));
+                Font f = new("Marlett", (float)(6.8d * (double)iFx));
                 _CloseBtn.Font = f;
                 _MinBtn.Font = f;
                 _MaxBtn.Font = f;
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         public void AdjustPadding()
         {
             int iP = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
             int iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
-            var _Padding = new Padding(iP, iT, iP, iP);
+            Padding _Padding = new(iP, iT, iP, iP);
             Padding = _Padding;
         }
 
@@ -425,13 +422,13 @@ namespace WinPaletter.UI.Retro
             DoubleBuffered = true;
 
             // ################################################################################# Customizer
-            var Rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
 
             int CompinedPadding = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3;
 
-            var TRect = new Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + TitleHeight);
+            Rectangle TRect = new(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + TitleHeight);
 
-            var ARect = new Rectangle(2, 2, Width - 5, Height - 5);
+            Rectangle ARect = new(2, 2, Width - 5, Height - 5);
             // #################################################################################
             G.Clear(BackColor);
 
@@ -464,7 +461,7 @@ namespace WinPaletter.UI.Retro
             {
                 if (G.TextRenderingHint == TextRenderingHint.SingleBitPerPixelGridFit)
                 {
-                    F = new Font("Microsoft Sans Serif", 8f, FontStyle.Bold);
+                    F = new("Microsoft Sans Serif", 8f, FontStyle.Bold);
                 }
                 else
                 {
@@ -475,12 +472,12 @@ namespace WinPaletter.UI.Retro
 
                 try
                 {
-                    var gr = new LinearGradientBrush(TRect, RTL ? Color2 : Color1, RTL ? Color1 : Color2, LinearGradientMode.Horizontal);
+                    LinearGradientBrush gr = new(TRect, RTL ? Color2 : Color1, RTL ? Color1 : Color2, LinearGradientMode.Horizontal);
                     if (ColorGradient)
                     {
                         G.FillRectangle(gr, TRect);
 
-                        var TRectFixer = new Rectangle(TRect.X, TRect.Y, 1, TRect.Height);
+                        Rectangle TRectFixer = new(TRect.X, TRect.Y, 1, TRect.Height);
                         G.FillRectangle(new SolidBrush(RTL ? Color2 : Color1), TRectFixer);
                     }
 

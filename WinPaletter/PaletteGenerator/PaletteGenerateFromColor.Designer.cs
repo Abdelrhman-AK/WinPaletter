@@ -231,7 +231,7 @@ namespace WinPaletter
             // 
             this.SelectedColor.AllowDrop = true;
             this.SelectedColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(38)))), ((int)(((byte)(53)))));
-            this.SelectedColor.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(38)))), ((int)(((byte)(53)))));
+            this.SelectedColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(38)))), ((int)(((byte)(53)))));
             this.SelectedColor.DontShowInfo = false;
             this.SelectedColor.Location = new System.Drawing.Point(106, 3);
             this.SelectedColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

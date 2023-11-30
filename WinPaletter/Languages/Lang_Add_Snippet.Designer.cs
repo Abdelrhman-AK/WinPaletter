@@ -60,7 +60,7 @@ namespace WinPaletter
             // 
             Button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button3.BackColor = Color.FromArgb(34, 34, 34);
-            Button3.Font = new Font("Segoe UI", 9.0f);
+            Button3.Font = new("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
             Button3.Location = new Point(416, 83);
@@ -74,7 +74,7 @@ namespace WinPaletter
             // 
             Button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.Font = new Font("Segoe UI", 9.0f);
+            Button2.Font = new("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
             Button2.Image = null;
             Button2.Location = new Point(335, 83);
@@ -90,7 +90,7 @@ namespace WinPaletter
             ComboBox2.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox2.DropDownHeight = 250;
             ComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox2.Font = new Font("Segoe UI", 9.0f);
+            ComboBox2.Font = new("Segoe UI", 9.0f);
             ComboBox2.ForeColor = Color.White;
             ComboBox2.FormattingEnabled = true;
             ComboBox2.IntegralHeight = false;
@@ -104,7 +104,7 @@ namespace WinPaletter
             // 
             Button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.Font = new Font("Segoe UI", 9.0f);
+            Button1.Font = new("Segoe UI", 9.0f);
             Button1.ForeColor = Color.White;
             Button1.Image = null;
             Button1.Location = new Point(416, 13);
@@ -120,7 +120,7 @@ namespace WinPaletter
             ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             ComboBox1.DropDownHeight = 250;
             ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox1.Font = new Font("Segoe UI", 9.0f);
+            ComboBox1.Font = new("Segoe UI", 9.0f);
             ComboBox1.ForeColor = Color.White;
             ComboBox1.FormattingEnabled = true;
             ComboBox1.IntegralHeight = false;
@@ -142,7 +142,7 @@ namespace WinPaletter
             // 
             // Label2
             // 
-            Label2.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label2.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label2.Location = new Point(42, 12);
             Label2.Name = "Label2";
             Label2.Size = new Size(48, 24);
@@ -152,7 +152,7 @@ namespace WinPaletter
             // 
             // Label1
             // 
-            Label1.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label1.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label1.Location = new Point(42, 82);
             Label1.Name = "Label1";
             Label1.Size = new Size(48, 24);
@@ -177,7 +177,7 @@ namespace WinPaletter
             AlertBox7.BackColor = Color.FromArgb(70, 91, 94);
             AlertBox7.CenterText = true;
             AlertBox7.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox7.Font = new Font("Segoe UI", 9.0f);
+            AlertBox7.Font = new("Segoe UI", 9.0f);
             AlertBox7.Image = null;
             AlertBox7.Location = new Point(12, 182);
             AlertBox7.Name = "AlertBox7";
@@ -188,7 +188,7 @@ namespace WinPaletter
             // 
             // Label3
             // 
-            Label3.Font = new Font("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
+            Label3.Font = new("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
             Label3.Location = new Point(45, 41);
             Label3.Name = "Label3";
             Label3.Size = new Size(446, 24);
@@ -198,7 +198,7 @@ namespace WinPaletter
             // 
             // Label4
             // 
-            Label4.Font = new Font("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
+            Label4.Font = new("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
             Label4.Location = new Point(45, 113);
             Label4.Name = "Label4";
             Label4.Size = new Size(446, 56);
@@ -213,7 +213,7 @@ namespace WinPaletter
             AlertBox1.BackColor = Color.FromArgb(70, 91, 94);
             AlertBox1.CenterText = true;
             AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new Font("Segoe UI", 9.0f);
+            AlertBox1.Font = new("Segoe UI", 9.0f);
             AlertBox1.Image = null;
             AlertBox1.Location = new Point(12, 210);
             AlertBox1.Name = "AlertBox1";
@@ -241,10 +241,10 @@ namespace WinPaletter
             Controls.Add(ComboBox2);
             Controls.Add(Button1);
             Controls.Add(ComboBox1);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Lang_Add_Snippet";

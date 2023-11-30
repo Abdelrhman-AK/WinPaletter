@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
     public partial class TerminalInfo
     {
-        public TProfile Profile = new TProfile();
+        public TProfile Profile = new();
 
         public TerminalInfo()
         {
@@ -103,11 +104,11 @@ namespace WinPaletter
                 return;
             }
 
-            var CList = new List<Control>() { (Control)sender, Forms.WindowsTerminal.Terminal1 };
+            List<Control> CList = new() { (Control)sender, Forms.WindowsTerminal.Terminal1 };
 
-            var _Conditions = new Conditions() { Terminal_TabColor = true };
+            Conditions _conditions = new(){ Terminal_TabColor = true };
 
-            var C = Forms.ColorPickerDlg.Pick(CList, _Conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
 
@@ -116,7 +117,5 @@ namespace WinPaletter
 
             CList.Clear();
         }
-
-
     }
 }

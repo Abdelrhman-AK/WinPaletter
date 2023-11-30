@@ -917,7 +917,7 @@ namespace WinPaletter
             // 
             this.color2.AllowDrop = true;
             this.color2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.color2.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
+            this.color2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
             this.color2.DontShowInfo = false;
             this.color2.Location = new System.Drawing.Point(167, 36);
             this.color2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -931,7 +931,7 @@ namespace WinPaletter
             // 
             this.color1.AllowDrop = true;
             this.color1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.color1.DefaultColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.color1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.color1.DontShowInfo = false;
             this.color1.Location = new System.Drawing.Point(167, 6);
             this.color1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
