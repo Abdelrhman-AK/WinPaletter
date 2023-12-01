@@ -260,6 +260,57 @@
         Pj9Hek9ISEhISEhISEhISEhISEjIK6VS/R8C92uYq3K1PwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>• Minor updates in WinPaletter UI, as a preparation for a new major WinPaletter UI update (new look)
+
+• In classic colors: Plus! 98 CD themes are included as schemes
+
+• Rescue tools are returned, to help you fix your Windows and manage current Windows session if you are stuck in an error
+
+• Classic colors preview speed improvements
+
+• UI improvements
+
+• This is in code, but nothing will be visible to you: make WinPaletter can handle Windows 12. WinPaletter will manage it as if it is Windows 11 until Windows 12 stable is released and WinPaletter is optimized and tested in it.
+
+• Cyotek color picker component is updated into 2.0.0-beta.7</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>• Fix preview not synced in classic colors after selecting a color
+
+• Sounds: Fix bug of repeated pathing imageres.dll alert with sounds are the same
+
+• ExplorerPatcher error fix
+
+• GUI translator bug fix: Form exception error
+
+• Fix color picker not working in Windows XP
+
+• Fix Preview of Windows 11/10 not syncing color with color picker
+
+• Fix metrics preview of Windows XP to 8.1 (inner padding)
+
+• Bug report fix: Windows 10 OS info if Windows 11 is running
+
+• Fix issue of disappearing taskbar and start in preview</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>• Fix issues in Application themer
+
+• Fix issue of conflict between custom DPI and metrics and fonts
+
+• Fix bug of applying application theme on closing WinPaletter Store with a theme open
+
+• Fix small icons fonts and other fonts on applying metrics and fonts with DPI higher than 125 and with delaying metrics and fonts effects option in settings is enabled
+
+• Fix bug of opening an old theme file causes null or non-found values for the newly loaded theme
+
+• Fix error of WinEffects: GETCLIENTANIMATION get and set in Windows XP
+
+• Alt+Tab opacity preview fix for Windows 10
+
+• Fix user exception error that prevents users from opening WinPaletter</value>
+  </data>
   <data name="label21.Text" xml:space="preserve">
     <value>• It is possible now to control multiple users in WinPaletter.
 
@@ -282,40 +333,16 @@
 • New Explorer restart method (all to avoid crashing all open applications): When you apply a theme, firstly it will kill Explorer, waits for theme applying finish and finally reopen Explorer. Formerly, the method was both killing and opening after finishing theme apply.
 </value>
   </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>• Rescue tools are returned, to help you fix your Windows and manage current Windows session if you are stuck in an error
+  <data name="label30.Text" xml:space="preserve">
+    <value>• Cursors studio layout has been changed to tabs, making it easier to understand it instead of the old condensed layout
 
-• Classic colors preview speed improvements
+• Busy and app waiting cursors can be rendered in high size when high DPI is set
 
-• UI improvements
+• Now you can select external cursors files instead of rendering them
 
-• This is in code, but nothing will be visible to you: make WinPaletter can handle Windows 12. WinPaletter will manage it as if it is Windows 11 until Windows 12 stable is released and WinPaletter is optimized and tested in it.
+• New style for busy and app waiting cursors; fluid. And dot scheme is changed into modern
 
-• Cyotek color picker component is updated into 2.0.0-beta.7</value>
-  </data>
-  <data name="Label16.Text" xml:space="preserve">
-    <value>• Sounds: Fix bug of repeated pathing imageres.dll alert with sounds are the same
-
-• ExplorerPatcher error fix
-
-• GUI translator bug fix: Form exception error
-
-• Fix color picker not working in Windows XP
-
-• Fix Preview of Windows 11/10 not syncing color with color picker
-
-• Fix metrics preview of Windows XP to 8.1 (inner padding)
-
-• Bug report fix: Windows 10 OS info if Windows 11 is running
-
-• Fix issue of disappearing taskbar and start in preview</value>
-  </data>
-  <data name="label25.Text" xml:space="preserve">
-    <value>• Fix issue of conflict between custom DPI and metrics and fonts
-
-• Fix small icons fonts and other fonts on applying metrics and fonts with DPI higher than 125 and with delaying metrics and fonts effects option in settings is enabled
-
-• Fix bug of opening an old theme file causes null or non-found values for the newly loaded theme</value>
+• Fix scaling preview bug, and also in WinPaletter Store.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

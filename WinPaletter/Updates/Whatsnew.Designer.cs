@@ -92,6 +92,9 @@ namespace WinPaletter
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.TabControl1.SuspendLayout();
@@ -110,12 +113,12 @@ namespace WinPaletter
             this.TabPage13.SuspendLayout();
             this.TabPage8.SuspendLayout();
             this.tabPage12.SuspendLayout();
+            this.tabPage15.SuspendLayout();
             this.SuspendLayout();
             // 
             // AnimatedBox1
             // 
             this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
-            this.AnimatedBox1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(162)))));
             this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
             this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
             this.AnimatedBox1.Controls.Add(this.Label2);
@@ -161,6 +164,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl1.Controls.Add(this.tabPage6);
             this.TabControl1.Controls.Add(this.tabPage10);
+            this.TabControl1.Controls.Add(this.tabPage15);
             this.TabControl1.Controls.Add(this.tabPage11);
             this.TabControl1.Controls.Add(this.TabPage7);
             this.TabControl1.Controls.Add(this.TabPage1);
@@ -205,7 +209,7 @@ namespace WinPaletter
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(629, 33);
             this.label20.TabIndex = 41;
-            this.label20.Text = "In 1.0.8.2, there is extensive optimization in code after coding language shift a" +
+            this.label20.Text = "In 1.0.8.3, there is extensive optimization in code after coding language shift a" +
     "nd bugs fixes";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -319,7 +323,8 @@ namespace WinPaletter
             // 
             // Button4
             // 
-            this.Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button4.CustomColor = System.Drawing.Color.Empty;
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
@@ -370,7 +375,8 @@ namespace WinPaletter
             // 
             // Button5
             // 
-            this.Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button5.CustomColor = System.Drawing.Color.Empty;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
@@ -456,7 +462,8 @@ namespace WinPaletter
             // 
             // Button6
             // 
-            this.Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button6.CustomColor = System.Drawing.Color.Empty;
+            this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
@@ -507,7 +514,8 @@ namespace WinPaletter
             // 
             // Button7
             // 
-            this.Button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button7.CustomColor = System.Drawing.Color.Empty;
+            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
@@ -558,7 +566,8 @@ namespace WinPaletter
             // 
             // button9
             // 
-            this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.button9.CustomColor = System.Drawing.Color.Empty;
+            this.button9.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
@@ -608,7 +617,8 @@ namespace WinPaletter
             // 
             // Button8
             // 
-            this.Button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button8.CustomColor = System.Drawing.Color.Empty;
+            this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = null;
@@ -698,7 +708,7 @@ namespace WinPaletter
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label5.Location = new System.Drawing.Point(6, 48);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(656, 359);
+            this.Label5.Size = new System.Drawing.Size(656, 375);
             this.Label5.TabIndex = 44;
             this.Label5.Text = resources.GetString("Label5.Text");
             // 
@@ -733,7 +743,7 @@ namespace WinPaletter
             this.Label16.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label16.Location = new System.Drawing.Point(6, 48);
             this.Label16.Name = "Label16";
-            this.Label16.Size = new System.Drawing.Size(656, 313);
+            this.Label16.Size = new System.Drawing.Size(656, 375);
             this.Label16.TabIndex = 42;
             this.Label16.Text = resources.GetString("Label16.Text");
             // 
@@ -768,7 +778,7 @@ namespace WinPaletter
             this.label25.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.Location = new System.Drawing.Point(6, 48);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(656, 313);
+            this.label25.Size = new System.Drawing.Size(656, 375);
             this.label25.TabIndex = 44;
             this.label25.Text = resources.GetString("label25.Text");
             // 
@@ -787,7 +797,8 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
@@ -802,8 +813,9 @@ namespace WinPaletter
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
             this.Button2.Enabled = false;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
@@ -818,7 +830,8 @@ namespace WinPaletter
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
@@ -829,6 +842,41 @@ namespace WinPaletter
             this.Button1.Text = "Next";
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage15.Controls.Add(this.label30);
+            this.tabPage15.Controls.Add(this.label31);
+            this.tabPage15.Location = new System.Drawing.Point(154, 4);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(667, 426);
+            this.tabPage15.TabIndex = 40;
+            this.tabPage15.Text = "Cursors";
+            // 
+            // label30
+            // 
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(6, 48);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(656, 375);
+            this.label30.TabIndex = 46;
+            this.label30.Text = resources.GetString("label30.Text");
+            // 
+            // label31
+            // 
+            this.label31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label31.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.Crimson;
+            this.label31.Location = new System.Drawing.Point(3, 3);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(661, 45);
+            this.label31.TabIndex = 45;
+            this.label31.Text = "Cursors new features";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Whatsnew
             // 
@@ -870,6 +918,7 @@ namespace WinPaletter
             this.TabPage13.ResumeLayout(false);
             this.TabPage8.ResumeLayout(false);
             this.tabPage12.ResumeLayout(false);
+            this.tabPage15.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -929,5 +978,8 @@ namespace WinPaletter
         private TabPage tabPage14;
         internal Label label28;
         internal Label label29;
+        private TabPage tabPage15;
+        internal Label label30;
+        internal Label label31;
     }
 }
