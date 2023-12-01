@@ -407,11 +407,18 @@ namespace WinPaletter
 
             if (!OS.WXP)
             {
-                SelectQuery query = new("Win32_UserProfile");
-                ManagementObjectSearcher searcher = new(query);
-                ManagementObjectCollection managementObjects = searcher.Get();
+                try
+                {
+                    SelectQuery query = new("Win32_UserProfile");
+                    ManagementObjectSearcher searcher = new(query);
+                    ManagementObjectCollection managementObjects = searcher.Get();
 
-                foreach (ManagementObject SID in managementObjects.Cast<ManagementObject>()) { FoundSIDs.Add(SID["SID"].ToString()); }
+                    foreach (ManagementObject SID in managementObjects.Cast<ManagementObject>()) { FoundSIDs.Add(SID["SID"].ToString()); }
+                }
+                catch
+                {
+                    foreach (string SID in Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList").GetSubKeyNames()) { FoundSIDs.Add(SID); }
+                }
             }
             else
             {
