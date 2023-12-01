@@ -2,6 +2,149 @@
 
 ---
 
+### 1.0.8.3
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 01 Dec 2023  |
+
+
+> **Warning**
+> If you are using a language file, please re-download it from [here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
+
+> **Warning**
+> Please run `SFC /scanfile=%windir%\System32\imageres.dll` in Command Prompt as administrator and restart your Windows if you used a previous beta version to fix imageres.dll corruption made by modifying Windows startup sound. Don't use previous beta versions `1.0.7.x`.
+
+# These are all new features since last stable release `1.0.8.0`:
+# If you have read this before, read feature NO. 3 (Cursors new features), improvements and bugs fixes (to save your time)
+
+### 1. WinPaletter is written now in C# instead of Visual Basic .NET
+- In 1.0.8.3, there is extensive optimization in code after coding language shift and bugs fixes.
+- It is expected to face bugs due to programming language shift. Please report problems you may face in Issues.
+
+### 2. Multiple users
+- It is possible now to control multiple users in WinPaletter.
+- This feature helped WinPaletter to reduce UAC dialogs appearance and fixed issue of not applying and getting theme data from a different account #185
+- Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPaletter retains their previous state and is unaffected by the theme.
+- So, the best practice method is to open target user then open WinPaletter inside this profile, not from a different one.
+
+### 3. Cursors new features
+- Cursors studio layout has been changed to tabs, making it easier to understand it instead of the old condensed layout
+- Busy and app waiting cursors can be rendered in high size when high DPI is set
+- Now you can select external cursors files instead of rendering them
+- New style for busy and app waiting cursors; fluid. And dot scheme is changed into modern
+- Fix scaling preview bug, and also in WinPaletter Store.
+
+### 4. Sounds service #184
+- Task Scheduler method is removed, being replaced by a service made by WinPaletter.
+- This service listens to system events and play sounds according to the received event, and this method is relatively better than Task Scheduler method.
+- This service can handle Windows shutdown, logoff, logon, account lock and unlock, and charger connection and disconnection sounds.
+
+### 5. Drag and drop colors items - read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Color-picker-control#3-drag-and-drop) to learn more.
+
+You can drag a color into another color to make it easier and quicker to change colors. You can also swap between colors, you can learn it from wiki.
+
+https://github.com/Abdelrhman-AK/WinPaletter/assets/59510211/9d082727-720b-473c-8827-80c6f2f8c8d9
+
+### 6. Palette extraction and distribution
+
+- If you are confused with colors for your Windows colors, WinPaletter now can generate a palette from one color or from an image.
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about this feature
+
+### 7. Applying theme thread
+- Applying WinPaletter theme is now in a separate thread, to fix issue of Windows and WinPaletter freezing #180 #155 #102
+- New Explorer restart method (all to avoid crashing all open applications): When you apply a theme, firstly it will kill Explorer, waits for theme applying finish and finally reopen Explorer. Formerly, the method was both killing and opening after finishing theme apply.
+
+### 8. Colors history
+
+Click on a color item and navigate to history tab, you will see all color used for current open item.
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Color-picker-control#4-previous-colors-like-undo-or-colors-history) to learn more about this feature
+
+### 9. GUI language editor
+
+- It will help you create, modify and update languages JSON files by showing mini-forms that you can edit so that you can see all text items in real time
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Language-creation) to learn more about this feature
+
+### 10. New download sources for WinPaletter
+
+- Including WinGet and Chocolatey #168
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter) to know how to download from these sources
+
+### 11. Theme log levels
+
+- There is a new level called "Advanced details" that shows you all registry modifications and actions done to your system during theme applying
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Theme-log-verbose-level) to learn more about this feature
+
+### 12. Windows Effects new feature
+
+- Animate controls and elements inside window
+
+***
+
+# Improvements:
+
+- Minor updates in WinPaletter UI, as a preparation for a new major WinPaletter UI update (new look)
+
+- In classic colors: Plus! 98 CD themes are included as schemes
+
+- Rescue tools are returned, to help you fix your Windows and manage current Windows session if you are stuck in an error
+
+- Classic colors preview speed improvements
+
+- UI improvements #186 and others.
+
+- This is in code, but nothing will be visible to you: make WinPaletter can handle Windows 12. WinPaletter will manage it as if it is Windows 11 until Windows 12 stable is released and WinPaletter is optimized and tested in it.
+
+- Cyotek color picker component is updated into 2.0.0-beta.7
+
+- Sounds
+  - Added Unlock and Charger connected sounds #170
+  - Fix empty icons after patching imageres.dll
+  - Fix "Sound API only supports playing PCM wave files" on opening a WAV file
+  - Added [alert dialog](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Advanced-options-to-patch-PE-files) on changing PE files resources, for example imageres.dll (for startup sound)
+ 
+***
+
+# Bugs fixes:
+- Fix user exception error that prevents users from opening WinPaletter #198 
+- Fix issues in Application themer
+- Fix bug of applying application theme on closing WinPaletter Store with a theme open
+- Fix error of WinEffects: GETCLIENTANIMATION get and set in Windows XP
+- Fix preview not synced in classic colors after selecting a color
+- Bug report fix: Windows 10 OS info if Windows 11 is running
+- Alt+Tab opacity preview fix for Windows 10
+- Sounds: Fix bug of repeated pathing imageres.dll alert with sounds are the same
+- ExplorerPatcher error fix #181
+- GUI translator bug fix: Form exception error #183
+- Fix color picker not working in Windows XP
+- Fix Preview of Windows 11/10 not syncing color with color picker
+- Fix metrics preview of Windows XP to 8.1 (inner padding)
+- Bug report fix: Windows 10 OS info if Windows 11 is running
+- Fix issue of disappearing taskbar and start in preview
+- Fix issue of conflict between custom DPI and metrics and fonts #179 #178
+- Fix small icons fonts and other fonts on applying metrics and fonts with DPI higher than 125 and with delaying metrics and fonts effects option in settings is enabled 
+- Fix bug of opening an old theme file causes null or non-found values for the newly loaded theme
+- Fix WinPaletter theme load issue #173
+
+***
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.0...v1.0.8.3) |
+| Previous Beta   | `1.0.8.2`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.2...v1.0.8.3) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.3) |
+
+---
+
 ### 1.0.8.2
 
 > **Info:**
