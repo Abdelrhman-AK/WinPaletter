@@ -528,33 +528,37 @@ namespace WinPaletter
         /// <returns><c>true</c> if user is an Administrator, <c>false</c> otherwise.</returns>
         public static bool IsAdmin(string SID)
         {
-            SecurityIdentifier AdminGroupSID = new("S-1-5-32-544");
-
-            PrincipalContext pContext = new(ContextType.Machine);
-            UserPrincipal pUser = new(pContext);
-            PrincipalSearcher pSearcher = new(pUser);
-
-            Principal User = (from u in pSearcher.FindAll() where u.Sid.ToString().Equals(SID, StringComparison.OrdinalIgnoreCase) select u).FirstOrDefault();
-
-            if (User is null)
+            try
             {
-                if (SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20")
+                SecurityIdentifier AdminGroupSID = new("S-1-5-32-544");
+
+                PrincipalContext pContext = new(ContextType.Machine);
+                UserPrincipal pUser = new(pContext);
+                PrincipalSearcher pSearcher = new(pUser);
+
+                Principal User = (from u in pSearcher.FindAll() where u.Sid.ToString().Equals(SID, StringComparison.OrdinalIgnoreCase) select u).FirstOrDefault();
+
+                if (User is null)
                 {
-                    return true;
+                    if (SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
-                {
-                    return false;
-                }
+
+                bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
+
+                pContext.Dispose();
+                pSearcher.Dispose();
+                pUser.Dispose();
+
+                return IsAdmin;
             }
-
-            bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
-
-            pContext.Dispose();
-            pSearcher.Dispose();
-            pUser.Dispose();
-
-            return IsAdmin;
+            catch { return false; }
         }
         #endregion
 
