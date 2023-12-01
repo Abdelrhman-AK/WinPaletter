@@ -13,7 +13,7 @@ namespace WinPaletter
             {
                 if (arg.ToLower() == "/exportlanguage")
                 {
-                    Lang.ExportJSON(string.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year));
+                    Lang.ExportJSON($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
                     MsgBox(Lang.LngExported, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     using Process Prc = Process.GetCurrentProcess();
                     Prc.Kill();

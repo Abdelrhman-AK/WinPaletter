@@ -41,7 +41,7 @@ namespace WinPaletter
         {
             try
             {
-                var ci = CultureInfo.GetCultureInfo(ComboBox2.SelectedItem.ToString());
+                CultureInfo ci = CultureInfo.GetCultureInfo(ComboBox2.SelectedItem.ToString());
                 _Result = ci.TextInfo.IsRightToLeft.ToString();
             }
             catch

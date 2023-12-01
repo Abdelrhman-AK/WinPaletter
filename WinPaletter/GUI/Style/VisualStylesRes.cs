@@ -51,7 +51,7 @@ namespace WinPaletter
                         Rectangle.Offset(1, 1);
                         Rectangle.Inflate(0, 1);
 
-                        var CS = Active ? WindowCaptionState.Active : WindowCaptionState.Inactive;
+                        WindowCaptionState CS = Active ? WindowCaptionState.Active : WindowCaptionState.Inactive;
 
                         if (!ToolWindow)
                         {
@@ -67,7 +67,7 @@ namespace WinPaletter
 
                 case Element.RightEdge:
                     {
-                        var FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
+                        WindowFrameState FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
 
                         if (!ToolWindow)
                         {
@@ -83,7 +83,7 @@ namespace WinPaletter
 
                 case Element.LeftEdge:
                     {
-                        var FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
+                        WindowFrameState FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
 
                         if (!ToolWindow)
                         {
@@ -99,7 +99,7 @@ namespace WinPaletter
 
                 case Element.BottomEdge:
                     {
-                        var FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
+                        WindowFrameState FS = Active ? WindowFrameState.Active : WindowFrameState.Inactive;
 
                         if (!ToolWindow)
                         {
@@ -115,7 +115,7 @@ namespace WinPaletter
 
                 case Element.CloseButton:
                     {
-                        var BS = Active ? WindowButtonState.Normal : WindowButtonState.Disabled;
+                        WindowButtonState BS = Active ? WindowButtonState.Normal : WindowButtonState.Disabled;
 
                         if (!ToolWindow)
                         {

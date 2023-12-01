@@ -72,8 +72,8 @@ namespace WinPaletter
 
 
             Save_Info(Program.TM);
-            Forms.MainFrm.themename_lbl.Text = string.Format("{0} ({1})", Program.TM.Info.ThemeName, Program.TM.Info.ThemeVersion);
-            Forms.MainFrm.author_lbl.Text = string.Format("{0} {1}", Program.Lang.By, Program.TM.Info.Author);
+            Forms.MainFrm.themename_lbl.Text = $"{Program.TM.Info.ThemeName} ({Program.TM.Info.ThemeVersion})";
+            Forms.MainFrm.author_lbl.Text = $"{Program.Lang.By} {Program.TM.Info.Author}";
 
             Close();
         }
@@ -143,7 +143,7 @@ namespace WinPaletter
                 return;
             }
 
-            Conditions _conditions = new(){ Background = true };
+            Conditions _conditions = new() { Background = true };
             List<Control> CList = new() { color1, StoreItem1 };
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -162,7 +162,7 @@ namespace WinPaletter
                 return;
             }
 
-            Conditions _conditions = new(){ Background2 = true };
+            Conditions _conditions = new() { Background2 = true };
             List<Control> CList = new() { color2, StoreItem1 };
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -289,7 +289,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-theme-info");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-theme-info");
         }
     }
 }

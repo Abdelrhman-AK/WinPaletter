@@ -23,7 +23,7 @@ namespace WinPaletter.TypesExtensions
                 TreeView.Nodes.Clear();
 
                 {
-                    var temp = TreeView.Nodes.Add(rootName);
+                    TreeNode temp = TreeView.Nodes.Add(rootName);
                     temp.ImageKey = "json";
                     temp.SelectedImageKey = "json";
                     temp.Tag = root;
@@ -48,7 +48,7 @@ namespace WinPaletter.TypesExtensions
             {
 
                 {
-                    var temp = inTreeNode.Nodes.Add(token.ToString());
+                    TreeNode temp = inTreeNode.Nodes.Add(token.ToString());
                     temp.ImageKey = "value";
                     temp.SelectedImageKey = "value";
                     temp.Tag = token;
@@ -59,9 +59,9 @@ namespace WinPaletter.TypesExtensions
             {
                 JObject obj = (JObject)token;
 
-                foreach (var property in obj.Properties())
+                foreach (JProperty property in obj.Properties())
                 {
-                    var childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(property.Name)).ToString()];
+                    TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(property.Name)).ToString()];
                     childNode.Tag = property;
                     AddNode(property.Value, childNode);
                 }
@@ -73,7 +73,7 @@ namespace WinPaletter.TypesExtensions
 
                 for (int i = 0, loopTo = array.Count - 1; i <= loopTo; i++)
                 {
-                    var childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(i.ToString()))];
+                    TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(i.ToString()))];
                     childNode.Tag = array[i];
                     AddNode(array[i], childNode);
                 }

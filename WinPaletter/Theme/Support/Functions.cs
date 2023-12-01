@@ -36,7 +36,7 @@ namespace WinPaletter.Theme
                                 {
                                     string c = x.Split('=')[1];
                                     bool inx = true;
-                                    foreach (var u in c.Split(' '))
+                                    foreach (string u in c.Split(' '))
                                     {
                                         if (!u.All(char.IsDigit))
                                             inx = false;
@@ -75,7 +75,7 @@ namespace WinPaletter.Theme
             List<Color> ls = new();
             ls.Clear();
 
-            var AllThemes = String.CList();
+            List<string> AllThemes = String.CList();
             string SelectedTheme = string.Empty;
             bool Found = false;
 
@@ -91,7 +91,7 @@ namespace WinPaletter.Theme
 
             if (!Found) { return null; }
 
-            var SelectedThemeList = SelectedTheme.CList();
+            List<string> SelectedThemeList = SelectedTheme.CList();
 
             foreach (string x in SelectedThemeList)
             {
@@ -105,7 +105,7 @@ namespace WinPaletter.Theme
                             {
                                 string c = x.Split('=')[1];
                                 bool inx = true;
-                                foreach (var u in c.Split(' '))
+                                foreach (string u in c.Split(' '))
                                 {
                                     if (!u.All(char.IsDigit))
                                         inx = false;
@@ -136,7 +136,7 @@ namespace WinPaletter.Theme
             List<Color> CL = new();
             CL.Clear();
 
-            foreach (var field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -145,7 +145,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(LogonUI10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(LogonUI10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -153,7 +153,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Windows8x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Windows8x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -161,7 +161,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Windows7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Windows7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -169,7 +169,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(WindowsVista).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(WindowsVista).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -177,7 +177,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(WindowsXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(WindowsXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -185,7 +185,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Theme.Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Theme.Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -193,7 +193,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Theme.Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Theme.Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -201,7 +201,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -209,7 +209,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(WallpaperTone).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(WallpaperTone).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -222,7 +222,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var field in typeof(Theme.Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Theme.Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {
@@ -232,7 +232,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (var c in Terminal.Colors)
+            foreach (TColors c in Terminal.Colors)
             {
                 CL.Add(c.Background);
                 CL.Add(c.Foreground);
@@ -256,7 +256,7 @@ namespace WinPaletter.Theme
                 CL.Add(c.Yellow);
             }
 
-            foreach (var c in TerminalPreview.Colors)
+            foreach (TColors c in TerminalPreview.Colors)
             {
                 CL.Add(c.Background);
                 CL.Add(c.Foreground);
@@ -280,7 +280,7 @@ namespace WinPaletter.Theme
                 CL.Add(c.Yellow);
             }
 
-            foreach (var c in Terminal.Themes)
+            foreach (TTheme c in Terminal.Themes)
             {
                 CL.Add(c.Titlebar_Inactive);
                 CL.Add(c.Titlebar_Active);
@@ -288,7 +288,7 @@ namespace WinPaletter.Theme
                 CL.Add(c.Tab_Inactive);
             }
 
-            foreach (var c in TerminalPreview.Themes)
+            foreach (TTheme c in TerminalPreview.Themes)
             {
                 CL.Add(c.Titlebar_Inactive);
                 CL.Add(c.Titlebar_Active);
@@ -296,16 +296,16 @@ namespace WinPaletter.Theme
                 CL.Add(c.Tab_Inactive);
             }
 
-            foreach (var c in Terminal.Profiles)
+            foreach (TProfile c in Terminal.Profiles)
                 CL.Add(c.TabColor);
 
-            foreach (var c in TerminalPreview.Profiles)
+            foreach (TProfile c in TerminalPreview.Profiles)
                 CL.Add(c.TabColor);
 
             CL.Add(Terminal.DefaultProf.TabColor);
             CL.Add(TerminalPreview.DefaultProf.TabColor);
 
-            foreach (var field in typeof(Theme.Structures.Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in typeof(Theme.Structures.Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (field.FieldType.Name.ToLower() == "color")
                 {

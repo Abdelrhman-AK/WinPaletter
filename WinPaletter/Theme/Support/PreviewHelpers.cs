@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.UI.Simulation;
 
 namespace WinPaletter
 {
@@ -11,8 +12,6 @@ namespace WinPaletter
     /// </summary>
     public class PreviewHelpers
     {
-        private static readonly int Steps = 15;
-        private static readonly int Delay = 1;
 
         /// <summary>
         /// Style of selected Windows edition (used for theme preview)
@@ -380,9 +379,9 @@ namespace WinPaletter
                     {
                         #region Win11
                         byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default;
-                        var TB_Blur = default(byte);
+                        byte TB_Blur = default(byte);
                         Color TB_Color = default, S_Color = default, AC_Color = default;
-                        var TB_UL_Color = default(Color);
+                        Color TB_UL_Color = default(Color);
                         Color Settings_Label_Color = default, Link_preview_Color = default;
                         Color AC_Normal = default, AC_Hover = default, AC_Pressed = default;
 
@@ -605,14 +604,14 @@ namespace WinPaletter
                         byte TB_Alpha, S_Alpha, AC_Alpha;
                         byte TB_Blur;
                         Color TB_Color = default, S_Color = default, AC_Color = default;
-                        var TB_StartBtnColor = default(Color);
+                        Color TB_StartBtnColor = default(Color);
 
-                        var TB_UL_Color = default(Color);
-                        var TB_AppBack_Color = default(Color);
-                        var AC_LinkColor = default(Color);
+                        Color TB_UL_Color = default(Color);
+                        Color TB_AppBack_Color = default(Color);
+                        Color AC_LinkColor = default(Color);
 
                         Color Settings_Label_Color = default, Link_preview_Color = default;
-                        var AC_Normal = default(Color);
+                        Color AC_Normal = default(Color);
 
                         Start.DarkMode = !TM.Windows10.WinMode_Light;
                         Taskbar.DarkMode = !TM.Windows10.WinMode_Light;
@@ -1111,10 +1110,10 @@ namespace WinPaletter
             Window1.SuspendRefresh = true;
             Window2.SuspendRefresh = true;
 
-            var AC_Style = ActionCenter.Style;
-            var Start_Style = Start.Style;
-            var Taskbar_Style = Taskbar.Style;
-            var Window_Style = Window1.Preview;
+            WinElement.Styles AC_Style = ActionCenter.Style;
+            WinElement.Styles Start_Style = Start.Style;
+            WinElement.Styles Taskbar_Style = Taskbar.Style;
+            Window.Preview_Enum Window_Style = Window1.Preview;
 
             Settings_Container.Visible = Style == WindowStyle.W12 || Style == WindowStyle.W11 || Style == WindowStyle.W10;
             Link_preview.Visible = Style == WindowStyle.W12 || Style == WindowStyle.W11 || Style == WindowStyle.W10;
@@ -1254,7 +1253,7 @@ namespace WinPaletter
                             case Theme.Structures.WindowsXP.Themes.LunaBlue:
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
-                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                                     Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
@@ -1262,7 +1261,7 @@ namespace WinPaletter
                             case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
-                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
                                     Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
@@ -1270,7 +1269,7 @@ namespace WinPaletter
                             case Theme.Structures.WindowsXP.Themes.LunaSilver:
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
-                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
                                     Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
@@ -1286,7 +1285,7 @@ namespace WinPaletter
                                         else if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".msstyles")
                                         {
                                             PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
-                                            System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
+                                            System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={TM.WindowsXP.ThemeFile}{"\r\n"}ColorStyle={TM.WindowsXP.ColorScheme}{"\r\n"}Size=NormalSize");
                                         }
                                     }
                                     Program.resVS = new(PathsExt.MSTheme);
@@ -1296,7 +1295,7 @@ namespace WinPaletter
                             case Theme.Structures.WindowsXP.Themes.Classic:
                                 {
                                     PathsExt.MSTheme = PathsExt.MSTheme_Luna_theme;
-                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                                    System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                                     Program.resVS = new(PathsExt.MSTheme);
                                     break;
                                 }
@@ -2330,11 +2329,11 @@ namespace WinPaletter
             {
                 if (OS.WXP)
                 {
-                    WT.Image = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WT.Image = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WT.Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WT.Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 

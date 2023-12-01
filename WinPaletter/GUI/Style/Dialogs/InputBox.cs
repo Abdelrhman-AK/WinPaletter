@@ -48,10 +48,10 @@ namespace WinPaletter.UI.Style
 
         private static string InputBox_Classic(string Instruction, string Value = "", string Notice = "", string Title = "")
         {
-            string N = !string.IsNullOrWhiteSpace(Notice) ? "\r\n" + "\r\n" + Notice : string.Empty;
+            string N = !string.IsNullOrWhiteSpace(Notice) ? $"\r\n\r\n{Notice}" : string.Empty;
             string T = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName;
 
-            return Interaction.InputBox(Instruction + N, T, Value);
+            return Interaction.InputBox($"{Instruction}{N}", T, Value);
         }
 
     }

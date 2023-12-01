@@ -71,7 +71,7 @@ namespace WinPaletter
             if (RegType == RegistryValueKind.String & Value is null)
                 Value = string.Empty;
 
-            var scope = default(Reg_scope);
+            Reg_scope scope = default(Reg_scope);
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
             {
@@ -282,9 +282,9 @@ namespace WinPaletter
                     R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType);
                     AddVerboseItem(TreeView, false, Key_BeforeModification, ValueName, Value, RegType);
                 }
-                else if (scope == Reg_scope.HKEY_LOCAL_MACHINE) { EditReg_CMD(TreeView, @"HKEY_LOCAL_MACHINE\" + Key, ValueName, Value, RegType); }
+                else if (scope == Reg_scope.HKEY_LOCAL_MACHINE) { EditReg_CMD(TreeView, $@"HKEY_LOCAL_MACHINE\{Key}", ValueName, Value, RegType); }
 
-                else if (scope == Reg_scope.HKEY_USERS) { EditReg_CMD(TreeView, @"HKEY_USERS\" + Key, ValueName, Value, RegType); }
+                else if (scope == Reg_scope.HKEY_USERS) { EditReg_CMD(TreeView, $@"HKEY_USERS\{Key}", ValueName, Value, RegType); }
             }
             catch (SecurityException @PermissionEx)
             {
@@ -336,19 +336,19 @@ namespace WinPaletter
             string _Value;
 
             if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
-                Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
+                Key = $"HKLM{(Key.Remove(0, "HKEY_LOCAL_MACHINE".Count()))}";
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (User.SID != User.AdminSID_GrantedUAC ? "HKU" + "\\" + User.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = $"{((User.SID != User.AdminSID_GrantedUAC ? $"HKU\\{User.SID}" : "HKCU"))}{(Key.Remove(0, "HKEY_CURRENT_USER".Count()))}";
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
-                Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
+                Key = $"HKU{(Key.Remove(0, "HKEY_USERS".Count()))}";
 
             if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
-                Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
+                Key = $"HKCR{(Key.Remove(0, "HKEY_CLASSES_ROOT".Count()))}";
 
             if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
-                Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
+                Key = $"HKCC{(Key.Remove(0, "HKEY_CURRENT_CONFIG".Count()))}";
 
             // /v = Value Name
             // /t = Registry Value Type
@@ -396,7 +396,7 @@ namespace WinPaletter
                     case RegistryValueKind.MultiString:
                         {
                             regTemplate = "add \"{0}\" /v \"{1}\" /t REG_MULTI_SZ /d \"{2}\" /f";
-                            _Value = Value.ToString().Replace("\r\n", @"\0") + @"\0\0";
+                            _Value = $@"{(Value.ToString().Replace("\r\n", @"\0"))}\0\0";
                             break;
                         }
                     // A sequence of null-terminated strings, terminated by an empty string (\0). The following is an example: String1\0String2\0String3\0LastString\0\0. The first \0 terminates the first string, the second-from-last \0 terminates the last string, and the final \0 terminates the sequence. Note that the final terminator must be factored into the length of the string.
@@ -438,7 +438,7 @@ namespace WinPaletter
             }
             finally
             {
-                AddVerboseItem(TreeView, false, "CMD: " + Key_BeforeModification, ValueName, Value, RegType);
+                AddVerboseItem(TreeView, false, $"CMD: {Key_BeforeModification}", ValueName, Value, RegType);
             }
 
         }
@@ -508,15 +508,15 @@ namespace WinPaletter
                     v0 = "(default)";
                 if (string.IsNullOrWhiteSpace(v1))
                     v1 = "null";
-                string v2 = ex.Message + " - " + "CMD: " + string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
+                string v2 = $"{ex.Message} - CMD: {(string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()))}";
                 if (TreeView is not null)
-                    Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), v2), "error");
+                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {v2}", "error");
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(v2, ex));
             }
             else
             {
                 if (TreeView is not null)
-                    Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ex.Message), "error");
+                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {ex.Message}", "error");
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
         }
@@ -609,7 +609,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(Key + " : " + ValueName, ex));
+                Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
                 if (RaiseExceptions)
                     Forms.BugReport.ThrowError(ex);
                 try
@@ -637,19 +637,19 @@ namespace WinPaletter
         {
             string regTemplate;
             if (Key.StartsWith("HKEY_LOCAL_MACHINE", StringComparison.OrdinalIgnoreCase))
-                Key = "HKLM" + Key.Remove(0, "HKEY_LOCAL_MACHINE".Count());
+                Key = $"HKLM{(Key.Remove(0, "HKEY_LOCAL_MACHINE".Count()))}";
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
-                Key = (User.SID != User.AdminSID_GrantedUAC ? "HKU" + "\\" + User.SID : "HKCU") + Key.Remove(0, "HKEY_CURRENT_USER".Count());
+                Key = $"{((User.SID != User.AdminSID_GrantedUAC ? $"HKU\\{User.SID}" : "HKCU"))}{(Key.Remove(0, "HKEY_CURRENT_USER".Count()))}";
 
             if (Key.StartsWith("HKEY_USERS", StringComparison.OrdinalIgnoreCase))
-                Key = "HKU" + Key.Remove(0, "HKEY_USERS".Count());
+                Key = $"HKU{(Key.Remove(0, "HKEY_USERS".Count()))}";
 
             if (Key.StartsWith("HKEY_CLASSES_ROOT", StringComparison.OrdinalIgnoreCase))
-                Key = "HKCR" + Key.Remove(0, "HKEY_CLASSES_ROOT".Count());
+                Key = $"HKCR{(Key.Remove(0, "HKEY_CLASSES_ROOT".Count()))}";
 
             if (Key.StartsWith("HKEY_CURRENT_CONFIG", StringComparison.OrdinalIgnoreCase))
-                Key = "HKCC" + Key.Remove(0, "HKEY_CURRENT_CONFIG".Count());
+                Key = $"HKCC{(Key.Remove(0, "HKEY_CURRENT_CONFIG".Count()))}";
 
             // /f = Disable prompt
             regTemplate = @"delete ""{0}\{1}"" /f";
@@ -674,7 +674,7 @@ namespace WinPaletter
             {
                 StartInfo = new()
                 {
-                    FileName = PathsExt.System32 + "\\cmd.exe",
+                    FileName = $"{PathsExt.System32}\\cmd.exe",
                     Verb = "runas",
                     WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
                     CreateNoWindow = Hide,
@@ -685,7 +685,7 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(File))
                 {
-                    process.StartInfo.Arguments = "/c sfc.exe /SCANFILE=\"" + File + $"\"{(!Hide ? " && pause" : string.Empty)}";
+                    process.StartInfo.Arguments = $"/c sfc.exe /SCANFILE=\"{File}\"{(!Hide ? " && pause" : string.Empty)}";
                 }
                 else if (IfNotExist_DoScannow)
                 {
@@ -717,7 +717,7 @@ namespace WinPaletter
 
                 try
                 {
-                    var fSecurity = System.IO.File.GetAccessControl(File);
+                    FileSecurity fSecurity = System.IO.File.GetAccessControl(File);
                     fSecurity.AddAccessRule(new FileSystemAccessRule(System.Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
                     System.IO.File.SetAccessControl(File, fSecurity);
                 }
@@ -737,11 +737,11 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.SendCommand($"{PathsExt.System32}\\ICACLS.exe {string.Format("\"{0}\" /grant {1}:F", File, AsAdministrator ? "administrators" : "%username%")}");
+                Program.SendCommand($"{PathsExt.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
 
                 try
                 {
-                    var fSecurity = System.IO.File.GetAccessControl(File);
+                    FileSecurity fSecurity = System.IO.File.GetAccessControl(File);
                     fSecurity.AddAccessRule(new FileSystemAccessRule(System.Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
                     System.IO.File.SetAccessControl(File, fSecurity);
                 }
@@ -760,7 +760,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(source))
             {
-                Program.SendCommand($"{PathsExt.CMD} {string.Format("move \"{0}\" \"{1}\"", source, destination)}");
+                Program.SendCommand($"{PathsExt.CMD} {$"move \"{source}\" \"{destination}\""}");
             }
         }
     }

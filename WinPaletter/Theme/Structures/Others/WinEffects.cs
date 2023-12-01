@@ -289,7 +289,7 @@ namespace WinPaletter.Theme.Structures
 
             WindowAnimation = SystemParametersInfo(SPI.SPI_GETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_NONE) ? anim.IMinAnimate == 1 : @default.WindowAnimation;
 
-            var x = default(bool);
+            bool x = default(bool);
 
             if (SystemParametersInfo(SPI.SPI_GETMENUFADE, 0, ref x, SPIF.SPIF_NONE))
             {
@@ -525,13 +525,13 @@ namespace WinPaletter.Theme.Structures
                     {
                         case ExplorerBar.Bar:
                             {
-                                if (System.IO.File.Exists(PathsExt.System32 + @"\UIRibbon.dll"))
+                                if (System.IO.File.Exists($@"{PathsExt.System32}\UIRibbon.dll"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
-                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll");
-                                    Move_File(PathsExt.System32 + @"\UIRibbon.dll", PathsExt.System32 + @"\UIRibbon.dll_bak");
+                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll");
+                                    Move_File($@"{PathsExt.System32}\UIRibbon.dll", $@"{PathsExt.System32}\UIRibbon.dll_bak");
 
                                     // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
 
@@ -542,14 +542,14 @@ namespace WinPaletter.Theme.Structures
 
                         default:
                             {
-                                if (System.IO.File.Exists(PathsExt.System32 + @"\UIRibbon.dll_bak"))
+                                if (System.IO.File.Exists($@"{PathsExt.System32}\UIRibbon.dll_bak"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
-                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll_bak");
-                                    Takeown_File(PathsExt.System32 + @"\UIRibbon.dll");
-                                    Move_File(PathsExt.System32 + @"\UIRibbon.dll_bak", PathsExt.System32 + @"\UIRibbon.dll");
+                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll_bak");
+                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll");
+                                    Move_File($@"{PathsExt.System32}\UIRibbon.dll_bak", $@"{PathsExt.System32}\UIRibbon.dll");
                                 }
 
                                 break;

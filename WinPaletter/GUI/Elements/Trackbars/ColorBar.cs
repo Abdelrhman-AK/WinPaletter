@@ -210,22 +210,6 @@ namespace WinPaletter.UI.WP
 
         public ModesList Mode { get; set; } = ModesList.Hue;
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
         #endregion
 
         #region Events
@@ -388,6 +372,12 @@ namespace WinPaletter.UI.WP
             set { _alpha = value; Refresh(); }
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

@@ -37,9 +37,9 @@ namespace WinPaletter.NativeMethods
                     Win32Exception ex = new(Error);
 
                     if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, $"ERROR {Error}: " + ex.Message), "dll");
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, $"ERROR {Error}: " + ex.Message), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", $"\"{pszFilename}\"", pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
 
                     return;
                 }
@@ -60,9 +60,9 @@ namespace WinPaletter.NativeMethods
                     Win32Exception ex = new(Error);
 
                     if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: " + ex.Message), "dll");
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: " + ex.Message), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), ex));
 
                     return;
                 }
@@ -83,9 +83,9 @@ namespace WinPaletter.NativeMethods
                     Win32Exception ex = new(Error);
 
                     if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: " + ex.Message), "dll");
+                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: " + ex.Message), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), ex));
 
                     return;
                 }

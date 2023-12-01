@@ -122,7 +122,7 @@ namespace WinPaletter
                                 {
                                     if (JSonFile["profiles"]["list"] is not null)
                                     {
-                                        foreach (var item in JSonFile["profiles"]["list"])
+                                        foreach (JToken item in JSonFile["profiles"]["list"])
                                         {
                                             TProfile P = new();
                                             if (item["name"] is not null)
@@ -176,7 +176,7 @@ namespace WinPaletter
 
                                 if (JSonFile["schemes"] is not null)
                                 {
-                                    foreach (var item in JSonFile["schemes"])
+                                    foreach (JToken item in JSonFile["schemes"])
                                     {
                                         TColors TC = new();
 
@@ -263,7 +263,7 @@ namespace WinPaletter
 
                                 if (JSonFile["themes"] is not null)
                                 {
-                                    foreach (var item in JSonFile["themes"])
+                                    foreach (JToken item in JSonFile["themes"])
                                     {
                                         TTheme Th = new();
                                         if (item["name"] is not null)
@@ -350,10 +350,10 @@ namespace WinPaletter
                             {
                                 case Version.Stable:
                                     {
-                                        var bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+                                        BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                                         foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                         {
-                                            var type = field.FieldType;
+                                            Type type = field.FieldType;
                                             field.SetValue(this, field.GetValue(TBx.TerminalPreview));
                                         }
 
@@ -362,10 +362,10 @@ namespace WinPaletter
 
                                 case Version.Preview:
                                     {
-                                        var bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+                                        BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                                         foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                         {
-                                            var type = field.FieldType;
+                                            Type type = field.FieldType;
                                             field.SetValue(this, field.GetValue(TBx.TerminalPreview));
                                         }
 
@@ -539,11 +539,11 @@ namespace WinPaletter
                             JS["foreground"] = RGB2HEX(Colors[x].Foreground);
 
                             // # Check for properties reminants from the old JObj to be added to the new one
-                            foreach (var item in JSonFileUntouched["schemes"])
+                            foreach (JToken item in JSonFileUntouched["schemes"])
                             {
                                 if (item["name"].ToString().ToLower() == JS["name"].ToString().ToLower())
                                 {
-                                    foreach (var itemX in (IEnumerable)item)
+                                    foreach (object itemX in (IEnumerable)item)
                                     {
                                         bool Contains = JS.ContainsKey(itemX.ToString().Split(':')[0].Trim().Replace("\"", string.Empty));
                                         if (!Contains)
@@ -556,12 +556,12 @@ namespace WinPaletter
                         }
 
                         // # Check for reminants from the old JObj to be added to the new one
-                        foreach (var x in (JArray)JSonFileUntouched["schemes"])
+                        foreach (JToken x in (JArray)JSonFileUntouched["schemes"])
                         {
                             string name1 = x["name"].ToString();
                             bool Found = false;
 
-                            foreach (var y in (JArray)JSonFile["schemes"])
+                            foreach (JToken y in (JArray)JSonFile["schemes"])
                             {
                                 string name2 = y["name"].ToString();
 
@@ -673,11 +673,11 @@ namespace WinPaletter
                             JS["font"] = JS_Font;
 
                             // # Check for properties reminants from the old JObj to be added to the new one
-                            foreach (var item in JSonFileUntouched["profiles"]["list"])
+                            foreach (JToken item in JSonFileUntouched["profiles"]["list"])
                             {
                                 if (item["name"].ToString().ToLower() == JS["name"].ToString().ToLower())
                                 {
-                                    foreach (var itemX in (IEnumerable)item)
+                                    foreach (object itemX in (IEnumerable)item)
                                     {
                                         if (itemX.ToString().Split(':')[0].Trim().Replace("\"", string.Empty) != "tabColor")
                                         {
@@ -693,12 +693,12 @@ namespace WinPaletter
                         }
 
                         // # Check for reminants from the old JObj to be added to the new one
-                        foreach (var x in (JArray)JSonFileUntouched["profiles"]["list"])
+                        foreach (JToken x in (JArray)JSonFileUntouched["profiles"]["list"])
                         {
                             string name1 = x["name"].ToString();
                             bool Found = false;
 
-                            foreach (var y in (JArray)JSonFile["profiles"]["list"])
+                            foreach (JToken y in (JArray)JSonFile["profiles"]["list"])
                             {
                                 string name2 = y["name"].ToString();
 
@@ -781,12 +781,12 @@ namespace WinPaletter
         {
             Process proc = new();
             proc.StartInfo.FileName = "takeown.exe";
-            proc.StartInfo.Arguments = "/R /F \"" + filepath + "\"";
+            proc.StartInfo.Arguments = $"/R /F \"{filepath}\"";
             proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             proc.Start();
             proc.WaitForExit();
             proc.StartInfo.FileName = "icacls.exe";
-            proc.StartInfo.Arguments = "\"" + filepath + "\" /grant *{GROUP_USERS_SID}:F /T";
+            proc.StartInfo.Arguments = $"\"{filepath}\" /grant *{{GROUP_USERS_SID}}:F /T";
             proc.Start();
             proc.WaitForExit();
         }
@@ -828,7 +828,7 @@ namespace WinPaletter
         /// <returns></returns>
         public string RGB2HEX(Color Color)
         {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
+            return $"#{Color.R:X2}{Color.G:X2}{Color.B:X2}";
         }
 
         /// <summary>

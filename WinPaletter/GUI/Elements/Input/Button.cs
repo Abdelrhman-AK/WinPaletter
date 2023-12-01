@@ -337,22 +337,6 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
 
         private Flags _flag = Flags.None;
         public Flags Flag
@@ -596,12 +580,6 @@ namespace WinPaletter.UI.WP
             Animate();
         }
 
-        protected override void OnLocationChanged(EventArgs e)
-        {
-            Refresh();
-
-            base.OnLocationChanged(e);
-        }
         #endregion
 
         #region Animator
@@ -641,6 +619,12 @@ namespace WinPaletter.UI.WP
             }
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

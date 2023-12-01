@@ -109,14 +109,14 @@ namespace WinPaletter
                             UpdateSize = Conversions.ToDecimal(ls[UpdateChannel].Split(' ')[2]);
                             ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls[UpdateChannel].Split(' ')[3]));
 
-                            Label7.Text = UpdateSize + " " + Program.Lang.MBSizeUnit;
+                            Label7.Text = $"{UpdateSize} {Program.Lang.MBSizeUnit}";
                             Label9.Text = ReleaseDate.ToLongDateString();
 
                             LinkLabel3.Visible = true;
 
                             Program.Animator.Show(Panel1, true);
                             Button1.Text = Program.Lang.DoAction_Update;
-                            AlertBox2.Text = string.Format("{0}. {1} {2}", Program.Lang.NewUpdate, Program.Lang.Version, ver);
+                            AlertBox2.Text = $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}";
                             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
                         }
                         else
@@ -185,7 +185,7 @@ namespace WinPaletter
 
                 if (RadioButton2.Checked)
                 {
-                    SaveFileDialog1.FileName = string.Format("WinPaletter ({0})", ver);
+                    SaveFileDialog1.FileName = $"WinPaletter ({ver})";
 
                     if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
@@ -258,14 +258,14 @@ namespace WinPaletter
                 ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls[UpdateChannel].Split(' ')[3]));
                 ver = ls[UpdateChannel].Split(' ')[1];
 
-                Label7.Text = UpdateSize + " " + Program.Lang.MBSizeUnit;
-                Label9.Text = ReleaseDate.ToLongDateString() + " " + ReleaseDate.ToLongTimeString();
+                Label7.Text = $"{UpdateSize} {Program.Lang.MBSizeUnit}";
+                Label9.Text = $"{ReleaseDate.ToLongDateString()} {ReleaseDate.ToLongTimeString()}";
 
                 LinkLabel3.Visible = true;
 
                 Program.Animator.Show(Panel1, true);
                 Button1.Text = Program.Lang.DoAction_Update;
-                AlertBox2.Text = string.Format("{0}. {1} {2}", Program.Lang.NewUpdate, Program.Lang.Version, ver);
+                AlertBox2.Text = $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}";
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
 
                 Program.Animator.Show(AlertBox2, true);
@@ -336,7 +336,7 @@ namespace WinPaletter
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);
-                using (var Prc = Process.GetCurrentProcess())
+                using (Process Prc = Process.GetCurrentProcess())
                 {
                     Prc.Kill();
                 }

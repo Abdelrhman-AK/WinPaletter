@@ -61,7 +61,7 @@ namespace WinPaletter.UI.Style
             {
                 if (Uri.IsWellFormedUriString(x, UriKind.Absolute))
                 {
-                    c.Add(string.Format("<a href=\"{0}\">{0}</a>", x));
+                    c.Add($"<a href=\"{x}\">{x}</a>");
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace WinPaletter.UI.Style
 
                     TD.MainIcon = icon;
 
-                    var result = DialogResult.OK;
+                    DialogResult result = DialogResult.OK;
                     TaskDialogButton resultButton = TD.ShowDialog();
 
                     if (resultButton == yesButton)
@@ -238,19 +238,14 @@ namespace WinPaletter.UI.Style
             }
         }
 
-        private static void Dialog_Opened(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private static DialogResult Msgbox_Classic(object Message, object SubMessage, object ExpandedDetails, object Footer, object DialogTitle, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information)
         {
-            string SM = !string.IsNullOrWhiteSpace((SubMessage ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : string.Empty;
-            string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : string.Empty;
-            string Fo = !string.IsNullOrWhiteSpace((Footer ?? string.Empty).ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : string.Empty;
+            string SM = !string.IsNullOrWhiteSpace((SubMessage ?? string.Empty).ToString()) ? $"\r\n\r\n{SubMessage}" : string.Empty;
+            string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? string.Empty).ToString()) ? $"\r\n\r\n{ExpandedDetails}" : string.Empty;
+            string Fo = !string.IsNullOrWhiteSpace((Footer ?? string.Empty).ToString()) ? $"\r\n\r\n{Footer}" : string.Empty;
             string T = !string.IsNullOrWhiteSpace((DialogTitle ?? string.Empty).ToString()) ? DialogTitle.ToString() : Application.ProductName;
 
-            return MessageBox.Show(Message + SM + ED + Fo, T, Buttons, Icon);
+            return MessageBox.Show($"{Message}{SM}{ED}{Fo}", T, Buttons, Icon);
         }
 
 

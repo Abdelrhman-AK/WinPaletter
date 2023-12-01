@@ -85,7 +85,7 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    throw new User.LogonFailureException($"ERROR_LOGON_FAILURE ({Marshal.GetLastWin32Error()}): " + Program.Lang.UserSwitch_ERROR_LOGON_FAILURE);
+                    throw new User.LogonFailureException($"ERROR_LOGON_FAILURE ({Marshal.GetLastWin32Error()}): {Program.Lang.UserSwitch_ERROR_LOGON_FAILURE}");
                 }
             }
             catch (User.LogonFailureException ex)

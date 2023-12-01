@@ -32,14 +32,14 @@ namespace WinPaletter.TypesExtensions
             string S;
             if (Alpha)
             {
-                S = string.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) + string.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) + string.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) + string.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B);
+                S = $"{(string.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))}";
             }
             else
             {
-                S = string.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B);
+                S = $"{Color.R:X2}{Color.G:X2}{Color.B:X2}";
             }
             if (Hash)
-                S = "#" + S;
+                S = $"#{S}";
             return S;
         }
 
@@ -166,7 +166,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string HSL_Text(this Color Color)
         {
-            return string.Format("{0} {1}% {2}%", Color.ToHSL().H, Math.Round((double)(Color.ToHSL().S * 100f)), Math.Round((double)(Color.ToHSL().L * 100f)));
+            return $"{Color.ToHSL().H} {Math.Round((double)(Color.ToHSL().S * 100f))}% {Math.Round((double)(Color.ToHSL().L * 100f))}%";
         }
 
         /// <summary>
@@ -176,11 +176,11 @@ namespace WinPaletter.TypesExtensions
         {
             if (!Alpha)
             {
-                return string.Format("{0} {1} {2}", Color.R, Color.G, Color.B);
+                return $"{Color.R} {Color.G} {Color.B}";
             }
             else
             {
-                return string.Format("{0} {1} {2} {3}", Color.A, Color.R, Color.G, Color.B);
+                return $"{Color.A} {Color.R} {Color.G} {Color.B}";
             }
         }
 
@@ -366,52 +366,19 @@ namespace WinPaletter.TypesExtensions
 
         public struct HSL_Structure
         {
-            private int _h;
-            private float _s;
-            private float _l;
 
             public HSL_Structure(int h, float s, float l)
             {
-                _h = h;
-                _s = s;
-                _l = l;
+                H = h;
+                S = s;
+                L = l;
             }
 
-            public int H
-            {
-                get
-                {
-                    return _h;
-                }
-                set
-                {
-                    _h = value;
-                }
-            }
+            public int H { get; set; }
 
-            public float S
-            {
-                get
-                {
-                    return _s;
-                }
-                set
-                {
-                    _s = value;
-                }
-            }
+            public float S { get; set; }
 
-            public float L
-            {
-                get
-                {
-                    return _l;
-                }
-                set
-                {
-                    _l = value;
-                }
-            }
+            public float L { get; set; }
 
             public bool Equals(HSL_Structure hsl)
             {

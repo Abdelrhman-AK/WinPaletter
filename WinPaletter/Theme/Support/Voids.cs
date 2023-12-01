@@ -24,7 +24,7 @@ namespace WinPaletter.Theme
                         TreeView.Invoke(new MethodInvoker(() =>
                         {
                             {
-                                var temp = TreeView.Nodes.Add(Text);
+                                TreeNode temp = TreeView.Nodes.Add(Text);
                                 temp.ImageKey = ImageKey;
                                 temp.SelectedImageKey = ImageKey;
                             }
@@ -45,7 +45,7 @@ namespace WinPaletter.Theme
                         TreeView.Invoke(new MethodInvoker(() =>
                         {
                             {
-                                var temp = TreeView.Nodes.Add(Text);
+                                TreeNode temp = TreeView.Nodes.Add(Text);
                                 temp.ImageKey = ImageKey;
                                 temp.SelectedImageKey = ImageKey;
                             }
@@ -92,10 +92,10 @@ namespace WinPaletter.Theme
                 if (!ExecuteEvenIfSkip)
                 {
                     if (!string.IsNullOrWhiteSpace(StartStr))
-                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), StartStr), "apply");
+                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {StartStr}", "apply");
                 }
                 else if (!string.IsNullOrWhiteSpace(ErrorStr))
-                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), SkipStr), "skip");
+                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {SkipStr}", "skip");
 
                 try
                 {
@@ -111,7 +111,7 @@ namespace WinPaletter.Theme
                     if (ReportProgress)
                     {
                         if (!string.IsNullOrWhiteSpace(ErrorStr))
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ErrorStr), "error");
+                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {ErrorStr}", "error");
                         AddException(ErrorStr, ex);
                     }
                     else
@@ -123,7 +123,7 @@ namespace WinPaletter.Theme
                 }
             }
             else if (!string.IsNullOrWhiteSpace(ErrorStr))
-                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), SkipStr), "skip");
+                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {SkipStr}", "skip");
 
             sw.Stop();
         }

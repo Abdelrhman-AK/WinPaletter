@@ -143,7 +143,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Terminal_supposed}\"{TerDir}\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + TerPreDir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Terminal_supposed}\"{TerPreDir}\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
             }
 
@@ -223,7 +223,7 @@ namespace WinPaletter
             {
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                string Dir = Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0";
+                string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0";
 
                 if (System.IO.Directory.Exists(Dir))
                 {
@@ -233,7 +233,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Terminal_supposed}\"{Dir}\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -252,7 +252,7 @@ namespace WinPaletter
             {
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                string Dir = Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0";
+                string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0";
 
                 if (System.IO.Directory.Exists(Dir))
                 {
@@ -262,7 +262,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, Program.Lang.Terminal_supposed + "\"" + Dir + "\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
+                    MsgBox(Program.Lang.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Terminal_supposed}\"{Dir}\"", Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.Terminal_Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

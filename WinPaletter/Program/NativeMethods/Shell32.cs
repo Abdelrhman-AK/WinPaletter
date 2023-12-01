@@ -62,7 +62,7 @@ namespace WinPaletter.NativeMethods
         {
             if (!OS.WXP)
             {
-                var sb = new StringBuilder(1000);
+                StringBuilder sb = new StringBuilder(1000);
                 GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
                 return sb.ToString();
             }

@@ -367,14 +367,14 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is TreeView)
             {
-                var temp1 = (TreeView)ctrl;
+                TreeView temp1 = (TreeView)ctrl;
                 temp1.BackColor = ctrl.Parent.BackColor;
                 temp1.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is ListView)
             {
-                var temp3 = (ListView)ctrl;
+                ListView temp3 = (ListView)ctrl;
                 temp3.BackColor = ctrl.Parent.BackColor;
             }
 
@@ -385,21 +385,21 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is CheckedListBox)
             {
-                var temp4 = (CheckedListBox)ctrl;
+                CheckedListBox temp4 = (CheckedListBox)ctrl;
                 temp4.BackColor = ctrl.Parent.BackColor;
                 temp4.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is NumericUpDown)
             {
-                var temp5 = (NumericUpDown)ctrl;
+                NumericUpDown temp5 = (NumericUpDown)ctrl;
                 temp5.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
                 temp5.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is System.Windows.Forms.ComboBox && ctrl is not UI.WP.ComboBox)
             {
-                var temp6 = (System.Windows.Forms.ComboBox)ctrl;
+                ComboBox temp6 = (System.Windows.Forms.ComboBox)ctrl;
                 temp6.FlatStyle = FlatStyle.Flat;
                 temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;

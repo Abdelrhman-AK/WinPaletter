@@ -1,6 +1,7 @@
 // Author:          Evan Olds
 // Creation Date:   February 10, 2008
 // Description:     Class for loading icon or cursor data from streams
+using EOFC;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -179,8 +180,7 @@ public class EOIcoCurLoader
         }
         catch (Exception e)
         {
-            ErrorMsg = "Could not get 6 bytes from the beginning of the stream. " +
-                "The following exception was generated:\r\n" + e.ToString();
+            ErrorMsg = $"Could not get 6 bytes from the beginning of the stream. The following exception was generated:\r\n{e}";
             return -1;
         }
 
@@ -212,8 +212,7 @@ public class EOIcoCurLoader
         // Make sure that the "ImageIndex" parameter is ok
         if (ImageIndex >= hdr.Count)
         {
-            ErrorMsg = "Invalid image index of " + Convert.ToString(ImageIndex) +
-                " was passed to GetImage";
+            ErrorMsg = $"Invalid image index of {Convert.ToString(ImageIndex)} was passed to GetImage";
             return null;
         }
 
@@ -250,11 +249,11 @@ public class EOIcoCurLoader
             m_reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
             // Create an offset stream so .NET can load
-            var os = new EOFC.OffsetStream(m_reader.BaseStream);
+            OffsetStream os = new EOFC.OffsetStream(m_reader.BaseStream);
 
             try
             {
-                bm  = new(os);
+                bm = new(os);
                 bm.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
             catch (ArgumentException)
@@ -327,9 +326,7 @@ public class EOIcoCurLoader
         // Make sure that the "ImageIndex" parameter is ok
         if (ImageIndex >= hdr.Count)
         {
-            ErrorMsg = "Invalid image index passed to GetImageDimensions.\r\n" +
-                "Image index: " + Convert.ToString(ImageIndex) + "\r\n" +
-                "Available image count: " + Convert.ToString(hdr.Count);
+            ErrorMsg = $"Invalid image index passed to GetImageDimensions.\r\nImage index: {Convert.ToString(ImageIndex)}\r\nAvailable image count: {Convert.ToString(hdr.Count)}";
             return false;
         }
 
@@ -348,9 +345,7 @@ public class EOIcoCurLoader
         }
         catch (Exception)
         {
-            ErrorMsg = "Could not seek to appropriate position in icon stream data.\r\n" +
-                "The file data may be truncated, inaccessible or invalid.\r\n" +
-                "Attempted seek position: " + Convert.ToString(SeekPos);
+            ErrorMsg = $"Could not seek to appropriate position in icon stream data.\r\nThe file data may be truncated, inaccessible or invalid.\r\nAttempted seek position: {Convert.ToString(SeekPos)}";
             // Seek back to original stream position
             m_reader.BaseStream.Seek(oldPos, SeekOrigin.Begin);
             return false;
@@ -368,7 +363,7 @@ public class EOIcoCurLoader
 
             try
             {
-                using (Bitmap bm  = new(os))
+                using (Bitmap bm = new(os))
                 {
                     out_Width = (uint)bm.Width;
                     out_Height = (uint)bm.Height;
@@ -430,34 +425,6 @@ public class EOIcoCurLoader
         return true;
     }
 
-    private PixelFormat PixelFormatFrombpp(uint bpp)
-    {
-        switch (bpp)
-        {
-            case 32:
-                return PixelFormat.Format32bppArgb;
-
-            case 24:
-                return PixelFormat.Format24bppRgb;
-
-            case 16:
-                return PixelFormat.Format16bppRgb565;
-
-            case 15:
-                return PixelFormat.Format16bppRgb555;
-
-            case 8:
-                return PixelFormat.Format8bppIndexed;
-
-            case 4:
-                return PixelFormat.Format4bppIndexed;
-
-            case 1:
-                return PixelFormat.Format1bppIndexed;
-        }
-        return PixelFormat.Undefined;
-    }
-
     private uint PixelFormatTobpp(PixelFormat pf)
     {
         switch (pf)
@@ -478,17 +445,6 @@ public class EOIcoCurLoader
                 return 1;
         }
         return 32;
-    }
-
-    private int SizeComp(int w, int h, int bpp)
-    {
-        // Compute the row size
-        int RowSize = w * bpp / 8;
-        if (RowSize % 4 != 0)
-        {
-            RowSize += (4 - (RowSize % 4));
-        }
-        return h * RowSize;
     }
 
     private uint SizeComp(uint w, uint h, uint bpp)

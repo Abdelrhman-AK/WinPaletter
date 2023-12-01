@@ -65,8 +65,8 @@ namespace WinPaletter.TypesExtensions
 
         public static void DoubleBufferedControl(Control Control, bool setting)
         {
-            var panType = Control.GetType();
-            var pi = panType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            Type panType = Control.GetType();
+            PropertyInfo pi = panType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(Control, setting, null);
         }
 
@@ -95,7 +95,7 @@ namespace WinPaletter.TypesExtensions
                     {
                         try
                         {
-                            var c1 = ctrl.Parent.BackColor;
+                            Color c1 = ctrl.Parent.BackColor;
                             Color c2;
                             if (!(ctrl.Parent.Parent is Form))
                             {
@@ -148,7 +148,7 @@ namespace WinPaletter.TypesExtensions
             {
                 if (parent != null && parent.Controls.Count > 0)
                 {
-                    var cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
+                    IOrderedEnumerable<Control> cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
                     return cs.SelectMany(c => c.GetAllControls()).Concat(cs).OrderBy(c => c.Name);
                 }
                 else
@@ -161,7 +161,7 @@ namespace WinPaletter.TypesExtensions
             {
                 if (parent != null && parent.Controls.Count > 0)
                 {
-                    var cs = parent.Controls.OfType<Control>();
+                    IEnumerable<Control> cs = parent.Controls.OfType<Control>();
                     return cs.SelectMany(c => c.GetAllControls()).Concat(cs);
                 }
                 else
@@ -223,7 +223,7 @@ namespace WinPaletter.TypesExtensions
                 else
                 {
                     {
-                        var temp = Ctrl.Nodes.Add(text);
+                        TreeNode temp = Ctrl.Nodes.Add(text);
                         temp.ImageKey = imagekey;
                         temp.SelectedImageKey = imagekey;
                     }

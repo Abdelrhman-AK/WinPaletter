@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -347,7 +348,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -403,17 +404,17 @@ namespace WinPaletter
         {
             if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox1.Text = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox1.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox1.Text = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox1.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
             }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            var R1 = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+            RegistryKey R1 = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
             string WallpaperPath = R1.GetValue("Wallpaper", null).ToString();
             if (R1 is not null)
                 R1.Close();
@@ -438,7 +439,7 @@ namespace WinPaletter
             OpenImgDlg.Multiselect = true;
             if (OpenImgDlg.ShowDialog() == DialogResult.OK)
             {
-                foreach (var x in OpenImgDlg.FileNames)
+                foreach (string x in OpenImgDlg.FileNames)
                 {
                     if (!ListBox1.Items.Contains(x))
                         ListBox1.Items.Add(x);
@@ -458,7 +459,7 @@ namespace WinPaletter
             if (ListBox1.SelectedItem is not null)
             {
                 ArrayList items = new(ListBox1.SelectedItems);
-                foreach (var item in items)
+                foreach (object item in items)
                     ListBox1.Items.Remove(item);
             }
 
@@ -488,7 +489,7 @@ namespace WinPaletter
             int newIndex = ListBox1.SelectedIndex + direction;
             if (newIndex < 0 || newIndex >= ListBox1.Items.Count)
                 return;
-            var selected = ListBox1.SelectedItem;
+            object selected = ListBox1.SelectedItem;
             ListBox1.Items.Remove(selected);
             ListBox1.Items.Insert(newIndex, selected);
             ListBox1.SetSelected(newIndex, true);
@@ -753,7 +754,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var clr = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Color clr = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     pnl_preview.BackColor = clr;
@@ -792,7 +793,7 @@ namespace WinPaletter
                         img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
                         img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
 
-                        Label3.Text = index + 1 + "/" + ImgLs1.Count;
+                        Label3.Text = $"{index + 1}/{ImgLs1.Count}";
                     }
                     else
                     {
@@ -820,7 +821,7 @@ namespace WinPaletter
                     img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
                     img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
 
-                    Label3.Text = index + 1 + "/" + ImgLs2.Count;
+                    Label3.Text = $"{index + 1}/{ImgLs2.Count}";
                 }
             }
 
@@ -930,11 +931,11 @@ namespace WinPaletter
             {
                 if (Program.PreviewStyle == WindowStyle.WXP)
                 {
-                    WallpaperPath = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
+                    WallpaperPath = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WallpaperPath = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                    WallpaperPath = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 
@@ -946,16 +947,16 @@ namespace WinPaletter
         {
             if (Program.PreviewStyle == WindowStyle.WXP)
             {
-                TextBox3.Text = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
+                TextBox3.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox3.Text = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                TextBox3.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp" : PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }
@@ -987,7 +988,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Wallpaper");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Wallpaper");
         }
     }
 }

@@ -145,193 +145,193 @@ namespace WinPaletter.Theme.Structures
                         SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.SPIF_NONE);
 
                         {
-                            var temp = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209");
+                            object temp = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209");
                             if (temp.ToString().Split(' ').Count() == 3)
                                 ActiveTitle = Color.FromArgb(255, Convert.ToInt32(temp.ToString().Split(' ')[0]), Convert.ToInt32(temp.ToString().Split(' ')[1]), Convert.ToInt32(temp.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp1 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171");
+                            object temp1 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171");
                             if (temp1.ToString().Split(' ').Count() == 3)
                                 AppWorkspace = Color.FromArgb(255, Convert.ToInt32(temp1.ToString().Split(' ')[0]), Convert.ToInt32(temp1.ToString().Split(' ')[1]), Convert.ToInt32(temp1.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp2 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0");
+                            object temp2 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0");
                             if (temp2.ToString().Split(' ').Count() == 3)
                                 Background = Color.FromArgb(255, Convert.ToInt32(temp2.ToString().Split(' ')[0]), Convert.ToInt32(temp2.ToString().Split(' ')[1]), Convert.ToInt32(temp2.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp3 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0");
+                            object temp3 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0");
                             if (temp3.ToString().Split(' ').Count() == 3)
                                 ButtonAlternateFace = Color.FromArgb(255, Convert.ToInt32(temp3.ToString().Split(' ')[0]), Convert.ToInt32(temp3.ToString().Split(' ')[1]), Convert.ToInt32(temp3.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp4 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105");
+                            object temp4 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105");
                             if (temp4.ToString().Split(' ').Count() == 3)
                                 ButtonDkShadow = Color.FromArgb(255, Convert.ToInt32(temp4.ToString().Split(' ')[0]), Convert.ToInt32(temp4.ToString().Split(' ')[1]), Convert.ToInt32(temp4.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp5 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240");
+                            object temp5 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240");
                             if (temp5.ToString().Split(' ').Count() == 3)
                                 ButtonFace = Color.FromArgb(255, Convert.ToInt32(temp5.ToString().Split(' ')[0]), Convert.ToInt32(temp5.ToString().Split(' ')[1]), Convert.ToInt32(temp5.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp6 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255");
+                            object temp6 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255");
                             if (temp6.ToString().Split(' ').Count() == 3)
                                 ButtonHilight = Color.FromArgb(255, Convert.ToInt32(temp6.ToString().Split(' ')[0]), Convert.ToInt32(temp6.ToString().Split(' ')[1]), Convert.ToInt32(temp6.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp7 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227");
+                            object temp7 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227");
                             if (temp7.ToString().Split(' ').Count() == 3)
                                 ButtonLight = Color.FromArgb(255, Convert.ToInt32(temp7.ToString().Split(' ')[0]), Convert.ToInt32(temp7.ToString().Split(' ')[1]), Convert.ToInt32(temp7.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp8 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160");
+                            object temp8 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160");
                             if (temp8.ToString().Split(' ').Count() == 3)
                                 ButtonShadow = Color.FromArgb(255, Convert.ToInt32(temp8.ToString().Split(' ')[0]), Convert.ToInt32(temp8.ToString().Split(' ')[1]), Convert.ToInt32(temp8.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp9 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0");
+                            object temp9 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0");
                             if (temp9.ToString().Split(' ').Count() == 3)
                                 ButtonText = Color.FromArgb(255, Convert.ToInt32(temp9.ToString().Split(' ')[0]), Convert.ToInt32(temp9.ToString().Split(' ')[1]), Convert.ToInt32(temp9.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp10 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234");
+                            object temp10 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234");
                             if (temp10.ToString().Split(' ').Count() == 3)
                                 GradientActiveTitle = Color.FromArgb(255, Convert.ToInt32(temp10.ToString().Split(' ')[0]), Convert.ToInt32(temp10.ToString().Split(' ')[1]), Convert.ToInt32(temp10.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp11 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242");
+                            object temp11 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242");
                             if (temp11.ToString().Split(' ').Count() == 3)
                                 GradientInactiveTitle = Color.FromArgb(255, Convert.ToInt32(temp11.ToString().Split(' ')[0]), Convert.ToInt32(temp11.ToString().Split(' ')[1]), Convert.ToInt32(temp11.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp12 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109");
+                            object temp12 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109");
                             if (temp12.ToString().Split(' ').Count() == 3)
                                 GrayText = Color.FromArgb(255, Convert.ToInt32(temp12.ToString().Split(' ')[0]), Convert.ToInt32(temp12.ToString().Split(' ')[1]), Convert.ToInt32(temp12.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp13 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255");
+                            object temp13 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255");
                             if (temp13.ToString().Split(' ').Count() == 3)
                                 HilightText = Color.FromArgb(255, Convert.ToInt32(temp13.ToString().Split(' ')[0]), Convert.ToInt32(temp13.ToString().Split(' ')[1]), Convert.ToInt32(temp13.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp14 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204");
+                            object temp14 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204");
                             if (temp14.ToString().Split(' ').Count() == 3)
                                 HotTrackingColor = Color.FromArgb(255, Convert.ToInt32(temp14.ToString().Split(' ')[0]), Convert.ToInt32(temp14.ToString().Split(' ')[1]), Convert.ToInt32(temp14.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp15 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252");
+                            object temp15 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252");
                             if (temp15.ToString().Split(' ').Count() == 3)
                                 ActiveBorder = Color.FromArgb(255, Convert.ToInt32(temp15.ToString().Split(' ')[0]), Convert.ToInt32(temp15.ToString().Split(' ')[1]), Convert.ToInt32(temp15.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp16 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252");
+                            object temp16 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252");
                             if (temp16.ToString().Split(' ').Count() == 3)
                                 InactiveBorder = Color.FromArgb(255, Convert.ToInt32(temp16.ToString().Split(' ')[0]), Convert.ToInt32(temp16.ToString().Split(' ')[1]), Convert.ToInt32(temp16.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp17 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219");
+                            object temp17 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219");
                             if (temp17.ToString().Split(' ').Count() == 3)
                                 InactiveTitle = Color.FromArgb(255, Convert.ToInt32(temp17.ToString().Split(' ')[0]), Convert.ToInt32(temp17.ToString().Split(' ')[1]), Convert.ToInt32(temp17.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp18 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0");
+                            object temp18 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0");
                             if (temp18.ToString().Split(' ').Count() == 3)
                                 InactiveTitleText = Color.FromArgb(255, Convert.ToInt32(temp18.ToString().Split(' ')[0]), Convert.ToInt32(temp18.ToString().Split(' ')[1]), Convert.ToInt32(temp18.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp19 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0");
+                            object temp19 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0");
                             if (temp19.ToString().Split(' ').Count() == 3)
                                 InfoText = Color.FromArgb(255, Convert.ToInt32(temp19.ToString().Split(' ')[0]), Convert.ToInt32(temp19.ToString().Split(' ')[1]), Convert.ToInt32(temp19.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp20 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225");
+                            object temp20 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225");
                             if (temp20.ToString().Split(' ').Count() == 3)
                                 InfoWindow = Color.FromArgb(255, Convert.ToInt32(temp20.ToString().Split(' ')[0]), Convert.ToInt32(temp20.ToString().Split(' ')[1]), Convert.ToInt32(temp20.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp21 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240");
+                            object temp21 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240");
                             if (temp21.ToString().Split(' ').Count() == 3)
                                 Menu = Color.FromArgb(255, Convert.ToInt32(temp21.ToString().Split(' ')[0]), Convert.ToInt32(temp21.ToString().Split(' ')[1]), Convert.ToInt32(temp21.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp22 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240");
+                            object temp22 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240");
                             if (temp22.ToString().Split(' ').Count() == 3)
                                 MenuBar = Color.FromArgb(255, Convert.ToInt32(temp22.ToString().Split(' ')[0]), Convert.ToInt32(temp22.ToString().Split(' ')[1]), Convert.ToInt32(temp22.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp23 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0");
+                            object temp23 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0");
                             if (temp23.ToString().Split(' ').Count() == 3)
                                 MenuText = Color.FromArgb(255, Convert.ToInt32(temp23.ToString().Split(' ')[0]), Convert.ToInt32(temp23.ToString().Split(' ')[1]), Convert.ToInt32(temp23.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp24 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200");
+                            object temp24 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200");
                             if (temp24.ToString().Split(' ').Count() == 3)
                                 Scrollbar = Color.FromArgb(255, Convert.ToInt32(temp24.ToString().Split(' ')[0]), Convert.ToInt32(temp24.ToString().Split(' ')[1]), Convert.ToInt32(temp24.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp25 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0");
+                            object temp25 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0");
                             if (temp25.ToString().Split(' ').Count() == 3)
                                 TitleText = Color.FromArgb(255, Convert.ToInt32(temp25.ToString().Split(' ')[0]), Convert.ToInt32(temp25.ToString().Split(' ')[1]), Convert.ToInt32(temp25.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp26 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255");
+                            object temp26 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255");
                             if (temp26.ToString().Split(' ').Count() == 3)
                                 Window = Color.FromArgb(255, Convert.ToInt32(temp26.ToString().Split(' ')[0]), Convert.ToInt32(temp26.ToString().Split(' ')[1]), Convert.ToInt32(temp26.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp27 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100");
+                            object temp27 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100");
                             if (temp27.ToString().Split(' ').Count() == 3)
                                 WindowFrame = Color.FromArgb(255, Convert.ToInt32(temp27.ToString().Split(' ')[0]), Convert.ToInt32(temp27.ToString().Split(' ')[1]), Convert.ToInt32(temp27.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp28 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0");
+                            object temp28 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0");
                             if (temp28.ToString().Split(' ').Count() == 3)
                                 WindowText = Color.FromArgb(255, Convert.ToInt32(temp28.ToString().Split(' ')[0]), Convert.ToInt32(temp28.ToString().Split(' ')[1]), Convert.ToInt32(temp28.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp29 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215");
+                            object temp29 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215");
                             if (temp29.ToString().Split(' ').Count() == 3)
                                 Hilight = Color.FromArgb(255, Convert.ToInt32(temp29.ToString().Split(' ')[0]), Convert.ToInt32(temp29.ToString().Split(' ')[1]), Convert.ToInt32(temp29.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp30 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215");
+                            object temp30 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215");
                             if (temp30.ToString().Split(' ').Count() == 3)
                                 MenuHilight = Color.FromArgb(255, Convert.ToInt32(temp30.ToString().Split(' ')[0]), Convert.ToInt32(temp30.ToString().Split(' ')[1]), Convert.ToInt32(temp30.ToString().Split(' ')[2]));
                         }
 
                         {
-                            var temp31 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0");
+                            object temp31 = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0");
                             if (temp31.ToString().Split(' ').Count() == 3)
                                 Desktop = Color.FromArgb(255, Convert.ToInt32(temp31.ToString().Split(' ')[0]), Convert.ToInt32(temp31.ToString().Split(' ')[1]), Convert.ToInt32(temp31.ToString().Split(' ')[2]));
                         }

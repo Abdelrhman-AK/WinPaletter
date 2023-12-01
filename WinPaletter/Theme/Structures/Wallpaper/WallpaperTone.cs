@@ -43,21 +43,21 @@ namespace WinPaletter.Theme.Structures
 
             if (SubKey.ToLower() == "winxp")
             {
-                wallpaper = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp";
+                wallpaper = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                wallpaper = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg";
+                wallpaper = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(wallpaper))
                 wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "Enabled", false));
-            Image = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "Image", wallpaper).ToString();
-            H = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "H", 0));
-            S = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "S", 100));
-            L = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "L", 100));
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", false));
+            Image = GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", wallpaper).ToString();
+            H = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", 0));
+            S = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 100));
+            L = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 100));
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public static void Save_To_Registry(WallpaperTone WT, string SubKey, TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "Enabled", WT.Enabled);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "Image", WT.Image, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "H", WT.H);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "S", WT.S);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" + SubKey, "L", WT.L);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
         }
 
         /// <summary>

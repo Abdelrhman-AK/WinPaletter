@@ -11,6 +11,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 
@@ -228,7 +230,7 @@ namespace WinPaletter
                 if (Ctrl[0] is UI.Controllers.ColorItem)
                 {
                     {
-                        var ctrl = (UI.Controllers.ColorItem)Ctrl[0];
+                        ColorItem ctrl = (UI.Controllers.ColorItem)Ctrl[0];
                         GetColorsHistory((UI.Controllers.ColorItem)Ctrl[0]);
                         ctrl.PauseColorsHistory = true;
                         ctrl.ColorPickerOpened = true;
@@ -237,7 +239,7 @@ namespace WinPaletter
                 }
 
                 _conditions = Conditions is null ? new() : Conditions;
-                   
+
                 Location = Ctrl[0].PointToScreen(Point.Empty) + (Size)new Point(-Width + Ctrl[0].Width + 5, Ctrl[0].Height - 1);
                 if (Location.Y + Height > Program.Computer.Screen.Bounds.Height)
                     Location = new(Location.X, Program.Computer.Screen.Bounds.Height - Height);
@@ -274,7 +276,7 @@ namespace WinPaletter
 
             else
             {
-                var c = Color.FromArgb(Ctrl[0].BackColor.A, Ctrl[0].BackColor);
+                Color c = Color.FromArgb(Ctrl[0].BackColor.A, Ctrl[0].BackColor);
                 using (ColorDialog CCP = new() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false })
                 {
                     if (CCP.ShowDialog() == DialogResult.OK)
@@ -313,7 +315,7 @@ namespace WinPaletter
             {
                 if (control is UI.Simulation.Window)
                 {
-                    var Window = (UI.Simulation.Window)control;
+                    Window Window = (UI.Simulation.Window)control;
 
                     if (!_conditions.Win7)
                     {
@@ -346,7 +348,7 @@ namespace WinPaletter
                 else if (control is UI.Simulation.WinElement)
                 {
                     {
-                        var WinElement = (UI.Simulation.WinElement)control;
+                        WinElement WinElement = (UI.Simulation.WinElement)control;
 
                         if (WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar11 | WinElement.Style == UI.Simulation.WinElement.Styles.Taskbar10)
                         {
@@ -419,7 +421,7 @@ namespace WinPaletter
 
                 else if (control is UI.Controllers.StoreItem)
                 {
-                    var StoreItem = (UI.Controllers.StoreItem)control;
+                    StoreItem StoreItem = (UI.Controllers.StoreItem)control;
                     if (_conditions.Background)
                     {
                         StoreItem.TM.Info.Color1 = color;
@@ -446,7 +448,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.WindowR)
                 {
-                    var WindowR = (UI.Retro.WindowR)control;
+                    WindowR WindowR = (UI.Retro.WindowR)control;
                     if (_conditions.WindowRColor1)
                         WindowR.Color1 = color;
 
@@ -491,7 +493,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.Preview3D)
                 {
-                    var Preview3D = (UI.Retro.Preview3D)control;
+                    Preview3D Preview3D = (UI.Retro.Preview3D)control;
                     if (_conditions.ButtonRFace)
                         Preview3D.BackColor = color;
 
@@ -518,7 +520,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.TextBoxR)
                 {
-                    var TextBoxR = (UI.Retro.TextBoxR)control;
+                    TextBoxR TextBoxR = (UI.Retro.TextBoxR)control;
                     if (_conditions.WindowRForeColor)
                         TextBoxR.ForeColor = color;
 
@@ -545,7 +547,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.ButtonR)
                 {
-                    var ButtonR = (UI.Retro.ButtonR)control;
+                    ButtonR ButtonR = (UI.Retro.ButtonR)control;
                     if (_conditions.ButtonRFace)
                         ButtonR.BackColor = color;
 
@@ -572,7 +574,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.ScrollBarR)
                 {
-                    var ScrollBarR = (UI.Retro.ScrollBarR)control;
+                    ScrollBarR ScrollBarR = (UI.Retro.ScrollBarR)control;
 
                     if (_conditions.ButtonRHilight)
                         ScrollBarR.ButtonHilight = color;
@@ -620,7 +622,7 @@ namespace WinPaletter
 
                 else if (control is UI.Retro.TextBoxR)
                 {
-                    var TextBoxR = (UI.Retro.TextBoxR)control;
+                    TextBoxR TextBoxR = (UI.Retro.TextBoxR)control;
 
                     if (_conditions.WindowRText)
                     {
@@ -637,7 +639,7 @@ namespace WinPaletter
 
                 else if (control is UI.Simulation.WinTerminal)
                 {
-                    var WinTerminal = (UI.Simulation.WinTerminal)control;
+                    UI.Simulation.WinTerminal WinTerminal = (UI.Simulation.WinTerminal)control;
 
                     if (_conditions.Terminal_Back)
                     {
@@ -689,7 +691,7 @@ namespace WinPaletter
 
                 else if (control is UI.Simulation.WinCMD)
                 {
-                    var WinCMD = (UI.Simulation.WinCMD)control;
+                    WinCMD WinCMD = (UI.Simulation.WinCMD)control;
                     if (_conditions.CMD_ColorTable00)
                     {
                         WinCMD.CMD_ColorTable00 = Color.FromArgb(255, color);
@@ -792,7 +794,7 @@ namespace WinPaletter
 
                 else if (control is UI.Controllers.CursorControl)
                 {
-                    var CursorControl = (UI.Controllers.CursorControl)control;
+                    CursorControl CursorControl = (UI.Controllers.CursorControl)control;
 
                     if (_conditions.CursorBack1)
                     {
@@ -1006,12 +1008,6 @@ namespace WinPaletter
             ColorEditorManager1.Color = ((UI.Controllers.ColorItem)sender).BackColor;
         }
 
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            ColorWheel1.Visible = false;
-            ColorGrid1.Visible = false;
-        }
-
         private void Button4_Click_1(object sender, EventArgs e)
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
@@ -1210,11 +1206,11 @@ namespace WinPaletter
                 {
                     try
                     {
-                        System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, "\r\n"));
+                        System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox2.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
 
-                        VisualStyleFile vs = new(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme");
+                        VisualStyleFile vs = new($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme");
 
-                        foreach (var field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                        foreach (FieldInfo field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                         {
                             if (field.FieldType.Name.ToLower() == "color")
                             {

@@ -27,9 +27,9 @@ namespace WinPaletter
             {
                 BeginInvoke(new MethodInvoker(() =>
                 {
-                    var area = Screen.FromControl(this).WorkingArea;
-                    var targetX = (area.Width / 2) - (Width / 2);
-                    var targetY = (area.Height / 2) - (Height / 2);
+                    Rectangle area = Screen.FromControl(this).WorkingArea;
+                    int targetX = (area.Width / 2) - (Width / 2);
+                    int targetY = (area.Height / 2) - (Height / 2);
 
                     FluentTransitions.Transition
                         .With(this, nameof(Left), targetX)
@@ -43,7 +43,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
+            Color c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
 
             Label2.Font = Fonts.ConsoleMedium;
@@ -56,7 +56,7 @@ namespace WinPaletter
             try { Forms.BK.Show(); }
             catch { }
 
-            foreach (var lbl in AnimatedBox1.Controls.OfType<Label>())
+            foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
 
             Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
@@ -72,10 +72,10 @@ namespace WinPaletter
             {
                 if (Exception.Data.Keys.Count > 0)
                 {
-                    var temp = Treeview.Nodes.Add(str + " data").Nodes;
+                    TreeNodeCollection temp = Treeview.Nodes.Add($"{str} data").Nodes;
 
                     foreach (DictionaryEntry x in Exception.Data)
-                        temp.Add(string.Format("{0} = {1}", x.Key.ToString(), x.Value.ToString()));
+                        temp.Add($"{x.Key.ToString()} = {x.Value.ToString()}");
                 }
             }
             catch { }
@@ -90,17 +90,17 @@ namespace WinPaletter
                     if (!string.IsNullOrWhiteSpace(Exception.Message))
                     {
 
-                        TreeView.Nodes.Add(str + " message").Nodes.Add(Exception.Message);
+                        TreeView.Nodes.Add($"{str} message").Nodes.Add(Exception.Message);
 
                         TreeView.Nodes.Add("Exception type").Nodes.Add(Exception.GetType().ToString());
 
-                        if (Win32Error != 0) { TreeView.Nodes.Add(str + " Marshal.GetLastWin32Error").Nodes.Add(Win32Error.ToString()); }
+                        if (Win32Error != 0) { TreeView.Nodes.Add($"{str} Marshal.GetLastWin32Error").Nodes.Add(Win32Error.ToString()); }
 
                         if (!string.IsNullOrEmpty(Exception.StackTrace))
                         {
-                            var n = TreeView.Nodes.Add(str + " stack trace");
+                            TreeNode n = TreeView.Nodes.Add($"{str} stack trace");
 
-                            foreach (var x in Exception.StackTrace.CList())
+                            foreach (string x in Exception.StackTrace.CList())
                                 n.Nodes.Add(x);
                         }
 
@@ -108,19 +108,19 @@ namespace WinPaletter
 
                         if (Exception.TargetSite != null)
                         {
-                            TreeView.Nodes.Add(str + @" target void\function").Nodes.Add($"{Exception.Source}.{Exception.TargetSite.Name}()");
+                            TreeView.Nodes.Add($@"{str} target void\function").Nodes.Add($"{Exception.Source}.{Exception.TargetSite.Name}()");
                         }
 
                         if (Exception.TargetSite.Module.Assembly != null)
                         {
-                            TreeView.Nodes.Add(str + " assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName);
-                            TreeView.Nodes.Add(str + " assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location);
+                            TreeView.Nodes.Add($"{str} assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName);
+                            TreeView.Nodes.Add($"{str} assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location);
                         }
 
-                        TreeView.Nodes.Add(str + " HRESULT").Nodes.Add(Exception.HResult.ToString());
+                        TreeView.Nodes.Add($"{str} HRESULT").Nodes.Add(Exception.HResult.ToString());
 
                         if (!string.IsNullOrWhiteSpace(Exception.HelpLink))
-                            TreeView.Nodes.Add(str + " Microsoft help link").Nodes.Add(Exception.HelpLink);
+                            TreeView.Nodes.Add($"{str} Microsoft help link").Nodes.Add(Exception.HelpLink);
                     }
                 }
                 catch
@@ -137,7 +137,7 @@ namespace WinPaletter
 
             Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
 
-            Label3.Text = Program.Version + (Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty);
+            Label3.Text = $"{Program.Version}{((Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty))}";
 
             AlertBox1.Visible = NoRecovery;
             TreeView1.Nodes.Clear();
@@ -156,10 +156,10 @@ namespace WinPaletter
 
             TreeView1.ExpandAll();
 
-            if (!System.IO.Directory.Exists(PathsExt.appData + @"\Reports"))
-                System.IO.Directory.CreateDirectory(PathsExt.appData + @"\Reports");
+            if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
+                System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
 
-            System.IO.File.WriteAllText(string.Format(PathsExt.appData + @"\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
+            System.IO.File.WriteAllText(string.Format($@"{PathsExt.appData}\Reports\{{0}}.{{1}}.{{2}} {{3}}-{{4}}-{{5}}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
 
             ShowDialog();
 
@@ -176,7 +176,7 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.Abort;
             Close();
-            using (var Prc = Process.GetCurrentProcess())
+            using (Process Prc = Process.GetCurrentProcess())
             {
                 Prc.Kill();
             }
@@ -190,7 +190,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Repository + "issues");
+            Process.Start($"{Properties.Resources.Link_Repository}issues");
             try
             {
                 Forms.BK.Close();
@@ -220,9 +220,9 @@ namespace WinPaletter
             SB.AppendLine("```cs");
             SB.AppendLine("//General information");
             SB.AppendLine("//...........................................................");
-            SB.AppendLine(string.Format("   Report.Date = \"{0}\";", DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString()));
-            SB.AppendLine(string.Format("   OS = \"{0}\";", Label2.Text));
-            SB.AppendLine(string.Format("   WinPaletter.Version = \"{0}\";", Label3.Text));
+            SB.AppendLine($"   Report.Date = \"{$"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}"}\";");
+            SB.AppendLine($"   OS = \"{Label2.Text}\";");
+            SB.AppendLine($"   WinPaletter.Version = \"{Label3.Text}\";");
             SB.AppendLine();
 
             SB.AppendLine("//Error details");
@@ -236,20 +236,20 @@ namespace WinPaletter
                 {
                     if (int.TryParse(x.Nodes[0].Text, out int Number))
                     {
-                        SB.AppendLine("   " + prop + $" = {Number};");
+                        SB.AppendLine($"   {prop} = {Number};");
                     }
                     else
                     {
-                        SB.AppendLine("   " + prop + " = \"" + x.Nodes[0].Text.Replace("\\", "\\\\") + "\";");
+                        SB.AppendLine($"   {prop} = \"{(x.Nodes[0].Text.Replace("\\", "\\\\"))}\";");
                     }
                 }
 
                 else
                 {
-                    SB.AppendLine("   " + prop + " =");
+                    SB.AppendLine($"   {prop} =");
                     SB.AppendLine("   " + "{");
 
-                    foreach (TreeNode y in x.Nodes) { SB.AppendLine("      " + y.Text.Replace("\\", "\\\\")); }
+                    foreach (TreeNode y in x.Nodes) { SB.AppendLine($"      {(y.Text.Replace("\\", "\\\\"))}"); }
 
                     SB.AppendLine("   " + "};");
                 }
@@ -263,9 +263,9 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
 
-            if (System.IO.Directory.Exists(PathsExt.appData + @"\Reports"))
+            if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
             {
-                Process.Start(PathsExt.appData + @"\Reports");
+                Process.Start($@"{PathsExt.appData}\Reports");
                 try
                 {
                     Forms.BK.Close();
@@ -276,7 +276,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Bug_NoReport, PathsExt.appData + @"\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{PathsExt.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

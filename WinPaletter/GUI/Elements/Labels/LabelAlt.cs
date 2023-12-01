@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -21,22 +22,6 @@ namespace WinPaletter.UI.WP
 
         public bool DrawOnGlass { get; set; } = false;
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode && DrawOnGlass)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
         #endregion
 
         #region Voids/Functions
@@ -110,6 +95,12 @@ namespace WinPaletter.UI.WP
             return format;
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

@@ -200,7 +200,7 @@ namespace WinPaletter
                             System.IO.FileInfo FI = new(f);
                             string Name = System.IO.Path.GetFileNameWithoutExtension(FI.Name);
                             string Dir = FI.FullName.Replace(FI.FullName.Split('\\').Last(), "WinPaletterConversion");
-                            string SaveAs = Dir + @"\" + Name + ".wpth";
+                            string SaveAs = $@"{Dir}\{Name}.wpth";
 
                             if (!(_Convert.GetFormat(f) == Converter_CP.WP_Format.Error))
                             {
@@ -266,7 +266,7 @@ namespace WinPaletter
                 }
                 catch (Exception ex)
                 {
-                    if (MsgBox(Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, Lang.MonitorIssue2 + "\r\n" + Lang.TM_RestoreCursorsErrorPressOK) == DialogResult.OK)
+                    if (MsgBox(Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, $"{Lang.MonitorIssue2}\r\n{Lang.TM_RestoreCursorsErrorPressOK}") == DialogResult.OK)
                     {
                         Forms.BugReport.ThrowError(ex);
                     }
@@ -316,13 +316,13 @@ namespace WinPaletter
                     if (!System.IO.Directory.Exists(PathsExt.appData))
                         System.IO.Directory.CreateDirectory(PathsExt.appData);
 
-                    WriteIfChangedOrNotExists(PathsExt.appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
-                    WriteIfChangedOrNotExists(PathsExt.appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
-                    WriteIfChangedOrNotExists(PathsExt.appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
+                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
+                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
+                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
 
-                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, PathsExt.appData + @"\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, PathsExt.appData + @"\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, PathsExt.appData + @"\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{PathsExt.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
+                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{PathsExt.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
+                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{PathsExt.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
                 }
             }
             catch
@@ -367,7 +367,7 @@ namespace WinPaletter
                             if (entry.FullName.Contains(@"\"))
                             {
                                 string dest = System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName);
-                                string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), string.Empty);
+                                string dest_dir = dest.Replace($@"\{dest.Split('\\').Last()}", string.Empty);
 
                                 if (!System.IO.Directory.Exists(dest_dir))
                                 {
@@ -379,7 +379,7 @@ namespace WinPaletter
                     }
                     s.Close();
                 }
-                System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PathsExt.appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+                System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
             }
             catch (Exception ex)
             {
@@ -391,10 +391,10 @@ namespace WinPaletter
         {
             try
             {
-                if (!OS.WXP && !System.IO.File.Exists(PathsExt.appData + @"\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && !System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
                 {
                     byte[] SoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                    System.IO.File.WriteAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav", SoundBytes);
+                    System.IO.File.WriteAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav", SoundBytes);
                 }
             }
             catch (Exception ex)
@@ -506,7 +506,7 @@ namespace WinPaletter
                 try
                 {
                     if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.KillingExplorer), "info");
+                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info");
                     Stopwatch sw = new();
                     sw.Reset();
                     sw.Start();
@@ -517,14 +517,14 @@ namespace WinPaletter
 
                     sw.Stop();
                     if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)), "time");
+                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time");
                     sw.Reset();
                 }
                 catch (Exception ex)
                 {
                     if (TreeView is not null)
                     {
-                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.ErrorExplorerRestart), "error");
+                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
                         Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
                     }
                 }
@@ -552,7 +552,7 @@ namespace WinPaletter
                 request.AllowAutoRedirect = false;
                 request.Method = "HEAD";
 
-                using (var response = request.GetResponse())
+                using (request.GetResponse())
                 {
                     return true;
                 }
@@ -567,8 +567,8 @@ namespace WinPaletter
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                var GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
-                var DeviceContextHandle = GraphicsObject.GetHdc();
+                Graphics GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
+                IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
                 int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
                 int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
                 double ScreenScalingFactor = Math.Round(PhysicalScreenHeight / (double)LogicalScreenHeight, 2);

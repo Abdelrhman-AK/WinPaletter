@@ -13,7 +13,7 @@ namespace WinPaletter
                 {
                     using (System.IO.Stream bmpStream = System.IO.File.Open(file, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     {
-                        using (var image = Image.FromStream(bmpStream))
+                        using (Image image = Image.FromStream(bmpStream))
                         {
                             return new Bitmap(image);
                         }
@@ -23,7 +23,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        using (var image = Image.FromFile(file))
+                        using (Image image = Image.FromFile(file))
                         {
                             return new Bitmap(image);
                         }

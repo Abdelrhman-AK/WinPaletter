@@ -47,7 +47,7 @@ namespace WinPaletter.Theme.Structures
 
                 try
                 {
-                    var stringThemeName = UxTheme.GetCurrentVS().Item1;
+                    string stringThemeName = UxTheme.GetCurrentVS().Item1;
                     Classic = string.IsNullOrWhiteSpace(stringThemeName.ToString()) | !System.IO.File.Exists(stringThemeName.ToString());
                 }
                 catch
@@ -89,7 +89,7 @@ namespace WinPaletter.Theme.Structures
                 case Windows7.Themes.Aero:
                     {
                         UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -100,7 +100,7 @@ namespace WinPaletter.Theme.Structures
                 case Windows7.Themes.AeroOpaque:
                     {
                         UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -111,7 +111,7 @@ namespace WinPaletter.Theme.Structures
                 case Windows7.Themes.Basic:
                     {
                         UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);

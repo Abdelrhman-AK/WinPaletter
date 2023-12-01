@@ -106,10 +106,10 @@ namespace WinPaletter.Dialogs
                     TM.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
-                        Theme.Manager.AddNode(TreeView1, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_AllDone), "info");
+                        Theme.Manager.AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_AllDone}", "info");
 
                     if (TM.MetricsFonts.Enabled & Program.GetWindowsScreenScalingFactor() > 100d)
-                        Theme.Manager.AddNode(TreeView1, string.Format("{0}", Program.Lang.TM_MetricsHighDPIAlert), "info");
+                        Theme.Manager.AddNode(TreeView1, $"{Program.Lang.TM_MetricsHighDPIAlert}", "info");
 
                     if (AdditionalStoreTips)
                         Theme.Manager.AddNode(TreeView1, Program.Lang.Store_LogoffRecommended, "info");
@@ -199,7 +199,7 @@ namespace WinPaletter.Dialogs
                 sb.Clear();
 
                 foreach (TreeNode N in TreeView1.Nodes)
-                    sb.AppendLine(string.Format("[{0}]{2} {1}{3}", N.ImageKey, N.Text, "\t", "\r\n"));
+                    sb.AppendLine($"[{N.ImageKey}]{"\t"} {N.Text}{"\r\n"}");
 
                 System.IO.File.WriteAllText(Forms.MainFrm.SaveFileDialog3.FileName, sb.ToString());
             }

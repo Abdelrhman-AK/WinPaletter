@@ -125,7 +125,7 @@ namespace WinPaletter
 
             if (LastNodeIndex >= 0 && CurrentNodeMatches.Count > 0 && LastNodeIndex < CurrentNodeMatches.Count)
             {
-                var selectedNode = CurrentNodeMatches[LastNodeIndex];
+                TreeNode selectedNode = CurrentNodeMatches[LastNodeIndex];
                 LastNodeIndex += 1;
                 TreeView1.SelectedNode = selectedNode;
                 TreeView1.SelectedNode.Expand();
@@ -183,11 +183,6 @@ namespace WinPaletter
             }
         }
 
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Forms.Lang_Add_Snippet.ShowDialog();
-        }
-
         private void Button6_Click(object sender, EventArgs e)
         {
             FontDialog1.Font = TextBox1.Font;
@@ -230,7 +225,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation-(old-methods)");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation-(old-methods)");
         }
     }
 }

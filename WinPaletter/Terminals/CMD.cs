@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -447,7 +449,7 @@ namespace WinPaletter
                         }
                 }
 
-                var FC0 = CMD_PopupForegroundLbl.BackColor.IsDark() ? CMD_PopupForegroundLbl.BackColor.LightLight() : CMD_PopupForegroundLbl.BackColor.Dark(0.9f);
+                Color FC0 = CMD_PopupForegroundLbl.BackColor.IsDark() ? CMD_PopupForegroundLbl.BackColor.LightLight() : CMD_PopupForegroundLbl.BackColor.Dark(0.9f);
                 CMD_PopupForegroundLbl.ForeColor = FC0;
 
                 // CMD_PopupForegroundBar.AccentColor = CMD_PopupForegroundLbl.BackColor
@@ -540,7 +542,7 @@ namespace WinPaletter
                         }
                 }
 
-                var FC0 = CMD_PopupBackgroundLbl.BackColor.IsDark() ? CMD_PopupBackgroundLbl.BackColor.LightLight() : CMD_PopupBackgroundLbl.BackColor.Dark(0.9f);
+                Color FC0 = CMD_PopupBackgroundLbl.BackColor.IsDark() ? CMD_PopupBackgroundLbl.BackColor.LightLight() : CMD_PopupBackgroundLbl.BackColor.Dark(0.9f);
                 CMD_PopupBackgroundLbl.ForeColor = FC0;
                 // CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
                 CMD_PopupBackgroundBar.Invalidate();
@@ -633,7 +635,7 @@ namespace WinPaletter
                         }
                 }
 
-                var FC0 = CMD_AccentBackgroundLbl.BackColor.IsDark() ? CMD_AccentBackgroundLbl.BackColor.LightLight() : CMD_AccentBackgroundLbl.BackColor.Dark(0.9f);
+                Color FC0 = CMD_AccentBackgroundLbl.BackColor.IsDark() ? CMD_AccentBackgroundLbl.BackColor.LightLight() : CMD_AccentBackgroundLbl.BackColor.Dark(0.9f);
                 CMD_AccentBackgroundLbl.ForeColor = FC0;
                 // CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
                 CMD_AccentBackgroundBar.Invalidate();
@@ -735,7 +737,7 @@ namespace WinPaletter
                         }
                 }
 
-                var FC0 = CMD_AccentForegroundLbl.BackColor.IsDark() ? CMD_AccentForegroundLbl.BackColor.LightLight() : CMD_AccentForegroundLbl.BackColor.Dark(0.9f);
+                Color FC0 = CMD_AccentForegroundLbl.BackColor.IsDark() ? CMD_AccentForegroundLbl.BackColor.LightLight() : CMD_AccentForegroundLbl.BackColor.Dark(0.9f);
                 CMD_AccentForegroundLbl.ForeColor = FC0;
                 // CMD_AccentForegroundBar.AccentColor = CMD_AccentForegroundLbl.BackColor
                 CMD_AccentForegroundBar.Invalidate();
@@ -875,7 +877,7 @@ namespace WinPaletter
             if (!Console.FontRaster)
             {
                 {
-                    var temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
+                    Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
                     F_cmd = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
@@ -1095,7 +1097,7 @@ namespace WinPaletter
         private void CommandPrompt_PopupForegroundBar_Scroll(object sender)
         {
             {
-                var temp = CMD_PopupForegroundBar;
+                Trackbar temp = CMD_PopupForegroundBar;
                 CMD_PopupForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_PopupForegroundLbl.Text += " (A)";
@@ -1118,7 +1120,7 @@ namespace WinPaletter
         private void CMD_PopupBackgroundBar_Scroll(object sender)
         {
             {
-                var temp = CMD_PopupBackgroundBar;
+                Trackbar temp = CMD_PopupBackgroundBar;
                 CMD_PopupBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_PopupBackgroundLbl.Text += " (A)";
@@ -1141,7 +1143,7 @@ namespace WinPaletter
         private void CMD_AccentForegroundBar_Scroll(object sender)
         {
             {
-                var temp = CMD_AccentForegroundBar;
+                Trackbar temp = CMD_AccentForegroundBar;
                 CMD_AccentForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_AccentForegroundLbl.Text += " (A)";
@@ -1165,7 +1167,7 @@ namespace WinPaletter
         private void CMD_AccentBackgroundBar_Scroll(object sender)
         {
             {
-                var temp = CMD_AccentBackgroundBar;
+                Trackbar temp = CMD_AccentBackgroundBar;
                 CMD_AccentBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_AccentBackgroundLbl.Text += " (A)";
@@ -1264,7 +1266,7 @@ namespace WinPaletter
             F_cmd.ToLogFont(fx);
             fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
             {
-                var temp = Font.FromLogFont(fx);
+                Font temp = Font.FromLogFont(fx);
                 F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
             }
             ApplyPreview();
@@ -1416,7 +1418,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 bool ee = CMDEnabled.Checked;
                 ApplyFromTM(_Def, _Edition);
@@ -1492,7 +1494,7 @@ namespace WinPaletter
                 F_cmd.ToLogFont(fx);
                 fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
                 {
-                    var temp = Font.FromLogFont(fx);
+                    Font temp = Font.FromLogFont(fx);
                     F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
                 }
                 FontName.Font = new(FontDialog1.Font.Name, 9f, F_cmd.Style);
@@ -1502,7 +1504,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
         }
     }
 }

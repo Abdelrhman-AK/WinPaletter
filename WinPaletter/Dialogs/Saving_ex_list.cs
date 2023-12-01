@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace WinPaletter
 {
@@ -22,10 +23,10 @@ namespace WinPaletter
             TreeView1.ImageList = ImageLists.ThemeLog;
             TreeView1.Nodes.Clear();
 
-            foreach (var x in ex_List)
+            foreach (Tuple<string, Exception> x in ex_List)
             {
                 {
-                    var temp = TreeView1.Nodes.Add(x.Item1);
+                    TreeNode temp = TreeView1.Nodes.Add(x.Item1);
                     temp.ImageKey = "error";
                     temp.SelectedImageKey = "error";
                 }

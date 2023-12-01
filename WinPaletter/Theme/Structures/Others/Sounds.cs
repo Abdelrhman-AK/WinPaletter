@@ -460,7 +460,7 @@ namespace WinPaletter.Theme.Structures
                     else if (Snd_Imageres_SystemStart.Trim().ToUpper() == "DEFAULT")
                     {
                         byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                        byte[] OriginalSoundBytes = File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav");
+                        byte[] OriginalSoundBytes = File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav");
 
                         if (!CurrentSoundBytes.Equals_Method2(OriginalSoundBytes))
                         {

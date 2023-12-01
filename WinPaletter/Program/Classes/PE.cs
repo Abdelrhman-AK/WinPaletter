@@ -1,6 +1,7 @@
 ﻿using Ressy;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -75,7 +76,7 @@ namespace WinPaletter
             {
                 // It isn't in system directory and can be modified without changing rights/permissions.
                 if (TreeView is not null)
-                    Theme.Manager.AddNode(TreeView, string.Format("Replacing '{0}' resources", System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                    Theme.Manager.AddNode(TreeView, $"Replacing '{System.IO.Path.GetFileName(SourceFile)}' resources", "pe_patch");
                 PortableExecutable PE_File = new(SourceFile);
                 PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
             }
@@ -84,7 +85,7 @@ namespace WinPaletter
 
         private static bool CreateBackup(string SourceFile)
         {
-            foreach (var backupFile in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(SourceFile), System.IO.Path.GetFileNameWithoutExtension(SourceFile) + "*.bak"))
+            foreach (string backupFile in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(SourceFile), $"{System.IO.Path.GetFileNameWithoutExtension(SourceFile)}*.bak"))
             {
                 try
                 {
@@ -99,7 +100,7 @@ namespace WinPaletter
             try
             {
                 PreparePrivileges();
-                string backupFile = System.IO.Path.GetDirectoryName(SourceFile) + @"\" + System.IO.Path.GetFileNameWithoutExtension(SourceFile) + Math.Abs(DateTime.Now.ToBinary()) + ".bak";
+                string backupFile = $@"{System.IO.Path.GetDirectoryName(SourceFile)}\{System.IO.Path.GetFileNameWithoutExtension(SourceFile)}{Math.Abs(DateTime.Now.ToBinary())}.bak";
 
                 System.IO.File.Move(SourceFile, backupFile);
                 System.IO.File.Copy(backupFile, SourceFile);
@@ -113,11 +114,11 @@ namespace WinPaletter
 
         public static bool BackupPermissions(string SourceFile, string BackupFile)
         {
-            var accessControl = System.IO.File.GetAccessControl(SourceFile);
+            FileSecurity accessControl = System.IO.File.GetAccessControl(SourceFile);
             if (accessControl is null)
                 return false;
 
-            using (var fileStream = System.IO.File.Create(BackupFile, 1, System.IO.FileOptions.None, accessControl))
+            using (FileStream fileStream = System.IO.File.Create(BackupFile, 1, System.IO.FileOptions.None, accessControl))
             {
                 fileStream.Close();
             }
@@ -131,7 +132,7 @@ namespace WinPaletter
 
         public static bool RestorePermissions(string SourceFile, string BackupFile)
         {
-            var BackupAccessControl = System.IO.File.GetAccessControl(SourceFile);
+            FileSecurity BackupAccessControl = System.IO.File.GetAccessControl(SourceFile);
             if (BackupAccessControl is null)
                 return false;
 

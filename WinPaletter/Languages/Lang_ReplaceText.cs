@@ -19,7 +19,7 @@ namespace WinPaletter
 
         public string Replace(DataGridView data, int Column, string FindWhat)
         {
-            using (var dlg = new Lang_ReplaceText())
+            using (Lang_ReplaceText dlg = new Lang_ReplaceText())
             {
                 dlg.TextBox3.Text = FindWhat;
 
@@ -35,7 +35,7 @@ namespace WinPaletter
                     for (int r = 0, loopTo = data.Rows.Count - 1; r <= loopTo; r++)
                     {
                         {
-                            var temp = data[Column, r];
+                            DataGridViewCell temp = data[Column, r];
                             temp.Value = temp.Value.ToString().Replace(SearchText, ReplaceBy, !dlg.CheckBox1.Checked, dlg.CheckBox2.Checked);
                         }
                     }
@@ -52,7 +52,7 @@ namespace WinPaletter
 
         public string Replace(Form Form, string FindWhat)
         {
-            using (var dlg = new Lang_ReplaceText())
+            using (Lang_ReplaceText dlg = new Lang_ReplaceText())
             {
                 dlg.TextBox3.Text = FindWhat;
 
@@ -65,7 +65,7 @@ namespace WinPaletter
                     if (string.IsNullOrWhiteSpace(SearchText))
                         return ReplaceBy;
 
-                    foreach (var ctrl in Form.GetAllControls())
+                    foreach (Control ctrl in Form.GetAllControls())
                     {
                         if (ctrl.Text is not null && !string.IsNullOrWhiteSpace(ctrl.Text))
                         {

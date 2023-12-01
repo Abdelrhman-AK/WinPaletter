@@ -145,7 +145,7 @@ namespace WinPaletter
                 accent.AccentFlags = 0x20 | 0x40 | 0x80 | 0x100;
 
             int accentStructSize = Marshal.SizeOf(accent);
-            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
             Marshal.StructureToPtr(accent, accentPtr, false);
 
             User32.WindowCompositionAttributeData Data = new()

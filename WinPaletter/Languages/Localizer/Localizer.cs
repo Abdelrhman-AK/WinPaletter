@@ -63,15 +63,15 @@ namespace WinPaletter
             if (System.IO.File.Exists(File))
             {
 
-                using (var St = new StreamReader(File))
+                using (StreamReader St = new StreamReader(File))
                 {
                     JObj = JObject.Parse(St.ReadToEnd());
                     St.Close();
                 }
 
-                J_Information= new();
-                J_GlobalStrings= new();
-                J_Forms= new();
+                J_Information = new();
+                J_GlobalStrings = new();
+                J_Forms = new();
 
                 bool Valid = JObj.ContainsKey("Information") & JObj.ContainsKey("Global Strings") & JObj.ContainsKey("Forms Strings");
 
@@ -95,7 +95,7 @@ namespace WinPaletter
 
         public void LoadInnerStrings(JObject LangInfo, JObject Strings)
         {
-            var type1 = GetType();
+            Type type1 = GetType();
             PropertyInfo[] properties1 = type1.GetProperties();
 
             foreach (PropertyInfo property in properties1)
@@ -221,7 +221,7 @@ namespace WinPaletter
             // Item3 = Prop
             // Item4 = Value
 
-            foreach (var member in PopCtrlList)
+            foreach (Tuple<string, string, string, string> member in PopCtrlList)
             {
                 try
                 {
@@ -300,7 +300,7 @@ namespace WinPaletter
 
         public void ExportJSON(string File, Form[] Forms = null)
         {
-            JObject JSON_Overall= new();
+            JObject JSON_Overall = new();
             Localizer newL = new();
 
             JObject j_info = new();
@@ -314,7 +314,7 @@ namespace WinPaletter
 
             JObject j_globalstrings = new();
 
-            var type1 = newL.GetType();
+            Type type1 = newL.GetType();
             PropertyInfo[] properties1 = type1.GetProperties();
 
             foreach (PropertyInfo property in properties1)
@@ -329,20 +329,20 @@ namespace WinPaletter
 
             if (Forms is null)
             {
-                foreach (var f in Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t)))
+                foreach (Type f in Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t)))
                 {
-                    var ins = new Form();
+                    Form ins = new Form();
                     ins = (Form)Activator.CreateInstance(f);
 
                     if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
-                        JObject j_ctrl= new(), j_child= new();
+                        JObject j_ctrl = new(), j_child = new();
                         j_ctrl.RemoveAll();
                         j_child.RemoveAll();
 
                         j_ctrl.Add("Text", ins.Text);
 
-                        foreach (var ctrl in ins.GetAllControls())
+                        foreach (Control ctrl in ins.GetAllControls())
                         {
 
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
@@ -350,7 +350,7 @@ namespace WinPaletter
 
                                 if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
                                 {
-                                    j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                    j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
                                 else
                                 {
@@ -358,12 +358,12 @@ namespace WinPaletter
                                     {
                                         if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
                                         {
-                                            j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                            j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                         }
                                     }
                                     catch
                                     {
-                                        j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                        j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                     }
                                 }
 
@@ -371,7 +371,7 @@ namespace WinPaletter
 
                             if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit))
                             {
-                                j_child.Add(ctrl.Name + ".Tag", ctrl.Tag.ToString());
+                                j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
                             }
 
                         }
@@ -395,17 +395,17 @@ namespace WinPaletter
                     j_Forms = (JObject)OldSource["Forms Strings"];
                 }
 
-                foreach (var f in Forms)
+                foreach (Form f in Forms)
                 {
                     if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
                     {
-                        JObject j_ctrl= new(), j_child= new();
+                        JObject j_ctrl = new(), j_child = new();
                         j_ctrl.RemoveAll();
                         j_child.RemoveAll();
 
                         j_ctrl.Add("Text", f.Text);
 
-                        foreach (var ctrl in f.GetAllControls())
+                        foreach (Control ctrl in f.GetAllControls())
                         {
 
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
@@ -413,7 +413,7 @@ namespace WinPaletter
 
                                 if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
                                 {
-                                    j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                    j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
                                 else
                                 {
@@ -421,12 +421,12 @@ namespace WinPaletter
                                     {
                                         if (!f.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
                                         {
-                                            j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                            j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                         }
                                     }
                                     catch
                                     {
-                                        j_child.Add(ctrl.Name + ".Text", ctrl.Text);
+                                        j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                     }
                                 }
 
@@ -434,7 +434,7 @@ namespace WinPaletter
 
                             if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()))
                             {
-                                j_child.Add(ctrl.Name + ".Tag", ctrl.Tag.ToString());
+                                j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
                             }
 
                         }

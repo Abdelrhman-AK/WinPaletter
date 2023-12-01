@@ -75,7 +75,7 @@ namespace WinPaletter.Theme.Structures
             {
                 object y;
 
-                var stringThemeName = UxTheme.GetCurrentVS().Item1;
+                string stringThemeName = UxTheme.GetCurrentVS().Item1;
 
                 if (stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" | string.IsNullOrWhiteSpace(stringThemeName.ToString()))
                 {
@@ -142,14 +142,14 @@ namespace WinPaletter.Theme.Structures
                     case Windows7.Themes.Aero:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
                             break;
                         }
 
                     case Windows7.Themes.AeroLite:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
                             try
                             {
                                 Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
@@ -185,8 +185,8 @@ namespace WinPaletter.Theme.Structures
 
             EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
             EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI);
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" + PersonalColors_Background.HEX(false), RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" + PersonalColors_Accent.HEX(false), RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.HEX(false)}", RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.HEX(false)}", RegistryValueKind.String);
         }
 
         /// <summary>Operator to check if two Windows8x structures are equal</summary>

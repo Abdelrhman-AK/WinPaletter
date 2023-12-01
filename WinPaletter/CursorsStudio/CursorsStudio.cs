@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -554,7 +555,7 @@ namespace WinPaletter
                 i.Refresh();
             }
 
-            Label5.Text = string.Format("{0} ({1}x)", Program.Lang.Scaling, ((float)((UI.WP.Trackbar)sender).Value) / 100);
+            Label5.Text = $"{Program.Lang.Scaling} ({((float)((UI.WP.Trackbar)sender).Value) / 100}x)";
         }
 
         private float Angle = 180f;
@@ -832,7 +833,7 @@ namespace WinPaletter
                 LoadFromTM(TMx);
                 TMx.Dispose();
 
-                foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+                foreach (CursorControl x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
                 {
                     if (x.Focused)
                     {
@@ -850,7 +851,7 @@ namespace WinPaletter
             LoadFromTM(TMx);
             TMx.Dispose();
 
-            foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+            foreach (CursorControl x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
                 if (x.Focused)
                 {
@@ -862,12 +863,12 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 LoadFromTM(_Def);
             }
 
-            foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
+            foreach (CursorControl x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
                 if (x.Focused)
                 {
@@ -1198,7 +1199,7 @@ namespace WinPaletter
 
         private void CursorsStudio_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-cursors");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-cursors");
         }
 
         private void button20_Click(object sender, EventArgs e)

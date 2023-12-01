@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -15,9 +16,9 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             Icon = Forms.WindowsTerminal.Icon;
-            var c = PictureBox1.Image.AverageColor();
-            var c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
-            var c2 = c.CB((float)(Program.Style.DarkMode ? -0.75d : 0.75d));
+            Color c = PictureBox1.Image.AverageColor();
+            Color c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
+            Color c2 = c.CB((float)(Program.Style.DarkMode ? -0.75d : 0.75d));
             Panel1.BackColor = c1;
             BackColor = c2;
             Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);

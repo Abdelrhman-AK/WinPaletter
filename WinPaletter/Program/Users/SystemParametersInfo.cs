@@ -74,15 +74,15 @@ namespace WinPaletter.NativeMethods
                     Win32Exception ex = new(Error);
 
                     if (TreeView != null)
-                        Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: " + ex.Message), "dll");
+                        Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
                     if (uAction.ToString().StartsWith("SPI_GET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: " + ex.Message), ex));
+                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
                     else if (uAction.ToString().StartsWith("SPI_SET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: " + ex.Message), ex));
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
 
                     return;

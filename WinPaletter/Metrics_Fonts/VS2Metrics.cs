@@ -39,8 +39,8 @@ namespace WinPaletter
 
                 else if (Path.GetExtension(TextBox1.Text) == ".msstyles")
                 {
-                    theme = PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme";
-                    File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\win32uischeme.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox1.Text, "\r\n"));
+                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox1.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                 }
 
                 if ((File.Exists(TextBox1.Text) && File.Exists(theme)) & !string.IsNullOrEmpty(theme))

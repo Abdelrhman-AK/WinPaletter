@@ -69,7 +69,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-LogonUI-screen#windows-11--10");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-LogonUI-screen#windows-11--10");
         }
     }
 }

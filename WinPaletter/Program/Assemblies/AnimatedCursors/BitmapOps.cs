@@ -240,7 +240,7 @@ namespace EOFC
             int h = bm.Height - (y1 + y2) + 1;
 
             // Allocate the new bitmap
-            Bitmap bm2  = new(w, h, PixelFormat.Format32bppArgb);
+            Bitmap bm2 = new(w, h, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
@@ -267,7 +267,7 @@ namespace EOFC
             int w = bm.Width - (x1 + x2) + 1;
 
             // Allocate the new bitmap
-            Bitmap bm2  = new(w, bm.Height, PixelFormat.Format32bppArgb);
+            Bitmap bm2 = new(w, bm.Height, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
@@ -329,7 +329,7 @@ namespace EOFC
 
             uint imgsize = ComputeSize((uint)w, (uint)h, (uint)bpp, true);
             PixelFormat pf = FormatFrombpp(bpp);
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             BitmapData bd = bm.LockBits(new Rectangle(0, 0, w, h), ImageLockMode.ReadWrite, pf);
             byte* BMbits = (byte*)bd.Scan0.ToPointer();
 
@@ -347,7 +347,7 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the 24-bit data
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
@@ -394,7 +394,7 @@ namespace EOFC
         public static unsafe Bitmap FromRawBits32(uint* bits, int w, int h)
         {
             int PixelCount = w * h;
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* ui = (uint*)bd.Scan0.ToPointer();
@@ -412,7 +412,7 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
@@ -453,7 +453,7 @@ namespace EOFC
             bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
@@ -486,7 +486,7 @@ namespace EOFC
         public static unsafe Bitmap FromRawBitsBinary(void* bits, int w, int h, bool PaddedTo32Bit)
         {
             // Makes a 32-bit bitmap from the indices and palette data
-            Bitmap bm  = new(w, h);
+            Bitmap bm = new(w, h);
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
@@ -678,7 +678,7 @@ namespace EOFC
             BitmapData OldBD = bm.LockBits(OldRect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             uint* OldBits = (uint*)OldBD.Scan0.ToPointer();
 
-            Bitmap NewBM  = new(NewWidth, NewHeight);
+            Bitmap NewBM = new(NewWidth, NewHeight);
             Rectangle NewRect = new(0, 0, NewWidth, NewHeight);
             BitmapData NewBD = NewBM.LockBits(NewRect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
             uint* NewBits = (uint*)NewBD.Scan0.ToPointer();

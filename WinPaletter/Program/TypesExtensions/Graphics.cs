@@ -48,7 +48,7 @@ namespace WinPaletter.TypesExtensions
 
                 using (Bitmap bm = new((int)Math.Round(Rect.Width / (double)GlowFade), (int)Math.Round(Rect.Height / (double)GlowFade)))
                 {
-                    using (var G2 = Graphics.FromImage(bm))
+                    using (Graphics G2 = Graphics.FromImage(bm))
                     {
                         Rectangle Rect2 = new(1, 1, bm.Width, bm.Height);
 
@@ -82,8 +82,8 @@ namespace WinPaletter.TypesExtensions
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
 
-                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
-                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
+                Color C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
+                Color C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
                 using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
@@ -108,8 +108,8 @@ namespace WinPaletter.TypesExtensions
                     G.FillRectangle(br, Rect);
                 }
 
-                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
-                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
+                Color C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
+                Color C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
                 using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
@@ -136,7 +136,7 @@ namespace WinPaletter.TypesExtensions
 
                 if ((Program.Style.RoundedCorners || ForcedRoundCorner) && Radius > 0)
                 {
-                    using (var path = Rectangle.Round(Radius))
+                    using (GraphicsPath path = Rectangle.Round(Radius))
                     {
                         Graphics.FillPath(Brush, path);
                     }
@@ -161,7 +161,7 @@ namespace WinPaletter.TypesExtensions
 
                 if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
                 {
-                    using (var path = Rectangle.Round(Radius))
+                    using (GraphicsPath path = Rectangle.Round(Radius))
                     {
                         Region reg = new(path);
                         Graphics.Clip = reg;
@@ -271,7 +271,7 @@ namespace WinPaletter.TypesExtensions
                     }
 
                     LinearGradientBrush G;
-                    var CColor = Pen2.Color.CB((float)(Dark ? 0.03d : -0.05d));
+                    Color CColor = Pen2.Color.CB((float)(Dark ? 0.03d : -0.05d));
 
                     if (Dark)
                     {

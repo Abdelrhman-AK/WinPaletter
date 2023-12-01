@@ -15,7 +15,6 @@ namespace WinPaletter
     public partial class LogonUI7
     {
         private bool _Shown = false;
-        private readonly Bitmap b;
         public int ID;
 
         public LogonUI7()
@@ -274,11 +273,11 @@ namespace WinPaletter
                     string SysLock;
                     if (!(ID == 1) & !(ID == 3))
                     {
-                        SysLock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", ID);
+                        SysLock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", ID);
                     }
                     else
                     {
-                        SysLock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", ID);
+                        SysLock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", ID);
                     }
 
                     bmpX = Bitmap_Mgr.Load(SysLock);
@@ -287,7 +286,7 @@ namespace WinPaletter
 
             else if (RadioButton2.Checked)
             {
-                using (var b = new Bitmap(Program.GetWallpaperFromRegistry()))
+                using (Bitmap b = new Bitmap(Program.GetWallpaperFromRegistry()))
                 {
                     bmpX = (Bitmap)b.Clone();
                 }
@@ -339,7 +338,7 @@ namespace WinPaletter
 
                 if (CheckBox7.Checked)
                 {
-                    var imgF = new ImageFactory();
+                    ImageFactory imgF = new ImageFactory();
                     imgF.Load((Bitmap)_bmp.Clone());
                     imgF.GaussianBlur(Trackbar1.Value);
                     _bmp = (Bitmap)imgF.Image;
@@ -540,7 +539,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-LogonUI-screen#windows-81-and-windows-7");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-LogonUI-screen#windows-81-and-windows-7");
         }
     }
 }

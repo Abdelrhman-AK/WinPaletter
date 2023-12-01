@@ -31,23 +31,6 @@ namespace WinPaletter.UI.WP
         #region Properties
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public override Color BackColor { get; set; }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
         #endregion
 
         #region Variables
@@ -176,6 +159,12 @@ namespace WinPaletter.UI.WP
             set { _alpha2 = value; Refresh(); }
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {

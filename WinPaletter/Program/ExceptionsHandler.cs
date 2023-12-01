@@ -12,16 +12,6 @@ namespace WinPaletter
             catch { throw e.Exception; }
         }
 
-        private static void SecondChanceExceptionHandler(object sender, Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs e)
-        {
-            try
-            {
-                e.ExitApplication = false;
-                Forms.BugReport.ThrowError(e.Exception, false, System.Runtime.InteropServices.Marshal.GetLastWin32Error());
-            }
-            catch { throw e.Exception; }
-        }
-
         private static void Domain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
         {
             try

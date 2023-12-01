@@ -49,7 +49,7 @@ namespace WinPaletter
 
             else
             {
-                var ctrls = new List<Control>() { SelectedColor };
+                List<Control> ctrls = new List<Control>() { SelectedColor };
                 PickerOpened = true;
                 SelectedColor.BackColor = Forms.ColorPickerDlg.Pick(ctrls);
                 GetColors();
@@ -98,8 +98,8 @@ namespace WinPaletter
 
             Colors_List.Clear();
 
-            var _Color = SelectedColor.BackColor;
-            var _ColorInverted = _Color.Invert();
+            Color _Color = SelectedColor.BackColor;
+            Color _ColorInverted = _Color.Invert();
 
             if (RadioButton5.Checked)
             {
@@ -160,7 +160,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            var arr = GetUniqueRandomNumbers(0, Colors_List.Count);
+            List<int> arr = GetUniqueRandomNumbers(0, Colors_List.Count);
 
             switch (Program.PreviewStyle)
             {

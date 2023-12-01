@@ -116,7 +116,7 @@ namespace WinPaletter.Theme.Structures
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
             object temp;
-            string RegAddress = @"HKEY_CURRENT_USER\Console" + (string.IsNullOrEmpty(RegKey) ? string.Empty : @"\" + RegKey);
+            string RegAddress = $@"HKEY_CURRENT_USER\Console{((string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}"))}";
 
             temp = GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb());
             ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
@@ -166,17 +166,17 @@ namespace WinPaletter.Theme.Structures
             temp = GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb());
             ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
-            temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32(@default.PopupBackground.ToString("X") + @default.PopupForeground.ToString("X"), 16));
+            temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16));
             string d = ((int)temp).ToString("X");
             if (d.Count() == 1)
-                d = 0 + d;
+                d = $"{0}{d}";
             PopupBackground = Convert.ToInt32(d[0].ToString(), 16);
             PopupForeground = Convert.ToInt32(d[1].ToString(), 16);
 
-            temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32(@default.ScreenColorsBackground.ToString("X") + @default.ScreenColorsForeground.ToString("X"), 16));
+            temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16));
             d = ((int)temp).ToString("X");
             if (d.Count() == 1)
-                d = 0 + d;
+                d = $"{0}{d}";
             ScreenColorsBackground = Convert.ToInt32(d[0].ToString(), 16);
             ScreenColorsForeground = Convert.ToInt32(d[1].ToString(), 16);
 
@@ -230,14 +230,14 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as a theme log</param>
         public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView TreeView = null)
         {
-            string RegAddress = scopeReg + @"\Console" + (string.IsNullOrEmpty(RegKey) ? string.Empty : @"\" + RegKey);
+            string RegAddress = $@"{scopeReg}\Console{((string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}"))}";
 
             try
             {
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
                     if (!string.IsNullOrEmpty(RegKey))
-                        Registry.CurrentUser.CreateSubKey(@"Console\" + RegKey, true).Close();
+                        Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
                 }
             }
             catch
@@ -261,8 +261,8 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, RegAddress, "ColorTable13", Color.FromArgb(0, Console.ColorTable13.Reverse()).ToArgb());
             EditReg(TreeView, RegAddress, "ColorTable14", Color.FromArgb(0, Console.ColorTable14.Reverse()).ToArgb());
             EditReg(TreeView, RegAddress, "ColorTable15", Color.FromArgb(0, Console.ColorTable15.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "PopupColors", Convert.ToInt32(Console.PopupBackground.ToString("X") + Console.PopupForeground.ToString("X"), 16));
-            EditReg(TreeView, RegAddress, "ScreenColors", Convert.ToInt32(Console.ScreenColorsBackground.ToString("X") + Console.ScreenColorsForeground.ToString("X"), 16));
+            EditReg(TreeView, RegAddress, "PopupColors", Convert.ToInt32($"{Console.PopupBackground:X}{Console.PopupForeground:X}", 16));
+            EditReg(TreeView, RegAddress, "ScreenColors", Convert.ToInt32($"{Console.ScreenColorsBackground:X}{Console.ScreenColorsForeground:X}", 16));
             EditReg(TreeView, RegAddress, "CursorSize", Console.CursorSize);
 
             if (Console.FontRaster)

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -40,9 +41,9 @@ namespace WinPaletter
 
             try
             {
-                if (!OS.WXP && System.IO.File.Exists(PathsExt.appData + @"\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav"));
+                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav"));
                 }
             }
             catch { }
@@ -103,7 +104,7 @@ namespace WinPaletter
             }
             else if (RadioImage3.Checked)
             {
-                using (var _Def = Theme.Default.Get())
+                using (Manager _Def = Theme.Default.Get())
                 {
                     _Def.Save(Theme.Manager.Source.Registry);
                     if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
@@ -118,7 +119,7 @@ namespace WinPaletter
 
             Close();
 
-            using (var Prc = Process.GetCurrentProcess())
+            using (Process Prc = Process.GetCurrentProcess())
             {
                 Prc.Kill();
             }

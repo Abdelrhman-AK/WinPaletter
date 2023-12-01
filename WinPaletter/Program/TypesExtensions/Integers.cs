@@ -14,7 +14,7 @@ namespace WinPaletter.TypesExtensions
             {
                 int i = 8 - @int.ToString().Count();
                 string s = string.Empty;
-                var loopTo = i;
+                int loopTo = i;
                 for (i = 1; i <= loopTo; i++)
                     s += "0";
                 s += @int.ToString();
@@ -36,7 +36,7 @@ namespace WinPaletter.TypesExtensions
             {
                 int i = 16 - @int.ToString().Count();
                 string s = string.Empty;
-                var loopTo = i;
+                int loopTo = i;
                 for (i = 1; i <= loopTo; i++)
                     s += "0";
                 s += @int.ToString();

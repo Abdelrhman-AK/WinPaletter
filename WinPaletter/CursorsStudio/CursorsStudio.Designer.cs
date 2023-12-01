@@ -2562,6 +2562,7 @@ namespace WinPaletter
             // PictureBox12
             // 
             this.PictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.PictureBox12.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
             this.PictureBox12.Location = new System.Drawing.Point(8, 435);
             this.PictureBox12.Name = "PictureBox12";
@@ -2572,10 +2573,11 @@ namespace WinPaletter
             // Label5
             // 
             this.Label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Label5.BackColor = System.Drawing.Color.Transparent;
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label5.Location = new System.Drawing.Point(38, 435);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(85, 24);
+            this.Label5.Size = new System.Drawing.Size(100, 24);
             this.Label5.TabIndex = 56;
             this.Label5.Text = "Scaling (1x)";
             this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2585,11 +2587,11 @@ namespace WinPaletter
             this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar1.LargeChange = 50;
-            this.Trackbar1.Location = new System.Drawing.Point(129, 438);
+            this.Trackbar1.Location = new System.Drawing.Point(144, 438);
             this.Trackbar1.Maximum = 320;
             this.Trackbar1.Minimum = 100;
             this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(146, 19);
+            this.Trackbar1.Size = new System.Drawing.Size(131, 19);
             this.Trackbar1.SmallChange = 20;
             this.Trackbar1.TabIndex = 9;
             this.Trackbar1.Value = 100;

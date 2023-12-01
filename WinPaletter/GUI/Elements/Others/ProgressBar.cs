@@ -231,23 +231,6 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
-
         #region Properties for animation purposes only
         public int AnimationDuration { get; set; } = 1000;
 
@@ -447,6 +430,12 @@ namespace WinPaletter.UI.WP
             Marquee
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

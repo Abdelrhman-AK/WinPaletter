@@ -23,22 +23,12 @@ namespace WinPaletter.UI.WP
 
         public Image Image { get; set; }
 
-        protected override CreateParams CreateParams
+        protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
         }
+
 
         protected override void OnPaint(PaintEventArgs e)
         {

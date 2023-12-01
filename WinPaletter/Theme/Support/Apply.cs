@@ -28,22 +28,22 @@ namespace WinPaletter.Theme
             EditReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonElement.Enabled ? 1 : 0);
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonElement.Enabled ? 1 : 0);
 
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Mode", (int)LogonElement.Mode);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "ImagePath", LogonElement.ImagePath, RegistryValueKind.String);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Color", LogonElement.Color.ToArgb());
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Blur", LogonElement.Blur ? 1 : 0);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Blur_Intensity", LogonElement.Blur_Intensity);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Grayscale", LogonElement.Grayscale ? 1 : 0);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise", LogonElement.Noise ? 1 : 0);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise_Mode", (int)LogonElement.Noise_Mode);
-            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\" + RegEntryHint, "Noise_Intensity", LogonElement.Noise_Intensity);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Mode", (int)LogonElement.Mode);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "ImagePath", LogonElement.ImagePath, RegistryValueKind.String);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Color", LogonElement.Color.ToArgb());
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Blur", LogonElement.Blur ? 1 : 0);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Blur_Intensity", LogonElement.Blur_Intensity);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Grayscale", LogonElement.Grayscale ? 1 : 0);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Noise", LogonElement.Noise ? 1 : 0);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Noise_Mode", (int)LogonElement.Noise_Mode);
+            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\{RegEntryHint}", "Noise_Intensity", LogonElement.Noise_Intensity);
 
             if (LogonElement.Enabled)
             {
                 IntPtr wow64Value = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
-                string DirX = PathsExt.System32 + @"\oobe\info\backgrounds";
+                string DirX = $@"{PathsExt.System32}\oobe\info\backgrounds";
 
                 Directory.CreateDirectory(DirX);
 
@@ -95,7 +95,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.Wallpaper:
                         {
-                            using (Bitmap b  = new(Program.GetWallpaperFromRegistry()))
+                            using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
                             {
                                 bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
                             }
@@ -111,7 +111,7 @@ namespace WinPaletter.Theme
                 for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
                     if (ReportProgress)
-                        AddNode(TreeView, string.Format("{3}: " + Program.Lang.TM_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
+                        AddNode(TreeView, string.Format($"{{3}}: {Program.Lang.TM_RenderingCustomLogonUI_Progress} {{2}} ({{0}}/{{1}})", x + 1, bmpList.Count, $"{bmpList[x].Width}x{bmpList[x].Height}", DateTime.Now.ToLongTimeString()), "info");
 
                     if (LogonElement.Grayscale)
                     {
@@ -149,16 +149,16 @@ namespace WinPaletter.Theme
                 {
                     if (Program.Elevated)
                     {
-                        bmpList[0].Save(DirX + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                     }
                     else
                     {
-                        bmpList[0].Save(PathsExt.appData + @"\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        Reg_IO.Move_File(PathsExt.appData + @"\backgroundDefault.jpg", DirX + @"\backgroundDefault.jpg");
+                        bmpList[0].Save($@"{PathsExt.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File($@"{PathsExt.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
                     }
 
                     if (ReportProgress_Detailed)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgSaved, DirX + @"\backgroundDefault.jpg"), "info");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgSaved, $@"{DirX}\backgroundDefault.jpg"), "info");
                 }
                 else
                 {
@@ -166,16 +166,16 @@ namespace WinPaletter.Theme
                     {
                         if (Program.Elevated)
                         {
-                            bmpList[x].Save(DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
+                            bmpList[x].Save($"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
                         }
                         else
                         {
-                            bmpList[x].Save(PathsExt.appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), System.Drawing.Imaging.ImageFormat.Jpeg);
-                            Reg_IO.Move_File(PathsExt.appData + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height));
+                            bmpList[x].Save($"{PathsExt.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            Reg_IO.Move_File($"{PathsExt.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}");
                         }
 
                         if (ReportProgress_Detailed)
-                            AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgNUMSaved, DirX + string.Format(@"\background{0}x{1}.jpg", bmpList[x].Width, bmpList[x].Height), x + 1), "info");
+                            AddNode(TreeView, string.Format(Program.Lang.Verbose_LogonUIImgNUMSaved, $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", x + 1), "info");
 
                     }
                 }
@@ -194,7 +194,7 @@ namespace WinPaletter.Theme
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-            string lockimg = PathsExt.appData + @"\LockScreen.png";
+            string lockimg = $@"{PathsExt.appData}\LockScreen.png";
 
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows81.NoLockScreen ? 1 : 0);
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String);
@@ -223,14 +223,14 @@ namespace WinPaletter.Theme
                         {
                             string syslock = string.Empty;
 
-                            if (System.IO.File.Exists(string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID)))
+                            if (System.IO.File.Exists(string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", Program.TM.Windows81.LockScreenSystemID)))
                             {
-                                syslock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.png", Program.TM.Windows81.LockScreenSystemID);
+                                syslock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", Program.TM.Windows81.LockScreenSystemID);
                             }
 
-                            else if (System.IO.File.Exists(string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID)))
+                            else if (System.IO.File.Exists(string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", Program.TM.Windows81.LockScreenSystemID)))
                             {
-                                syslock = string.Format(PathsExt.Windows + @"\Web\Screen\img10{0}.jpg", Program.TM.Windows81.LockScreenSystemID);
+                                syslock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", Program.TM.Windows81.LockScreenSystemID);
 
                             }
 
@@ -288,7 +288,7 @@ namespace WinPaletter.Theme
                     AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}:  " + Program.Lang.TM_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, string.Format($"{{0}}:  {Program.Lang.TM_RenderingCustomLogonUI}", DateTime.Now.ToLongTimeString()), "info");
 
                 if (LogonUI7.Grayscale)
                 {
@@ -356,7 +356,7 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_PowerShell86(TreeView TreeView = null)
         {
-            if (PowerShellx86.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\System32\WindowsPowerShell\v1.0"))
+            if (PowerShellx86.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, TreeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -372,7 +372,7 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void Apply_PowerShell64(TreeView TreeView = null)
         {
-            if (PowerShellx64.Enabled & Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") + @"\SysWOW64\WindowsPowerShell\v1.0"))
+            if (PowerShellx64.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0"))
             {
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, TreeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -398,7 +398,7 @@ namespace WinPaletter.Theme
 
                 Stopwatch sw = new();
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}: " + Program.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, string.Format($"{{0}}: {Program.Lang.TM_SavingCursorsColors}", DateTime.Now.ToLongTimeString()), "info");
 
                 sw.Reset();
                 sw.Start();
@@ -449,7 +449,7 @@ namespace WinPaletter.Theme
                         }), TreeView, Program.Lang.TM_ApplyingCursors, Program.Lang.TM_CursorsApplying_Error, Program.Lang.TM_Time);
                     }
                     else if (ReportProgress)
-                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Restricted_Cursors), "error");
+                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Restricted_Cursors}", "error");
                 }
 
                 else if (Program.Settings.ThemeApplyingBehavior.ResetCursorsToAero)

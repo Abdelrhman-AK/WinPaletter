@@ -1708,8 +1708,8 @@ namespace WinPaletter
                 {
                     case CircleStyle.Aero:
                         {
-                            var outerRect = Rectangle;
-                            var innerRect = R;
+                            Rectangle outerRect = Rectangle;
+                            Rectangle innerRect = R;
                             path.AddArc(outerRect, Angle, arcLength);
                             path.AddArc(innerRect, Angle + arcLength, -arcLength);
                             path.CloseFigure();
@@ -1898,8 +1898,8 @@ namespace WinPaletter
                 {
                     case CircleStyle.Aero:
                         {
-                            var outerRect = Rectangle;
-                            var innerRect = R;
+                            Rectangle outerRect = Rectangle;
+                            Rectangle innerRect = R;
                             path.AddArc(outerRect, Angle, arcLength);
                             path.AddArc(innerRect, Angle + arcLength, -arcLength);
                             break;
@@ -2267,7 +2267,7 @@ namespace WinPaletter
 
         public static GraphicsPath NWSE(Rectangle Rectangle, float Scale = 1f)
         {
-            using (var path = NESW(Rectangle))
+            using (GraphicsPath path = NESW(Rectangle))
             {
                 Rectangle.Width = 17;
                 Rectangle.Height = 17;

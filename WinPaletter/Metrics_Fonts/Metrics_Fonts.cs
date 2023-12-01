@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -94,7 +95,7 @@ namespace WinPaletter
             }
             else
             {
-                var ico = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
+                Icon ico = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
                 if (ico is not null)
                 {
                     PictureBox35.Image = ico.ToBitmap();
@@ -647,7 +648,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -897,7 +898,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-Metrics-and-Fonts");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Metrics-and-Fonts");
         }
     }
 }

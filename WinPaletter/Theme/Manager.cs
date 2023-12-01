@@ -35,7 +35,7 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
-                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                        using (User.Identity.Impersonate())
                         {
                             using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
                             {
@@ -71,14 +71,14 @@ namespace WinPaletter.Theme
                                 CommandPrompt.Load(string.Empty, "Terminal_CMD_Enabled", @default.CommandPrompt);
                                 if (Directory.Exists(PathsExt.PS86_app))
                                 {
-                                    try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS86_reg, true).Close(); }
+                                    try { Registry.CurrentUser.CreateSubKey($@"Console\{PathsExt.PS86_reg}", true).Close(); }
                                     catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86); }
                                 }
                                 else { PowerShellx86 = @default.PowerShellx86; }
 
                                 if (Directory.Exists(PathsExt.PS64_app))
                                 {
-                                    try { Registry.CurrentUser.CreateSubKey(@"Console\" + PathsExt.PS64_reg, true).Close(); }
+                                    try { Registry.CurrentUser.CreateSubKey($@"Console\{PathsExt.PS64_reg}", true).Close(); }
                                     catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64); }
                                 }
                                 else { PowerShellx64 = @default.PowerShellx64; }
@@ -166,7 +166,7 @@ namespace WinPaletter.Theme
 
                 case Source.File:
                     {
-                        using (var TMx = Default.Get())
+                        using (Manager TMx = Default.Get())
                         {
                             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                             {
@@ -192,9 +192,9 @@ namespace WinPaletter.Theme
 
                             List<string> txt = new();
                             txt.Clear();
-                            string Pack = new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp";
+                            string Pack = $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp";
                             bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && converter.GetFormat(File) == Converter_CP.WP_Format.JSON;
-                            string cache = PathsExt.ThemeResPackCache + @"\" + string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()));
+                            string cache = $@"{PathsExt.ThemeResPackCache}\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
 
                             // Extract theme resources pack
                             try
@@ -213,7 +213,7 @@ namespace WinPaletter.Theme
                                                 if (entry.FullName.Contains(@"\"))
                                                 {
                                                     string dest = Path.Combine(cache, entry.FullName);
-                                                    string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), string.Empty);
+                                                    string dest_dir = dest.Replace($@"\{dest.Split('\\').Last()}", string.Empty);
                                                     if (!Directory.Exists(dest_dir))
                                                         Directory.CreateDirectory(dest_dir);
                                                 }
@@ -244,7 +244,7 @@ namespace WinPaletter.Theme
                                         string[] arr = txt[x].Split(':');
                                         if (arr.Count() == 2 && arr[1].Contains("%WinPaletterAppData%"))
                                         {
-                                            txt[x] = arr[0] + ":" + arr[1].Replace("%WinPaletterAppData%", PathsExt.appData.Replace(@"\", @"\\"));
+                                            txt[x] = $"{arr[0]}:{(arr[1].Replace("%WinPaletterAppData%", PathsExt.appData.Replace(@"\", @"\\")))}";
                                         }
                                     }
                                 }
@@ -353,14 +353,14 @@ namespace WinPaletter.Theme
 
                                 else { OS_str = Program.Lang.OS_WinUndefined; }
 
-                                AddNode(TreeView, string.Format("{0}", string.Format(Program.Lang.TM_ApplyFrom, OS_str)), "info");
+                                AddNode(TreeView, $"{(string.Format(Program.Lang.TM_ApplyFrom, OS_str))}", "info");
 
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_Started), "info");
+                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_Started}", "info");
 
                                 if (!Program.Elevated)
                                 {
-                                    AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg0), "admin");
-                                    AddNode(TreeView, string.Format("{0}", Program.Lang.TM_Admin_Msg1), "admin");
+                                    AddNode(TreeView, $"{Program.Lang.TM_Admin_Msg0}", "admin");
+                                    AddNode(TreeView, $"{Program.Lang.TM_Admin_Msg1}", "admin");
                                 }
 
                             }
@@ -370,7 +370,7 @@ namespace WinPaletter.Theme
                             {
                                 Execute(() =>
                                 {
-                                    using (var def = Theme.Default.Get())
+                                    using (Manager def = Theme.Default.Get())
                                     {
                                         def.LogonUI10x.NoLockScreen = false;
                                         def.LogonUI7.Enabled = false;
@@ -534,24 +534,24 @@ namespace WinPaletter.Theme
                                 {
                                     if (Terminal.Enabled & TerminalPreview.Enabled)
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_Terminals), "info");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_Terminals}", "info");
                                     }
 
                                     else if (Terminal.Enabled)
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview), "skip");
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalStable), "info");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview}", "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalStable}", "info");
                                     }
 
                                     else if (TerminalPreview.Enabled)
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable), "skip");
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Check_TerminalPreview), "info");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable}", "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalPreview}", "info");
                                     }
 
                                     else
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals), "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
 
                                     }
 
@@ -593,7 +593,7 @@ namespace WinPaletter.Theme
 
                                         try
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalStable), "info");
+                                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalStable}", "info");
                                             Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                                             if (ReportProgress)
                                                 AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
@@ -605,7 +605,7 @@ namespace WinPaletter.Theme
                                             _ErrorHappened = true;
                                             if (ReportProgress)
                                             {
-                                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalStable), "error");
+                                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalStable}", "error");
                                                 AddException(Program.Lang.TM_Error_TerminalStable, ex);
                                             }
                                             else
@@ -621,11 +621,11 @@ namespace WinPaletter.Theme
 
                                     else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_NotInstalled}", "skip");
                                     }
                                     else
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound}", "skip");
 
                                     }
                                 }
@@ -637,7 +637,7 @@ namespace WinPaletter.Theme
 
                                         try
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Applying_TerminalPreview), "info");
+                                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalPreview}", "info");
                                             TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                             if (ReportProgress)
                                                 AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
@@ -649,7 +649,7 @@ namespace WinPaletter.Theme
                                             _ErrorHappened = true;
                                             if (ReportProgress)
                                             {
-                                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Error_TerminalPreview), "error");
+                                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalPreview}", "error");
                                                 AddException(Program.Lang.TM_Error_TerminalPreview, ex);
                                             }
                                             else
@@ -664,18 +664,18 @@ namespace WinPaletter.Theme
 
                                     else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_NotInstalled}", "skip");
                                     }
                                     else
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound}", "skip");
                                     }
                                 }
                             }
 
                             else
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), Program.Lang.TM_Skip_Terminals_NotSupported), "skip");
+                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals_NotSupported}", "skip");
                             }
                             sw.Stop();
                             #endregion
@@ -736,11 +736,11 @@ namespace WinPaletter.Theme
                             {
                                 if (!_ErrorHappened)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
+                                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d))}", "success");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
+                                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d))}", "warning");
                                 }
                             }
 
@@ -766,7 +766,7 @@ namespace WinPaletter.Theme
 
                         if (Info.ExportResThemePack)
                         {
-                            PackThemeResources((Manager)Clone(), File, new FileInfo(File).DirectoryName + @"\" + Path.GetFileNameWithoutExtension(File) + ".wptp");
+                            PackThemeResources((Manager)Clone(), File, $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp");
                         }
                         else
                         {
@@ -793,7 +793,7 @@ namespace WinPaletter.Theme
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
             {
-                var type = field.FieldType;
+                Type type = field.FieldType;
 
                 if (IsStructure(type))
                 {
@@ -824,7 +824,7 @@ namespace WinPaletter.Theme
         /// <param name="Pack">Theme resources pack file</param>
         public void PackThemeResources(Manager TM, string ThemeFile, string Pack)
         {
-            string cache = @"%WinPaletterAppData%\ThemeResPack_Cache\" + string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + @"\";
+            string cache = $@"%WinPaletterAppData%\ThemeResPack_Cache\{(string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}\";
             Dictionary<string, string> filesList = new();
             filesList.Clear();
             string x;
@@ -832,14 +832,14 @@ namespace WinPaletter.Theme
 
             if (System.IO.File.Exists(Pack))
                 System.IO.File.Delete(Pack);
-            using (var archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
+            using (ZipArchive archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
             {
                 if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Sources.CustomImage)
                 {
                     x = TM.LogonUI7.ImagePath;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "LogonUI" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}LogonUI{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.LogonUI7.ImagePath = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -849,38 +849,38 @@ namespace WinPaletter.Theme
                 if (TM.Terminal.Enabled)
                 {
                     x = TM.Terminal.DefaultProf.BackgroundImage;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "winterminal_defprofile_backimg" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}winterminal_defprofile_backimg{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Terminal.DefaultProf.BackgroundImage = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Terminal.DefaultProf.Icon;
-                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "winterminal_defprofile_icon" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}winterminal_defprofile_icon{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Terminal.DefaultProf.Icon = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    foreach (var i in TM.Terminal.Profiles)
+                    foreach (TProfile i in TM.Terminal.Profiles)
                     {
                         x = i.BackgroundImage;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}winterminal_profile({(string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))})_backimg{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 i.BackgroundImage = ZipEntry;
                             filesList.Add(ZipEntry, x);
                         }
 
                         x = i.Icon;
-                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}winterminal_profile({(string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))})_icon{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 i.Icon = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -891,38 +891,38 @@ namespace WinPaletter.Theme
                 if (TM.TerminalPreview.Enabled)
                 {
                     x = TM.TerminalPreview.DefaultProf.BackgroundImage;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "winterminal_preview_defprofile_backimg" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}winterminal_preview_defprofile_backimg{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.TerminalPreview.DefaultProf.BackgroundImage = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.TerminalPreview.DefaultProf.Icon;
-                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "winterminal_preview_defprofile_icon" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}winterminal_preview_defprofile_icon{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.TerminalPreview.DefaultProf.Icon = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    foreach (var i in TM.TerminalPreview.Profiles)
+                    foreach (TProfile i in TM.TerminalPreview.Profiles)
                     {
                         x = i.BackgroundImage;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_backimg" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}winterminal_preview_profile({(string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))})_backimg{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 i.BackgroundImage = ZipEntry;
                             filesList.Add(ZipEntry, x);
                         }
 
                         x = i.Icon;
-                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "winterminal_preview_profile(" + string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())) + ")_icon" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}winterminal_preview_profile({(string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))})_icon{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 i.Icon = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -933,9 +933,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W11.Enabled)
                 {
                     x = TM.WallpaperTone_W11.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_w11" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_w11{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_W11.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -945,9 +945,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W10.Enabled)
                 {
                     x = TM.WallpaperTone_W10.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_w10" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_w10{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_W10.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -957,9 +957,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W81.Enabled)
                 {
                     x = TM.WallpaperTone_W81.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_w81" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_w81{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_W81.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -969,9 +969,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_W7.Enabled)
                 {
                     x = TM.WallpaperTone_W7.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_w7" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_w7{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_W7.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -981,9 +981,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_WVista.Enabled)
                 {
                     x = TM.WallpaperTone_WVista.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_wvista" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_wvista{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_WVista.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -993,9 +993,9 @@ namespace WinPaletter.Theme
                 if (TM.WallpaperTone_WXP.Enabled)
                 {
                     x = TM.WallpaperTone_WXP.Image;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wt_wxp" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wt_wxp{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WallpaperTone_WXP.Image = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -1007,7 +1007,7 @@ namespace WinPaletter.Theme
                     x = TM.ScreenSaver.File;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
-                        ZipEntry = cache + "scrsvr" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}scrsvr{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.ScreenSaver.File = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -1020,9 +1020,9 @@ namespace WinPaletter.Theme
                     {
                         // Cursor_Arrow
                         x = TM.Cursor_Arrow.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Arrow" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Arrow{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Arrow.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1030,9 +1030,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_AppLoading
                         x = TM.Cursor_AppLoading.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_AppLoading" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_AppLoading{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_AppLoading.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1040,9 +1040,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Busy
                         x = TM.Cursor_Busy.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Busy" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Busy{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Busy.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1050,9 +1050,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Help
                         x = TM.Cursor_Help.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Help" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Help{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Help.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1060,9 +1060,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Move
                         x = TM.Cursor_Move.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Move" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Move{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Move.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1070,9 +1070,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_NS
                         x = TM.Cursor_NS.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_NS" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_NS{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_NS.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1080,9 +1080,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_EW
                         x = TM.Cursor_EW.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_EW" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_EW{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_EW.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1090,9 +1090,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_NESW
                         x = TM.Cursor_NESW.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_NESW" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_NESW{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_NESW.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1100,9 +1100,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_NWSE
                         x = TM.Cursor_NWSE.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_NWSE" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_NWSE{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_NWSE.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1110,9 +1110,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Up
                         x = TM.Cursor_Up.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Up" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Up{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Up.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1120,9 +1120,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Pen
                         x = TM.Cursor_Pen.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Pen" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Pen{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Pen.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1130,9 +1130,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_None
                         x = TM.Cursor_None.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_None" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_None{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_None.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1140,9 +1140,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Link
                         x = TM.Cursor_Link.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Link" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Link{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Link.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1150,9 +1150,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Pin
                         x = TM.Cursor_Pin.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Pin" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Pin{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Pin.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1160,9 +1160,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Person
                         x = TM.Cursor_Person.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Person" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Person{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Person.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1170,9 +1170,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_IBeam
                         x = TM.Cursor_IBeam.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_IBeam" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_IBeam{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_IBeam.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1180,9 +1180,9 @@ namespace WinPaletter.Theme
 
                         // Cursor_Cross
                         x = TM.Cursor_Cross.File;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Cursors", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
-                            ZipEntry = cache + "Cursor_Cross" + Path.GetExtension(x);
+                            ZipEntry = $"{cache}Cursor_Cross{Path.GetExtension(x)}";
                             if (System.IO.File.Exists(x))
                                 TM.Cursor_Cross.File = ZipEntry;
                             filesList.Add(ZipEntry, x);
@@ -1194,477 +1194,477 @@ namespace WinPaletter.Theme
                 if (TM.Sounds.Enabled)
                 {
                     x = TM.Sounds.Snd_Win_Default;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Default" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Default{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Default = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_AppGPFault;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_AppGPFault" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_AppGPFault{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_AppGPFault = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_CCSelect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_CCSelect" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_CCSelect{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_CCSelect = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_ChangeTheme;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_ChangeTheme" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_ChangeTheme{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_ChangeTheme = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Close;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Close" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Close{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Close = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_CriticalBatteryAlarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_CriticalBatteryAlarm" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_CriticalBatteryAlarm{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_CriticalBatteryAlarm = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceConnect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_DeviceConnect" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_DeviceConnect{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_DeviceConnect = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceDisconnect;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_DeviceDisconnect" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_DeviceDisconnect{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_DeviceDisconnect = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceFail;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_DeviceFail" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_DeviceFail{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_DeviceFail = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_FaxBeep;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_FaxBeep" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_FaxBeep{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_FaxBeep = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_LowBatteryAlarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_LowBatteryAlarm" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_LowBatteryAlarm{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_LowBatteryAlarm = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_MailBeep;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_MailBeep" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_MailBeep{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_MailBeep = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Maximize;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Maximize" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Maximize{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Maximize = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_MenuCommand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_MenuCommand" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_MenuCommand{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_MenuCommand = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_MenuPopup;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_MenuPopup" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_MenuPopup{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_MenuPopup = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_MessageNudge;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_MessageNudge" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_MessageNudge{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_MessageNudge = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Minimize;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Minimize" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Minimize{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Minimize = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Default;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Default" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Default{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Default = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_IM;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_IM" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_IM{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_IM = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm10;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm10" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm10{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm10 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm2;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm2" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm2{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm2 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm3;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm3" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm3{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm3 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm4;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm4" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm4{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm4 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm5;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm5" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm5{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm5 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm6;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm6" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm6{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm6 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm7;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm7" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm7{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm7 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm8;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm8" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm8{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm8 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm9;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Alarm9" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm9{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm9 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call10;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call10" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call10{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call10 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call2;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call2" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call2{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call2 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call3;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call3" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call3{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call3 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call4;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call4" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call4{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call4 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call5;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call5" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call5{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call5 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call6;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call6" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call6{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call6 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call7;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call7" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call7{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call7 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call8;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call8" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call8{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call8 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call9;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Looping_Call9" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call9{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Looping_Call9 = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Mail;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Mail" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Mail{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Mail = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Proximity;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Proximity" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Proximity{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Proximity = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Reminder;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_Reminder" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_Reminder{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_Reminder = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_SMS;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Notification_SMS" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Notification_SMS{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Notification_SMS = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_Open;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_Open" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_Open{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_Open = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_PrintComplete;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_PrintComplete" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_PrintComplete{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_PrintComplete = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_ProximityConnection;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_ProximityConnection" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_ProximityConnection{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_ProximityConnection = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreDown;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_RestoreDown" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_RestoreDown{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_RestoreDown = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreUp;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_RestoreUp" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_RestoreUp{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_RestoreUp = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_ShowBand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_ShowBand" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_ShowBand{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_ShowBand = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemAsterisk;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemAsterisk" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemAsterisk{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemAsterisk = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExclamation;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemExclamation" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemExclamation{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemExclamation = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExit;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemExit" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemExit{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemExit = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemStart;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemStart" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemStart{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemStart = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -1673,268 +1673,268 @@ namespace WinPaletter.Theme
                     x = TM.Sounds.Snd_Imageres_SystemStart;
                     if (!string.IsNullOrWhiteSpace(x))  // Don't include the condition: Not x.StartsWith(My.Directories.Windows & "\media", My.StringComparison.OrdinalIgnoreCase)
                     {
-                        ZipEntry = cache + "Snd_Imageres_SystemStart" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Imageres_SystemStart{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Imageres_SystemStart = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemHand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemHand" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemHand{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemHand = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemNotification;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemNotification" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemNotification{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemNotification = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_SystemQuestion;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_SystemQuestion" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_SystemQuestion{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_SystemQuestion = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogoff;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_WindowsLogoff" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_WindowsLogoff{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_WindowsLogoff = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogon;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_WindowsLogon" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_WindowsLogon{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_WindowsLogon = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUAC;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_WindowsUAC" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_WindowsUAC{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_WindowsUAC = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUnlock;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Win_WindowsUnlock" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Win_WindowsUnlock{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Win_WindowsUnlock = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_ActivatingDocument;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_ActivatingDocument" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_ActivatingDocument{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_ActivatingDocument = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_BlockedPopup;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_BlockedPopup" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_BlockedPopup{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_BlockedPopup = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_EmptyRecycleBin;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_EmptyRecycleBin" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_EmptyRecycleBin{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_EmptyRecycleBin = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_FeedDiscovered;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_FeedDiscovered" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_FeedDiscovered{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_FeedDiscovered = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_MoveMenuItem;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_MoveMenuItem" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_MoveMenuItem{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_MoveMenuItem = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_Navigating;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_Navigating" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_Navigating{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_Navigating = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_SecurityBand;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_SecurityBand" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_SecurityBand{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_SecurityBand = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_SearchProviderDiscovered;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_SearchProviderDiscovered" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_SearchProviderDiscovered{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_SearchProviderDiscovered = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxError;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_FaxError" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_FaxError{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_FaxError = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxLineRings;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_FaxLineRings" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_FaxLineRings{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_FaxLineRings = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxNew;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_FaxNew" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_FaxNew{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_FaxNew = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxSent;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_Explorer_FaxSent" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_Explorer_FaxSent{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_Explorer_FaxSent = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonJoins;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_NetMeeting_PersonJoins" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_NetMeeting_PersonJoins{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_NetMeeting_PersonJoins = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonLeaves;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_NetMeeting_PersonLeaves" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_NetMeeting_PersonLeaves{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_NetMeeting_PersonLeaves = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveCall;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_NetMeeting_ReceiveCall" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_NetMeeting_ReceiveCall{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_NetMeeting_ReceiveCall = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveRequestToJoin;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_NetMeeting_ReceiveRequestToJoin" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_NetMeeting_ReceiveRequestToJoin{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_NetMeeting_ReceiveRequestToJoin = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_DisNumbersSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_DisNumbersSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_DisNumbersSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_DisNumbersSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOffSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_HubOffSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_HubOffSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_HubOffSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOnSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_HubOnSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_HubOnSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_HubOnSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubSleepSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_HubSleepSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_HubSleepSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_HubSleepSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_MisrecoSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_MisrecoSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_MisrecoSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_MisrecoSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_PanelSound;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\media", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "Snd_SpeechRec_PanelSound" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}Snd_SpeechRec_PanelSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_PanelSound = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -1945,16 +1945,16 @@ namespace WinPaletter.Theme
                 if (TM.Wallpaper.Enabled && TM.Wallpaper.WallpaperType == Wallpaper.WallpaperTypes.Picture)
                 {
                     x = TM.Wallpaper.ImageFile;
-                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + "wallpaper_file" + Path.GetExtension(x);
+                        ZipEntry = $"{cache}wallpaper_file{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Wallpaper.ImageFile = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
                 }
 
-                foreach (var _file in filesList)
+                foreach (KeyValuePair<string, string> _file in filesList)
                 {
                     if (System.IO.File.Exists(_file.Value))
                         archive.CreateEntryFromFile(_file.Value, _file.Key.Split('\\').Last(), CompressionLevel.Optimal);
@@ -1963,16 +1963,16 @@ namespace WinPaletter.Theme
                 if (TM.WindowsXP.Theme == WindowsXP.Themes.Custom)
                 {
                     x = TM.WindowsXP.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith(PathsExt.Windows + @"\Resources\Themes\Luna", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith($@"{PathsExt.Windows}\Resources\Themes\Luna", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = cache + @"WXP_VS\" + Path.GetFileName(x);
+                        ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(x)}";
                         if (System.IO.File.Exists(x))
                             TM.WindowsXP.ThemeFile = ZipEntry;
                         string DirName = new FileInfo(x).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
                             if (System.IO.File.Exists(file))
-                                archive.CreateEntryFromFile(file, "WXP_VS" + file.Replace(DirName, string.Empty), CompressionLevel.Optimal);
+                                archive.CreateEntryFromFile(file, $"WXP_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
                         }
                     }
                 }
@@ -1982,18 +1982,18 @@ namespace WinPaletter.Theme
                     if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
                     {
                         x = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
-                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = cache + "wallpapers_slideshow";
+                            TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = $"{cache}wallpapers_slideshow";
 
-                            foreach (var image in Directory.EnumerateFiles(x, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")))
+                            foreach (string image in Directory.EnumerateFiles(x, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")))
 
 
                             {
 
 
                                 if (System.IO.File.Exists(image))
-                                    archive.CreateEntryFromFile(image, @"wallpapers_slideshow\" + new FileInfo(image).Name, CompressionLevel.Optimal);
+                                    archive.CreateEntryFromFile(image, $@"wallpapers_slideshow\{new FileInfo(image).Name}", CompressionLevel.Optimal);
 
                             }
 
@@ -2005,20 +2005,20 @@ namespace WinPaletter.Theme
                         string[] arr = TM.Wallpaper.Wallpaper_Slideshow_Images.ToArray();
                         if (arr.Count() > 0)
                         {
-                            if (!arr[0].StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                            if (!arr[0].StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                             {
-                                TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = cache + "WallpapersList";
+                                TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = $"{cache}WallpapersList";
                                 TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
                                 for (int x0 = 0, loopTo = arr.Count() - 1; x0 <= loopTo; x0++)
                                 {
                                     x = arr[x0];
-                                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        ZipEntry = cache + @"WallpapersList\wallpaperlist_" + x0 + "_file" + Path.GetExtension(x);
+                                        ZipEntry = $@"{cache}WallpapersList\wallpaperlist_{x0}_file{Path.GetExtension(x)}";
                                         if (System.IO.File.Exists(x))
                                         {
                                             TM.Wallpaper.Wallpaper_Slideshow_Images = TM.Wallpaper.Wallpaper_Slideshow_Images.Append(ZipEntry).ToArray();
-                                            archive.CreateEntryFromFile(x, @"WallpapersList\wallpaperlist_" + x0 + "_file" + Path.GetExtension(x), CompressionLevel.Optimal);
+                                            archive.CreateEntryFromFile(x, $@"WallpapersList\wallpaperlist_{x0}_file{Path.GetExtension(x)}", CompressionLevel.Optimal);
                                         }
                                     }
                                 }

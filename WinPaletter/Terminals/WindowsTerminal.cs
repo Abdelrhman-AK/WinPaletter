@@ -164,7 +164,7 @@ namespace WinPaletter
                 TerThemesContainer.Enabled = true;
 
                 {
-                    var temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
+                    TTheme temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
                     TerTitlebarActive.BackColor = temp.Titlebar_Active;
                     TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
                     TerTabActive.BackColor = temp.Tab_Active;
@@ -232,7 +232,7 @@ namespace WinPaletter
             try
             {
                 {
-                    var temp = _Terminal.Colors[TerSchemes.SelectedIndex];
+                    TColors temp = _Terminal.Colors[TerSchemes.SelectedIndex];
                     TerBackground.BackColor = temp.Background;
                     TerForeground.BackColor = temp.Foreground;
                     TerSelection.BackColor = temp.SelectionBackground;
@@ -258,7 +258,7 @@ namespace WinPaletter
                 }
 
                 {
-                    var temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                    TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                     temp1.ColorScheme = TerSchemes.SelectedItem.ToString();
                 }
 
@@ -533,7 +533,7 @@ namespace WinPaletter
         {
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 try
                 {
                     if (TerSchemes.Items.Contains(temp.ColorScheme))
@@ -627,7 +627,7 @@ namespace WinPaletter
             Terminal1.Font = new(Terminal1.Font.Name, TerFontSizeBar.Value, Terminal1.Font.Style);
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.Font.Size = TerFontSizeBar.Value;
             }
         }
@@ -643,7 +643,7 @@ namespace WinPaletter
                 return;
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.CursorHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
             }
         }
@@ -659,7 +659,7 @@ namespace WinPaletter
 
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.BackgroundImageOpacity = (float)(TerImageOpacity.Value / 100d);
             }
         }
@@ -673,14 +673,14 @@ namespace WinPaletter
                 return;
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.CursorShape = (TProfile.CursorShape_Enum)TerCursorStyle.SelectedIndex;
             }
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            _Terminal.Colors.Add(new TColors() { Name = Program.Lang.Terminal_NewScheme + " #" + TerSchemes.Items.Count });
+            _Terminal.Colors.Add(new TColors() { Name = $"{Program.Lang.Terminal_NewScheme} #{TerSchemes.Items.Count}" });
             FillTerminalSchemes(_Terminal, TerSchemes);
             TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1;
         }
@@ -794,7 +794,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
+                Color cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
 
                 if (ColorClipboard.Event != ColorClipboard.MenuEvent.None)
                 {
@@ -917,19 +917,6 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        private void TerFonts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!_Shown)
-                return;
-
-            Terminal1.Font = new(TerFontName.Font.Name, Terminal1.Font.Size, Terminal1.Font.Style);
-
-            {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.Font.Face = TerFontName.Font.Name;
-            }
-        }
-
         public void ApplyPreview(WinTerminal Terminal)
         {
             try
@@ -1031,7 +1018,7 @@ namespace WinPaletter
                 }
 
                 {
-                    var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                    TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                     NativeMethods.GDI32.LogFont fx = new();
                     Font f_cmd = new(temp.Font.Face, temp.Font.Size);
                     f_cmd.ToLogFont(fx);
@@ -1052,7 +1039,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            _Terminal.Themes.Add(new TTheme() { Name = Program.Lang.Terminal_NewTheme + " #" + (TerThemes.Items.Count - 3) });
+            _Terminal.Themes.Add(new TTheme() { Name = $"{Program.Lang.Terminal_NewTheme} #{(TerThemes.Items.Count - 3)}" });
             FillTerminalThemes(_Terminal, TerThemes);
             TerThemes.SelectedIndex = TerThemes.Items.Count - 1;
         }
@@ -1087,7 +1074,7 @@ namespace WinPaletter
                 TerThemesContainer.Enabled = true;
 
                 {
-                    var temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
+                    TTheme temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
                     TerTitlebarActive.BackColor = temp.Titlebar_Active;
                     TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
                     TerTabActive.BackColor = temp.Tab_Active;
@@ -1205,7 +1192,7 @@ namespace WinPaletter
             {
 
                 {
-                    var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                    TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                     temp.Name = Forms.TerminalInfo.Profile.Name;
                     temp.TabTitle = Forms.TerminalInfo.Profile.TabTitle;
                     temp.Icon = Forms.TerminalInfo.Profile.Icon;
@@ -1231,7 +1218,7 @@ namespace WinPaletter
             if (_Shown)
             {
                 {
-                    var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                    TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                     temp.Opacity = TerOpacityBar.Value;
                 }
             }
@@ -1248,7 +1235,7 @@ namespace WinPaletter
                 return;
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.UseAcrylic = TerAcrylic.Checked;
             }
         }
@@ -1261,7 +1248,7 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            _Terminal.Profiles.Add(new TProfile() { Name = Program.Lang.Terminal_NewProfile + " #" + TerProfiles.Items.Count, ColorScheme = _Terminal.DefaultProf.ColorScheme });
+            _Terminal.Profiles.Add(new TProfile() { Name = $"{Program.Lang.Terminal_NewProfile} #{TerProfiles.Items.Count}", ColorScheme = _Terminal.DefaultProf.ColorScheme });
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
         }
@@ -1343,7 +1330,7 @@ namespace WinPaletter
                 return;
 
             {
-                var temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                 temp.BackgroundImage = TerBackImage.Text;
             }
 
@@ -1602,7 +1589,7 @@ namespace WinPaletter
 
             TColors TC = new()
             {
-                Name = TerSchemes.SelectedItem.ToString() + " Clone #" + TerSchemes.Items.Count,
+                Name = $"{TerSchemes.SelectedItem} Clone #{TerSchemes.Items.Count}",
                 Background = _Terminal.Colors[TerSchemes.SelectedIndex].Background,
                 Black = _Terminal.Colors[TerSchemes.SelectedIndex].Black,
                 Blue = _Terminal.Colors[TerSchemes.SelectedIndex].Blue,
@@ -1641,7 +1628,7 @@ namespace WinPaletter
 
             TProfile P = new()
             {
-                Name = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].Name + " " + Program.Lang.Terminal_Clone + " #" + TerProfiles.Items.Count,
+                Name = $"{_Terminal.Profiles[TerProfiles.SelectedIndex - 1].Name} {Program.Lang.Terminal_Clone} #{TerProfiles.Items.Count}",
                 BackgroundImage = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].BackgroundImage,
                 BackgroundImageOpacity = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].BackgroundImageOpacity,
                 ColorScheme = _Terminal.Profiles[TerProfiles.SelectedIndex - 1].ColorScheme,
@@ -1672,7 +1659,7 @@ namespace WinPaletter
 
             TTheme Th = new()
             {
-                Name = _Terminal.Themes[TerThemes.SelectedIndex - 3].Name + " " + Program.Lang.Terminal_Clone + " #" + TerThemes.Items.Count,
+                Name = $"{_Terminal.Themes[TerThemes.SelectedIndex - 3].Name} {Program.Lang.Terminal_Clone} #{TerThemes.Items.Count}",
                 Style = _Terminal.Themes[TerThemes.SelectedIndex - 3].Style,
                 Tab_Active = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Active,
                 Tab_Inactive = _Terminal.Themes[TerThemes.SelectedIndex - 3].Tab_Inactive,
@@ -1697,11 +1684,11 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
             {
-                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
+                UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
-                foreach (var x in TerProfiles.Items)
+                foreach (object x in TerProfiles.Items)
                     temp.Items.Add(x);
             }
 
@@ -1712,10 +1699,10 @@ namespace WinPaletter
                     if ((TerProfiles.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
-                        var CCatFrom = x == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[x - 1];
+                        TProfile CCatFrom = x == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[x - 1];
 
                         {
-                            var temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                            TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
                             temp1.BackgroundImage = CCatFrom.BackgroundImage;
                             temp1.BackgroundImageOpacity = CCatFrom.BackgroundImageOpacity;
                             temp1.ColorScheme = CCatFrom.ColorScheme;
@@ -1823,11 +1810,11 @@ namespace WinPaletter
         private void Button20_Click(object sender, EventArgs e)
         {
             {
-                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
+                UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
-                foreach (var x in TerSchemes.Items)
+                foreach (object x in TerSchemes.Items)
                     temp.Items.Add(x);
             }
 
@@ -1838,10 +1825,10 @@ namespace WinPaletter
                     if ((TerSchemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
-                        var CCatFrom = _Terminal.Colors[x];
+                        TColors CCatFrom = _Terminal.Colors[x];
 
                         {
-                            var temp1 = _Terminal.Colors[TerSchemes.SelectedIndex];
+                            TColors temp1 = _Terminal.Colors[TerSchemes.SelectedIndex];
                             temp1.Background = CCatFrom.Background;
                             temp1.Black = CCatFrom.Black;
                             temp1.Blue = CCatFrom.Blue;
@@ -1907,11 +1894,11 @@ namespace WinPaletter
             }
 
             {
-                var temp = Forms.WindowsTerminalCopycat.ComboBox1;
+                UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
                 temp.Items.Clear();
                 CCat = null;
 
-                foreach (var x in TerThemes.Items)
+                foreach (object x in TerThemes.Items)
                     temp.Items.Add(x);
             }
 
@@ -1922,10 +1909,10 @@ namespace WinPaletter
                     if ((TerThemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
 
-                        var CCatFrom = _Terminal.Themes[x - 3];
+                        TTheme CCatFrom = _Terminal.Themes[x - 3];
 
                         {
-                            var temp1 = _Terminal.Themes[TerThemes.SelectedIndex - 3];
+                            TTheme temp1 = _Terminal.Themes[TerThemes.SelectedIndex - 3];
                             temp1.Style = CCatFrom.Style;
                             temp1.Tab_Active = CCatFrom.Tab_Active;
                             temp1.Tab_Inactive = CCatFrom.Tab_Inactive;
@@ -2018,7 +2005,7 @@ namespace WinPaletter
                 FontDialog1.Font.ToLogFont(fx);
                 fx.lfWeight = TerFontWeight.SelectedIndex * 100;
                 {
-                    var temp = Font.FromLogFont(fx);
+                    Font temp = Font.FromLogFont(fx);
                     Terminal1.Font = new(FontDialog1.Font.Name, FontDialog1.Font.Size, temp.Style);
                 }
                 TerFontName.Font = new(FontDialog1.Font.Name, 9f, Terminal1.Font.Style);
@@ -2029,7 +2016,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-Terminals-(Windows-10-and-later)");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Terminals-(Windows-10-and-later)");
         }
     }
 }

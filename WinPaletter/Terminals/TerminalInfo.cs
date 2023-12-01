@@ -82,7 +82,7 @@ namespace WinPaletter
             if (e is DragEventArgs)
             {
                 {
-                    var temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+                    TProfile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
                     temp.TabColor = TerTabColor.BackColor;
                 }
 
@@ -92,10 +92,10 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                var cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
+                Color cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
 
                 {
-                    var temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+                    TProfile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
                     temp1.TabColor = cx;
                 }
 
@@ -106,7 +106,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, Forms.WindowsTerminal.Terminal1 };
 
-            Conditions _conditions = new(){ Terminal_TabColor = true };
+            Conditions _conditions = new() { Terminal_TabColor = true };
 
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 

@@ -44,9 +44,9 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(PathsExt.System32 + @"\logoff.exe"))
+                if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
                 {
-                    Interaction.Shell(PathsExt.System32 + @"\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
@@ -62,9 +62,9 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(PathsExt.System32 + @"\shutdown.exe"))
+                if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))
                 {
-                    Interaction.Shell(PathsExt.System32 + @"\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                    Interaction.Shell($@"{PathsExt.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
@@ -80,9 +80,9 @@ namespace WinPaletter.Dialogs
                 Forms.MainFrm.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(PathsExt.System32 + @"\shutdown.exe"))
+                if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))
                 {
-                    Interaction.Shell(PathsExt.System32 + @"\shutdown.exe /s /t 0", AppWinStyle.Hide);
+                    Interaction.Shell($@"{PathsExt.System32}\shutdown.exe /s /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
@@ -112,7 +112,7 @@ namespace WinPaletter.Dialogs
                 {
                     StartInfo = new()
                     {
-                        FileName = PathsExt.System32 + "\\cmd.exe",
+                        FileName = $"{PathsExt.System32}\\cmd.exe",
                         Verb = "runas",
                         UseShellExecute = true
                     }

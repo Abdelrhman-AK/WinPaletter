@@ -47,7 +47,7 @@ namespace WinPaletter
 
                 else
                 {
-                    Registry.CurrentUser.CreateSubKey(string.Format(@"Console\%SystemDrive%_{0}", TextBox1.Text.Replace(@"\", "_").Trim(':')[1]), true).Close();
+                    Registry.CurrentUser.CreateSubKey($@"Console\%SystemDrive%_{(TextBox1.Text.Replace(@"\", "_").Trim(':')[1])}", true).Close();
 
                     MsgBox(Program.Lang.ExtTer_NewSuccess, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Forms.ExternalTerminal.FillTerminals(Forms.ExternalTerminal.ComboBox1);
@@ -58,7 +58,7 @@ namespace WinPaletter
             catch (Exception ex)
             {
 
-                MsgBox(Program.Lang.ExtTer_NewError, MessageBoxButtons.OK, MessageBoxIcon.Error, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.ErrorDetails + ex.Message);
+                MsgBox(Program.Lang.ExtTer_NewError, MessageBoxButtons.OK, MessageBoxIcon.Error, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, $"{Program.Lang.ErrorDetails}{ex.Message}");
             }
 
         }

@@ -10,13 +10,13 @@ namespace WinPaletter.TypesExtensions
             Type type = typeof(T);
 
             // Get all fields and properties
-            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            foreach (var field in fields)
+            foreach (FieldInfo field in fields)
             {
-                var value1 = field.GetValue(obj1);
-                var value2 = field.GetValue(obj2);
+                object value1 = field.GetValue(obj1);
+                object value2 = field.GetValue(obj2);
 
                 if (!object.Equals(value1, value2))
                 {
@@ -24,10 +24,10 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            foreach (var property in properties)
+            foreach (PropertyInfo property in properties)
             {
-                var value1 = property.GetValue(obj1);
-                var value2 = property.GetValue(obj2);
+                object value1 = property.GetValue(obj1);
+                object value2 = property.GetValue(obj2);
 
                 if (!object.Equals(value1, value2))
                 {

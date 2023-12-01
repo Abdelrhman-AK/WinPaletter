@@ -79,8 +79,8 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            themename_lbl.Text = string.Format("{0} ({1})", TM.Info.ThemeName, TM.Info.ThemeVersion);
-            author_lbl.Text = string.Format("{0} {1}", Program.Lang.By, TM.Info.Author);
+            themename_lbl.Text = $"{TM.Info.ThemeName} ({TM.Info.ThemeVersion})";
+            author_lbl.Text = $"{Program.Lang.By} {TM.Info.Author}";
 
             ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
             Appearance.CustomColors = TM.AppTheme.Enabled;
@@ -489,7 +489,7 @@ namespace WinPaletter
                 Forms.Updates.ls = Updates_ls;
                 NotifyUpdates.Visible = true;
                 Button5.Image = Properties.Resources.Update_Dot;
-                NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, string.Format("{0}. {1} {2}", Program.Lang.NewUpdate, Program.Lang.Version, ver), ToolTipIcon.Info);
+                NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
             }
         }
 
@@ -875,7 +875,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, Window2 };
 
-            Conditions _conditions = new(){ Window_InactiveTitlebar = true };
+            Conditions _conditions = new() { Window_InactiveTitlebar = true };
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows11.Titlebar_Inactive = Color.FromArgb(255, C);
@@ -999,12 +999,12 @@ namespace WinPaletter
                 if (!Program.TM.Windows11.WinMode_Light)
                 {
                     CList.Add(ActionCenter);
-                    Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
+                    Conditions _conditions = new() { AppUnderlineOnly = true, ActionCenterBtn = true };
                     C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
                 else
                 {
-                    Conditions _conditions = new(){ AppUnderlineWithTaskbar = true };
+                    Conditions _conditions = new() { AppUnderlineWithTaskbar = true };
                     C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
             }
@@ -1013,7 +1013,7 @@ namespace WinPaletter
                 CList.Add(ActionCenter);
                 CList.Add(taskbar);
 
-                Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
+                Conditions _conditions = new() { AppUnderlineOnly = true, ActionCenterBtn = true };
                 C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
             else
@@ -1115,7 +1115,7 @@ namespace WinPaletter
             else
             {
                 CList.Add(lnk_preview);
-                Conditions _conditions = new(){ AppUnderlineOnly = true };
+                Conditions _conditions = new() { AppUnderlineOnly = true };
                 C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
 
@@ -1151,7 +1151,7 @@ namespace WinPaletter
             CList.Add(taskbar);
             CList.Add(setting_icon_preview);
 
-            Conditions _conditions = new(){ AppUnderlineOnly = true };
+            Conditions _conditions = new() { AppUnderlineOnly = true };
             C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows11.Color_Index3 = Color.FromArgb(255, C);
@@ -1290,14 +1290,14 @@ namespace WinPaletter
                 {
                     CList.Add(ActionCenter);
 
-                    Conditions _conditions = new(){ ActionCenterBtn = true };
+                    Conditions _conditions = new() { ActionCenterBtn = true };
                     C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
                 else
                 {
                     CList.Add(start);
 
-                    Conditions _conditions = new(){ StartColorOnly = true };
+                    Conditions _conditions = new() { StartColorOnly = true };
                     C = Forms.ColorPickerDlg.Pick(CList, _conditions);
                 }
             }
@@ -1307,7 +1307,7 @@ namespace WinPaletter
                 CList.Add(ActionCenter);
                 CList.Add(taskbar);
 
-                Conditions _conditions = new(){ AppUnderlineOnly = true, ActionCenterBtn = true };
+                Conditions _conditions = new() { AppUnderlineOnly = true, ActionCenterBtn = true };
 
                 C = Forms.ColorPickerDlg.Pick(CList, _conditions);
             }
@@ -1315,7 +1315,7 @@ namespace WinPaletter
             {
                 CList.Add(start);
 
-                Conditions _conditions = new(){ StartColorOnly = true };
+                Conditions _conditions = new() { StartColorOnly = true };
                 C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             }
@@ -1402,7 +1402,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, Window1 };
 
-            Conditions _conditions = new(){ Window_ActiveTitlebar = true };
+            Conditions _conditions = new() { Window_ActiveTitlebar = true };
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Titlebar_Active = Color.FromArgb(255, C);
@@ -1431,7 +1431,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, Window2 };
 
-            Conditions _conditions = new(){ Window_InactiveTitlebar = true };
+            Conditions _conditions = new() { Window_InactiveTitlebar = true };
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
             Program.TM.Windows10.Titlebar_Inactive = Color.FromArgb(255, C);
@@ -2065,7 +2065,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            Conditions _conditions = new(){ Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, LivePreview_Colorization = true };
+            Conditions _conditions = new() { Window_ActiveTitlebar = true, Window_InactiveTitlebar = true, LivePreview_Colorization = true };
 
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -2276,7 +2276,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            Conditions _conditions = new(){ Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true };
+            Conditions _conditions = new() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true };
 
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -2306,7 +2306,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            Conditions _conditions = new(){ Win7 = true, Color2 = true, Background2 = true, LivePreview_AfterGlow = true };
+            Conditions _conditions = new() { Win7 = true, Color2 = true, Background2 = true, LivePreview_AfterGlow = true };
 
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -2485,7 +2485,7 @@ namespace WinPaletter
 
             List<Control> CList = new() { (Control)sender, start, taskbar, Window1, Window2 };
 
-            Conditions _conditions = new(){ Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true, LivePreview_AfterGlow = true };
+            Conditions _conditions = new() { Win7 = true, Color1 = true, Background = true, LivePreview_Colorization = true, LivePreview_AfterGlow = true };
 
             Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
 
@@ -2635,14 +2635,14 @@ namespace WinPaletter
 
             else if (System.IO.Path.GetExtension(WXP_VS_textbox.Text) == ".msstyles")
             {
-                theme = PathsExt.appData + @"\VisualStyles\Luna\custom.theme";
+                theme = $@"{PathsExt.appData}\VisualStyles\Luna\custom.theme";
 
                 if (!System.IO.Directory.Exists(PathsExt.MSTheme_Dir))
                 {
                     System.IO.Directory.CreateDirectory(PathsExt.MSTheme_Dir);
                 }
 
-                System.IO.File.WriteAllText(PathsExt.appData + @"\VisualStyles\Luna\custom.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, "\r\n"));
+                System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\custom.theme", $"[VisualStyles]{"\r\n"}Path={WXP_VS_textbox.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
 
             }
 
@@ -2657,7 +2657,7 @@ namespace WinPaletter
 
                 try
                 {
-                    foreach (var x in vs.ColorSchemes)
+                    foreach (VisualStyleScheme x in vs.ColorSchemes)
                         WXP_VS_ColorsList.Items.Add(x.Name);
                 }
                 catch
@@ -3122,9 +3122,9 @@ namespace WinPaletter
                 LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists(PathsExt.System32 + @"\logoff.exe"))
+                if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
                 {
-                    Interaction.Shell(PathsExt.System32 + @"\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {

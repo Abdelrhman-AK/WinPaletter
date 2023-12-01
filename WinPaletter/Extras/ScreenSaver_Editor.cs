@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -62,7 +63,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -101,7 +102,7 @@ namespace WinPaletter
             {
                 if (Proc is not null && !Proc.HasExited)
                     Proc.Kill();
-                Proc = Process.GetProcessById(Interaction.Shell("\"" + TextBox1.Text + "\"" + " /p " + pnl_preview.Handle.ToInt32()));
+                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
             }
         }
 
@@ -120,7 +121,7 @@ namespace WinPaletter
             {
                 if (Proc is not null && !Proc.HasExited)
                     Proc.Kill();
-                Proc = Process.GetProcessById(Interaction.Shell("\"" + TextBox1.Text + "\"" + " /p " + pnl_preview.Handle.ToInt32()));
+                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
             }
         }
 
@@ -133,7 +134,7 @@ namespace WinPaletter
         private void Button13_Click(object sender, EventArgs e)
         {
             if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
-                Interaction.Shell("\"" + TextBox1.Text + "\"" + " /s");
+                Interaction.Shell($"\"{TextBox1.Text}\" /s");
         }
 
         private void Button14_Click(object sender, EventArgs e)
@@ -142,9 +143,9 @@ namespace WinPaletter
                 Proc.Kill();
             if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
             {
-                Proc = Process.GetProcessById(Interaction.Shell("\"" + TextBox1.Text + "\"" + " /c", AppWinStyle.NormalFocus));
+                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /c", AppWinStyle.NormalFocus));
                 Proc.WaitForExit();
-                Proc = Process.GetProcessById(Interaction.Shell("\"" + TextBox1.Text + "\"" + " /p " + pnl_preview.Handle.ToInt32()));
+                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
             }
         }
 
@@ -171,7 +172,7 @@ namespace WinPaletter
 
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
                 }
@@ -188,7 +189,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Screen-Saver");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Screen-Saver");
         }
     }
 }

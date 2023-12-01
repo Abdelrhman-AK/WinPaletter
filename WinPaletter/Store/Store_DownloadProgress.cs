@@ -78,8 +78,8 @@ namespace WinPaletter
             {
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                 ProgressBar1.Value = e.ProgressPercentage;
-                Label2.SetText(string.Format("{0}/{1}", e.BytesReceived.SizeString(), e.TotalBytesToReceive.SizeString()));
-                var time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
+                Label2.SetText($"{e.BytesReceived.SizeString()}/{e.TotalBytesToReceive.SizeString()}");
+                TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
                 Label4.SetText(time.ToString(@"mm\:ss"));
             }
             else

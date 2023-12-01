@@ -34,7 +34,7 @@ namespace WinPaletter
                 ref Localizer lang = ref Program.Lang;
                 Label11.Text = lang.Name;
                 Label12.Text = lang.TranslationVersion;
-                Label14.Text = lang.AppVer + " " + Program.Lang.AndBelow;
+                Label14.Text = $"{lang.AppVer} {Program.Lang.AndBelow}";
                 Label19.Text = lang.Lang;
                 Label16.Text = lang.LangCode;
                 Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
@@ -179,13 +179,13 @@ namespace WinPaletter
             RadioImage1.Checked = Sets.Store.Online_or_Offline;
             RadioImage2.Checked = !Sets.Store.Online_or_Offline;
             ListBox1.Items.Clear();
-            foreach (var x in Sets.Store.Online_Repositories)
+            foreach (string x in Sets.Store.Online_Repositories)
             {
                 if (!string.IsNullOrWhiteSpace(x))
                     ListBox1.Items.Add(x);
             }
             ListBox2.Items.Clear();
-            foreach (var x in Sets.Store.Offline_Directories)
+            foreach (string x in Sets.Store.Offline_Directories)
             {
                 if (!string.IsNullOrWhiteSpace(x))
                     ListBox2.Items.Add(x);
@@ -804,30 +804,6 @@ namespace WinPaletter
             }
         }
 
-        private void Me_DragEnter(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            if (Path.GetExtension(files[0]).ToLower() == ".wpsf")
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void MainFrm_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            Settings sets = new(Settings.Mode.File, files[0]);
-            Read(sets);
-
-            OpenFileDialog1.FileName = files[0];
-        }
-
         private void Button5_Click(object sender, EventArgs e)
         {
             if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
@@ -860,7 +836,7 @@ namespace WinPaletter
 
                     Label11.Text = J["Information"]["name"].ToString();
                     Label12.Text = J["Information"]["translationversion"].ToString();
-                    Label14.Text = J["Information"]["appver"].ToString() + " " + Program.Lang.AndBelow;
+                    Label14.Text = $"{J["Information"]["appver"]} {Program.Lang.AndBelow}";
                     Label19.Text = J["Information"]["lang"].ToString();
                     Label16.Text = J["Information"]["langcode"].ToString();
                     Label22.Text = !(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
@@ -875,7 +851,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Repository + "wiki/Language-creation");
+            Process.Start($"{Properties.Resources.Link_Repository}wiki/Language-creation");
         }
 
         private void Button16_Click(object sender, EventArgs e)
@@ -896,7 +872,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Repository + "tree/master/Languages");
+            Process.Start($"{Properties.Resources.Link_Repository}tree/master/Languages");
         }
 
         private void Button11_Click(object sender, EventArgs e)

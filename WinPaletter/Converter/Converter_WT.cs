@@ -196,7 +196,7 @@ namespace WinPaletter
                         EnumProfiles = EnumProfiles.Distinct().ToList();
                         foreach (string x in EnumProfiles)
                         {
-                            var P = new TProfile();
+                            TProfile P = new TProfile();
                             foreach (string lin in CollectedProfiles)
                             {
                                 if ((lin.Split('=')[0].Split('.')[0].Trim().ToLower() ?? string.Empty) == (x.ToLower() ?? string.Empty))
@@ -294,7 +294,7 @@ namespace WinPaletter
                         EnumColors = EnumColors.Distinct().ToList();
                         foreach (string x in EnumColors)
                         {
-                            var TC = new TColors();
+                            TColors TC = new TColors();
 
                             foreach (string lin in CollectedColors)
                             {
@@ -444,7 +444,7 @@ namespace WinPaletter
                         EnumThemes = EnumThemes.Distinct().ToList();
                         foreach (string x in EnumThemes)
                         {
-                            var Th = new TTheme();
+                            TTheme Th = new TTheme();
 
                             foreach (string lin in CollectedThemes)
                             {
@@ -618,21 +618,21 @@ namespace WinPaletter
                         {
                             try
                             {
-                                S.Add(string.Format("{0}{1}= {2}", First, "theme", Theme));
+                                S.Add($"{First}{"theme"}= {Theme}");
                             }
                             catch
                             {
                             }
                             try
                             {
-                                S.Add(string.Format("{0}{1}= {2}", First, "Enabled", Enabled));
+                                S.Add($"{First}{"Enabled"}= {Enabled}");
                             }
                             catch
                             {
                             }
                             try
                             {
-                                S.Add(string.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", UseAcrylicInTabRow));
+                                S.Add($"{First}{"useAcrylicInTabRow"}= {UseAcrylicInTabRow}");
                             }
                             catch
                             {
@@ -644,7 +644,7 @@ namespace WinPaletter
 
                         try
                         {
-                            var type1 = DefaultProf.GetType();
+                            Type type1 = DefaultProf.GetType();
                             PropertyInfo[] properties1 = type1.GetProperties();
 
                             foreach (PropertyInfo property in properties1)
@@ -653,7 +653,7 @@ namespace WinPaletter
                                 {
                                     if (property.GetValue(DefaultProf) is not null)
                                     {
-                                        S.Add(string.Format("{0}{1}.{2}= {3}", First, "Default", property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(DefaultProf))));
+                                        S.Add($"{First}{"Default"}.{property.Name}= {(ReturnPerfectValue(property.PropertyType, property.GetValue(DefaultProf)))}");
                                     }
                                 }
                                 catch
@@ -670,7 +670,7 @@ namespace WinPaletter
 
                             foreach (TColors c in Colors)
                             {
-                                var type2 = c.GetType();
+                                Type type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
 
                                 foreach (PropertyInfo property in properties2)
@@ -679,7 +679,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null)
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add($"{First}{"Schemes"}.{(c.Name.Replace(" ", string.Empty).Replace(".", string.Empty))}.{property.Name}= {(ReturnPerfectValue(property.PropertyType, property.GetValue(c)))}");
                                         }
                                     }
                                     catch
@@ -697,7 +697,7 @@ namespace WinPaletter
                         {
                             foreach (TProfile c in Profiles)
                             {
-                                var type2 = c.GetType();
+                                Type type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
                                 try
                                 {
@@ -705,7 +705,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null & property.Name != "commandline")
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add($"{First}{"Profiles"}.{(c.Name.Replace(" ", string.Empty).Replace(".", string.Empty))}.{property.Name}= {(ReturnPerfectValue(property.PropertyType, property.GetValue(c)))}");
                                         }
                                     }
                                 }
@@ -722,7 +722,7 @@ namespace WinPaletter
                         {
                             foreach (TTheme c in Themes)
                             {
-                                var type2 = c.GetType();
+                                Type type2 = c.GetType();
                                 PropertyInfo[] properties2 = type2.GetProperties();
                                 foreach (PropertyInfo property in properties2)
                                 {
@@ -730,7 +730,7 @@ namespace WinPaletter
                                     {
                                         if (property.GetValue(c) is not null)
                                         {
-                                            S.Add(string.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", string.Empty).Replace(".", string.Empty), property.Name, ReturnPerfectValue(property.PropertyType, property.GetValue(c))));
+                                            S.Add($"{First}{"Themes"}.{(c.Name.Replace(" ", string.Empty).Replace(".", string.Empty))}.{property.Name}= {(ReturnPerfectValue(property.PropertyType, property.GetValue(c)))}");
                                         }
                                     }
                                     catch
@@ -759,9 +759,9 @@ namespace WinPaletter
         {
             List<string> tx = new();
             tx.Clear();
-            tx.Add(string.Format("<{0}>", Signature));
+            tx.Add($"<{Signature}>");
             tx.Add(Save(string.Empty, Mode.WinPaletterFile, Edition));
-            tx.Add(string.Format("</{0}>", Signature));
+            tx.Add($"</{Signature}>");
             return tx.CString();
         }
 
@@ -777,16 +777,16 @@ namespace WinPaletter
                 case "padding":
                     {
                         {
-                            var temp = (Padding)Value;
-                            return temp.Left + "," + temp.Top + "," + temp.Right + "," + temp.Bottom;
+                            Padding temp = (Padding)Value;
+                            return $"{temp.Left},{temp.Top},{temp.Right},{temp.Bottom}";
                         }
                     }
 
                 case "fontsbase":
                     {
                         {
-                            var temp1 = (TFont)Value;
-                            return temp1.Face + "," + temp1.Size + "," + FontWeight_ReturnToString(temp1.Weight);
+                            TFont temp1 = (TFont)Value;
+                            return $"{temp1.Face},{temp1.Size},{FontWeight_ReturnToString(temp1.Weight)}";
                         }
                     }
 

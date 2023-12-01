@@ -265,20 +265,20 @@ namespace WinPaletter
 
         public static void Monitor()
         {
-            var currentUser = WindowsIdentity.GetCurrent();
+            WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
             string KeyPath;
             string valueName;
             string Base;
 
             KeyPath = @"Control Panel\Desktop";
             valueName = "Wallpaper";
-            Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
+            Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
             WqlEventQuery query1 = new(Base);
             WallMon_Watcher1 = new(query1);
 
             KeyPath = @"Control Panel\Colors";
             valueName = "Background";
-            Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
+            Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
             WqlEventQuery query2 = new(Base);
             WallMon_Watcher2 = new(query2);
 
@@ -292,13 +292,13 @@ namespace WinPaletter
             {
                 KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
                 valueName = "BackgroundType";
-                Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
+                Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
                 WqlEventQuery query3 = new(Base);
                 WallMon_Watcher3 = new(query3);
 
                 KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
                 valueName = "AppsUseLightTheme";
-                Base = string.Format(@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace(@"\", @"\\"), valueName);
+                Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
                 WqlEventQuery query4 = new(Base);
                 WallMon_Watcher4 = new(query4);
 

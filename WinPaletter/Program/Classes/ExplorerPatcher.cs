@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 
 namespace WinPaletter
 {
@@ -47,7 +48,7 @@ namespace WinPaletter
                     try
                     {
                         {
-                            var temp = Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
+                            RegistryKey temp = Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
                             UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
                             TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
                             StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));

@@ -169,7 +169,6 @@ namespace WinPaletter
             // 
             this.RoundedCorners.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.RoundedCorners.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.RoundedCorners.Checked = true;
             this.RoundedCorners.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RoundedCorners.ForeColor = System.Drawing.Color.White;
@@ -184,7 +183,6 @@ namespace WinPaletter
             // 
             this.appearance_dark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.appearance_dark.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.appearance_dark.Checked = true;
             this.appearance_dark.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.appearance_dark.ForeColor = System.Drawing.Color.White;
@@ -309,7 +307,6 @@ namespace WinPaletter
             // AppThemeEnabled
             // 
             this.AppThemeEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AppThemeEnabled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
             this.AppThemeEnabled.Checked = false;
             this.AppThemeEnabled.DarkLight_Toggler = false;
             this.AppThemeEnabled.Location = new System.Drawing.Point(814, 25);
@@ -341,6 +338,8 @@ namespace WinPaletter
             // 
             // appearance_list
             // 
+            this.appearance_list.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.appearance_list.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.appearance_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.appearance_list.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -360,7 +359,7 @@ namespace WinPaletter
             "Discord Light"});
             this.appearance_list.Location = new System.Drawing.Point(85, 38);
             this.appearance_list.Name = "appearance_list";
-            this.appearance_list.Size = new System.Drawing.Size(411, 26);
+            this.appearance_list.Size = new System.Drawing.Size(682, 26);
             this.appearance_list.TabIndex = 216;
             this.appearance_list.SelectedIndexChanged += new System.EventHandler(this.Appearance_list_SelectedIndexChanged);
             // 

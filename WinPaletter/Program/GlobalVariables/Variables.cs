@@ -41,7 +41,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as Beta or not
         /// <br>Don't forget to make it <b>True</b> when you design a beta one</br>
         /// </summary>
-        public readonly static bool IsBeta = true;
+        public readonly static bool IsBeta = false;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -85,7 +85,7 @@ namespace WinPaletter
         {
             StartInfo = new()
             {
-                FileName = PathsExt.System32 + @"\taskkill.exe",
+                FileName = $@"{PathsExt.System32}\taskkill.exe",
                 Verb = !OS.WXP ? "runas" : string.Empty,
                 Arguments = "/F /IM explorer.exe",
                 WindowStyle = ProcessWindowStyle.Hidden,

@@ -34,18 +34,18 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<General>");
-                    tx.Add("*Palette Name= " + ThemeName);
+                    tx.Add($"*Palette Name= {ThemeName}");
                     if (string.IsNullOrWhiteSpace(Description))
                     {
                         tx.Add("*Palette Description= ");
                     }
                     else
                     {
-                        tx.Add("*Palette Description= " + Description.Replace("\r\n", "<br>"));
+                        tx.Add($"*Palette Description= {(Description.Replace("\r\n", "<br>"))}");
                     }
-                    tx.Add("*Palette File Version= " + ThemeVersion);
-                    tx.Add("*Author= " + Author);
-                    tx.Add("*AuthorSocialMediaLink= " + AuthorSocialMediaLink);
+                    tx.Add($"*Palette File Version= {ThemeVersion}");
+                    tx.Add($"*Author= {Author}");
+                    tx.Add($"*AuthorSocialMediaLink= {AuthorSocialMediaLink}");
                     tx.Add("</General>" + "\r\n");
                     return tx.CString();
                 }
@@ -83,26 +83,26 @@ namespace WinPaletter
                 {
                     List<string> tx = new();
                     tx.Clear();
-                    tx.Add(string.Format("<{0}>", Signature));
-                    tx.Add(string.Format("*{0}_Color_Index0= {1}", MiniSignature, Color_Index0.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index1= {1}", MiniSignature, Color_Index1.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index2= {1}", MiniSignature, Color_Index2.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index3= {1}", MiniSignature, Color_Index3.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index4= {1}", MiniSignature, Color_Index4.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index5= {1}", MiniSignature, Color_Index5.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index6= {1}", MiniSignature, Color_Index6.ToArgb()));
-                    tx.Add(string.Format("*{0}_Color_Index7= {1}", MiniSignature, Color_Index7.ToArgb()));
-                    tx.Add(string.Format("*{0}_Titlebar_Active= {1}", MiniSignature, Titlebar_Active.ToArgb()));
-                    tx.Add(string.Format("*{0}_Titlebar_Inactive= {1}", MiniSignature, Titlebar_Inactive.ToArgb()));
-                    tx.Add(string.Format("*{0}_StartMenu_Accent= {1}", MiniSignature, StartMenu_Accent.ToArgb()));
-                    tx.Add(string.Format("*{0}_WinMode_Light= {1}", MiniSignature, WinMode_Light));
-                    tx.Add(string.Format("*{0}_AppMode_Light= {1}", MiniSignature, AppMode_Light));
-                    tx.Add(string.Format("*{0}_Transparency= {1}", MiniSignature, Transparency));
-                    tx.Add(string.Format("*{0}_IncreaseTBTransparency= {1}", MiniSignature, IncreaseTBTransparency));
-                    tx.Add(string.Format("*{0}_TB_Blur= {1}", MiniSignature, TB_Blur));
-                    tx.Add(string.Format("*{0}_ApplyAccentonTitlebars= {1}", MiniSignature, ApplyAccentOnTitlebars));
-                    tx.Add(string.Format("*{0}_AccentOnStartTBAC= {1}", MiniSignature, (int)ApplyAccentOnTaskbar));
-                    tx.Add(string.Format("</{0}>" + "\r\n", Signature));
+                    tx.Add($"<{Signature}>");
+                    tx.Add($"*{MiniSignature}_Color_Index0= {Color_Index0.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index1= {Color_Index1.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index2= {Color_Index2.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index3= {Color_Index3.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index4= {Color_Index4.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index5= {Color_Index5.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index6= {Color_Index6.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Color_Index7= {Color_Index7.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Titlebar_Active= {Titlebar_Active.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_Titlebar_Inactive= {Titlebar_Inactive.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_StartMenu_Accent= {StartMenu_Accent.ToArgb()}");
+                    tx.Add($"*{MiniSignature}_WinMode_Light= {WinMode_Light}");
+                    tx.Add($"*{MiniSignature}_AppMode_Light= {AppMode_Light}");
+                    tx.Add($"*{MiniSignature}_Transparency= {Transparency}");
+                    tx.Add($"*{MiniSignature}_IncreaseTBTransparency= {IncreaseTBTransparency}");
+                    tx.Add($"*{MiniSignature}_TB_Blur= {TB_Blur}");
+                    tx.Add($"*{MiniSignature}_ApplyAccentonTitlebars= {ApplyAccentOnTitlebars}");
+                    tx.Add($"*{MiniSignature}_AccentOnStartTBAC= {(int)ApplyAccentOnTaskbar}");
+                    tx.Add($"</{Signature}>" + $"\r\n");
                     return tx.CString();
                 }
 
@@ -228,18 +228,18 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Metro>");
-                    tx.Add("*Metro_ColorizationColor= " + ColorizationColor.ToArgb());
-                    tx.Add("*Metro_ColorizationColorBalance= " + ColorizationColorBalance);
-                    tx.Add("*Metro_PersonalColors_Background= " + PersonalColors_Background.ToArgb());
-                    tx.Add("*Metro_PersonalColors_Accent= " + PersonalColors_Accent.ToArgb());
-                    tx.Add("*Metro_StartColor= " + StartColor.ToArgb());
-                    tx.Add("*Metro_AccentColor= " + AccentColor.ToArgb());
-                    tx.Add("*Metro_Start= " + Start);
-                    tx.Add("*Metro_Theme= " + (int)Theme);
-                    tx.Add("*Metro_LogonUI= " + LogonUI);
-                    tx.Add("*Metro_NoLockScreen= " + NoLockScreen);
-                    tx.Add("*Metro_LockScreenType= " + (int)LockScreenType);
-                    tx.Add("*Metro_LockScreenSystemID= " + LockScreenSystemID);
+                    tx.Add($"*Metro_ColorizationColor= {ColorizationColor.ToArgb()}");
+                    tx.Add($"*Metro_ColorizationColorBalance= {ColorizationColorBalance}");
+                    tx.Add($"*Metro_PersonalColors_Background= {PersonalColors_Background.ToArgb()}");
+                    tx.Add($"*Metro_PersonalColors_Accent= {PersonalColors_Accent.ToArgb()}");
+                    tx.Add($"*Metro_StartColor= {StartColor.ToArgb()}");
+                    tx.Add($"*Metro_AccentColor= {AccentColor.ToArgb()}");
+                    tx.Add($"*Metro_Start= {Start}");
+                    tx.Add($"*Metro_Theme= {(int)Theme}");
+                    tx.Add($"*Metro_LogonUI= {LogonUI}");
+                    tx.Add($"*Metro_NoLockScreen= {NoLockScreen}");
+                    tx.Add($"*Metro_LockScreenType= {(int)LockScreenType}");
+                    tx.Add($"*Metro_LockScreenSystemID= {LockScreenSystemID}");
                     tx.Add("</Metro>" + "\r\n");
 
                     return tx.CString();
@@ -303,15 +303,15 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Aero>");
-                    tx.Add("*Aero_ColorizationColor= " + ColorizationColor.ToArgb());
-                    tx.Add("*Aero_ColorizationAfterglow= " + ColorizationAfterglow.ToArgb());
-                    tx.Add("*Aero_ColorizationColorBalance= " + ColorizationColorBalance);
-                    tx.Add("*Aero_ColorizationAfterglowBalance= " + ColorizationAfterglowBalance);
-                    tx.Add("*Aero_ColorizationBlurBalance= " + ColorizationBlurBalance);
-                    tx.Add("*Aero_ColorizationGlassReflectionIntensity= " + ColorizationGlassReflectionIntensity);
-                    tx.Add("*Aero_EnableAeroPeek= " + EnableAeroPeek);
-                    tx.Add("*Aero_AlwaysHibernateThumbnails= " + AlwaysHibernateThumbnails);
-                    tx.Add("*Aero_Theme= " + (int)Theme);
+                    tx.Add($"*Aero_ColorizationColor= {ColorizationColor.ToArgb()}");
+                    tx.Add($"*Aero_ColorizationAfterglow= {ColorizationAfterglow.ToArgb()}");
+                    tx.Add($"*Aero_ColorizationColorBalance= {ColorizationColorBalance}");
+                    tx.Add($"*Aero_ColorizationAfterglowBalance= {ColorizationAfterglowBalance}");
+                    tx.Add($"*Aero_ColorizationBlurBalance= {ColorizationBlurBalance}");
+                    tx.Add($"*Aero_ColorizationGlassReflectionIntensity= {ColorizationGlassReflectionIntensity}");
+                    tx.Add($"*Aero_EnableAeroPeek= {EnableAeroPeek}");
+                    tx.Add($"*Aero_AlwaysHibernateThumbnails= {AlwaysHibernateThumbnails}");
+                    tx.Add($"*Aero_Theme= {(int)Theme}");
                     tx.Add("</Aero>" + "\r\n");
                     return tx.CString();
                 }
@@ -364,9 +364,9 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Vista>");
-                    tx.Add("*Vista_ColorizationColor= " + ColorizationColor.ToArgb());
-                    tx.Add("*Vista_Alpha= " + Alpha);
-                    tx.Add("*Vista_Theme= " + (int)Theme);
+                    tx.Add($"*Vista_ColorizationColor= {ColorizationColor.ToArgb()}");
+                    tx.Add($"*Vista_Alpha= {Alpha}");
+                    tx.Add($"*Vista_Theme= {(int)Theme}");
                     tx.Add("</Vista>" + "\r\n");
                     return tx.CString();
                 }
@@ -406,9 +406,9 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<WinXP>");
-                    tx.Add("*WinXP_Theme= " + (int)Theme);
-                    tx.Add("*WinXP_ThemeFile= " + ThemeFile);
-                    tx.Add("*WinXP_ColorScheme= " + ColorScheme);
+                    tx.Add($"*WinXP_Theme= {(int)Theme}");
+                    tx.Add($"*WinXP_ThemeFile= {ThemeFile}");
+                    tx.Add($"*WinXP_ColorScheme= {ColorScheme}");
                     tx.Add("</WinXP>" + "\r\n");
                     return tx.CString();
                 }
@@ -478,40 +478,40 @@ namespace WinPaletter
                     tx.Clear();
 
                     tx.Add("<Win32UI>");
-                    tx.Add("*Win32UI_EnableTheming= " + EnableTheming);
-                    tx.Add("*Win32UI_EnableGradient= " + EnableGradient);
-                    tx.Add("*Win32UI_ActiveBorder= " + ActiveBorder.ToArgb());
-                    tx.Add("*Win32UI_ActiveTitle= " + ActiveTitle.ToArgb());
-                    tx.Add("*Win32UI_AppWorkspace= " + AppWorkspace.ToArgb());
-                    tx.Add("*Win32UI_Background= " + Background.ToArgb());
-                    tx.Add("*Win32UI_ButtonAlternateFace= " + ButtonAlternateFace.ToArgb());
-                    tx.Add("*Win32UI_ButtonDkShadow= " + ButtonDkShadow.ToArgb());
-                    tx.Add("*Win32UI_ButtonFace= " + ButtonFace.ToArgb());
-                    tx.Add("*Win32UI_ButtonHilight= " + ButtonHilight.ToArgb());
-                    tx.Add("*Win32UI_ButtonLight= " + ButtonLight.ToArgb());
-                    tx.Add("*Win32UI_ButtonShadow= " + ButtonShadow.ToArgb());
-                    tx.Add("*Win32UI_ButtonText= " + ButtonText.ToArgb());
-                    tx.Add("*Win32UI_GradientActiveTitle= " + GradientActiveTitle.ToArgb());
-                    tx.Add("*Win32UI_GradientInactiveTitle= " + GradientInactiveTitle.ToArgb());
-                    tx.Add("*Win32UI_GrayText= " + GrayText.ToArgb());
-                    tx.Add("*Win32UI_HilightText= " + HilightText.ToArgb());
-                    tx.Add("*Win32UI_HotTrackingColor= " + HotTrackingColor.ToArgb());
-                    tx.Add("*Win32UI_InactiveBorder= " + InactiveBorder.ToArgb());
-                    tx.Add("*Win32UI_InactiveTitle= " + InactiveTitle.ToArgb());
-                    tx.Add("*Win32UI_InactiveTitleText= " + InactiveTitleText.ToArgb());
-                    tx.Add("*Win32UI_InfoText= " + InfoText.ToArgb());
-                    tx.Add("*Win32UI_InfoWindow= " + InfoWindow.ToArgb());
-                    tx.Add("*Win32UI_Menu= " + Menu.ToArgb());
-                    tx.Add("*Win32UI_MenuBar= " + MenuBar.ToArgb());
-                    tx.Add("*Win32UI_MenuText= " + MenuText.ToArgb());
-                    tx.Add("*Win32UI_Scrollbar= " + Scrollbar.ToArgb());
-                    tx.Add("*Win32UI_TitleText= " + TitleText.ToArgb());
-                    tx.Add("*Win32UI_Window= " + Window.ToArgb());
-                    tx.Add("*Win32UI_WindowFrame= " + WindowFrame.ToArgb());
-                    tx.Add("*Win32UI_WindowText= " + WindowText.ToArgb());
-                    tx.Add("*Win32UI_Hilight= " + Hilight.ToArgb());
-                    tx.Add("*Win32UI_MenuHilight= " + MenuHilight.ToArgb());
-                    tx.Add("*Win32UI_Desktop= " + Desktop.ToArgb());
+                    tx.Add($"*Win32UI_EnableTheming= {EnableTheming}");
+                    tx.Add($"*Win32UI_EnableGradient= {EnableGradient}");
+                    tx.Add($"*Win32UI_ActiveBorder= {ActiveBorder.ToArgb()}");
+                    tx.Add($"*Win32UI_ActiveTitle= {ActiveTitle.ToArgb()}");
+                    tx.Add($"*Win32UI_AppWorkspace= {AppWorkspace.ToArgb()}");
+                    tx.Add($"*Win32UI_Background= {Background.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonAlternateFace= {ButtonAlternateFace.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonDkShadow= {ButtonDkShadow.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonFace= {ButtonFace.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonHilight= {ButtonHilight.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonLight= {ButtonLight.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonShadow= {ButtonShadow.ToArgb()}");
+                    tx.Add($"*Win32UI_ButtonText= {ButtonText.ToArgb()}");
+                    tx.Add($"*Win32UI_GradientActiveTitle= {GradientActiveTitle.ToArgb()}");
+                    tx.Add($"*Win32UI_GradientInactiveTitle= {GradientInactiveTitle.ToArgb()}");
+                    tx.Add($"*Win32UI_GrayText= {GrayText.ToArgb()}");
+                    tx.Add($"*Win32UI_HilightText= {HilightText.ToArgb()}");
+                    tx.Add($"*Win32UI_HotTrackingColor= {HotTrackingColor.ToArgb()}");
+                    tx.Add($"*Win32UI_InactiveBorder= {InactiveBorder.ToArgb()}");
+                    tx.Add($"*Win32UI_InactiveTitle= {InactiveTitle.ToArgb()}");
+                    tx.Add($"*Win32UI_InactiveTitleText= {InactiveTitleText.ToArgb()}");
+                    tx.Add($"*Win32UI_InfoText= {InfoText.ToArgb()}");
+                    tx.Add($"*Win32UI_InfoWindow= {InfoWindow.ToArgb()}");
+                    tx.Add($"*Win32UI_Menu= {Menu.ToArgb()}");
+                    tx.Add($"*Win32UI_MenuBar= {MenuBar.ToArgb()}");
+                    tx.Add($"*Win32UI_MenuText= {MenuText.ToArgb()}");
+                    tx.Add($"*Win32UI_Scrollbar= {Scrollbar.ToArgb()}");
+                    tx.Add($"*Win32UI_TitleText= {TitleText.ToArgb()}");
+                    tx.Add($"*Win32UI_Window= {Window.ToArgb()}");
+                    tx.Add($"*Win32UI_WindowFrame= {WindowFrame.ToArgb()}");
+                    tx.Add($"*Win32UI_WindowText= {WindowText.ToArgb()}");
+                    tx.Add($"*Win32UI_Hilight= {Hilight.ToArgb()}");
+                    tx.Add($"*Win32UI_MenuHilight= {MenuHilight.ToArgb()}");
+                    tx.Add($"*Win32UI_Desktop= {Desktop.ToArgb()}");
                     tx.Add("</Win32UI>" + "\r\n");
 
                     return tx.CString();
@@ -666,39 +666,39 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<WindowsEffects>");
-                    tx.Add("*WinEffects_Enabled= " + Enabled);
-                    tx.Add("*WinEffects_WindowAnimation= " + WindowAnimation);
-                    tx.Add("*WinEffects_WindowShadow= " + WindowShadow);
-                    tx.Add("*WinEffects_WindowUIEffects= " + WindowUIEffects);
-                    tx.Add("*WinEffects_MenuAnimation= " + MenuAnimation);
-                    tx.Add("*WinEffects_MenuFade= " + (int)MenuFade);
-                    tx.Add("*WinEffects_MenuShowDelay= " + MenuShowDelay);
-                    tx.Add("*WinEffects_MenuSelectionFade= " + MenuSelectionFade);
-                    tx.Add("*WinEffects_ComboBoxAnimation= " + ComboBoxAnimation);
-                    tx.Add("*WinEffects_ListboxSmoothScrolling= " + ListBoxSmoothScrolling);
-                    tx.Add("*WinEffects_TooltipAnimation= " + TooltipAnimation);
-                    tx.Add("*WinEffects_TooltipFade= " + (int)TooltipFade);
-                    tx.Add("*WinEffects_IconsShadow= " + IconsShadow);
-                    tx.Add("*WinEffects_IconsDesktopTranslSel= " + IconsDesktopTranslSel);
-                    tx.Add("*WinEffects_ShowWinContentDrag= " + ShowWinContentDrag);
-                    tx.Add("*WinEffects_KeyboardUnderline= " + KeyboardUnderline);
-                    tx.Add("*WinEffects_FocusRectWidth= " + FocusRectWidth);
-                    tx.Add("*WinEffects_FocusRectHeight= " + FocusRectHeight);
-                    tx.Add("*WinEffects_Caret= " + Caret);
-                    tx.Add("*WinEffects_NotificationDuration= " + NotificationDuration);
-                    tx.Add("*WinEffects_ShakeToMinimize= " + ShakeToMinimize);
-                    tx.Add("*WinEffects_AWT_Enabled= " + AWT_Enabled);
-                    tx.Add("*WinEffects_AWT_BringActivatedWindowToTop= " + AWT_BringActivatedWindowToTop);
-                    tx.Add("*WinEffects_AWT_Delay= " + AWT_Delay);
-                    tx.Add("*WinEffects_SnapCursorToDefButton= " + SnapCursorToDefButton);
-                    tx.Add("*WinEffects_Win11ClassicContextMenu= " + Win11ClassicContextMenu);
-                    tx.Add("*WinEffects_SysListView32= " + SysListView32);
-                    tx.Add("*WinEffects_ShowSecondsInSystemClock= " + ShowSecondsInSystemClock);
-                    tx.Add("*WinEffects_BalloonNotifications= " + BalloonNotifications);
-                    tx.Add("*WinEffects_PaintDesktopVersion= " + PaintDesktopVersion);
-                    tx.Add("*WinEffects_Win11BootDots= " + Win11BootDots);
-                    tx.Add("*WinEffects_Win11ExplorerBar= " + ((int)Win11ExplorerBar).ToString());
-                    tx.Add("*WinEffects_DisableNavBar= " + DisableNavBar);
+                    tx.Add($"*WinEffects_Enabled= {Enabled}");
+                    tx.Add($"*WinEffects_WindowAnimation= {WindowAnimation}");
+                    tx.Add($"*WinEffects_WindowShadow= {WindowShadow}");
+                    tx.Add($"*WinEffects_WindowUIEffects= {WindowUIEffects}");
+                    tx.Add($"*WinEffects_MenuAnimation= {MenuAnimation}");
+                    tx.Add($"*WinEffects_MenuFade= {(int)MenuFade}");
+                    tx.Add($"*WinEffects_MenuShowDelay= {MenuShowDelay}");
+                    tx.Add($"*WinEffects_MenuSelectionFade= {MenuSelectionFade}");
+                    tx.Add($"*WinEffects_ComboBoxAnimation= {ComboBoxAnimation}");
+                    tx.Add($"*WinEffects_ListboxSmoothScrolling= {ListBoxSmoothScrolling}");
+                    tx.Add($"*WinEffects_TooltipAnimation= {TooltipAnimation}");
+                    tx.Add($"*WinEffects_TooltipFade= {(int)TooltipFade}");
+                    tx.Add($"*WinEffects_IconsShadow= {IconsShadow}");
+                    tx.Add($"*WinEffects_IconsDesktopTranslSel= {IconsDesktopTranslSel}");
+                    tx.Add($"*WinEffects_ShowWinContentDrag= {ShowWinContentDrag}");
+                    tx.Add($"*WinEffects_KeyboardUnderline= {KeyboardUnderline}");
+                    tx.Add($"*WinEffects_FocusRectWidth= {FocusRectWidth}");
+                    tx.Add($"*WinEffects_FocusRectHeight= {FocusRectHeight}");
+                    tx.Add($"*WinEffects_Caret= {Caret}");
+                    tx.Add($"*WinEffects_NotificationDuration= {NotificationDuration}");
+                    tx.Add($"*WinEffects_ShakeToMinimize= {ShakeToMinimize}");
+                    tx.Add($"*WinEffects_AWT_Enabled= {AWT_Enabled}");
+                    tx.Add($"*WinEffects_AWT_BringActivatedWindowToTop= {AWT_BringActivatedWindowToTop}");
+                    tx.Add($"*WinEffects_AWT_Delay= {AWT_Delay}");
+                    tx.Add($"*WinEffects_SnapCursorToDefButton= {SnapCursorToDefButton}");
+                    tx.Add($"*WinEffects_Win11ClassicContextMenu= {Win11ClassicContextMenu}");
+                    tx.Add($"*WinEffects_SysListView32= {SysListView32}");
+                    tx.Add($"*WinEffects_ShowSecondsInSystemClock= {ShowSecondsInSystemClock}");
+                    tx.Add($"*WinEffects_BalloonNotifications= {BalloonNotifications}");
+                    tx.Add($"*WinEffects_PaintDesktopVersion= {PaintDesktopVersion}");
+                    tx.Add($"*WinEffects_Win11BootDots= {Win11BootDots}");
+                    tx.Add($"*WinEffects_Win11ExplorerBar= {(int)Win11ExplorerBar}");
+                    tx.Add($"*WinEffects_DisableNavBar= {DisableNavBar}");
                     tx.Add("</WindowsEffects>" + "\r\n");
                     return tx.CString();
                 }
@@ -819,13 +819,13 @@ namespace WinPaletter
                 {
                     List<string> tx = new();
                     tx.Clear();
-                    tx.Add(string.Format("<WallpaperTone_{0}>", Signature));
-                    tx.Add(string.Format("*WallpaperTone_{0}_Enabled= {1}", Signature, Enabled));
-                    tx.Add(string.Format("*WallpaperTone_{0}_Image= {1}", Signature, Image));
-                    tx.Add(string.Format("*WallpaperTone_{0}_H= {1}", Signature, H));
-                    tx.Add(string.Format("*WallpaperTone_{0}_S= {1}", Signature, S));
-                    tx.Add(string.Format("*WallpaperTone_{0}_L= {1}", Signature, L));
-                    tx.Add(string.Format("</WallpaperTone_{0}>", Signature) + "\r\n");
+                    tx.Add($"<WallpaperTone_{Signature}>");
+                    tx.Add($"*WallpaperTone_{Signature}_Enabled= {Enabled}");
+                    tx.Add($"*WallpaperTone_{Signature}_Image= {Image}");
+                    tx.Add($"*WallpaperTone_{Signature}_H= {H}");
+                    tx.Add($"*WallpaperTone_{Signature}_S= {S}");
+                    tx.Add($"*WallpaperTone_{Signature}_L= {L}");
+                    tx.Add($"{($"</WallpaperTone_{Signature}>")}\r\n");
                     return tx.CString();
                 }
             }
@@ -862,9 +862,9 @@ namespace WinPaletter
                 {
                     List<string> s = new();
                     s.Clear();
-                    s.Add(string.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name));
-                    s.Add(string.Format("*Fonts_{0}_{1}= {2}", PropName, "Size", Font.SizeInPoints));
-                    s.Add(string.Format("*Fonts_{0}_{1}= {2}", PropName, "Style", Font.Style));
+                    s.Add($"*Fonts_{PropName}_{"Name"}= {Font.Name}");
+                    s.Add($"*Fonts_{PropName}_{"Size"}= {Font.SizeInPoints}");
+                    s.Add($"*Fonts_{PropName}_{"Style"}= {Font.Style}");
                     return s.CString();
                 }
 
@@ -873,24 +873,24 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<Metrics&Fonts>");
-                    tx.Add("*MetricsFonts_Enabled= " + Enabled);
-                    tx.Add("*Metrics_BorderWidth= " + BorderWidth);
-                    tx.Add("*Metrics_CaptionHeight= " + CaptionHeight);
-                    tx.Add("*Metrics_CaptionWidth= " + CaptionWidth);
-                    tx.Add("*Metrics_IconSpacing= " + IconSpacing);
-                    tx.Add("*Metrics_IconVerticalSpacing= " + IconVerticalSpacing);
-                    tx.Add("*Metrics_MenuHeight= " + MenuHeight);
-                    tx.Add("*Metrics_MenuWidth= " + MenuWidth);
-                    tx.Add("*Metrics_PaddedBorderWidth= " + PaddedBorderWidth);
-                    tx.Add("*Metrics_ScrollHeight= " + ScrollHeight);
-                    tx.Add("*Metrics_ScrollWidth= " + ScrollWidth);
-                    tx.Add("*Metrics_SmCaptionHeight= " + SmCaptionHeight);
-                    tx.Add("*Metrics_SmCaptionWidth= " + SmCaptionWidth);
-                    tx.Add("*Metrics_DesktopIconSize= " + DesktopIconSize);
-                    tx.Add("*Metrics_ShellIconSize= " + ShellIconSize);
-                    tx.Add("*FontSubstitute_MSShellDlg= " + FontSubstitute_MSShellDlg);
-                    tx.Add("*FontSubstitute_MSShellDlg2= " + FontSubstitute_MSShellDlg2);
-                    tx.Add("*FontSubstitute_SegoeUI= " + FontSubstitute_SegoeUI);
+                    tx.Add($"*MetricsFonts_Enabled= {Enabled}");
+                    tx.Add($"*Metrics_BorderWidth= {BorderWidth}");
+                    tx.Add($"*Metrics_CaptionHeight= {CaptionHeight}");
+                    tx.Add($"*Metrics_CaptionWidth= {CaptionWidth}");
+                    tx.Add($"*Metrics_IconSpacing= {IconSpacing}");
+                    tx.Add($"*Metrics_IconVerticalSpacing= {IconVerticalSpacing}");
+                    tx.Add($"*Metrics_MenuHeight= {MenuHeight}");
+                    tx.Add($"*Metrics_MenuWidth= {MenuWidth}");
+                    tx.Add($"*Metrics_PaddedBorderWidth= {PaddedBorderWidth}");
+                    tx.Add($"*Metrics_ScrollHeight= {ScrollHeight}");
+                    tx.Add($"*Metrics_ScrollWidth= {ScrollWidth}");
+                    tx.Add($"*Metrics_SmCaptionHeight= {SmCaptionHeight}");
+                    tx.Add($"*Metrics_SmCaptionWidth= {SmCaptionWidth}");
+                    tx.Add($"*Metrics_DesktopIconSize= {DesktopIconSize}");
+                    tx.Add($"*Metrics_ShellIconSize= {ShellIconSize}");
+                    tx.Add($"*FontSubstitute_MSShellDlg= {FontSubstitute_MSShellDlg}");
+                    tx.Add($"*FontSubstitute_MSShellDlg2= {FontSubstitute_MSShellDlg2}");
+                    tx.Add($"*FontSubstitute_SegoeUI= {FontSubstitute_SegoeUI}");
                     tx.Add(AddFontsToThemeFile("Caption", CaptionFont));
                     tx.Add(AddFontsToThemeFile("Icon", IconFont));
                     tx.Add(AddFontsToThemeFile("Menu", MenuFont));
@@ -950,9 +950,9 @@ namespace WinPaletter
 
                     if (fonts.Count > 0)
                     {
-                        foreach (var x in fonts)
+                        foreach (string x in fonts)
                         {
-                            string Value = x.Replace(x.Split('=')[0] + "= ", string.Empty).Trim();
+                            string Value = x.Replace($"{x.Split('=')[0]}= ", string.Empty).Trim();
                             string FontName = x.Split('=')[0].ToString().Split('_')[0];
                             string Prop = x.Split('=')[0].ToString().Split('_')[1];
 
@@ -1074,9 +1074,9 @@ namespace WinPaletter
 
                     else
                     {
-                        var Collection = new FontStyle();
+                        FontStyle Collection = new FontStyle();
 
-                        foreach (var x in Value.Split(','))
+                        foreach (string x in Value.Split(','))
                         {
                             string val = x.Trim();
 
@@ -1148,9 +1148,9 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<AltTab>");
-                    tx.Add("*AltTab_Enabled= " + Enabled);
-                    tx.Add("*AltTab_Style= " + (int)Style);
-                    tx.Add("*AltTab_Win10Opacity= " + Win10Opacity);
+                    tx.Add($"*AltTab_Enabled= {Enabled}");
+                    tx.Add($"*AltTab_Style= {(int)Style}");
+                    tx.Add($"*AltTab_Win10Opacity= {Win10Opacity}");
                     tx.Add("</AltTab>" + "\r\n");
                     return tx.CString();
                 }
@@ -1181,9 +1181,9 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_10_11>");
-                    tx.Add("*LogonUI_DisableAcrylicBackgroundOnLogon= " + DisableAcrylicBackgroundOnLogon);
-                    tx.Add("*LogonUI_DisableLogonBackgroundImage= " + DisableLogonBackgroundImage);
-                    tx.Add("*LogonUI_NoLockScreen= " + NoLockScreen);
+                    tx.Add($"*LogonUI_DisableAcrylicBackgroundOnLogon= {DisableAcrylicBackgroundOnLogon}");
+                    tx.Add($"*LogonUI_DisableLogonBackgroundImage= {DisableLogonBackgroundImage}");
+                    tx.Add($"*LogonUI_NoLockScreen= {NoLockScreen}");
                     tx.Add("</LogonUI_10_11>" + "\r\n");
                     return tx.CString();
                 }
@@ -1235,16 +1235,16 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_7_8>");
-                    tx.Add("*LogonUI7_Enabled= " + Enabled);
-                    tx.Add("*LogonUI7_Mode= " + (int)Mode);
-                    tx.Add("*LogonUI7_ImagePath= " + ImagePath);
-                    tx.Add("*LogonUI7_Color= " + Color.ToArgb());
-                    tx.Add("*LogonUI7_Effect_Blur= " + Blur);
-                    tx.Add("*LogonUI7_Effect_Blur_Intensity= " + Blur_Intensity);
-                    tx.Add("*LogonUI7_Effect_Grayscale= " + Grayscale);
-                    tx.Add("*LogonUI7_Effect_Noise= " + Noise);
-                    tx.Add("*LogonUI7_Effect_Noise_Mode= " + (int)Noise_Mode);
-                    tx.Add("*LogonUI7_Effect_Noise_Intensity= " + Noise_Intensity);
+                    tx.Add($"*LogonUI7_Enabled= {Enabled}");
+                    tx.Add($"*LogonUI7_Mode= {(int)Mode}");
+                    tx.Add($"*LogonUI7_ImagePath= {ImagePath}");
+                    tx.Add($"*LogonUI7_Color= {Color.ToArgb()}");
+                    tx.Add($"*LogonUI7_Effect_Blur= {Blur}");
+                    tx.Add($"*LogonUI7_Effect_Blur_Intensity= {Blur_Intensity}");
+                    tx.Add($"*LogonUI7_Effect_Grayscale= {Grayscale}");
+                    tx.Add($"*LogonUI7_Effect_Noise= {Noise}");
+                    tx.Add($"*LogonUI7_Effect_Noise_Mode= {(int)Noise_Mode}");
+                    tx.Add($"*LogonUI7_Effect_Noise_Intensity= {Noise_Intensity}");
                     tx.Add("</LogonUI_7_8>" + "\r\n");
                     return tx.CString();
                 }
@@ -1296,10 +1296,10 @@ namespace WinPaletter
                     List<string> tx = new();
                     tx.Clear();
                     tx.Add("<LogonUI_XP>");
-                    tx.Add("*LogonUIXP_Enabled= " + Enabled);
-                    tx.Add("*LogonUIXP_Mode= " + (int)Mode);
-                    tx.Add("*LogonUIXP_BackColor= " + BackColor.ToArgb());
-                    tx.Add("*LogonUIXP_ShowMoreOptions= " + ShowMoreOptions);
+                    tx.Add($"*LogonUIXP_Enabled= {Enabled}");
+                    tx.Add($"*LogonUIXP_Mode= {(int)Mode}");
+                    tx.Add($"*LogonUIXP_BackColor= {BackColor.ToArgb()}");
+                    tx.Add($"*LogonUIXP_ShowMoreOptions= {ShowMoreOptions}");
                     tx.Add("</LogonUI_XP>" + "\r\n");
                     return tx.CString();
                 }
@@ -1360,40 +1360,40 @@ namespace WinPaletter
                 {
                     List<string> tx = new();
                     tx.Clear();
-                    tx.Add(string.Format("<{0}>", Signature));
-                    tx.Add(string.Format("*Terminal_{0}_Enabled= {1}", Signature, Enabled));
-                    tx.Add(string.Format("*{0}_ColorTable00= {1}", Signature, ColorTable00.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable01= {1}", Signature, ColorTable01.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable02= {1}", Signature, ColorTable02.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable03= {1}", Signature, ColorTable03.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable04= {1}", Signature, ColorTable04.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable05= {1}", Signature, ColorTable05.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable06= {1}", Signature, ColorTable06.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable07= {1}", Signature, ColorTable07.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable08= {1}", Signature, ColorTable08.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable09= {1}", Signature, ColorTable09.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable10= {1}", Signature, ColorTable10.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable11= {1}", Signature, ColorTable11.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable12= {1}", Signature, ColorTable12.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable13= {1}", Signature, ColorTable13.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable14= {1}", Signature, ColorTable14.ToArgb()));
-                    tx.Add(string.Format("*{0}_ColorTable15= {1}", Signature, ColorTable15.ToArgb()));
-                    tx.Add(string.Format("*{0}_PopupForeground= {1}", Signature, PopupForeground));
-                    tx.Add(string.Format("*{0}_PopupBackground= {1}", Signature, PopupBackground));
-                    tx.Add(string.Format("*{0}_ScreenColorsForeground= {1}", Signature, ScreenColorsForeground));
-                    tx.Add(string.Format("*{0}_ScreenColorsBackground= {1}", Signature, ScreenColorsBackground));
-                    tx.Add(string.Format("*{0}_CursorSize= {1}", Signature, CursorSize));
-                    tx.Add(string.Format("*{0}_FaceName= {1}", Signature, FaceName));
-                    tx.Add(string.Format("*{0}_FontRaster= {1}", Signature, FontRaster));
-                    tx.Add(string.Format("*{0}_FontSize= {1}", Signature, FontSize));
-                    tx.Add(string.Format("*{0}_FontWeight= {1}", Signature, FontWeight));
-                    tx.Add(string.Format("*{0}_1909_CursorType= {1}", Signature, W10_1909_CursorType));
-                    tx.Add(string.Format("*{0}_1909_CursorColor= {1}", Signature, W10_1909_CursorColor.ToArgb()));
-                    tx.Add(string.Format("*{0}_1909_ForceV2= {1}", Signature, W10_1909_ForceV2));
-                    tx.Add(string.Format("*{0}_1909_LineSelection= {1}", Signature, W10_1909_LineSelection));
-                    tx.Add(string.Format("*{0}_1909_TerminalScrolling= {1}", Signature, W10_1909_TerminalScrolling));
-                    tx.Add(string.Format("*{0}_1909_WindowAlpha= {1}", Signature, W10_1909_WindowAlpha));
-                    tx.Add(string.Format("</{0}>", Signature) + "\r\n");
+                    tx.Add($"<{Signature}>");
+                    tx.Add($"*Terminal_{Signature}_Enabled= {Enabled}");
+                    tx.Add($"*{Signature}_ColorTable00= {ColorTable00.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable01= {ColorTable01.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable02= {ColorTable02.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable03= {ColorTable03.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable04= {ColorTable04.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable05= {ColorTable05.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable06= {ColorTable06.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable07= {ColorTable07.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable08= {ColorTable08.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable09= {ColorTable09.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable10= {ColorTable10.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable11= {ColorTable11.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable12= {ColorTable12.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable13= {ColorTable13.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable14= {ColorTable14.ToArgb()}");
+                    tx.Add($"*{Signature}_ColorTable15= {ColorTable15.ToArgb()}");
+                    tx.Add($"*{Signature}_PopupForeground= {PopupForeground}");
+                    tx.Add($"*{Signature}_PopupBackground= {PopupBackground}");
+                    tx.Add($"*{Signature}_ScreenColorsForeground= {ScreenColorsForeground}");
+                    tx.Add($"*{Signature}_ScreenColorsBackground= {ScreenColorsBackground}");
+                    tx.Add($"*{Signature}_CursorSize= {CursorSize}");
+                    tx.Add($"*{Signature}_FaceName= {FaceName}");
+                    tx.Add($"*{Signature}_FontRaster= {FontRaster}");
+                    tx.Add($"*{Signature}_FontSize= {FontSize}");
+                    tx.Add($"*{Signature}_FontWeight= {FontWeight}");
+                    tx.Add($"*{Signature}_1909_CursorType= {W10_1909_CursorType}");
+                    tx.Add($"*{Signature}_1909_CursorColor= {W10_1909_CursorColor.ToArgb()}");
+                    tx.Add($"*{Signature}_1909_ForceV2= {W10_1909_ForceV2}");
+                    tx.Add($"*{Signature}_1909_LineSelection= {W10_1909_LineSelection}");
+                    tx.Add($"*{Signature}_1909_TerminalScrolling= {W10_1909_TerminalScrolling}");
+                    tx.Add($"*{Signature}_1909_WindowAlpha= {W10_1909_WindowAlpha}");
+                    tx.Add($"{($"</{Signature}>")}\r\n");
                     return tx.CString();
                 }
 
@@ -1763,40 +1763,40 @@ namespace WinPaletter
                 {
                     List<string> tx = new();
                     tx.Clear();
-                    tx.Add(string.Format("<{0}>", Signature));
-                    tx.Add(string.Format("*Cursor_{0}_ArrowStyle= {1}", Signature, (int)ArrowStyle));
-                    tx.Add(string.Format("*Cursor_{0}_CircleStyle= {1}", Signature, (int)CircleStyle));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColor1= {1}", Signature, PrimaryColor1.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColor2= {1}", Signature, PrimaryColor2.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColorGradient= {1}", Signature, PrimaryColorGradient));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColorGradientMode= {1}", Signature, ReturnStringFromGradientMode(PrimaryColorGradientMode)));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColorNoise= {1}", Signature, PrimaryColorNoise));
-                    tx.Add(string.Format("*Cursor_{0}_PrimaryColorNoiseOpacity= {1}", Signature, PrimaryColorNoiseOpacity));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColor1= {1}", Signature, SecondaryColor1.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColor2= {1}", Signature, SecondaryColor2.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColorGradient= {1}", Signature, SecondaryColorGradient));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColorGradientMode= {1}", Signature, ReturnStringFromGradientMode(SecondaryColorGradientMode)));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColorNoise= {1}", Signature, SecondaryColorNoise));
-                    tx.Add(string.Format("*Cursor_{0}_SecondaryColorNoiseOpacity= {1}", Signature, SecondaryColorNoiseOpacity));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBack1= {1}", Signature, LoadingCircleBack1.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBack2= {1}", Signature, LoadingCircleBack2.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBackGradient= {1}", Signature, LoadingCircleBackGradient));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBackGradientMode= {1}", Signature, ReturnStringFromGradientMode(LoadingCircleBackGradientMode)));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBackNoise= {1}", Signature, LoadingCircleBackNoise));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleBackNoiseOpacity= {1}", Signature, LoadingCircleBackNoiseOpacity));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHot1= {1}", Signature, LoadingCircleHot1.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHot2= {1}", Signature, LoadingCircleHot2.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHotGradient= {1}", Signature, LoadingCircleHotGradient));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHotGradientMode= {1}", Signature, ReturnStringFromGradientMode(LoadingCircleHotGradientMode)));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHotNoise= {1}", Signature, LoadingCircleHotNoise));
-                    tx.Add(string.Format("*Cursor_{0}_LoadingCircleHotNoiseOpacity= {1}", Signature, LoadingCircleHotNoiseOpacity));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_Enabled= {1}", Signature, Shadow_Enabled));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_Color= {1}", Signature, Shadow_Color.ToArgb()));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_Blur= {1}", Signature, Shadow_Blur));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_Opacity= {1}", Signature, Shadow_Opacity * 100f));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_OffsetX= {1}", Signature, Shadow_OffsetX));
-                    tx.Add(string.Format("*Cursor_{0}_Shadow_OffsetY= {1}", Signature, Shadow_OffsetY));
-                    tx.Add(string.Format("</{0}>", Signature) + "\r\n");
+                    tx.Add($"<{Signature}>");
+                    tx.Add($"*Cursor_{Signature}_ArrowStyle= {(int)ArrowStyle}");
+                    tx.Add($"*Cursor_{Signature}_CircleStyle= {(int)CircleStyle}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColor1= {PrimaryColor1.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColor2= {PrimaryColor2.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColorGradient= {PrimaryColorGradient}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColorGradientMode= {ReturnStringFromGradientMode(PrimaryColorGradientMode)}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColorNoise= {PrimaryColorNoise}");
+                    tx.Add($"*Cursor_{Signature}_PrimaryColorNoiseOpacity= {PrimaryColorNoiseOpacity}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColor1= {SecondaryColor1.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColor2= {SecondaryColor2.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColorGradient= {SecondaryColorGradient}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColorGradientMode= {ReturnStringFromGradientMode(SecondaryColorGradientMode)}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColorNoise= {SecondaryColorNoise}");
+                    tx.Add($"*Cursor_{Signature}_SecondaryColorNoiseOpacity= {SecondaryColorNoiseOpacity}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBack1= {LoadingCircleBack1.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBack2= {LoadingCircleBack2.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBackGradient= {LoadingCircleBackGradient}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBackGradientMode= {ReturnStringFromGradientMode(LoadingCircleBackGradientMode)}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBackNoise= {LoadingCircleBackNoise}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleBackNoiseOpacity= {LoadingCircleBackNoiseOpacity}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHot1= {LoadingCircleHot1.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHot2= {LoadingCircleHot2.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHotGradient= {LoadingCircleHotGradient}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHotGradientMode= {ReturnStringFromGradientMode(LoadingCircleHotGradientMode)}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHotNoise= {LoadingCircleHotNoise}");
+                    tx.Add($"*Cursor_{Signature}_LoadingCircleHotNoiseOpacity= {LoadingCircleHotNoiseOpacity}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_Enabled= {Shadow_Enabled}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_Color= {Shadow_Color.ToArgb()}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_Blur= {Shadow_Blur}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_Opacity= {Shadow_Opacity * 100f}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_OffsetX= {Shadow_OffsetX}");
+                    tx.Add($"*Cursor_{Signature}_Shadow_OffsetY= {Shadow_OffsetY}");
+                    tx.Add($"{($"</{Signature}>")}\r\n");
                     return tx.CString();
                 }
 
@@ -1899,7 +1899,7 @@ namespace WinPaletter
         {
             Theme = Structures.WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
-            ThemeFile = PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles"
+            ThemeFile = $@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles"
         };
 
         public Structures.LogonUI7 LogonUI7 = new Structures.LogonUI7()
@@ -1965,7 +1965,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W11 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1974,7 +1974,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W10 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1983,7 +1983,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W8 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -1992,7 +1992,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_W7 = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2001,7 +2001,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WVista = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 100,
             L = 100
@@ -2010,7 +2010,7 @@ namespace WinPaletter
         public Structures.WallpaperTone WallpaperTone_WXP = new Structures.WallpaperTone()
         {
             Enabled = false,
-            Image = PathsExt.Windows + @"\Web\Wallpaper\Bliss.bmp",
+            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp",
             H = 0,
             S = 100,
             L = 100
@@ -3187,8 +3187,8 @@ namespace WinPaletter
             List<string> tx = new();
             tx.Clear();
             tx.Add("<WinPaletter - Programmed by Abdelrhman-AK>");
-            tx.Add("*Created from App Version= " + Info.AppVersion);
-            tx.Add("*Last Modified by App Version= " + Program.Version + "\r\n");
+            tx.Add($"*Created from App Version= {Info.AppVersion}");
+            tx.Add($"*Last Modified by App Version= {Program.Version}\r\n");
 
             tx.Add(Info.ToString());
 
@@ -3198,24 +3198,24 @@ namespace WinPaletter
                 try
                 {
                     {
-                        var temp = (OS.W12 || OS.W11) ? Windows11 : Windows10;
+                        Structures.Windows10x temp = (OS.W12 || OS.W11) ? Windows11 : Windows10;
                         tx.Add("<LegacyWinPaletter_Windows11/10>");
-                        tx.Add("*WinMode_Light= " + temp.WinMode_Light);
-                        tx.Add("*AppMode_Light= " + temp.AppMode_Light);
-                        tx.Add("*Transparency= " + temp.Transparency);
-                        tx.Add("*AccentColorOnTitlebarAndBorders= " + temp.ApplyAccentOnTitlebars);
-                        tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " + ((int)temp.ApplyAccentOnTaskbar).ToString());
-                        tx.Add("*Titlebar_Active= " + temp.Titlebar_Active.ToArgb());
-                        tx.Add("*Titlebar_Inactive= " + temp.Titlebar_Inactive.ToArgb());
-                        tx.Add("*ActionCenter_AppsLinks= " + temp.Color_Index0.ToArgb());
-                        tx.Add("*Taskbar_Icon_Underline= " + temp.Color_Index1.ToArgb());
-                        tx.Add("*StartButton_Hover= " + temp.Color_Index2.ToArgb());
-                        tx.Add("*SettingsIconsAndLinks= " + temp.Color_Index3.ToArgb());
-                        tx.Add("StartMenuBackground_ActiveTaskbarButton= " + temp.Color_Index4.ToArgb());
-                        tx.Add("*StartListFolders_TaskbarFront= " + temp.Color_Index5.ToArgb());
-                        tx.Add("*Taskbar_Background= " + temp.Color_Index6.ToArgb());
-                        tx.Add("*StartMenu_Accent= " + temp.StartMenu_Accent.ToArgb());
-                        tx.Add("*Undefined= " + temp.Color_Index7.ToArgb());
+                        tx.Add($"*WinMode_Light= {temp.WinMode_Light}");
+                        tx.Add($"*AppMode_Light= {temp.AppMode_Light}");
+                        tx.Add($"*Transparency= {temp.Transparency}");
+                        tx.Add($"*AccentColorOnTitlebarAndBorders= {temp.ApplyAccentOnTitlebars}");
+                        tx.Add($"*AccentColorOnStartTaskbarAndActionCenter= {(int)temp.ApplyAccentOnTaskbar}");
+                        tx.Add($"*Titlebar_Active= {temp.Titlebar_Active.ToArgb()}");
+                        tx.Add($"*Titlebar_Inactive= {temp.Titlebar_Inactive.ToArgb()}");
+                        tx.Add($"*ActionCenter_AppsLinks= {temp.Color_Index0.ToArgb()}");
+                        tx.Add($"*Taskbar_Icon_Underline= {temp.Color_Index1.ToArgb()}");
+                        tx.Add($"*StartButton_Hover= {temp.Color_Index2.ToArgb()}");
+                        tx.Add($"*SettingsIconsAndLinks= {temp.Color_Index3.ToArgb()}");
+                        tx.Add($"StartMenuBackground_ActiveTaskbarButton= {temp.Color_Index4.ToArgb()}");
+                        tx.Add($"*StartListFolders_TaskbarFront= {temp.Color_Index5.ToArgb()}");
+                        tx.Add($"*Taskbar_Background= {temp.Color_Index6.ToArgb()}");
+                        tx.Add($"*StartMenu_Accent= {temp.StartMenu_Accent.ToArgb()}");
+                        tx.Add($"*Undefined= {temp.Color_Index7.ToArgb()}");
                         tx.Add("</LegacyWinPaletter_Windows11/10>" + "\r\n");
                     }
                 }
@@ -3272,10 +3272,10 @@ namespace WinPaletter
             tx.Add("</Terminals>" + "\r\n");
 
             tx.Add("<Cursors>");
-            tx.Add("*Cursor_Enabled= " + Cursor_Enabled);
-            tx.Add("*Cursor_Shadow= " + Cursor_Shadow);
-            tx.Add("*Cursor_Sonar= " + Cursor_Sonar);
-            tx.Add("*Cursor_Trails= " + Cursor_Trails);
+            tx.Add($"*Cursor_Enabled= {Cursor_Enabled}");
+            tx.Add($"*Cursor_Shadow= {Cursor_Shadow}");
+            tx.Add($"*Cursor_Sonar= {Cursor_Sonar}");
+            tx.Add($"*Cursor_Trails= {Cursor_Trails}");
             tx.Add(Cursor_Arrow.ToString("Arrow"));
             tx.Add(Cursor_Help.ToString("Help"));
             tx.Add(Cursor_AppLoading.ToString("AppLoading"));
@@ -3322,7 +3322,7 @@ namespace WinPaletter
 
             j.RemoveAll();
 
-            foreach (var field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 JToken result;
 
@@ -3378,7 +3378,7 @@ namespace WinPaletter
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
             {
-                var type = field.FieldType;
+                Type type = field.FieldType;
 
                 if (J[field.Name] is not null)
                 {
@@ -3399,7 +3399,7 @@ namespace WinPaletter
                 // For array
                 try
                 {
-                    var obj = JToken.Parse(strInput);
+                    JToken obj = JToken.Parse(strInput);
                     return true;
                 }
                 catch (JsonReaderException)

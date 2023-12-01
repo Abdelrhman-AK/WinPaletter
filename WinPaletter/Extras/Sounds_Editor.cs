@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -63,7 +64,7 @@ namespace WinPaletter
 
                     try
                     {
-                        using (FileStream FS = new(PathsExt.appData + @"\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
+                        using (FileStream FS = new($@"{PathsExt.appData}\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
                         {
                             SP = new(FS);
                             SP.Load();
@@ -73,7 +74,7 @@ namespace WinPaletter
                     catch (Exception)
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(PathsExt.appData + @"\WindowsStartup_Backup.wav");
+                        NativeMethods.DLLFunc.PlayAudio($@"{PathsExt.appData}\WindowsStartup_Backup.wav");
                     }
 
                 }
@@ -184,7 +185,7 @@ namespace WinPaletter
         public void BrowseForWAV(object sender, EventArgs e)
         {
             {
-                var temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
+                UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
                 if (File.Exists(temp.Text))
                 {
                     OpenFileDialog2.FileName = new FileInfo(temp.Text).Name;
@@ -496,7 +497,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -550,7 +551,7 @@ namespace WinPaletter
         {
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
                 }
@@ -663,7 +664,7 @@ namespace WinPaletter
 
         private void Sounds_Editor_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Sounds");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Sounds");
         }
     }
 }

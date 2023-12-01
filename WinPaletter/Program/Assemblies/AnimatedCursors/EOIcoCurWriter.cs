@@ -216,17 +216,6 @@ public class EOIcoCurWriter
         return h * RowSize;
     }
 
-    private uint SizeComp(uint w, uint h, uint bpp)
-    {
-        // Compute the row size
-        uint RowSize = w * bpp / 8;
-        if (RowSize % 4 != 0)
-        {
-            RowSize += (4 - (RowSize % 4));
-        }
-        return h * RowSize;
-    }
-
     /// <summary>
     /// Writes a bitmap to the output stream. The image data is written in its current format if 
     /// both dimensions are less than 256. Otherwise it's written as an embedded PNG.

@@ -29,7 +29,7 @@ namespace WinPaletter.TypesExtensions
                             {
                                 for (int y = 0, loopTo1 = bmp.Height - 1; y <= loopTo1; y++)
                                 {
-                                    var pixel = bmp.GetPixel(x, y);
+                                    Color pixel = bmp.GetPixel(x, y);
                                     totalR += pixel.R;
                                     totalG += pixel.G;
                                     totalB += pixel.B;
@@ -147,7 +147,7 @@ namespace WinPaletter.TypesExtensions
 
                 for (int x = 0, loopTo1 = inputImage.Width - 1; x <= loopTo1; x++)
                 {
-                    var PixelColor = inputImage.GetPixel(x, y);
+                    Color PixelColor = inputImage.GetPixel(x, y);
 
                     if (PixelColor == oldColor)
                     {
@@ -184,8 +184,6 @@ namespace WinPaletter.TypesExtensions
             {
                 int sourceWidth = Bitmap.Width;
                 int sourceHeight = Bitmap.Height;
-                int destX = 0;
-                int destY = 0;
                 decimal nPercent = 0;
                 decimal nPercentW = 0;
                 decimal nPercentH = 0;
@@ -195,20 +193,20 @@ namespace WinPaletter.TypesExtensions
                 if (nPercentH < nPercentW)
                 {
                     nPercent = nPercentH;
-                    destX = Convert.ToInt16((Size.Width - sourceWidth * nPercent) / 2);
+                    Convert.ToInt16((Size.Width - sourceWidth * nPercent) / 2);
                 }
                 else
                 {
                     nPercent = nPercentW;
-                    destY = Convert.ToInt16((Size.Height - sourceHeight * nPercent) / 2);
+                    Convert.ToInt16((Size.Height - sourceHeight * nPercent) / 2);
                 }
 
                 int destWidth = (int)Math.Round(sourceWidth * nPercent);
                 int destHeight = (int)Math.Round(sourceHeight * nPercent);
 
-                Bitmap bmPhoto  = new(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
+                Bitmap bmPhoto = new(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
                 bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution);
-                var grPhoto = Graphics.FromImage(bmPhoto);
+                Graphics grPhoto = Graphics.FromImage(bmPhoto);
                 grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 grPhoto.DrawImage(Bitmap, new Rectangle(0, 0, destWidth, destHeight));
                 grPhoto.Dispose();
@@ -315,14 +313,14 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap Tint(this Bitmap sourceBitmap, Color Color)
         {
-            var sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             byte[] pixelBuffer = new byte[(sourceData.Stride * sourceData.Height)];
             Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
             sourceBitmap.UnlockBits(sourceData);
             float blue;
             float green;
             float red;
-            var k = default(int);
+            int k = default(int);
 
             while (k + 4 < pixelBuffer.Length)
             {
@@ -366,7 +364,7 @@ namespace WinPaletter.TypesExtensions
             if (originalBitmap == null) return null;
             using (Bitmap bmp = new(originalBitmap.Width, originalBitmap.Height))
             {
-                using (var gfx = Graphics.FromImage(bmp))
+                using (Graphics gfx = Graphics.FromImage(bmp))
                 {
                     ColorMatrix matrix = new() { Matrix33 = (float)opacity };
                     ImageAttributes attributes = new();
@@ -423,13 +421,13 @@ namespace WinPaletter.TypesExtensions
 
             using (Bitmap bmpSource = new(bmp))
             {
-                bmpDest  = new(bmpSource.Width, bmpSource.Height);
+                bmpDest = new(bmpSource.Width, bmpSource.Height);
 
                 for (int x = 0, loopTo = bmpSource.Width - 1; x <= loopTo; x++)
                 {
                     for (int y = 0, loopTo1 = bmpSource.Height - 1; y <= loopTo1; y++)
                     {
-                        var clrPixel = bmpSource.GetPixel(x, y);
+                        Color clrPixel = bmpSource.GetPixel(x, y);
                         clrPixel = Color.FromArgb(clrPixel.A, 255 - clrPixel.R, 255 - clrPixel.G, 255 - clrPixel.B);
                         bmpDest.SetPixel(x, y, clrPixel);
                     }

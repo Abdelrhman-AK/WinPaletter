@@ -87,7 +87,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Convert-WinPaletter-themes-between-old-and-new-formats");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Convert-WinPaletter-themes-between-old-and-new-formats");
         }
     }
 }

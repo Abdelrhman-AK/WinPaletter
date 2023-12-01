@@ -1883,7 +1883,7 @@ namespace WinPaletter
             this.Cursors_Container.Location = new System.Drawing.Point(3, 3);
             this.Cursors_Container.Name = "Cursors_Container";
             this.Cursors_Container.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.Cursors_Container.Size = new System.Drawing.Size(520, 218);
+            this.Cursors_Container.Size = new System.Drawing.Size(520, 256);
             this.Cursors_Container.TabIndex = 67;
             // 
             // Arrow
@@ -2645,11 +2645,11 @@ namespace WinPaletter
             // 
             this.CursorsSize_Bar.BackColor = System.Drawing.Color.Transparent;
             this.CursorsSize_Bar.LargeChange = 50;
-            this.CursorsSize_Bar.Location = new System.Drawing.Point(127, 268);
+            this.CursorsSize_Bar.Location = new System.Drawing.Point(141, 268);
             this.CursorsSize_Bar.Maximum = 320;
             this.CursorsSize_Bar.Minimum = 100;
             this.CursorsSize_Bar.Name = "CursorsSize_Bar";
-            this.CursorsSize_Bar.Size = new System.Drawing.Size(223, 19);
+            this.CursorsSize_Bar.Size = new System.Drawing.Size(209, 19);
             this.CursorsSize_Bar.SmallChange = 20;
             this.CursorsSize_Bar.TabIndex = 68;
             this.CursorsSize_Bar.Value = 100;
@@ -2660,7 +2660,7 @@ namespace WinPaletter
             this.Label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label17.Location = new System.Drawing.Point(36, 265);
             this.Label17.Name = "Label17";
-            this.Label17.Size = new System.Drawing.Size(85, 24);
+            this.Label17.Size = new System.Drawing.Size(99, 24);
             this.Label17.TabIndex = 69;
             this.Label17.Text = "Scaling (1x)";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

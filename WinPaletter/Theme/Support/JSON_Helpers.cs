@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
 
             j.RemoveAll();
 
-            foreach (var field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 JToken result;
                 try { result = JToken.FromObject(field.GetValue(Structure)); }
@@ -34,7 +34,7 @@ namespace WinPaletter.Theme
             {
                 try
                 {
-                    var obj = JToken.Parse(strInput);
+                    JToken obj = JToken.Parse(strInput);
                     return true;
                 }
                 catch (JsonReaderException) { return false; }   // Exception in parsing json

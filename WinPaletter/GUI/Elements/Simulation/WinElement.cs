@@ -338,22 +338,7 @@ namespace WinPaletter.UI.Simulation
         public bool UseWin11RoundedCorners_WithWin10_Level2 { get; set; } = false;
         public bool Shadow { get; set; } = true;
         public bool SuspendRefresh { get; set; } = false;
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
+
         #endregion
 
         #region Voids/Functions
@@ -618,7 +603,14 @@ namespace WinPaletter.UI.Simulation
 
             base.OnLocationChanged(e);
         }
+
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -631,6 +623,7 @@ namespace WinPaletter.UI.Simulation
             Rectangle Rect = new(-1, -1, Width + 2, Height + 2);
             Rectangle RRect = new(0, 0, Width - 1, Height - 1);
             int Radius = 5;
+
 
             switch (Style)
             {
@@ -1228,7 +1221,7 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        Bitmap StartORB  = new(Properties.Resources.Win8ORB);
+                        Bitmap StartORB = new(Properties.Resources.Win8ORB);
                         Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
@@ -1293,7 +1286,7 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        Bitmap StartORB  = new(Properties.Resources.Win8ORB);
+                        Bitmap StartORB = new(Properties.Resources.Win8ORB);
                         Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
@@ -1565,7 +1558,7 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
+                        Bitmap StartORB = new(Properties.Resources.Win7ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 
@@ -1620,7 +1613,7 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
+                        Bitmap StartORB = new(Properties.Resources.Win7ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 
@@ -1656,7 +1649,7 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Properties.Resources.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB  = new(Properties.Resources.Win7ORB);
+                        Bitmap StartORB = new(Properties.Resources.Win7ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 

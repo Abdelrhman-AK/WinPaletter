@@ -105,8 +105,8 @@ namespace WinPaletter.Theme.Structures
 
             ImageFile = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", @default.ImageFile).ToString();
 
-            string slideshow_img = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\TranscodedWallpaper";
-            string spotlight_img = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
+            string slideshow_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper";
+            string spotlight_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
 
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
             if (ImageFile.StartsWith(slideshow_img, StringComparison.OrdinalIgnoreCase) || ImageFile.StartsWith(spotlight_img, StringComparison.OrdinalIgnoreCase) || !File.Exists(ImageFile))
@@ -147,8 +147,8 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                string slideshow_ini = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\slideshow.ini";
-                string slideshow_img = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\TranscodedWallpaper";
+                string slideshow_ini = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\slideshow.ini";
+                string slideshow_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper";
 
                 if (File.Exists(slideshow_ini))
                 {
@@ -179,7 +179,7 @@ namespace WinPaletter.Theme.Structures
 
                     else if (WallpaperType == WallpaperTypes.Picture)
                     {
-                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith(PathsExt.Windows + @"\Web", StringComparison.OrdinalIgnoreCase))
+                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             using (Bitmap bmp = new(Bitmap_Mgr.Load(ImageFile)))
                             {
@@ -236,7 +236,7 @@ namespace WinPaletter.Theme.Structures
                                 }
 
                                 for (int i = 0, loopTo = Wallpaper_Slideshow_Images.Count() - 1; i <= loopTo; i++)
-                                    _ini.Write("Slideshow", "Item" + i + "Path", Wallpaper_Slideshow_Images[i]);
+                                    _ini.Write("Slideshow", $"Item{i}Path", Wallpaper_Slideshow_Images[i]);
                             }
 
                         }

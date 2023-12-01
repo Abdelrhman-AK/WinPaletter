@@ -208,39 +208,38 @@ namespace WinPaletter.UI.Retro
                     using (Pen penButtonHilight = new(ButtonHilight))
                     using (Pen penButtonLight = new(ButtonLight))
                     using (Pen penButtonShadow = new(ButtonShadow))
-                    using (Pen penBackColor = new(BackColor))
                     {
-                        G.DrawRectangle(penButtonDkShadow, rect);
-                        G.DrawLine(penButtonHilight, new Point(1, 1), new Point(Width - 2, 1));
-                        G.DrawLine(penButtonHilight, new Point(1, 2), new Point(1, Height - 2));
-                        G.DrawLine(penButtonDkShadow, new Point(1, Height - 2), new Point(Width - 2, Height - 2));
-                        G.DrawLine(penButtonDkShadow, new Point(Width - 2, 1), new Point(Width - 2, Height - 2));
-                        G.DrawLine(penButtonLight, new Point(2, 2), new Point(Width - 3, 2));
-                        G.DrawLine(penButtonLight, new Point(2, 3), new Point(2, Height - 3));
-                        G.DrawLine(penButtonShadow, new Point(2, Height - 3), new Point(Width - 3, Height - 3));
-                        G.DrawLine(penButtonShadow, new Point(Width - 3, 2), new Point(Width - 3, Height - 3));
+                            G.DrawRectangle(penButtonDkShadow, rect);
+                            G.DrawLine(penButtonHilight, new Point(1, 1), new Point(Width - 2, 1));
+                            G.DrawLine(penButtonHilight, new Point(1, 2), new Point(1, Height - 2));
+                            G.DrawLine(penButtonDkShadow, new Point(1, Height - 2), new Point(Width - 2, Height - 2));
+                            G.DrawLine(penButtonDkShadow, new Point(Width - 2, 1), new Point(Width - 2, Height - 2));
+                            G.DrawLine(penButtonLight, new Point(2, 2), new Point(Width - 3, 2));
+                            G.DrawLine(penButtonLight, new Point(2, 3), new Point(2, Height - 3));
+                            G.DrawLine(penButtonShadow, new Point(2, Height - 3), new Point(Width - 3, Height - 3));
+                            G.DrawLine(penButtonShadow, new Point(Width - 3, 2), new Point(Width - 3, Height - 3));
 
-                        if (Pressed & !(Font.FontFamily.Name.ToLower() == "marlett"))
-                        {
-                            Rectangle ur = new(rectdash.X, rectdash.Y, rectdash.Width, FocusRectHeight);
-                            Rectangle dr = new(ur.X, rectdash.Y + rectdash.Height - ur.Height, ur.Width, ur.Height);
-                            Rectangle lr = new(rectdash.X, rectdash.Y, FocusRectWidth, rectdash.Height);
-                            Rectangle rr = new(rectdash.X + rectdash.Width - lr.Width, rectdash.Y, FocusRectWidth, rectdash.Height);
-
-                            using (HatchBrush hb = new(HatchStyle.Percent50, Color.Black, BackColor))
+                            if (Pressed & !(Font.FontFamily.Name.ToLower() == "marlett"))
                             {
-                                G.FillRectangle(hb, ur);
-                                G.FillRectangle(hb, dr);
-                                G.FillRectangle(hb, lr);
-                                G.FillRectangle(hb, rr);
-                            }
+                                Rectangle ur = new(rectdash.X, rectdash.Y, rectdash.Width, FocusRectHeight);
+                                Rectangle dr = new(ur.X, rectdash.Y + rectdash.Height - ur.Height, ur.Width, ur.Height);
+                                Rectangle lr = new(rectdash.X, rectdash.Y, FocusRectWidth, rectdash.Height);
+                                Rectangle rr = new(rectdash.X + rectdash.Width - lr.Width, rectdash.Y, FocusRectWidth, rectdash.Height);
 
-                            using (Pen penWindowFrame = new(WindowFrame))
-                            {
-                                G.DrawRectangle(penWindowFrame, rect);
+                                using (HatchBrush hb = new(HatchStyle.Percent50, Color.Black, BackColor))
+                                {
+                                    G.FillRectangle(hb, ur);
+                                    G.FillRectangle(hb, dr);
+                                    G.FillRectangle(hb, lr);
+                                    G.FillRectangle(hb, rr);
+                                }
+
+                                using (Pen penWindowFrame = new(WindowFrame))
+                                {
+                                    G.DrawRectangle(penWindowFrame, rect);
+                                }
                             }
                         }
-                    }
                 }
             }
             else
@@ -306,13 +305,13 @@ namespace WinPaletter.UI.Retro
                 if (TextAlign == ContentAlignment.MiddleCenter)
                 {
 
-                    var r = rect;
+                    Rectangle r = rect;
 
                     // Resetting positions to fix layout misadjust
                     // Never modify
                     if (Font.Name == "Marlett" & Text.Count() == 1)
                     {
-                        var textSize = Text.Measure(Font);
+                        SizeF textSize = Text.Measure(Font);
                         int x = (int)Math.Round(rect.X + (rect.Width - textSize.Width) / 2f);
                         int y = (int)Math.Round(rect.Y + (rect.Height - textSize.Height) / 2f);
                         int w = (int)Math.Round(textSize.Width);

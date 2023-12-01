@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace WinPaletter
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
 
-            var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
+            Color c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = Program.Style.Schemes.Main.Colors.AccentAlt;
 
@@ -69,7 +70,7 @@ namespace WinPaletter
             Button2.Enabled = false;
             CheckBox1.Enabled = false;
 
-            textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Stopping, SvcName) + "\r\n");
+            textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
             List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
@@ -77,7 +78,7 @@ namespace WinPaletter
 
             try
             {
-                textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Extracting, SvcName) + "\r\n");
+                textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Extracting, SvcName))}\r\n");
                 if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir); }
                 if (System.IO.File.Exists(PathsExt.SysEventsSounds))
                     System.IO.File.Delete(PathsExt.SysEventsSounds);
@@ -93,22 +94,22 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Installing, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Installing, SvcName))}\r\n");
                     Program.SendCommand($"\"{installutil}\" \"{PathsExt.SysEventsSounds}\"");
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Starting, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Starting, SvcName))}\r\n");
                     Program.SendCommand("net start WinPaletter.SystemEventsSounds");
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_InstallCompleted, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_InstallCompleted, SvcName))}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName))}\r\n");
                     MsgBox(Program.Lang.SvcInstaller_MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -124,7 +125,7 @@ namespace WinPaletter
             Button2.Enabled = false;
             CheckBox1.Enabled = false;
 
-            textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Stopping, SvcName) + "\r\n");
+            textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
             List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
@@ -138,16 +139,16 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
 
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName))}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText(textBox1.Text + "• " + string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName) + "\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName))}\r\n");
                     MsgBox(Program.Lang.SvcInstaller_MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }

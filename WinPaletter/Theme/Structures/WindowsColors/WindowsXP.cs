@@ -92,7 +92,7 @@ namespace WinPaletter.Theme.Structures
                 else if (string.IsNullOrEmpty(vsFile.ToString()))
                 {
                     Theme = Themes.Classic;
-                    ThemeFile = PathsExt.Windows.ToLower() + @"\resources\Themes\Luna.theme";
+                    ThemeFile = $@"{PathsExt.Windows.ToLower()}\resources\Themes\Luna.theme";
                     ColorScheme = "NormalColor";
                 }
 
@@ -126,7 +126,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaBlue:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
 
                             Program.StartedWithClassicTheme = false;
                             break;
@@ -135,7 +135,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaOliveGreen:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
                             Program.StartedWithClassicTheme = false;
                             break;
                         }
@@ -143,7 +143,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaSilver:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle(PathsExt.Windows + @"\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
                             Program.StartedWithClassicTheme = false;
                             break;
                         }

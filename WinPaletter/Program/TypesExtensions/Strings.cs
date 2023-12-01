@@ -111,7 +111,7 @@ namespace WinPaletter.TypesExtensions
 
         public static string PhrasePath(this string path)
         {
-            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", PathsExt.ProgramFiles + @"\Plus!\Themes"));
+            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", $@"{PathsExt.ProgramFiles}\Plus!\Themes"));
         }
 
 
@@ -180,7 +180,7 @@ namespace WinPaletter.TypesExtensions
                 wordSt = s.IndexOf(word, stringComparison);
                 if (!WholeWord || (wordSt == 0 || !char.IsLetterOrDigit(char.Parse(s.Substring(wordSt - 1, 1)))) && !char.IsLetterOrDigit(char.Parse(s.Substring(wordSt + word.Length, 1))))
                 {
-                    sb.Append(s.Substring(0, wordSt) + by);
+                    sb.Append($"{(s.Substring(0, wordSt))}{by}");
                 }
                 else
                 {
@@ -195,7 +195,7 @@ namespace WinPaletter.TypesExtensions
 
         public static string Replace(this string s, string word, string by, bool IgnoreCase, bool WholeWord)
         {
-            var stringComparison = StringComparison.Ordinal;
+            StringComparison stringComparison = StringComparison.Ordinal;
             if (IgnoreCase)
                 stringComparison = StringComparison.OrdinalIgnoreCase;
             return s.Replace(word, by, stringComparison, WholeWord);

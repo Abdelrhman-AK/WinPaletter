@@ -97,23 +97,6 @@ namespace WinPaletter.UI.Controllers
                 }
             }
         }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= 0x20;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
         #endregion
 
         #region Events
@@ -134,13 +117,6 @@ namespace WinPaletter.UI.Controllers
             if (CanAnimate) Invalidate();
 
             base.OnSizeChanged(e);
-        }
-
-        protected override void OnLocationChanged(EventArgs e)
-        {
-            if (CanAnimate) Invalidate();
-
-            base.OnLocationChanged(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -191,7 +167,6 @@ namespace WinPaletter.UI.Controllers
 
             base.OnClick(e);
         }
-
         #endregion
 
         #region Animator
@@ -213,6 +188,12 @@ namespace WinPaletter.UI.Controllers
             set { _alpha2 = value; Refresh(); }
         }
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //Leave it empty to make control background transparent
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -267,7 +248,7 @@ namespace WinPaletter.UI.Controllers
                 Shadow_OffsetY = Prop_Shadow_OffsetY
             };
 
-            bmp  = new((int)Math.Round(32f * Prop_Scale), (int)Math.Round(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
+            bmp = new((int)Math.Round(32f * Prop_Scale), (int)Math.Round(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
 
             bmp = Paths.Draw(CurOptions);
 

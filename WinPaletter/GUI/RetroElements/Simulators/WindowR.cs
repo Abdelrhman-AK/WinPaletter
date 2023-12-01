@@ -150,20 +150,7 @@ namespace WinPaletter.UI.Retro
                 // Refresh()
             }
         }
-
-        private Color _ButtonFace = Color.FromArgb(192, 192, 192);
-        public Color ButtonFace
-        {
-            get
-            {
-                return _ButtonFace;
-            }
-            set
-            {
-                _ButtonFace = value;
-                // Refresh()
-            }
-        }
+        public Color ButtonFace { get; set; } = Color.FromArgb(192, 192, 192);
 
         private Color _ButtonText = Color.Black;
         public Color ButtonText
@@ -416,7 +403,7 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var G = e.Graphics;
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
             DoubleBuffered = true;

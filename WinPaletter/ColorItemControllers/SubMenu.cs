@@ -221,7 +221,7 @@ namespace WinPaletter
         {
             _shown = false;
 
-            var p = MousePosition;
+            Point p = MousePosition;
 
             if (p.Y + Height > Program.Computer.Screen.WorkingArea.Bottom)
             {
@@ -268,7 +268,7 @@ namespace WinPaletter
 
                         if (s.StartsWith("color "))
                         {
-                            var C = Color.FromArgb(255, 0, 0, 0);
+                            Color C = Color.FromArgb(255, 0, 0, 0);
                             s = s.Remove(0, "color ".Count());
                             s = s.Replace("[", string.Empty);
                             s = s.Replace("]", string.Empty);

@@ -10,24 +10,24 @@ namespace WinPaletter
         public static void CreateUninstaller()
         {
             string guidText = Application.ProductName;
-            string RegPath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\" + guidText;
+            string RegPath = $@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\{guidText}";
 
             if (!System.IO.Directory.Exists(PathsExt.appData))
                 System.IO.Directory.CreateDirectory(PathsExt.appData);
 
-            WriteIfChangedOrNotExists(PathsExt.appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
+            WriteIfChangedOrNotExists($@"{PathsExt.appData}\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
 
             EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
             EditReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
             EditReg(RegPath, "DisplayVersion", Version, RegistryValueKind.String);
             EditReg(RegPath, "Publisher", Application.CompanyName, RegistryValueKind.String);
-            EditReg(RegPath, "DisplayIcon", PathsExt.appData + @"\uninstall.ico", RegistryValueKind.String);
+            EditReg(RegPath, "DisplayIcon", $@"{PathsExt.appData}\uninstall.ico", RegistryValueKind.String);
             EditReg(RegPath, "URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
             EditReg(RegPath, "Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
             EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
             EditReg(RegPath, "Comments", Lang.Uninstall_Comment, RegistryValueKind.String);
-            EditReg(RegPath, "UninstallString", AppFile + " /uninstall", RegistryValueKind.String);
-            EditReg(RegPath, "QuietUninstallString", AppFile + " /uninstall", RegistryValueKind.String);
+            EditReg(RegPath, "UninstallString", $"{AppFile} /uninstall", RegistryValueKind.String);
+            EditReg(RegPath, "QuietUninstallString", $"{AppFile} /uninstall", RegistryValueKind.String);
             EditReg(RegPath, "InstallLocation", new System.IO.FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
             EditReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
             EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
@@ -43,9 +43,9 @@ namespace WinPaletter
 
             try
             {
-                if (!OS.WXP && System.IO.File.Exists(PathsExt.appData + @"\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(PathsExt.appData + @"\WindowsStartup_Backup.wav"));
+                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav"));
                 }
             }
             catch { }
@@ -81,7 +81,7 @@ namespace WinPaletter
             string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
             Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
 
-            using (var Prc = Process.GetCurrentProcess())
+            using (Process Prc = Process.GetCurrentProcess())
             {
                 Prc.Kill();
             }

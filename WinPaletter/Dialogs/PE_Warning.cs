@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -18,7 +19,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            var c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
+            Color c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
             CheckBox1.Checked = Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
 
@@ -44,15 +45,15 @@ namespace WinPaletter
             TreeView1.Nodes.Add(Program.Lang.PE_Systemfile).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
 
             {
-                var temp = TreeView1.Nodes.Add(Program.Lang.PE_ReplacedResourceProperties);
+                TreeNode temp = TreeView1.Nodes.Add(Program.Lang.PE_ReplacedResourceProperties);
                 temp.Nodes.Add(Program.Lang.PE_ResourceType).Nodes.Add(ResourceType);
                 temp.Nodes.Add(Program.Lang.PE_ResourceID).Nodes.Add(ID.ToString());
                 temp.Nodes.Add(Program.Lang.PE_ResourceLanguageCode).Nodes.Add(LangID.ToString());
             }
 
             {
-                var temp1 = TreeView1.Nodes.Add(Program.Lang.PE_RunSFCinCMD_Node);
-                temp1.Nodes.Add("sfc /scanfile=\"" + System.IO.Path.GetFullPath(SourceFile) + "\"");
+                TreeNode temp1 = TreeView1.Nodes.Add(Program.Lang.PE_RunSFCinCMD_Node);
+                temp1.Nodes.Add($"sfc /scanfile=\"{System.IO.Path.GetFullPath(SourceFile)}\"");
                 temp1.Nodes.Add(Program.Lang.PE_DontForgetToRestart);
             }
 
@@ -100,19 +101,19 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Antiviruses-or-browsers-download-issue");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Antiviruses-or-browsers-download-issue");
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Advanced-options-to-patch-PE-files");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Advanced-options-to-patch-PE-files");
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
             Reg_IO.SFC(PE_File);
-            MsgBox(string.Format("{0}. {1}.", Program.Lang.Done, Program.Lang.PE_DontForgetToRestart), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox($"{Program.Lang.Done}. {Program.Lang.PE_DontForgetToRestart}.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Cursor = Cursors.Default;
         }
     }

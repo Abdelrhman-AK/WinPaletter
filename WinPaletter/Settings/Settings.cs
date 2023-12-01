@@ -788,7 +788,7 @@ namespace WinPaletter
 
             j.RemoveAll();
 
-            foreach (var field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (FieldInfo field in StructureType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 JToken result;
 
@@ -819,7 +819,7 @@ namespace WinPaletter
                 // For array
                 try
                 {
-                    var obj = JToken.Parse(strInput);
+                    JToken obj = JToken.Parse(strInput);
                     return true;
                 }
                 catch (JsonReaderException)

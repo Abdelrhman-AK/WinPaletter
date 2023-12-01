@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Retro;
 using static WinPaletter.PreviewHelpers;
@@ -779,7 +780,7 @@ namespace WinPaletter
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
                 Toggle1.Checked = false;
-                using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
                 {
                     LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
                 }
@@ -803,8 +804,8 @@ namespace WinPaletter
                     activetitle_pick.BackColor = _ini.Read(Section, "ActiveTitle", _DefWin32.ActiveTitle.ToWin32Reg()).FromWin32RegToColor();
                     InactiveTitle_pick.BackColor = _ini.Read(Section, "InactiveTitle", _DefWin32.InactiveTitle.ToWin32Reg()).FromWin32RegToColor();
 
-                    var GA = _ini.Read(Section, "GradientActiveTitle").FromWin32RegToColor();
-                    var GI = _ini.Read(Section, "GradientInactiveTitle").FromWin32RegToColor();
+                    Color GA = _ini.Read(Section, "GradientActiveTitle").FromWin32RegToColor();
+                    Color GI = _ini.Read(Section, "GradientInactiveTitle").FromWin32RegToColor();
 
                     if (GA != Color.Empty)
                     {
@@ -1277,143 +1278,143 @@ namespace WinPaletter
             {
                 List<string> s = new();
                 s.Clear();
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year));
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName));
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion));
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author));
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName));
-                s.Add("; " + string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion));
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
                 s.Add(string.Empty);
 
                 s.Add(string.Format(@"[Control Panel\Colors]"));
 
                 {
-                    var temp = activetitle_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ActiveTitle", temp.R, temp.G, temp.B));
+                    Color temp = activetitle_pick.BackColor;
+                    s.Add($"{"ActiveTitle"}={temp.R} {temp.G} {temp.B}");
                 }
                 {
-                    var temp1 = background_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Background", temp1.R, temp1.G, temp1.B));
+                    Color temp1 = background_pick.BackColor;
+                    s.Add($"{"Background"}={temp1.R} {temp1.G} {temp1.B}");
                 }
                 {
-                    var temp2 = hilight_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Hilight", temp2.R, temp2.G, temp2.B));
+                    Color temp2 = hilight_pick.BackColor;
+                    s.Add($"{"Hilight"}={temp2.R} {temp2.G} {temp2.B}");
                 }
                 {
-                    var temp3 = hilighttext_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "HilightText", temp3.R, temp3.G, temp3.B));
+                    Color temp3 = hilighttext_pick.BackColor;
+                    s.Add($"{"HilightText"}={temp3.R} {temp3.G} {temp3.B}");
                 }
                 {
-                    var temp4 = TitleText_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "TitleText", temp4.R, temp4.G, temp4.B));
+                    Color temp4 = TitleText_pick.BackColor;
+                    s.Add($"{"TitleText"}={temp4.R} {temp4.G} {temp4.B}");
                 }
                 {
-                    var temp5 = Window_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Window", temp5.R, temp5.G, temp5.B));
+                    Color temp5 = Window_pick.BackColor;
+                    s.Add($"{"Window"}={temp5.R} {temp5.G} {temp5.B}");
                 }
                 {
-                    var temp6 = WindowText_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "WindowText", temp6.R, temp6.G, temp6.B));
+                    Color temp6 = WindowText_pick.BackColor;
+                    s.Add($"{"WindowText"}={temp6.R} {temp6.G} {temp6.B}");
                 }
                 {
-                    var temp7 = Scrollbar_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Scrollbar", temp7.R, temp7.G, temp7.B));
+                    Color temp7 = Scrollbar_pick.BackColor;
+                    s.Add($"{"Scrollbar"}={temp7.R} {temp7.G} {temp7.B}");
                 }
                 {
-                    var temp8 = InactiveTitle_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "InactiveTitle", temp8.R, temp8.G, temp8.B));
+                    Color temp8 = InactiveTitle_pick.BackColor;
+                    s.Add($"{"InactiveTitle"}={temp8.R} {temp8.G} {temp8.B}");
                 }
                 {
-                    var temp9 = menu_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Menu", temp9.R, temp9.G, temp9.B));
+                    Color temp9 = menu_pick.BackColor;
+                    s.Add($"{"Menu"}={temp9.R} {temp9.G} {temp9.B}");
                 }
                 {
-                    var temp10 = Frame_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "WindowFrame", temp10.R, temp10.G, temp10.B));
+                    Color temp10 = Frame_pick.BackColor;
+                    s.Add($"{"WindowFrame"}={temp10.R} {temp10.G} {temp10.B}");
                 }
                 {
-                    var temp11 = menutext_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "MenuText", temp11.R, temp11.G, temp11.B));
+                    Color temp11 = menutext_pick.BackColor;
+                    s.Add($"{"MenuText"}={temp11.R} {temp11.G} {temp11.B}");
                 }
                 {
-                    var temp12 = ActiveBorder_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ActiveBorder", temp12.R, temp12.G, temp12.B));
+                    Color temp12 = ActiveBorder_pick.BackColor;
+                    s.Add($"{"ActiveBorder"}={temp12.R} {temp12.G} {temp12.B}");
                 }
                 {
-                    var temp13 = InactiveBorder_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "InactiveBorder", temp13.R, temp13.G, temp13.B));
+                    Color temp13 = InactiveBorder_pick.BackColor;
+                    s.Add($"{"InactiveBorder"}={temp13.R} {temp13.G} {temp13.B}");
                 }
                 {
-                    var temp14 = AppWorkspace_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "AppWorkspace", temp14.R, temp14.G, temp14.B));
+                    Color temp14 = AppWorkspace_pick.BackColor;
+                    s.Add($"{"AppWorkspace"}={temp14.R} {temp14.G} {temp14.B}");
                 }
                 {
-                    var temp15 = btnface_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonFace", temp15.R, temp15.G, temp15.B));
+                    Color temp15 = btnface_pick.BackColor;
+                    s.Add($"{"ButtonFace"}={temp15.R} {temp15.G} {temp15.B}");
                 }
                 {
-                    var temp16 = btnshadow_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonShadow", temp16.R, temp16.G, temp16.B));
+                    Color temp16 = btnshadow_pick.BackColor;
+                    s.Add($"{"ButtonShadow"}={temp16.R} {temp16.G} {temp16.B}");
                 }
                 {
-                    var temp17 = GrayText_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "GrayText", temp17.R, temp17.G, temp17.B));
+                    Color temp17 = GrayText_pick.BackColor;
+                    s.Add($"{"GrayText"}={temp17.R} {temp17.G} {temp17.B}");
                 }
                 {
-                    var temp18 = btntext_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonText", temp18.R, temp18.G, temp18.B));
+                    Color temp18 = btntext_pick.BackColor;
+                    s.Add($"{"ButtonText"}={temp18.R} {temp18.G} {temp18.B}");
                 }
                 {
-                    var temp19 = InactivetitleText_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "InactiveTitleText", temp19.R, temp19.G, temp19.B));
+                    Color temp19 = InactivetitleText_pick.BackColor;
+                    s.Add($"{"InactiveTitleText"}={temp19.R} {temp19.G} {temp19.B}");
                 }
                 {
-                    var temp20 = btnhilight_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonHilight", temp20.R, temp20.G, temp20.B));
+                    Color temp20 = btnhilight_pick.BackColor;
+                    s.Add($"{"ButtonHilight"}={temp20.R} {temp20.G} {temp20.B}");
                 }
                 {
-                    var temp21 = btndkshadow_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonDkShadow", temp21.R, temp21.G, temp21.B));
+                    Color temp21 = btndkshadow_pick.BackColor;
+                    s.Add($"{"ButtonDkShadow"}={temp21.R} {temp21.G} {temp21.B}");
                 }
                 {
-                    var temp22 = btnlight_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonLight", temp22.R, temp22.G, temp22.B));
+                    Color temp22 = btnlight_pick.BackColor;
+                    s.Add($"{"ButtonLight"}={temp22.R} {temp22.G} {temp22.B}");
                 }
                 {
-                    var temp23 = InfoText_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "InfoText", temp23.R, temp23.G, temp23.B));
+                    Color temp23 = InfoText_pick.BackColor;
+                    s.Add($"{"InfoText"}={temp23.R} {temp23.G} {temp23.B}");
                 }
                 {
-                    var temp24 = InfoWindow_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "InfoWindow", temp24.R, temp24.G, temp24.B));
+                    Color temp24 = InfoWindow_pick.BackColor;
+                    s.Add($"{"InfoWindow"}={temp24.R} {temp24.G} {temp24.B}");
                 }
                 {
-                    var temp25 = GActivetitle_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "GradientActiveTitle", temp25.R, temp25.G, temp25.B));
+                    Color temp25 = GActivetitle_pick.BackColor;
+                    s.Add($"{"GradientActiveTitle"}={temp25.R} {temp25.G} {temp25.B}");
                 }
                 {
-                    var temp26 = GInactivetitle_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "GradientInactiveTitle", temp26.R, temp26.G, temp26.B));
+                    Color temp26 = GInactivetitle_pick.BackColor;
+                    s.Add($"{"GradientInactiveTitle"}={temp26.R} {temp26.G} {temp26.B}");
                 }
                 {
-                    var temp27 = btnaltface_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "ButtonAlternateFace", temp27.R, temp27.G, temp27.B));
+                    Color temp27 = btnaltface_pick.BackColor;
+                    s.Add($"{"ButtonAlternateFace"}={temp27.R} {temp27.G} {temp27.B}");
                 }
                 {
-                    var temp28 = hottracking_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "HotTrackingColor", temp28.R, temp28.G, temp28.B));
+                    Color temp28 = hottracking_pick.BackColor;
+                    s.Add($"{"HotTrackingColor"}={temp28.R} {temp28.G} {temp28.B}");
                 }
                 {
-                    var temp29 = menuhilight_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "MenuHilight", temp29.R, temp29.G, temp29.B));
+                    Color temp29 = menuhilight_pick.BackColor;
+                    s.Add($"{"MenuHilight"}={temp29.R} {temp29.G} {temp29.B}");
                 }
                 {
-                    var temp30 = menubar_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "MenuBar", temp30.R, temp30.G, temp30.B));
+                    Color temp30 = menubar_pick.BackColor;
+                    s.Add($"{"MenuBar"}={temp30.R} {temp30.G} {temp30.B}");
                 }
                 {
-                    var temp31 = desktop_pick.BackColor;
-                    s.Add(string.Format("{0}={1} {2} {3}", "Desktop", temp31.R, temp31.G, temp31.B));
+                    Color temp31 = desktop_pick.BackColor;
+                    s.Add($"{"Desktop"}={temp31.R} {temp31.G} {temp31.B}");
                 }
                 s.Add(string.Empty);
 
@@ -1505,7 +1506,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-classic-colors");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-classic-colors");
         }
     }
 }

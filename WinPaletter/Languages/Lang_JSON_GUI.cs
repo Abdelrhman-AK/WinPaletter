@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
@@ -154,7 +155,7 @@ namespace WinPaletter
         public void LoadAllMiniFormsIntoList_Thread()
         {
             int i = 0;
-            foreach (var f in ITypes)
+            foreach (Type f in ITypes)
             {
 
                 using (Form ins = (Form)Activator.CreateInstance(f))
@@ -188,7 +189,7 @@ namespace WinPaletter
 
             FormsList = FormsList.OrderBy(o => o.Name).ToList();
             ComboBox1.Items.Clear();
-            foreach (var f in FormsList)
+            foreach (Form f in FormsList)
                 ComboBox1.Items.Add(f.Name);
 
             ComboBox1.Visible = true;
@@ -227,7 +228,7 @@ namespace WinPaletter
             };
 
             if (Form.FormBorderStyle == FormBorderStyle.None)
-                Child.Size += new Size (4 * 4 + 2, 24 * 2 - 6);
+                Child.Size += new Size(4 * 4 + 2, 24 * 2 - 6);
 
             PopulateSubControls(Form, Child, OriginalForm);
 
@@ -481,7 +482,7 @@ namespace WinPaletter
             if (_SelectedItem is UI.Controllers.TextTranslationItem)
             {
                 {
-                    var temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
+                    TextTranslationItem temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
                     temp.Pressed = false;
                     temp.Invalidate();
                 }
@@ -497,7 +498,7 @@ namespace WinPaletter
             if (_SelectedItem is UI.Controllers.TextTranslationItem)
             {
                 {
-                    var temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
+                    TextTranslationItem temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
                     temp.Pressed = false;
                     temp.Invalidate();
                 }
@@ -513,7 +514,7 @@ namespace WinPaletter
             if (_SelectedItem is UI.Controllers.TextTranslationItem)
             {
                 {
-                    var temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
+                    TextTranslationItem temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
                     temp.Pressed = false;
                     temp.Invalidate();
                 }
@@ -529,7 +530,7 @@ namespace WinPaletter
             if (_SelectedItem is UI.Controllers.TextTranslationItem)
             {
                 {
-                    var temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
+                    TextTranslationItem temp = (UI.Controllers.TextTranslationItem)_SelectedItem;
                     temp.Pressed = false;
                     temp.Invalidate();
                 }
@@ -568,7 +569,7 @@ namespace WinPaletter
             {
 
                 {
-                    var temp = (UI.Controllers.TextTranslationItem)sender;
+                    TextTranslationItem temp = (UI.Controllers.TextTranslationItem)sender;
 
                     if (!string.IsNullOrWhiteSpace(temp.Text_English))
                     {
@@ -608,11 +609,11 @@ namespace WinPaletter
             if (e.ColumnIndex == 0 & !CheckBox2.Checked)
                 return;
 
-            var sf = StringFormat.GenericTypographic;
+            StringFormat sf = StringFormat.GenericTypographic;
             sf.FormatFlags = sf.FormatFlags | StringFormatFlags.MeasureTrailingSpaces | StringFormatFlags.DisplayFormatControl;
 
             string text = e.Value.ToString();
-            var textSize = e.Graphics.MeasureString(text, Font, e.CellBounds.Width, sf);
+            SizeF textSize = e.Graphics.MeasureString(text, Font, e.CellBounds.Width, sf);
             int keyPos = text.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase);
 
             if (keyPos >= 0)
@@ -628,7 +629,7 @@ namespace WinPaletter
                     textMetricSize = e.Graphics.MeasureString(textMetric, Font, e.CellBounds.Width, sf);
                 }
 
-                var keySize = e.Graphics.MeasureString(text.Substring(keyPos, SearchText.Length), Font, e.CellBounds.Width, sf);
+                SizeF keySize = e.Graphics.MeasureString(text.Substring(keyPos, SearchText.Length), Font, e.CellBounds.Width, sf);
                 float left = e.CellBounds.Left + (keyPos <= 0 ? 0f : textMetricSize.Width); // + 2
                 RectangleF keyRect = new(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
 
@@ -688,12 +689,12 @@ namespace WinPaletter
 
         private void TextBox9_TextChanged(object sender, EventArgs e)
         {
-            foreach (var ctrl in _Form.GetAllControls())
+            foreach (Control ctrl in _Form.GetAllControls())
             {
                 if (ctrl is UI.Controllers.TextTranslationItem)
                 {
                     {
-                        var temp = (UI.Controllers.TextTranslationItem)ctrl;
+                        TextTranslationItem temp = (UI.Controllers.TextTranslationItem)ctrl;
                         temp.SearchHighlight = TextBox9.Text;
                     }
                 }
@@ -733,7 +734,7 @@ namespace WinPaletter
 
             if (Th is not null && Th.IsAlive)
                 Th.Abort();
-            foreach (var f in FormsList)
+            foreach (Form f in FormsList)
                 f.Dispose();
             FormsList.Clear();
             _Form = null;
@@ -935,7 +936,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation");
         }
     }
 }

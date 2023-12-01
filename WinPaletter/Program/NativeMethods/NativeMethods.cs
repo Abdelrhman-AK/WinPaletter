@@ -39,8 +39,8 @@ namespace WinPaletter.NativeMethods
             uint LargeAndSmallSize = (uint)MAKEICONSIZE(256, 16);
 
             // Initialize handles for large and small icons.
-            var hLrgIcon = IntPtr.Zero;
-            var hSmlIcon = IntPtr.Zero;
+            IntPtr hLrgIcon = IntPtr.Zero;
+            IntPtr hSmlIcon = IntPtr.Zero;
 
             // Call the SHDefExtractIconW function to extract icons.
             int result = Shell32.SHDefExtractIconW(Path, IconIndex, 0U, ref hLrgIcon, ref hSmlIcon, LargeAndSmallSize);
@@ -153,14 +153,14 @@ namespace WinPaletter.NativeMethods
                 Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);
 
                 // Open the specified audio file
-                Winmm.mciSendString("open \"" + file + "\" type mpegvideo alias myWAV", null, 0, IntPtr.Zero);
+                Winmm.mciSendString($"open \"{file}\" type mpegvideo alias myWAV", null, 0, IntPtr.Zero);
 
                 // Play the audio file
                 Winmm.mciSendString("play myWAV", null, 0, IntPtr.Zero);
 
                 // Set the volume to maximum
                 int volume = 1000; // Sets it to use the entire range of volume control
-                Winmm.mciSendString("setaudio myWAV volume to " + volume.ToString(), null, 0, IntPtr.Zero);
+                Winmm.mciSendString($"setaudio myWAV volume to {volume}", null, 0, IntPtr.Zero);
             }
         }
 

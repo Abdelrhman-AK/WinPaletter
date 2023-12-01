@@ -187,7 +187,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            var arr = GetUniqueRandomNumbers(0, Colors_List.Count);
+            List<int> arr = GetUniqueRandomNumbers(0, Colors_List.Count);
 
             switch (Program.PreviewStyle)
             {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -37,7 +38,7 @@ namespace WinPaletter
             if (RadioImage4.Checked)
                 i2 = 0;
 
-            Program.Settings.General.ComplexSaveResult = i1 + "." + i2;
+            Program.Settings.General.ComplexSaveResult = $"{i1}.{i2}";
             Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked;
             Program.Settings.General.Save();
             Program.Settings.ThemeApplyingBehavior.Save();
@@ -49,7 +50,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
 
-            var c = PictureBox1.Image.AverageColor();
+            Color c = PictureBox1.Image.AverageColor();
 
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = c;

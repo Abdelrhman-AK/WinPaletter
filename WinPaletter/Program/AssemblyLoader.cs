@@ -25,11 +25,11 @@ namespace WinPaletter
             {
                 using (ZipArchive zip = new(ms))
                 {
-                    if (zip.Entries.Any(entry => entry.Name.EndsWith(Name + ".dll", StringComparison.OrdinalIgnoreCase)))
+                    if (zip.Entries.Any(entry => entry.Name.EndsWith($"{Name}.dll", StringComparison.OrdinalIgnoreCase)))
                     {
                         using (System.IO.MemoryStream _as = new())
                         {
-                            zip.GetEntry(Name + ".dll").Open().CopyTo(_as);
+                            zip.GetEntry($"{Name}.dll").Open().CopyTo(_as);
                             _as.Seek(0L, System.IO.SeekOrigin.Begin);
                             b = _as.ToArray();
                         }

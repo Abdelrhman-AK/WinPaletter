@@ -74,13 +74,13 @@ namespace WinPaletter
                 JObject J_GlobalStrings = new();
                 JObject x_old = (JObject)J_Old["Global Strings"];
                 JObject x_new = (JObject)J_New["Global Strings"];
-                foreach (var j in x_new.Properties())
+                foreach (JProperty j in x_new.Properties())
                 {
                     if (x_old[j.Name] is null)
                         J_GlobalStrings.Add(j.Name, j.Value);       // Add Missing Strings From New JObj
                 }
 
-                foreach (var j in x_old.Properties())
+                foreach (JProperty j in x_old.Properties())
                 {
                     if (CheckBox1.Checked)
                     {
@@ -100,7 +100,7 @@ namespace WinPaletter
                 x_old = (JObject)J_Old["Forms Strings"];
                 x_new = (JObject)J_New["Forms Strings"];
 
-                foreach (var j in x_new.Properties())
+                foreach (JProperty j in x_new.Properties())
                 {
 
                     if (x_old[j.Name] is null)
@@ -114,13 +114,13 @@ namespace WinPaletter
                         JObject c_new = (JObject)x_new[j.Name]["Controls"];
                         JObject c = new();
 
-                        foreach (var jj in c_new.Properties())
+                        foreach (JProperty jj in c_new.Properties())
                         {
                             if (c_old[jj.Name] is null)
                                 c.Add(jj.Name, jj.Value);       // Add Missing Controls From New JObj
                         }
 
-                        foreach (var jj in c_old.Properties())
+                        foreach (JProperty jj in c_old.Properties())
                             c.Add(jj.Name, jj.Value);                                         // Add Rest of controls from Old JObj
 
                         x_new[j.Name]["Controls"] = c;
@@ -131,7 +131,7 @@ namespace WinPaletter
                 }
 
                 // Add Modification to the newly created JObj
-                foreach (var j in x_new.Properties())
+                foreach (JProperty j in x_new.Properties())
                 {
                     if (!J_Forms.ContainsKey(j.Name))
                         J_Forms.Add(j.Name, j.Value);
@@ -154,7 +154,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation-(old-methods)#3-update-your-language-file-when-a-new-winpaletter-is-released");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation-(old-methods)#3-update-your-language-file-when-a-new-winpaletter-is-released");
         }
     }
 }

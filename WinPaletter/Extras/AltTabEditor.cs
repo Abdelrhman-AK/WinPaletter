@@ -2,8 +2,8 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -242,7 +242,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
             {
                 ApplyFromTM(_Def);
             }
@@ -302,7 +302,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-switcher-(Alt-Tab-appearance)");
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-switcher-(Alt-Tab-appearance)");
         }
     }
 }

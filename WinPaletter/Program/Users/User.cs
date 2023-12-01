@@ -425,7 +425,7 @@ namespace WinPaletter
                     string username = new SecurityIdentifier(sid).Translate(typeof(NTAccount)).ToString();
                     bool condition_base = includeSystemProfiles | !username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
                     bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
-                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists(User.GetUserProfilePath(sid) + "\\NTUSER.DAT");
+                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
 
                     if (condition_DAT_Unloaded)
                     {
@@ -471,9 +471,9 @@ namespace WinPaletter
         {
             try
             {
-                var keyPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" + SID;
+                string keyPath = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\{SID}";
 
-                var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(keyPath);
+                RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(keyPath);
                 if (key == null)
                 {
                     //handle error
@@ -544,14 +544,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    try
-                    {
-                        SecurityIdentifier userSid = new(SID);
-                        SecurityIdentifier adminSid = new(WellKnownSidType.BuiltinAdministratorsSid, null);
-
-                        return userSid.Equals(adminSid);
-                    }
-                    catch { return false; }
+                    return false;
                 }
             }
 
