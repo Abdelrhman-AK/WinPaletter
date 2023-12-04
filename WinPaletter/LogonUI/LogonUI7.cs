@@ -273,11 +273,11 @@ namespace WinPaletter
                     string SysLock;
                     if (!(ID == 1) & !(ID == 3))
                     {
-                        SysLock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", ID);
+                        SysLock = $@"{PathsExt.Windows}\Web\Screen\img10{ID}.jpg";
                     }
                     else
                     {
-                        SysLock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", ID);
+                        SysLock = $@"{PathsExt.Windows}\Web\Screen\img10{ID}.png";
                     }
 
                     bmpX = Bitmap_Mgr.Load(SysLock);

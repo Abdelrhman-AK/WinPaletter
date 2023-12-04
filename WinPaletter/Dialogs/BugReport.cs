@@ -159,7 +159,7 @@ namespace WinPaletter
             if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
                 System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
 
-            System.IO.File.WriteAllText(string.Format($@"{PathsExt.appData}\Reports\{{0}}.{{1}}.{{2}} {{3}}-{{4}}-{{5}}.txt", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year), GetDetails());
+            System.IO.File.WriteAllText($@"{PathsExt.appData}\Reports\{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.txt", GetDetails());
 
             ShowDialog();
 
@@ -176,10 +176,7 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.Abort;
             Close();
-            using (Process Prc = Process.GetCurrentProcess())
-            {
-                Prc.Kill();
-            }
+            Program.ForceExit();
         }
 
         private void Button1_Click(object sender, EventArgs e)

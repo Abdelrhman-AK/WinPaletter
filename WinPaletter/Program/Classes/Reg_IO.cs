@@ -721,10 +721,7 @@ namespace WinPaletter
                     fSecurity.AddAccessRule(new FileSystemAccessRule(System.Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
                     System.IO.File.SetAccessControl(File, fSecurity);
                 }
-                catch
-                {
-                }
-
+                catch { }
             }
         }
 
@@ -745,9 +742,7 @@ namespace WinPaletter
                     fSecurity.AddAccessRule(new FileSystemAccessRule(System.Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
                     System.IO.File.SetAccessControl(File, fSecurity);
                 }
-                catch
-                {
-                }
+                catch { }
             }
         }
 
@@ -758,10 +753,7 @@ namespace WinPaletter
         /// <param name="destination">Destination file</param>
         public static void Move_File(string source, string destination)
         {
-            if (System.IO.File.Exists(source))
-            {
-                Program.SendCommand($"{PathsExt.CMD} {$"move \"{source}\" \"{destination}\""}");
-            }
+            if (System.IO.File.Exists(source)) { Program.SendCommand($"{PathsExt.CMD} /C move \"{source}\" \"{destination}\" && exit"); }
         }
     }
 }

@@ -79,7 +79,7 @@ namespace WinPaletter.Theme
                 if (!Directory.Exists(PathsExt.CursorsWP))
                     Directory.CreateDirectory(PathsExt.CursorsWP);
 
-                string Path = string.Format($@"{PathsExt.CursorsWP}\{{0}}.cur", CurName);
+                string Path = $@"{PathsExt.CursorsWP}\{CurName}.cur";
 
                 FileStream FS = new(Path, FileMode.Create);
                 EOIcoCurWriter EO = new(FS, 7, EOIcoCurWriter.IcoCurType.Cursor);
@@ -278,7 +278,7 @@ namespace WinPaletter.Theme
                     if (scale == 64) { curFileNameModifier = "_l"; }
                     if (scale == 128) { curFileNameModifier = "_xl"; }
 
-                    string OutputFile = string.Format($@"{PathsExt.CursorsWP}\{{0}}{{1}}.ani", CurName, curFileNameModifier);
+                    string OutputFile = $@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani";
 
                     using (FileStream fs = new(OutputFile, FileMode.Create))
                     {
@@ -286,13 +286,13 @@ namespace WinPaletter.Theme
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
-                        ProcessedFiles = ProcessedFiles.ToList().Append(string.Format($@"{PathsExt.CursorsWP}\{{0}}{{1}}.ani", CurName, curFileNameModifier)).ToArray();
+                        ProcessedFiles = ProcessedFiles.ToList().Append($@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani").ToArray();
 
                         fs.Close();
                     }
 
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, string.Format($@"{PathsExt.CursorsWP}\{{0}}{{1}}.ani", CurName, curFileNameModifier)), "info");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, $@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani"), "info");
                 }
             }
         }

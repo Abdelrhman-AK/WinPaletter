@@ -81,10 +81,7 @@ namespace WinPaletter
             string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
             Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
 
-            using (Process Prc = Process.GetCurrentProcess())
-            {
-                Prc.Kill();
-            }
+            Program.ForceExit();
         }
     }
 }

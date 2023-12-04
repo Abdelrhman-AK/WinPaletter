@@ -119,9 +119,8 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 G.Save();
-                return bmp;
                 G.Dispose();
-                bmp.Dispose();
+                return bmp;
             }
             catch
             {

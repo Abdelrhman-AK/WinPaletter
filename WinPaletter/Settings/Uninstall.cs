@@ -119,12 +119,7 @@ namespace WinPaletter
 
             Close();
 
-            using (Process Prc = Process.GetCurrentProcess())
-            {
-                Prc.Kill();
-            }
-
+            Program.ForceExit();
         }
-
     }
 }

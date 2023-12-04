@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -18,21 +21,26 @@ namespace WinPaletter
     {
         public static void SendCommand(string command, bool Wait = true)
         {
-            using (Process process = new()
+            using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             {
-                StartInfo = new()
+                using (Process process = new()
                 {
-                    FileName = command.Split(' ')[0],
-                    Verb = OS.WXP ? string.Empty : "runas",
-                    Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : string.Empty,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
-                    UseShellExecute = true
+                    StartInfo = new()
+                    {
+                        FileName = command.Split(' ')[0],
+                        Verb = OS.WXP ? string.Empty : "runas",
+                        Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : string.Empty,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                        UseShellExecute = true
+                    }
+                })
+                {
+                    process.Start();
+                    process.WaitForExit();
                 }
-            })
-            {
-                process.Start();
-                process.WaitForExit();
+
+                wic.Undo();
             }
         }
 
@@ -154,16 +162,9 @@ namespace WinPaletter
                 }
             }
 
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
+            catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
 
-            if (KillProcessAfterConvert)
-            {
-                using Process Prc = Process.GetCurrentProcess();
-                Prc.Kill();
-            }
+            if (KillProcessAfterConvert) Program.ForceExit();
         }
 
         public static void CMD_Convert_List(string arg, bool KillProcessAfterConvert)
@@ -217,16 +218,9 @@ namespace WinPaletter
                 }
             }
 
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
+            catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
 
-            if (KillProcessAfterConvert)
-            {
-                using Process Prc = Process.GetCurrentProcess();
-                Prc.Kill();
-            }
+            if (KillProcessAfterConvert) Program.ForceExit();
         }
 
         public static void LoadLanguage()
@@ -248,11 +242,7 @@ namespace WinPaletter
         {
             if (!Settings.General.LicenseAccepted)
             {
-                if (Forms.LicenseForm.ShowDialog() != DialogResult.OK)
-                {
-                    using Process Prc = Process.GetCurrentProcess();
-                    Prc.Kill();
-                }
+                if (Forms.LicenseForm.ShowDialog() != DialogResult.OK) Program.ForceExit();
             }
         }
 
@@ -502,11 +492,12 @@ namespace WinPaletter
 
         public static void RestartExplorer(TreeView TreeView = null)
         {
+            try
             {
-                try
+                if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                 {
-                    if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info");
+                    if (TreeView is not null) { Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
+
                     Stopwatch sw = new();
                     sw.Reset();
                     sw.Start();
@@ -516,20 +507,32 @@ namespace WinPaletter
                     Program.Explorer_exe.Start();
 
                     sw.Stop();
-                    if (TreeView is not null)
-                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time");
+
+                    if (TreeView is not null) { Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
+
                     sw.Reset();
                 }
-                catch (Exception ex)
+                else
                 {
                     if (TreeView is not null)
                     {
-                        Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                        Theme.Manager.AddNode(TreeView, Program.Lang.RestartExplorerIssue0 + ". " + Program.Lang.RestartExplorerIssue1, "warning");
+                    }
+                    else
+                    {
+                        MsgBox(Program.Lang.RestartExplorerIssue0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.RestartExplorerIssue1);
                     }
                 }
-
             }
+            catch (Exception ex)
+            {
+                if (TreeView is not null)
+                {
+                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                }
+            }
+
         }
 
         /// <summary>
@@ -581,6 +584,21 @@ namespace WinPaletter
 
                 wic.Undo();
                 return ScreenScalingFactor;
+            }
+        }
+
+        /// <summary>
+        /// Exit WinPaletter by force
+        /// </summary>
+        public static void ForceExit()
+        {
+            using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
+            using (Process process = Process.GetCurrentProcess())
+            {
+                Forms.MainFrm.LoggingOff = true;
+                Forms.MainFrm.Close();
+                process.Kill();
+                wic.Undo();  // :)
             }
         }
     }

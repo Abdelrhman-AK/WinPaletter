@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Security.Principal;
 using System.Windows.Forms;
+using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -407,7 +409,12 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", Snd_Win_WindowsLock, RegistryValueKind.String);
 
             if (System.IO.File.Exists(PathsExt.SysEventsSounds_Local_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Local_INI); }
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Global_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Global_INI); }
+
+            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Global_INI))
+            {
+                try { System.IO.File.Delete(PathsExt.SysEventsSounds_Global_INI); }
+                catch { Program.SendCommand($"{PathsExt.CMD} /C del \"{PathsExt.SysEventsSounds_Global_INI}\" && exit"); }
+            }
 
             if (Enabled)
             {

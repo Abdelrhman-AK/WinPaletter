@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -97,8 +99,11 @@ namespace WinPaletter.Dialogs
                 // New method of restarting explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                 {
-                    Program.ExplorerKiller.Start();
-                    Program.ExplorerKiller.WaitForExit();
+                    if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
+                    {
+                        Program.ExplorerKiller.Start();
+                        Program.ExplorerKiller.WaitForExit();
+                    }
                 }
 
                 try
@@ -120,7 +125,8 @@ namespace WinPaletter.Dialogs
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
-                Program.TM_Original = new(Theme.Manager.Source.Registry);
+                Program.TM = (Theme.Manager)TM.Clone();
+                Program.TM_Original = (Theme.Manager)TM.Clone();
 
                 Cursor = Cursors.Default;
 
@@ -161,11 +167,19 @@ namespace WinPaletter.Dialogs
                 }
 
                 //New method of restarting explorer
-                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                    Program.Explorer_exe.Start();
-                else if (LogEnabled)
-                    Theme.Manager.AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning");
+                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) 
+                {
+                    if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
+                    {
+                        Program.Explorer_exe.Start();
+                    }
+                    else
+                    {
+                        Theme.Manager.AddNode(TreeView1, Program.Lang.RestartExplorerIssue0 + ". " + Program.Lang.RestartExplorerIssue1, "warning");
+                    }
+                }
 
+                else if (LogEnabled) { Theme.Manager.AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning"); }
             });
 
             Apply_Thread.Start();

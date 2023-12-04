@@ -336,10 +336,7 @@ namespace WinPaletter
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);
-                using (Process Prc = Process.GetCurrentProcess())
-                {
-                    Prc.Kill();
-                }
+                Program.ForceExit();
             }
         }
 

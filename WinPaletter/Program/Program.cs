@@ -4,6 +4,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
@@ -35,6 +36,7 @@ namespace WinPaletter
             InitializeApplication(true);
 
             SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
+            //SingleInstanceApplication.Run(new WinColors_XP(), StartupNextInstanceEventHandler);
         }
 
         public static void InitializeApplication(bool ShowLoginDialog)
@@ -53,7 +55,7 @@ namespace WinPaletter
 
                 if (ShowLoginDialog)
                 {
-                    User.Login();
+                    User.Login(false, ArgsCanSkipUserLogin);
                     return;
                 }
 
@@ -92,9 +94,7 @@ namespace WinPaletter
                         WallMon_Watcher4.Stop();
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             DeleteUpdateResiduals();

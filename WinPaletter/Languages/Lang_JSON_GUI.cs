@@ -100,7 +100,7 @@ namespace WinPaletter
 
                         if ((row.Cells[2].Value.ToString().ToLower().Trim() ?? string.Empty) == (row.Cells[1].Value.ToString().ToLower().Trim() ?? string.Empty))
                         {
-                            row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                            row.Cells[1].Style.BackColor = Program.Style.Schemes.Secondary.Colors.Back_Checked;
                         }
                         else if ((row.Cells[2].Value.ToString() ?? string.Empty).Contains("{") || (row.Cells[1].Value.ToString() ?? string.Empty).Contains("{"))
                         {
@@ -108,14 +108,14 @@ namespace WinPaletter
                             int count2 = (row.Cells[2].Value ?? string.Empty).ToString().Count(c => c == '{');
                             if (count1 != count2)
                             {
-                                row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                                row.Cells[1].Style.BackColor = Program.Style.Schemes.Secondary.Colors.Back_Checked;
                             }
                         }
                     }
 
                     else
                     {
-                        row.Cells[1].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                        row.Cells[1].Style.BackColor = Program.Style.Schemes.Secondary.Colors.Back_Checked;
                         row.Cells[1].Value = string.Empty;
                         row.Cells[1].ReadOnly = false;
                     }
@@ -378,6 +378,7 @@ namespace WinPaletter
                                 Label temp = (Label)ctrl;
                                 c.TextAlign = temp.TextAlign;
                                 c.ImageAlign = temp.ImageAlign;
+                                c.TextImageRelation = TextImageRelation.ImageBeforeText;
                             }
                         }
 
@@ -388,6 +389,7 @@ namespace WinPaletter
                                 c.TextAlign = temp1.TextAlign;
                                 c.ImageAlign = temp1.ImageAlign;
                                 c.Image = temp1.Image;
+                                c.TextImageRelation = temp1.TextImageRelation;
                             }
                         }
 
@@ -398,6 +400,7 @@ namespace WinPaletter
                                 c.TextAlign = temp2.TextAlign;
                                 c.ImageAlign = temp2.ImageAlign;
                                 c.Image = temp2.Image;
+                                c.TextImageRelation = temp2.TextImageRelation;
                             }
                         }
 
@@ -407,6 +410,7 @@ namespace WinPaletter
                                 UI.WP.RadioImage temp3 = (UI.WP.RadioImage)ctrl;
                                 c.Text = !string.IsNullOrWhiteSpace(temp3.Text) ? temp3.Text : string.Empty;
                                 c.Image = temp3.Image;
+                                c.TextImageRelation = temp3.TextImageRelation;
                             }
                         }
 
@@ -422,7 +426,6 @@ namespace WinPaletter
                                 c.Image = null;
                                 c.TextAlign = ContentAlignment.MiddleLeft;
                             }
-
                         }
 
 
@@ -652,28 +655,29 @@ namespace WinPaletter
 
         private void TextBox8_TextChanged(object sender, EventArgs e)
         {
-            SearchText = TextBox8.Text.ToLower().Trim();
-
             data.ClearSelection();
 
-            if (string.IsNullOrWhiteSpace(SearchText))
+            if (TextBox8.Text == null || string.IsNullOrWhiteSpace(TextBox8.Text))
             {
                 data.Refresh();
                 return;
             }
 
-            for (int r = 0, loopTo = data.Rows.Count - 1; r <= loopTo; r++)
+            SearchText = (TextBox8.Text ?? "").ToLower().Trim();
+
+            for (int r = 0; r <= data.Rows.Count - 1; r++)
             {
-                data[1, r].Selected = data[1, r].Value.ToString().ToLower().Trim().Contains(SearchText);
+                data[1, r].Selected = (data[1, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
+
                 if (CheckBox1.Checked)
-                    data[2, r].Selected = data[2, r].Value.ToString().ToLower().Trim().Contains(SearchText);
+                    data[2, r].Selected = (data[2, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
+
                 if (CheckBox2.Checked)
-                    data[0, r].Selected = data[0, r].Value.ToString().ToLower().Trim().Contains(SearchText);
+                    data[0, r].Selected = (data[0, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
             }
 
-            if (data.SelectedCells is not null && data.SelectedCells.Count > 0)
-                data.FirstDisplayedScrollingRowIndex = data.SelectedCells[0].RowIndex;
-
+            if (data.SelectedCells is not null && data.SelectedCells.Count > 0) { data.FirstDisplayedScrollingRowIndex = data.SelectedCells[0].RowIndex; }
+                
             data.Refresh();
         }
 
@@ -689,15 +693,9 @@ namespace WinPaletter
 
         private void TextBox9_TextChanged(object sender, EventArgs e)
         {
-            foreach (Control ctrl in _Form.GetAllControls())
+            foreach (UI.Controllers.TextTranslationItem ctrl in _Form.GetAllControls().OfType<UI.Controllers.TextTranslationItem>())
             {
-                if (ctrl is UI.Controllers.TextTranslationItem)
-                {
-                    {
-                        TextTranslationItem temp = (UI.Controllers.TextTranslationItem)ctrl;
-                        temp.SearchHighlight = TextBox9.Text;
-                    }
-                }
+                ctrl.SearchHighlight = TextBox9.Text;
             }
         }
         #endregion
@@ -899,7 +897,7 @@ namespace WinPaletter
                     int count2 = (data[2, e.RowIndex].Value ?? string.Empty).ToString().Count(c => c == '{');
                     if (count1 != count2)
                     {
-                        data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                        data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Secondary.Colors.Back_Checked;
                     }
                     else
                     {
@@ -913,7 +911,7 @@ namespace WinPaletter
             }
             else
             {
-                data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                data[1, e.RowIndex].Style.BackColor = Program.Style.Schemes.Secondary.Colors.Back_Checked;
             }
         }
 

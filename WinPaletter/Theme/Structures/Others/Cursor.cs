@@ -218,7 +218,7 @@ namespace WinPaletter.Theme.Structures
         public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView TreeView = null)
         {
             EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", Cursor.UseFromFile);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File, RegistryValueKind.String);
             EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", (int)Cursor.ArrowStyle);
             EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "CircleStyle", (int)Cursor.CircleStyle);
             EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor1", Cursor.PrimaryColor1.ToArgb());

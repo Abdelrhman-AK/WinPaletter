@@ -35,7 +35,7 @@ namespace WinPaletter
         /// <summary>
         /// Get if Application is started as administrator or not
         /// </summary>
-        public readonly static bool Elevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+        public static bool Elevated => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         /// <summary>
         /// Gets if WinPaletter's current version is designed as Beta or not
@@ -101,7 +101,7 @@ namespace WinPaletter
             StartInfo = new()
             {
                 FileName = PathsExt.explorer,
-                WindowStyle = ProcessWindowStyle.Normal,
+                WindowStyle = ProcessWindowStyle.Normal
             }
         };
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -7,6 +8,47 @@ namespace WinPaletter
 {
     internal partial class Program
     {
+        public static bool ArgsCanSkipUserLogin
+        {
+            get
+            {
+                IEnumerable<string> args = Environment.GetCommandLineArgs().Skip(1);
+
+                foreach (string arg in args)
+                {
+                    if (arg.ToLower() == "/exportlanguage")
+                    {
+                        return true;
+                    }
+
+                    else if (arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+
+                    else if (arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+
+                    else if (!arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
+                        {
+                            return true;
+                        }
+                    }
+
+                    else if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
         private static void ExecuteArgs()
         {
             foreach (string arg in Environment.GetCommandLineArgs().Skip(1))
@@ -15,16 +57,14 @@ namespace WinPaletter
                 {
                     Lang.ExportJSON($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
                     MsgBox(Lang.LngExported, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    using Process Prc = Process.GetCurrentProcess();
-                    Prc.Kill();
+                    Program.ForceExit();
                     break;
                 }
 
                 else if (arg.ToLower() == "/uninstall")
                 {
                     Forms.Uninstall.ShowDialog();
-                    using Process Prc = Process.GetCurrentProcess();
-                    Prc.Kill();
+                    Program.ForceExit();
                     break;
                 }
 
@@ -45,7 +85,10 @@ namespace WinPaletter
 
                 }
 
-                else if (!arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase) & !arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
+                else if (!arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase) 
+                      && !arg.StartsWith("/edit:", StringComparison.OrdinalIgnoreCase) 
+                      && !arg.StartsWith("/convert:", StringComparison.OrdinalIgnoreCase) 
+                      && !arg.StartsWith("/convert-list:", StringComparison.OrdinalIgnoreCase))
                 {
                     if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
                     {
@@ -56,37 +99,36 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Theme.Manager TMx = new(Theme.Manager.Source.File, arg);
-                            TMx.Save(Theme.Manager.Source.Registry, arg);
-                            if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                                RestartExplorer();
-                            using Process Prc = Process.GetCurrentProcess();
-                            Prc.Kill();
+                            using (Theme.Manager TMx = new(Theme.Manager.Source.File, arg)) 
+                            {
+                                TMx.Save(Theme.Manager.Source.Registry);
+                                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+                                Program.ForceExit();
+                            }
                         }
                     }
 
-                    if (System.IO.Path.GetExtension(arg).ToLower() == ".wpsf")
+                    else if (System.IO.Path.GetExtension(arg).ToLower() == ".wpsf")
                     {
                         Forms.SettingsX._External = true;
                         Forms.SettingsX._File = arg;
                         Forms.SettingsX.ShowDialog();
-                        using Process Prc = Process.GetCurrentProcess();
-                        Prc.Kill();
+                        Program.ForceExit();
                     }
                 }
 
                 else if (arg.StartsWith("/apply:", StringComparison.OrdinalIgnoreCase))
                 {
-                    string File = arg.Remove(0, "/apply:".Count());
-                    File = File.Replace("\"", string.Empty);
+                    string File = arg.Remove(0, "/apply:".Count()).Replace("\"", string.Empty);
+
                     if (System.IO.File.Exists(File))
                     {
-                        Theme.Manager TMx = new(Theme.Manager.Source.File, File);
-                        TMx.Save(Theme.Manager.Source.Registry);
-                        if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                            RestartExplorer();
-                        using Process Prc = Process.GetCurrentProcess();
-                        Prc.Kill();
+                        using (Theme.Manager TMx = new(Theme.Manager.Source.File, File)) 
+                        {
+                            TMx.Save(Theme.Manager.Source.Registry);
+                            if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+                            Program.ForceExit();
+                        }
                     }
                 }
 
@@ -139,16 +181,17 @@ namespace WinPaletter
                             {
                                 Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
-                                TM = new(Theme.Manager.Source.File, arg);
-                                TM_Original = (Theme.Manager)TM.Clone();
-                                Forms.MainFrm.OpenFileDialog1.FileName = arg;
-                                Forms.MainFrm.SaveFileDialog1.FileName = arg;
-                                Forms.MainFrm.LoadFromTM(TM);
-                                Forms.MainFrm.ApplyColorsToElements(TM);
-
-                                if (!Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
+                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, arg))
                                 {
-                                    Forms.ThemeLog.Apply_Theme();
+                                    Forms.MainFrm.OpenFileDialog1.FileName = arg;
+                                    Forms.MainFrm.SaveFileDialog1.FileName = arg;
+                                    Forms.MainFrm.LoadFromTM(TMx);
+                                    Forms.MainFrm.ApplyColorsToElements(TMx);
+
+                                    if (!Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
+                                    {
+                                        Forms.ThemeLog.Apply_Theme(TMx);
+                                    }
                                 }
                             }
 
@@ -168,10 +211,7 @@ namespace WinPaletter
                                 File = File.Replace("\"", string.Empty);
                                 if (System.IO.File.Exists(File))
                                 {
-                                    Theme.Manager TMx = new(Theme.Manager.Source.File, File);
-                                    TMx.Save(Theme.Manager.Source.Registry);
-                                    if (Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                                        RestartExplorer();
+                                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, File)) { Forms.ThemeLog.Apply_Theme(TMx); }
                                 }
                             }
 

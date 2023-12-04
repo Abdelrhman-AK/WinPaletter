@@ -1,12 +1,17 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Web.Caching;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -119,7 +124,7 @@ namespace WinPaletter
                             }
 
                             Program.InitializeApplication(false);
-
+                            
                             if (MainFormIsOpened) { Forms.MainFrm.LoadData(); }
 
                             foreach (Form f in OpenForms)
@@ -146,10 +151,8 @@ namespace WinPaletter
         /// </summary>
         public static string SID
         {
-            get
-            {
-                return _SID;
-            }
+            get => _SID;
+
             set
             {
                 bool changed = false;
@@ -331,13 +334,17 @@ namespace WinPaletter
 
                 return false;
             }
-
         }
 
         /// <summary>
         /// Administrator user security identifier that opened WinPaletter after granting UAC dialog
         /// </summary>
         public readonly static string AdminSID_GrantedUAC = WindowsIdentity.GetCurrent().User.Value;
+
+        /// <summary>
+        /// User's SID who opened WinPaletter before granting UAC dialog
+        /// </summary>
+        public readonly static string UserSID_OpenedWP = GetActiveSessionSID();
         #endregion
 
         #region Properties
@@ -354,23 +361,17 @@ namespace WinPaletter
         /// <summary>
         /// Return if current user is Administrator or not
         /// </summary>
-        public static bool Administrator { get { return IsAdmin(SID); } }
+        public static bool Administrator => IsAdmin(SID);
 
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+        public static string ProfilePicturePath => NativeMethods.Shell32.GetUserTilePath(UserName);
 
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static Bitmap ProfilePicture
-        {
-            get
-            {
-                return (Bitmap)NativeMethods.Shell32.GetUserAccountPicture(UserName);
-            }
-        }
+        public static Bitmap ProfilePicture => (Bitmap)NativeMethods.Shell32.GetUserAccountPicture(UserName);
 
         /// <summary>
         /// Handle to current user profile
@@ -386,6 +387,11 @@ namespace WinPaletter
         /// Current user Windows identity, used to impersonate user profile to do codes and operations on this user.
         /// </summary>
         public static WindowsIdentity Identity = WindowsIdentity.GetCurrent();
+
+        /// <summary>
+        /// Administrator user Windows identity, used to impersonate administrator to do codes and operations require elevation.
+        /// </summary>
+        public static WindowsIdentity Identity_Admin = WindowsIdentity.GetCurrent();
 
         /// <summary>
         /// Get path of current user profile
@@ -454,20 +460,42 @@ namespace WinPaletter
         /// <summary>
         /// Change current active user for WinPaletter if there are multiple Windows profiles
         /// </summary>
-        public static void Login(bool ForceShow = false)
+        public static void Login(bool ForceShow = false, bool SkipToCurrentUser = false)
         {
             Dictionary<string, string> UsersList = GetUsers();
 
             // Save settings into current user before reloading settings for new user
-            Program.Settings.Save(Settings.Mode.Registry);
+            if (!SkipToCurrentUser) Program.Settings.Save(Settings.Mode.Registry);
 
-            if (ForceShow || UsersList.Count > 1) { Forms.UserSwitch.PickUser(UsersList); }
+            if (SkipToCurrentUser) { User.SID = GetActiveSessionSID(); }
+
+            else if (ForceShow || UsersList.Count > 1) { Forms.UserSwitch.PickUser(UsersList); }
 
             // If one user if found, there is no need to login, use current windows identity
-            else if (UsersList.Count == 1 || UsersList.Count == 0)
+            else { User.SID = WindowsIdentity.GetCurrent().User.Value; }
+        }
+
+
+        private static string GetActiveSessionSID()
+        {
+            string result = WindowsIdentity.GetCurrent().User.Value;
+
+            try
             {
-                User.SID = WindowsIdentity.GetCurrent().User.Value;
+                if (!OS.WXP && !OS.WVista && !OS.W7)
+                {
+                    result = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result).ToString();
+                }
+                else
+                {
+                    string username = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty).ToString();
+                    username = username.Split('\\').Last();
+                    result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
+                }
             }
+            catch { }
+
+            return result;
         }
 
         /// <summary>
@@ -516,6 +544,26 @@ namespace WinPaletter
                     PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
                 }
 
+                using (WindowsImpersonationContext wic = Identity_Admin.Impersonate())
+                {
+                    // Create a DirectoryInfo object
+                    DirectoryInfo directoryInfo = new(PathsExt.ProgramFilesData);
+
+                    // Get the existing access control settings
+                    DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
+
+                    // Define the security rules (example: allow full control to administrators)
+                    SecurityIdentifier allUsers = new(WellKnownSidType.BuiltinUsersSid, null);
+                    FileSystemAccessRule rule = new(allUsers, FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.None, AccessControlType.Allow);
+
+                    // Add the rule to the security settings
+                    directorySecurity.AddAccessRule(rule);
+
+                    // Apply the new security settings to the directory
+                    directoryInfo.SetAccessControl(directorySecurity);
+
+                    wic.Undo();
+                }
             }
             else
             {

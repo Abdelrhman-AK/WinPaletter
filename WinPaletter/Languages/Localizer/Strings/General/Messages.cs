@@ -29,5 +29,7 @@
         public string WrongVerFormat { get; set; } = "Wrong version format. Please type the version to it in this style (x.x.x.x), replacing (x) by numbers.";
         public string RT_UseWinUpdate { get; set; } = "Do you want to use the online source for repair?";
         public string RT_UseInstallWIM { get; set; } = "If you pressed no, an open file dialog will appear to select install.wim/install.esd file that will be repair source.";
+        public string RestartExplorerIssue0 { get; set; } = "Restarting Explorer using an elevated WinPaletter on another user can cause issues with the desktop and taskbar. As a result, WinPaletter won't be able to restart Explorer";
+        public string RestartExplorerIssue1 { get; set; } = "Try restarting Explorer yourself, or log off and log back on to your Windows profile to ensure the theme is fully applied.";
     }
 }

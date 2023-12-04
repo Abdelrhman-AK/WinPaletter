@@ -111,15 +111,15 @@ namespace WinPaletter.Theme
                 for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
                     if (ReportProgress)
-                        AddNode(TreeView, string.Format($"{{3}}: {Program.Lang.TM_RenderingCustomLogonUI_Progress} {{2}} ({{0}}/{{1}})", x + 1, bmpList.Count, $"{bmpList[x].Width}x{bmpList[x].Height}", DateTime.Now.ToLongTimeString()), "info");
+                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_RenderingCustomLogonUI_Progress} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
 
                     if (LogonElement.Grayscale)
                     {
                         if (ReportProgress_Detailed)
                             AddNode(TreeView, Program.Lang.Verbose_GrayscaleLogonUIImg, "apply");
+
                         bmpList[x] = bmpList[x].Grayscale();
                     }
-
 
                     if (LogonElement.Blur)
                     {
@@ -127,13 +127,13 @@ namespace WinPaletter.Theme
                             AddNode(TreeView, Program.Lang.Verbose_BlurringLogonUIImg, "apply");
 
                         ImageProcessor.ImageFactory imgF = new();
+
                         using (Bitmap b = new(bmpList[x]))
                         {
                             imgF.Load(b);
                             imgF.GaussianBlur(LogonElement.Blur_Intensity);
                             bmpList[x] = (Bitmap)imgF.Image;
                         }
-
                     }
 
                     if (LogonElement.Noise)
@@ -162,7 +162,7 @@ namespace WinPaletter.Theme
                 }
                 else
                 {
-                    for (int x = 0, loopTo1 = bmpList.Count - 1; x <= loopTo1; x++)
+                    for (int x = 0; x <= bmpList.Count - 1; x++)
                     {
                         if (Program.Elevated)
                         {
@@ -223,14 +223,14 @@ namespace WinPaletter.Theme
                         {
                             string syslock = string.Empty;
 
-                            if (System.IO.File.Exists(string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", Program.TM.Windows81.LockScreenSystemID)))
+                            if (System.IO.File.Exists($@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png"))
                             {
-                                syslock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.png", Program.TM.Windows81.LockScreenSystemID);
+                                syslock = $@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png";
                             }
 
-                            else if (System.IO.File.Exists(string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", Program.TM.Windows81.LockScreenSystemID)))
+                            else if (System.IO.File.Exists($@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg"))
                             {
-                                syslock = string.Format($@"{PathsExt.Windows}\Web\Screen\img10{{0}}.jpg", Program.TM.Windows81.LockScreenSystemID);
+                                syslock = $@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg";
 
                             }
 
@@ -288,7 +288,7 @@ namespace WinPaletter.Theme
                     AddNode(TreeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format($"{{0}}:  {Program.Lang.TM_RenderingCustomLogonUI}", DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_RenderingCustomLogonUI}", "info");
 
                 if (LogonUI7.Grayscale)
                 {
@@ -398,7 +398,7 @@ namespace WinPaletter.Theme
 
                 Stopwatch sw = new();
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format($"{{0}}: {Program.Lang.TM_SavingCursorsColors}", DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_SavingCursorsColors}", "info");
 
                 sw.Reset();
                 sw.Start();

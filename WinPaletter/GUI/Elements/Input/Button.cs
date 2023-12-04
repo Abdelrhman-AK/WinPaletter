@@ -1,8 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Web.UI.Design;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -26,10 +29,16 @@ namespace WinPaletter.UI.WP
             if (Image is not null) { Flag = Flags.TintedOnHover; }
 
             _alpha = 0;
+
+            SplitMenuStrip.ItemClicked += SplitMenuStrip_ItemClicked;
         }
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
+        public UI.WP.ContextMenuStrip SplitMenuStrip = new() { ShowImageMargin = true };
+        private string SelectedItem;
+        public object SelectedTag;
 
         private Config.Scheme scheme1 = Program.Style.Schemes.Main;
         private Config.Scheme scheme2 = Program.Style.Schemes.Secondary;
@@ -368,6 +377,30 @@ namespace WinPaletter.UI.WP
             AlwaysCustomColor
         }
 
+        public override string Text
+        {
+            get => SplitMenuStrip.Items.Count == 0 || SelectedItem == null ? base.Text : SelectedItem;
+            set => base.Text = value;
+        }
+
+        private ToolStripItem[] _items = new ToolStripItem[] { };
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Browsable(true)]
+        public ToolStripItem[] Items      
+        {
+            get
+            {
+                return _items;
+            }
+            set
+            {
+                SplitMenuStrip.Items.Clear();
+                SplitMenuStrip.Items.AddRange(value);
+                _items = value; 
+            }
+        }
+
         #endregion
 
         #region Events
@@ -507,6 +540,35 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
+        private void SplitMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            SelectedItem = e.ClickedItem.Text;
+            SelectedTag = e.ClickedItem.Tag;
+            Image = e.ClickedItem.Image;
+            Refresh();
+        }
+
+        protected override void OnClick(EventArgs e)
+        {
+            if (SplitMenuStrip.Items.Count > 0)
+            {
+                Rectangle rectangle = new(Width - 15, 0, 15, Height);
+
+                if (rectangle.Contains(PointToClient(MousePosition)))
+                {
+                    SplitMenuStrip.Show(this, new Point(0, this.Height), ToolStripDropDownDirection.Default);
+                }
+                else
+                {
+                    base.OnClick(e);
+                }
+            }
+            else
+            {
+                base.OnClick(e);
+            }
+        }
+
         protected override void OnLeave(EventArgs e)
         {
             State = MouseState.None;
@@ -642,7 +704,7 @@ namespace WinPaletter.UI.WP
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle RectInner = new(1, 1, Width - 3, Height - 3);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
-            Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2, Height - 7 - PaddingRect.Height * 2);
+            Rectangle TextAndImageRect = new(Rect.X + 3 + PaddingRect.X, Rect.Y + 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2 - Rect.X * 2, Height - 7 - PaddingRect.Height * 2 - Rect.Y * 2);
             // #################################################################################
 
             #region Button render
@@ -740,7 +802,7 @@ namespace WinPaletter.UI.WP
                         else
                         {
                             int innerSpacing = 1;
-                            Size ImageSize = Image.Size - new Size(1, 1);
+                            Size ImageSize = Image.Size;
                             SizeF TextSizeF = G.MeasureString(Text, Font, TextAndImageRect.Size, sf);
                             Size TextSize = new((int)TextSizeF.Width + innerSpacing * 2, (int)TextSizeF.Height);
 
@@ -813,7 +875,7 @@ namespace WinPaletter.UI.WP
                                 imageRect.Height = ImageSize.Height;
                             }
 
-                            G.DrawImage(Enabled ? _image : _image.Grayscale(), new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
+                            G.DrawImage(Enabled ? _image : _image.Grayscale(), imageRect);
                             G.DrawString(Text, Font, fc, textRect, sf);
                         }
                     }

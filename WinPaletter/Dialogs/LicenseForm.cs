@@ -32,10 +32,7 @@ namespace WinPaletter
             DialogResult = DialogResult.Cancel;
             Program.Settings.General.LicenseAccepted = false;
             Program.Settings.General.Save();
-            using (Process Prc = Process.GetCurrentProcess())
-            {
-                Prc.Kill();
-            }
+            Program.ForceExit();
         }
     }
 }

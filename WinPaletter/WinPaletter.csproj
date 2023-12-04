@@ -71,7 +71,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -258,10 +258,17 @@
     <Compile Include="Dialogs\UserPassword.Designer.cs">
       <DependentUpon>UserPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Elements\Others\ProgressBar.cs">
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TitlebarExtender.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\TabControls\TabControlHelpers.cs">
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TitlebarExtender.Designer.cs">
+      <DependentUpon>TitlebarExtender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\ContextMenuStrip.cs" />
+    <Compile Include="GUI\Elements\Input\ContextMenuStrip.Designer.cs">
+      <DependentUpon>ContextMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\ProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Style\TestControl.cs">
@@ -917,9 +924,15 @@
     <Compile Include="Extras\WinEffecter.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsColors\WinColors_XP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\WinColors_XP.Designer.cs">
+      <DependentUpon>WinColors_XP.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ICON.ico" />
+    <Content Include="Icon.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <None Include="Resources\LogonUI_2000.png" />
@@ -1320,6 +1333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\WinEffecter.resx">
       <DependentUpon>WinEffecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\WinColors_XP.resx">
+      <DependentUpon>WinColors_XP.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

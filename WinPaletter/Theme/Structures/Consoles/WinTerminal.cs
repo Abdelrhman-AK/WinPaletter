@@ -786,7 +786,7 @@ namespace WinPaletter
             proc.Start();
             proc.WaitForExit();
             proc.StartInfo.FileName = "icacls.exe";
-            proc.StartInfo.Arguments = $"\"{filepath}\" /grant *{{GROUP_USERS_SID}}:F /T";
+            proc.StartInfo.Arguments = "\"{filepath}\" /grant *{GROUP_USERS_SID}:F /T";
             proc.Start();
             proc.WaitForExit();
         }
