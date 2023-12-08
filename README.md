@@ -20,7 +20,7 @@
       
 or 2. Microsoft WinGet: `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
 
-or 3. Chocolatey: `choco install WinPaletter --version 1.0.8` (You must mention WinPaletter version)
+or 3. Chocolatey: `choco install WinPaletter` or `choco install WinPaletter --version x.x.xx`
 
    - [Click here for more advanced instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter)
 
