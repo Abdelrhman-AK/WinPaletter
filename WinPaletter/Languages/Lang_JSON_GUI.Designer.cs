@@ -162,7 +162,6 @@ namespace WinPaletter
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
-            this.Button7.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button7.Location = new System.Drawing.Point(668, 671);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(80, 34);
@@ -180,7 +179,6 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
-            this.Button2.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button2.Location = new System.Drawing.Point(840, 671);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(150, 34);
@@ -246,7 +244,6 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
-            this.Button6.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button6.Location = new System.Drawing.Point(540, 6);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(148, 30);
@@ -263,7 +260,6 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button5.Location = new System.Drawing.Point(344, 6);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(190, 30);
@@ -280,7 +276,6 @@ namespace WinPaletter
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
-            this.Button8.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button8.Location = new System.Drawing.Point(7, 6);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(102, 30);
@@ -297,7 +292,6 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button4.Location = new System.Drawing.Point(115, 6);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(223, 30);
@@ -381,7 +375,6 @@ namespace WinPaletter
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
-            this.Button11.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button11.Location = new System.Drawing.Point(669, 63);
             this.Button11.Name = "Button11";
             this.Button11.Size = new System.Drawing.Size(140, 24);
@@ -409,7 +402,6 @@ namespace WinPaletter
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
             this.Button10.Image = ((System.Drawing.Image)(resources.GetObject("Button10.Image")));
-            this.Button10.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button10.Location = new System.Drawing.Point(669, 33);
             this.Button10.Name = "Button10";
             this.Button10.Size = new System.Drawing.Size(140, 24);
@@ -437,7 +429,6 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button3.Location = new System.Drawing.Point(669, 123);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(140, 24);
@@ -465,7 +456,6 @@ namespace WinPaletter
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
             this.Button9.Image = ((System.Drawing.Image)(resources.GetObject("Button9.Image")));
-            this.Button9.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button9.Location = new System.Drawing.Point(669, 3);
             this.Button9.Name = "Button9";
             this.Button9.Size = new System.Drawing.Size(140, 24);
@@ -782,7 +772,6 @@ namespace WinPaletter
             this.Button12.ForeColor = System.Drawing.Color.White;
             this.Button12.Image = ((System.Drawing.Image)(resources.GetObject("Button12.Image")));
             this.Button12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button12.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button12.Location = new System.Drawing.Point(3, 3);
             this.Button12.Name = "Button12";
             this.Button12.Size = new System.Drawing.Size(24, 24);
@@ -919,7 +908,6 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button1.Location = new System.Drawing.Point(393, 37);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(76, 26);
@@ -1023,7 +1011,6 @@ namespace WinPaletter
             this.Button13.ForeColor = System.Drawing.Color.White;
             this.Button13.Image = ((System.Drawing.Image)(resources.GetObject("Button13.Image")));
             this.Button13.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button13.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button13.Location = new System.Drawing.Point(3, 3);
             this.Button13.Name = "Button13";
             this.Button13.Size = new System.Drawing.Size(24, 24);
@@ -1219,7 +1206,6 @@ namespace WinPaletter
             this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button14.ForeColor = System.Drawing.Color.White;
             this.Button14.Image = ((System.Drawing.Image)(resources.GetObject("Button14.Image")));
-            this.Button14.Items = new System.Windows.Forms.ToolStripItem[0];
             this.Button14.Location = new System.Drawing.Point(754, 671);
             this.Button14.Name = "Button14";
             this.Button14.Size = new System.Drawing.Size(80, 34);

@@ -162,7 +162,6 @@ namespace WinPaletter.Theme
                             }
                         }
 
-
                         break;
                     }
 
@@ -300,6 +299,7 @@ namespace WinPaletter.Theme
 
                             else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
+
                         break;
                     }
             }
@@ -806,14 +806,14 @@ namespace WinPaletter.Theme
         /// <param name="Pack">Theme resources pack file</param>
         public void PackThemeResources(Manager TM, string ThemeFile, string Pack)
         {
-            string cache = $@"%WinPaletterAppData%\ThemeResPack_Cache\{(string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}\";
+            string cache = $"%WinPaletterAppData%\\ThemeResPack_Cache\\{(string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}\\";
             Dictionary<string, string> filesList = new();
             filesList.Clear();
             string x;
             string ZipEntry;
 
-            if (System.IO.File.Exists(Pack))
-                System.IO.File.Delete(Pack);
+            if (System.IO.File.Exists(Pack)) System.IO.File.Delete(Pack);
+
             using (ZipArchive archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
             {
                 if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Sources.CustomImage)

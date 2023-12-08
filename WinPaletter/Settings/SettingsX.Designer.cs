@@ -1450,8 +1450,8 @@ namespace WinPaletter
             this.RadioButton2.Name = "RadioButton2";
             this.RadioButton2.Size = new System.Drawing.Size(770, 24);
             this.RadioButton2.TabIndex = 9;
-            this.RadioButton2.Text = "Opening theme file from explorer applies the theme without opening the applicatio" +
-    "n";
+            this.RadioButton2.Text = "Opening theme file from explorer applies the theme without showing main form (Win" +
+    "Paletter will exit after theme applying)";
             // 
             // RadioButton1
             // 

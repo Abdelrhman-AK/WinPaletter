@@ -924,11 +924,11 @@
     <Compile Include="Extras\WinEffecter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\WinColors_XP.cs">
+    <Compile Include="WindowsColors\AspectsTemplate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\WinColors_XP.Designer.cs">
-      <DependentUpon>WinColors_XP.cs</DependentUpon>
+    <Compile Include="WindowsColors\AspectsTemplate.Designer.cs">
+      <DependentUpon>AspectsTemplate.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1334,8 +1334,8 @@
     <EmbeddedResource Include="Extras\WinEffecter.resx">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\WinColors_XP.resx">
-      <DependentUpon>WinColors_XP.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsColors\AspectsTemplate.resx">
+      <DependentUpon>AspectsTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -15,7 +14,6 @@ namespace WinPaletter.UI.WP
             {
                 Graphics G = e.Graphics;
                 G.SmoothingMode = SmoothingMode.AntiAlias;
-                G.TextRenderingHint = TextRenderingHint.SystemDefault;
 
                 Rectangle itemRectangle = e.Item.ContentRectangle;
                 itemRectangle.Height -= 1;
@@ -42,15 +40,33 @@ namespace WinPaletter.UI.WP
 
             base.OnRenderItemText(e);
         }
+
+        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+        {
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            Rectangle itemRectangle = e.Item.ContentRectangle;
+            itemRectangle.Y += 1;
+
+            G.DrawLine(Program.Style.Schemes.Main.Pens.Line_Hover, itemRectangle.Location, itemRectangle.Location + new Size(e.Vertical ? 0 : itemRectangle.Width, e.Vertical ? itemRectangle.Height : 0));
+
+            base.OnRenderSeparator(e);
+        }
     }
 
     public partial class ContextMenuStrip : System.Windows.Forms.ContextMenuStrip
     {
         public ContextMenuStrip()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            this.AllowTransparency = true;
+            this.AutoClose = true;
+            this.DropShadowEnabled = false;
+
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
+
             Renderer = new ContextMenuStripRenderer();
         }
 
@@ -60,19 +76,13 @@ namespace WinPaletter.UI.WP
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
-
-            //Makes background drawn properly, and transparent
-            InvokePaintBackground(this, e);
-
-            G.Clear(Color.Transparent);
+            G.TextRenderingHint = Program.Style.RenderingHint;
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
-            G.FillRoundedRect(scheme.Brushes.Back, rect);
-            G.DrawRoundedRect_LikeW11(scheme.Pens.Line, rect);
+            G.FillRectangle(scheme.Brushes.Back, rect);
+            G.DrawRectangle(scheme.Pens.Line_Hover, rect);
 
             base.OnPaint(e);    
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -10,18 +9,17 @@ namespace WinPaletter
         public static void CreateUninstaller()
         {
             string guidText = Application.ProductName;
-            string RegPath = $@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\{guidText}";
+            string RegPath = $"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{guidText}";
 
-            if (!System.IO.Directory.Exists(PathsExt.appData))
-                System.IO.Directory.CreateDirectory(PathsExt.appData);
+            if (!System.IO.Directory.Exists(PathsExt.appData)) System.IO.Directory.CreateDirectory(PathsExt.appData);
 
-            WriteIfChangedOrNotExists($@"{PathsExt.appData}\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
+            WriteIfChangedOrNotExists($"{PathsExt.appData}\\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
 
             EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
             EditReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
             EditReg(RegPath, "DisplayVersion", Version, RegistryValueKind.String);
             EditReg(RegPath, "Publisher", Application.CompanyName, RegistryValueKind.String);
-            EditReg(RegPath, "DisplayIcon", $@"{PathsExt.appData}\uninstall.ico", RegistryValueKind.String);
+            EditReg(RegPath, "DisplayIcon", $"{PathsExt.appData}\\uninstall.ico", RegistryValueKind.String);
             EditReg(RegPath, "URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
             EditReg(RegPath, "Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
             EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
@@ -33,6 +31,7 @@ namespace WinPaletter
             EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
             EditReg(RegPath, "EstimatedSize", Length / 1024, RegistryValueKind.DWord);
         }
+
         public static void Uninstall_Quiet()
         {
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
@@ -43,9 +42,17 @@ namespace WinPaletter
 
             try
             {
-                if (!OS.WXP && System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && System.IO.File.Exists($"{PathsExt.appData}\\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav"));
+                    string file = $"{PathsExt.appData}\\WindowsStartup_Backup.wav";
+
+                    byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                    byte[] TargetSoundBytes = System.IO.File.ReadAllBytes(file);
+
+                    if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
+                    {
+                        PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, TargetSoundBytes);
+                    }
                 }
             }
             catch { }
@@ -64,22 +71,21 @@ namespace WinPaletter
                     Theme.Manager.ResetCursorsToNone_XP();
                     if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                         Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
-
                 }
 
-                try { System.IO.Directory.Delete(PathsExt.appData, true); }
-                catch { }
+                try { System.IO.Directory.Delete(PathsExt.appData, true); } catch { }
+
             }
 
             if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
             {
-                try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); }
-                catch { }
+                try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); } catch { }
             }
 
             string guidText = Application.ProductName;
-            string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
-            Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
+            Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall", true).DeleteSubKeyTree(guidText, false);
+
+            Environment.ExitCode = 0;
 
             Program.ForceExit();
         }

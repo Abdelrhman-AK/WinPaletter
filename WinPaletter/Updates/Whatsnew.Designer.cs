@@ -47,6 +47,9 @@ namespace WinPaletter
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -92,15 +95,13 @@ namespace WinPaletter
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.tabPage15 = new System.Windows.Forms.TabPage();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabPage10.SuspendLayout();
+            this.tabPage15.SuspendLayout();
             this.tabPage11.SuspendLayout();
             this.TabPage7.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -113,7 +114,6 @@ namespace WinPaletter
             this.TabPage13.SuspendLayout();
             this.TabPage8.SuspendLayout();
             this.tabPage12.SuspendLayout();
-            this.tabPage15.SuspendLayout();
             this.SuspendLayout();
             // 
             // AnimatedBox1
@@ -272,6 +272,41 @@ namespace WinPaletter
             this.label22.TabIndex = 41;
             this.label22.Text = "Multiple users";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage15.Controls.Add(this.label30);
+            this.tabPage15.Controls.Add(this.label31);
+            this.tabPage15.Location = new System.Drawing.Point(154, 4);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(667, 426);
+            this.tabPage15.TabIndex = 40;
+            this.tabPage15.Text = "Cursors";
+            // 
+            // label30
+            // 
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(6, 48);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(656, 375);
+            this.label30.TabIndex = 46;
+            this.label30.Text = resources.GetString("label30.Text");
+            // 
+            // label31
+            // 
+            this.label31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label31.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.Crimson;
+            this.label31.Location = new System.Drawing.Point(3, 3);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(661, 45);
+            this.label31.TabIndex = 45;
+            this.label31.Text = "Cursors new features";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabPage11
             // 
@@ -843,41 +878,6 @@ namespace WinPaletter
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // tabPage15
-            // 
-            this.tabPage15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage15.Controls.Add(this.label30);
-            this.tabPage15.Controls.Add(this.label31);
-            this.tabPage15.Location = new System.Drawing.Point(154, 4);
-            this.tabPage15.Name = "tabPage15";
-            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(667, 426);
-            this.tabPage15.TabIndex = 40;
-            this.tabPage15.Text = "Cursors";
-            // 
-            // label30
-            // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label30.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(6, 48);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(656, 375);
-            this.label30.TabIndex = 46;
-            this.label30.Text = resources.GetString("label30.Text");
-            // 
-            // label31
-            // 
-            this.label31.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label31.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.ForeColor = System.Drawing.Color.Crimson;
-            this.label31.Location = new System.Drawing.Point(3, 3);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(661, 45);
-            this.label31.TabIndex = 45;
-            this.label31.Text = "Cursors new features";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Whatsnew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -906,6 +906,7 @@ namespace WinPaletter
             this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabPage10.ResumeLayout(false);
+            this.tabPage15.ResumeLayout(false);
             this.tabPage11.ResumeLayout(false);
             this.TabPage7.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
@@ -918,7 +919,6 @@ namespace WinPaletter
             this.TabPage13.ResumeLayout(false);
             this.TabPage8.ResumeLayout(false);
             this.tabPage12.ResumeLayout(false);
-            this.tabPage15.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

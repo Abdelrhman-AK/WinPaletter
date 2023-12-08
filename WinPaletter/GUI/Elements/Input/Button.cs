@@ -1,11 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Web.UI.Design;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -29,20 +26,18 @@ namespace WinPaletter.UI.WP
             if (Image is not null) { Flag = Flags.TintedOnHover; }
 
             _alpha = 0;
+            MenuSplitterRectangle = new(Width - MenuSplitterWidth, 0, MenuSplitterWidth, Height);
 
-            SplitMenuStrip.ItemClicked += SplitMenuStrip_ItemClicked;
+            Menu.ItemClicked += SplitMenuStrip_ItemClicked;
         }
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        public UI.WP.ContextMenuStrip SplitMenuStrip = new() { ShowImageMargin = true };
-        private string SelectedItem;
-        public object SelectedTag;
-
-        private Config.Scheme scheme1 = Program.Style.Schemes.Main;
-        private Config.Scheme scheme2 = Program.Style.Schemes.Secondary;
-        private Config.Scheme scheme3 = Program.Style.Schemes.Tertiary;
+        public UI.WP.ContextMenuStrip Menu = new() { ShowImageMargin = true, AllowTransparency = true };
+        private int MenuSplitterWidth = 15;
+        Rectangle MenuSplitterRectangle;
+        bool isMouseOverMenuSplitter = false;
 
         private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.6d));
         private Color imageColor;
@@ -377,29 +372,9 @@ namespace WinPaletter.UI.WP
             AlwaysCustomColor
         }
 
-        public override string Text
-        {
-            get => SplitMenuStrip.Items.Count == 0 || SelectedItem == null ? base.Text : SelectedItem;
-            set => base.Text = value;
-        }
-
-        private ToolStripItem[] _items = new ToolStripItem[] { };
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Browsable(true)]
-        public ToolStripItem[] Items      
-        {
-            get
-            {
-                return _items;
-            }
-            set
-            {
-                SplitMenuStrip.Items.Clear();
-                SplitMenuStrip.Items.AddRange(value);
-                _items = value; 
-            }
-        }
+        private Config.Scheme scheme1 => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+        private Config.Scheme scheme2 => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
+        private Config.Scheme scheme3 => Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
         #endregion
 
@@ -409,6 +384,8 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
+
+            isMouseOverMenuSplitter = Menu.Items.Count > 0 && MenuSplitterRectangle.Contains(PointToClient(MousePosition));
 
             Animate();
 
@@ -540,23 +517,22 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
+        public delegate void ItemClickedEventHandler(object sender, ToolStripItemClickedEventArgs e);
+
+        public event ItemClickedEventHandler ItemClicked;
+
         private void SplitMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            SelectedItem = e.ClickedItem.Text;
-            SelectedTag = e.ClickedItem.Tag;
-            Image = e.ClickedItem.Image;
-            Refresh();
+            ItemClicked(this, e);
         }
 
         protected override void OnClick(EventArgs e)
         {
-            if (SplitMenuStrip.Items.Count > 0)
+            if (Menu.Items.Count > 0)
             {
-                Rectangle rectangle = new(Width - 15, 0, 15, Height);
-
-                if (rectangle.Contains(PointToClient(MousePosition)))
+                if (MenuSplitterRectangle.Contains(PointToClient(MousePosition)))
                 {
-                    SplitMenuStrip.Show(this, new Point(0, this.Height), ToolStripDropDownDirection.Default);
+                    Menu.Show(this, new Point(0, this.Height), ToolStripDropDownDirection.Default);
                 }
                 else
                 {
@@ -583,6 +559,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseMove(MouseEventArgs mevent)
         {
+            isMouseOverMenuSplitter = Menu.Items.Count > 0 && MenuSplitterRectangle.Contains(PointToClient(MousePosition));
+
             if (CanAnimate && _ripple && State != MouseState.None)
             {
                 hoverPosition = this.PointToClient(MousePosition);
@@ -626,15 +604,17 @@ namespace WinPaletter.UI.WP
             base.OnEnabledChanged(e);
         }
 
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            MenuSplitterRectangle = new(Width - MenuSplitterWidth, 0, MenuSplitterWidth, Height);
+            base.OnSizeChanged(e);
+        }
+
         public void UpdateStyleSchemes()
         {
             alpha = 0;
             HoverSize = 0;
             State = MouseState.None;
-
-            scheme1 = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-            scheme2 = Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
-            scheme3 = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
             _color = Colorize();
             _lineColor = LineColor(_color);
@@ -701,19 +681,67 @@ namespace WinPaletter.UI.WP
             InvokePaintBackground(this, e);
 
             // ################################################################################# Customizer
-            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
-            Rectangle RectInner = new(1, 1, Width - 3, Height - 3);
+            int MenuModifier = Menu.Items.Count > 0 ? MenuSplitterWidth : 0;
+
+            Rectangle Rect = new(0, 0, Width - 1 - MenuModifier, Height - 1);
+            Rectangle RectInner = new(1, 1, Width - 3 - MenuModifier, Height - 3);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
-            Rectangle TextAndImageRect = new(Rect.X + 3 + PaddingRect.X, Rect.Y + 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2 - Rect.X * 2, Height - 7 - PaddingRect.Height * 2 - Rect.Y * 2);
+            Rectangle TextAndImageRect = new(Rect.X + 3 + PaddingRect.X, Rect.Y + 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2 - Rect.X * 2 - MenuModifier, Height - 7 - PaddingRect.Height * 2 - Rect.Y * 2);
+
+            Rectangle Rect_Menu = new(Rect.Right - MenuModifier, 0, MenuModifier * 2 - 1, Height - 1);
+            Rectangle RectInner_Menu = new(RectInner.Right - MenuModifier, RectInner.Y, MenuModifier * 2 - 1, RectInner.Height);
+            Rectangle Rect_Menu_Substracted0 = Rect;
+            Rect_Menu_Substracted0.Intersect(Rect_Menu);
+            Rectangle Rect_Menu_Substracted = new(Rect_Menu_Substracted0.Right, Rect_Menu_Substracted0.Y, Rect_Menu.Width - Rect_Menu_Substracted0.Width, Rect_Menu.Height);
             // #################################################################################
 
             #region Button render
+
+            // Menu split button
+            if (Menu.Items.Count > 0)
+            {
+                using (SolidBrush br = new(Color.FromArgb(255, scheme1.Colors.Back_Hover))) { G.FillRoundedRect(br, RectInner_Menu); }
+
+                using (Pen P = new(Color.FromArgb(255, scheme1.Colors.Line))) { G.DrawRoundedRect_LikeW11(P, RectInner_Menu); }
+
+                using (SolidBrush br = new(Color.FromArgb(alpha, Color))) { G.FillRoundedRect(br, Rect_Menu); }
+
+                using (Pen P = new(Color.FromArgb(alpha, _lineColor))) { G.DrawRoundedRect_LikeW11(P, Rect_Menu); }
+
+                if (!(State == MouseState.None) && isMouseOverMenuSplitter)
+                {
+                    if (_ripple && hoverRect.Width > 0 && hoverRect.Height > 0)
+                    {
+                        GraphicsPath path = Program.Style.RoundedCorners ? Rect_Menu.Round() : new GraphicsPath();
+                        if (!Program.Style.RoundedCorners) { path.AddRectangle(Rect_Menu); }
+
+                        G.SetClip(path);
+
+                        GraphicsPath gp = new();
+
+                        gp.AddEllipse(hoverRect);
+                        PathGradientBrush pgb = new(gp)
+                        {
+                            CenterPoint = hoverPosition,
+                            CenterColor = Color.FromArgb(Math.Max(100, alpha), _rippleColor),
+                            SurroundColors = new Color[] { Color.Transparent }
+                        };
+
+                        G.FillEllipse(pgb, hoverRect);
+
+                        G.ResetClip();
+                    }
+                }
+            }
+
             //Color.FromArgb(150, Color)
             using (SolidBrush br = new(Color.FromArgb(255, Color))) { G.FillRoundedRect(br, RectInner); }
 
+            using (Pen P = new(Color.FromArgb(255, _lineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
+
             using (SolidBrush br = new(Color.FromArgb(alpha, Color))) { G.FillRoundedRect(br, Rect); }
 
-            if (!(State == MouseState.None))
+            if (!(State == MouseState.None) && !isMouseOverMenuSplitter)
             {
                 if (_ripple && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
@@ -728,7 +756,7 @@ namespace WinPaletter.UI.WP
                     PathGradientBrush pgb = new(gp)
                     {
                         CenterPoint = hoverPosition,
-                        CenterColor = Color.FromArgb(alpha, _rippleColor),
+                        CenterColor = Color.FromArgb(Math.Max(100, alpha), _rippleColor),
                         SurroundColors = new Color[] { Color.Transparent }
                     };
 
@@ -739,8 +767,6 @@ namespace WinPaletter.UI.WP
 
                 G.FillRoundedRect(Noise, Rect);
             }
-
-            using (Pen P = new(Color.FromArgb(255 - alpha, _lineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
 
             using (Pen P = new(Color.FromArgb(alpha, _lineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
             #endregion
@@ -877,6 +903,16 @@ namespace WinPaletter.UI.WP
 
                             G.DrawImage(Enabled ? _image : _image.Grayscale(), imageRect);
                             G.DrawString(Text, Font, fc, textRect, sf);
+                        }
+                    }
+
+                    if (Menu.Items.Count > 0)
+                    {
+                        using (StringFormat sf0 = ContentAlignment.MiddleCenter.ToStringFormat())
+                        using (Font f = new Font("Marlett", 8))
+                        {
+                            Rect_Menu_Substracted.Offset(-1, 1);
+                            G.DrawString("u", f, fc, Rect_Menu_Substracted, sf0);
                         }
                     }
                 }

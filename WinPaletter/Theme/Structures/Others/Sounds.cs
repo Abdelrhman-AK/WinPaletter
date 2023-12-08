@@ -179,10 +179,10 @@ namespace WinPaletter.Theme.Structures
         /// <br></br>- Targeting Windows Vista and later
         /// <code>
         /// Syntaxes:
-        ///  file_path:          string path of WAV file that will be patched in imageres.dll
-        ///  DEFAULT:            it will restore default sound from WinPaletter backup
-        ///  CURRENT:            will do nothing
-        ///  Empty string (""):  will disable startup sound
+        ///  file_path:          String path of WAV file that will be patched in imageres.dll
+        ///  DEFAULT:            It will restore default sound from WinPaletter backup
+        ///  CURRENT:            Will do nothing
+        ///  Empty string (""):  Will disable startup sound
         /// </code>
         /// </summary>
         public string Snd_Imageres_SystemStart;

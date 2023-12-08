@@ -260,6 +260,39 @@
         Pj9Hek9ISEhISEhISEhISEhISEjIK6VS/R8C92uYq3K1PwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>• It is possible now to control multiple users in WinPaletter.
+
+• This feature helped WinPaletter to reduce UAC dialogs appearance and fixed issue of not applying and getting theme data from a different account.
+
+• Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPaletter retains their previous state and is unaffected by the theme.
+
+• So, the best practice method is to open target user then open WinPaletter inside this profile, not from a different one.</value>
+  </data>
+  <data name="label30.Text" xml:space="preserve">
+    <value>• Cursors studio layout has been changed to tabs, making it easier to understand it instead of the old condensed layout
+
+• Busy and app waiting cursors can be rendered in high size when high DPI is set
+
+• Now you can select external cursors files instead of rendering them
+
+• New style for busy and app waiting cursors; fluid. And dot scheme is changed into modern
+
+• Fix scaling preview bug, and also in WinPaletter Store.</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>• Task Scheduler method is removed, being replaced by a service made by WinPaletter.
+
+• This service listens to system events and play sounds according to the received event, and this method is relatively better than Task Scheduler method.
+
+• This service can handle Windows shutdown, logoff, logon, account lock and unlock, and charger connection and disconnection sounds.</value>
+  </data>
+  <data name="label28.Text" xml:space="preserve">
+    <value>• Applying WinPaletter theme is now in a separate thread, to fix issue of Windows and WinPaletter freezing
+
+• New Explorer restart method (all to avoid crashing all open applications): When you apply a theme, firstly it will kill Explorer, waits for theme applying finish and finally reopen Explorer. Formerly, the method was both killing and opening after finishing theme apply.
+</value>
+  </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>• Minor updates in WinPaletter UI, as a preparation for a new major WinPaletter UI update (new look)
 
@@ -276,22 +309,19 @@
 • Cyotek color picker component is updated into 2.0.0-beta.7</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
-    <value>• Fix preview not synced in classic colors after selecting a color
-
+    <value>• Fix issue of opening WinPaletter main form after opening a wpth file with settings of not opening application is checked
+• Fix bug in translator GUI text search
+• Fix increased memory usage on rendering cursors
+• Fix exception errors happening on applying cursors
+• Fix error on applying Windows 8.1 lock screen background and Windows 7 LogonUI background
+• Fix preview not synced in classic colors after selecting a color
 • Sounds: Fix bug of repeated pathing imageres.dll alert with sounds are the same
-
 • ExplorerPatcher error fix
-
 • GUI translator bug fix: Form exception error
-
 • Fix color picker not working in Windows XP
-
 • Fix Preview of Windows 11/10 not syncing color with color picker
-
 • Fix metrics preview of Windows XP to 8.1 (inner padding)
-
 • Bug report fix: Windows 10 OS info if Windows 11 is running
-
 • Fix issue of disappearing taskbar and start in preview</value>
   </data>
   <data name="label25.Text" xml:space="preserve">
@@ -310,39 +340,6 @@
 • Alt+Tab opacity preview fix for Windows 10
 
 • Fix user exception error that prevents users from opening WinPaletter</value>
-  </data>
-  <data name="label21.Text" xml:space="preserve">
-    <value>• It is possible now to control multiple users in WinPaletter.
-
-• This feature helped WinPaletter to reduce UAC dialogs appearance and fixed issue of not applying and getting theme data from a different account.
-
-• Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPaletter retains their previous state and is unaffected by the theme.
-
-• So, the best practice method is to open target user then open WinPaletter inside this profile, not from a different one.</value>
-  </data>
-  <data name="label23.Text" xml:space="preserve">
-    <value>• Task Scheduler method is removed, being replaced by a service made by WinPaletter.
-
-• This service listens to system events and play sounds according to the received event, and this method is relatively better than Task Scheduler method.
-
-• This service can handle Windows shutdown, logoff, logon, account lock and unlock, and charger connection and disconnection sounds.</value>
-  </data>
-  <data name="label28.Text" xml:space="preserve">
-    <value>• Applying WinPaletter theme is now in a separate thread, to fix issue of Windows and WinPaletter freezing
-
-• New Explorer restart method (all to avoid crashing all open applications): When you apply a theme, firstly it will kill Explorer, waits for theme applying finish and finally reopen Explorer. Formerly, the method was both killing and opening after finishing theme apply.
-</value>
-  </data>
-  <data name="label30.Text" xml:space="preserve">
-    <value>• Cursors studio layout has been changed to tabs, making it easier to understand it instead of the old condensed layout
-
-• Busy and app waiting cursors can be rendered in high size when high DPI is set
-
-• Now you can select external cursors files instead of rendering them
-
-• New style for busy and app waiting cursors; fluid. And dot scheme is changed into modern
-
-• Fix scaling preview bug, and also in WinPaletter Store.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

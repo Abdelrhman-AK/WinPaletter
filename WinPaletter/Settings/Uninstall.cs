@@ -41,9 +41,17 @@ namespace WinPaletter
 
             try
             {
-                if (!OS.WXP && System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && System.IO.File.Exists($"{PathsExt.appData}\\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav"));
+                    string file = $"{PathsExt.appData}\\WindowsStartup_Backup.wav";
+
+                    byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                    byte[] TargetSoundBytes = System.IO.File.ReadAllBytes(file);
+
+                    if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
+                    {
+                        PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, TargetSoundBytes);
+                    }
                 }
             }
             catch { }
@@ -118,6 +126,8 @@ namespace WinPaletter
 
 
             Close();
+
+            Environment.ExitCode = 0;
 
             Program.ForceExit();
         }
