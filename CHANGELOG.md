@@ -2,6 +2,33 @@
 
 ---
 
+### 1.0.8.4
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 08 Dec 2023  |
+
+# The same as 1.0.8.3, except for some bugs fixes:
+
+### New bugs fixes:
+1- Fix issue of opening WinPaletter main form after opening a wpth file with settings of not opening application is checked #202 
+2- Fix bug in translator GUI text search #203 
+3- Fix increased memory usage on rendering cursors
+4- Fix exception errors happening on applying cursors
+5- Fix error on applying Windows 8.1 lock screen background and Windows 7 LogonUI background
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.3`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.3...v1.0.8.4) |
+| Previous Beta   | `1.0.8.2`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.2...v1.0.8.4) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.4) |
+
+---
+
 ### 1.0.8.3
 
 > **Info:**
