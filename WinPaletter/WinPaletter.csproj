@@ -250,13 +250,175 @@
     <None Include="Resources\Assemblies.zip" />
     <None Include="Resources\JetBrainsMono-Medium.ttf" />
     <None Include="Resources\luna.zip" />
+    <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Accessibility_Vision.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Accessibility_Vision.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\CMD_Raster.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMD_Raster.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\LogonUIRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogonUIRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Notifications.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\PowerShell_Raster.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PowerShell_Raster.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win11Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win11Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win10Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win10Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win10xLegends.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win10xLegends.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win7Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win7Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win81Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win81Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\WinLogos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinLogos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\WinPaletter_Store.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinPaletter_Store.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\WinVistaPreview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinVistaPreview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\UserPassword.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\UserPassword.Designer.cs">
       <DependentUpon>UserPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\ScreenSavers_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\ScreenSavers_List.Designer.cs">
+      <DependentUpon>ScreenSavers_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\TabsContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\Card.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\ToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\ResizableControls.cs" />
+    <Compile Include="GUI\Elements\Trackbars\ColorBarX.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\ColorBarX.Designer.cs">
+      <DependentUpon>ColorBarX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\TrackBarX.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\TrackBarX.Designer.cs">
+      <DependentUpon>TrackBarX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Containers\AppWorkspaceR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Events.cs" />
+    <Compile Include="GUI\RetroElements\Menus\MenuBarR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Menus\MenuBarR.Designer.cs">
+      <DependentUpon>MenuBarR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Menus\ContextMenuR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Others\LabelR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Others\ToolTipR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Simulators\WindowControlR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Style\SchemeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\PaletteGenerator.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Animation.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\CubicBezierTimingFunction.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Margins.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Platform.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\PropertyStream.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\ResourceAccess.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Signature.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StringTable.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StyleClass.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StylePart.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StyleProperty.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StyleResource.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\StyleState.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\TimingFunction.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Transform.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Transform2D.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Transform3D.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\TransformOpacity.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStyle.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStyleAnimationMap.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStyleDefinitions.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStyleEnumMap.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStylePartMap.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStylePropertyMap.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\VisualStyleStateMap.cs" />
+    <Compile Include="Program\Assemblies\libmsstyle\Win32ResourceApi.cs" />
+    <Compile Include="Program\TypesExtensions\VisualStyles.cs" />
+    <Compile Include="Assets\AspectsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AspectsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="GUI\Elements\ContainersAndBoxes\TitlebarExtender.cs">
       <SubType>Component</SubType>
@@ -278,6 +440,7 @@
       <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Designers.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Languages.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\Consoles.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tips.cs" />
@@ -394,7 +557,43 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="BackupThemes_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BackupThemes_List.Designer.cs">
+      <DependentUpon>BackupThemes_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Templates\DesktopIcons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Templates\DesktopIcons.Designer.cs">
+      <DependentUpon>DesktopIcons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\RetroDesktopColors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Templates\RetroDesktopColors.Designer.cs">
+      <DependentUpon>RetroDesktopColors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\WindowMetrics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Templates\WindowMetrics.Designer.cs">
+      <DependentUpon>WindowMetrics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\TabsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Templates\TabsForm.Designer.cs">
+      <DependentUpon>TabsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\WindowsDesktop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Templates\WindowsDesktop.Designer.cs">
+      <DependentUpon>WindowsDesktop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
@@ -406,6 +605,7 @@
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\CursorsRender.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
+    <Compile Include="Theme\Support\Format.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
     <Compile Include="Theme\Support\JSON_Helpers.cs" />
     <Compile Include="Theme\Support\Operators.cs" />
@@ -453,15 +653,6 @@
     </Compile>
     <Compile Include="Program\Classes\Bitmap_Mgr.cs" />
     <Compile Include="Program\Classes\INI.cs" />
-    <Compile Include="Converter\Converter_CP.cs" />
-    <Compile Include="Converter\Converter_Form.Designer.cs">
-      <DependentUpon>Converter_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Converter\Converter_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Converter\Converter.cs" />
-    <Compile Include="Converter\Converter_WT.cs" />
     <Compile Include="Theme\Support\PreviewHelpers.cs" />
     <Compile Include="Extras\AltTabEditor.Designer.cs">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
@@ -598,7 +789,7 @@
     <Compile Include="GUI\Elements\AdvancedControls\TextTranslationItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\Trackbars\Trackbar.cs">
+    <Compile Include="GUI\Elements\Trackbars\TrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Simulation\WinCMD.cs">
@@ -643,12 +834,6 @@
       <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
     </Compile>
     <Compile Include="PaletteGenerator\PaletteGenerateFromImage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.Designer.cs">
-      <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ColorItemControllers\ColorPickerDlg.Designer.cs">
@@ -763,12 +948,6 @@
       <DependentUpon>Metrics_Fonts.cs</DependentUpon>
     </Compile>
     <Compile Include="Metrics_Fonts\Metrics_Fonts.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Metrics_Fonts\VS2Metrics.Designer.cs">
-      <DependentUpon>VS2Metrics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Metrics_Fonts\VS2Metrics.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\SettingsX.Designer.cs">
@@ -900,22 +1079,16 @@
     <Compile Include="Extras\Wallpaper_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win32UI\VS2Win32UI.Designer.cs">
-      <DependentUpon>VS2Win32UI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Win32UI\VS2Win32UI.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Win32UI\Win32UI.Designer.cs">
       <DependentUpon>Win32UI.cs</DependentUpon>
     </Compile>
     <Compile Include="Win32UI\Win32UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\Start8Selector.Designer.cs">
+    <Compile Include="WindowsColors\Start8Selector.Designer.cs">
       <DependentUpon>Start8Selector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\Start8Selector.cs">
+    <Compile Include="WindowsColors\Start8Selector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Extras\WinEffecter.Designer.cs">
@@ -924,220 +1097,126 @@
     <Compile Include="Extras\WinEffecter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\AspectsTemplate.cs">
+    <Compile Include="Templates\AspectsTemplate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\AspectsTemplate.Designer.cs">
+    <Compile Include="Templates\AspectsTemplate.Designer.cs">
       <DependentUpon>AspectsTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI_Fullscreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI_Fullscreen.Designer.cs">
+      <DependentUpon>Win32UI_Fullscreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI_Gallery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI_Gallery.Designer.cs">
+      <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\WinXPColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\WinXPColors.Designer.cs">
+      <DependentUpon>WinXPColors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\WinVistaColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\WinVistaColors.Designer.cs">
+      <DependentUpon>WinVistaColors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\Win81Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\Win81Colors.Designer.cs">
+      <DependentUpon>Win81Colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\Win7Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\Win7Colors.Designer.cs">
+      <DependentUpon>Win7Colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\Win10Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\Win10Colors.Designer.cs">
+      <DependentUpon>Win10Colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsColors\Win11Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsColors\Win11Colors.Designer.cs">
+      <DependentUpon>Win11Colors.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
-    <None Include="Resources\LogonUI_2000.png" />
-    <None Include="Resources\add_win12.png" />
-    <None Include="Resources\Native12.png" />
-    <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
-    <None Include="Resources\Service_SysEventsSounds_Reg.txt" />
-    <None Include="Resources\Start10_Light.png" />
-    <None Include="Resources\Start10_Dark.png" />
-    <None Include="Resources\notify_error.png" />
-    <None Include="Resources\SampleApp_Inactive.png" />
-    <None Include="Resources\notify_warning.png" />
-    <None Include="Resources\notify_info.png" />
-    <None Include="Resources\Native11.png" />
-    <None Include="Resources\lightmode_light.png" />
-    <None Include="Resources\lightmode_dark.png" />
-    <None Include="Resources\darkmode_light.png" />
-    <None Include="Resources\darkmode_dark.png" />
-    <None Include="Resources\AC_11_Light.png" />
-    <None Include="Resources\fileextension.ico" />
-    <None Include="Resources\AC_10_Dark.png" />
-    <None Include="Resources\AC_10_Light.png" />
-    <None Include="Resources\RetroThemesDB.wpdb" />
-    <None Include="Resources\XML_Unlock.xml" />
-    <None Include="Resources\XML_Shutdown.xml" />
-    <None Include="Resources\XML_Logon.xml" />
-    <None Include="Resources\XML_Logoff.xml" />
-    <None Include="Resources\AC_11_Dark.png" />
-    <None Include="Resources\add_win10.png" />
-    <None Include="Resources\add_win11.png" />
-    <None Include="Resources\add_win7.png" />
-    <None Include="Resources\add_win8.png" />
-    <None Include="Resources\add_winvista.png" />
-    <None Include="Resources\add_winxp.png" />
-    <None Include="Resources\AeroGlass.png" />
-    <None Include="Resources\AeroPeek.png" />
-    <None Include="Resources\BackgroundOpacity.png" />
-    <None Include="Resources\BasicTaskbar.png" />
-    <None Include="Resources\WP_Admin.png" />
-    <None Include="Resources\checker_enabled.png" />
-    <None Include="Resources\checker_disabled.png" />
-    <None Include="Resources\checker_enabled.png" />
-    <None Include="Resources\checker_disabled.png" />
-    <None Include="Resources\CF_Pie_Red-green_red weak_protanopia.png" />
-    <None Include="Resources\CF_Img_Blue-yellow_tritanopia.png" />
-    <None Include="Resources\CF_Img_Grayscale.png" />
-    <None Include="Resources\CF_Img_Normal.png" />
-    <None Include="Resources\CF_Img_Red-green_green_weak_deuteranopia.png" />
-    <None Include="Resources\CF_Img_Red-green_red_weak_protanopia.png" />
-    <None Include="Resources\CF_Pie_Blue-yellow _tritanopia.png" />
-    <None Include="Resources\CF_Pie_Grayscale.png" />
-    <None Include="Resources\CF_Pie_Normal.png" />
-    <None Include="Resources\CF_Pie_Red-green_green weak_deuteranopia.png" />
-    <None Include="Resources\CMD_10x18.png" />
-    <None Include="Resources\CMD_10x18_P.png" />
-    <None Include="Resources\CMD_12x16.png" />
-    <None Include="Resources\CMD_12x16_P.png" />
-    <None Include="Resources\CMD_16x12.png" />
-    <None Include="Resources\CMD_16x12_P.png" />
-    <None Include="Resources\CMD_16x8.png" />
-    <None Include="Resources\CMD_16x8_P.png" />
-    <None Include="Resources\CMD_4x6.png" />
-    <None Include="Resources\CMD_4x6_P.png" />
-    <None Include="Resources\CMD_5x12.png" />
-    <None Include="Resources\CMD_5x12_P.png" />
-    <None Include="Resources\CMD_6x8.png" />
-    <None Include="Resources\CMD_6x8_P.png" />
-    <None Include="Resources\CMD_7x12.png" />
-    <None Include="Resources\CMD_7x12_P.png" />
-    <None Include="Resources\CMD_8x12.png" />
-    <None Include="Resources\CMD_8x12_P.png" />
-    <None Include="Resources\CMD_8x8.png" />
-    <None Include="Resources\CMD_8x8_P.png" />
-    <None Include="Resources\GaussianBlur.png" />
-    <None Include="Resources\GaussianBlurOpaque.png" />
-    <None Include="Resources\icons8_PowerShell.ico" />
-    <None Include="Resources\icons8_command_line.ico" />
-    <None Include="Resources\Icon_Uninstall.ico" />
-    <None Include="Resources\LangNode_JSON.png" />
-    <None Include="Resources\LangNode_Main.png" />
-    <None Include="Resources\LangNode_Value.png" />
-    <None Include="Resources\LICENSE.txt" />
-    <None Include="Resources\LogonUI7.png" />
-    <None Include="Resources\LogonUI8.png" />
-    <None Include="Resources\Mini_AC.png" />
-    <None Include="Resources\Mini_ACHover_Links.png" />
-    <None Include="Resources\Mini_Badge.png" />
-    <None Include="Resources\Mini_Hamburger.png" />
-    <None Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <None Include="Resources\Mini_Overflow.png" />
-    <None Include="Resources\Mini_PressedButton.png" />
-    <None Include="Resources\Mini_SettingsIcons.png" />
-    <None Include="Resources\Mini_StartMenu.png" />
-    <None Include="Resources\Mini_StartContextMenu.png" />
-    <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
-    <None Include="Resources\Mini_Taskbar.png" />
-    <None Include="Resources\Mini_TaskbarActiveIcon.png" />
-    <None Include="Resources\Mini_TaskbarApp.png" />
-    <None Include="Resources\Mini_Undefined.png" />
-    <None Include="Resources\Mini_UWPDlg.png" />
-    <None Include="Resources\Native10.png" />
-    <None Include="Resources\Native7.png" />
-    <None Include="Resources\Native8.png" />
-    <None Include="Resources\NativeVista.png" />
-    <None Include="Resources\NativeXP.png" />
-    <None Include="Resources\notify_administrator.png" />
-    <None Include="Resources\notify_applying.png" />
-    <None Include="Resources\notify_dll.png" />
-    <None Include="Resources\notify_reg_add.png" />
-    <None Include="Resources\notify_reg_delete.png" />
-    <None Include="Resources\notify_reg_skip.png" />
-    <None Include="Resources\notify_file_rename.png" />
-    <None Include="Resources\notify_pe_restore.png" />
-    <None Include="Resources\notify_pe_patch.png" />
-    <None Include="Resources\notify_pe_backup.png" />
-    <None Include="Resources\notify_skip.png" />
-    <None Include="Resources\notify_success.png" />
-    <None Include="Resources\notify_task_add.png" />
-    <None Include="Resources\notify_task_remove.png" />
-    <None Include="Resources\notify_time.png" />
-    <None Include="Resources\PS_10x18.png" />
-    <None Include="Resources\PS_12x16.png" />
-    <None Include="Resources\PS_16x12.png" />
-    <None Include="Resources\PS_16x8.png" />
-    <None Include="Resources\PS_4x6.png" />
-    <None Include="Resources\PS_5x12.png" />
-    <None Include="Resources\PS_6x8.png" />
-    <None Include="Resources\PS_7x12.png" />
-    <None Include="Resources\PS_8x12.png" />
-    <None Include="Resources\PS_8x8.png" />
-    <None Include="Resources\Start11_EP_Rounded_Dark.png" />
-    <None Include="Resources\Start11_EP_Rounded_Light.png" />
-    <None Include="Resources\Start11_Light.png" />
-    <None Include="Resources\Start11_Dark.png" />
-    <None Include="Resources\SampleApp_Small_Inactive.png" />
-    <None Include="Resources\SampleApp_Small_Active.png" />
-    <None Include="Resources\Sound_Stop.png" />
-    <None Include="Resources\Sound_Play.png" />
-    <None Include="Resources\settingsfile.ico" />
-    <None Include="Resources\Start7.png" />
-    <None Include="Resources\Start7Basic.png" />
-    <None Include="Resources\Start7Glass.png" />
-    <None Include="Resources\StartBtn_10Dark.png" />
-    <None Include="Resources\StartBtn_10Light.png" />
-    <None Include="Resources\StartBtn_11_EP.png" />
-    <None Include="Resources\StartBtn_11Dark.png" />
-    <None Include="Resources\StartBtn_11Light.png" />
-    <None Include="Resources\Store_DoneByWinPaletter.png" />
-    <None Include="Resources\Store_DoneByUser.png" />
-    <None Include="Resources\Store_DesignedForXP.png" />
-    <None Include="Resources\Store_DesignedFor7.png" />
-    <None Include="Resources\Store_DesignedFor8.png" />
-    <None Include="Resources\Store_DesignedFor10.png" />
-    <None Include="Resources\Store_DesignedFor11.png" />
-    <None Include="Resources\Store_DesignedForVista.png" />
-    <None Include="Resources\Store_BackBtn.png" />
-    <None Include="Resources\Store_Pattern1.png" />
-    <None Include="Resources\Store_Pattern2.png" />
-    <None Include="Resources\Store_Pattern3.png" />
-    <None Include="Resources\Store_Pattern4.png" />
-    <None Include="Resources\Store_Pattern5.png" />
-    <None Include="Resources\Store_Pattern6.png" />
-    <None Include="Resources\Store_Pattern8.png" />
-    <None Include="Resources\Store_Pattern10.png" />
-    <None Include="Resources\Store_Pattern7.png" />
-    <None Include="Resources\Store_Pattern9.png" />
-    <None Include="Resources\Store_ThemeVersion.png" />
-    <None Include="Resources\Taskbar_ActiveApp7.png" />
-    <None Include="Resources\Taskbar_InactiveApp7.png" />
-    <None Include="Resources\ThemesResIcon.ico" />
-    <None Include="Resources\Update.png" />
-    <None Include="Resources\Update_Dot.png" />
-    <None Include="Resources\Vista_ActiveApp.png" />
-    <None Include="Resources\Vista_Close_Active.png" />
-    <None Include="Resources\Vista_Close_inactive.png" />
-    <None Include="Resources\Vista_InactiveApp.png" />
-    <None Include="Resources\Vista_StartAero.png" />
-    <None Include="Resources\Vista_StartBasic.png" />
-    <None Include="Resources\Vista_StartLowerORB.png" />
-    <None Include="Resources\Vista_Taskbar.png" />
-    <None Include="Resources\Win7AltTabBasicButton.png" />
-    <None Include="Resources\Win10x_Close_Light.png" />
-    <None Include="Resources\Win10x_Close_Dark.png" />
-    <None Include="Resources\Win7Logo.png" />
-    <None Include="Resources\Win7ORB.png" />
-    <None Include="Resources\Win7Sides.png" />
-    <None Include="Resources\Win7TaskbarSides.png" />
-    <None Include="Resources\Win7_Basic_Close_0.png" />
-    <None Include="Resources\Win7_Basic_Close_1.png" />
-    <None Include="Resources\Win7_Basic_Close_2.png" />
-    <None Include="Resources\Win7_Basic_Close_ToolWindow.png" />
-    <None Include="Resources\Win7_Close_Active.png" />
-    <None Include="Resources\Win7_Close_inactive.png" />
-    <None Include="Resources\Win7_TitleTopL.png" />
-    <None Include="Resources\Win7_TitleTopR.png" />
-    <None Include="Resources\Win8ORB.png" />
-    <None Include="Resources\Win8_Close_0.png" />
-    <None Include="Resources\Win8_Close_1.png" />
-    <None Include="Resources\Win8_Close_2.png" />
-    <None Include="Resources\Win8_Close_3.png" />
-    <None Include="Resources\Win8_Close_ToolWindow.png" />
+    <Content Include="Resources\LICENSE.txt" />
+    <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\CMD_Raster.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CMD_Raster.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\LogonUIRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogonUIRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Notifications.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notifications.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\PowerShell_Raster.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PowerShell_Raster.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win11Preview.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win11Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win10Preview.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win10Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win10xLegends.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win10xLegends.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win7Preview.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win7Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win81Preview.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win81Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\WinLogos.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinLogos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\WinPaletter_Store.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinPaletter_Store.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\WinVistaPreview.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinVistaPreview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
       <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -1147,10 +1226,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PE_Warning.resx">
       <DependentUpon>PE_Warning.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Converter\Converter_Form.resx">
-      <DependentUpon>Converter_Form.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\RescueTools.resx">
       <DependentUpon>RescueTools.cs</DependentUpon>
@@ -1196,8 +1271,21 @@
     <EmbeddedResource Include="Extras\ApplicationThemer.resx">
       <DependentUpon>ApplicationThemer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Extras\ScreenSavers_List.resx">
+      <DependentUpon>ScreenSavers_List.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extras\Sounds_Editor.resx">
       <DependentUpon>Sounds_Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AspectsResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AspectsResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Elements\Trackbars\ColorBarX.resx">
+      <DependentUpon>ColorBarX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Elements\Trackbars\TrackBarX.resx">
+      <DependentUpon>TrackBarX.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
@@ -1242,9 +1330,6 @@
     <EmbeddedResource Include="Metrics_Fonts\Metrics_Fonts.resx">
       <DependentUpon>Metrics_Fonts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Metrics_Fonts\VS2Metrics.resx">
-      <DependentUpon>VS2Metrics.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
     </EmbeddedResource>
@@ -1255,12 +1340,12 @@
       <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateDashboard.resx">
-      <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BackupThemes_List.resx">
+      <DependentUpon>BackupThemes_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>
@@ -1288,6 +1373,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
       <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\DesktopIcons.resx">
+      <DependentUpon>DesktopIcons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\RetroDesktopColors.resx">
+      <DependentUpon>RetroDesktopColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\WindowMetrics.resx">
+      <DependentUpon>WindowMetrics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TabsForm.resx">
+      <DependentUpon>TabsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\WindowsDesktop.resx">
+      <DependentUpon>WindowsDesktop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\CMD.resx">
       <DependentUpon>CMD.cs</DependentUpon>
@@ -1321,21 +1421,43 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\Wallpaper_Editor.resx">
       <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
-      <DependentUpon>VS2Win32UI.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI\Win32UI.resx">
       <DependentUpon>Win32UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\Start8Selector.resx">
+    <EmbeddedResource Include="WindowsColors\Start8Selector.resx">
       <DependentUpon>Start8Selector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\WinEffecter.resx">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\AspectsTemplate.resx">
+    <EmbeddedResource Include="Templates\AspectsTemplate.resx">
       <DependentUpon>AspectsTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI\Win32UI_Fullscreen.resx">
+      <DependentUpon>Win32UI_Fullscreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI\Win32UI_Gallery.resx">
+      <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\WinXPColors.resx">
+      <DependentUpon>WinXPColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\WinVistaColors.resx">
+      <DependentUpon>WinVistaColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\Win81Colors.resx">
+      <DependentUpon>Win81Colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\Win7Colors.resx">
+      <DependentUpon>Win7Colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\Win10Colors.resx">
+      <DependentUpon>Win10Colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsColors\Win11Colors.resx">
+      <DependentUpon>Win11Colors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

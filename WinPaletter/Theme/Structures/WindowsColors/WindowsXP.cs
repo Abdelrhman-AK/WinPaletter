@@ -10,6 +10,9 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct WindowsXP : ICloneable
     {
+        /// <summary> Controls if Windows XP themes editing is enabled or not </summary> 
+        public bool Enabled;
+
         /// <summary>
         /// Theme used for Windows XP
         /// <code>
@@ -25,7 +28,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Visual styles file used when 'Theme' selected as 'Custom'</summary>
         public string ThemeFile;
 
-        /// <summary>Color scheme of visual styles file 'ThemeFile' when 'Theme' selected as 'Custom'</summary>
+        /// <summary>Color scheme of visual styles file 'WindowsXPThemePath' when 'Theme' selected as 'Custom'</summary>
         public string ColorScheme;
 
         /// <summary>Enumeration of Windows XP stock themes.</summary>
@@ -40,7 +43,7 @@ namespace WinPaletter.Theme.Structures
             /// <summary>Classic theme</summary>
             Classic,
             /// <summary>
-            /// Use 'ThemeFile' to be the current visual styles.
+            /// Use 'WindowsXPThemePath' to be the current visual styles.
             /// <br><b>- Requires UxTheme patched Windows XP</b></br>
             /// </summary>
             Custom
@@ -52,6 +55,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsXP data structure</param>
         public void Load(WindowsXP @default)
         {
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, @default.Enabled));
+
             if (OS.WXP)
             {
                 Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
@@ -119,65 +124,64 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            try
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, Enabled);
+
+            if (Enabled)
             {
-                switch (Theme)
+                try
                 {
-                    case Themes.LunaBlue:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
-
-                            Program.StartedWithClassicTheme = false;
-                            break;
-                        }
-
-                    case Themes.LunaOliveGreen:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
-                            Program.StartedWithClassicTheme = false;
-                            break;
-                        }
-
-                    case Themes.LunaSilver:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
-                            Program.StartedWithClassicTheme = false;
-                            break;
-                        }
-
-                    case Themes.Classic:
-                        {
-                            UxTheme.EnableTheming(0);
-                            Program.StartedWithClassicTheme = true;
-                            break;
-                        }
-
-                    case Themes.Custom:
-                        {
-
-                            if (System.IO.File.Exists(ThemeFile) && System.IO.Path.GetExtension(ThemeFile) == ".theme" | System.IO.Path.GetExtension(ThemeFile) == ".msstyles")
+                    switch (Theme)
+                    {
+                        case Themes.LunaBlue:
                             {
                                 UxTheme.EnableTheming(1);
-
-                                UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0);
-                                Program.StartedWithClassicTheme = false;
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
+                                break;
                             }
 
-                            break;
-                        }
+                        case Themes.LunaOliveGreen:
+                            {
+                                UxTheme.EnableTheming(1);
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
+                                break;
+                            }
 
+                        case Themes.LunaSilver:
+                            {
+                                UxTheme.EnableTheming(1);
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
+                                break;
+                            }
+
+                        case Themes.Classic:
+                            {
+                                UxTheme.EnableTheming(0);
+                                break;
+                            }
+
+                        case Themes.Custom:
+                            {
+
+                                if (System.IO.File.Exists(ThemeFile) && System.IO.Path.GetExtension(ThemeFile) == ".theme" | System.IO.Path.GetExtension(ThemeFile) == ".msstyles")
+                                {
+                                    UxTheme.EnableTheming(1);
+
+                                    UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0);
+                                }
+
+                                break;
+                            }
+
+                    }
+
+                    Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
+
+                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", ThemeTuple.Item1, RegistryValueKind.String);
+                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ThemeTuple.Item2, RegistryValueKind.String);
                 }
-
-                Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
-
-                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", ThemeTuple.Item1, RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ThemeTuple.Item2, RegistryValueKind.String);
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 

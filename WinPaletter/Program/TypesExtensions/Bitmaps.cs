@@ -2,14 +2,13 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 
 namespace WinPaletter.TypesExtensions
 {
     public static class BitmapExtensions
     {
         /// <summary>
-        /// Return Most Used Color From image
+        /// Return most used color from a bitmap
         /// </summary>
         public static Color AverageColor(this Bitmap Bitmap)
         {
@@ -63,7 +62,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return Most Used Color From Image
+        /// Return most used color from an image
         /// </summary>
         public static Color AverageColor(this Image Image)
         {
@@ -99,7 +98,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return Noised bitmap (Noise of Windows 10 Acrylic)
+        /// Return noised bitmap (noise of Windows 10 Acrylic style or Windows 7 Aero glass)
         /// </summary>
         public static Bitmap Noise(this Bitmap bmp, NoiseMode NoiseMode, float opacity)
         {
@@ -109,13 +108,18 @@ namespace WinPaletter.TypesExtensions
 
                 if (NoiseMode == NoiseMode.Acrylic)
                 {
-                    TextureBrush br;
-                    br = new(Properties.Resources.GaussianBlur.Fade((double)opacity));
-                    G.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    using (Bitmap b = Properties.Resources.Noise.Fade(opacity))
+                    using (TextureBrush br = new(b))
+                    {
+                        G.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    }
                 }
                 else if (NoiseMode == NoiseMode.Aero)
                 {
-                    G.DrawImage(Properties.Resources.AeroGlass.Fade((double)opacity), new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    using (Bitmap b = Assets.Win7Preview.AeroGlass.Fade(opacity))
+                    {
+                        G.DrawImage(b, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    }
                 }
 
                 G.Save();
@@ -134,44 +138,34 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Replace Color in image (Pixels) by color you choose
+        /// Replace color in image (pixels) by a color
         /// </summary>
         public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color NewColor)
         {
-            Bitmap outputImage = new(inputImage.Width, inputImage.Height);
-            Graphics G = Graphics.FromImage(outputImage);
-
-            for (int y = 0, loopTo = inputImage.Height - 1; y <= loopTo; y++)
+            using (Bitmap outputImage = new(inputImage.Width, inputImage.Height))
+            using (Graphics G = Graphics.FromImage(outputImage))
             {
-
-                for (int x = 0, loopTo1 = inputImage.Width - 1; x <= loopTo1; x++)
+                for (int y = 0, loopTo = inputImage.Height - 1; y <= loopTo; y++)
                 {
-                    Color PixelColor = inputImage.GetPixel(x, y);
-
-                    if (PixelColor == oldColor)
+                    for (int x = 0, loopTo1 = inputImage.Width - 1; x <= loopTo1; x++)
                     {
-                        outputImage.SetPixel(x, y, NewColor);
-                    }
-                    else
-                    {
-                        outputImage.SetPixel(x, y, PixelColor);
-                    }
+                        Color PixelColor = inputImage.GetPixel(x, y);
 
+                        if (Color.FromArgb(255, PixelColor) == Color.FromArgb(255, oldColor))
+                        {
+                            outputImage.SetPixel(x, y, Color.FromArgb(PixelColor.A, NewColor));
+                        }
+                        else
+                        {
+                            outputImage.SetPixel(x, y, PixelColor);
+                        }
+
+                    }
                 }
+
+                G.DrawImage(outputImage, 0, 0);
+                return outputImage.Clone() as Bitmap;
             }
-
-            G.DrawImage(outputImage, 0, 0);
-            G.Dispose();
-            return outputImage;
-            outputImage.Dispose();
-        }
-
-        /// <summary>
-        /// Replace Color in Image (Pixels) by color you choose
-        /// </summary>
-        public static Image ReplaceColor(this Image inputImage, Color oldColor, Color NewColor)
-        {
-            return ((Bitmap)inputImage).ReplaceColor(oldColor, NewColor);
         }
 
         /// <summary>
@@ -254,8 +248,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap Resize(this Bitmap bmSource, int TargetWidth, int TargetHeight)
         {
-            if (bmSource is null)
-                return null;
+            if (bmSource is null) return null;
 
             using (Bitmap B = new(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb))
             {
@@ -271,7 +264,7 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 B.SetResolution(TargetWidth, TargetHeight);
-                return (Bitmap)B.Clone();
+                return B.Clone() as Bitmap;
             }
         }
 
@@ -300,90 +293,69 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return Image Tinted by a color
+        /// Return image tinted by a color
         /// </summary>
-        public static Bitmap Tint(this Image sourceImage, Color Color)
+        public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
         {
-            return ((Bitmap)sourceImage).Tint(Color);
-        }
+            // Create a color matrix for the tint effect
+            float[][] matrixElements = {
+            new float[] {tintColor.R / 255f, 0, 0, 0, 0},
+            new float[] {0, tintColor.G / 255f, 0, 0, 0},
+            new float[] {0, 0, tintColor.B / 255f, 0, 0},
+            new float[] {0, 0, 0, tintColor.A / 255f, 0},
+            new float[] {0, 0, 0, 0, 1}
+        };
 
-        /// <summary>
-        /// Return image Tinted by a color
-        /// </summary>
-        public static Bitmap Tint(this Bitmap sourceBitmap, Color Color)
-        {
-            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            byte[] pixelBuffer = new byte[(sourceData.Stride * sourceData.Height)];
-            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
-            sourceBitmap.UnlockBits(sourceData);
-            float blue;
-            float green;
-            float red;
-            int k = default(int);
+            ColorMatrix colorMatrix = new(matrixElements);
 
-            while (k + 4 < pixelBuffer.Length)
+            // Apply the color matrix to an image attributes object
+            ImageAttributes imageAttributes = new();
+            imageAttributes.SetColorMatrix(colorMatrix);
+
+            // Create a destination bitmap with the same size as the original
+            Bitmap tintedBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+
+            // Draw the original bitmap onto the destination bitmap using the image attributes
+            using (Graphics g = Graphics.FromImage(tintedBitmap))
             {
-                blue = pixelBuffer[k] + (255 - pixelBuffer[k]) * Color.B;
-                green = pixelBuffer[k + 1] + (255 - pixelBuffer[k + 1]) * Color.G;
-                red = pixelBuffer[k + 2] + (255 - pixelBuffer[k + 2]) * Color.R;
-
-                if (blue > 255f)
-                {
-                    blue = 255f;
-                }
-
-                if (green > 255f)
-                {
-                    green = 255f;
-                }
-
-                if (red > 255f)
-                {
-                    red = 255f;
-                }
-
-                pixelBuffer[k] = (byte)Math.Round(blue);
-                pixelBuffer[k + 1] = (byte)Math.Round(green);
-                pixelBuffer[k + 2] = (byte)Math.Round(red);
-                k += 4;
+                g.DrawImage(originalBitmap,
+                    new Rectangle(0, 0, originalBitmap.Width, originalBitmap.Height),
+                    0, 0, originalBitmap.Width, originalBitmap.Height,
+                    GraphicsUnit.Pixel, imageAttributes);
             }
 
-            Bitmap resultBitmap = new(sourceBitmap.Width, sourceBitmap.Height);
-            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
-            resultBitmap.UnlockBits(resultData);
-            return resultBitmap;
+            return tintedBitmap;
         }
 
         /// <summary>
-        /// Fade image (Change Opacity)
+        /// Fade bitmap (change opacity)
         /// </summary>
-        public static Bitmap Fade(this Bitmap originalBitmap, double opacity)
+        public static Bitmap Fade(this Bitmap originalBitmap, float opacity)
         {
             if (originalBitmap == null) return null;
+
             using (Bitmap bmp = new(originalBitmap.Width, originalBitmap.Height))
+            using (Graphics G = Graphics.FromImage(bmp))
             {
-                using (Graphics gfx = Graphics.FromImage(bmp))
-                {
-                    ColorMatrix matrix = new() { Matrix33 = (float)opacity };
-                    ImageAttributes attributes = new();
-                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                    gfx.DrawImage(originalBitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
-                }
-                return (Bitmap)bmp.Clone();
+                ColorMatrix matrix = new() { Matrix33 = opacity };
+                ImageAttributes attributes = new();
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                G.DrawImage(originalBitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
+                return bmp.Clone() as Bitmap;
+
             }
         }
 
         /// <summary>
-        /// Fade Image (Change Opacity)
+        /// Fade image (change opacity)
         /// </summary>
-        public static Image Fade(this Image originalImage, double opacity)
+        public static Image Fade(this Image originalImage, float opacity)
         {
-            return ((Bitmap)originalImage).Fade(opacity);
+            return originalImage.Fade(opacity);
         }
 
         /// <summary>
-        /// Return image in Grayscale
+        /// Return image in grayscale
         /// </summary>
         public static Bitmap Grayscale(this Image original)
         {
@@ -391,7 +363,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return image in Grayscale
+        /// Return bitmap in grayscale
         /// </summary>
         public static Bitmap Grayscale(this Bitmap original)
         {
@@ -412,7 +384,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return Inverted image
+        /// Return inverted bitmap
         /// </summary>
         public static Bitmap Invert(this Bitmap bmp)
         {
@@ -454,7 +426,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// makes circle bitmap from rectangle bitmap
+        /// Make circular bitmap from a rectangular bitmap
         /// </summary>
         /// <returns></returns>
         public static Bitmap ToCircle(this Bitmap bitmap, bool DrawBorder = true)
@@ -488,16 +460,5 @@ namespace WinPaletter.TypesExtensions
                 return dstImage;
             }
         }
-
-        /// <summary>
-        /// makes circle bitmap from rectangle image
-        /// </summary>
-        /// <returns></returns>
-        public static Bitmap ToCircle(this Image image, bool DrawBorder = true)
-        {
-            return ToCircle((Bitmap)image, DrawBorder);
-        }
-
     }
-
 }

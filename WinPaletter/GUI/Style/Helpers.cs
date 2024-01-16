@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter.UI.Style
 {
-    public class Helpers
+    public partial class Helpers
     {
         /// <summary>
         /// Determines whether rounded corners should be applied to the program's style.
@@ -39,7 +40,7 @@ namespace WinPaletter.UI.Style
 
                 else if (OS.W7 || OS.WXP || OS.WVista)
                 {
-                    Program.Style.RoundedCorners = !Program.StartedWithClassicTheme;
+                    Program.Style.RoundedCorners = !Program.ClassicThemeRunning;
                 }
 
                 else
@@ -78,7 +79,7 @@ namespace WinPaletter.UI.Style
                 }
                 else if (OS.W7 || OS.WXP || OS.WVista)
                 {
-                    return !Program.StartedWithClassicTheme;
+                    return !Program.ClassicThemeRunning;
                 }
                 else
                 {
@@ -161,19 +162,14 @@ namespace WinPaletter.UI.Style
             {
                 DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
                 RoundedCorners = Program.Settings.Appearance.RoundedCorners;
-                //Animations = Program.Settings.Appearance.Animations;
-                Animations = Program.Style.Animations;
+                Animations = Program.Settings.Appearance.Animations;
 
                 BackColor = Program.Settings.Appearance.BackColor;
                 AccentColor = Program.Settings.Appearance.AccentColor;
-                //Secondary = Program.Settings.Appearance.SecondaryColor;
-                //Tertiary = Program.Settings.Appearance.TertiaryColor;
-                //Disabled = Program.Settings.Appearance.DisabledColor;
-                //Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
-                Secondary = DefaultColors.SecondaryColor;
-                Tertiary = DefaultColors.TertiaryColor;
-                Disabled = DarkMode ? DefaultColors.DisabledColor_Dark : DefaultColors.DisabledColor_Light;
-                Disabled_Background = DarkMode ? DefaultColors.DisabledBackColor_Dark : DefaultColors.DisabledBackColor_Light;
+                Secondary = Program.Settings.Appearance.SecondaryColor;
+                Tertiary = Program.Settings.Appearance.TertiaryColor;
+                Disabled = Program.Settings.Appearance.DisabledColor;
+                Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
 
                 CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
             }
@@ -195,7 +191,7 @@ namespace WinPaletter.UI.Style
 
             Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations);
 
-            // Apply the style to the specified form or all open forms
+            // Apply the style to all open forms
             if (Form is null)
             {
                 foreach (Form form in Application.OpenForms)
@@ -236,9 +232,9 @@ namespace WinPaletter.UI.Style
                 }
             }
 
+            // Apply the style to the specified form
             else
             {
-                // Apply the style to the specified form
                 Form.BackColor = BackColor;
 
                 if (!IgnoreTitleBar)
@@ -256,16 +252,6 @@ namespace WinPaletter.UI.Style
                 {
                     int argpvAttribute3 = (int)DWMAPI.FormCornersType.Rectangular;
                     DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
-                }
-
-                if (Form == Forms.ExternalTerminal)
-                {
-                    Forms.ExternalTerminal.Label102.ForeColor = DarkMode ? Color.Gold : Color.Gold.Dark(0.1f);
-                }
-
-                if (Form == Forms.MainFrm)
-                {
-                    Forms.MainFrm.status_lbl.ForeColor = DarkMode ? Color.White : Color.Black;
                 }
 
                 if (Form.Visible)
@@ -287,10 +273,10 @@ namespace WinPaletter.UI.Style
             // Apply dark titlebar style
             DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
 
-            // SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            // SetControlTheme(Handle, Program.Style.DarkMode_App ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
             // IntPtr hDC = User32.GetDC(Handle);
             // User32.SetBkColor(hDC, BackColor.ToArgb() & 0x00FFFFFF);
-            // User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
+            // User32.SetTextColor(hDC, (Program.Style.DarkMode_App ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
             // User32.ReleaseDC(Handle, hDC);
 
             // Apply specific window corner preference for Windows 11/12
@@ -310,10 +296,6 @@ namespace WinPaletter.UI.Style
 
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
         {
-            // This will make all control have a consistent dark\light mode.
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
-                SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
-
             bool b = false;
             if (ctrl is UI.Retro.ButtonR)
                 b = true;
@@ -327,9 +309,23 @@ namespace WinPaletter.UI.Style
                 b = true;
             if (ctrl is UI.WP.LabelAlt)
                 b = true;
+            if (ctrl is UI.Retro.LabelR)
+                b = true;
+            if (ctrl is UI.Retro.ContextMenuR)
+                b = true;
+            if (ctrl is UI.Retro.MenuBarR)
+                b = true;
+            if (ctrl is UI.Retro.AppWorkspaceR)
+                b = true;
+            if (ctrl is UI.Retro.ToolTipR)
+                b = true;
 
             if (!b)
             {
+                // This will make all control have a consistent dark\light mode.
+                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+
                 switch (DarkMode)
                 {
                     case true:
@@ -376,6 +372,7 @@ namespace WinPaletter.UI.Style
             {
                 ListView temp3 = (ListView)ctrl;
                 temp3.BackColor = ctrl.Parent.BackColor;
+                temp3.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
             else if (ctrl is ListBox)
@@ -403,6 +400,18 @@ namespace WinPaletter.UI.Style
                 temp6.FlatStyle = FlatStyle.Flat;
                 temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;
+            }
+
+            else if (ctrl is WP.TitlebarExtender)
+            {
+                WP.TitlebarExtender titlebarExtender = ctrl as WP.TitlebarExtender;
+                if (!titlebarExtender.DropDWMEffect)
+                {
+                    Config.Scheme scheme = titlebarExtender.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+                    titlebarExtender.BackColor = scheme.Colors.Back_Hover;
+                }
+
+                Forms.MainFrm.tabsContainer1.Refresh();
             }
 
             else if (ctrl is DataGridView)

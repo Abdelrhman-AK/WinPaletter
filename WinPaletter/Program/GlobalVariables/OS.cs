@@ -48,17 +48,23 @@ namespace WinPaletter.GlobalVariables
         /// <br></br>
         /// <br>Value is got from OS name, or NT version. Nothing is known until Windows 12 releases are dropped</br>
         /// </summary>
-        public readonly static bool W12 = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("12") || Environment.OSVersion.Version.Major > 10 || (Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor > 0);
+        public readonly static bool W12 = RuntimeInformation.OSDescription.Contains("12") || Environment.OSVersion.Version.Major > 10 || (Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor > 0);
 
         /// <summary>
-        /// A boolean that represents if OS is Windows 10 (19H2=1909) or higher or not at all
+        /// A boolean that represents if OS is Windows 10 (19H2 = 1909) or higher or not
         /// </summary>
-        public readonly static bool W10_1909 = W12 || W11 || W10 && Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString()) >= 1909;
+        public readonly static bool W10_1909 = (!WXP && !WVista && !W7 && !W8 && !W81 && !W10) || W10 && Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString()) >= 1909;
 
         /// <summary>
-        /// A boolean that represents if OS is Windows 11 Build 22523 or higher or not at all
+        /// A boolean that represents if OS is Windows 10 (20H2 = 2004 = 19041) or higher or not
         /// </summary>
-        public readonly static bool W11_22523 = W12 || W11 && Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", 0).ToString()) >= 22523;
+        public readonly static bool W10_2004 = (!WXP && !WVista && !W7 && !W8 && !W81 && !W10) || W10 && Environment.OSVersion.Version.Build >= 19041;
+
+        /// <summary>
+        /// A boolean that represents if OS is Windows 11 build 22523 or higher or not
+        /// </summary>
+        public readonly static bool W11_22523 = (!WXP && !WVista && !W7 && !W8 && !W81 && !W10 && !W11) || W11 && Environment.OSVersion.Version.Build >= 22523;
+
 
         /// <summary>
         /// Get proper Windows name, returned as string differs according to current WinPaletter language.

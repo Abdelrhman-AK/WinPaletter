@@ -2,6 +2,16 @@
 {
     public partial class Localizer
     {
+        public string AspectEnabled { get; set; } = "Windows aspect ({0}) is enabled";
+        public string AspectDisabled { get; set; } = "Windows aspect ({0}) is disabled";
+        public string AspectEnabledTip { get; set; } = "WinPaletter will apply it when you apply the whole theme";
+        public string AspectDisabledTip { get; set; } = "WinPaletter will skip it and it won't be applied";
+        public string WindowsColors { get; set; } = "{0} colors";
+        public string ClassicColors { get; set; } = "Classic colors";
+        public string MetricsFonts { get; set; } = "Metrics and fonts";
+        public string LockScreen { get; set; } = "Lock screen";
+        public string LogonUIScreen { get; set; } = "LogonUI screen";
+
         public string CommandPrompt { get; set; } = "Command Prompt";
         public string PowerShellx86 { get; set; } = "PowerShell x86";
         public string PowerShellx64 { get; set; } = "PowerShell x64";

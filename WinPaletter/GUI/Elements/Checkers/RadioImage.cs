@@ -17,7 +17,6 @@ namespace WinPaletter.UI.WP
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
-            DoubleBuffered = true;
             Font = new("Segoe UI", 9f);
             ForeColor = Color.White;
             Text = string.Empty;
@@ -60,7 +59,7 @@ namespace WinPaletter.UI.WP
                     }
                     else { alpha2 = Checked ? 255 : 0; }
 
-                    CheckedChanged?.Invoke(this);
+                    CheckedChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -92,13 +91,24 @@ namespace WinPaletter.UI.WP
         public ContentAlignment ImageAlign { get; set; } = ContentAlignment.MiddleCenter;
         public TextImageRelation TextImageRelation { get; set; } = TextImageRelation.ImageAboveText;
 
+
+        private int _focusAlpha = 255;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int FocusAlpha
+        {
+            get => _focusAlpha;
+            set
+            {
+                _focusAlpha = value;
+                Refresh();
+            }
+        }
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
-        public event CheckedChangedEventHandler CheckedChanged;
-
-        public delegate void CheckedChangedEventHandler(object sender);
+        public event EventHandler CheckedChanged;
 
         protected override void OnDragOver(DragEventArgs e)
         {
@@ -156,9 +166,55 @@ namespace WinPaletter.UI.WP
             base.OnMouseLeave(e);
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            if (FindForm() != null)
+            {
+                FindForm().Activated += Form_Activated;
+                FindForm().Deactivate += Form_Deactivate; ;
+            }
+
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            if (FindForm() != null)
+            {
+                FindForm().Activated -= Form_Activated;
+                FindForm().Deactivate -= Form_Deactivate; ;
+            }
+
+            base.OnHandleDestroyed(e);
+        }
+
+        private void Form_Activated(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 255;
+            }
+        }
+
+        private void Form_Deactivate(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 100;
+            }
+        }
+
         #endregion
 
-        #region Voids/Functions
+        #region Methods
         private void UncheckOthersOnChecked()
         {
             if (Parent is null)
@@ -208,7 +264,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
 
             Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
             Rectangle MainRectInner = new(1, 1, Width - 3, Height - 3);
@@ -226,7 +281,7 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(Color.FromArgb(_alpha2, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, MainRect); }
 
-            using (SolidBrush br = new(Color.FromArgb(255 - _alpha2, scheme.Colors.Back))) { G.FillRoundedRect(br, MainRectInner); }
+            using (SolidBrush br = new(Color.FromArgb(Math.Max(0, FocusAlpha - _alpha2), scheme.Colors.Back))) { G.FillRoundedRect(br, MainRectInner); }
 
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 
@@ -312,7 +367,7 @@ namespace WinPaletter.UI.WP
                                 textRect.Width = space.Width;
                                 textRect.Height = TextSize.Height;
                                 textRect.X = space.X;
-                                textRect.Y = imageRect.Bottom + innerSpacing;
+                                textRect.Y = imageRect.Bottom + innerSpacing * 2;
                             }
 
                             else if (TextImageRelation == TextImageRelation.TextAboveImage)

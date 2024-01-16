@@ -24,7 +24,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Voids/Functions
+        #region Methods
         protected TextFormatFlags ReturnFormatFlags(string Text = "")
         {
             TextFormatFlags format = TextFormatFlags.Default;

@@ -74,10 +74,8 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
-        #region Events
-        public event CheckedChangedEventHandler CheckedChanged;
-
-        public delegate void CheckedChangedEventHandler(object sender, EventArgs e);
+        #region Events/Overrides
+        public event EventHandler CheckedChanged;
 
         protected virtual void OnCheckedChanged()
         {
@@ -202,7 +200,6 @@ namespace WinPaletter.UI.WP
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -233,7 +230,7 @@ namespace WinPaletter.UI.WP
 
                 using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
 
-                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.ForeColor_Accent.IsDark() ? Color.White : Color.Black))) { G.FillEllipse(br, CheckC); }
+                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt.IsDark() ? Color.Black : Color.White))) { G.FillEllipse(br, CheckC); }
 
                 // Non checked part
                 using (SolidBrush br = new(Color.FromArgb(255 - alpha, scheme.Colors.Back_Max))) { G.FillEllipse(br, CheckC); }
@@ -270,13 +267,21 @@ namespace WinPaletter.UI.WP
 
                 if (Checked)
                 {
-                    G.DrawImage((scheme.Colors.Line_Max.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
-                    G.DrawImage((scheme.Colors.Line_Max.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
+                    using (Bitmap b0 = (scheme.Colors.Line_Max.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.Line_Max.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((float)(1m - val)))
+                    {
+                        G.DrawImage(b0, CheckC);
+                        G.DrawImage(b1, CheckC);
+                    }
                 }
                 else
                 {
-                    G.DrawImage((scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
-                    G.DrawImage((scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
+                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((float)(1m - val)))
+                    {
+                        G.DrawImage(b0, CheckC);
+                        G.DrawImage(b1, CheckC);
+                    }
                 }
 
                 using (Pen P = new(lgborderChecked)) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }

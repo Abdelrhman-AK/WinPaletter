@@ -60,7 +60,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.NotifyUpdates.Visible = false;
+            Forms.Dashboard.NotifyUpdates.Visible = false;
 
             if (url is null)
             {
@@ -301,7 +301,7 @@ namespace WinPaletter
             _Shown = true;
         }
 
-        private void CheckBox1_CheckedChanged(object sender)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (_Shown)
             {

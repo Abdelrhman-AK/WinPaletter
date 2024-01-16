@@ -6,7 +6,6 @@ namespace WinPaletter.Theme
     {
         private bool _ErrorHappened = false;
         private readonly BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-        private readonly Converter converter = new();
 
         /// <summary>
         /// Enumeration for WinPaletter themes sources

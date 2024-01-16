@@ -35,105 +35,118 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsTerminalCopycat));
-            Label163 = new Label();
-            PictureBox33 = new PictureBox();
-            ComboBox1 = new UI.WP.ComboBox();
-            Button2 = new UI.WP.Button();
-            Button2.Click += new EventHandler(Button2_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            ((System.ComponentModel.ISupportInitialize)PictureBox33).BeginInit();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsTerminalCopycat));
+            this.Label163 = new System.Windows.Forms.Label();
+            this.PictureBox33 = new System.Windows.Forms.PictureBox();
+            this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
+            this.Button2 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).BeginInit();
+            this.SuspendLayout();
             // 
             // Label163
             // 
-            Label163.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label163.BackColor = Color.Transparent;
-            Label163.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label163.Location = new Point(42, 12);
-            Label163.Name = "Label163";
-            Label163.Size = new Size(418, 24);
-            Label163.TabIndex = 191;
-            Label163.Text = "Copycat from:";
-            Label163.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label163.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label163.BackColor = System.Drawing.Color.Transparent;
+            this.Label163.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label163.Location = new System.Drawing.Point(42, 12);
+            this.Label163.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Label163.Name = "Label163";
+            this.Label163.Size = new System.Drawing.Size(418, 23);
+            this.Label163.TabIndex = 191;
+            this.Label163.Text = "Copycat from:";
+            this.Label163.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox33
             // 
-            PictureBox33.Image = (Image)resources.GetObject("PictureBox33.Image");
-            PictureBox33.Location = new Point(12, 12);
-            PictureBox33.Name = "PictureBox33";
-            PictureBox33.Size = new Size(24, 24);
-            PictureBox33.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox33.TabIndex = 192;
-            PictureBox33.TabStop = false;
+            this.PictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox33.Image")));
+            this.PictureBox33.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox33.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.PictureBox33.Name = "PictureBox33";
+            this.PictureBox33.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox33.TabIndex = 192;
+            this.PictureBox33.TabStop = false;
             // 
             // ComboBox1
             // 
-            ComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
-            ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox1.Font = new("Segoe UI", 9.0f);
-            ComboBox1.ForeColor = Color.White;
-            ComboBox1.FormattingEnabled = true;
-            ComboBox1.ItemHeight = 20;
-            ComboBox1.Location = new Point(45, 38);
-            ComboBox1.Name = "ComboBox1";
-            ComboBox1.Size = new Size(415, 26);
-            ComboBox1.TabIndex = 193;
+            this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ComboBox1.ForeColor = System.Drawing.Color.White;
+            this.ComboBox1.FormattingEnabled = true;
+            this.ComboBox1.ItemHeight = 20;
+            this.ComboBox1.Location = new System.Drawing.Point(46, 38);
+            this.ComboBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ComboBox1.Name = "ComboBox1";
+            this.ComboBox1.Size = new System.Drawing.Size(415, 26);
+            this.ComboBox1.TabIndex = 193;
             // 
             // Button2
             // 
-            Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.Font = new("Segoe UI", 9.0f);
-            Button2.ForeColor = Color.White;
-            Button2.Image = null;
-            Button2.Location = new Point(294, 75);
-            Button2.Name = "Button2";
-            Button2.Size = new Size(80, 34);
-            Button2.TabIndex = 195;
-            Button2.Text = "Cancel";
-            Button2.UseVisualStyleBackColor = false;
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button2.ForeColor = System.Drawing.Color.White;
+            this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(294, 75);
+            this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(80, 33);
+            this.Button2.TabIndex = 195;
+            this.Button2.Text = "Cancel";
+            this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.Font = new("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = null;
-            Button1.ImageAlign = ContentAlignment.MiddleLeft;
-            Button1.Location = new Point(380, 75);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(80, 34);
-            Button1.TabIndex = 194;
-            Button1.Text = "OK";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = null;
+            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(380, 75);
+            this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(80, 33);
+            this.Button1.TabIndex = 194;
+            this.Button1.Text = "OK";
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // WindowsTerminalCopycat
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(472, 121);
-            Controls.Add(Button2);
-            Controls.Add(Button1);
-            Controls.Add(ComboBox1);
-            Controls.Add(Label163);
-            Controls.Add(PictureBox33);
-            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "WindowsTerminalCopycat";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Copycat";
-            ((System.ComponentModel.ISupportInitialize)PictureBox33).EndInit();
-            Load += new EventHandler(WindowsTerminalCopycat_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(472, 121);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.ComboBox1);
+            this.Controls.Add(this.Label163);
+            this.Controls.Add(this.PictureBox33);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "WindowsTerminalCopycat";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Copycat";
+            this.Load += new System.EventHandler(this.WindowsTerminalCopycat_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).EndInit();
+            this.ResumeLayout(false);
 
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
@@ -104,16 +105,19 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, Forms.WindowsTerminal.Terminal1 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } },
+                { Forms.WindowsTerminal.Terminal1, new string[] { nameof(Forms.WindowsTerminal.Terminal1.TabColor) } },
+            };
 
-            Conditions _conditions = new() { Terminal_TabColor = true };
-
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
 
             CList.Clear();
         }

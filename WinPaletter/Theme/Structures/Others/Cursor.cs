@@ -210,7 +210,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Save data of WinPaletter themed cursors into registry
+        /// ApplyToTM data of WinPaletter themed cursors into registry
         /// </summary>
         /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         /// <param name="Cursor">WinPaletter themed cursor structure</param>

@@ -350,7 +350,7 @@ namespace WinPaletter
                 {
                     bool Condition0 = ctrl.Text is not null && !ctrl.Text.All(char.IsDigit) && !string.IsNullOrWhiteSpace(ctrl.Text) && ctrl.Text.Count() > 1;
                     bool Condition1 = ctrl.Tag is not null && !ctrl.Tag.ToString().All(char.IsDigit) && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && ctrl.Tag.ToString().Count() > 1;
-                    bool Condition2 = ctrl is not TextBox && ctrl is not UI.WP.TextBox && ctrl is not UI.WP.SeparatorH && ctrl is not UI.WP.SeparatorV && ctrl is not UI.WP.NumericUpDown && ctrl is not UI.WP.Trackbar;
+                    bool Condition2 = ctrl is not TextBox && ctrl is not UI.WP.TextBox && ctrl is not UI.WP.SeparatorH && ctrl is not UI.WP.SeparatorV && ctrl is not UI.WP.NumericUpDown && ctrl is not UI.WP.TrackBar;
                     bool Condition3 = ctrl is PictureBox && ((PictureBox)ctrl).Image is not null;
 
                     if (Condition0 | Condition1 && Condition2)
@@ -663,21 +663,21 @@ namespace WinPaletter
                 return;
             }
 
-            SearchText = (TextBox8.Text ?? "").ToLower().Trim();
+            SearchText = (TextBox8.Text ?? string.Empty).ToLower().Trim();
 
             for (int r = 0; r <= data.Rows.Count - 1; r++)
             {
-                data[1, r].Selected = (data[1, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
+                data[1, r].Selected = (data[1, r].Value ?? string.Empty).ToString().ToLower().Trim().Contains(SearchText);
 
                 if (CheckBox1.Checked)
-                    data[2, r].Selected = (data[2, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
+                    data[2, r].Selected = (data[2, r].Value ?? string.Empty).ToString().ToLower().Trim().Contains(SearchText);
 
                 if (CheckBox2.Checked)
-                    data[0, r].Selected = (data[0, r].Value ?? "").ToString().ToLower().Trim().Contains(SearchText);
+                    data[0, r].Selected = (data[0, r].Value ?? string.Empty).ToString().ToLower().Trim().Contains(SearchText);
             }
 
             if (data.SelectedCells is not null && data.SelectedCells.Count > 0) { data.FirstDisplayedScrollingRowIndex = data.SelectedCells[0].RowIndex; }
-                
+
             data.Refresh();
         }
 
@@ -797,7 +797,7 @@ namespace WinPaletter
             }
         }
 
-        private void RadioButton1_CheckedChanged(object sender)
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
             TextBox1.RightToLeft = RadioButton2.Checked ? RightToLeft.Yes : RightToLeft.No;
         }
@@ -927,7 +927,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox1_CheckedChanged(object sender)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             data.Refresh();
         }

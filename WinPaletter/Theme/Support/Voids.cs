@@ -66,7 +66,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Helps in executing apply voids for WinPaletter theme structures, and counts execution time
+        /// Helps in executing apply Methods for WinPaletter theme structures, and counts execution time
         /// </summary>
         /// <param name="Void">Void that executes apply for a WinPaletter theme structure (feature)</param>
         /// <param name="TreeView">TreeView used as a theme log</param>

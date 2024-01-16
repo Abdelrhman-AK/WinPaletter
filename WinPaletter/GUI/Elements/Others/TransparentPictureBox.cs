@@ -8,6 +8,11 @@ namespace WinPaletter.UI.WP
     [Description("PictureBox that supports transparent background")]
     public class TransparentPictureBox : PictureBox
     {
+        public TransparentPictureBox()
+        {
+            DoubleBuffered = true;
+        }
+
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             base.OnPaintBackground(e);
@@ -15,7 +20,6 @@ namespace WinPaletter.UI.WP
             if (this == null) return;
 
             Graphics G = e.Graphics;
-            DoubleBuffered = true;
 
             int index = Parent.Controls.GetChildIndex(this);
 

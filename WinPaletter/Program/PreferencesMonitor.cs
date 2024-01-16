@@ -23,16 +23,9 @@ namespace WinPaletter
 
         private static MethodInvoker UpdateWallpaperInvoker()
         {
-            Bitmap wall = FetchSuitableWallpaper(TM, PreviewStyle);
-            Forms.MainFrm.pnl_preview.BackgroundImage = wall;
-            Forms.MainFrm.pnl_preview_classic.BackgroundImage = wall;
-            Forms.Metrics_Fonts.pnl_preview1.BackgroundImage = wall;
-            Forms.Metrics_Fonts.pnl_preview2.BackgroundImage = wall;
-            Forms.Metrics_Fonts.pnl_preview3.BackgroundImage = wall;
-            Forms.Metrics_Fonts.pnl_preview4.BackgroundImage = wall;
-            Forms.Metrics_Fonts.Classic_Preview1.BackgroundImage = wall;
-            Forms.Metrics_Fonts.Classic_Preview3.BackgroundImage = wall;
-            Forms.Metrics_Fonts.Classic_Preview4.BackgroundImage = wall;
+            Bitmap wall = FetchSuitableWallpaper(TM, WindowStyle);
+            Forms.Metrics_Fonts.windowMetrics1.BackgroundImage = wall;
+            Forms.Metrics_Fonts.Desktop_icons.BackgroundImage = wall;
             Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
             Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
             return null;
@@ -42,7 +35,6 @@ namespace WinPaletter
         {
             using (Bitmap wall_New = new((Bitmap)GetWallpaperFromRegistry().Clone()))
             {
-
                 Wallpaper_Unscaled = (Bitmap)wall_New.Clone();
                 Wallpaper = (Bitmap)wall_New.GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, null, IntPtr.Zero);
             }
@@ -50,7 +42,7 @@ namespace WinPaletter
 
         public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle PreviewConfig)
         {
-            using (PictureBox picbox = new() { Size = Forms.MainFrm.pnl_preview.Size, BackColor = TM.Win32.Background })
+            using (PictureBox picbox = new() { Size = Forms.Win11Colors.windowsDesktop1.Size, BackColor = TM.Win32.Background })
             {
                 Bitmap Wall;
 
@@ -313,7 +305,6 @@ namespace WinPaletter
             {
                 SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
             }
-
         }
 
         public static void OldWinPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)

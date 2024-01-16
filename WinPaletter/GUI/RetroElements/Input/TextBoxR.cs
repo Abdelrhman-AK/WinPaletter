@@ -11,15 +11,14 @@ namespace WinPaletter.UI.Retro
     [DefaultEvent("TextChanged")]
     public class TextBoxR : Control
     {
-
         public TextBoxR()
         {
             _BaseColor = BackColor;
             _TextColor = ForeColor;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
-            ForeColor = Color.Black;
-            BackColor = Color.White;
+            ForeColor = SystemColors.WindowText;
+            BackColor = SystemColors.Control;
             Font = new("Microsoft Sans Serif", 8f);
 
             TB = new()
@@ -27,7 +26,7 @@ namespace WinPaletter.UI.Retro
                 Visible = true,
                 Font = new("Microsoft Sans Serif", 8f),
                 Text = Text,
-                ForeColor = Color.White,
+                ForeColor = SystemColors.ControlText,
                 MaxLength = _MaxLength,
                 Multiline = _Multiline,
                 ReadOnly = _ReadOnly,
@@ -50,7 +49,6 @@ namespace WinPaletter.UI.Retro
 
             TB.TextChanged += OnBaseTextChanged;
             TB.KeyDown += OnBaseKeyDown;
-            BackColorChanged += TextBoxR_BackColorChanged;
         }
 
         #region Variables
@@ -243,13 +241,85 @@ namespace WinPaletter.UI.Retro
             }
         }
 
-        public Color ButtonShadow { get; set; } = Color.FromArgb(128, 128, 128);
-        public Color ButtonDkShadow { get; set; } = Color.Black;
-        public Color ButtonHilight { get; set; } = Color.White;
-        public Color ButtonLight { get; set; } = Color.FromArgb(192, 192, 192);
+        private Color buttonShadow = SystemColors.ButtonShadow;
+        private Color buttonDkShadow = SystemColors.ControlDark;
+        private Color buttonHilight = SystemColors.ButtonHighlight;
+        private Color buttonLight = SystemColors.ControlLight;
+
+        public Color ButtonShadow
+        {
+            get { return buttonShadow; }
+            set
+            {
+                if (buttonShadow != value)
+                {
+                    buttonShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonDkShadow
+        {
+            get { return buttonDkShadow; }
+            set
+            {
+                if (buttonDkShadow != value)
+                {
+                    buttonDkShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonHilight
+        {
+            get { return buttonHilight; }
+            set
+            {
+                if (buttonHilight != value)
+                {
+                    buttonHilight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonLight
+        {
+            get { return buttonLight; }
+            set
+            {
+                if (buttonLight != value)
+                {
+                    buttonLight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public new Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                if (base.BackColor != value)
+                {
+                    base.BackColor = value;
+                    Refresh();
+
+                    if (TB is not null)
+                    {
+                        TB.BackColor = value;
+                        TB.Refresh();
+                    }
+                }
+            }
+        }
+
         #endregion
 
-        #region Events
+        #region Events/Overrides
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -350,18 +420,6 @@ namespace WinPaletter.UI.Retro
             Invalidate();
         }
 
-        private void TextBoxR_BackColorChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (TB is not null)
-                    TB.BackColor = BackColor;
-            }
-            catch
-            {
-            }
-        }
-
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
@@ -369,7 +427,6 @@ namespace WinPaletter.UI.Retro
             Bitmap B = new(Width, Height);
             Graphics G = Graphics.FromImage(B);
 
-            DoubleBuffered = true;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
 

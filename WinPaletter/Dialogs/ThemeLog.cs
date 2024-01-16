@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -96,7 +94,7 @@ namespace WinPaletter.Dialogs
                     Button25.Visible = false;
                 }));
 
-                // New method of restarting explorer
+                // New method of restarting Explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                 {
                     if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
@@ -166,8 +164,8 @@ namespace WinPaletter.Dialogs
                     log_lbl.SetText(Program.Lang.TM_LogTimerFinished);
                 }
 
-                //New method of restarting explorer
-                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) 
+                //New method of restarting Explorer
+                if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                 {
                     if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                     {
@@ -175,7 +173,7 @@ namespace WinPaletter.Dialogs
                     }
                     else
                     {
-                        Theme.Manager.AddNode(TreeView1, Program.Lang.RestartExplorerIssue0 + ". " + Program.Lang.RestartExplorerIssue1, "warning");
+                        Theme.Manager.AddNode(TreeView1, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
                     }
                 }
 
@@ -207,7 +205,7 @@ namespace WinPaletter.Dialogs
             timer1.Enabled = false;
             timer1.Stop();
 
-            if (Forms.MainFrm.SaveFileDialog3.ShowDialog() == DialogResult.OK)
+            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 StringBuilder sb = new();
                 sb.Clear();
@@ -215,7 +213,7 @@ namespace WinPaletter.Dialogs
                 foreach (TreeNode N in TreeView1.Nodes)
                     sb.AppendLine($"[{N.ImageKey}]{"\t"} {N.Text}{"\r\n"}");
 
-                System.IO.File.WriteAllText(Forms.MainFrm.SaveFileDialog3.FileName, sb.ToString());
+                System.IO.File.WriteAllText(SaveFileDialog1.FileName, sb.ToString());
             }
         }
 

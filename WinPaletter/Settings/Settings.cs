@@ -33,6 +33,7 @@ namespace WinPaletter
             private const string REG_NerdStats = REG + @"\NerdStats";
             private const string REG_UsersServices = REG + @"\UsersServices";
             private const string REG_Miscellaneous = REG + @"\Miscellaneous";
+            private const string REG_Backup = REG + @"\Backup";
             #endregion
 
             public struct General
@@ -195,26 +196,28 @@ namespace WinPaletter
                 public bool CustomColors;
                 public bool CustomTheme_DarkMode;
                 public Color AccentColor;
-                //public Color SecondaryColor;
-                //public Color TertiaryColor;
-                //public Color DisabledColor;
+                public Color SecondaryColor;
+                public Color TertiaryColor;
+                public Color DisabledColor;
                 public Color BackColor;
-                //public Color DisabledBackColor;
+                public Color DisabledBackColor;
                 public bool RoundedCorners;
                 public bool ManagedByTheme;
+                public bool Animations;
 
                 public void Load()
                 {
                     DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "DarkMode", true));
+                    Animations = Conversions.ToBoolean(GetReg(REG_Appearance, "Animations", true));
                     AutoDarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "AutoDarkMode", true));
                     CustomColors = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomColors", false));
                     CustomTheme_DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
                     AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor.ToArgb())));
                     BackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColorDark.ToArgb())));
-                    //SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.Secondary.ToArgb())));
-                    //TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.Tertiary.ToArgb())));
-                    //DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledColor", DefaultColors.Disabled.ToArgb())));
-                    //DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor.ToArgb())));
+                    SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.SecondaryColor.ToArgb())));
+                    TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.TertiaryColor.ToArgb())));
+                    DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledColor", DefaultColors.DisabledColor_Dark.ToArgb())));
+                    DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor_Dark.ToArgb())));
                     RoundedCorners = Conversions.ToBoolean(GetReg(REG_Appearance, "RoundedCorners", true));
                     ManagedByTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "ManagedByTheme", true));
                 }
@@ -222,15 +225,16 @@ namespace WinPaletter
                 public void Save()
                 {
                     EditReg(REG_Appearance, "DarkMode", DarkMode, RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "Animations", Animations, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "AutoDarkMode", AutoDarkMode, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "CustomColors", CustomColors, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "CustomTheme", CustomTheme_DarkMode, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "AccentColor", AccentColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "BackColor", BackColor.ToArgb(), RegistryValueKind.DWord);
-                    //EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
-                    //EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
-                    //EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
-                    //EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
+                    EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
                     EditReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
                 }
@@ -493,6 +497,33 @@ namespace WinPaletter
                 }
 
             }
+
+            public struct BackupTheme
+            {
+                public bool Enabled;
+                public bool AutoBackupOnAppOpen;
+                public bool AutoBackupOnApply;
+                public bool AutoBackupOnThemeLoad;
+                public string BackupPath;
+
+                public void Load()
+                {
+                    Enabled = Conversions.ToBoolean(GetReg(REG_Backup, "Enabled", true));
+                    AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", true));
+                    AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
+                    AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
+                    BackupPath = GetReg(REG_Backup, "BackupPath", PathsExt.appData + "\\Backup\\Themes").ToString();
+                }
+
+                public void Save()
+                {
+                    EditReg(REG_Backup, "Enabled", Enabled, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "AutoBackupOnAppOpen", AutoBackupOnAppOpen, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "AutoBackupOnApply", AutoBackupOnApply, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "AutoBackupOnThemeLoad", AutoBackupOnThemeLoad, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
+                }
+            }
         }
 
         public Structures.General General = new()
@@ -548,12 +579,13 @@ namespace WinPaletter
             CustomTheme_DarkMode = true,
             AccentColor = DefaultColors.PrimaryColor,
             BackColor = DefaultColors.BackColorDark,
-            //SecondaryColor = DefaultColors.Secondary,
-            //TertiaryColor = DefaultColors.Tertiary,
-            //DisabledColor = DefaultColors.Disabled,
-            //DisabledBackColor = DefaultColors.DisabledBackColor,
+            SecondaryColor = DefaultColors.SecondaryColor,
+            TertiaryColor = DefaultColors.TertiaryColor,
+            DisabledColor = DefaultColors.DisabledColor_Dark,
+            DisabledBackColor = DefaultColors.DisabledBackColor_Dark,
             RoundedCorners = true,
-            ManagedByTheme = true
+            ManagedByTheme = true,
+            Animations = true
         };
 
         public Structures.Language Language = new()
@@ -625,6 +657,15 @@ namespace WinPaletter
             Win7LivePreview = true,
         };
 
+        public Structures.BackupTheme BackupTheme = new()
+        {
+            Enabled = true,
+            AutoBackupOnAppOpen = true,
+            AutoBackupOnApply = true,
+            AutoBackupOnThemeLoad = false,
+            BackupPath = PathsExt.appData + "\\Backup\\Themes"
+        };
+
         public enum Mode
         {
             Registry,
@@ -652,6 +693,7 @@ namespace WinPaletter
                         NerdStats.Load();
                         UsersServices.Load();
                         Miscellaneous.Load();
+                        BackupTheme.Load();
                         break;
                     }
 
@@ -734,6 +776,7 @@ namespace WinPaletter
                         NerdStats.Save();
                         UsersServices.Save();
                         Miscellaneous.Save();
+                        BackupTheme.Save();
                         break;
                     }
 

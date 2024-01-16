@@ -140,7 +140,7 @@
   <data name="Button25.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAI5JREFUOE9jGDrgHre0+E0OqfpbHFIdpGCQnjs8EmJQYxDgJod0FVDyP3lYugpq
+        wAAADsABataJCQAAAI5JREFUOE9jGDrgHre0+E0OqfpbHFIdpGCQnjs8EmJQYxDgJod0FVDyP3lYugpq
         DAIAJRowFRKNG6DGIABIEE0RKXjUQCAACaIpIgVjGnicha/hBDPvf3IwSC/UGAQYNZAkTB8DTzLxVmFT
         TAwG6YUagwAnGLjFTzDxFR9n4iknBYP0HGUQxCy+BilgYAAAiqbI4772Yg8AAAAASUVORK5CYII=
 </value>
@@ -216,4 +216,7 @@
         jQUE/AVJbsohsOVAAgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>105, 17</value>
+  </metadata>
 </root>

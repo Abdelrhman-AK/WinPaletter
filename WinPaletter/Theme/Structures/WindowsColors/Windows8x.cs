@@ -12,6 +12,9 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct Windows8x : ICloneable
     {
+        /// <summary> Controls if Windows 8x colors editing is enabled or not </summary> 
+        public bool Enabled;
+
         /// <summary>Start screen background ID. It can be any number from 1 to 20.</summary>
         public int Start;
 
@@ -65,12 +68,20 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Lock screen stock background image ID</summary>
         public int LockScreenSystemID;
 
+        /// <summary>Enable aero peek feature: hovering on taskbar right corner will show apps with aero transparent glass rectangles on desktop.</summary>
+        public bool EnableAeroPeek;
+
+        ///
+        public bool AlwaysHibernateThumbnails;
+
         /// <summary>
         /// Loads Windows8x data from registry
         /// </summary>
         /// <param name="default">Default Windows8x data structure</param>
-        public void Load(Windows8x @default)
+        public void Load(string Edition, Windows8x @default)
         {
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, @default.Enabled));
+
             if (OS.W8 | OS.W81)
             {
                 object y;
@@ -111,6 +122,9 @@ namespace WinPaletter.Theme.Structures
                 LockScreenType = (LogonUI7.Sources)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", LogonUI7.Sources.Default));
                 LockScreenSystemID = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", 0));
                 NoLockScreen = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", false));
+
+                EnableAeroPeek = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", @default.EnableAeroPeek));
+                AlwaysHibernateThumbnails = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", @default.AlwaysHibernateThumbnails));
             }
             else
             {
@@ -124,6 +138,8 @@ namespace WinPaletter.Theme.Structures
                 NoLockScreen = @default.NoLockScreen;
                 LockScreenType = @default.LockScreenType;
                 LockScreenSystemID = @default.LockScreenSystemID;
+                EnableAeroPeek = @default.EnableAeroPeek;
+                AlwaysHibernateThumbnails = @default.AlwaysHibernateThumbnails;
             }
         }
 
@@ -131,62 +147,72 @@ namespace WinPaletter.Theme.Structures
         /// Saves Windows8x data into registry
         /// </summary>
         /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        public void Apply(Theme.Manager TM, string Edition, TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
+            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, Enabled);
 
-            try
+            if (Enabled)
             {
-                switch (Theme)
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
+
+                try
                 {
-                    case Windows7.Themes.Aero:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-                            break;
-                        }
-
-                    case Windows7.Themes.AeroLite:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-                            try
+                    switch (Theme)
+                    {
+                        case Windows7.Themes.Aero:
                             {
-                                Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
-                            }
-                            catch
-                            {
-                                // Do nothing
-                                Program.Computer.Registry.CurrentUser.Close();
-                            }
-                            finally
-                            {
-                                Program.Computer.Registry.CurrentUser.Close();
+                                UxTheme.EnableTheming(1);
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                                break;
                             }
 
-                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
-                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
-                            break;
-                        }
+                        case Windows7.Themes.AeroLite:
+                            {
+                                UxTheme.EnableTheming(1);
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
+                                try
+                                {
+                                    Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
+                                }
+                                catch
+                                {
+                                    // Do nothing
+                                    Program.Computer.Registry.CurrentUser.Close();
+                                }
+                                finally
+                                {
+                                    Program.Computer.Registry.CurrentUser.Close();
+                                }
 
+                                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                                break;
+                            }
+
+                    }
                 }
+                catch { }
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse().ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse().ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse().ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI);
+
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.HEX(false)}", RegistryValueKind.String);
+                EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.HEX(false)}", RegistryValueKind.String);
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
+
+                Program.RefreshDWM(TM);
             }
-            catch { }
-
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);
-
-            EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse().ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse().ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse().ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI);
-
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI);
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.HEX(false)}", RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.HEX(false)}", RegistryValueKind.String);
         }
 
         /// <summary>Operator to check if two Windows8x structures are equal</summary>

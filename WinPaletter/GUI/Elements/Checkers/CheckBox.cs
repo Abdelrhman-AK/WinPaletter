@@ -52,7 +52,7 @@ namespace WinPaletter.UI.WP
                 if (value != _Checked)
                 {
                     _Checked = value;
-                    CheckedChanged?.Invoke(this);
+                    CheckedChanged?.Invoke(this, new EventArgs());
 
                     if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
                     else { alpha2 = Checked ? 255 : 0; }
@@ -66,13 +66,28 @@ namespace WinPaletter.UI.WP
         [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; }
+
+
+        private int _focusAlpha = 255;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int FocusAlpha
+        {
+            get => _focusAlpha;
+            set
+            {
+                _focusAlpha = value;
+                Refresh();
+            }
+        }
+
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         public event CheckedChangedEventHandler CheckedChanged;
 
-        public delegate void CheckedChangedEventHandler(object sender);
+        public delegate void CheckedChangedEventHandler(object sender, EventArgs e);
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -123,6 +138,52 @@ namespace WinPaletter.UI.WP
 
             base.OnMouseLeave(e);
         }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            if (FindForm() != null)
+            {
+                FindForm().Activated += Form_Activated;
+                FindForm().Deactivate += Form_Deactivate; ;
+            }
+
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            if (FindForm() != null)
+            {
+                FindForm().Activated -= Form_Activated;
+                FindForm().Deactivate -= Form_Deactivate; ;
+            }
+
+            base.OnHandleDestroyed(e);
+        }
+
+        private void Form_Activated(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 255;
+            }
+        }
+
+        private void Form_Deactivate(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 100;
+            }
+        }
         #endregion
 
         #region Animator
@@ -160,7 +221,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -177,7 +237,7 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             Color BackRect_Color = scheme.Colors.Back;
-            Color BackRect_LineColor = Color.FromArgb(255 - alpha, scheme.Colors.Back_Hover);
+            Color BackRect_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover);
 
             Color BackRect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover);
             Color BackRect_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover);
@@ -212,13 +272,12 @@ namespace WinPaletter.UI.WP
             // #################################################################################
 
             using (SolidBrush br = new(BackRect_Color)) { G.FillRoundedRect(br, InnerRect); }
-
             using (SolidBrush br = new(Checked_Rect_Color)) { G.FillRoundedRect(br, OuterRect); }
 
             if (_Checked)
             {
                 using (SolidBrush br = new(Checked_Rect_Color_Hover)) { G.FillRoundedRect(br, OuterRect); }
-                using (Pen P = new(Color.FromArgb(255, Checked_Rect_Color_Hover))) { G.DrawRoundedRect(P, OuterRect); }
+                using (Pen P = new(Color.FromArgb(FocusAlpha, Checked_Rect_Color_Hover))) { G.DrawRoundedRect(P, OuterRect); }
             }
             else
             {

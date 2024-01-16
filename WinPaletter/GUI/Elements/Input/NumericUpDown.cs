@@ -46,13 +46,14 @@ namespace WinPaletter.UI.WP
                 if (value != _Value)
                 {
                     if (value > Maximum) value = Maximum;
-                    if (value > Minimum) value = Minimum;
+                    if (value < Minimum) value = Minimum;
                     _Value = value;
                     Invalidate();
                     ValueChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
+
 
         private int _Max = 100;
         public int Maximum
@@ -68,6 +69,7 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
+
 
         private int _Min;
         public int Minimum
@@ -91,9 +93,23 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
+        private int _focusAlpha = 255;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int FocusAlpha
+        {
+            get => _focusAlpha;
+            set
+            {
+                _focusAlpha = value;
+                Refresh();
+            }
+        }
+
         #endregion
 
-        #region Events
+        #region Events/Overrides
+
         public event ValueChangedEventHandler ValueChanged;
 
         public delegate void ValueChangedEventHandler(object sender, EventArgs e);
@@ -180,6 +196,7 @@ namespace WinPaletter.UI.WP
 
             base.OnMouseDown(e);
         }
+
         #endregion
 
         #region Animator
@@ -205,7 +222,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
             bool RTL = (int)RightToLeft == 1;
 
             //Makes background drawn properly, and transparent
@@ -226,17 +242,17 @@ namespace WinPaletter.UI.WP
             }
             // #################################################################################
 
-            G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
+            G.FillRoundedRect(scheme.Brushes.Back_Level2, InnerRect);
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.FillRoundedRect(br, SideRect); }
 
-            using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+            using (Pen P = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Level2))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
             using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
-            using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_Checked_Hover)))
+            using (SolidBrush SignBrush = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Checked_Hover)))
             {
                 using (Font SignFont = new("Marlett", 11f))
                 {

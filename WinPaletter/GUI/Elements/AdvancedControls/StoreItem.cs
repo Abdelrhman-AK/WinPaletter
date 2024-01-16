@@ -26,7 +26,7 @@ namespace WinPaletter.UI.Controllers
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.65d));
+        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
         private List<Bitmap> DesignedFor_Badges = new();
         private TextureBrush pattern;
 
@@ -70,7 +70,7 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         public event ThemeManagerChangedEventHandler ThemeManagerChanged;
 
@@ -117,24 +117,24 @@ namespace WinPaletter.UI.Controllers
         }
         #endregion
 
-        #region Voids/Functions
+        #region Methods
         public void UpdateBadges()
         {
             DesignedFor_Badges.Clear();
             if (_TM is not null)
             {
                 if (_TM.Info.DesignedFor_Win11)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor11);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor11);
                 if (_TM.Info.DesignedFor_Win10)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor10);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor10);
                 if (_TM.Info.DesignedFor_Win81)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor8);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor8);
                 if (_TM.Info.DesignedFor_Win7)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor7);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor7);
                 if (_TM.Info.DesignedFor_WinVista)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedForVista);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForVista);
                 if (_TM.Info.DesignedFor_WinXP)
-                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedForXP);
+                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForXP);
             }
             Refresh();
         }
@@ -153,52 +153,52 @@ namespace WinPaletter.UI.Controllers
 
                 case 1:
                     {
-                        bmp = Properties.Resources.Store_Pattern1;
+                        bmp = Assets.WinPaletter_Store.Pattern1;
                         break;
                     }
                 case 2:
                     {
-                        bmp = Properties.Resources.Store_Pattern2;
+                        bmp = Assets.WinPaletter_Store.Pattern2;
                         break;
                     }
                 case 3:
                     {
-                        bmp = Properties.Resources.Store_Pattern3;
+                        bmp = Assets.WinPaletter_Store.Pattern3;
                         break;
                     }
                 case 4:
                     {
-                        bmp = Properties.Resources.Store_Pattern4;
+                        bmp = Assets.WinPaletter_Store.Pattern4;
                         break;
                     }
                 case 5:
                     {
-                        bmp = Properties.Resources.Store_Pattern5;
+                        bmp = Assets.WinPaletter_Store.Pattern5;
                         break;
                     }
                 case 6:
                     {
-                        bmp = Properties.Resources.Store_Pattern6;
+                        bmp = Assets.WinPaletter_Store.Pattern6;
                         break;
                     }
                 case 7:
                     {
-                        bmp = Properties.Resources.Store_Pattern7;
+                        bmp = Assets.WinPaletter_Store.Pattern7;
                         break;
                     }
                 case 8:
                     {
-                        bmp = Properties.Resources.Store_Pattern8;
+                        bmp = Assets.WinPaletter_Store.Pattern8;
                         break;
                     }
                 case 9:
                     {
-                        bmp = Properties.Resources.Store_Pattern9;
+                        bmp = Assets.WinPaletter_Store.Pattern9;
                         break;
                     }
                 case 10:
                     {
-                        bmp = Properties.Resources.Store_Pattern10;
+                        bmp = Assets.WinPaletter_Store.Pattern10;
                         break;
                     }
 
@@ -248,7 +248,6 @@ namespace WinPaletter.UI.Controllers
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            DoubleBuffered = true;
 
             if (TM is not null)
             {
@@ -366,11 +365,11 @@ namespace WinPaletter.UI.Controllers
 
                 if (DoneByWinPaletter)
                 {
-                    G.DrawImage(Properties.Resources.Store_DoneByWinPaletter, BadgeRect);
+                    G.DrawImage(Assets.WinPaletter_Store.DoneByWinPaletter, BadgeRect);
                 }
                 else
                 {
-                    G.DrawImage(Properties.Resources.Store_DoneByUser, BadgeRect);
+                    G.DrawImage(Assets.WinPaletter_Store.DoneByUser, BadgeRect);
                 }
 
                 string author = DoneByWinPaletter ? Application.ProductName : TM.Info.Author;
@@ -380,7 +379,7 @@ namespace WinPaletter.UI.Controllers
                     {
                         G.DrawString($"{Program.Lang.By} {author}", new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), br, Author_Rect, sf);
 
-                        G.DrawImage(Properties.Resources.Store_ThemeVersion, VerRect);
+                        G.DrawImage(Assets.WinPaletter_Store.ThemeVersion, VerRect);
                         G.DrawString(TM.Info.ThemeVersion, Fonts.Console, br, Version_Rect, sf);
                     }
                 }

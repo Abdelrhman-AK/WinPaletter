@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+﻿using Devcorp.Controls.VisualStyles;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.ComponentModel;
@@ -6,13 +6,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class Metrics_Fonts
     {
         public Metrics_Fonts()
@@ -20,187 +18,238 @@ namespace WinPaletter
             InitializeComponent();
         }
 
+        private void Metrics_Fonts_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Metrics-and-Fonts");
+        }
+
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromMSSTYLES(object sender, EventArgs e)
+        {
+            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                string theme = OpenFileDialog2.FileName;
+
+                try
+                {
+                    // Newer versions of msstyles
+                    using (libmsstyle.VisualStyle visualStyle = new(theme))
+                    {
+                        Theme.Manager TMx = new(Manager.Source.Empty)
+                        {
+                            MetricsFonts = visualStyle.MetricsFonts()
+                        };
+                        LoadFromTM(TMx);
+                        TMx.Dispose();
+                    }
+                }
+                catch
+                {
+                    // Old msstyles (Windows XP)
+                    try
+                    {
+                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                        {
+                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                        }
+
+                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                        {
+                            using (VisualStyleFile vs = new(theme))
+                            {
+                                LoadMetrics(vs.Metrics);
+                            }
+                        }
+                    }
+                    catch (Exception ex) { throw ex; }
+                }
+            }
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
+            Close();
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                TMx.MetricsFonts.Apply();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private void ModeSwitched(object sender, EventArgs e)
+        {
+            if (AdvancedMode)
+            {
+                tablessControl1.SelectedIndex = 0;
+            }
+            else
+            {
+                tablessControl1.SelectedIndex = 1;
+            }
+        }
+
         private void EditFonts_Load(object sender, EventArgs e)
         {
-            MenuStrip1.Renderer = new UI.WP.StripRenderer();  // Removes the inferior white line from menu strip
-            MenuStrip2.Renderer = new UI.WP.StripRenderer();
-
-            pnl_preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview2.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview3.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview4.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-
-            Classic_Preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview3.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview4.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-
-            this.LoadLanguage();
-            ApplyStyle(this);
-            ApplyFromTM(Program.TM);
-
-            Window1.CopycatFrom(Forms.MainFrm.Window1, true);
-            Window2.CopycatFrom(Forms.MainFrm.Window2, true);
-            Window4.CopycatFrom(Forms.MainFrm.Window1, true);
-            Window6.CopycatFrom(Forms.MainFrm.Window1, true);
-
-            SetClassicWindowColors(Program.TM, WindowR1);
-            SetClassicWindowColors(Program.TM, WindowR2, false);
-            SetClassicWindowColors(Program.TM, WindowR3);
-            SetClassicWindowColors(Program.TM, WindowR5);
-            SetClassicPanelColors(Program.TM, PanelR1);
-            SetClassicPanelColors(Program.TM, PanelR2);
-            SetClassicButtonColors(Program.TM, ButtonR1);
-            SetClassicButtonColors(Program.TM, ButtonR2);
-            SetClassicButtonColors(Program.TM, ButtonR3);
-            SetClassicButtonColors(Program.TM, ButtonR10);
-            SetClassicButtonColors(Program.TM, ButtonR11);
-            SetClassicButtonColors(Program.TM, ButtonR12);
-
-            ScrollBarR2.ButtonHilight = Program.TM.Win32.ButtonHilight;
-            ScrollBarR2.BackColor = Program.TM.Win32.ButtonFace;
-            ScrollBarR1.ButtonHilight = Program.TM.Win32.ButtonHilight;
-            ScrollBarR1.BackColor = Program.TM.Win32.ButtonFace;
-
-            Label13.ForeColor = Program.TM.Win32.ButtonText;
-            Label14.ForeColor = Program.TM.Win32.ButtonText;
-            Refresh17BitPreference();
-
-            this.DoubleBuffer();
-
-            bool condition0 = Program.PreviewStyle == WindowStyle.W7 && Program.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
-            bool condition1 = Program.PreviewStyle == WindowStyle.WVista && Program.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
-            bool condition2 = Program.PreviewStyle == WindowStyle.WXP && Program.TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
-
-            if (condition0 | condition1 | condition2)
+            DesignerData data = new(this)
             {
-                tabs_preview_1.SelectedIndex = 1;
-                tabs_preview_2.SelectedIndex = 1;
-                tabs_preview_3.SelectedIndex = 1;
-            }
-            else
-            {
-                tabs_preview_1.SelectedIndex = 0;
-                tabs_preview_2.SelectedIndex = 0;
-                tabs_preview_3.SelectedIndex = 0;
-            }
+                AspectName = Program.Lang.MetricsFonts,
+                Enabled = Program.TM.MetricsFonts.Enabled,
+                Import_theme = false,
+                Import_msstyles = true,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = true,
 
-            FakeIcon1.Icon = Forms.MainFrm.Icon;                  // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-            FakeIcon2.Icon = Properties.Resources.fileextension;    // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-            FakeIcon3.Icon = Properties.Resources.ThemesResIcon;    // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromMSSTYLES = LoadFromMSSTYLES,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_11 = ImportWin11Preset,
+                OnImportFromScheme_10 = ImportWin10Preset,
+                OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_7 = ImportWin7Preset,
+                OnImportFromScheme_Vista = ImportWinVistaPreset,
+                OnImportFromScheme_XP = ImportWinXPPreset,
 
-            if (OS.WXP)
-            {
-                PictureBox35.Image = SystemIcons.Information.ToBitmap();
-                PictureBox36.Image = SystemIcons.Information.ToBitmap();
-            }
-            else
-            {
-                Icon ico = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
-                if (ico is not null)
-                {
-                    PictureBox35.Image = ico.ToBitmap();
-                    PictureBox36.Image = ico.ToBitmap();
-                }
-                else
-                {
-                    PictureBox35.Image = SystemIcons.Information.ToBitmap();
-                    PictureBox36.Image = SystemIcons.Information.ToBitmap();
-                }
-            }
+                OnModeAdvanced = ModeSwitched,
+                OnModeSimple = ModeSwitched,
+            };
 
-            bool Win7 = Window6.Preview == UI.Simulation.Window.Preview_Enum.W7Aero | Window6.Preview == UI.Simulation.Window.Preview_Enum.W7Opaque | Window6.Preview == UI.Simulation.Window.Preview_Enum.W7Basic;
-            bool Win8 = Window6.Preview == UI.Simulation.Window.Preview_Enum.W8 | Window6.Preview == UI.Simulation.Window.Preview_Enum.W8Lite;
-            bool WinXP = Window6.Preview == UI.Simulation.Window.Preview_Enum.WXP;
+            LoadData(data);
 
-            if (!Win7 & !Win8 & !WinXP)
-            {
-                msgLbl.ForeColor = Window6.DarkMode ? Color.White : Color.Black;
-                MenuStrip1.BackColor = Window6.DarkMode ? Color.FromArgb(35, 35, 35) : Color.FromArgb(255, 255, 255);
-                MenuStrip1.ForeColor = Window6.DarkMode ? Color.White : Color.Black;
-            }
-            else
-            {
-                msgLbl.ForeColor = Color.Black;
-                MenuStrip1.BackColor = Color.FromArgb(255, 255, 255);
-                MenuStrip1.ForeColor = Color.Black;
-            }
+            windowMetrics1.BackgroundImage = Program.Wallpaper;
+            Desktop_icons.BackgroundImage = Program.Wallpaper;
 
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            LoadFromTM(Program.TM);
+            LoadDefaultValues();
+
             AlertBox10.Text = Program.Lang.TM_MetricsHighDPIAlert;
-
-            AlertBox11.Text = Forms.MainFrm.WXP_Alert2.Text;
-            AlertBox11.Visible = Forms.MainFrm.WXP_Alert2.Visible;
-            AlertBox11.Size = AlertBox11.Parent.Size - new Size(40, 40);
-            AlertBox11.Location = new(20, 20);
-
-            AlertBox12.Text = AlertBox11.Text;
-            AlertBox12.Visible = AlertBox11.Visible;
-            AlertBox12.Size = AlertBox11.Size;
-            AlertBox12.Location = AlertBox11.Location;
-
-            AlertBox13.Text = AlertBox11.Text;
-            AlertBox13.Visible = AlertBox11.Visible;
-            AlertBox13.Size = AlertBox11.Size;
-            AlertBox13.Location = AlertBox11.Location;
-
-            Forms.MainFrm.Visible = false;
         }
 
-        public void Refresh17BitPreference()
+        private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (Program.TM.Win32.EnableTheming)
+            switch (TabControl1.SelectedIndex)
             {
-                MenuStrip2.BackColor = Program.TM.Win32.MenuBar;
+                case 0:
+                    {
+                        tabs_preview_1.SelectedIndex = 0;
+                        windowMetrics1.ShowMenuSection = false;
+                        windowMetrics1.ShowAsMenu = true;
+                        break;
+                    }
+                case 1:
+                    {
+                        tabs_preview_1.SelectedIndex = 1;
+                        windowMetrics1.ShowMenuSection = false;
+                        windowMetrics1.ShowAsMenu = false;
+                        break;
+                    }
+                case 2:
+                    {
+                        windowMetrics1.ShowMenuSection = true;
+                        windowMetrics1.ShowAsMenu = true;
+                        tabs_preview_1.SelectedIndex = 0;
+                        break;
+                    }
+                case 3:
+                    {
+                        windowMetrics1.ShowMenuSection = true;
+                        windowMetrics1.ShowAsMenu = false;
+                        tabs_preview_1.SelectedIndex = 0;
+                        break;
+                    }
             }
-            else
-            {
-                MenuStrip2.BackColor = Program.TM.Win32.Menu;
-            }
-
-            ToolStripMenuItem1.ForeColor = Program.TM.Win32.MenuText;
-            ToolStripMenuItem4.ForeColor = Program.TM.Win32.MenuText;
-
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Manager TM)
         {
-            MetricsEnabled.Checked = TM.MetricsFonts.Enabled;
+            AspectEnabled = TM.MetricsFonts.Enabled;
 
             Label1.Font = TM.MetricsFonts.CaptionFont;
-            Window1.Font = TM.MetricsFonts.CaptionFont;
-            WindowR1.Font = TM.MetricsFonts.CaptionFont;
-            WindowR3.Font = TM.MetricsFonts.CaptionFont;
-            WindowR5.Font = TM.MetricsFonts.CaptionFont;
 
             Label1.Text = TM.MetricsFonts.CaptionFont.Name;
 
             Label2.Font = TM.MetricsFonts.IconFont;
-            FakeIcon1.Font = TM.MetricsFonts.IconFont;
-            FakeIcon2.Font = TM.MetricsFonts.IconFont;
-            FakeIcon3.Font = TM.MetricsFonts.IconFont;
+
             Label2.Text = TM.MetricsFonts.IconFont.Name;
 
             Label3.Font = TM.MetricsFonts.MenuFont;
-            MenuStrip1.Font = TM.MetricsFonts.MenuFont;
-            MenuStrip2.Font = TM.MetricsFonts.MenuFont;
             Label3.Text = TM.MetricsFonts.MenuFont.Name;
 
             Label5.Font = TM.MetricsFonts.SmCaptionFont;
-            Window2.Font = TM.MetricsFonts.SmCaptionFont;
-            WindowR2.Font = TM.MetricsFonts.SmCaptionFont;
             Label5.Text = TM.MetricsFonts.SmCaptionFont.Name;
 
             Label4.Font = TM.MetricsFonts.MessageFont;
-            msgLbl.Font = TM.MetricsFonts.MessageFont;
-            Label13.Font = TM.MetricsFonts.MessageFont;
             Label4.Text = TM.MetricsFonts.MessageFont.Name;
 
             Label6.Font = TM.MetricsFonts.StatusFont;
-            statusLbl.Font = TM.MetricsFonts.StatusFont;
-            Label14.Font = TM.MetricsFonts.StatusFont;
             Label6.Text = TM.MetricsFonts.StatusFont.Name;
-            PanelR1.Height = Math.Max(GetTitleTextHeight(TM.MetricsFonts.StatusFont), 20);
 
             TextBox1.Text = TM.MetricsFonts.FontSubstitute_MSShellDlg;
             TextBox2.Text = TM.MetricsFonts.FontSubstitute_MSShellDlg2;
@@ -208,114 +257,29 @@ namespace WinPaletter
 
             CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
 
-            Trackbar1.Value = TM.MetricsFonts.BorderWidth;
-            Trackbar2.Value = TM.MetricsFonts.CaptionHeight;
-            Trackbar3.Value = TM.MetricsFonts.CaptionWidth;
-            Trackbar6.Value = TM.MetricsFonts.IconSpacing;
-            Trackbar4.Value = TM.MetricsFonts.IconVerticalSpacing;
-            Trackbar9.Value = TM.MetricsFonts.MenuHeight;
-            Trackbar8.Value = TM.MetricsFonts.MenuWidth;
-            Trackbar12.Value = TM.MetricsFonts.PaddedBorderWidth;
-            Trackbar11.Value = TM.MetricsFonts.ScrollHeight;
-            Trackbar10.Value = TM.MetricsFonts.ScrollWidth;
-            Trackbar14.Value = TM.MetricsFonts.SmCaptionHeight;
-            Trackbar13.Value = TM.MetricsFonts.SmCaptionWidth;
-            Trackbar7.Value = TM.MetricsFonts.DesktopIconSize;
-            Trackbar5.Value = TM.MetricsFonts.ShellIconSize;
-            Trackbar15.Value = TM.MetricsFonts.ShellSmallIconSize;
+            trackBarX1.Value = TM.MetricsFonts.CaptionHeight;
+            trackBarX2.Value = TM.MetricsFonts.CaptionWidth;
+            trackBarX3.Value = TM.MetricsFonts.BorderWidth;
+            trackBarX4.Value = TM.MetricsFonts.PaddedBorderWidth;
+            trackBarX5.Value = TM.MetricsFonts.SmCaptionHeight;
+            trackBarX6.Value = TM.MetricsFonts.SmCaptionWidth;
+            trackBarX7.Value = TM.MetricsFonts.IconVerticalSpacing;
+            trackBarX8.Value = TM.MetricsFonts.IconSpacing;
+            trackBarX9.Value = TM.MetricsFonts.DesktopIconSize;
+            trackBarX10.Value = TM.MetricsFonts.ShellIconSize;
+            trackBarX11.Value = TM.MetricsFonts.ShellSmallIconSize;
+            trackBarX12.Value = TM.MetricsFonts.MenuHeight;
+            trackBarX13.Value = TM.MetricsFonts.MenuWidth;
+            trackBarX14.Value = TM.MetricsFonts.ScrollHeight;
+            trackBarX15.Value = TM.MetricsFonts.ScrollWidth;
 
-            WindowR1.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
-            WindowR3.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
-            WindowR5.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
-
-            if (TM.WindowsEffects.IconsShadow)
-            {
-                FakeIcon1.ColorGlow = Color.FromArgb(75, 0, 0, 0);
-            }
-            else
-            {
-                FakeIcon1.ColorGlow = Color.FromArgb(0, 0, 0, 0);
-            }
-            FakeIcon2.ColorGlow = FakeIcon1.ColorGlow;
-            FakeIcon3.ColorGlow = FakeIcon1.ColorGlow;
-
-            WindowR1.Refresh();
-            WindowR2.Refresh();
-            WindowR3.Refresh();
-            WindowR5.Refresh();
-
-            CtrlTheme theme;
-            Color statusBackColor, StatusForeColor;
-
-            if (Program.PreviewStyle == WindowStyle.W12)
-            {
-                if (TM.Windows12.AppMode_Light)
-                {
-                    theme = CtrlTheme.Default;
-                    StatusForeColor = Color.Black;
-                    statusBackColor = Color.White;
-                }
-                else
-                {
-                    theme = CtrlTheme.DarkExplorer;
-                    StatusForeColor = Color.White;
-                    statusBackColor = Color.FromArgb(28, 28, 28);
-                }
-            }
-
-            else if (Program.PreviewStyle == WindowStyle.W11)
-            {
-
-                if (TM.Windows11.AppMode_Light)
-                {
-                    theme = CtrlTheme.Default;
-                    StatusForeColor = Color.Black;
-                    statusBackColor = Color.White;
-                }
-                else
-                {
-                    theme = CtrlTheme.DarkExplorer;
-                    StatusForeColor = Color.White;
-                    statusBackColor = Color.FromArgb(28, 28, 28);
-                }
-            }
-
-            else if (Program.PreviewStyle == WindowStyle.W10)
-            {
-
-                if (TM.Windows10.AppMode_Light)
-                {
-                    theme = CtrlTheme.Default;
-                    StatusForeColor = Color.Black;
-                    statusBackColor = Color.White;
-                }
-                else
-                {
-                    theme = CtrlTheme.DarkExplorer;
-                    StatusForeColor = Color.White;
-                    statusBackColor = Color.FromArgb(28, 28, 28);
-                }
-            }
-
-            else
-            {
-                StatusForeColor = Color.Black;
-                statusBackColor = Color.White;
-                theme = CtrlTheme.Default;
-            }
-
-            SetControlTheme(MenuStrip1.Handle, theme);
-            SetControlTheme(VScrollBar1.Handle, theme);
-            SetControlTheme(HScrollBar1.Handle, theme);
-            SetControlTheme(StatusStrip1.Handle, theme);
-
-            statusLbl.ForeColor = StatusForeColor;
-            StatusStrip1.BackColor = statusBackColor;
+            windowMetrics1.LoadMetrics(TM);
+            Desktop_icons.LoadMetrics(TM);
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            TM.MetricsFonts.Enabled = MetricsEnabled.Checked;
+            TM.MetricsFonts.Enabled = AspectEnabled;
 
             TM.MetricsFonts.CaptionFont = Label1.Font;
             TM.MetricsFonts.IconFont = Label2.Font;
@@ -324,26 +288,88 @@ namespace WinPaletter
             TM.MetricsFonts.SmCaptionFont = Label5.Font;
             TM.MetricsFonts.StatusFont = Label6.Font;
 
-            TM.MetricsFonts.BorderWidth = Trackbar1.Value;
-            TM.MetricsFonts.CaptionHeight = Trackbar2.Value;
-            TM.MetricsFonts.CaptionWidth = Trackbar3.Value;
-            TM.MetricsFonts.IconSpacing = Trackbar6.Value;
-            TM.MetricsFonts.IconVerticalSpacing = Trackbar4.Value;
-            TM.MetricsFonts.MenuHeight = Trackbar9.Value;
-            TM.MetricsFonts.MenuWidth = Trackbar8.Value;
-            TM.MetricsFonts.PaddedBorderWidth = Trackbar12.Value;
-            TM.MetricsFonts.ScrollHeight = Trackbar11.Value;
-            TM.MetricsFonts.ScrollWidth = Trackbar10.Value;
-            TM.MetricsFonts.SmCaptionHeight = Trackbar14.Value;
-            TM.MetricsFonts.SmCaptionWidth = Trackbar13.Value;
-            TM.MetricsFonts.DesktopIconSize = Trackbar7.Value;
-            TM.MetricsFonts.ShellIconSize = Trackbar5.Value;
-            TM.MetricsFonts.ShellSmallIconSize = Trackbar15.Value;
+            TM.MetricsFonts.CaptionHeight = trackBarX1.Value;
+            TM.MetricsFonts.CaptionWidth = trackBarX2.Value;
+            TM.MetricsFonts.BorderWidth = trackBarX3.Value;
+            TM.MetricsFonts.PaddedBorderWidth = trackBarX4.Value;
+            TM.MetricsFonts.SmCaptionHeight = trackBarX5.Value;
+            TM.MetricsFonts.SmCaptionWidth = trackBarX6.Value;
+            TM.MetricsFonts.IconVerticalSpacing = trackBarX7.Value;
+            TM.MetricsFonts.IconSpacing = trackBarX8.Value;
+            TM.MetricsFonts.DesktopIconSize = trackBarX9.Value;
+            TM.MetricsFonts.ShellIconSize = trackBarX10.Value;
+            TM.MetricsFonts.ShellSmallIconSize = trackBarX11.Value;
+            TM.MetricsFonts.MenuHeight = trackBarX12.Value;
+            TM.MetricsFonts.MenuWidth = trackBarX13.Value;
+            TM.MetricsFonts.ScrollHeight = trackBarX14.Value;
+            TM.MetricsFonts.ScrollWidth = trackBarX15.Value;
+
             TM.MetricsFonts.Fonts_SingleBitPP = CheckBox1.Checked;
 
             TM.MetricsFonts.FontSubstitute_MSShellDlg = TextBox1.Text;
             TM.MetricsFonts.FontSubstitute_MSShellDlg2 = TextBox2.Text;
             TM.MetricsFonts.FontSubstitute_SegoeUI = TextBox3.Text;
+        }
+
+        public void LoadMetrics(VisualStyleMetrics vs)
+        {
+            trackBarX3.Value = vs.Sizes.CaptionBarHeight;
+            trackBarX14.Value = vs.Sizes.ScrollbarHeight;
+            trackBarX15.Value = vs.Sizes.ScrollbarWidth;
+            trackBarX5.Value = vs.Sizes.SMCaptionBarHeight;
+            trackBarX7.Value = vs.Sizes.SMCaptionBarWidth;
+
+            Label1.Font = vs.Fonts.CaptionFont;
+            windowMetrics1.CaptionFont = vs.Fonts.CaptionFont;
+
+            Label2.Font = vs.Fonts.IconTitleFont;
+            Desktop_icons.Font = vs.Fonts.IconTitleFont;
+            Label2.Text = vs.Fonts.IconTitleFont.Name;
+
+            Label3.Font = vs.Fonts.MenuFont;
+            windowMetrics1.MenuFont = vs.Fonts.CaptionFont;
+            Label3.Text = vs.Fonts.MenuFont.Name;
+
+            Label5.Font = vs.Fonts.SmallCaptionFont;
+            windowMetrics1.SmCaptionFont = vs.Fonts.CaptionFont;
+            Label5.Text = vs.Fonts.SmallCaptionFont.Name;
+
+
+            Label4.Font = vs.Fonts.MsgBoxFont;
+            windowMetrics1.MessageFont = vs.Fonts.CaptionFont;
+            Label4.Text = vs.Fonts.MsgBoxFont.Name;
+
+            Label6.Font = vs.Fonts.StatusFont;
+            windowMetrics1.StatusFont = vs.Fonts.CaptionFont;
+            Label6.Text = vs.Fonts.StatusFont.Name;
+
+            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            {
+                ApplyToTM(TMx);
+                LoadFromTM(TMx);
+            }
+        }
+
+        void LoadDefaultValues()
+        {
+            using (Theme.Manager @default = Default.Get(Program.WindowStyle))
+            {
+                trackBarX1.DefaultValue = @default.MetricsFonts.CaptionHeight;
+                trackBarX2.DefaultValue = @default.MetricsFonts.CaptionWidth;
+                trackBarX3.DefaultValue = @default.MetricsFonts.BorderWidth;
+                trackBarX4.DefaultValue = @default.MetricsFonts.PaddedBorderWidth;
+                trackBarX5.DefaultValue = @default.MetricsFonts.SmCaptionHeight;
+                trackBarX6.DefaultValue = @default.MetricsFonts.SmCaptionWidth;
+                trackBarX7.DefaultValue = @default.MetricsFonts.IconVerticalSpacing;
+                trackBarX8.DefaultValue = @default.MetricsFonts.IconSpacing;
+                trackBarX9.DefaultValue = @default.MetricsFonts.DesktopIconSize;
+                trackBarX10.DefaultValue = @default.MetricsFonts.ShellIconSize;
+                trackBarX11.DefaultValue = @default.MetricsFonts.ShellSmallIconSize;
+                trackBarX12.DefaultValue = @default.MetricsFonts.MenuHeight;
+                trackBarX13.DefaultValue = @default.MetricsFonts.MenuWidth;
+                trackBarX14.DefaultValue = @default.MetricsFonts.ScrollHeight;
+                trackBarX15.DefaultValue = @default.MetricsFonts.ScrollWidth;
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -352,19 +378,8 @@ namespace WinPaletter
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
                 Label1.Font = FontDialog1.Font;
-                Window1.Font = FontDialog1.Font;
-                WindowR1.Font = FontDialog1.Font;
-                Window4.Font = FontDialog1.Font;
-                WindowR3.Font = FontDialog1.Font;
-                Window6.Font = FontDialog1.Font;
-                WindowR5.Font = FontDialog1.Font;
+                windowMetrics1.CaptionFont = FontDialog1.Font;
                 Label1.Text = FontDialog1.Font.Name;
-                Window1.Refresh();
-                WindowR1.Refresh();
-                Window4.Refresh();
-                WindowR3.Refresh();
-                Window6.Refresh();
-                WindowR5.Refresh();
             }
         }
 
@@ -374,11 +389,8 @@ namespace WinPaletter
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
                 Label2.Font = FontDialog1.Font;
-                FakeIcon1.Font = FontDialog1.Font;
-                FakeIcon2.Font = FontDialog1.Font;
-                FakeIcon3.Font = FontDialog1.Font;
+                Desktop_icons.Font = FontDialog1.Font;
                 Label2.Text = FontDialog1.Font.Name;
-
             }
         }
 
@@ -387,9 +399,8 @@ namespace WinPaletter
             FontDialog1.Font = Label3.Font;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
+                windowMetrics1.MenuFont = FontDialog1.Font;
                 Label3.Font = FontDialog1.Font;
-                MenuStrip1.Font = FontDialog1.Font;
-                MenuStrip2.Font = FontDialog1.Font;
                 Label3.Text = FontDialog1.Font.Name;
             }
         }
@@ -399,11 +410,9 @@ namespace WinPaletter
             FontDialog1.Font = Label4.Font;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
+                windowMetrics1.MessageFont = FontDialog1.Font;
                 Label4.Font = FontDialog1.Font;
-                msgLbl.Font = FontDialog1.Font;
-                Label13.Font = FontDialog1.Font;
                 Label4.Text = FontDialog1.Font.Name;
-
             }
         }
 
@@ -412,9 +421,8 @@ namespace WinPaletter
             FontDialog1.Font = Label5.Font;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
+                windowMetrics1.SmCaptionFont = FontDialog1.Font;
                 Label5.Font = FontDialog1.Font;
-                Window2.Font = FontDialog1.Font;
-                WindowR2.Font = FontDialog1.Font;
                 Label5.Text = FontDialog1.Font.Name;
             }
         }
@@ -424,177 +432,10 @@ namespace WinPaletter
             FontDialog1.Font = Label6.Font;
             if (FontDialog1.ShowDialog() == DialogResult.OK)
             {
+                windowMetrics1.StatusFont = FontDialog1.Font;
                 Label6.Font = FontDialog1.Font;
-                Label14.Font = FontDialog1.Font;
-                statusLbl.Font = FontDialog1.Font;
                 Label6.Text = FontDialog1.Font.Name;
-                PanelR1.Height = Math.Max(GetTitleTextHeight(FontDialog1.Font), 20);
             }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM);
-            Close();
-            SetModernWindowMetrics(Program.TM, Forms.MainFrm.Window1);
-            SetModernWindowMetrics(Program.TM, Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(Program.TM, Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(Program.TM, Forms.MainFrm.ClassicWindow2);
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            SetModernWindowMetrics(TMx, Forms.MainFrm.Window1);
-            SetModernWindowMetrics(TMx, Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(TMx, Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(TMx, Forms.MainFrm.ClassicWindow2);
-
-            TMx.MetricsFonts.Apply();
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Trackbar2_Scroll(object sender)
-        {
-            ttl_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-
-            Window1.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR1.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR3.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR5.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar3_Scroll(object sender)
-        {
-            ttl_w.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            WindowR1.Metrics_CaptionWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR3.Metrics_CaptionWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR5.Metrics_CaptionWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar9_Scroll(object sender)
-        {
-            m_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            MenuStrip1.Height = Conversions.ToInteger(Math.Max(((UI.WP.Trackbar)sender).Value, GetTitleTextHeight(MenuStrip1.Font)));
-            MenuStrip2.Height = MenuStrip1.Height;
-            PanelR2.Refresh();
-        }
-
-        private void Trackbar8_Scroll(object sender)
-        {
-            m_w.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void Trackbar1_Scroll(object sender)
-        {
-            ttl_b.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            Window1.Metrics_BorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR1.Metrics_BorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR2.Metrics_BorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR3.Metrics_BorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR5.Metrics_BorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar12_Scroll(object sender)
-        {
-            ttl_p.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            Window1.Metrics_PaddedBorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR1.Metrics_PaddedBorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR2.Metrics_PaddedBorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR3.Metrics_PaddedBorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR5.Metrics_PaddedBorderWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar11_Scroll(object sender)
-        {
-            s_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            HScrollBar1.Height = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ScrollBarR1.Height = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ButtonR1.Height = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ScrollBarR1.Refresh();
-        }
-
-        private void Trackbar10_Scroll(object sender)
-        {
-            s_w.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            VScrollBar1.Width = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ScrollBarR2.Width = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ButtonR12.Width = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ScrollBarR2.Refresh();
-        }
-
-        private void Trackbar14_Scroll(object sender)
-        {
-            tw_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            Window2.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            WindowR2.Metrics_CaptionHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar13_Scroll(object sender)
-        {
-            tw_w.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            WindowR2.Metrics_CaptionWidth = ((UI.WP.Trackbar)sender).Value;
-        }
-
-        private void Trackbar7_Scroll(object sender)
-        {
-            if (Trackbar7.Value < Trackbar7.Minimum)
-            {
-                Trackbar7.Value = Trackbar7.Minimum;
-            }
-
-            if (Trackbar7.Value > Trackbar7.Maximum)
-            {
-                Trackbar7.Value = Trackbar7.Maximum;
-            }
-
-            i_d_s.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            FakeIcon1.IconSize = ((UI.WP.Trackbar)sender).Value;
-            FakeIcon2.IconSize = ((UI.WP.Trackbar)sender).Value;
-            FakeIcon3.IconSize = ((UI.WP.Trackbar)sender).Value;
-
-            FakeIcon1.Height = ((UI.WP.Trackbar)sender).Value + 35;
-            FakeIcon2.Height = ((UI.WP.Trackbar)sender).Value + 35;
-            FakeIcon3.Height = ((UI.WP.Trackbar)sender).Value + 35;
-            FakeIcon2.Top = FakeIcon1.Bottom + (Trackbar4.Value - 45);
-
-            FakeIcon1.Width = ((UI.WP.Trackbar)sender).Value + 15 + Trackbar6.Value / 16;
-            FakeIcon2.Width = ((UI.WP.Trackbar)sender).Value + 15 + Trackbar6.Value / 16;
-            FakeIcon3.Width = ((UI.WP.Trackbar)sender).Value + 15 + Trackbar6.Value / 16;
-            FakeIcon3.Left = FakeIcon1.Right + 2;
-
-        }
-
-        private void Trackbar6_Scroll(object sender)
-        {
-            i_s_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-
-            FakeIcon1.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
-            FakeIcon2.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
-            FakeIcon3.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
-            FakeIcon3.Left = FakeIcon1.Right + 2;
-
-            FakeIcon3.SendToBack();
-            FakeIcon1.BringToFront();
-        }
-
-        private void Trackbar4_Scroll(object sender)
-        {
-            i_s_v.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-
-            FakeIcon2.Top = FakeIcon1.Bottom + (Trackbar4.Value - 45);
-
-            FakeIcon2.SendToBack();
-            FakeIcon1.BringToFront();
         }
 
         private void Label1_FontChanged(object sender, EventArgs e)
@@ -602,176 +443,9 @@ namespace WinPaletter
             ((Label)sender).Text = ((Label)sender).Font.FontFamily.Name;
         }
 
-        private void Trackbar5_Scroll(object sender)
-        {
-            i_s_s.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void Window1_MetricsChanged()
-        {
-            Window1.SetMetrics(Window4);
-            Window1.SetMetrics(Window6);
-        }
-
-        private void Window1_FontChanged(object sender, EventArgs e)
-        {
-            Window4.Font = Window1.Font;
-            Window6.Font = Window1.Font;
-        }
-
-        private void MenuStrip1_FontChanged(object sender, EventArgs e)
-        {
-            MenuStrip1.Height = Math.Max(Trackbar9.Value, GetTitleTextHeight(MenuStrip1.Font));
-        }
-
-        public int GetTitleTextHeight(Font font)
-        {
-            return font.Height;
-        }
-
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button13_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
-            Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button13_Click_1(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
-            Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button14_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
-            Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button15_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar12.Maximum), Trackbar12.Minimum).ToString();
-            Trackbar12.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Tw_h_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar14.Maximum), Trackbar14.Minimum).ToString();
-            Trackbar14.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Tw_w_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar13.Maximum), Trackbar13.Minimum).ToString();
-            Trackbar13.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void I_s_v_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
-            Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void I_s_h_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
-            Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void I_d_s_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar7.Maximum), Trackbar7.Minimum).ToString();
-            Trackbar7.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void I_s_s_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
-            Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Mh_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar9.Maximum), Trackbar9.Minimum).ToString();
-            Trackbar9.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Mw_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar8.Maximum), Trackbar8.Minimum).ToString();
-            Trackbar8.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Sh_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar11.Maximum), Trackbar11.Minimum).ToString();
-            Trackbar11.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Sw_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar10.Maximum), Trackbar10.Minimum).ToString();
-            Trackbar10.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button13_Click_2(object sender, EventArgs e)
-        {
-            if (tabs_preview_1.SelectedIndex == 0)
-            {
-                tabs_preview_1.SelectedIndex = 1;
-                tabs_preview_2.SelectedIndex = 1;
-                tabs_preview_3.SelectedIndex = 1;
-            }
-            else
-            {
-                tabs_preview_1.SelectedIndex = 0;
-                tabs_preview_2.SelectedIndex = 0;
-                tabs_preview_3.SelectedIndex = 0;
-            }
-        }
-
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            Forms.MainFrm.Visible = true;
         }
 
         private void Button14_Click_1(object sender, EventArgs e)
@@ -821,7 +495,6 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
@@ -830,12 +503,10 @@ namespace WinPaletter
             {
                 ((UI.WP.TextBox)sender).Font = new("Microsoft Sans Serif", 9f, FontStyle.Regular);
             }
-
         }
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
-
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
@@ -844,12 +515,10 @@ namespace WinPaletter
             {
                 ((UI.WP.TextBox)sender).Font = new("Tahoma", 9f, FontStyle.Regular);
             }
-
         }
 
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-
             if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
@@ -858,47 +527,258 @@ namespace WinPaletter
             {
                 ((UI.WP.TextBox)sender).Font = new("Segoe UI", 9f, FontStyle.Regular);
             }
-
         }
 
-        private void Button20_Click(object sender, EventArgs e)
-        {
-            Forms.VS2Metrics.ShowDialog();
-        }
-
-        private void MetricsEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
-        private void Trackbar15_Scroll(object sender)
-        {
-            i_s_s_s.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void I_s_s_s_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar15.Maximum), Trackbar15.Minimum).ToString();
-            Trackbar15.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void CheckBox1_CheckedChanged(object sender)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             Program.Style.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            Window1.Refresh();
-            Window2.Refresh();
-            Window4.Refresh();
-            Window6.Refresh();
-            WindowR1.Refresh();
-            WindowR2.Refresh();
-            WindowR3.Refresh();
-            WindowR5.Refresh();
+            windowMetrics1.Refresh();
         }
 
-        private void Metrics_Fonts_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Metrics-and-Fonts");
+            if (e.PropertyName == nameof(windowMetrics1.CaptionFont))
+            {
+                FontDialog1.Font = windowMetrics1.CaptionFont;
+                Label1.Font = FontDialog1.Font;
+                Label1.Text = FontDialog1.Font.Name;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.SmCaptionFont))
+            {
+                FontDialog1.Font = windowMetrics1.SmCaptionFont;
+                Label5.Font = FontDialog1.Font;
+                Label5.Text = FontDialog1.Font.Name;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.CaptionHeight))
+            {
+                trackBarX1.Value = windowMetrics1.CaptionHeight;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.CaptionWidth))
+            {
+                trackBarX2.Value = windowMetrics1.CaptionWidth;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.BorderWidth))
+            {
+                trackBarX3.Value = windowMetrics1.BorderWidth;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.PaddedBorderWidth))
+            {
+                trackBarX4.Value = windowMetrics1.PaddedBorderWidth;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.SmCaptionHeight))
+            {
+                trackBarX5.Value = windowMetrics1.SmCaptionHeight;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.SmCaptionWidth))
+            {
+                trackBarX6.Value = windowMetrics1.SmCaptionWidth;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.MenuHeight))
+            {
+                trackBarX12.Value = windowMetrics1.MenuHeight;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.MenuFont))
+            {
+                FontDialog1.Font = windowMetrics1.MenuFont;
+                Label3.Font = FontDialog1.Font;
+                Label3.Text = FontDialog1.Font.Name;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.ScrollWidth))
+            {
+                trackBarX15.Value = windowMetrics1.ScrollWidth;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.ScrollHeight))
+            {
+                trackBarX14.Value = windowMetrics1.ScrollHeight;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.MessageFont))
+            {
+                FontDialog1.Font = windowMetrics1.MessageFont;
+                Label4.Font = FontDialog1.Font;
+                Label4.Text = FontDialog1.Font.Name;
+            }
+            else if (e.PropertyName == nameof(windowMetrics1.StatusFont))
+            {
+                FontDialog1.Font = windowMetrics1.StatusFont;
+                Label6.Font = FontDialog1.Font;
+                Label6.Text = FontDialog1.Font.Name;
+            }
+        }
+
+        private void Desktop_icons_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        {
+            if (e.PropertyName == nameof(Desktop_icons.IconSize))
+            {
+                trackBarX9.Value = Desktop_icons.IconSize;
+            }
+            else if (e.PropertyName == nameof(Desktop_icons.IconSpacing_Horizontal))
+            {
+                trackBarX8.Value = Desktop_icons.IconSpacing_Horizontal;
+            }
+            else if (e.PropertyName == nameof(Desktop_icons.IconSpacing_Vertical))
+            {
+                trackBarX7.Value = Desktop_icons.IconSpacing_Vertical;
+            }
+            else if (e.PropertyName == nameof(Desktop_icons.IconFont))
+            {
+                FontDialog1.Font = Desktop_icons.IconFont;
+                Label2.Font = FontDialog1.Font;
+                Desktop_icons.Font = FontDialog1.Font;
+                Label2.Text = FontDialog1.Font.Name;
+            }
+        }
+
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.CaptionHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX2_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.CaptionWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX3_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.BorderWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX4_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.PaddedBorderWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX5_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.SmCaptionHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX6_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.SmCaptionWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX7_ValueChanged(object sender, EventArgs e)
+        {
+            Desktop_icons.IconSpacing_Vertical = ((UI.Controllers.TrackBarX)sender).Value;
+        }
+
+        private void trackBarX8_ValueChanged(object sender, EventArgs e)
+        {
+            Desktop_icons.IconSpacing_Horizontal = ((UI.Controllers.TrackBarX)sender).Value;
+        }
+
+        private void trackBarX9_ValueChanged(object sender, EventArgs e)
+        {
+            Desktop_icons.IconSize = ((UI.Controllers.TrackBarX)sender).Value;
+        }
+
+        private void trackBarX12_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.MenuHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX14_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.ScrollHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX15_ValueChanged(object sender, EventArgs e)
+        {
+            windowMetrics1.ScrollWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void undo_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label1.Font = TM.MetricsFonts.CaptionFont;
+                Label1.Text = Label1.Font.Name;
+                windowMetrics1.CaptionFont = TM.MetricsFonts.CaptionFont;
+            }
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label5.Font = TM.MetricsFonts.SmCaptionFont;
+                Label5.Text = Label5.Font.Name;
+                windowMetrics1.SmCaptionFont = TM.MetricsFonts.SmCaptionFont;
+            }
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label2.Font = TM.MetricsFonts.IconFont;
+                Label2.Text = Label2.Font.Name;
+                Desktop_icons.IconFont = TM.MetricsFonts.IconFont;
+            }
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label3.Font = TM.MetricsFonts.MenuFont;
+                Label3.Text = Label3.Font.Name;
+                windowMetrics1.MenuFont = TM.MetricsFonts.MenuFont;
+            }
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label4.Font = TM.MetricsFonts.MessageFont;
+                Label4.Text = Label4.Font.Name;
+                windowMetrics1.MessageFont = TM.MetricsFonts.MessageFont;
+            }
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                Label6.Font = TM.MetricsFonts.StatusFont;
+                Label6.Text = Label6.Font.Name;
+                windowMetrics1.StatusFont = TM.MetricsFonts.StatusFont;
+            }
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
+            }
+        }
+
+        private void button7_Click_1(object sender, EventArgs e)
+        {
+            windowMetrics1.Classic = !windowMetrics1.Classic;
+        }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+            TabControl1.SelectedIndex = 0;
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            TabControl1.SelectedIndex = 1;
+        }
+
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+            TabControl1.SelectedIndex = 2;
+        }
+
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            TabControl1.SelectedIndex = 3;
         }
     }
 }

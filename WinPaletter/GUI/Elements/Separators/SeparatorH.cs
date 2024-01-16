@@ -31,7 +31,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         protected override void OnResize(EventArgs e)
         {
@@ -54,14 +54,13 @@ namespace WinPaletter.UI.WP
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Color Line = AlternativeLook ? Color.DarkRed : Color.FromArgb(128, scheme.Colors.Back_Hover);
+            Color Line = AlternativeLook ? Color.DarkRed : Color.FromArgb(128, scheme.Colors.Back_Hover_Level2);
 
             using (Pen C = new(Line, !AlternativeLook ? 1 : 2))
             {

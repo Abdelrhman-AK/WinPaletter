@@ -10,11 +10,9 @@ namespace WinPaletter
 
     public partial class SubMenu
     {
-
         private bool _shown;
         private Color _overrideColor;
         private bool _eventDone;
-        private readonly int _Speed = 20;
         private readonly float _dark = 0.7f;
         private Color PreviousClr;
 
@@ -44,32 +42,28 @@ namespace WinPaletter
 
         protected override void WndProc(ref Message m)
         {
-            switch (m.Msg)
+            if (m.Msg == DWMAPI.WM_NCPAINT)
             {
-                case DWMAPI.WM_NCPAINT:
+                int val = 2;
+                if (DWMAPI.IsCompositionEnabled())
+                {
+                    DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
+                    DWMAPI.MARGINS bla = new();
                     {
-                        int val = 2;
-                        if (DWMAPI.IsCompositionEnabled())
-                        {
-                            DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
-                            DWMAPI.MARGINS bla = new();
-                            {
-                                bla.bottomHeight = 1;
-                                bla.leftWidth = 1;
-                                bla.rightWidth = 1;
-                                bla.topHeight = 1;
-                            }
-                            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
-                        }
-                        break;
+                        bla.bottomHeight = 1;
+                        bla.leftWidth = 1;
+                        bla.rightWidth = 1;
+                        bla.topHeight = 1;
                     }
+                    DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
+                }
             }
-
-            const uint WM_NCACTIVATE = 0x86U;
-
-            if (m.Msg == WM_NCACTIVATE && m.WParam.ToInt32() == 0)
+            else if (m.Msg == 0x86 && m.WParam == IntPtr.Zero)
             {
-                HandleDeactivate();
+                if (Visible && !RectangleToScreen(DisplayRectangle).Contains(Cursor.Position))
+                {
+                    Deactivated();
+                }
             }
 
             base.WndProc(ref m);
@@ -80,9 +74,9 @@ namespace WinPaletter
         {
             Button5.Visible = EnableDelete;
 
-            MainColor.BackColor = ColorItem.BackColor.CB((float)((Trackbar1.Value - 100) / 100d));
-            DefaultColor.BackColor = ColorItem.DefaultBackColor.CB((float)((Trackbar2.Value - 100) / 100d));
-            InvertedColor.BackColor = ColorItem.BackColor.Invert().CB((float)((Trackbar3.Value - 100) / 100d));
+            MainColor.BackColor = ColorItem.BackColor.CB((float)((trackBarX1.Value - 100) / 100d));
+            DefaultColor.BackColor = ColorItem.DefaultBackColor.CB((float)((trackBarX2.Value - 100) / 100d));
+            InvertedColor.BackColor = ColorItem.BackColor.Invert().CB((float)((trackBarX4.Value - 100) / 100d));
 
             MainColor.DefaultBackColor = ColorItem.BackColor;
             DefaultColor.DefaultBackColor = ColorItem.DefaultBackColor;
@@ -90,12 +84,12 @@ namespace WinPaletter
 
             if (ColorItem.ColorsHistory.Count > 1)
             {
-                PreviousColor.BackColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2].CB((float)((Trackbar4.Value - 100) / 100d));
+                PreviousColor.BackColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2].CB((float)((trackBarX3.Value - 100) / 100d));
                 PreviousColor.DefaultBackColor = ColorItem.ColorsHistory[ColorItem.ColorsHistory.Count - 2];
             }
             else
             {
-                PreviousColor.BackColor = ColorItem.BackColor.CB((float)((Trackbar4.Value - 100) / 100d));
+                PreviousColor.BackColor = ColorItem.BackColor.CB((float)((trackBarX3.Value - 100) / 100d));
                 PreviousColor.DefaultBackColor = ColorItem.BackColor;
             }
 
@@ -161,57 +155,46 @@ namespace WinPaletter
             PaletteContainer.Visible = false;
         }
 
-        private void SubMenu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_HIDE | User32.AnimateWindowFlags.AW_BLEND);
-        }
-
-        public void HandleDeactivate()
+        public void Deactivated()
         {
             if (_shown)
             {
+                if (!_eventDone) DialogResult = DialogResult.None;
+
+                FluentTransitions.Transition
+                    .With(this, nameof(Opacity), (double)0)
+                    .HookOnCompletionInUiThread(this, Close)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+
                 _shown = false;
-                if (!_eventDone)
-                    DialogResult = DialogResult.None;
-                Close();
             }
         }
 
         public void Collapse_Expand()
         {
-
             Button4.Visible = false;
 
-            switch (PaletteContainer.Visible)
+            if (PaletteContainer.Visible)
             {
-                case false:
-                    {
-                        Button4.Text = "<";
+                Button4.Text = ">";
 
-                        for (int i = PaletteContainer.Left + 3, loopTo = PaletteContainer.Right + 8; i <= loopTo; i += 2)
-                            Width = i;
+                FluentTransitions.Transition
+                    .With(this, nameof(Width), PaletteContainer.Left + 3)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
-                        Width = PaletteContainer.Right + 8;
+                PaletteContainer.Visible = false;
+                Label2.Visible = false;
+            }
+            else
+            {
+                Button4.Text = "<";
 
-                        PaletteContainer.Visible = true;
-                        Label2.Visible = true;
-                        break;
-                    }
+                FluentTransitions.Transition
+                    .With(this, nameof(Width), PaletteContainer.Right + 8)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
-                case true:
-                    {
-                        Button4.Text = ">";
-
-                        PaletteContainer.Visible = false;
-                        Label2.Visible = false;
-
-                        for (int i = PaletteContainer.Right + 8, loopTo1 = PaletteContainer.Left + 3; i >= loopTo1; i -= 2)
-                            Width = i;
-
-                        Width = PaletteContainer.Left + 3;
-                        break;
-                    }
-
+                PaletteContainer.Visible = true;
+                Label2.Visible = true;
             }
 
             Button4.Visible = true;
@@ -219,6 +202,7 @@ namespace WinPaletter
 
         private void SubMenu_Load(object sender, EventArgs e)
         {
+            this.Icon = Forms.MainFrm.Icon;
             _shown = false;
 
             Point p = MousePosition;
@@ -305,9 +289,10 @@ namespace WinPaletter
 
             BackColor = Program.Style.DarkMode ? MainColor.BackColor.Dark(_dark) : MainColor.BackColor.LightLight();
 
-            User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE | User32.AnimateWindowFlags.AW_BLEND);
-
-            Invalidate();
+            Opacity = (double)0;
+            FluentTransitions.Transition
+                .With(this, nameof(Opacity), (double)1)
+                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
         }
 
         public void MiniColorItem_Clicked(object sender, EventArgs e)
@@ -315,7 +300,7 @@ namespace WinPaletter
             MainColor.BackColor = ((UI.Controllers.ColorItem)sender).BackColor;
             MainColor.DefaultBackColor = ((UI.Controllers.ColorItem)sender).BackColor;
 
-            InvertedColor.BackColor = MainColor.BackColor.Invert().CB((float)((Trackbar3.Value - 100) / 100d));
+            InvertedColor.BackColor = MainColor.BackColor.Invert().CB((float)((trackBarX4.Value - 100) / 100d));
             InvertedColor.DefaultBackColor = MainColor.BackColor.Invert();
 
             Collapse_Expand();
@@ -402,46 +387,6 @@ namespace WinPaletter
             Close();
         }
 
-        private void Trackbar1_Scroll(object sender)
-        {
-            MainColor.BackColor = MainColor.DefaultBackColor.CB((float)((Trackbar1.Value - 100) / 100d));
-        }
-
-        private void Trackbar2_Scroll(object sender)
-        {
-            DefaultColor.BackColor = DefaultColor.DefaultBackColor.CB((float)((Trackbar2.Value - 100) / 100d));
-        }
-
-        private void Trackbar3_Scroll(object sender)
-        {
-            InvertedColor.BackColor = InvertedColor.DefaultBackColor.CB((float)((Trackbar3.Value - 100) / 100d));
-        }
-
-        private void Button6_Click(object sender, EventArgs e)
-        {
-            Trackbar1.Value = 100;
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Trackbar2.Value = 100;
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            Trackbar3.Value = 100;
-        }
-
-        private void Trackbar4_Scroll(object sender)
-        {
-            PreviousColor.BackColor = PreviousColor.DefaultBackColor.CB((float)((Trackbar4.Value - 100) / 100d));
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Trackbar4.Value = 100;
-        }
-
         private void PreviousColor_Click(object sender, EventArgs e)
         {
             _eventDone = true;
@@ -458,6 +403,26 @@ namespace WinPaletter
             _overrideColor = PreviousClr;
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            MainColor.BackColor = MainColor.DefaultBackColor.CB((float)((trackBarX1.Value - 100) / 100d));
+        }
+
+        private void trackBarX2_ValueChanged(object sender, EventArgs e)
+        {
+            DefaultColor.BackColor = DefaultColor.DefaultBackColor.CB((float)((trackBarX2.Value - 100) / 100d));
+        }
+
+        private void trackBarX3_ValueChanged(object sender, EventArgs e)
+        {
+            PreviousColor.BackColor = PreviousColor.DefaultBackColor.CB((float)((trackBarX3.Value - 100) / 100d));
+        }
+
+        private void trackBarX4_ValueChanged(object sender, EventArgs e)
+        {
+            InvertedColor.BackColor = InvertedColor.DefaultBackColor.CB((float)((trackBarX4.Value - 100) / 100d));
         }
     }
 }

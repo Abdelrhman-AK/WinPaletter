@@ -7,7 +7,6 @@
         public string Convert_Error_Phrasing { get; set; } = "Error occurred while phrasing theme file";
         public string Convert_Done { get; set; } = "Theme file is converted and exported successfully";
         public string Convert_Detect_Old_OnLoading0 { get; set; } = "WinPaletter detected that you are using an old theme format";
-        public string Convert_Detect_Old_OnLoading1 { get; set; } = "Do you want to convert it and load it automatically?";
-        public string Convert_Detect_Old_OnLoading2 { get; set; } = "Pressing 'No' will load a default Windows preset";
+        public string Convert_Detect_Old_OnLoadingTip { get; set; } = "Please use WinPaletter with earlier version to convert it then reuse the theme in current WinPaletter version";
     }
 }

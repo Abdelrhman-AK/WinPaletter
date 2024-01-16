@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class WinEffecter : Form
+    public partial class WinEffecter : AspectsTemplate
     {
 
         // Form overrides dispose to clean up the component list.
@@ -41,6 +41,12 @@ namespace WinPaletter
             this.Timer1 = new System.Windows.Forms.Timer(this.components);
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.button5 = new WinPaletter.UI.WP.Button();
+            this.button4 = new WinPaletter.UI.WP.Button();
+            this.button3 = new WinPaletter.UI.WP.Button();
+            this.button2 = new WinPaletter.UI.WP.Button();
+            this.button1 = new WinPaletter.UI.WP.Button();
+            this.button21 = new WinPaletter.UI.WP.Button();
             this.CheckBox27 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox36 = new System.Windows.Forms.PictureBox();
             this.PictureBox27 = new System.Windows.Forms.PictureBox();
@@ -54,14 +60,20 @@ namespace WinPaletter
             this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.button6 = new WinPaletter.UI.WP.Button();
+            this.button7 = new WinPaletter.UI.WP.Button();
             this.PictureBox14 = new System.Windows.Forms.PictureBox();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
             this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
             this.CheckBox10 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage3 = new System.Windows.Forms.TabPage();
+            this.button8 = new WinPaletter.UI.WP.Button();
+            this.button9 = new WinPaletter.UI.WP.Button();
+            this.button10 = new WinPaletter.UI.WP.Button();
+            this.button11 = new WinPaletter.UI.WP.Button();
+            this.Trackbar1 = new WinPaletter.UI.Controllers.TrackBarX();
             this.CheckBox12 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
-            this.MD = new WinPaletter.UI.WP.Button();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
             this.CheckBox6 = new WinPaletter.UI.WP.CheckBox();
             this.Label6 = new System.Windows.Forms.Label();
@@ -69,50 +81,54 @@ namespace WinPaletter
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
-            this.Trackbar1 = new WinPaletter.UI.WP.Trackbar();
             this.TabPage4 = new System.Windows.Forms.TabPage();
+            this.button12 = new WinPaletter.UI.WP.Button();
+            this.button13 = new WinPaletter.UI.WP.Button();
             this.PictureBox9 = new System.Windows.Forms.PictureBox();
             this.PictureBox10 = new System.Windows.Forms.PictureBox();
             this.CheckBox7 = new WinPaletter.UI.WP.CheckBox();
             this.CheckBox8 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage5 = new System.Windows.Forms.TabPage();
+            this.button15 = new WinPaletter.UI.WP.Button();
+            this.button16 = new WinPaletter.UI.WP.Button();
+            this.button17 = new WinPaletter.UI.WP.Button();
+            this.Trackbar5 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox23 = new System.Windows.Forms.PictureBox();
             this.CheckBox17 = new WinPaletter.UI.WP.CheckBox();
-            this.Button4 = new WinPaletter.UI.WP.Button();
             this.Label4 = new System.Windows.Forms.Label();
             this.PictureBox17 = new System.Windows.Forms.PictureBox();
-            this.Trackbar5 = new WinPaletter.UI.WP.Trackbar();
             this.ComboBox2 = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
             this.CheckBox9 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage6 = new System.Windows.Forms.TabPage();
+            this.Trackbar3 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.Trackbar2 = new WinPaletter.UI.Controllers.TrackBarX();
             this.ButtonR1 = new WinPaletter.UI.Retro.ButtonR();
-            this.Button2 = new WinPaletter.UI.WP.Button();
             this.Label2 = new System.Windows.Forms.Label();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
-            this.Trackbar3 = new WinPaletter.UI.WP.Trackbar();
-            this.Button1 = new WinPaletter.UI.WP.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.PictureBox8 = new System.Windows.Forms.PictureBox();
-            this.Trackbar2 = new WinPaletter.UI.WP.Trackbar();
             this.TabPage7 = new System.Windows.Forms.TabPage();
+            this.Trackbar4 = new WinPaletter.UI.Controllers.TrackBarX();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.Panel2 = new System.Windows.Forms.Panel();
             this.Label7 = new System.Windows.Forms.Label();
-            this.Button3 = new WinPaletter.UI.WP.Button();
             this.Label3 = new System.Windows.Forms.Label();
             this.PictureBox13 = new System.Windows.Forms.PictureBox();
-            this.Trackbar4 = new WinPaletter.UI.WP.Trackbar();
             this.TabPage8 = new System.Windows.Forms.TabPage();
-            this.Button5 = new WinPaletter.UI.WP.Button();
+            this.button14 = new WinPaletter.UI.WP.Button();
+            this.button18 = new WinPaletter.UI.WP.Button();
+            this.Trackbar6 = new WinPaletter.UI.Controllers.TrackBarX();
             this.Label5 = new System.Windows.Forms.Label();
             this.PictureBox20 = new System.Windows.Forms.PictureBox();
-            this.Trackbar6 = new WinPaletter.UI.WP.Trackbar();
             this.PictureBox19 = new System.Windows.Forms.PictureBox();
             this.CheckBox14 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox18 = new System.Windows.Forms.PictureBox();
             this.CheckBox13 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage11 = new System.Windows.Forms.TabPage();
+            this.button22 = new WinPaletter.UI.WP.Button();
+            this.button19 = new WinPaletter.UI.WP.Button();
+            this.button20 = new WinPaletter.UI.WP.Button();
             this.AlertBox3 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
@@ -126,11 +142,14 @@ namespace WinPaletter
             this.PictureBox29 = new System.Windows.Forms.PictureBox();
             this.Label8 = new System.Windows.Forms.Label();
             this.TabPage10 = new System.Windows.Forms.TabPage();
+            this.button23 = new WinPaletter.UI.WP.Button();
+            this.button24 = new WinPaletter.UI.WP.Button();
             this.PictureBox28 = new System.Windows.Forms.PictureBox();
             this.CheckBox22 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox22 = new System.Windows.Forms.PictureBox();
             this.CheckBox16 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage12 = new System.Windows.Forms.TabPage();
+            this.button25 = new WinPaletter.UI.WP.Button();
             this.AlertBox4 = new WinPaletter.UI.WP.AlertBox();
             this.RadioImage7 = new WinPaletter.UI.WP.RadioImage();
             this.RadioImage6 = new WinPaletter.UI.WP.RadioImage();
@@ -173,6 +192,12 @@ namespace WinPaletter
             this.PictureBox33 = new System.Windows.Forms.PictureBox();
             this.PictureBox32 = new System.Windows.Forms.PictureBox();
             this.TabPage9 = new System.Windows.Forms.TabPage();
+            this.button26 = new WinPaletter.UI.WP.Button();
+            this.button27 = new WinPaletter.UI.WP.Button();
+            this.button28 = new WinPaletter.UI.WP.Button();
+            this.button29 = new WinPaletter.UI.WP.Button();
+            this.button30 = new WinPaletter.UI.WP.Button();
+            this.button31 = new WinPaletter.UI.WP.Button();
             this.PictureBox35 = new System.Windows.Forms.PictureBox();
             this.CheckBox26 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox34 = new System.Windows.Forms.PictureBox();
@@ -187,16 +212,6 @@ namespace WinPaletter
             this.CheckBox18 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox25 = new System.Windows.Forms.PictureBox();
             this.CheckBox19 = new WinPaletter.UI.WP.CheckBox();
-            this.Button10 = new WinPaletter.UI.WP.Button();
-            this.Button7 = new WinPaletter.UI.WP.Button();
-            this.Button8 = new WinPaletter.UI.WP.Button();
-            this.GroupBox12 = new WinPaletter.UI.WP.GroupBox();
-            this.Button9 = new WinPaletter.UI.WP.Button();
-            this.Label12 = new System.Windows.Forms.Label();
-            this.Button11 = new WinPaletter.UI.WP.Button();
-            this.Button12 = new WinPaletter.UI.WP.Button();
-            this.EffectsEnabled = new WinPaletter.UI.WP.Toggle();
-            this.checker_img = new System.Windows.Forms.PictureBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
@@ -254,9 +269,11 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).BeginInit();
-            this.GroupBox12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.checker_img)).BeginInit();
             this.SuspendLayout();
+            // 
+            // titlebarExtender1
+            // 
+            this.titlebarExtender1.Size = new System.Drawing.Size(784, 52);
             // 
             // OpenFileDialog1
             // 
@@ -272,8 +289,8 @@ namespace WinPaletter
             // TabControl1
             // 
             this.TabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.TabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl1.Controls.Add(this.TabPage1);
             this.TabControl1.Controls.Add(this.TabPage2);
@@ -290,17 +307,23 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(30, 170);
-            this.TabControl1.Location = new System.Drawing.Point(12, 57);
+            this.TabControl1.Location = new System.Drawing.Point(9, 58);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(769, 392);
+            this.TabControl1.Size = new System.Drawing.Size(767, 419);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 209;
             // 
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage1.Controls.Add(this.button5);
+            this.TabPage1.Controls.Add(this.button4);
+            this.TabPage1.Controls.Add(this.button3);
+            this.TabPage1.Controls.Add(this.button2);
+            this.TabPage1.Controls.Add(this.button1);
+            this.TabPage1.Controls.Add(this.button21);
             this.TabPage1.Controls.Add(this.CheckBox27);
             this.TabPage1.Controls.Add(this.PictureBox36);
             this.TabPage1.Controls.Add(this.PictureBox27);
@@ -316,21 +339,122 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(174, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(591, 384);
+            this.TabPage1.Size = new System.Drawing.Size(582, 411);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Window";
             // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Image = null;
+            this.button5.ImageAsVector = true;
+            this.button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("button5.ImageVector")));
+            this.button5.Location = new System.Drawing.Point(542, 156);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(34, 24);
+            this.button5.TabIndex = 236;
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Image = null;
+            this.button4.ImageAsVector = true;
+            this.button4.ImageVector = ((System.Drawing.Image)(resources.GetObject("button4.ImageVector")));
+            this.button4.Location = new System.Drawing.Point(542, 126);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(34, 24);
+            this.button4.TabIndex = 235;
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Image = null;
+            this.button3.ImageAsVector = true;
+            this.button3.ImageVector = ((System.Drawing.Image)(resources.GetObject("button3.ImageVector")));
+            this.button3.Location = new System.Drawing.Point(542, 96);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(34, 24);
+            this.button3.TabIndex = 234;
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Image = null;
+            this.button2.ImageAsVector = true;
+            this.button2.ImageVector = ((System.Drawing.Image)(resources.GetObject("button2.ImageVector")));
+            this.button2.Location = new System.Drawing.Point(542, 66);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(34, 24);
+            this.button2.TabIndex = 233;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = null;
+            this.button1.ImageAsVector = true;
+            this.button1.ImageVector = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
+            this.button1.Location = new System.Drawing.Point(542, 36);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(34, 24);
+            this.button1.TabIndex = 232;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button21
+            // 
+            this.button21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button21.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button21.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button21.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button21.ForeColor = System.Drawing.Color.White;
+            this.button21.Image = null;
+            this.button21.ImageAsVector = true;
+            this.button21.ImageVector = ((System.Drawing.Image)(resources.GetObject("button21.ImageVector")));
+            this.button21.Location = new System.Drawing.Point(542, 6);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(34, 24);
+            this.button21.TabIndex = 231;
+            this.button21.UseVisualStyleBackColor = false;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
             // CheckBox27
             // 
-            this.CheckBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox27.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox27.Checked = false;
             this.CheckBox27.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox27.ForeColor = System.Drawing.Color.White;
             this.CheckBox27.Location = new System.Drawing.Point(36, 36);
             this.CheckBox27.Name = "CheckBox27";
-            this.CheckBox27.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox27.Size = new System.Drawing.Size(500, 24);
             this.CheckBox27.TabIndex = 229;
             this.CheckBox27.Text = "Animate controls and elements inside window";
             // 
@@ -358,15 +482,14 @@ namespace WinPaletter
             // 
             // CheckBox21
             // 
-            this.CheckBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox21.Checked = false;
             this.CheckBox21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox21.ForeColor = System.Drawing.Color.White;
             this.CheckBox21.Location = new System.Drawing.Point(36, 156);
             this.CheckBox21.Name = "CheckBox21";
-            this.CheckBox21.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox21.Size = new System.Drawing.Size(500, 24);
             this.CheckBox21.TabIndex = 227;
             this.CheckBox21.Text = "Shake a window to minimize other windows (Windows 7 and later)";
             // 
@@ -394,29 +517,27 @@ namespace WinPaletter
             // 
             // CheckBox11
             // 
-            this.CheckBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox11.Checked = false;
             this.CheckBox11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox11.ForeColor = System.Drawing.Color.White;
             this.CheckBox11.Location = new System.Drawing.Point(36, 126);
             this.CheckBox11.Name = "CheckBox11";
-            this.CheckBox11.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox11.Size = new System.Drawing.Size(500, 24);
             this.CheckBox11.TabIndex = 8;
             this.CheckBox11.Text = "Show window contents while dragging";
             // 
             // CheckBox1
             // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
             this.CheckBox1.Location = new System.Drawing.Point(36, 6);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox1.Size = new System.Drawing.Size(500, 24);
             this.CheckBox1.TabIndex = 2;
             this.CheckBox1.Text = "Animations (Open\\Close\\Minimize\\Maximize\\...)";
             // 
@@ -433,29 +554,27 @@ namespace WinPaletter
             // 
             // CheckBox2
             // 
-            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox2.Checked = false;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
             this.CheckBox2.Location = new System.Drawing.Point(36, 66);
             this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox2.Size = new System.Drawing.Size(500, 24);
             this.CheckBox2.TabIndex = 4;
             this.CheckBox2.Text = "Borders shadow (Windows Vista and later)";
             // 
             // CheckBox3
             // 
-            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox3.Checked = false;
             this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox3.ForeColor = System.Drawing.Color.White;
             this.CheckBox3.Location = new System.Drawing.Point(36, 96);
             this.CheckBox3.Name = "CheckBox3";
-            this.CheckBox3.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox3.Size = new System.Drawing.Size(500, 24);
             this.CheckBox3.TabIndex = 6;
             this.CheckBox3.Text = "UI effects";
             // 
@@ -473,6 +592,8 @@ namespace WinPaletter
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage2.Controls.Add(this.button6);
+            this.TabPage2.Controls.Add(this.button7);
             this.TabPage2.Controls.Add(this.PictureBox14);
             this.TabPage2.Controls.Add(this.PictureBox5);
             this.TabPage2.Controls.Add(this.CheckBox4);
@@ -480,9 +601,43 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(174, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(591, 384);
+            this.TabPage2.Size = new System.Drawing.Size(582, 411);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Icons";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button6.ForeColor = System.Drawing.Color.White;
+            this.button6.Image = null;
+            this.button6.ImageAsVector = true;
+            this.button6.ImageVector = ((System.Drawing.Image)(resources.GetObject("button6.ImageVector")));
+            this.button6.Location = new System.Drawing.Point(542, 36);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(34, 24);
+            this.button6.TabIndex = 234;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.Image = null;
+            this.button7.ImageAsVector = true;
+            this.button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
+            this.button7.Location = new System.Drawing.Point(542, 6);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(34, 24);
+            this.button7.TabIndex = 233;
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // PictureBox14
             // 
@@ -508,38 +663,40 @@ namespace WinPaletter
             // 
             // CheckBox4
             // 
-            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox4.Checked = false;
             this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox4.ForeColor = System.Drawing.Color.White;
             this.CheckBox4.Location = new System.Drawing.Point(36, 6);
             this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox4.Size = new System.Drawing.Size(500, 24);
             this.CheckBox4.TabIndex = 6;
             this.CheckBox4.Text = "Drop shadow behind desktop icons label";
             // 
             // CheckBox10
             // 
-            this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox10.Checked = false;
             this.CheckBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox10.ForeColor = System.Drawing.Color.White;
             this.CheckBox10.Location = new System.Drawing.Point(36, 36);
             this.CheckBox10.Name = "CheckBox10";
-            this.CheckBox10.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox10.Size = new System.Drawing.Size(500, 24);
             this.CheckBox10.TabIndex = 8;
             this.CheckBox10.Text = "Translucent selection rectangle";
             // 
             // TabPage3
             // 
             this.TabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage3.Controls.Add(this.button8);
+            this.TabPage3.Controls.Add(this.button9);
+            this.TabPage3.Controls.Add(this.button10);
+            this.TabPage3.Controls.Add(this.button11);
+            this.TabPage3.Controls.Add(this.Trackbar1);
             this.TabPage3.Controls.Add(this.CheckBox12);
             this.TabPage3.Controls.Add(this.PictureBox1);
-            this.TabPage3.Controls.Add(this.MD);
             this.TabPage3.Controls.Add(this.PictureBox7);
             this.TabPage3.Controls.Add(this.CheckBox6);
             this.TabPage3.Controls.Add(this.Label6);
@@ -547,25 +704,106 @@ namespace WinPaletter
             this.TabPage3.Controls.Add(this.PictureBox16);
             this.TabPage3.Controls.Add(this.PictureBox6);
             this.TabPage3.Controls.Add(this.ComboBox1);
-            this.TabPage3.Controls.Add(this.Trackbar1);
             this.TabPage3.Location = new System.Drawing.Point(174, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(591, 384);
+            this.TabPage3.Size = new System.Drawing.Size(582, 411);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Menus";
             // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button8.ForeColor = System.Drawing.Color.White;
+            this.button8.Image = null;
+            this.button8.ImageAsVector = true;
+            this.button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("button8.ImageVector")));
+            this.button8.Location = new System.Drawing.Point(542, 156);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(34, 24);
+            this.button8.TabIndex = 238;
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button9.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button9.ForeColor = System.Drawing.Color.White;
+            this.button9.Image = null;
+            this.button9.ImageAsVector = true;
+            this.button9.ImageVector = ((System.Drawing.Image)(resources.GetObject("button9.ImageVector")));
+            this.button9.Location = new System.Drawing.Point(542, 126);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(34, 24);
+            this.button9.TabIndex = 237;
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button10.ForeColor = System.Drawing.Color.White;
+            this.button10.Image = null;
+            this.button10.ImageAsVector = true;
+            this.button10.ImageVector = ((System.Drawing.Image)(resources.GetObject("button10.ImageVector")));
+            this.button10.Location = new System.Drawing.Point(282, 36);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(34, 26);
+            this.button10.TabIndex = 236;
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Image = null;
+            this.button11.ImageAsVector = true;
+            this.button11.ImageVector = ((System.Drawing.Image)(resources.GetObject("button11.ImageVector")));
+            this.button11.Location = new System.Drawing.Point(542, 6);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(34, 24);
+            this.button11.TabIndex = 235;
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // Trackbar1
+            // 
+            this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar1.DefaultValue = 400;
+            this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar1.Location = new System.Drawing.Point(39, 93);
+            this.Trackbar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar1.Maximum = 5000;
+            this.Trackbar1.Minimum = 1;
+            this.Trackbar1.Name = "Trackbar1";
+            this.Trackbar1.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar1.TabIndex = 134;
+            this.Trackbar1.Value = 400;
+            // 
             // CheckBox12
             // 
-            this.CheckBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox12.Checked = false;
             this.CheckBox12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox12.ForeColor = System.Drawing.Color.White;
-            this.CheckBox12.Location = new System.Drawing.Point(36, 126);
+            this.CheckBox12.Location = new System.Drawing.Point(36, 156);
             this.CheckBox12.Name = "CheckBox12";
-            this.CheckBox12.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox12.Size = new System.Drawing.Size(500, 24);
             this.CheckBox12.TabIndex = 132;
             this.CheckBox12.Text = "Underline an item in menus as a shortcut for keyboard when I press ALT";
             // 
@@ -573,27 +811,12 @@ namespace WinPaletter
             // 
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 126);
+            this.PictureBox1.Location = new System.Drawing.Point(6, 156);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(24, 24);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PictureBox1.TabIndex = 133;
             this.PictureBox1.TabStop = false;
-            // 
-            // MD
-            // 
-            this.MD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MD.CustomColor = System.Drawing.Color.Empty;
-            this.MD.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.MD.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MD.ForeColor = System.Drawing.Color.White;
-            this.MD.Image = null;
-            this.MD.Location = new System.Drawing.Point(521, 66);
-            this.MD.Name = "MD";
-            this.MD.Size = new System.Drawing.Size(64, 24);
-            this.MD.TabIndex = 131;
-            this.MD.UseVisualStyleBackColor = false;
-            this.MD.Click += new System.EventHandler(this.MD_Click);
             // 
             // PictureBox7
             // 
@@ -608,40 +831,40 @@ namespace WinPaletter
             // 
             // CheckBox6
             // 
-            this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox6.Checked = false;
             this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox6.ForeColor = System.Drawing.Color.White;
             this.CheckBox6.Location = new System.Drawing.Point(36, 6);
             this.CheckBox6.Name = "CheckBox6";
-            this.CheckBox6.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox6.Size = new System.Drawing.Size(500, 24);
             this.CheckBox6.TabIndex = 2;
             this.CheckBox6.Text = "Animation enabled";
             // 
             // Label6
             // 
+            this.Label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label6.BackColor = System.Drawing.Color.Transparent;
             this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label6.Location = new System.Drawing.Point(36, 66);
             this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(172, 24);
+            this.Label6.Size = new System.Drawing.Size(539, 24);
             this.Label6.TabIndex = 112;
             this.Label6.Text = "Menu show delay (seconds):";
             this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CheckBox5
             // 
-            this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox5.Checked = false;
             this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox5.ForeColor = System.Drawing.Color.White;
-            this.CheckBox5.Location = new System.Drawing.Point(36, 96);
+            this.CheckBox5.Location = new System.Drawing.Point(36, 126);
             this.CheckBox5.Name = "CheckBox5";
-            this.CheckBox5.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox5.Size = new System.Drawing.Size(500, 24);
             this.CheckBox5.TabIndex = 4;
             this.CheckBox5.Text = "Fade the selected item after choosing a menu item";
             // 
@@ -660,7 +883,7 @@ namespace WinPaletter
             // 
             this.PictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
-            this.PictureBox6.Location = new System.Drawing.Point(6, 96);
+            this.PictureBox6.Location = new System.Drawing.Point(6, 126);
             this.PictureBox6.Name = "PictureBox6";
             this.PictureBox6.Size = new System.Drawing.Size(24, 24);
             this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -680,28 +903,14 @@ namespace WinPaletter
             "Slide"});
             this.ComboBox1.Location = new System.Drawing.Point(36, 36);
             this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(187, 26);
+            this.ComboBox1.Size = new System.Drawing.Size(240, 26);
             this.ComboBox1.TabIndex = 6;
-            // 
-            // Trackbar1
-            // 
-            this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar1.LargeChange = 10;
-            this.Trackbar1.Location = new System.Drawing.Point(214, 69);
-            this.Trackbar1.Maximum = 5000;
-            this.Trackbar1.Minimum = 1;
-            this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(301, 19);
-            this.Trackbar1.SmallChange = 1;
-            this.Trackbar1.TabIndex = 113;
-            this.Trackbar1.Value = 1;
-            this.Trackbar1.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar1_Scroll);
             // 
             // TabPage4
             // 
             this.TabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage4.Controls.Add(this.button12);
+            this.TabPage4.Controls.Add(this.button13);
             this.TabPage4.Controls.Add(this.PictureBox9);
             this.TabPage4.Controls.Add(this.PictureBox10);
             this.TabPage4.Controls.Add(this.CheckBox7);
@@ -709,9 +918,43 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(174, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(591, 384);
+            this.TabPage4.Size = new System.Drawing.Size(582, 411);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Selection controls";
+            // 
+            // button12
+            // 
+            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button12.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button12.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button12.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button12.ForeColor = System.Drawing.Color.White;
+            this.button12.Image = null;
+            this.button12.ImageAsVector = true;
+            this.button12.ImageVector = ((System.Drawing.Image)(resources.GetObject("button12.ImageVector")));
+            this.button12.Location = new System.Drawing.Point(542, 36);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(34, 24);
+            this.button12.TabIndex = 236;
+            this.button12.UseVisualStyleBackColor = false;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button13
+            // 
+            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button13.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button13.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button13.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button13.ForeColor = System.Drawing.Color.White;
+            this.button13.Image = null;
+            this.button13.ImageAsVector = true;
+            this.button13.ImageVector = ((System.Drawing.Image)(resources.GetObject("button13.ImageVector")));
+            this.button13.Location = new System.Drawing.Point(542, 6);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(34, 24);
+            this.button13.TabIndex = 235;
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // PictureBox9
             // 
@@ -737,56 +980,122 @@ namespace WinPaletter
             // 
             // CheckBox7
             // 
-            this.CheckBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox7.Checked = false;
             this.CheckBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox7.ForeColor = System.Drawing.Color.White;
             this.CheckBox7.Location = new System.Drawing.Point(36, 36);
             this.CheckBox7.Name = "CheckBox7";
-            this.CheckBox7.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox7.Size = new System.Drawing.Size(500, 24);
             this.CheckBox7.TabIndex = 4;
             this.CheckBox7.Text = "Listbox smooth scrolling";
             // 
             // CheckBox8
             // 
-            this.CheckBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox8.Checked = false;
             this.CheckBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox8.ForeColor = System.Drawing.Color.White;
             this.CheckBox8.Location = new System.Drawing.Point(36, 6);
             this.CheckBox8.Name = "CheckBox8";
-            this.CheckBox8.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox8.Size = new System.Drawing.Size(500, 24);
             this.CheckBox8.TabIndex = 2;
             this.CheckBox8.Text = "Combobox animation";
             // 
             // TabPage5
             // 
             this.TabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage5.Controls.Add(this.button15);
+            this.TabPage5.Controls.Add(this.button16);
+            this.TabPage5.Controls.Add(this.button17);
+            this.TabPage5.Controls.Add(this.Trackbar5);
             this.TabPage5.Controls.Add(this.PictureBox23);
             this.TabPage5.Controls.Add(this.CheckBox17);
-            this.TabPage5.Controls.Add(this.Button4);
             this.TabPage5.Controls.Add(this.Label4);
             this.TabPage5.Controls.Add(this.PictureBox17);
-            this.TabPage5.Controls.Add(this.Trackbar5);
             this.TabPage5.Controls.Add(this.ComboBox2);
             this.TabPage5.Controls.Add(this.PictureBox12);
             this.TabPage5.Controls.Add(this.CheckBox9);
             this.TabPage5.Location = new System.Drawing.Point(174, 4);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(591, 384);
+            this.TabPage5.Size = new System.Drawing.Size(589, 411);
             this.TabPage5.TabIndex = 4;
             this.TabPage5.Text = "Tooltips & notifications";
+            // 
+            // button15
+            // 
+            this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button15.ForeColor = System.Drawing.Color.White;
+            this.button15.Image = null;
+            this.button15.ImageAsVector = true;
+            this.button15.ImageVector = ((System.Drawing.Image)(resources.GetObject("button15.ImageVector")));
+            this.button15.Location = new System.Drawing.Point(549, 125);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(34, 24);
+            this.button15.TabIndex = 241;
+            this.button15.UseVisualStyleBackColor = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // button16
+            // 
+            this.button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button16.ForeColor = System.Drawing.Color.White;
+            this.button16.Image = null;
+            this.button16.ImageAsVector = true;
+            this.button16.ImageVector = ((System.Drawing.Image)(resources.GetObject("button16.ImageVector")));
+            this.button16.Location = new System.Drawing.Point(282, 36);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(34, 26);
+            this.button16.TabIndex = 240;
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // button17
+            // 
+            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button17.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button17.ForeColor = System.Drawing.Color.White;
+            this.button17.Image = null;
+            this.button17.ImageAsVector = true;
+            this.button17.ImageVector = ((System.Drawing.Image)(resources.GetObject("button17.ImageVector")));
+            this.button17.Location = new System.Drawing.Point(549, 6);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(34, 24);
+            this.button17.TabIndex = 239;
+            this.button17.UseVisualStyleBackColor = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // Trackbar5
+            // 
+            this.Trackbar5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar5.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar5.DefaultValue = 5;
+            this.Trackbar5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar5.Location = new System.Drawing.Point(39, 92);
+            this.Trackbar5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar5.Maximum = 100;
+            this.Trackbar5.Minimum = 1;
+            this.Trackbar5.Name = "Trackbar5";
+            this.Trackbar5.Size = new System.Drawing.Size(543, 24);
+            this.Trackbar5.TabIndex = 219;
+            this.Trackbar5.Value = 5;
             // 
             // PictureBox23
             // 
             this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
-            this.PictureBox23.Location = new System.Drawing.Point(6, 96);
+            this.PictureBox23.Location = new System.Drawing.Point(6, 125);
             this.PictureBox23.Name = "PictureBox23";
             this.PictureBox23.Size = new System.Drawing.Size(24, 24);
             this.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -795,41 +1104,27 @@ namespace WinPaletter
             // 
             // CheckBox17
             // 
-            this.CheckBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox17.Checked = false;
             this.CheckBox17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox17.ForeColor = System.Drawing.Color.White;
-            this.CheckBox17.Location = new System.Drawing.Point(36, 96);
+            this.CheckBox17.Location = new System.Drawing.Point(36, 125);
             this.CheckBox17.Name = "CheckBox17";
-            this.CheckBox17.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox17.Size = new System.Drawing.Size(507, 24);
             this.CheckBox17.TabIndex = 217;
             this.CheckBox17.Text = "Balloon notifications for Windows 10 (If Windows 11, you should use ExplorerPatch" +
     "er)";
             // 
-            // Button4
-            // 
-            this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button4.CustomColor = System.Drawing.Color.Empty;
-            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button4.ForeColor = System.Drawing.Color.White;
-            this.Button4.Image = null;
-            this.Button4.Location = new System.Drawing.Point(521, 66);
-            this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(64, 24);
-            this.Button4.TabIndex = 143;
-            this.Button4.UseVisualStyleBackColor = false;
-            this.Button4.Click += new System.EventHandler(this.Button4_Click);
-            // 
             // Label4
             // 
+            this.Label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(36, 66);
+            this.Label4.Location = new System.Drawing.Point(36, 65);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(159, 24);
+            this.Label4.Size = new System.Drawing.Size(547, 24);
             this.Label4.TabIndex = 141;
             this.Label4.Text = "Notification duration (sec):";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -838,28 +1133,12 @@ namespace WinPaletter
             // 
             this.PictureBox17.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
-            this.PictureBox17.Location = new System.Drawing.Point(6, 66);
+            this.PictureBox17.Location = new System.Drawing.Point(6, 65);
             this.PictureBox17.Name = "PictureBox17";
             this.PictureBox17.Size = new System.Drawing.Size(24, 24);
             this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PictureBox17.TabIndex = 140;
             this.PictureBox17.TabStop = false;
-            // 
-            // Trackbar5
-            // 
-            this.Trackbar5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar5.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar5.LargeChange = 10;
-            this.Trackbar5.Location = new System.Drawing.Point(201, 69);
-            this.Trackbar5.Maximum = 100;
-            this.Trackbar5.Minimum = 1;
-            this.Trackbar5.Name = "Trackbar5";
-            this.Trackbar5.Size = new System.Drawing.Size(314, 19);
-            this.Trackbar5.SmallChange = 1;
-            this.Trackbar5.TabIndex = 142;
-            this.Trackbar5.Value = 1;
-            this.Trackbar5.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar5_Scroll);
             // 
             // ComboBox2
             // 
@@ -874,7 +1153,7 @@ namespace WinPaletter
             "Slide"});
             this.ComboBox2.Location = new System.Drawing.Point(36, 36);
             this.ComboBox2.Name = "ComboBox2";
-            this.ComboBox2.Size = new System.Drawing.Size(187, 26);
+            this.ComboBox2.Size = new System.Drawing.Size(240, 26);
             this.ComboBox2.TabIndex = 6;
             // 
             // PictureBox12
@@ -890,37 +1169,71 @@ namespace WinPaletter
             // 
             // CheckBox9
             // 
-            this.CheckBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CheckBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox9.Checked = false;
             this.CheckBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox9.ForeColor = System.Drawing.Color.White;
             this.CheckBox9.Location = new System.Drawing.Point(36, 6);
             this.CheckBox9.Name = "CheckBox9";
-            this.CheckBox9.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox9.Size = new System.Drawing.Size(507, 24);
             this.CheckBox9.TabIndex = 2;
             this.CheckBox9.Text = "Tooltip animation enabled";
             // 
             // TabPage6
             // 
             this.TabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage6.Controls.Add(this.Trackbar3);
+            this.TabPage6.Controls.Add(this.Trackbar2);
             this.TabPage6.Controls.Add(this.ButtonR1);
-            this.TabPage6.Controls.Add(this.Button2);
             this.TabPage6.Controls.Add(this.Label2);
             this.TabPage6.Controls.Add(this.PictureBox11);
-            this.TabPage6.Controls.Add(this.Trackbar3);
-            this.TabPage6.Controls.Add(this.Button1);
             this.TabPage6.Controls.Add(this.Label1);
             this.TabPage6.Controls.Add(this.PictureBox8);
-            this.TabPage6.Controls.Add(this.Trackbar2);
             this.TabPage6.Location = new System.Drawing.Point(174, 4);
             this.TabPage6.Name = "TabPage6";
             this.TabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage6.Size = new System.Drawing.Size(591, 384);
+            this.TabPage6.Size = new System.Drawing.Size(582, 411);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Focus rectangle";
             // 
+            // Trackbar3
+            // 
+            this.Trackbar3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar3.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar3.DefaultValue = 1;
+            this.Trackbar3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar3.Location = new System.Drawing.Point(39, 92);
+            this.Trackbar3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar3.Maximum = 4;
+            this.Trackbar3.Minimum = 1;
+            this.Trackbar3.Name = "Trackbar3";
+            this.Trackbar3.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar3.TabIndex = 142;
+            this.Trackbar3.Value = 1;
+            this.Trackbar3.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
+            // 
+            // Trackbar2
+            // 
+            this.Trackbar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar2.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar2.DefaultValue = 1;
+            this.Trackbar2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar2.Location = new System.Drawing.Point(39, 33);
+            this.Trackbar2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar2.Maximum = 4;
+            this.Trackbar2.Minimum = 1;
+            this.Trackbar2.Name = "Trackbar2";
+            this.Trackbar2.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar2.TabIndex = 141;
+            this.Trackbar2.Value = 1;
+            this.Trackbar2.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
+            // 
             // ButtonR1
             // 
+            this.ButtonR1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ButtonR1.AppearsAsPressed = false;
             this.ButtonR1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ButtonR1.ButtonDkShadow = System.Drawing.Color.Black;
@@ -933,7 +1246,7 @@ namespace WinPaletter
             this.ButtonR1.ForeColor = System.Drawing.Color.Black;
             this.ButtonR1.HatchBrush = false;
             this.ButtonR1.Image = null;
-            this.ButtonR1.Location = new System.Drawing.Point(225, 79);
+            this.ButtonR1.Location = new System.Drawing.Point(221, 146);
             this.ButtonR1.Name = "ButtonR1";
             this.ButtonR1.Size = new System.Drawing.Size(140, 45);
             this.ButtonR1.TabIndex = 140;
@@ -942,28 +1255,15 @@ namespace WinPaletter
             this.ButtonR1.UseVisualStyleBackColor = false;
             this.ButtonR1.WindowFrame = System.Drawing.Color.Black;
             // 
-            // Button2
-            // 
-            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button2.ForeColor = System.Drawing.Color.White;
-            this.Button2.Image = null;
-            this.Button2.Location = new System.Drawing.Point(550, 36);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(34, 24);
-            this.Button2.TabIndex = 139;
-            this.Button2.UseVisualStyleBackColor = false;
-            this.Button2.Click += new System.EventHandler(this.Button2_Click);
-            // 
             // Label2
             // 
+            this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(36, 36);
+            this.Label2.Location = new System.Drawing.Point(36, 65);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(56, 24);
+            this.Label2.Size = new System.Drawing.Size(539, 24);
             this.Label2.TabIndex = 137;
             this.Label2.Text = "Height:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -972,51 +1272,22 @@ namespace WinPaletter
             // 
             this.PictureBox11.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
-            this.PictureBox11.Location = new System.Drawing.Point(6, 36);
+            this.PictureBox11.Location = new System.Drawing.Point(6, 65);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
             this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PictureBox11.TabIndex = 136;
             this.PictureBox11.TabStop = false;
             // 
-            // Trackbar3
-            // 
-            this.Trackbar3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar3.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar3.LargeChange = 10;
-            this.Trackbar3.Location = new System.Drawing.Point(98, 39);
-            this.Trackbar3.Maximum = 4;
-            this.Trackbar3.Minimum = 1;
-            this.Trackbar3.Name = "Trackbar3";
-            this.Trackbar3.Size = new System.Drawing.Size(446, 19);
-            this.Trackbar3.SmallChange = 1;
-            this.Trackbar3.TabIndex = 138;
-            this.Trackbar3.Value = 1;
-            this.Trackbar3.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar3_Scroll);
-            // 
-            // Button1
-            // 
-            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button1.ForeColor = System.Drawing.Color.White;
-            this.Button1.Image = null;
-            this.Button1.Location = new System.Drawing.Point(550, 6);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(34, 24);
-            this.Button1.TabIndex = 135;
-            this.Button1.UseVisualStyleBackColor = false;
-            this.Button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
             // Label1
             // 
+            this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label1.BackColor = System.Drawing.Color.Transparent;
             this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(36, 6);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(56, 24);
+            this.Label1.Size = new System.Drawing.Size(539, 24);
             this.Label1.TabIndex = 133;
             this.Label1.Text = "Width:";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1032,36 +1303,36 @@ namespace WinPaletter
             this.PictureBox8.TabIndex = 132;
             this.PictureBox8.TabStop = false;
             // 
-            // Trackbar2
-            // 
-            this.Trackbar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar2.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar2.LargeChange = 10;
-            this.Trackbar2.Location = new System.Drawing.Point(98, 9);
-            this.Trackbar2.Maximum = 4;
-            this.Trackbar2.Minimum = 1;
-            this.Trackbar2.Name = "Trackbar2";
-            this.Trackbar2.Size = new System.Drawing.Size(446, 19);
-            this.Trackbar2.SmallChange = 1;
-            this.Trackbar2.TabIndex = 134;
-            this.Trackbar2.Value = 1;
-            this.Trackbar2.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar2_Scroll);
-            // 
             // TabPage7
             // 
             this.TabPage7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage7.Controls.Add(this.Trackbar4);
             this.TabPage7.Controls.Add(this.Panel1);
-            this.TabPage7.Controls.Add(this.Button3);
             this.TabPage7.Controls.Add(this.Label3);
             this.TabPage7.Controls.Add(this.PictureBox13);
-            this.TabPage7.Controls.Add(this.Trackbar4);
             this.TabPage7.Location = new System.Drawing.Point(174, 4);
             this.TabPage7.Name = "TabPage7";
             this.TabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage7.Size = new System.Drawing.Size(591, 384);
+            this.TabPage7.Size = new System.Drawing.Size(582, 411);
             this.TabPage7.TabIndex = 6;
             this.TabPage7.Text = "Text cursor (caret)";
+            // 
+            // Trackbar4
+            // 
+            this.Trackbar4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar4.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar4.DefaultValue = 1;
+            this.Trackbar4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar4.Location = new System.Drawing.Point(39, 33);
+            this.Trackbar4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar4.Maximum = 40;
+            this.Trackbar4.Minimum = 1;
+            this.Trackbar4.Name = "Trackbar4";
+            this.Trackbar4.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar4.TabIndex = 142;
+            this.Trackbar4.Value = 1;
+            this.Trackbar4.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_1);
             // 
             // Panel1
             // 
@@ -1069,7 +1340,7 @@ namespace WinPaletter
             this.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Panel1.Controls.Add(this.Panel2);
             this.Panel1.Controls.Add(this.Label7);
-            this.Panel1.Location = new System.Drawing.Point(94, 45);
+            this.Panel1.Location = new System.Drawing.Point(46, 69);
             this.Panel1.Name = "Panel1";
             this.Panel1.Padding = new System.Windows.Forms.Padding(1, 3, 0, 3);
             this.Panel1.Size = new System.Drawing.Size(402, 25);
@@ -1097,28 +1368,15 @@ namespace WinPaletter
             this.Label7.Text = "This is a text inside a textbox followed by a caret";
             this.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Button3
-            // 
-            this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button3.ForeColor = System.Drawing.Color.White;
-            this.Button3.Image = null;
-            this.Button3.Location = new System.Drawing.Point(550, 6);
-            this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(34, 24);
-            this.Button3.TabIndex = 139;
-            this.Button3.UseVisualStyleBackColor = false;
-            this.Button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
             // Label3
             // 
+            this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label3.BackColor = System.Drawing.Color.Transparent;
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label3.Location = new System.Drawing.Point(36, 6);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(56, 24);
+            this.Label3.Size = new System.Drawing.Size(540, 24);
             this.Label3.TabIndex = 137;
             this.Label3.Text = "Width:";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1134,29 +1392,14 @@ namespace WinPaletter
             this.PictureBox13.TabIndex = 136;
             this.PictureBox13.TabStop = false;
             // 
-            // Trackbar4
-            // 
-            this.Trackbar4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar4.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar4.LargeChange = 10;
-            this.Trackbar4.Location = new System.Drawing.Point(98, 9);
-            this.Trackbar4.Maximum = 40;
-            this.Trackbar4.Minimum = 1;
-            this.Trackbar4.Name = "Trackbar4";
-            this.Trackbar4.Size = new System.Drawing.Size(446, 19);
-            this.Trackbar4.SmallChange = 1;
-            this.Trackbar4.TabIndex = 138;
-            this.Trackbar4.Value = 1;
-            this.Trackbar4.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar4_Scroll);
-            // 
             // TabPage8
             // 
             this.TabPage8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage8.Controls.Add(this.Button5);
+            this.TabPage8.Controls.Add(this.button14);
+            this.TabPage8.Controls.Add(this.button18);
+            this.TabPage8.Controls.Add(this.Trackbar6);
             this.TabPage8.Controls.Add(this.Label5);
             this.TabPage8.Controls.Add(this.PictureBox20);
-            this.TabPage8.Controls.Add(this.Trackbar6);
             this.TabPage8.Controls.Add(this.PictureBox19);
             this.TabPage8.Controls.Add(this.CheckBox14);
             this.TabPage8.Controls.Add(this.PictureBox18);
@@ -1164,24 +1407,59 @@ namespace WinPaletter
             this.TabPage8.Location = new System.Drawing.Point(174, 4);
             this.TabPage8.Name = "TabPage8";
             this.TabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage8.Size = new System.Drawing.Size(591, 384);
+            this.TabPage8.Size = new System.Drawing.Size(582, 411);
             this.TabPage8.TabIndex = 7;
             this.TabPage8.Text = "Active Windows tracking";
             // 
-            // Button5
+            // button14
             // 
-            this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button5.ForeColor = System.Drawing.Color.White;
-            this.Button5.Image = null;
-            this.Button5.Location = new System.Drawing.Point(521, 66);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(64, 24);
-            this.Button5.TabIndex = 143;
-            this.Button5.UseVisualStyleBackColor = false;
-            this.Button5.Click += new System.EventHandler(this.Button5_Click);
+            this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button14.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button14.ForeColor = System.Drawing.Color.White;
+            this.button14.Image = null;
+            this.button14.ImageAsVector = true;
+            this.button14.ImageVector = ((System.Drawing.Image)(resources.GetObject("button14.ImageVector")));
+            this.button14.Location = new System.Drawing.Point(542, 36);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(34, 24);
+            this.button14.TabIndex = 236;
+            this.button14.UseVisualStyleBackColor = false;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // button18
+            // 
+            this.button18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button18.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button18.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button18.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button18.ForeColor = System.Drawing.Color.White;
+            this.button18.Image = null;
+            this.button18.ImageAsVector = true;
+            this.button18.ImageVector = ((System.Drawing.Image)(resources.GetObject("button18.ImageVector")));
+            this.button18.Location = new System.Drawing.Point(542, 6);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(34, 24);
+            this.button18.TabIndex = 235;
+            this.button18.UseVisualStyleBackColor = false;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // Trackbar6
+            // 
+            this.Trackbar6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar6.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar6.DefaultValue = 0;
+            this.Trackbar6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar6.Location = new System.Drawing.Point(39, 93);
+            this.Trackbar6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar6.Maximum = 5000;
+            this.Trackbar6.Minimum = 1;
+            this.Trackbar6.Name = "Trackbar6";
+            this.Trackbar6.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar6.TabIndex = 144;
+            this.Trackbar6.Value = 1;
             // 
             // Label5
             // 
@@ -1205,22 +1483,6 @@ namespace WinPaletter
             this.PictureBox20.TabIndex = 140;
             this.PictureBox20.TabStop = false;
             // 
-            // Trackbar6
-            // 
-            this.Trackbar6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar6.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar6.LargeChange = 10;
-            this.Trackbar6.Location = new System.Drawing.Point(245, 69);
-            this.Trackbar6.Maximum = 5000;
-            this.Trackbar6.Minimum = 1;
-            this.Trackbar6.Name = "Trackbar6";
-            this.Trackbar6.Size = new System.Drawing.Size(270, 19);
-            this.Trackbar6.SmallChange = 1;
-            this.Trackbar6.TabIndex = 142;
-            this.Trackbar6.Value = 1;
-            this.Trackbar6.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar6_Scroll);
-            // 
             // PictureBox19
             // 
             this.PictureBox19.BackColor = System.Drawing.Color.Transparent;
@@ -1234,15 +1496,14 @@ namespace WinPaletter
             // 
             // CheckBox14
             // 
-            this.CheckBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox14.Checked = false;
             this.CheckBox14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox14.ForeColor = System.Drawing.Color.White;
             this.CheckBox14.Location = new System.Drawing.Point(36, 36);
             this.CheckBox14.Name = "CheckBox14";
-            this.CheckBox14.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox14.Size = new System.Drawing.Size(500, 24);
             this.CheckBox14.TabIndex = 6;
             this.CheckBox14.Text = "Bring activated window to top";
             // 
@@ -1259,21 +1520,23 @@ namespace WinPaletter
             // 
             // CheckBox13
             // 
-            this.CheckBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox13.Checked = false;
             this.CheckBox13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox13.ForeColor = System.Drawing.Color.White;
             this.CheckBox13.Location = new System.Drawing.Point(36, 6);
             this.CheckBox13.Name = "CheckBox13";
-            this.CheckBox13.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox13.Size = new System.Drawing.Size(500, 24);
             this.CheckBox13.TabIndex = 4;
             this.CheckBox13.Text = "Enabled (focus follows the cursor)";
             // 
             // TabPage11
             // 
             this.TabPage11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage11.Controls.Add(this.button22);
+            this.TabPage11.Controls.Add(this.button19);
+            this.TabPage11.Controls.Add(this.button20);
             this.TabPage11.Controls.Add(this.AlertBox3);
             this.TabPage11.Controls.Add(this.AlertBox2);
             this.TabPage11.Controls.Add(this.AlertBox1);
@@ -1289,32 +1552,83 @@ namespace WinPaletter
             this.TabPage11.Location = new System.Drawing.Point(174, 4);
             this.TabPage11.Name = "TabPage11";
             this.TabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage11.Size = new System.Drawing.Size(591, 384);
+            this.TabPage11.Size = new System.Drawing.Size(582, 411);
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Explorer (controls options)";
+            // 
+            // button22
+            // 
+            this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button22.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button22.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button22.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button22.ForeColor = System.Drawing.Color.White;
+            this.button22.Image = null;
+            this.button22.ImageAsVector = true;
+            this.button22.ImageVector = ((System.Drawing.Image)(resources.GetObject("button22.ImageVector")));
+            this.button22.Location = new System.Drawing.Point(542, 235);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(34, 24);
+            this.button22.TabIndex = 241;
+            this.button22.UseVisualStyleBackColor = false;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
+            // 
+            // button19
+            // 
+            this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button19.ForeColor = System.Drawing.Color.White;
+            this.button19.Image = null;
+            this.button19.ImageAsVector = true;
+            this.button19.ImageVector = ((System.Drawing.Image)(resources.GetObject("button19.ImageVector")));
+            this.button19.Location = new System.Drawing.Point(542, 36);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(34, 24);
+            this.button19.TabIndex = 240;
+            this.button19.UseVisualStyleBackColor = false;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // button20
+            // 
+            this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button20.ForeColor = System.Drawing.Color.White;
+            this.button20.Image = null;
+            this.button20.ImageAsVector = true;
+            this.button20.ImageVector = ((System.Drawing.Image)(resources.GetObject("button20.ImageVector")));
+            this.button20.Location = new System.Drawing.Point(542, 6);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(34, 24);
+            this.button20.TabIndex = 239;
+            this.button20.UseVisualStyleBackColor = false;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // AlertBox3
             // 
             this.AlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox3.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox3.CenterText = false;
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
-            this.AlertBox3.Location = new System.Drawing.Point(73, 258);
+            this.AlertBox3.Location = new System.Drawing.Point(73, 265);
             this.AlertBox3.Name = "AlertBox3";
-            this.AlertBox3.Size = new System.Drawing.Size(512, 24);
+            this.AlertBox3.Size = new System.Drawing.Size(503, 48);
             this.AlertBox3.TabIndex = 238;
             this.AlertBox3.TabStop = false;
-            this.AlertBox3.Text = "This will disable navigation bar in Open\\Save dialogs, anywhere else requires Exp" +
-    "lorerPatcher";
+            this.AlertBox3.Text = "This will disable the navigation bar in Open/Save dialogs; anywhere else will req" +
+    "uire ExplorerPatcher.";
             // 
             // AlertBox2
             // 
             this.AlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.AlertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox2.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox2.CenterText = false;
@@ -1323,16 +1637,17 @@ namespace WinPaletter
             this.AlertBox2.Image = null;
             this.AlertBox2.Location = new System.Drawing.Point(73, 181);
             this.AlertBox2.Name = "AlertBox2";
-            this.AlertBox2.Size = new System.Drawing.Size(512, 40);
+            this.AlertBox2.Size = new System.Drawing.Size(503, 48);
             this.AlertBox2.TabIndex = 237;
             this.AlertBox2.TabStop = false;
-            this.AlertBox2.Text = "Due to limitations in Windows 11, styles can\'t be changed by registry. So you sho" +
-    "uld use ExplorerPatcher or StartAllBack to force apply bar style";
+            this.AlertBox2.Text = "Due to limitations in Windows 11, styles cannot be changed through the registry. " +
+    "Therefore, you should utilize ExplorerPatcher or StartAllBack to forcibly apply " +
+    "the bar style.";
             // 
             // AlertBox1
             // 
             this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox1.CenterText = false;
@@ -1341,20 +1656,21 @@ namespace WinPaletter
             this.AlertBox1.Image = null;
             this.AlertBox1.Location = new System.Drawing.Point(73, 154);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(512, 24);
+            this.AlertBox1.Size = new System.Drawing.Size(503, 24);
             this.AlertBox1.TabIndex = 236;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = "Default* is Command bar in Windows 11, Ribbon in Windows 10 and 8.1";
             // 
             // RadioButton3
             // 
-            this.RadioButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.RadioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton3.Checked = false;
             this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton3.ForeColor = System.Drawing.Color.White;
             this.RadioButton3.Location = new System.Drawing.Point(48, 123);
             this.RadioButton3.Name = "RadioButton3";
-            this.RadioButton3.Size = new System.Drawing.Size(537, 24);
+            this.RadioButton3.Size = new System.Drawing.Size(528, 24);
             this.RadioButton3.TabIndex = 233;
             this.RadioButton3.Text = "Windows 7 Explorer bar style";
             // 
@@ -1362,7 +1678,7 @@ namespace WinPaletter
             // 
             this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
-            this.PictureBox30.Location = new System.Drawing.Point(6, 228);
+            this.PictureBox30.Location = new System.Drawing.Point(6, 235);
             this.PictureBox30.Name = "PictureBox30";
             this.PictureBox30.Size = new System.Drawing.Size(24, 24);
             this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1382,53 +1698,53 @@ namespace WinPaletter
             // 
             // RadioButton2
             // 
-            this.RadioButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.RadioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton2.Checked = false;
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
             this.RadioButton2.Location = new System.Drawing.Point(48, 93);
             this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.Size = new System.Drawing.Size(537, 24);
+            this.RadioButton2.Size = new System.Drawing.Size(528, 24);
             this.RadioButton2.TabIndex = 232;
             this.RadioButton2.Text = "Ribbon";
             // 
             // CheckBox20
             // 
-            this.CheckBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox20.Checked = false;
             this.CheckBox20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox20.ForeColor = System.Drawing.Color.White;
             this.CheckBox20.Location = new System.Drawing.Point(36, 6);
             this.CheckBox20.Name = "CheckBox20";
-            this.CheckBox20.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox20.Size = new System.Drawing.Size(500, 24);
             this.CheckBox20.TabIndex = 221;
             this.CheckBox20.Text = "SysListView32 view in Explorer (For Windows 7 and later)";
             // 
             // CheckBox23
             // 
-            this.CheckBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox23.Checked = false;
             this.CheckBox23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox23.ForeColor = System.Drawing.Color.White;
-            this.CheckBox23.Location = new System.Drawing.Point(36, 228);
+            this.CheckBox23.Location = new System.Drawing.Point(36, 235);
             this.CheckBox23.Name = "CheckBox23";
-            this.CheckBox23.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox23.Size = new System.Drawing.Size(500, 24);
             this.CheckBox23.TabIndex = 227;
             this.CheckBox23.Text = "Disable navigation bar";
             // 
             // RadioButton1
             // 
-            this.RadioButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.RadioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton1.Checked = false;
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
             this.RadioButton1.Location = new System.Drawing.Point(48, 63);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(537, 24);
+            this.RadioButton1.Size = new System.Drawing.Size(528, 24);
             this.RadioButton1.TabIndex = 231;
             this.RadioButton1.Text = "Default*";
             // 
@@ -1445,13 +1761,13 @@ namespace WinPaletter
             // 
             // Label8
             // 
-            this.Label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.Label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label8.BackColor = System.Drawing.Color.Transparent;
             this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label8.Location = new System.Drawing.Point(36, 36);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(549, 24);
+            this.Label8.Size = new System.Drawing.Size(500, 24);
             this.Label8.TabIndex = 230;
             this.Label8.Text = "Explorer bar:";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1459,6 +1775,8 @@ namespace WinPaletter
             // TabPage10
             // 
             this.TabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage10.Controls.Add(this.button23);
+            this.TabPage10.Controls.Add(this.button24);
             this.TabPage10.Controls.Add(this.PictureBox28);
             this.TabPage10.Controls.Add(this.CheckBox22);
             this.TabPage10.Controls.Add(this.PictureBox22);
@@ -1466,9 +1784,43 @@ namespace WinPaletter
             this.TabPage10.Location = new System.Drawing.Point(174, 4);
             this.TabPage10.Name = "TabPage10";
             this.TabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage10.Size = new System.Drawing.Size(591, 384);
+            this.TabPage10.Size = new System.Drawing.Size(582, 411);
             this.TabPage10.TabIndex = 9;
             this.TabPage10.Text = "For Windows 11 only";
+            // 
+            // button23
+            // 
+            this.button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button23.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button23.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button23.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button23.ForeColor = System.Drawing.Color.White;
+            this.button23.Image = null;
+            this.button23.ImageAsVector = true;
+            this.button23.ImageVector = ((System.Drawing.Image)(resources.GetObject("button23.ImageVector")));
+            this.button23.Location = new System.Drawing.Point(542, 36);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(34, 24);
+            this.button23.TabIndex = 242;
+            this.button23.UseVisualStyleBackColor = false;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
+            // button24
+            // 
+            this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button24.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button24.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button24.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button24.ForeColor = System.Drawing.Color.White;
+            this.button24.Image = null;
+            this.button24.ImageAsVector = true;
+            this.button24.ImageVector = ((System.Drawing.Image)(resources.GetObject("button24.ImageVector")));
+            this.button24.Location = new System.Drawing.Point(542, 6);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(34, 24);
+            this.button24.TabIndex = 241;
+            this.button24.UseVisualStyleBackColor = false;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
             // PictureBox28
             // 
@@ -1483,15 +1835,14 @@ namespace WinPaletter
             // 
             // CheckBox22
             // 
-            this.CheckBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox22.Checked = false;
             this.CheckBox22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox22.ForeColor = System.Drawing.Color.White;
             this.CheckBox22.Location = new System.Drawing.Point(36, 36);
             this.CheckBox22.Name = "CheckBox22";
-            this.CheckBox22.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox22.Size = new System.Drawing.Size(500, 24);
             this.CheckBox22.TabIndex = 227;
             this.CheckBox22.Text = "Spinning dots in boot screen";
             // 
@@ -1508,21 +1859,21 @@ namespace WinPaletter
             // 
             // CheckBox16
             // 
-            this.CheckBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox16.Checked = false;
             this.CheckBox16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox16.ForeColor = System.Drawing.Color.White;
             this.CheckBox16.Location = new System.Drawing.Point(36, 6);
             this.CheckBox16.Name = "CheckBox16";
-            this.CheckBox16.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox16.Size = new System.Drawing.Size(500, 24);
             this.CheckBox16.TabIndex = 213;
-            this.CheckBox16.Text = "Classic context menu (may require explorer restart)";
+            this.CheckBox16.Text = "Classic context menu (may require Explorer restart)";
             // 
             // TabPage12
             // 
             this.TabPage12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage12.Controls.Add(this.button25);
             this.TabPage12.Controls.Add(this.AlertBox4);
             this.TabPage12.Controls.Add(this.RadioImage7);
             this.TabPage12.Controls.Add(this.RadioImage6);
@@ -1537,130 +1888,165 @@ namespace WinPaletter
             this.TabPage12.Location = new System.Drawing.Point(174, 4);
             this.TabPage12.Name = "TabPage12";
             this.TabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage12.Size = new System.Drawing.Size(591, 384);
+            this.TabPage12.Size = new System.Drawing.Size(582, 411);
             this.TabPage12.TabIndex = 11;
             this.TabPage12.Text = "Color filters (accessibility)";
+            // 
+            // button25
+            // 
+            this.button25.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button25.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button25.ForeColor = System.Drawing.Color.White;
+            this.button25.Image = null;
+            this.button25.ImageAsVector = true;
+            this.button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("button25.ImageVector")));
+            this.button25.Location = new System.Drawing.Point(438, 7);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(34, 25);
+            this.button25.TabIndex = 243;
+            this.button25.UseVisualStyleBackColor = false;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
             // 
             // AlertBox4
             // 
             this.AlertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.AlertBox4.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox4.CenterText = false;
             this.AlertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox4.Image = null;
-            this.AlertBox4.Location = new System.Drawing.Point(6, 337);
+            this.AlertBox4.Location = new System.Drawing.Point(6, 336);
             this.AlertBox4.Name = "AlertBox4";
-            this.AlertBox4.Size = new System.Drawing.Size(579, 40);
+            this.AlertBox4.Size = new System.Drawing.Size(570, 68);
             this.AlertBox4.TabIndex = 239;
             this.AlertBox4.TabStop = false;
-            this.AlertBox4.Text = "This is for Windows 10 & 11 and requires logoff. The colors of preview may be inc" +
-    "orrect if you applied a color filter (The correct ones are previewed when normal" +
-    " filter is applied). ";
+            this.AlertBox4.Text = resources.GetString("AlertBox4.Text");
             // 
             // RadioImage7
             // 
+            this.RadioImage7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage7.Checked = false;
             this.RadioImage7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage7.ForeColor = System.Drawing.Color.White;
             this.RadioImage7.Image = null;
+            this.RadioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage7.Location = new System.Drawing.Point(309, 7);
             this.RadioImage7.Name = "RadioImage7";
             this.RadioImage7.Size = new System.Drawing.Size(123, 25);
             this.RadioImage7.TabIndex = 6;
             this.RadioImage7.Text = "Inverted";
             this.RadioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage7.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage7_CheckedChanged);
+            this.RadioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage7.CheckedChanged += new System.EventHandler(this.RadioImage7_CheckedChanged);
             // 
             // RadioImage6
             // 
+            this.RadioImage6.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage6.Checked = false;
             this.RadioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage6.ForeColor = System.Drawing.Color.White;
             this.RadioImage6.Image = null;
+            this.RadioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage6.Location = new System.Drawing.Point(309, 38);
             this.RadioImage6.Name = "RadioImage6";
             this.RadioImage6.Size = new System.Drawing.Size(123, 25);
             this.RadioImage6.TabIndex = 5;
             this.RadioImage6.Text = "Grayscale inverted";
             this.RadioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage6.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage6_CheckedChanged);
+            this.RadioImage6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage6.CheckedChanged += new System.EventHandler(this.RadioImage6_CheckedChanged);
             // 
             // RadioImage5
             // 
+            this.RadioImage5.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage5.Checked = false;
             this.RadioImage5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage5.ForeColor = System.Drawing.Color.White;
             this.RadioImage5.Image = null;
+            this.RadioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage5.Location = new System.Drawing.Point(180, 38);
             this.RadioImage5.Name = "RadioImage5";
             this.RadioImage5.Size = new System.Drawing.Size(123, 25);
             this.RadioImage5.TabIndex = 4;
             this.RadioImage5.Text = "Grayscale";
             this.RadioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage5.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage5_CheckedChanged);
+            this.RadioImage5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage5.CheckedChanged += new System.EventHandler(this.RadioImage5_CheckedChanged);
             // 
             // RadioImage4
             // 
+            this.RadioImage4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage4.Checked = false;
             this.RadioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage4.ForeColor = System.Drawing.Color.White;
             this.RadioImage4.Image = null;
+            this.RadioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage4.Location = new System.Drawing.Point(180, 131);
             this.RadioImage4.Name = "RadioImage4";
             this.RadioImage4.Size = new System.Drawing.Size(252, 25);
             this.RadioImage4.TabIndex = 3;
             this.RadioImage4.Text = "Blue-yellow (tritanopia)";
             this.RadioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage4.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage4_CheckedChanged);
+            this.RadioImage4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage4.CheckedChanged += new System.EventHandler(this.RadioImage4_CheckedChanged);
             // 
             // RadioImage3
             // 
+            this.RadioImage3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage3.Checked = false;
             this.RadioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = null;
+            this.RadioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage3.Location = new System.Drawing.Point(180, 100);
             this.RadioImage3.Name = "RadioImage3";
             this.RadioImage3.Size = new System.Drawing.Size(252, 25);
             this.RadioImage3.TabIndex = 2;
             this.RadioImage3.Text = "Red-green (red weak, protanopia)";
             this.RadioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage3.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage3_CheckedChanged);
+            this.RadioImage3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage3.CheckedChanged += new System.EventHandler(this.RadioImage3_CheckedChanged);
             // 
             // RadioImage2
             // 
+            this.RadioImage2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage2.Checked = false;
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = null;
+            this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage2.Location = new System.Drawing.Point(180, 69);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.Size = new System.Drawing.Size(252, 25);
             this.RadioImage2.TabIndex = 1;
             this.RadioImage2.Text = "Red-green (green weak, deuteranopia)";
             this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage2.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage2_CheckedChanged);
+            this.RadioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage2.CheckedChanged += new System.EventHandler(this.RadioImage2_CheckedChanged);
             // 
             // RadioImage1
             // 
+            this.RadioImage1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RadioImage1.Checked = false;
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = null;
+            this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage1.Location = new System.Drawing.Point(180, 7);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.Size = new System.Drawing.Size(123, 25);
             this.RadioImage1.TabIndex = 0;
             this.RadioImage1.Text = "Normal";
             this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage1.CheckedChanged += new WinPaletter.UI.WP.RadioImage.CheckedChangedEventHandler(this.RadioImage1_CheckedChanged);
+            this.RadioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RadioImage1.CheckedChanged += new System.EventHandler(this.RadioImage1_CheckedChanged);
             // 
             // Panel3
             // 
-            this.Panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Panel3.BackColor = System.Drawing.Color.Transparent;
             this.Panel3.Controls.Add(this.Panel24);
             this.Panel3.Controls.Add(this.Panel20);
@@ -1668,7 +2054,7 @@ namespace WinPaletter
             this.Panel3.Controls.Add(this.Panel12);
             this.Panel3.Controls.Add(this.Panel8);
             this.Panel3.Controls.Add(this.Panel4);
-            this.Panel3.Location = new System.Drawing.Point(438, 162);
+            this.Panel3.Location = new System.Drawing.Point(434, 162);
             this.Panel3.Name = "Panel3";
             this.Panel3.Size = new System.Drawing.Size(147, 168);
             this.Panel3.TabIndex = 86;
@@ -1993,9 +2379,9 @@ namespace WinPaletter
             // 
             // PictureBox33
             // 
-            this.PictureBox33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PictureBox33.Image = global::WinPaletter.Properties.Resources.CF_Img_Normal;
-            this.PictureBox33.Location = new System.Drawing.Point(180, 162);
+            this.PictureBox33.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox33.Image = global::WinPaletter.Assets.Accessibility_Vision.CF_Img_Normal;
+            this.PictureBox33.Location = new System.Drawing.Point(176, 162);
             this.PictureBox33.Name = "PictureBox33";
             this.PictureBox33.Size = new System.Drawing.Size(252, 168);
             this.PictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2004,9 +2390,9 @@ namespace WinPaletter
             // 
             // PictureBox32
             // 
-            this.PictureBox32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PictureBox32.Image = global::WinPaletter.Properties.Resources.CF_Pie_Normal;
-            this.PictureBox32.Location = new System.Drawing.Point(6, 162);
+            this.PictureBox32.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox32.Image = global::WinPaletter.Assets.Accessibility_Vision.CF_Pie_Normal;
+            this.PictureBox32.Location = new System.Drawing.Point(2, 162);
             this.PictureBox32.Name = "PictureBox32";
             this.PictureBox32.Size = new System.Drawing.Size(168, 168);
             this.PictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2016,6 +2402,12 @@ namespace WinPaletter
             // TabPage9
             // 
             this.TabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage9.Controls.Add(this.button26);
+            this.TabPage9.Controls.Add(this.button27);
+            this.TabPage9.Controls.Add(this.button28);
+            this.TabPage9.Controls.Add(this.button29);
+            this.TabPage9.Controls.Add(this.button30);
+            this.TabPage9.Controls.Add(this.button31);
             this.TabPage9.Controls.Add(this.PictureBox35);
             this.TabPage9.Controls.Add(this.CheckBox26);
             this.TabPage9.Controls.Add(this.PictureBox34);
@@ -2033,9 +2425,111 @@ namespace WinPaletter
             this.TabPage9.Location = new System.Drawing.Point(174, 4);
             this.TabPage9.Name = "TabPage9";
             this.TabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage9.Size = new System.Drawing.Size(591, 384);
+            this.TabPage9.Size = new System.Drawing.Size(582, 411);
             this.TabPage9.TabIndex = 8;
             this.TabPage9.Text = "Miscellaneous";
+            // 
+            // button26
+            // 
+            this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button26.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button26.ForeColor = System.Drawing.Color.White;
+            this.button26.Image = null;
+            this.button26.ImageAsVector = true;
+            this.button26.ImageVector = ((System.Drawing.Image)(resources.GetObject("button26.ImageVector")));
+            this.button26.Location = new System.Drawing.Point(542, 231);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(34, 24);
+            this.button26.TabIndex = 251;
+            this.button26.UseVisualStyleBackColor = false;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
+            // 
+            // button27
+            // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button27.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button27.ForeColor = System.Drawing.Color.White;
+            this.button27.Image = null;
+            this.button27.ImageAsVector = true;
+            this.button27.ImageVector = ((System.Drawing.Image)(resources.GetObject("button27.ImageVector")));
+            this.button27.Location = new System.Drawing.Point(542, 201);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(34, 24);
+            this.button27.TabIndex = 250;
+            this.button27.UseVisualStyleBackColor = false;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
+            // 
+            // button28
+            // 
+            this.button28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button28.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button28.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button28.ForeColor = System.Drawing.Color.White;
+            this.button28.Image = null;
+            this.button28.ImageAsVector = true;
+            this.button28.ImageVector = ((System.Drawing.Image)(resources.GetObject("button28.ImageVector")));
+            this.button28.Location = new System.Drawing.Point(542, 171);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(34, 24);
+            this.button28.TabIndex = 249;
+            this.button28.UseVisualStyleBackColor = false;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
+            // button29
+            // 
+            this.button29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button29.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button29.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button29.ForeColor = System.Drawing.Color.White;
+            this.button29.Image = null;
+            this.button29.ImageAsVector = true;
+            this.button29.ImageVector = ((System.Drawing.Image)(resources.GetObject("button29.ImageVector")));
+            this.button29.Location = new System.Drawing.Point(542, 141);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(34, 24);
+            this.button29.TabIndex = 248;
+            this.button29.UseVisualStyleBackColor = false;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // button30
+            // 
+            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button30.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button30.ForeColor = System.Drawing.Color.White;
+            this.button30.Image = null;
+            this.button30.ImageAsVector = true;
+            this.button30.ImageVector = ((System.Drawing.Image)(resources.GetObject("button30.ImageVector")));
+            this.button30.Location = new System.Drawing.Point(542, 36);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(34, 24);
+            this.button30.TabIndex = 247;
+            this.button30.UseVisualStyleBackColor = false;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageAsVector = true;
+            this.button31.ImageVector = ((System.Drawing.Image)(resources.GetObject("button31.ImageVector")));
+            this.button31.Location = new System.Drawing.Point(542, 6);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(34, 24);
+            this.button31.TabIndex = 246;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
             // PictureBox35
             // 
@@ -2050,15 +2544,14 @@ namespace WinPaletter
             // 
             // CheckBox26
             // 
-            this.CheckBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox26.Checked = false;
             this.CheckBox26.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox26.ForeColor = System.Drawing.Color.White;
             this.CheckBox26.Location = new System.Drawing.Point(36, 231);
             this.CheckBox26.Name = "CheckBox26";
-            this.CheckBox26.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox26.Size = new System.Drawing.Size(500, 24);
             this.CheckBox26.TabIndex = 244;
             this.CheckBox26.Text = "Enable Windows 7 taskbar volume mixer for Windows 10 only";
             // 
@@ -2075,22 +2568,21 @@ namespace WinPaletter
             // 
             // CheckBox25
             // 
-            this.CheckBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox25.Checked = false;
             this.CheckBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox25.ForeColor = System.Drawing.Color.White;
             this.CheckBox25.Location = new System.Drawing.Point(36, 171);
             this.CheckBox25.Name = "CheckBox25";
-            this.CheckBox25.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox25.Size = new System.Drawing.Size(500, 24);
             this.CheckBox25.TabIndex = 242;
             this.CheckBox25.Text = "Full screen start menu (for Windows 10 and requires logoff and logon)";
             // 
             // AlertBox6
             // 
             this.AlertBox6.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.AlertBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox6.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox6.CenterText = false;
@@ -2099,11 +2591,11 @@ namespace WinPaletter
             this.AlertBox6.Image = null;
             this.AlertBox6.Location = new System.Drawing.Point(36, 94);
             this.AlertBox6.Name = "AlertBox6";
-            this.AlertBox6.Size = new System.Drawing.Size(549, 40);
+            this.AlertBox6.Size = new System.Drawing.Size(540, 40);
             this.AlertBox6.TabIndex = 241;
             this.AlertBox6.TabStop = false;
-            this.AlertBox6.Text = "If you are using Windows 11 lower than Moment 3 update, use ExplorerPatcher to ap" +
-    "ply this effect forcibly";
+            this.AlertBox6.Text = "If you are using Windows 11 version lower than the Moment 3 update, utilize Explo" +
+    "rerPatcher to forcibly apply this effect.";
             // 
             // AlertBox5
             // 
@@ -2133,15 +2625,14 @@ namespace WinPaletter
             // 
             // CheckBox24
             // 
-            this.CheckBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox24.Checked = false;
             this.CheckBox24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox24.ForeColor = System.Drawing.Color.White;
             this.CheckBox24.Location = new System.Drawing.Point(36, 201);
             this.CheckBox24.Name = "CheckBox24";
-            this.CheckBox24.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox24.Size = new System.Drawing.Size(500, 24);
             this.CheckBox24.TabIndex = 227;
             this.CheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and later)";
             // 
@@ -2158,15 +2649,14 @@ namespace WinPaletter
             // 
             // CheckBox15
             // 
-            this.CheckBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox15.Checked = false;
             this.CheckBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox15.ForeColor = System.Drawing.Color.White;
             this.CheckBox15.Location = new System.Drawing.Point(36, 6);
             this.CheckBox15.Name = "CheckBox15";
-            this.CheckBox15.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox15.Size = new System.Drawing.Size(500, 24);
             this.CheckBox15.TabIndex = 144;
             this.CheckBox15.Text = "Snap cursor to default button";
             // 
@@ -2183,15 +2673,14 @@ namespace WinPaletter
             // 
             // CheckBox18
             // 
-            this.CheckBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox18.Checked = false;
             this.CheckBox18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox18.ForeColor = System.Drawing.Color.White;
             this.CheckBox18.Location = new System.Drawing.Point(36, 141);
             this.CheckBox18.Name = "CheckBox18";
-            this.CheckBox18.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox18.Size = new System.Drawing.Size(500, 24);
             this.CheckBox18.TabIndex = 225;
             this.CheckBox18.Text = "Paint Windows version in desktop (Might require Windows restart)";
             // 
@@ -2208,192 +2697,27 @@ namespace WinPaletter
             // 
             // CheckBox19
             // 
-            this.CheckBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.CheckBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox19.Checked = false;
             this.CheckBox19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox19.ForeColor = System.Drawing.Color.White;
             this.CheckBox19.Location = new System.Drawing.Point(36, 36);
             this.CheckBox19.Name = "CheckBox19";
-            this.CheckBox19.Size = new System.Drawing.Size(549, 24);
+            this.CheckBox19.Size = new System.Drawing.Size(500, 24);
             this.CheckBox19.TabIndex = 223;
             this.CheckBox19.Text = "Show seconds in taskbar tray clock (Windows 10 or Windows 11 Moment 3 update)";
-            // 
-            // Button10
-            // 
-            this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button10.CustomColor = System.Drawing.Color.Empty;
-            this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button10.ForeColor = System.Drawing.Color.White;
-            this.Button10.Image = ((System.Drawing.Image)(resources.GetObject("Button10.Image")));
-            this.Button10.Location = new System.Drawing.Point(480, 455);
-            this.Button10.Name = "Button10";
-            this.Button10.Size = new System.Drawing.Size(115, 34);
-            this.Button10.TabIndex = 207;
-            this.Button10.Text = "Quick apply";
-            this.Button10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button10.UseVisualStyleBackColor = false;
-            this.Button10.Click += new System.EventHandler(this.Button10_Click);
-            // 
-            // Button7
-            // 
-            this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button7.ForeColor = System.Drawing.Color.White;
-            this.Button7.Image = null;
-            this.Button7.Location = new System.Drawing.Point(394, 455);
-            this.Button7.Name = "Button7";
-            this.Button7.Size = new System.Drawing.Size(80, 34);
-            this.Button7.TabIndex = 206;
-            this.Button7.Text = "Cancel";
-            this.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button7.UseVisualStyleBackColor = false;
-            this.Button7.Click += new System.EventHandler(this.Button7_Click);
-            // 
-            // Button8
-            // 
-            this.Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button8.CustomColor = System.Drawing.Color.Empty;
-            this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button8.ForeColor = System.Drawing.Color.White;
-            this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
-            this.Button8.Location = new System.Drawing.Point(601, 455);
-            this.Button8.Name = "Button8";
-            this.Button8.Size = new System.Drawing.Size(180, 34);
-            this.Button8.TabIndex = 205;
-            this.Button8.Text = "Load into current theme";
-            this.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button8.UseVisualStyleBackColor = false;
-            this.Button8.Click += new System.EventHandler(this.Button8_Click);
-            // 
-            // GroupBox12
-            // 
-            this.GroupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox12.Controls.Add(this.Button9);
-            this.GroupBox12.Controls.Add(this.Label12);
-            this.GroupBox12.Controls.Add(this.Button11);
-            this.GroupBox12.Controls.Add(this.Button12);
-            this.GroupBox12.Controls.Add(this.EffectsEnabled);
-            this.GroupBox12.Controls.Add(this.checker_img);
-            this.GroupBox12.Location = new System.Drawing.Point(12, 12);
-            this.GroupBox12.Name = "GroupBox12";
-            this.GroupBox12.Size = new System.Drawing.Size(769, 39);
-            this.GroupBox12.TabIndex = 200;
-            // 
-            // Button9
-            // 
-            this.Button9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button9.CustomColor = System.Drawing.Color.Empty;
-            this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button9.ForeColor = System.Drawing.Color.White;
-            this.Button9.Image = ((System.Drawing.Image)(resources.GetObject("Button9.Image")));
-            this.Button9.Location = new System.Drawing.Point(222, 5);
-            this.Button9.Name = "Button9";
-            this.Button9.Size = new System.Drawing.Size(126, 29);
-            this.Button9.TabIndex = 112;
-            this.Button9.Text = "Current applied";
-            this.Button9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button9.UseVisualStyleBackColor = false;
-            this.Button9.Click += new System.EventHandler(this.Button9_Click);
-            // 
-            // Label12
-            // 
-            this.Label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.Label12.BackColor = System.Drawing.Color.Transparent;
-            this.Label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label12.Location = new System.Drawing.Point(4, 4);
-            this.Label12.Name = "Label12";
-            this.Label12.Size = new System.Drawing.Size(75, 31);
-            this.Label12.TabIndex = 111;
-            this.Label12.Text = "Open from:";
-            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Button11
-            // 
-            this.Button11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button11.CustomColor = System.Drawing.Color.Empty;
-            this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button11.ForeColor = System.Drawing.Color.White;
-            this.Button11.Image = ((System.Drawing.Image)(resources.GetObject("Button11.Image")));
-            this.Button11.Location = new System.Drawing.Point(85, 5);
-            this.Button11.Name = "Button11";
-            this.Button11.Size = new System.Drawing.Size(135, 29);
-            this.Button11.TabIndex = 110;
-            this.Button11.Text = "WinPaletter theme";
-            this.Button11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button11.UseVisualStyleBackColor = false;
-            this.Button11.Click += new System.EventHandler(this.Button11_Click);
-            // 
-            // Button12
-            // 
-            this.Button12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button12.CustomColor = System.Drawing.Color.Empty;
-            this.Button12.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button12.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button12.ForeColor = System.Drawing.Color.White;
-            this.Button12.Image = null;
-            this.Button12.Location = new System.Drawing.Point(351, 5);
-            this.Button12.Name = "Button12";
-            this.Button12.Size = new System.Drawing.Size(130, 29);
-            this.Button12.TabIndex = 108;
-            this.Button12.Text = "Default Windows";
-            this.Button12.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button12.UseVisualStyleBackColor = false;
-            this.Button12.Click += new System.EventHandler(this.Button12_Click);
-            // 
-            // EffectsEnabled
-            // 
-            this.EffectsEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EffectsEnabled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.EffectsEnabled.Checked = false;
-            this.EffectsEnabled.DarkLight_Toggler = false;
-            this.EffectsEnabled.Location = new System.Drawing.Point(721, 9);
-            this.EffectsEnabled.Name = "EffectsEnabled";
-            this.EffectsEnabled.Size = new System.Drawing.Size(40, 20);
-            this.EffectsEnabled.TabIndex = 85;
-            this.EffectsEnabled.CheckedChanged += new WinPaletter.UI.WP.Toggle.CheckedChangedEventHandler(this.EffectsEnabled_CheckedChanged);
-            // 
-            // checker_img
-            // 
-            this.checker_img.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checker_img.Image = ((System.Drawing.Image)(resources.GetObject("checker_img.Image")));
-            this.checker_img.Location = new System.Drawing.Point(680, 4);
-            this.checker_img.Name = "checker_img";
-            this.checker_img.Size = new System.Drawing.Size(35, 31);
-            this.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.checker_img.TabIndex = 83;
-            this.checker_img.TabStop = false;
             // 
             // WinEffecter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(793, 501);
+            this.ClientSize = new System.Drawing.Size(784, 531);
             this.Controls.Add(this.TabControl1);
-            this.Controls.Add(this.Button10);
-            this.Controls.Add(this.Button7);
-            this.Controls.Add(this.Button8);
-            this.Controls.Add(this.GroupBox12);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WinEffecter";
@@ -2401,6 +2725,8 @@ namespace WinPaletter
             this.Text = "Windows Effects";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.WinEffecter_Load);
+            this.Controls.SetChildIndex(this.TabControl1, 0);
+            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).EndInit();
@@ -2458,19 +2784,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
-            this.GroupBox12.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.checker_img)).EndInit();
             this.ResumeLayout(false);
 
         }
-
-        internal UI.WP.GroupBox GroupBox12;
-        internal UI.WP.Button Button9;
-        internal Label Label12;
-        internal UI.WP.Button Button11;
-        internal UI.WP.Button Button12;
-        internal UI.WP.Toggle EffectsEnabled;
-        internal PictureBox checker_img;
         internal OpenFileDialog OpenFileDialog1;
         internal PictureBox PictureBox4;
         internal UI.WP.CheckBox CheckBox3;
@@ -2490,9 +2806,6 @@ namespace WinPaletter
         internal UI.WP.ComboBox ComboBox2;
         internal PictureBox PictureBox12;
         internal UI.WP.CheckBox CheckBox9;
-        internal UI.WP.Button Button10;
-        internal UI.WP.Button Button7;
-        internal UI.WP.Button Button8;
         internal PictureBox PictureBox5;
         internal UI.WP.CheckBox CheckBox4;
         internal PictureBox PictureBox14;
@@ -2501,8 +2814,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox11;
         internal Label Label6;
         internal PictureBox PictureBox16;
-        internal UI.WP.Trackbar Trackbar1;
-        internal UI.WP.Button MD;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal TabPage TabPage2;
@@ -2512,32 +2823,22 @@ namespace WinPaletter
         internal TabPage TabPage6;
         internal UI.WP.CheckBox CheckBox12;
         internal PictureBox PictureBox1;
-        internal UI.WP.Button Button2;
         internal Label Label2;
         internal PictureBox PictureBox11;
-        internal UI.WP.Trackbar Trackbar3;
-        internal UI.WP.Button Button1;
         internal Label Label1;
         internal PictureBox PictureBox8;
-        internal UI.WP.Trackbar Trackbar2;
         internal TabPage TabPage7;
-        internal UI.WP.Button Button3;
         internal Label Label3;
         internal PictureBox PictureBox13;
-        internal UI.WP.Trackbar Trackbar4;
-        internal UI.WP.Button Button4;
         internal Label Label4;
         internal PictureBox PictureBox17;
-        internal UI.WP.Trackbar Trackbar5;
         internal TabPage TabPage8;
         internal PictureBox PictureBox18;
         internal UI.WP.CheckBox CheckBox13;
         internal PictureBox PictureBox19;
         internal UI.WP.CheckBox CheckBox14;
-        internal UI.WP.Button Button5;
         internal Label Label5;
         internal PictureBox PictureBox20;
-        internal UI.WP.Trackbar Trackbar6;
         internal PictureBox PictureBox21;
         internal UI.WP.CheckBox CheckBox15;
         internal PictureBox PictureBox22;
@@ -2624,5 +2925,42 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox26;
         internal UI.WP.CheckBox CheckBox27;
         internal PictureBox PictureBox36;
+        private UI.Controllers.TrackBarX Trackbar1;
+        private UI.Controllers.TrackBarX Trackbar5;
+        private UI.Controllers.TrackBarX Trackbar3;
+        private UI.Controllers.TrackBarX Trackbar2;
+        private UI.Controllers.TrackBarX Trackbar4;
+        private UI.Controllers.TrackBarX Trackbar6;
+        internal UI.WP.Button button21;
+        internal UI.WP.Button button5;
+        internal UI.WP.Button button4;
+        internal UI.WP.Button button3;
+        internal UI.WP.Button button2;
+        internal UI.WP.Button button1;
+        internal UI.WP.Button button6;
+        internal UI.WP.Button button7;
+        internal UI.WP.Button button8;
+        internal UI.WP.Button button9;
+        internal UI.WP.Button button10;
+        internal UI.WP.Button button11;
+        internal UI.WP.Button button12;
+        internal UI.WP.Button button13;
+        internal UI.WP.Button button15;
+        internal UI.WP.Button button16;
+        internal UI.WP.Button button17;
+        internal UI.WP.Button button14;
+        internal UI.WP.Button button18;
+        internal UI.WP.Button button22;
+        internal UI.WP.Button button19;
+        internal UI.WP.Button button20;
+        internal UI.WP.Button button23;
+        internal UI.WP.Button button24;
+        internal UI.WP.Button button25;
+        internal UI.WP.Button button26;
+        internal UI.WP.Button button27;
+        internal UI.WP.Button button28;
+        internal UI.WP.Button button29;
+        internal UI.WP.Button button30;
+        internal UI.WP.Button button31;
     }
 }

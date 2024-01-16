@@ -28,22 +28,22 @@ namespace WinPaletter
                 sets = Program.Settings;
             else
                 sets = new(Settings.Mode.File, _File);
+
             Read(sets);
 
-            {
-                ref Localizer lang = ref Program.Lang;
-                Label11.Text = lang.Name;
-                Label12.Text = lang.TranslationVersion;
-                Label14.Text = $"{lang.AppVer} {Program.Lang.AndBelow}";
-                Label19.Text = lang.Lang;
-                Label16.Text = lang.LangCode;
-                Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
-            }
+            ref Localizer lang = ref Program.Lang;
+            Label11.Text = lang.Name;
+            Label12.Text = lang.TranslationVersion;
+            Label14.Text = $"{lang.AppVer} {Program.Lang.AndBelow}";
+            Label19.Text = lang.Lang;
+            Label16.Text = lang.LangCode;
+            Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
 
-            if (_External)
-                OpenFileDialog1.FileName = _File;
+            if (_External) OpenFileDialog1.FileName = _File;
+
             TextBox3.Text = Program.Settings.Language.File;
         }
+
         public void Read(Settings Sets)
         {
             CheckBox1.Checked = Sets.FileTypeManagement.AutoAddExt;
@@ -130,7 +130,7 @@ namespace WinPaletter
             }
 
             CheckBox18.Checked = Sets.ThemeLog.CountDown;
-            NumericUpDown1.Value = Sets.ThemeLog.CountDown_Seconds;
+            trackBarX1.Value = Sets.ThemeLog.CountDown_Seconds;
             CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked = Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose;
 
             CheckBox20.Checked = Sets.ExplorerPatcher.Enabled;
@@ -196,7 +196,14 @@ namespace WinPaletter
             CheckBox27.Checked = Sets.Store.Search_AuthorsNames;
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
             CheckBox4.Checked = Sets.Store.ShowTips;
+
+            checkBox19.Checked = Sets.BackupTheme.Enabled;
+            checkBox39.Checked = Sets.BackupTheme.AutoBackupOnAppOpen;
+            checkBox40.Checked = Sets.BackupTheme.AutoBackupOnApply;
+            checkBox41.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
+            textBox4.Text = Sets.BackupTheme.BackupPath;
         }
+
         public void SaveSettings()
         {
             Cursor = Cursors.WaitCursor;
@@ -341,9 +348,7 @@ namespace WinPaletter
                 {
                     Program.Lang = new();
                     Program.Lang.Load(Program.Settings.Language.File);
-                    foreach (Form f in Application.OpenForms)
-                        f.LoadLanguage();
-                    Forms.MainFrm.UpdateLegends();
+                    foreach (Form f in Application.OpenForms) f.LoadLanguage();
                 }
                 else
                 {
@@ -354,10 +359,7 @@ namespace WinPaletter
             if (ch_EP)
             {
                 Program.EP = new();
-                Forms.MainFrm.ApplyColorsToElements(Program.TM);
-                Forms.MainFrm.LoadFromTM(Program.TM);
-                Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
-                PreviewHelpers.ReValidateLivePreview(Forms.MainFrm.pnl_preview);
+                Forms.Dashboard.LoadFromTM(Program.TM);
             }
 
             //if (ch_WPElevator)
@@ -368,6 +370,7 @@ namespace WinPaletter
 
             MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         public void Write(Settings Sets, Settings.Mode Mode, string File = "")
         {
             Sets.FileTypeManagement.AutoAddExt = CheckBox1.Checked;
@@ -417,7 +420,7 @@ namespace WinPaletter
                 Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             Sets.ThemeLog.CountDown = CheckBox18.Checked;
-            Sets.ThemeLog.CountDown_Seconds = NumericUpDown1.Value;
+            Sets.ThemeLog.CountDown_Seconds = trackBarX1.Value;
             Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked;
 
             Sets.ExplorerPatcher.Enabled = CheckBox20.Checked;
@@ -427,6 +430,12 @@ namespace WinPaletter
             Sets.ExplorerPatcher.UseTaskbar10 = EP_Taskbar_10.Checked;
             Sets.ExplorerPatcher.TaskbarButton10 = EP_ORB_10.Checked;
             Sets.ThemeApplyingBehavior.DelayMetrics = CheckBox22.Checked;
+
+            Sets.BackupTheme.Enabled = checkBox19.Checked;
+            Sets.BackupTheme.AutoBackupOnAppOpen = checkBox39.Checked;
+            Sets.BackupTheme.AutoBackupOnApply = checkBox40.Checked;
+            Sets.BackupTheme.AutoBackupOnThemeLoad = checkBox41.Checked;
+            Sets.BackupTheme.BackupPath = textBox4.Text;
 
             if (RadioButton5.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
@@ -496,6 +505,7 @@ namespace WinPaletter
 
             Sets.Save(Mode, File);
         }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Settings NewSets = new(Settings.Mode.Empty);
@@ -579,7 +589,7 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.ThemeLog.CountDown != CheckBox18.Checked)
                     Changed = true;
-                if (Settings.ThemeLog.CountDown_Seconds != NumericUpDown1.Value)
+                if (Settings.ThemeLog.CountDown_Seconds != trackBarX1.Value)
                     Changed = true;
                 if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked)
                     Changed = true;
@@ -663,6 +673,17 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.Store.ShowTips != CheckBox4.Checked)
                     Changed = true;
+
+                if (Settings.BackupTheme.Enabled != checkBox19.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.AutoBackupOnAppOpen != checkBox39.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.AutoBackupOnApply != checkBox40.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.AutoBackupOnThemeLoad != checkBox41.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.BackupPath != textBox4.Text)
+                    Changed = true;
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
@@ -700,7 +721,6 @@ namespace WinPaletter
             }
         }
 
-
         private void Button2_Click(object sender, EventArgs e)
         {
             Close();
@@ -716,20 +736,20 @@ namespace WinPaletter
             LoadSettings();
 
             int w = 19;
-            EP_Start_11.Image = Properties.Resources.Native11.Resize(w, w);
-            EP_Start_10.Image = Properties.Resources.Native10.Resize(w, w);
+            EP_Start_11.Image = Assets.WinLogos.Win11.Resize(w, w);
+            EP_Start_10.Image = Assets.WinLogos.Win10.Resize(w, w);
             EP_Taskbar_11.Image = EP_Start_11.Image;
             EP_Taskbar_10.Image = EP_Start_10.Image;
 
             if (Program.Style.DarkMode)
             {
-                EP_ORB_11.Image = Properties.Resources.StartBtn_11_EP.Resize(w, w);
-                EP_ORB_10.Image = Properties.Resources.StartBtn_10Dark.Resize(w, w);
+                EP_ORB_11.Image = Assets.Win11Preview.StartBtn_11_EP.Resize(w, w);
+                EP_ORB_10.Image = Assets.Win10Preview.StartBtn_10Light.Invert().Resize(w, w);
             }
             else
             {
-                EP_ORB_11.Image = Properties.Resources.StartBtn_11_EP.Invert().Resize(w, w);
-                EP_ORB_10.Image = Properties.Resources.StartBtn_10Light.Resize(w, w);
+                EP_ORB_11.Image = Assets.Win11Preview.StartBtn_11_EP.Invert().Resize(w, w);
+                EP_ORB_10.Image = Assets.Win10Preview.StartBtn_10Light.Resize(w, w);
             }
 
             if (OS.WXP)
@@ -746,7 +766,6 @@ namespace WinPaletter
 
             Label38.Font = Fonts.ConsoleMedium;
             Label43.Font = Fonts.ConsoleMedium;
-
         }
 
         public int CalcStoreCache()
@@ -985,5 +1004,6 @@ namespace WinPaletter
             Close();
             User.Login(true);
         }
+
     }
 }

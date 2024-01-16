@@ -31,13 +31,26 @@ namespace WinPaletter.UI.WP
         #region Properties
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public override Color BackColor { get; set; }
+
+        private int _focusAlpha = 255;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int FocusAlpha
+        {
+            get => _focusAlpha;
+            set
+            {
+                _focusAlpha = value;
+                Refresh();
+            }
+        }
         #endregion
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.4d));
-        private readonly TextureBrush Noise2 = new(Properties.Resources.GaussianBlur.Fade(0.9d));
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.4f));
+        private readonly TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
 
         private MouseState State = MouseState.None;
 
@@ -50,7 +63,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Voids
+        #region Methods
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {
             List<Point> points = new() { FirstPoint, SecondPoint, ThirdPoint };
@@ -61,7 +74,8 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
-        #region Events
+        #region Events/Overrides
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space) { this.DroppedDown = !this.DroppedDown; }
@@ -137,6 +151,7 @@ namespace WinPaletter.UI.WP
 
             base.OnDropDownClosed(e);
         }
+
         #endregion
 
         #region Animator
@@ -182,11 +197,11 @@ namespace WinPaletter.UI.WP
             if (((e.State & DrawItemState.Focus) == DrawItemState.Focus) || ((e.State & DrawItemState.Selected) == DrawItemState.Selected) || ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight))
             {
                 e.DrawBackground();
-                G.FillRectangle(scheme.Brushes.Back, Rect_Fix1);
+                if (Parent is not WP.GroupBox) G.FillRectangle(scheme.Brushes.Back, Rect_Fix1); else G.FillRectangle(scheme.Brushes.Back_Level2, Rect_Fix1);
             }
             else
             {
-                G.FillRectangle(scheme.Brushes.Back, Rect_Fix2);
+                if (Parent is not WP.GroupBox) G.FillRectangle(scheme.Brushes.Back, Rect_Fix2); else G.FillRectangle(scheme.Brushes.Back_Level2, Rect_Fix2);
             }
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
@@ -219,7 +234,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -231,9 +245,9 @@ namespace WinPaletter.UI.WP
             Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
             Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_Checked);
-            Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line);
+            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Level2);
 
-            G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
+            G.FillRoundedRect(scheme.Brushes.Back_Level2, InnerRect);
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
@@ -259,17 +273,11 @@ namespace WinPaletter.UI.WP
 
             if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_Checked, InnerRect); }
 
-            Color Triangle1 = Color.FromArgb(255 - alpha2, !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
-            using (Pen P = new(Triangle1, 2f))
-            {
-                DrawTriangle(Triangle1, point_TopRight, point_CenterBottom, point_TopLeft, G);
-            }
+            Color Triangle1 = Color.FromArgb(Math.Max(FocusAlpha - alpha2, 0), !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
+            DrawTriangle(Triangle1, point_TopRight, point_CenterBottom, point_TopLeft, G);
 
             Color Triangle2 = Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover);
-            using (Pen P = new(Triangle2, 2f))
-            {
-                DrawTriangle(Triangle2, point_BottomRight, point_CenterTop, point_BottomLeft, G);
-            }
+            DrawTriangle(Triangle2, point_BottomRight, point_CenterTop, point_BottomLeft, G);
 
             using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
             {

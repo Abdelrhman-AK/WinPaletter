@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,19 +7,139 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using WinPaletter.Theme;
+using WinPaletter.UI.Controllers;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class ExternalTerminal
     {
         private bool _Shown = false;
         private Font f_extterminal = new("Consolas", 18f, FontStyle.Regular);
 
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+        }
+
         public ExternalTerminal()
         {
             InitializeComponent();
+        }
+
+
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                LoadFromTM(TMx);
+                ApplyPreview();
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            ApplyPreview();
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+            {
+                LoadFromTM(_Def);
+                ApplyPreview();
+            }
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            {
+                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
@@ -31,15 +150,161 @@ namespace WinPaletter
             FillTerminals(ComboBox1);
             RasterList.BringToFront();
 
-            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
-
             ExtTerminal_PopupForegroundLbl.Font = Fonts.Console;
             ExtTerminal_PopupBackgroundLbl.Font = Fonts.Console;
             ExtTerminal_AccentForegroundLbl.Font = Fonts.Console;
             ExtTerminal_AccentBackgroundLbl.Font = Fonts.Console;
 
-            Button4.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
+            toggle1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
+            IEnumerable<UI.WP.Button> buttons = flowLayoutPanel1.Controls.OfType<UI.WP.Button>();
+            UI.WP.Button button_import = buttons.Where(b => b.Name.StartsWith("btn_import")).FirstOrDefault() ?? null;
+            button_import.Text = Program.Lang.Designer_import_wpth;
+
+            #region Menu _data
+            button_import.Menu.Items.Clear();
+
+            ToolStripMenuItem import_current = new();
+            ToolStripMenuItem import_defaultWindows = new();
+            ToolStripMenuItem import_scheme = new();
+            //ToolStripMenuItem import_scheme_12 = new();
+            ToolStripMenuItem import_scheme_11 = new();
+            ToolStripMenuItem import_scheme_10 = new();
+            ToolStripMenuItem import_scheme_81 = new();
+            ToolStripMenuItem import_scheme_7 = new();
+            ToolStripMenuItem import_scheme_Vista = new();
+            ToolStripMenuItem import_scheme_XP = new();
+
+            import_current.Text = Program.Lang.Designer_import_current;
+            import_defaultWindows.Text = Program.Lang.Designer_import_defaultWindows;
+            import_scheme.Text = Program.Lang.Designer_import_preset;
+            import_scheme_11.Text = Program.Lang.OS_Win11;
+            import_scheme_10.Text = Program.Lang.OS_Win10;
+            import_scheme_81.Text = Program.Lang.OS_Win81;
+            import_scheme_7.Text = Program.Lang.OS_Win7;
+            import_scheme_Vista.Text = Program.Lang.OS_WinVista;
+            import_scheme_XP.Text = Program.Lang.OS_WinXP;
+            //import_scheme_12.Text = Program.Lang.OS_Win12;
+
+            import_current.Image = AspectsResources.CurrentApplied;
+
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win12_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win11_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win10_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win81_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win7_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
+            {
+                import_defaultWindows.Image = WinLogos.Add_WinVista_20px;
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
+            {
+                import_defaultWindows.Image = WinLogos.Add_WinXP_20px;
+            }
+
+            import_scheme.Image = AspectsResources.Scheme;
+            //import_scheme_12.Image = WinLogos.add_win12_20px;
+            import_scheme_11.Image = WinLogos.Add_Win11_20px;
+            import_scheme_10.Image = WinLogos.Add_Win10_20px;
+            import_scheme_81.Image = WinLogos.Add_Win81_20px;
+            import_scheme_7.Image = WinLogos.Add_Win7_20px;
+            import_scheme_Vista.Image = WinLogos.Add_WinVista_20px;
+            import_scheme_XP.Image = WinLogos.Add_WinXP_20px;
+
+            import_scheme.DropDown.Renderer = button_import.Menu.Renderer;
+            import_scheme.DropDown.Items.Add(import_scheme_11);
+            import_scheme.DropDown.Items.Add(import_scheme_10);
+            import_scheme.DropDown.Items.Add(import_scheme_81);
+            import_scheme.DropDown.Items.Add(import_scheme_7);
+            import_scheme.DropDown.Items.Add(import_scheme_Vista);
+            import_scheme.DropDown.Items.Add(import_scheme_XP);
+
+            button_import.Menu.Items.Add(import_current);
+            button_import.Menu.Items.Add(import_defaultWindows);
+
+            #endregion
+
+            #region Events/Overrides
+
+            if (button_import != null)
+                button_import.Click += LoadFromWPTH;
+
+            if (import_current != null)
+                import_current.Click += LoadFromCurrent;
+
+            if (import_defaultWindows != null)
+                import_defaultWindows.Click += LoadFromDefault;
+
+            if (import_scheme_11 != null)
+                import_scheme_11.Click += ImportWin11Preset;
+
+            if (import_scheme_10 != null)
+                import_scheme_10.Click += ImportWin10Preset;
+
+            if (import_scheme_81 != null)
+                import_scheme_81.Click += ImportWin81Preset;
+
+            if (import_scheme_7 != null)
+                import_scheme_7.Click += ImportWin7Preset;
+
+            if (import_scheme_Vista != null)
+                import_scheme_Vista.Click += ImportWinVistaPreset;
+
+            if (import_scheme_XP != null)
+                import_scheme_XP.Click += ImportWinXPPreset;
+
+            FormClosedEventHandler FormClosed = null;
+
+            FormClosed = (sender, args) =>
+            {
+                if (button_import != null)
+                    button_import.Click -= LoadFromWPTH;
+
+                if (import_current != null)
+                    import_current.Click -= LoadFromCurrent;
+
+                if (import_defaultWindows != null)
+                    import_defaultWindows.Click -= LoadFromDefault;
+
+                if (import_scheme_11 != null)
+                    import_scheme_11.Click -= ImportWin11Preset;
+
+                if (import_scheme_10 != null)
+                    import_scheme_10.Click -= ImportWin10Preset;
+
+                if (import_scheme_81 != null)
+                    import_scheme_81.Click -= ImportWin81Preset;
+
+                if (import_scheme_7 != null)
+                    import_scheme_7.Click -= ImportWin7Preset;
+
+                if (import_scheme_Vista != null)
+                    import_scheme_Vista.Click -= ImportWinVistaPreset;
+
+                if (import_scheme_XP != null)
+                    import_scheme_XP.Click -= ImportWinXPPreset;
+
+                this.FormClosed -= FormClosed;
+            };
+
+            this.FormClosed += FormClosed;
+
+            #endregion
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -68,12 +333,17 @@ namespace WinPaletter
 
             foreach (string x in Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames())
             {
-                if (!((x.ToLower() ?? string.Empty) == ("%%Startup".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_cmd.exe".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty)) & !((x.ToLower() ?? string.Empty) == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty)))
+                bool startupCondition = (x.ToLower() ?? string.Empty) == "%%Startup".ToLower();
+                bool systemRootCondition = (x.ToLower() ?? string.Empty) == "%SystemRoot%".ToLower();
+                bool cmdExeCondition = (x.ToLower() ?? string.Empty) == "%SystemRoot%_System32_cmd.exe".ToLower();
+                bool powershellExeCondition = (x.ToLower() ?? string.Empty) == "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower();
+                bool sysWow64PowershellCondition = (x.ToLower() ?? string.Empty) == ("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower() ?? string.Empty);
+
+                if (!startupCondition && !systemRootCondition && !cmdExeCondition && !powershellExeCondition && !sysWow64PowershellCondition)
                 {
                     ListBox.Items.Add(x);
                 }
             }
-
         }
 
         public void GetFromExtTerminal(string RegKey)
@@ -87,7 +357,7 @@ namespace WinPaletter
 
             object y_cmd;
 
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
+            using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
             {
                 ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", _Def.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
                 ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", _Def.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
@@ -121,7 +391,6 @@ namespace WinPaletter
                 ExtTerminal_AccentForegroundBar.Value = Convert.ToInt32(dx[1].ToString(), 16);
 
                 ExtTerminal_CursorSizeBar.Value = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", 25));
-                ExtTerminal_FontSizeVal.Text = ExtTerminal_FontSizeBar.Value.ToString();
 
                 int fw = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", 400));
                 switch (fw)
@@ -231,8 +500,8 @@ namespace WinPaletter
                 {
                     if (!ExtTerminal_RasterToggle.Checked)
                     {
+                        using (Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = y_cmd.ToString(), lfWeight = fw }))
                         {
-                            Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = y_cmd.ToString(), lfWeight = fw });
                             f_extterminal = new(temp.FontFamily, ExtTerminal_FontSizeBar.Value, temp.Style);
                         }
                         FontName.Text = f_extterminal.Name;
@@ -409,11 +678,12 @@ namespace WinPaletter
             }
         }
 
-        #region  Events related to External Terminal
+        #region Events
+
         private void ExtTerminal_PopupForegroundBar_Scroll(object sender)
         {
             {
-                UI.WP.Trackbar temp = ExtTerminal_PopupForegroundBar;
+                UI.WP.TrackBar temp = ExtTerminal_PopupForegroundBar;
                 ExtTerminal_PopupForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     ExtTerminal_PopupForegroundLbl.Text += " (A)";
@@ -436,7 +706,7 @@ namespace WinPaletter
         private void ExtTerminal_PopupBackgroundBar_Scroll(object sender)
         {
             {
-                UI.WP.Trackbar temp = ExtTerminal_PopupBackgroundBar;
+                UI.WP.TrackBar temp = ExtTerminal_PopupBackgroundBar;
                 ExtTerminal_PopupBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     ExtTerminal_PopupBackgroundLbl.Text += " (A)";
@@ -459,7 +729,7 @@ namespace WinPaletter
         private void ExtTerminal_AccentForegroundBar_Scroll(object sender)
         {
             {
-                UI.WP.Trackbar temp = ExtTerminal_AccentForegroundBar;
+                UI.WP.TrackBar temp = ExtTerminal_AccentForegroundBar;
                 ExtTerminal_AccentForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     ExtTerminal_AccentForegroundLbl.Text += " (A)";
@@ -483,7 +753,7 @@ namespace WinPaletter
         private void ExtTerminal_AccentBackgroundBar_Scroll(object sender)
         {
             {
-                UI.WP.Trackbar temp = ExtTerminal_AccentBackgroundBar;
+                UI.WP.TrackBar temp = ExtTerminal_AccentBackgroundBar;
                 ExtTerminal_AccentBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     ExtTerminal_AccentBackgroundLbl.Text += " (A)";
@@ -525,27 +795,13 @@ namespace WinPaletter
             f_extterminal = new(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style);
             f_extterminal.ToLogFont(fx);
             fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
+
+            using (Font temp = Font.FromLogFont(fx))
             {
-                Font temp = Font.FromLogFont(fx);
                 f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
             }
             FontName.Text = f_extterminal.Name;
             ApplyPreview();
-        }
-
-        private void ExtTerminal_FontSizeBar_Scroll(object sender)
-        {
-            ExtTerminal_FontSizeVal.Text = ExtTerminal_FontSizeBar.Value.ToString();
-            if (_Shown)
-            {
-                f_extterminal = new(f_extterminal.Name, ExtTerminal_FontSizeBar.Value, f_extterminal.Style);
-                ApplyPreview();
-            }
-        }
-
-        private void ExtTerminal_CursorSizeBar_Scroll(object sender)
-        {
-            UpdateCurPreview();
         }
 
         private void ExtTerminal_CursorStyle_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -567,42 +823,19 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, ExtTerminal_PreviewCUR2 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } },
+                { ExtTerminal_PreviewCUR2, new string[] { nameof(ExtTerminal_PreviewCUR2.BackColor) } }
+            };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
 
             CList.Clear();
-        }
-
-        private void ExtTerminal_OpacityBar_Scroll(object sender)
-        {
-            ExtTerminal_OpacityVal.Text = Conversion.Fix((((UI.WP.Trackbar)sender).Value / 255) * 100).ToString();
-        }
-
-        public int FixValue(int i)
-        {
-            int v;
-            v = i;
-            if (v < 12)
-                v = 12;
-            if (v > 12 & v < 18)
-                v = 12;
-            if (v > 18 & v < 24)
-                v = 18;
-            if (v > 24 & v < 30)
-                v = 24;
-            if (v > 30 & v < 36)
-                v = 30;
-            if (v > 36 & v < 42)
-                v = 36;
-            if (v > 42 & v < 48)
-                v = 42;
-            if (v > 48)
-                v = 48;
-            return v;
         }
 
         #endregion
@@ -631,47 +864,65 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, CMD4 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } }
+            };
 
-            Conditions _conditions = new();
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                _conditions.CMD_ColorTable00 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable00) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                _conditions.CMD_ColorTable01 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable01) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                _conditions.CMD_ColorTable02 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable02) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                _conditions.CMD_ColorTable03 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable03) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                _conditions.CMD_ColorTable04 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable04) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                _conditions.CMD_ColorTable05 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable05) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                _conditions.CMD_ColorTable06 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable06) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                _conditions.CMD_ColorTable07 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable07) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                _conditions.CMD_ColorTable08 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable08) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                _conditions.CMD_ColorTable09 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable09) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                _conditions.CMD_ColorTable10 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable10) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                _conditions.CMD_ColorTable11 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable11) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                _conditions.CMD_ColorTable12 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable12) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                _conditions.CMD_ColorTable13 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable13) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                _conditions.CMD_ColorTable14 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable14) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                _conditions.CMD_ColorTable15 = true;
+                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable15) });
 
 
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
             ApplyPreview();
 
             UpdateFromTrack(1);
@@ -682,7 +933,8 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        #region    Voids to modify colors or shapes
+        #region Methods to modify colors or shapes
+
         public void ApplyCursorShape()
         {
 
@@ -756,18 +1008,17 @@ namespace WinPaletter
                 ExtTerminal_PreviewCUR2.Top = ExtTerminal_PreviewCUR.Height - ExtTerminal_PreviewCUR2.Height - 2;
             }
         }
+
         public void UpdateCurPreview()
         {
             int all = ExtTerminal_PreviewCUR.Height - 4;
             ExtTerminal_PreviewCUR2.Height = (int)Math.Round(all * (ExtTerminal_CursorSizeBar.Value / (double)ExtTerminal_CursorSizeBar.Maximum));
             ExtTerminal_PreviewCUR2.Top = ExtTerminal_PreviewCUR.Height - ExtTerminal_PreviewCUR2.Height - 2;
-            ExtTerminal_PreviewCUR_Val.Text = ExtTerminal_CursorSizeBar.Value.ToString();
             ApplyCursorShape();
         }
+
         public void ApplyPreview()
         {
-
-            #region  External Terminal
             CMD4.CMD_ColorTable00 = ExtTerminal_ColorTable00.BackColor;
             CMD4.CMD_ColorTable01 = ExtTerminal_ColorTable01.BackColor;
             CMD4.CMD_ColorTable02 = ExtTerminal_ColorTable02.BackColor;
@@ -873,11 +1124,9 @@ namespace WinPaletter
 
             }
 
-            #endregion
-
-
             CMD4.Refresh();
         }
+
         public void UpdateFromTrack(int i)
         {
 
@@ -1263,6 +1512,7 @@ namespace WinPaletter
                 FontName.Font = new(f_extterminal.Name, 9f, f_extterminal.Style);
             }
         }
+
         #endregion
 
         private void Button6_Click(object sender, EventArgs e)
@@ -1299,9 +1549,8 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Manager TM)
         {
-
             ExtTerminal_ColorTable00.BackColor = TM.CommandPrompt.ColorTable00;
             ExtTerminal_ColorTable01.BackColor = TM.CommandPrompt.ColorTable01;
             ExtTerminal_ColorTable02.BackColor = TM.CommandPrompt.ColorTable02;
@@ -1401,8 +1650,8 @@ namespace WinPaletter
 
             if (!TM.CommandPrompt.FontRaster)
             {
+                using (Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight }))
                 {
-                    Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight });
                     f_extterminal = new(temp.FontFamily, (int)Math.Round(TM.CommandPrompt.FontSize / 65536d), temp.Style);
                 }
             }
@@ -1410,7 +1659,6 @@ namespace WinPaletter
             FontName.Text = f_extterminal.Name;
             FontName.Font = new(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style);
             ExtTerminal_FontSizeBar.Value = (int)Math.Round(f_extterminal.Size);
-            ExtTerminal_FontSizeVal.Text = f_extterminal.Size.ToString();
 
             if (TM.CommandPrompt.FontSize == 393220)
                 RasterList.SelectedItem = "4x6";
@@ -1445,78 +1693,10 @@ namespace WinPaletter
             ExtTerminal_PreviewCUR2.BackColor = TM.CommandPrompt.W10_1909_CursorColor;
             ExtTerminal_EnhancedTerminal.Checked = TM.CommandPrompt.W10_1909_ForceV2;
             ExtTerminal_OpacityBar.Value = TM.CommandPrompt.W10_1909_WindowAlpha;
-            ExtTerminal_OpacityVal.Text = Conversion.Fix(TM.CommandPrompt.W10_1909_WindowAlpha / 255d * 100d).ToString();
             ExtTerminal_LineSelection.Checked = TM.CommandPrompt.W10_1909_LineSelection;
             ExtTerminal_TerminalScrolling.Checked = TM.CommandPrompt.W10_1909_TerminalScrolling;
             ApplyCursorShape();
             UpdateCurPreview();
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
-            {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
-                ApplyFromTM(TMx);
-                ApplyPreview();
-                TMx.Dispose();
-            }
-        }
-
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
-            {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            ApplyPreview();
-            TMx.Dispose();
-        }
-
-        private void Button4_Click(object sender, EventArgs e)
-        {
-            if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString()))
-            {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-                ApplyPreview();
-            }
-        }
-
-        private void ExtTerminal_FontSizeVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_FontSizeBar.Maximum), ExtTerminal_FontSizeBar.Minimum).ToString();
-            ExtTerminal_FontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void ExtTerminal_PreviewCUR_Val_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_CursorSizeBar.Maximum), ExtTerminal_CursorSizeBar.Minimum).ToString();
-            ExtTerminal_CursorSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void ExtTerminal_OpacityVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum).ToString();
-            ExtTerminal_OpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -1531,17 +1711,52 @@ namespace WinPaletter
                 NativeMethods.GDI32.LogFont fx = new();
                 f_extterminal.ToLogFont(fx);
                 fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
+                using (Font temp = Font.FromLogFont(fx))
                 {
-                    Font temp = Font.FromLogFont(fx);
                     f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
                 }
                 FontName.Font = new(FontDialog1.Font.Name, 9f, f_extterminal.Style);
             }
         }
 
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+            if (_Shown)
+            {
+                Program.Settings.WindowsTerminals.ListAllFonts = toggle1.Checked;
+                Program.Settings.WindowsTerminals.Save();
+            }
+        }
+
+        private void CMD_FontSizeBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (_Shown)
+            {
+                f_extterminal = new(f_extterminal.Name, ExtTerminal_FontSizeBar.Value, f_extterminal.Style);
+                ApplyPreview();
+            }
+        }
+
+        private void CMD_CursorSizeBar_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCurPreview();
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GroupBox73.Visible = ComboBox1.SelectedItem != null;
+            TabControl1.Visible = ComboBox1.SelectedItem != null;
+        }
+
+        private void Button25_Click(object sender, EventArgs e)
+        {
+            Program.ToolTip.ToolTipText = Program.Lang.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.Image = Assets.Notifications.Info;
+
+            Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
+
+            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 5000);
         }
     }
 }

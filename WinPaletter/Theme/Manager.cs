@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
-using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,7 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -39,14 +37,14 @@ namespace WinPaletter.Theme
                     {
                         using (User.Identity.Impersonate())
                         {
-                            using (Manager @default = Theme.Default.Get(Program.PreviewStyle))
+                            using (Manager @default = Theme.Default.Get(Program.WindowStyle))
                             {
                                 Exceptions.ThemeLoad.Clear();
                                 Info.Load();
-                                Windows12.Load(@default.Windows12);
-                                Windows11.Load(@default.Windows11);
-                                Windows10.Load(@default.Windows10);
-                                Windows81.Load(@default.Windows81);
+                                Windows12.Load("12", @default.Windows12);
+                                Windows11.Load("11", @default.Windows11);
+                                Windows10.Load("10", @default.Windows10);
+                                Windows81.Load("8.1", @default.Windows81);
                                 Windows7.Load(@default.Windows7);
                                 WindowsVista.Load(@default.WindowsVista);
                                 WindowsXP.Load(@default.WindowsXP);
@@ -71,14 +69,14 @@ namespace WinPaletter.Theme
                                 Wallpaper.Load(@default.Wallpaper);
 
                                 CommandPrompt.Load(string.Empty, "Terminal_CMD_Enabled", @default.CommandPrompt);
-                                if (Directory.Exists(PathsExt.PS86_app))
+                                if (Directory.Exists(PathsExt.PS86_dir))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{PathsExt.PS86_reg}", true).Close(); }
                                     catch { PowerShellx86.Load(PathsExt.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86); }
                                 }
                                 else { PowerShellx86 = @default.PowerShellx86; }
 
-                                if (Directory.Exists(PathsExt.PS64_app))
+                                if (Directory.Exists(PathsExt.PS64_dir))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{PathsExt.PS64_reg}", true).Close(); }
                                     catch { PowerShellx64.Load(PathsExt.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64); }
@@ -194,7 +192,7 @@ namespace WinPaletter.Theme
                             List<string> txt = new();
                             txt.Clear();
                             string Pack = $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp";
-                            bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && converter.GetFormat(File) == Converter_CP.WP_Format.JSON;
+                            bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && Manager.GetFormat(File) == Manager.Format.JSON;
                             string cache = $@"{PathsExt.ThemeResPackCache}\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
 
                             // Extract theme resources pack
@@ -288,13 +286,10 @@ namespace WinPaletter.Theme
                                 }
                             }
 
-                            else if (converter.GetFormat(File) == Converter_CP.WP_Format.WPTH)
+                            else if (Manager.GetFormat(File) == Manager.Format.OldFormat)
                             {
-                                if (MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Convert_Detect_Old_OnLoading1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
-                                {
-                                    converter.Convert(File, File, Program.Settings.FileTypeManagement.CompressThemeFile, false);
-                                    goto Start;
-                                }
+                                MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Convert_Detect_Old_OnLoadingTip);
+                                return;
                             }
 
                             else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -306,7 +301,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Save or apply WinPaletter theme
+        /// ApplyToTM or apply WinPaletter theme
         /// </summary>
         /// <param name="Destination">Destination into which WinPaletter will write theme data. It can be registry or file.</param>
         /// <param name="File">If selected destination is file, this will specify WinPaletter theme file</param>
@@ -320,6 +315,12 @@ namespace WinPaletter.Theme
                     {
                         using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
+                            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApply)
+                            {
+                                string filename = Program.GetUniqueFileName(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply", $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                                Save(Source.File, filename);
+                            }
+
                             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
                             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
@@ -404,21 +405,21 @@ namespace WinPaletter.Theme
 
                             if (OS.W12)
                             {
-                                Execute(new(() => Windows12.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win12, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows12.Apply("12", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win12, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
 
                                 Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI12, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
                             }
 
                             if (OS.W11)
                             {
-                                Execute(new(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows11.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
 
                                 Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI11, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
                             }
 
                             if (OS.W10)
                             {
-                                Execute(new(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows10.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
 
                                 Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
                             }
@@ -427,8 +428,7 @@ namespace WinPaletter.Theme
                             {
                                 Execute(new(() =>
                                 {
-                                    Windows81.Apply(ReportProgress_Detailed ? TreeView : null);
-                                    Program.RefreshDWM(this);
+                                    Windows81.Apply(this, "8.1", ReportProgress_Detailed ? TreeView : null);
                                 }), TreeView, Program.Lang.TM_Applying_Win81, Program.Lang.TM_W81_Error, Program.Lang.TM_Time, sw_all);
 
                                 Execute(new(() => Apply_LogonUI_8(TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI8, Program.Lang.TM_LogonUI8_Error, Program.Lang.TM_Time, sw_all);
@@ -438,8 +438,7 @@ namespace WinPaletter.Theme
                             {
                                 Execute(new(() =>
                                 {
-                                    Windows7.Apply(ReportProgress_Detailed ? TreeView : null);
-                                    Program.RefreshDWM(this);
+                                    Windows7.Apply(this, ReportProgress_Detailed ? TreeView : null);
                                 }), TreeView, Program.Lang.TM_Applying_Win7, Program.Lang.TM_W7_Error, Program.Lang.TM_Time, sw_all);
 
                                 Execute(new(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI7, Program.Lang.TM_LogonUI7_Error, Program.Lang.TM_Time, sw_all);
@@ -746,6 +745,8 @@ namespace WinPaletter.Theme
 
                 case Source.File:
                     {
+                        if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(File))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(File));
+   
                         if (System.IO.File.Exists(File))
                         {
                             try { FileSystem.Kill(File); }

@@ -117,7 +117,7 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -162,7 +162,7 @@ namespace WinPaletter.UI.Controllers
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
             G.TextRenderingHint = Program.Style.RenderingHint;
-            DoubleBuffered = true;
+
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
             Rectangle TextAndImageRect = new(rect.X + PaddingRect.X, rect.Y + PaddingRect.Y, Width - 1 - PaddingRect.Width * 2 - rect.X * 2, Height - 1 - PaddingRect.Height * 2 - rect.Y * 2);

@@ -4,7 +4,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
@@ -36,7 +35,6 @@ namespace WinPaletter
             InitializeApplication(true);
 
             SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
-            //SingleInstanceApplication.Run(new AspectsTemplate(), StartupNextInstanceEventHandler);
         }
 
         public static void InitializeApplication(bool ShowLoginDialog)
@@ -60,7 +58,6 @@ namespace WinPaletter
                 }
 
                 // Data of following methods depends on current selected user
-                DetectIfWPStartedWithClassicTheme();
                 ExtractLuna();
 
                 CheckIfLicenseChecked();
@@ -70,10 +67,12 @@ namespace WinPaletter
                 BackupWindowsStartupSound();
                 CreateUninstaller();
                 CheckWhatsNew();
-                InitializeSysEventsSounds();
 
                 ExecuteArgs();
                 LoadThemeManager();
+                InitializeSysEventsSounds();
+
+                Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
 
                 wic.Undo();
             }

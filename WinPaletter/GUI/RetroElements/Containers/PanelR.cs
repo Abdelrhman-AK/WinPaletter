@@ -20,12 +20,92 @@ namespace WinPaletter.UI.Retro
         }
 
         #region Properties
-        public bool Flat { get; set; } = false;
-        public Color ButtonHilight { get; set; } = Color.White;
-        public Color ButtonShadow { get; set; } = Color.FromArgb(128, 128, 128);
-        public Color ButtonDkShadow { get; set; } = Color.FromArgb(105, 105, 105);
-        public Color ButtonLight { get; set; } = Color.FromArgb(227, 227, 227);
-        public bool Style2 { get; set; } = false;
+
+        private bool flat = false;
+        private Color buttonHilight = SystemColors.ButtonHighlight;
+        private Color buttonShadow = SystemColors.ButtonShadow;
+        private Color buttonDkShadow = SystemColors.ControlDark;
+        private Color buttonLight = SystemColors.ControlLight;
+        private bool style2 = false;
+
+        public bool Flat
+        {
+            get { return flat; }
+            set
+            {
+                if (flat != value)
+                {
+                    flat = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonHilight
+        {
+            get { return buttonHilight; }
+            set
+            {
+                if (buttonHilight != value)
+                {
+                    buttonHilight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonShadow
+        {
+            get { return buttonShadow; }
+            set
+            {
+                if (buttonShadow != value)
+                {
+                    buttonShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonDkShadow
+        {
+            get { return buttonDkShadow; }
+            set
+            {
+                if (buttonDkShadow != value)
+                {
+                    buttonDkShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonLight
+        {
+            get { return buttonLight; }
+            set
+            {
+                if (buttonLight != value)
+                {
+                    buttonLight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public bool Style2
+        {
+            get { return style2; }
+            set
+            {
+                if (style2 != value)
+                {
+                    style2 = value;
+                    Refresh();
+                }
+            }
+        }
+
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)
@@ -33,7 +113,6 @@ namespace WinPaletter.UI.Retro
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
-            DoubleBuffered = true;
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
 
             G.Clear(BackColor);

@@ -66,7 +66,7 @@ namespace WinPaletter
             this.TextBox6 = new WinPaletter.UI.WP.TextBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.Label13 = new System.Windows.Forms.Label();
-            this.Trackbar1 = new WinPaletter.UI.WP.Trackbar();
+            this.Trackbar1 = new WinPaletter.UI.WP.TrackBar();
             this.Label12 = new System.Windows.Forms.Label();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.Label11 = new System.Windows.Forms.Label();
@@ -620,7 +620,7 @@ namespace WinPaletter
             this.Trackbar1.TabIndex = 44;
             this.Trackbar1.Text = "Trackbar1";
             this.Trackbar1.Value = 1;
-            this.Trackbar1.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar1_Scroll);
+            this.Trackbar1.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.Trackbar1_Scroll);
             // 
             // Label12
             // 
@@ -636,7 +636,7 @@ namespace WinPaletter
             // PictureBox16
             // 
             this.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox16.Image = global::WinPaletter.Properties.Resources.Store_DoneByWinPaletter;
+            this.PictureBox16.Image = global::WinPaletter.Assets.WinPaletter_Store.DoneByWinPaletter;
             this.PictureBox16.Location = new System.Drawing.Point(6, 325);
             this.PictureBox16.Name = "PictureBox16";
             this.PictureBox16.Size = new System.Drawing.Size(24, 24);
@@ -697,7 +697,7 @@ namespace WinPaletter
             // PictureBox15
             // 
             this.PictureBox15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox15.Image = global::WinPaletter.Properties.Resources.Store_DoneByUser;
+            this.PictureBox15.Image = global::WinPaletter.Assets.WinPaletter_Store.DoneByUser;
             this.PictureBox15.Location = new System.Drawing.Point(6, 355);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
@@ -736,7 +736,7 @@ namespace WinPaletter
             // PictureBox14
             // 
             this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox14.Image = global::WinPaletter.Properties.Resources.Store_DesignedForXP;
+            this.PictureBox14.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedForXP;
             this.PictureBox14.Location = new System.Drawing.Point(42, 284);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
@@ -747,7 +747,7 @@ namespace WinPaletter
             // PictureBox13
             // 
             this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox13.Image = global::WinPaletter.Properties.Resources.Store_DesignedForVista;
+            this.PictureBox13.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedForVista;
             this.PictureBox13.Location = new System.Drawing.Point(42, 254);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
@@ -758,7 +758,7 @@ namespace WinPaletter
             // PictureBox12
             // 
             this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox12.Image = global::WinPaletter.Properties.Resources.Store_DesignedFor7;
+            this.PictureBox12.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor7;
             this.PictureBox12.Location = new System.Drawing.Point(42, 224);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
@@ -769,7 +769,7 @@ namespace WinPaletter
             // PictureBox11
             // 
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.Properties.Resources.Store_DesignedFor8;
+            this.PictureBox11.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor8;
             this.PictureBox11.Location = new System.Drawing.Point(42, 194);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
@@ -780,7 +780,7 @@ namespace WinPaletter
             // PictureBox10
             // 
             this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox10.Image = global::WinPaletter.Properties.Resources.Store_DesignedFor10;
+            this.PictureBox10.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor10;
             this.PictureBox10.Location = new System.Drawing.Point(42, 164);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
@@ -791,7 +791,7 @@ namespace WinPaletter
             // PictureBox9
             // 
             this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox9.Image = global::WinPaletter.Properties.Resources.Store_DesignedFor11;
+            this.PictureBox9.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor11;
             this.PictureBox9.Location = new System.Drawing.Point(42, 134);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
@@ -1130,7 +1130,7 @@ namespace WinPaletter
         internal PictureBox PictureBox16;
         internal Label Label10;
         internal PictureBox PictureBox15;
-        internal UI.WP.Trackbar Trackbar1;
+        internal UI.WP.TrackBar Trackbar1;
         internal Label Label12;
         internal PictureBox PictureBox17;
         internal UI.WP.AlertBox AlertBox2;

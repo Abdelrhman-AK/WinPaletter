@@ -15,14 +15,7 @@ namespace WinPaletter
             ApplyStyle(this);
             Icon = Forms.WindowsTerminal.Icon;
 
-            try
-            {
-                ComboBox1.SelectedIndex = 0;
-            }
-            catch
-            {
-            }
-
+            if (ComboBox1.Items.Count > 0) { ComboBox1.SelectedIndex = 0; }
         }
 
         private void Button1_Click(object sender, EventArgs e)

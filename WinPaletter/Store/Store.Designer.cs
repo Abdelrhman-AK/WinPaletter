@@ -36,18 +36,10 @@ namespace WinPaletter
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Store));
             this.FilesFetcher = new System.ComponentModel.BackgroundWorker();
-            this.Titlebar_panel = new System.Windows.Forms.Panel();
-            this.search_panel = new System.Windows.Forms.Panel();
-            this.search_btn = new WinPaletter.UI.WP.Button();
-            this.search_box = new WinPaletter.UI.WP.TextBox();
-            this.search_filter_btn = new WinPaletter.UI.WP.Button();
-            this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
-            this.back_btn = new WinPaletter.UI.WP.Button();
-            this.Titlebar_img = new System.Windows.Forms.PictureBox();
-            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Tabs = new WinPaletter.UI.WP.TablessControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.store_container = new System.Windows.Forms.FlowLayoutPanel();
@@ -75,55 +67,8 @@ namespace WinPaletter
             this.PictureBox41 = new System.Windows.Forms.PictureBox();
             this.Label19 = new System.Windows.Forms.Label();
             this.FlowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabs_preview = new WinPaletter.UI.WP.TablessControl();
-            this.TabPage4 = new System.Windows.Forms.TabPage();
-            this.pnl_preview = new System.Windows.Forms.Panel();
-            this.WXP_Alert2 = new WinPaletter.UI.WP.AlertBox();
-            this.ActionCenter = new WinPaletter.UI.Simulation.WinElement();
-            this.start = new WinPaletter.UI.Simulation.WinElement();
-            this.taskbar = new WinPaletter.UI.Simulation.WinElement();
-            this.Window2 = new WinPaletter.UI.Simulation.Window();
-            this.Window1 = new WinPaletter.UI.Simulation.Window();
-            this.Panel3 = new System.Windows.Forms.Panel();
-            this.Label8 = new WinPaletter.UI.WP.LabelAlt();
-            this.setting_icon_preview = new WinPaletter.UI.WP.LabelAlt();
-            this.lnk_preview = new WinPaletter.UI.WP.LabelAlt();
-            this.TabPage6 = new System.Windows.Forms.TabPage();
-            this.pnl_preview_classic = new System.Windows.Forms.Panel();
-            this.ClassicWindow1 = new WinPaletter.UI.Retro.WindowR();
-            this.ClassicWindow2 = new WinPaletter.UI.Retro.WindowR();
-            this.ClassicTaskbar = new WinPaletter.UI.Retro.PanelRaisedR();
-            this.ButtonR4 = new WinPaletter.UI.Retro.ButtonR();
-            this.ButtonR3 = new WinPaletter.UI.Retro.ButtonR();
-            this.ButtonR2 = new WinPaletter.UI.Retro.ButtonR();
-            this.ClassicColorsPreview = new System.Windows.Forms.Panel();
-            this.RetroShadow1 = new WinPaletter.UI.WP.TransparentPictureBox();
-            this.Menu_Window = new WinPaletter.UI.Retro.WindowR();
-            this.menucontainer3 = new System.Windows.Forms.Panel();
-            this.LabelR9 = new WinPaletter.UI.WP.LabelAlt();
-            this.highlight = new System.Windows.Forms.Panel();
-            this.menuhilight = new System.Windows.Forms.Panel();
-            this.LabelR5 = new WinPaletter.UI.WP.LabelAlt();
-            this.menucontainer1 = new System.Windows.Forms.Panel();
-            this.LabelR6 = new WinPaletter.UI.WP.LabelAlt();
-            this.WindowR3 = new WinPaletter.UI.Retro.WindowR();
-            this.ButtonR5 = new WinPaletter.UI.Retro.ButtonR();
-            this.LabelR4 = new WinPaletter.UI.WP.LabelAlt();
-            this.LabelR13 = new WinPaletter.UI.WP.LabelAlt();
-            this.WindowR2 = new WinPaletter.UI.Retro.WindowR();
-            this.TextBoxR1 = new WinPaletter.UI.Retro.TextBoxR();
-            this.menucontainer0 = new System.Windows.Forms.Panel();
-            this.PanelR1 = new WinPaletter.UI.Retro.PanelR();
-            this.LabelR3 = new WinPaletter.UI.WP.LabelAlt();
-            this.LabelR2 = new WinPaletter.UI.WP.LabelAlt();
-            this.LabelR1 = new WinPaletter.UI.WP.LabelAlt();
-            this.WindowR1 = new WinPaletter.UI.Retro.WindowR();
-            this.WindowR4 = new WinPaletter.UI.Retro.WindowR();
-            this.programcontainer = new System.Windows.Forms.Panel();
-            this.PanelR2 = new WinPaletter.UI.Retro.ScrollBarR();
-            this.ButtonR12 = new WinPaletter.UI.Retro.ButtonR();
-            this.ButtonR11 = new WinPaletter.UI.Retro.ButtonR();
-            this.ButtonR10 = new WinPaletter.UI.Retro.ButtonR();
+            this.windowsDesktop1 = new WinPaletter.Templates.WindowsDesktop();
+            this.retroDesktopColors1 = new WinPaletter.Templates.RetroDesktopColors();
             this.CMD1 = new WinPaletter.UI.Simulation.WinCMD();
             this.CMD2 = new WinPaletter.UI.Simulation.WinCMD();
             this.CMD3 = new WinPaletter.UI.Simulation.WinCMD();
@@ -149,13 +94,17 @@ namespace WinPaletter
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
             this.cur_tip_btn = new WinPaletter.UI.WP.Button();
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
-            this.CursorsSize_Bar = new WinPaletter.UI.WP.Trackbar();
+            this.CursorsSize_Bar = new WinPaletter.UI.WP.TrackBar();
             this.Label17 = new System.Windows.Forms.Label();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
-            this.Titlebar_panel.SuspendLayout();
-            this.search_panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Titlebar_img)).BeginInit();
+            this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.search_panel = new System.Windows.Forms.Panel();
+            this.search_btn = new WinPaletter.UI.WP.Button();
+            this.search_box = new WinPaletter.UI.WP.TextBox();
+            this.search_filter_btn = new WinPaletter.UI.WP.Button();
+            this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
+            this.back_btn = new WinPaletter.UI.WP.Button();
             this.Status_pnl.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -166,32 +115,12 @@ namespace WinPaletter
             this.previewContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).BeginInit();
             this.FlowLayoutPanel1.SuspendLayout();
-            this.tabs_preview.SuspendLayout();
-            this.TabPage4.SuspendLayout();
-            this.pnl_preview.SuspendLayout();
-            this.Window1.SuspendLayout();
-            this.Panel3.SuspendLayout();
-            this.TabPage6.SuspendLayout();
-            this.pnl_preview_classic.SuspendLayout();
-            this.ClassicTaskbar.SuspendLayout();
-            this.ClassicColorsPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RetroShadow1)).BeginInit();
-            this.Menu_Window.SuspendLayout();
-            this.menucontainer3.SuspendLayout();
-            this.highlight.SuspendLayout();
-            this.menuhilight.SuspendLayout();
-            this.menucontainer1.SuspendLayout();
-            this.WindowR3.SuspendLayout();
-            this.WindowR2.SuspendLayout();
-            this.menucontainer0.SuspendLayout();
-            this.PanelR1.SuspendLayout();
-            this.WindowR4.SuspendLayout();
-            this.programcontainer.SuspendLayout();
-            this.PanelR2.SuspendLayout();
             this.Panel1.SuspendLayout();
             this.Cursors_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
             this.TabPage5.SuspendLayout();
+            this.titlebarExtender1.SuspendLayout();
+            this.search_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // FilesFetcher
@@ -201,142 +130,6 @@ namespace WinPaletter
             this.FilesFetcher.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FilesFetcher_DoWork);
             this.FilesFetcher.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.FilesFetcher_ProgressChanged);
             this.FilesFetcher.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FilesFetcher_RunWorkerCompleted);
-            // 
-            // Titlebar_panel
-            // 
-            this.Titlebar_panel.Controls.Add(this.search_panel);
-            this.Titlebar_panel.Controls.Add(this.Titlebar_lbl);
-            this.Titlebar_panel.Controls.Add(this.back_btn);
-            this.Titlebar_panel.Controls.Add(this.Titlebar_img);
-            this.Titlebar_panel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Titlebar_panel.Location = new System.Drawing.Point(0, 0);
-            this.Titlebar_panel.Name = "Titlebar_panel";
-            this.Titlebar_panel.Size = new System.Drawing.Size(1329, 70);
-            this.Titlebar_panel.TabIndex = 5;
-            this.Titlebar_panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
-            this.Titlebar_panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
-            // 
-            // search_panel
-            // 
-            this.search_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_panel.BackColor = System.Drawing.Color.Transparent;
-            this.search_panel.Controls.Add(this.search_btn);
-            this.search_panel.Controls.Add(this.search_box);
-            this.search_panel.Controls.Add(this.search_filter_btn);
-            this.search_panel.Location = new System.Drawing.Point(979, 17);
-            this.search_panel.Name = "search_panel";
-            this.search_panel.Size = new System.Drawing.Size(343, 30);
-            this.search_panel.TabIndex = 42;
-            // 
-            // search_btn
-            // 
-            this.search_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_btn.CustomColor = System.Drawing.Color.Empty;
-            this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.search_btn.ForeColor = System.Drawing.Color.White;
-            this.search_btn.Image = ((System.Drawing.Image)(resources.GetObject("search_btn.Image")));
-            this.search_btn.Location = new System.Drawing.Point(308, 3);
-            this.search_btn.Name = "search_btn";
-            this.search_btn.Size = new System.Drawing.Size(32, 24);
-            this.search_btn.TabIndex = 40;
-            this.search_btn.UseVisualStyleBackColor = false;
-            this.search_btn.Click += new System.EventHandler(this.Search_btn_Click);
-            // 
-            // search_box
-            // 
-            this.search_box.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_box.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.search_box.Location = new System.Drawing.Point(3, 3);
-            this.search_box.MaxLength = 32767;
-            this.search_box.Multiline = false;
-            this.search_box.Name = "search_box";
-            this.search_box.ReadOnly = false;
-            this.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None;
-            this.search_box.SelectedText = "";
-            this.search_box.SelectionLength = 0;
-            this.search_box.SelectionStart = 0;
-            this.search_box.Size = new System.Drawing.Size(261, 24);
-            this.search_box.TabIndex = 39;
-            this.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.search_box.UseSystemPasswordChar = false;
-            this.search_box.WordWrap = true;
-            this.search_box.KeyboardPress += new WinPaletter.UI.WP.TextBox.KeyboardPressEventHandler(this.Search_box_KeyPress);
-            // 
-            // search_filter_btn
-            // 
-            this.search_filter_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.search_filter_btn.CustomColor = System.Drawing.Color.Empty;
-            this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.search_filter_btn.ForeColor = System.Drawing.Color.White;
-            this.search_filter_btn.Image = ((System.Drawing.Image)(resources.GetObject("search_filter_btn.Image")));
-            this.search_filter_btn.Location = new System.Drawing.Point(270, 3);
-            this.search_filter_btn.Name = "search_filter_btn";
-            this.search_filter_btn.Size = new System.Drawing.Size(32, 24);
-            this.search_filter_btn.TabIndex = 41;
-            this.search_filter_btn.UseVisualStyleBackColor = false;
-            this.search_filter_btn.Click += new System.EventHandler(this.Search_filter_btn_Click);
-            // 
-            // Titlebar_lbl
-            // 
-            this.Titlebar_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.Titlebar_lbl.DrawOnGlass = false;
-            this.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Titlebar_lbl.Location = new System.Drawing.Point(78, 1);
-            this.Titlebar_lbl.Name = "Titlebar_lbl";
-            this.Titlebar_lbl.Size = new System.Drawing.Size(895, 64);
-            this.Titlebar_lbl.TabIndex = 38;
-            this.Titlebar_lbl.Text = "WinPaletter Store";
-            this.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
-            this.Titlebar_lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
-            // 
-            // back_btn
-            // 
-            this.back_btn.CustomColor = System.Drawing.Color.Empty;
-            this.back_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.back_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.back_btn.ForeColor = System.Drawing.Color.White;
-            this.back_btn.Image = null;
-            this.back_btn.Location = new System.Drawing.Point(8, 0);
-            this.back_btn.Name = "back_btn";
-            this.back_btn.Size = new System.Drawing.Size(64, 64);
-            this.back_btn.TabIndex = 36;
-            this.back_btn.UseVisualStyleBackColor = false;
-            this.back_btn.Visible = false;
-            this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
-            // 
-            // Titlebar_img
-            // 
-            this.Titlebar_img.BackColor = System.Drawing.Color.Transparent;
-            this.Titlebar_img.Image = ((System.Drawing.Image)(resources.GetObject("Titlebar_img.Image")));
-            this.Titlebar_img.Location = new System.Drawing.Point(5, 0);
-            this.Titlebar_img.Name = "Titlebar_img";
-            this.Titlebar_img.Size = new System.Drawing.Size(64, 64);
-            this.Titlebar_img.TabIndex = 37;
-            this.Titlebar_img.TabStop = false;
-            this.Titlebar_img.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
-            this.Titlebar_img.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
-            // 
-            // ProgressBar1
-            // 
-            this.ProgressBar1.AnimationDuration = 1000;
-            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
-            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
-            this.ProgressBar1.Name = "ProgressBar1";
-            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
-            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.ProgressBar1.TabIndex = 43;
-            this.ProgressBar1.TaskbarBroadcast = true;
-            this.ProgressBar1.Visible = false;
             // 
             // Cursor_Timer
             // 
@@ -367,16 +160,31 @@ namespace WinPaletter
             this.Status_lbl.TabIndex = 39;
             this.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ProgressBar1
+            // 
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.ProgressBar1.TabIndex = 43;
+            this.ProgressBar1.TaskbarBroadcast = true;
+            this.ProgressBar1.Visible = false;
+            // 
             // Tabs
             // 
             this.Tabs.Controls.Add(this.TabPage1);
             this.Tabs.Controls.Add(this.TabPage3);
             this.Tabs.Controls.Add(this.TabPage5);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Tabs.Location = new System.Drawing.Point(0, 70);
+            this.Tabs.Location = new System.Drawing.Point(0, 52);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(1329, 627);
+            this.Tabs.Size = new System.Drawing.Size(1329, 645);
             this.Tabs.TabIndex = 4;
             this.Tabs.SelectedIndexChanged += new System.EventHandler(this.Tabs_SelectedIndexChanged);
             // 
@@ -387,7 +195,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(4, 24);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage1.Size = new System.Drawing.Size(1321, 599);
+            this.TabPage1.Size = new System.Drawing.Size(1321, 617);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "0";
             // 
@@ -397,7 +205,7 @@ namespace WinPaletter
             this.store_container.Dock = System.Windows.Forms.DockStyle.Fill;
             this.store_container.Location = new System.Drawing.Point(10, 10);
             this.store_container.Name = "store_container";
-            this.store_container.Size = new System.Drawing.Size(1301, 579);
+            this.store_container.Size = new System.Drawing.Size(1301, 597);
             this.store_container.TabIndex = 3;
             // 
             // TabPage3
@@ -410,7 +218,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(4, 24);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage3.Size = new System.Drawing.Size(1321, 599);
+            this.TabPage3.Size = new System.Drawing.Size(1321, 617);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "1";
             // 
@@ -514,6 +322,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(193, 234);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(156, 34);
@@ -565,6 +375,8 @@ namespace WinPaletter
             this.author_url_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.author_url_button.ForeColor = System.Drawing.Color.White;
             this.author_url_button.Image = null;
+            this.author_url_button.ImageAsVector = false;
+            this.author_url_button.ImageVector = null;
             this.author_url_button.Location = new System.Drawing.Point(342, 537);
             this.author_url_button.Name = "author_url_button";
             this.author_url_button.Size = new System.Drawing.Size(24, 24);
@@ -581,6 +393,8 @@ namespace WinPaletter
             this.RestartExplorer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RestartExplorer.ForeColor = System.Drawing.Color.White;
             this.RestartExplorer.Image = null;
+            this.RestartExplorer.ImageAsVector = false;
+            this.RestartExplorer.ImageVector = null;
             this.RestartExplorer.Location = new System.Drawing.Point(31, 274);
             this.RestartExplorer.Name = "RestartExplorer";
             this.RestartExplorer.Size = new System.Drawing.Size(318, 34);
@@ -652,6 +466,8 @@ namespace WinPaletter
             this.Apply_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Apply_btn.ForeColor = System.Drawing.Color.White;
             this.Apply_btn.Image = null;
+            this.Apply_btn.ImageAsVector = false;
+            this.Apply_btn.ImageVector = null;
             this.Apply_btn.Location = new System.Drawing.Point(31, 194);
             this.Apply_btn.Name = "Apply_btn";
             this.Apply_btn.Size = new System.Drawing.Size(318, 34);
@@ -682,6 +498,8 @@ namespace WinPaletter
             this.Edit_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Edit_btn.ForeColor = System.Drawing.Color.White;
             this.Edit_btn.Image = ((System.Drawing.Image)(resources.GetObject("Edit_btn.Image")));
+            this.Edit_btn.ImageAsVector = false;
+            this.Edit_btn.ImageVector = null;
             this.Edit_btn.Location = new System.Drawing.Point(31, 234);
             this.Edit_btn.Name = "Edit_btn";
             this.Edit_btn.Size = new System.Drawing.Size(156, 34);
@@ -746,8 +564,8 @@ namespace WinPaletter
             this.FlowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FlowLayoutPanel1.AutoScroll = true;
-            this.FlowLayoutPanel1.Controls.Add(this.tabs_preview);
-            this.FlowLayoutPanel1.Controls.Add(this.ClassicColorsPreview);
+            this.FlowLayoutPanel1.Controls.Add(this.windowsDesktop1);
+            this.FlowLayoutPanel1.Controls.Add(this.retroDesktopColors1);
             this.FlowLayoutPanel1.Controls.Add(this.CMD1);
             this.FlowLayoutPanel1.Controls.Add(this.CMD2);
             this.FlowLayoutPanel1.Controls.Add(this.CMD3);
@@ -758,982 +576,123 @@ namespace WinPaletter
             this.FlowLayoutPanel1.Size = new System.Drawing.Size(900, 324);
             this.FlowLayoutPanel1.TabIndex = 139;
             // 
-            // tabs_preview
-            // 
-            this.tabs_preview.Controls.Add(this.TabPage4);
-            this.tabs_preview.Controls.Add(this.TabPage6);
-            this.tabs_preview.Location = new System.Drawing.Point(3, 3);
-            this.tabs_preview.Name = "tabs_preview";
-            this.tabs_preview.SelectedIndex = 0;
-            this.tabs_preview.Size = new System.Drawing.Size(528, 297);
-            this.tabs_preview.TabIndex = 140;
-            // 
-            // TabPage4
-            // 
-            this.TabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage4.Controls.Add(this.pnl_preview);
-            this.TabPage4.Location = new System.Drawing.Point(4, 24);
-            this.TabPage4.Name = "TabPage4";
-            this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(520, 269);
-            this.TabPage4.TabIndex = 0;
-            this.TabPage4.Text = "0";
-            // 
-            // pnl_preview
-            // 
-            this.pnl_preview.BackColor = System.Drawing.Color.Black;
-            this.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnl_preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_preview.Controls.Add(this.WXP_Alert2);
-            this.pnl_preview.Controls.Add(this.ActionCenter);
-            this.pnl_preview.Controls.Add(this.start);
-            this.pnl_preview.Controls.Add(this.taskbar);
-            this.pnl_preview.Controls.Add(this.Window2);
-            this.pnl_preview.Controls.Add(this.Window1);
-            this.pnl_preview.Location = new System.Drawing.Point(0, 0);
-            this.pnl_preview.Name = "pnl_preview";
-            this.pnl_preview.Size = new System.Drawing.Size(528, 297);
-            this.pnl_preview.TabIndex = 2;
-            // 
-            // WXP_Alert2
-            // 
-            this.WXP_Alert2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
-            this.WXP_Alert2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.WXP_Alert2.BackColor = System.Drawing.Color.Transparent;
-            this.WXP_Alert2.CenterText = true;
-            this.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.WXP_Alert2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.WXP_Alert2.Image = null;
-            this.WXP_Alert2.Location = new System.Drawing.Point(7, 6);
-            this.WXP_Alert2.Name = "WXP_Alert2";
-            this.WXP_Alert2.Size = new System.Drawing.Size(22, 22);
-            this.WXP_Alert2.TabIndex = 54;
-            this.WXP_Alert2.TabStop = false;
-            this.WXP_Alert2.Text = null;
-            this.WXP_Alert2.Visible = false;
-            // 
-            // ActionCenter
-            // 
-            this.ActionCenter.ActionCenterButton_Hover = System.Drawing.Color.Empty;
-            this.ActionCenter.ActionCenterButton_Normal = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
-            this.ActionCenter.ActionCenterButton_Pressed = System.Drawing.Color.Empty;
-            this.ActionCenter.AppBackground = System.Drawing.Color.Empty;
-            this.ActionCenter.AppUnderline = System.Drawing.Color.Empty;
-            this.ActionCenter.BackColor = System.Drawing.Color.Transparent;
-            this.ActionCenter.BackColorAlpha = 50;
-            this.ActionCenter.Background = System.Drawing.Color.Empty;
-            this.ActionCenter.Background2 = System.Drawing.Color.Empty;
-            this.ActionCenter.BlurPower = 8;
-            this.ActionCenter.DarkMode = true;
-            this.ActionCenter.LinkColor = System.Drawing.Color.Empty;
-            this.ActionCenter.Location = new System.Drawing.Point(400, 165);
-            this.ActionCenter.Name = "ActionCenter";
-            this.ActionCenter.NoisePower = 0.2F;
-            this.ActionCenter.Padding = new System.Windows.Forms.Padding(2);
-            this.ActionCenter.Shadow = true;
-            this.ActionCenter.Size = new System.Drawing.Size(120, 85);
-            this.ActionCenter.StartColor = System.Drawing.Color.Empty;
-            this.ActionCenter.Style = WinPaletter.UI.Simulation.WinElement.Styles.ActionCenter11;
-            this.ActionCenter.SuspendRefresh = false;
-            this.ActionCenter.TabIndex = 5;
-            this.ActionCenter.Transparency = true;
-            this.ActionCenter.UseWin11ORB_WithWin10 = false;
-            this.ActionCenter.UseWin11RoundedCorners_WithWin10_Level1 = false;
-            this.ActionCenter.UseWin11RoundedCorners_WithWin10_Level2 = false;
-            this.ActionCenter.Win7ColorBal = 100;
-            this.ActionCenter.Win7GlowBal = 100;
-            // 
-            // start
-            // 
-            this.start.ActionCenterButton_Hover = System.Drawing.Color.Empty;
-            this.start.ActionCenterButton_Normal = System.Drawing.Color.Empty;
-            this.start.ActionCenterButton_Pressed = System.Drawing.Color.Empty;
-            this.start.AppBackground = System.Drawing.Color.Empty;
-            this.start.AppUnderline = System.Drawing.Color.Empty;
-            this.start.BackColor = System.Drawing.Color.Transparent;
-            this.start.BackColorAlpha = 150;
-            this.start.Background = System.Drawing.Color.Empty;
-            this.start.Background2 = System.Drawing.Color.Empty;
-            this.start.BlurPower = 7;
-            this.start.DarkMode = true;
-            this.start.LinkColor = System.Drawing.Color.Empty;
-            this.start.Location = new System.Drawing.Point(7, 50);
-            this.start.Name = "start";
-            this.start.NoisePower = 0.2F;
-            this.start.Padding = new System.Windows.Forms.Padding(2);
-            this.start.Shadow = true;
-            this.start.Size = new System.Drawing.Size(135, 200);
-            this.start.StartColor = System.Drawing.Color.Empty;
-            this.start.Style = WinPaletter.UI.Simulation.WinElement.Styles.Start11;
-            this.start.SuspendRefresh = false;
-            this.start.TabIndex = 1;
-            this.start.Transparency = true;
-            this.start.UseWin11ORB_WithWin10 = false;
-            this.start.UseWin11RoundedCorners_WithWin10_Level1 = false;
-            this.start.UseWin11RoundedCorners_WithWin10_Level2 = false;
-            this.start.Win7ColorBal = 100;
-            this.start.Win7GlowBal = 100;
-            // 
-            // taskbar
-            // 
-            this.taskbar.ActionCenterButton_Hover = System.Drawing.Color.Empty;
-            this.taskbar.ActionCenterButton_Normal = System.Drawing.Color.Empty;
-            this.taskbar.ActionCenterButton_Pressed = System.Drawing.Color.Empty;
-            this.taskbar.AppBackground = System.Drawing.Color.Empty;
-            this.taskbar.AppUnderline = System.Drawing.Color.Empty;
-            this.taskbar.BackColor = System.Drawing.Color.Transparent;
-            this.taskbar.BackColorAlpha = 130;
-            this.taskbar.Background = System.Drawing.Color.Empty;
-            this.taskbar.Background2 = System.Drawing.Color.Empty;
-            this.taskbar.BlurPower = 12;
-            this.taskbar.DarkMode = true;
-            this.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.taskbar.LinkColor = System.Drawing.Color.Empty;
-            this.taskbar.Location = new System.Drawing.Point(0, 253);
-            this.taskbar.Name = "taskbar";
-            this.taskbar.NoisePower = 0.2F;
-            this.taskbar.Shadow = true;
-            this.taskbar.Size = new System.Drawing.Size(526, 42);
-            this.taskbar.StartColor = System.Drawing.Color.Empty;
-            this.taskbar.Style = WinPaletter.UI.Simulation.WinElement.Styles.Taskbar11;
-            this.taskbar.SuspendRefresh = false;
-            this.taskbar.TabIndex = 0;
-            this.taskbar.Transparency = true;
-            this.taskbar.UseWin11ORB_WithWin10 = false;
-            this.taskbar.UseWin11RoundedCorners_WithWin10_Level1 = false;
-            this.taskbar.UseWin11RoundedCorners_WithWin10_Level2 = false;
-            this.taskbar.Win7ColorBal = 100;
-            this.taskbar.Win7GlowBal = 100;
-            // 
-            // Window2
-            // 
-            this.Window2.AccentColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(100)))));
-            this.Window2.AccentColor_Enabled = true;
-            this.Window2.AccentColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Window2.AccentColor2_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
-            this.Window2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Window2.Active = false;
-            this.Window2.BackColor = System.Drawing.Color.Transparent;
-            this.Window2.DarkMode = true;
-            this.Window2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Window2.Location = new System.Drawing.Point(172, 160);
-            this.Window2.Metrics_BorderWidth = 1;
-            this.Window2.Metrics_CaptionHeight = 22;
-            this.Window2.Metrics_PaddedBorderWidth = 4;
-            this.Window2.Name = "Window2";
-            this.Window2.Padding = new System.Windows.Forms.Padding(4, 40, 4, 4);
-            this.Window2.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11;
-            this.Window2.Radius = 5;
-            this.Window2.Shadow = true;
-            this.Window2.Size = new System.Drawing.Size(189, 85);
-            this.Window2.SuspendRefresh = false;
-            this.Window2.TabIndex = 3;
-            this.Window2.Text = "Inactive app";
-            this.Window2.ToolWindow = false;
-            this.Window2.Win7Alpha = 100;
-            this.Window2.Win7ColorBal = 100;
-            this.Window2.Win7GlowBal = 100;
-            this.Window2.Win7Noise = 1F;
-            this.Window2.WinVista = false;
-            // 
-            // Window1
-            // 
-            this.Window1.AccentColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
-            this.Window1.AccentColor_Enabled = true;
-            this.Window1.AccentColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Window1.AccentColor2_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
-            this.Window1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Window1.Active = true;
-            this.Window1.BackColor = System.Drawing.Color.Transparent;
-            this.Window1.Controls.Add(this.Panel3);
-            this.Window1.Controls.Add(this.lnk_preview);
-            this.Window1.DarkMode = true;
-            this.Window1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Window1.Location = new System.Drawing.Point(172, 13);
-            this.Window1.Metrics_BorderWidth = 1;
-            this.Window1.Metrics_CaptionHeight = 22;
-            this.Window1.Metrics_PaddedBorderWidth = 4;
-            this.Window1.Name = "Window1";
-            this.Window1.Padding = new System.Windows.Forms.Padding(4, 40, 4, 4);
-            this.Window1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11;
-            this.Window1.Radius = 5;
-            this.Window1.Shadow = true;
-            this.Window1.Size = new System.Drawing.Size(189, 147);
-            this.Window1.SuspendRefresh = false;
-            this.Window1.TabIndex = 2;
-            this.Window1.Text = "App preview";
-            this.Window1.ToolWindow = false;
-            this.Window1.Win7Alpha = 100;
-            this.Window1.Win7ColorBal = 100;
-            this.Window1.Win7GlowBal = 100;
-            this.Window1.Win7Noise = 1F;
-            this.Window1.WinVista = false;
-            // 
-            // Panel3
-            // 
-            this.Panel3.BackColor = System.Drawing.Color.Transparent;
-            this.Panel3.Controls.Add(this.Label8);
-            this.Panel3.Controls.Add(this.setting_icon_preview);
-            this.Panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panel3.Location = new System.Drawing.Point(4, 40);
-            this.Panel3.Name = "Panel3";
-            this.Panel3.Padding = new System.Windows.Forms.Padding(1);
-            this.Panel3.Size = new System.Drawing.Size(181, 78);
-            this.Panel3.TabIndex = 0;
-            // 
-            // Label8
-            // 
-            this.Label8.BackColor = System.Drawing.Color.Transparent;
-            this.Label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Label8.DrawOnGlass = false;
-            this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label8.Location = new System.Drawing.Point(1, 46);
-            this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(179, 31);
-            this.Label8.TabIndex = 15;
-            this.Label8.Text = "This is a setting icon";
-            this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // setting_icon_preview
-            // 
-            this.setting_icon_preview.BackColor = System.Drawing.Color.Transparent;
-            this.setting_icon_preview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.setting_icon_preview.DrawOnGlass = false;
-            this.setting_icon_preview.Font = new System.Drawing.Font("Segoe MDL2 Assets", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.setting_icon_preview.Location = new System.Drawing.Point(1, 1);
-            this.setting_icon_preview.Name = "setting_icon_preview";
-            this.setting_icon_preview.Size = new System.Drawing.Size(179, 45);
-            this.setting_icon_preview.TabIndex = 14;
-            this.setting_icon_preview.Text = "";
-            this.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lnk_preview
-            // 
-            this.lnk_preview.BackColor = System.Drawing.Color.Transparent;
-            this.lnk_preview.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lnk_preview.DrawOnGlass = false;
-            this.lnk_preview.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lnk_preview.ForeColor = System.Drawing.Color.Brown;
-            this.lnk_preview.Location = new System.Drawing.Point(4, 118);
-            this.lnk_preview.Name = "lnk_preview";
-            this.lnk_preview.Size = new System.Drawing.Size(181, 25);
-            this.lnk_preview.TabIndex = 16;
-            this.lnk_preview.Text = "Settings link preview";
-            this.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TabPage6
-            // 
-            this.TabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage6.Controls.Add(this.pnl_preview_classic);
-            this.TabPage6.Location = new System.Drawing.Point(4, 24);
-            this.TabPage6.Name = "TabPage6";
-            this.TabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage6.Size = new System.Drawing.Size(520, 269);
-            this.TabPage6.TabIndex = 1;
-            this.TabPage6.Text = "1";
-            // 
-            // pnl_preview_classic
-            // 
-            this.pnl_preview_classic.BackColor = System.Drawing.Color.Black;
-            this.pnl_preview_classic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnl_preview_classic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_preview_classic.Controls.Add(this.ClassicWindow1);
-            this.pnl_preview_classic.Controls.Add(this.ClassicWindow2);
-            this.pnl_preview_classic.Controls.Add(this.ClassicTaskbar);
-            this.pnl_preview_classic.Location = new System.Drawing.Point(0, 0);
-            this.pnl_preview_classic.Name = "pnl_preview_classic";
-            this.pnl_preview_classic.Size = new System.Drawing.Size(528, 297);
-            this.pnl_preview_classic.TabIndex = 34;
-            // 
-            // ClassicWindow1
-            // 
-            this.ClassicWindow1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow1.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ClassicWindow1.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow1.ButtonHilight = System.Drawing.Color.White;
-            this.ClassicWindow1.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow1.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ClassicWindow1.ButtonText = System.Drawing.Color.Black;
-            this.ClassicWindow1.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
-            this.ClassicWindow1.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(132)))), ((int)(((byte)(208)))));
-            this.ClassicWindow1.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow1.ColorGradient = true;
-            this.ClassicWindow1.ControlBox = true;
-            this.ClassicWindow1.Flat = false;
-            this.ClassicWindow1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.ClassicWindow1.ForeColor = System.Drawing.Color.White;
-            this.ClassicWindow1.Location = new System.Drawing.Point(176, 20);
-            this.ClassicWindow1.MaximizeBox = false;
-            this.ClassicWindow1.Metrics_BorderWidth = 0;
-            this.ClassicWindow1.Metrics_CaptionHeight = 18;
-            this.ClassicWindow1.Metrics_CaptionWidth = 18;
-            this.ClassicWindow1.Metrics_PaddedBorderWidth = 0;
-            this.ClassicWindow1.MinimizeBox = false;
-            this.ClassicWindow1.Name = "ClassicWindow1";
-            this.ClassicWindow1.Padding = new System.Windows.Forms.Padding(4, 22, 4, 4);
-            this.ClassicWindow1.Size = new System.Drawing.Size(181, 146);
-            this.ClassicWindow1.TabIndex = 4;
-            this.ClassicWindow1.Text = "App preview";
-            this.ClassicWindow1.UseItAsMenu = false;
-            // 
-            // ClassicWindow2
-            // 
-            this.ClassicWindow2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow2.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ClassicWindow2.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow2.ButtonHilight = System.Drawing.Color.White;
-            this.ClassicWindow2.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow2.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ClassicWindow2.ButtonText = System.Drawing.Color.Black;
-            this.ClassicWindow2.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ClassicWindow2.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(181)))), ((int)(((byte)(181)))), ((int)(((byte)(181)))));
-            this.ClassicWindow2.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicWindow2.ColorGradient = true;
-            this.ClassicWindow2.ControlBox = true;
-            this.ClassicWindow2.Flat = false;
-            this.ClassicWindow2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.ClassicWindow2.ForeColor = System.Drawing.Color.White;
-            this.ClassicWindow2.Location = new System.Drawing.Point(176, 172);
-            this.ClassicWindow2.MaximizeBox = false;
-            this.ClassicWindow2.Metrics_BorderWidth = 0;
-            this.ClassicWindow2.Metrics_CaptionHeight = 18;
-            this.ClassicWindow2.Metrics_CaptionWidth = 18;
-            this.ClassicWindow2.Metrics_PaddedBorderWidth = 0;
-            this.ClassicWindow2.MinimizeBox = false;
-            this.ClassicWindow2.Name = "ClassicWindow2";
-            this.ClassicWindow2.Padding = new System.Windows.Forms.Padding(4, 22, 4, 4);
-            this.ClassicWindow2.Size = new System.Drawing.Size(181, 60);
-            this.ClassicWindow2.TabIndex = 5;
-            this.ClassicWindow2.Text = "Inactive app";
-            this.ClassicWindow2.UseItAsMenu = false;
-            // 
-            // ClassicTaskbar
-            // 
-            this.ClassicTaskbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ClassicTaskbar.ButtonDkShadow = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.ClassicTaskbar.ButtonHilight = System.Drawing.Color.White;
-            this.ClassicTaskbar.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.ClassicTaskbar.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ClassicTaskbar.Controls.Add(this.ButtonR4);
-            this.ClassicTaskbar.Controls.Add(this.ButtonR3);
-            this.ClassicTaskbar.Controls.Add(this.ButtonR2);
-            this.ClassicTaskbar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ClassicTaskbar.Flat = false;
-            this.ClassicTaskbar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.ClassicTaskbar.ForeColor = System.Drawing.Color.Black;
-            this.ClassicTaskbar.Location = new System.Drawing.Point(0, 251);
-            this.ClassicTaskbar.Name = "ClassicTaskbar";
-            this.ClassicTaskbar.Size = new System.Drawing.Size(526, 44);
-            this.ClassicTaskbar.Style2 = false;
-            this.ClassicTaskbar.TabIndex = 0;
-            this.ClassicTaskbar.UseItAsWin7Taskbar = true;
-            // 
-            // ButtonR4
-            // 
-            this.ButtonR4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonR4.AppearsAsPressed = false;
-            this.ButtonR4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR4.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR4.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR4.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR4.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR4.FocusRectHeight = 1;
-            this.ButtonR4.FocusRectWidth = 1;
-            this.ButtonR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonR4.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR4.HatchBrush = false;
-            this.ButtonR4.Image = null;
-            this.ButtonR4.Location = new System.Drawing.Point(113, 4);
-            this.ButtonR4.Name = "ButtonR4";
-            this.ButtonR4.Size = new System.Drawing.Size(48, 38);
-            this.ButtonR4.TabIndex = 2;
-            this.ButtonR4.UseItAsScrollbar = false;
-            this.ButtonR4.UseVisualStyleBackColor = false;
-            this.ButtonR4.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // ButtonR3
-            // 
-            this.ButtonR3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonR3.AppearsAsPressed = true;
-            this.ButtonR3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR3.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR3.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR3.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR3.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR3.FocusRectHeight = 1;
-            this.ButtonR3.FocusRectWidth = 1;
-            this.ButtonR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonR3.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR3.HatchBrush = false;
-            this.ButtonR3.Image = null;
-            this.ButtonR3.Location = new System.Drawing.Point(63, 4);
-            this.ButtonR3.Name = "ButtonR3";
-            this.ButtonR3.Size = new System.Drawing.Size(48, 38);
-            this.ButtonR3.TabIndex = 1;
-            this.ButtonR3.UseItAsScrollbar = false;
-            this.ButtonR3.UseVisualStyleBackColor = false;
-            this.ButtonR3.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // ButtonR2
-            // 
-            this.ButtonR2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonR2.AppearsAsPressed = false;
-            this.ButtonR2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR2.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR2.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR2.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR2.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR2.FocusRectHeight = 1;
-            this.ButtonR2.FocusRectWidth = 1;
-            this.ButtonR2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonR2.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR2.HatchBrush = false;
-            this.ButtonR2.Image = null;
-            this.ButtonR2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ButtonR2.Location = new System.Drawing.Point(2, 4);
-            this.ButtonR2.Name = "ButtonR2";
-            this.ButtonR2.Size = new System.Drawing.Size(52, 38);
-            this.ButtonR2.TabIndex = 0;
-            this.ButtonR2.Text = "Start";
-            this.ButtonR2.UseItAsScrollbar = false;
-            this.ButtonR2.UseVisualStyleBackColor = false;
-            this.ButtonR2.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // ClassicColorsPreview
-            // 
-            this.ClassicColorsPreview.BackColor = System.Drawing.Color.Teal;
-            this.ClassicColorsPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClassicColorsPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClassicColorsPreview.Controls.Add(this.RetroShadow1);
-            this.ClassicColorsPreview.Controls.Add(this.Menu_Window);
-            this.ClassicColorsPreview.Controls.Add(this.WindowR3);
-            this.ClassicColorsPreview.Controls.Add(this.LabelR13);
-            this.ClassicColorsPreview.Controls.Add(this.WindowR2);
-            this.ClassicColorsPreview.Controls.Add(this.WindowR1);
-            this.ClassicColorsPreview.Controls.Add(this.WindowR4);
-            this.ClassicColorsPreview.Location = new System.Drawing.Point(537, 3);
-            this.ClassicColorsPreview.Name = "ClassicColorsPreview";
-            this.ClassicColorsPreview.Size = new System.Drawing.Size(528, 297);
-            this.ClassicColorsPreview.TabIndex = 43;
-            // 
-            // RetroShadow1
-            // 
-            this.RetroShadow1.BackColor = System.Drawing.Color.Transparent;
-            this.RetroShadow1.Location = new System.Drawing.Point(112, 225);
-            this.RetroShadow1.Name = "RetroShadow1";
-            this.RetroShadow1.Size = new System.Drawing.Size(115, 66);
-            this.RetroShadow1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RetroShadow1.TabIndex = 7;
-            this.RetroShadow1.TabStop = false;
-            // 
-            // Menu_Window
-            // 
-            this.Menu_Window.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.Menu_Window.ButtonDkShadow = System.Drawing.Color.Black;
-            this.Menu_Window.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.Menu_Window.ButtonHilight = System.Drawing.Color.White;
-            this.Menu_Window.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.Menu_Window.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.Menu_Window.ButtonText = System.Drawing.Color.Black;
-            this.Menu_Window.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
-            this.Menu_Window.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(132)))), ((int)(((byte)(208)))));
-            this.Menu_Window.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.Menu_Window.ColorGradient = true;
-            this.Menu_Window.ControlBox = true;
-            this.Menu_Window.Controls.Add(this.menucontainer3);
-            this.Menu_Window.Controls.Add(this.highlight);
-            this.Menu_Window.Controls.Add(this.menucontainer1);
-            this.Menu_Window.Flat = false;
-            this.Menu_Window.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.Menu_Window.ForeColor = System.Drawing.Color.Black;
-            this.Menu_Window.Location = new System.Drawing.Point(300, 151);
-            this.Menu_Window.MaximizeBox = true;
-            this.Menu_Window.Metrics_BorderWidth = 1;
-            this.Menu_Window.Metrics_CaptionHeight = 22;
-            this.Menu_Window.Metrics_CaptionWidth = 0;
-            this.Menu_Window.Metrics_PaddedBorderWidth = 4;
-            this.Menu_Window.MinimizeBox = true;
-            this.Menu_Window.Name = "Menu_Window";
-            this.Menu_Window.Padding = new System.Windows.Forms.Padding(3, 3, 5, 5);
-            this.Menu_Window.Size = new System.Drawing.Size(115, 66);
-            this.Menu_Window.TabIndex = 4;
-            this.Menu_Window.Text = "New Window";
-            this.Menu_Window.UseItAsMenu = true;
-            this.Menu_Window.LocationChanged += new System.EventHandler(this.Menu_Window_SizeChanged);
-            this.Menu_Window.SizeChanged += new System.EventHandler(this.Menu_Window_SizeChanged);
-            // 
-            // menucontainer3
-            // 
-            this.menucontainer3.BackColor = System.Drawing.Color.Transparent;
-            this.menucontainer3.Controls.Add(this.LabelR9);
-            this.menucontainer3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.menucontainer3.Location = new System.Drawing.Point(3, 43);
-            this.menucontainer3.Name = "menucontainer3";
-            this.menucontainer3.Padding = new System.Windows.Forms.Padding(21, 0, 0, 0);
-            this.menucontainer3.Size = new System.Drawing.Size(107, 20);
-            this.menucontainer3.TabIndex = 12;
-            // 
-            // LabelR9
-            // 
-            this.LabelR9.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR9.DrawOnGlass = false;
-            this.LabelR9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR9.ForeColor = System.Drawing.Color.DimGray;
-            this.LabelR9.Location = new System.Drawing.Point(21, 0);
-            this.LabelR9.Name = "LabelR9";
-            this.LabelR9.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.LabelR9.Size = new System.Drawing.Size(86, 20);
-            this.LabelR9.TabIndex = 3;
-            this.LabelR9.Text = "Disabled item";
-            this.LabelR9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // highlight
-            // 
-            this.highlight.BackColor = System.Drawing.Color.Navy;
-            this.highlight.Controls.Add(this.menuhilight);
-            this.highlight.Dock = System.Windows.Forms.DockStyle.Top;
-            this.highlight.Location = new System.Drawing.Point(3, 23);
-            this.highlight.Name = "highlight";
-            this.highlight.Size = new System.Drawing.Size(107, 20);
-            this.highlight.TabIndex = 10;
-            // 
-            // menuhilight
-            // 
-            this.menuhilight.BackColor = System.Drawing.Color.Navy;
-            this.menuhilight.Controls.Add(this.LabelR5);
-            this.menuhilight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuhilight.Location = new System.Drawing.Point(0, 0);
-            this.menuhilight.Name = "menuhilight";
-            this.menuhilight.Padding = new System.Windows.Forms.Padding(21, 0, 1, 0);
-            this.menuhilight.Size = new System.Drawing.Size(107, 20);
-            this.menuhilight.TabIndex = 11;
-            // 
-            // LabelR5
-            // 
-            this.LabelR5.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR5.DrawOnGlass = false;
-            this.LabelR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR5.ForeColor = System.Drawing.Color.White;
-            this.LabelR5.Location = new System.Drawing.Point(21, 0);
-            this.LabelR5.Name = "LabelR5";
-            this.LabelR5.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.LabelR5.Size = new System.Drawing.Size(85, 20);
-            this.LabelR5.TabIndex = 3;
-            this.LabelR5.Text = "Hovered item";
-            this.LabelR5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // menucontainer1
-            // 
-            this.menucontainer1.BackColor = System.Drawing.Color.Transparent;
-            this.menucontainer1.Controls.Add(this.LabelR6);
-            this.menucontainer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.menucontainer1.Location = new System.Drawing.Point(3, 3);
-            this.menucontainer1.Name = "menucontainer1";
-            this.menucontainer1.Padding = new System.Windows.Forms.Padding(21, 0, 0, 0);
-            this.menucontainer1.Size = new System.Drawing.Size(107, 20);
-            this.menucontainer1.TabIndex = 6;
-            // 
-            // LabelR6
-            // 
-            this.LabelR6.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR6.DrawOnGlass = false;
-            this.LabelR6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR6.ForeColor = System.Drawing.Color.Black;
-            this.LabelR6.Location = new System.Drawing.Point(21, 0);
-            this.LabelR6.Name = "LabelR6";
-            this.LabelR6.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.LabelR6.Size = new System.Drawing.Size(86, 20);
-            this.LabelR6.TabIndex = 3;
-            this.LabelR6.Text = "Menu item";
-            this.LabelR6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // WindowR3
-            // 
-            this.WindowR3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR3.ButtonDkShadow = System.Drawing.Color.Black;
-            this.WindowR3.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR3.ButtonHilight = System.Drawing.Color.White;
-            this.WindowR3.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR3.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.WindowR3.ButtonText = System.Drawing.Color.Black;
-            this.WindowR3.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
-            this.WindowR3.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(132)))), ((int)(((byte)(208)))));
-            this.WindowR3.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR3.ColorGradient = true;
-            this.WindowR3.ControlBox = false;
-            this.WindowR3.Controls.Add(this.ButtonR5);
-            this.WindowR3.Controls.Add(this.LabelR4);
-            this.WindowR3.Flat = false;
-            this.WindowR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.WindowR3.ForeColor = System.Drawing.Color.White;
-            this.WindowR3.Location = new System.Drawing.Point(215, 185);
-            this.WindowR3.MaximizeBox = true;
-            this.WindowR3.Metrics_BorderWidth = 0;
-            this.WindowR3.Metrics_CaptionHeight = 18;
-            this.WindowR3.Metrics_CaptionWidth = 18;
-            this.WindowR3.Metrics_PaddedBorderWidth = 0;
-            this.WindowR3.MinimizeBox = true;
-            this.WindowR3.Name = "WindowR3";
-            this.WindowR3.Padding = new System.Windows.Forms.Padding(4, 22, 4, 4);
-            this.WindowR3.Size = new System.Drawing.Size(147, 80);
-            this.WindowR3.TabIndex = 2;
-            this.WindowR3.Text = "Message box";
-            this.WindowR3.UseItAsMenu = false;
-            // 
-            // ButtonR5
-            // 
-            this.ButtonR5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ButtonR5.AppearsAsPressed = false;
-            this.ButtonR5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR5.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR5.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR5.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR5.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR5.FocusRectHeight = 1;
-            this.ButtonR5.FocusRectWidth = 1;
-            this.ButtonR5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonR5.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR5.HatchBrush = false;
-            this.ButtonR5.Image = null;
-            this.ButtonR5.Location = new System.Drawing.Point(37, 49);
-            this.ButtonR5.Name = "ButtonR5";
-            this.ButtonR5.Size = new System.Drawing.Size(75, 23);
-            this.ButtonR5.TabIndex = 2;
-            this.ButtonR5.Text = "OK";
-            this.ButtonR5.UseItAsScrollbar = false;
-            this.ButtonR5.UseVisualStyleBackColor = false;
-            this.ButtonR5.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // LabelR4
-            // 
-            this.LabelR4.AutoSize = true;
-            this.LabelR4.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LabelR4.DrawOnGlass = false;
-            this.LabelR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR4.ForeColor = System.Drawing.Color.Black;
-            this.LabelR4.Location = new System.Drawing.Point(4, 22);
-            this.LabelR4.Name = "LabelR4";
-            this.LabelR4.Padding = new System.Windows.Forms.Padding(4);
-            this.LabelR4.Size = new System.Drawing.Size(78, 21);
-            this.LabelR4.TabIndex = 1;
-            this.LabelR4.Text = "Message text";
-            this.LabelR4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LabelR13
-            // 
-            this.LabelR13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LabelR13.AutoSize = true;
-            this.LabelR13.BackColor = System.Drawing.Color.White;
-            this.LabelR13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LabelR13.DrawOnGlass = false;
-            this.LabelR13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR13.ForeColor = System.Drawing.Color.Black;
-            this.LabelR13.Location = new System.Drawing.Point(287, 47);
-            this.LabelR13.Name = "LabelR13";
-            this.LabelR13.Size = new System.Drawing.Size(79, 15);
-            this.LabelR13.TabIndex = 5;
-            this.LabelR13.Text = "This is a tooltip";
-            // 
-            // WindowR2
-            // 
-            this.WindowR2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR2.ButtonDkShadow = System.Drawing.Color.Black;
-            this.WindowR2.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR2.ButtonHilight = System.Drawing.Color.White;
-            this.WindowR2.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR2.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.WindowR2.ButtonText = System.Drawing.Color.Black;
-            this.WindowR2.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
-            this.WindowR2.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(132)))), ((int)(((byte)(208)))));
-            this.WindowR2.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR2.ColorGradient = true;
-            this.WindowR2.ControlBox = true;
-            this.WindowR2.Controls.Add(this.TextBoxR1);
-            this.WindowR2.Controls.Add(this.menucontainer0);
-            this.WindowR2.Flat = false;
-            this.WindowR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.WindowR2.ForeColor = System.Drawing.Color.White;
-            this.WindowR2.Location = new System.Drawing.Point(195, 110);
-            this.WindowR2.MaximizeBox = true;
-            this.WindowR2.Metrics_BorderWidth = 0;
-            this.WindowR2.Metrics_CaptionHeight = 18;
-            this.WindowR2.Metrics_CaptionWidth = 18;
-            this.WindowR2.Metrics_PaddedBorderWidth = 0;
-            this.WindowR2.MinimizeBox = true;
-            this.WindowR2.Name = "WindowR2";
-            this.WindowR2.Padding = new System.Windows.Forms.Padding(4, 22, 4, 4);
-            this.WindowR2.Size = new System.Drawing.Size(196, 120);
-            this.WindowR2.TabIndex = 1;
-            this.WindowR2.Text = "Active window";
-            this.WindowR2.UseItAsMenu = false;
-            // 
-            // TextBoxR1
-            // 
-            this.TextBoxR1.BackColor = System.Drawing.Color.White;
-            this.TextBoxR1.ButtonDkShadow = System.Drawing.Color.Black;
-            this.TextBoxR1.ButtonHilight = System.Drawing.Color.White;
-            this.TextBoxR1.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.TextBoxR1.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.TextBoxR1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextBoxR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TextBoxR1.ForeColor = System.Drawing.Color.Black;
-            this.TextBoxR1.Location = new System.Drawing.Point(4, 40);
-            this.TextBoxR1.MaxLength = 32767;
-            this.TextBoxR1.Multiline = true;
-            this.TextBoxR1.Name = "TextBoxR1";
-            this.TextBoxR1.ReadOnly = true;
-            this.TextBoxR1.Size = new System.Drawing.Size(188, 76);
-            this.TextBoxR1.TabIndex = 3;
-            this.TextBoxR1.Text = "Window text";
-            this.TextBoxR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TextBoxR1.UseSystemPasswordChar = false;
-            // 
-            // menucontainer0
-            // 
-            this.menucontainer0.BackColor = System.Drawing.Color.Silver;
-            this.menucontainer0.Controls.Add(this.PanelR1);
-            this.menucontainer0.Controls.Add(this.LabelR2);
-            this.menucontainer0.Controls.Add(this.LabelR1);
-            this.menucontainer0.Dock = System.Windows.Forms.DockStyle.Top;
-            this.menucontainer0.Location = new System.Drawing.Point(4, 22);
-            this.menucontainer0.Name = "menucontainer0";
-            this.menucontainer0.Size = new System.Drawing.Size(188, 18);
-            this.menucontainer0.TabIndex = 5;
-            // 
-            // PanelR1
-            // 
-            this.PanelR1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.PanelR1.ButtonDkShadow = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.PanelR1.ButtonHilight = System.Drawing.Color.White;
-            this.PanelR1.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.PanelR1.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.PanelR1.Controls.Add(this.LabelR3);
-            this.PanelR1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelR1.Flat = false;
-            this.PanelR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PanelR1.ForeColor = System.Drawing.Color.Black;
-            this.PanelR1.Location = new System.Drawing.Point(88, 0);
-            this.PanelR1.Name = "PanelR1";
-            this.PanelR1.Padding = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.PanelR1.Size = new System.Drawing.Size(53, 18);
-            this.PanelR1.Style2 = false;
-            this.PanelR1.TabIndex = 2;
-            // 
-            // LabelR3
-            // 
-            this.LabelR3.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabelR3.DrawOnGlass = false;
-            this.LabelR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR3.ForeColor = System.Drawing.Color.Black;
-            this.LabelR3.Location = new System.Drawing.Point(1, 3);
-            this.LabelR3.Name = "LabelR3";
-            this.LabelR3.Size = new System.Drawing.Size(51, 12);
-            this.LabelR3.TabIndex = 1;
-            this.LabelR3.Text = "Selected";
-            this.LabelR3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LabelR2
-            // 
-            this.LabelR2.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelR2.DrawOnGlass = false;
-            this.LabelR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LabelR2.Location = new System.Drawing.Point(40, 0);
-            this.LabelR2.Name = "LabelR2";
-            this.LabelR2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.LabelR2.Size = new System.Drawing.Size(48, 18);
-            this.LabelR2.TabIndex = 1;
-            this.LabelR2.Text = "Disabled";
-            this.LabelR2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // LabelR1
-            // 
-            this.LabelR1.BackColor = System.Drawing.Color.Transparent;
-            this.LabelR1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LabelR1.DrawOnGlass = false;
-            this.LabelR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.LabelR1.ForeColor = System.Drawing.Color.Black;
-            this.LabelR1.Location = new System.Drawing.Point(0, 0);
-            this.LabelR1.Name = "LabelR1";
-            this.LabelR1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.LabelR1.Size = new System.Drawing.Size(40, 18);
-            this.LabelR1.TabIndex = 0;
-            this.LabelR1.Text = "Normal";
-            this.LabelR1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // WindowR1
-            // 
-            this.WindowR1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR1.ButtonDkShadow = System.Drawing.Color.Black;
-            this.WindowR1.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR1.ButtonHilight = System.Drawing.Color.White;
-            this.WindowR1.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR1.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.WindowR1.ButtonText = System.Drawing.Color.Black;
-            this.WindowR1.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.WindowR1.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(181)))), ((int)(((byte)(181)))), ((int)(((byte)(181)))));
-            this.WindowR1.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR1.ColorGradient = true;
-            this.WindowR1.ControlBox = true;
-            this.WindowR1.Flat = false;
-            this.WindowR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.WindowR1.ForeColor = System.Drawing.Color.White;
-            this.WindowR1.Location = new System.Drawing.Point(179, 77);
-            this.WindowR1.MaximizeBox = true;
-            this.WindowR1.Metrics_BorderWidth = 0;
-            this.WindowR1.Metrics_CaptionHeight = 18;
-            this.WindowR1.Metrics_CaptionWidth = 18;
-            this.WindowR1.Metrics_PaddedBorderWidth = 0;
-            this.WindowR1.MinimizeBox = true;
-            this.WindowR1.Name = "WindowR1";
-            this.WindowR1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 4);
-            this.WindowR1.Size = new System.Drawing.Size(180, 112);
-            this.WindowR1.TabIndex = 0;
-            this.WindowR1.Text = "Inactive window";
-            this.WindowR1.UseItAsMenu = false;
-            // 
-            // WindowR4
-            // 
-            this.WindowR4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR4.ButtonDkShadow = System.Drawing.Color.Black;
-            this.WindowR4.ButtonFace = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR4.ButtonHilight = System.Drawing.Color.White;
-            this.WindowR4.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR4.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.WindowR4.ButtonText = System.Drawing.Color.Black;
-            this.WindowR4.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
-            this.WindowR4.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(132)))), ((int)(((byte)(208)))));
-            this.WindowR4.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.WindowR4.ColorGradient = true;
-            this.WindowR4.ControlBox = true;
-            this.WindowR4.Controls.Add(this.programcontainer);
-            this.WindowR4.Flat = false;
-            this.WindowR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.WindowR4.ForeColor = System.Drawing.Color.White;
-            this.WindowR4.Location = new System.Drawing.Point(139, 30);
-            this.WindowR4.MaximizeBox = false;
-            this.WindowR4.Metrics_BorderWidth = 0;
-            this.WindowR4.Metrics_CaptionHeight = 18;
-            this.WindowR4.Metrics_CaptionWidth = 18;
-            this.WindowR4.Metrics_PaddedBorderWidth = 0;
-            this.WindowR4.MinimizeBox = false;
-            this.WindowR4.Name = "WindowR4";
-            this.WindowR4.Padding = new System.Windows.Forms.Padding(4, 22, 4, 4);
-            this.WindowR4.Size = new System.Drawing.Size(156, 132);
-            this.WindowR4.TabIndex = 3;
-            this.WindowR4.Text = "Program container";
-            this.WindowR4.UseItAsMenu = false;
-            // 
-            // programcontainer
-            // 
-            this.programcontainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.programcontainer.Controls.Add(this.PanelR2);
-            this.programcontainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.programcontainer.Location = new System.Drawing.Point(4, 22);
-            this.programcontainer.Name = "programcontainer";
-            this.programcontainer.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.programcontainer.Size = new System.Drawing.Size(148, 106);
-            this.programcontainer.TabIndex = 4;
-            // 
-            // PanelR2
-            // 
-            this.PanelR2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.PanelR2.ButtonHilight = System.Drawing.Color.White;
-            this.PanelR2.Controls.Add(this.ButtonR12);
-            this.PanelR2.Controls.Add(this.ButtonR11);
-            this.PanelR2.Controls.Add(this.ButtonR10);
-            this.PanelR2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PanelR2.ForeColor = System.Drawing.Color.Black;
-            this.PanelR2.Location = new System.Drawing.Point(0, 0);
-            this.PanelR2.Name = "PanelR2";
-            this.PanelR2.Size = new System.Drawing.Size(16, 106);
-            this.PanelR2.TabIndex = 0;
-            // 
-            // ButtonR12
-            // 
-            this.ButtonR12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonR12.AppearsAsPressed = false;
-            this.ButtonR12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR12.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR12.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR12.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR12.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR12.FocusRectHeight = 1;
-            this.ButtonR12.FocusRectWidth = 1;
-            this.ButtonR12.Font = new System.Drawing.Font("Marlett", 6F);
-            this.ButtonR12.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR12.HatchBrush = false;
-            this.ButtonR12.Image = null;
-            this.ButtonR12.Location = new System.Drawing.Point(0, 29);
-            this.ButtonR12.Name = "ButtonR12";
-            this.ButtonR12.Size = new System.Drawing.Size(16, 31);
-            this.ButtonR12.TabIndex = 7;
-            this.ButtonR12.UseItAsScrollbar = true;
-            this.ButtonR12.UseVisualStyleBackColor = false;
-            this.ButtonR12.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // ButtonR11
-            // 
-            this.ButtonR11.AppearsAsPressed = false;
-            this.ButtonR11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR11.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR11.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR11.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR11.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ButtonR11.FocusRectHeight = 1;
-            this.ButtonR11.FocusRectWidth = 1;
-            this.ButtonR11.Font = new System.Drawing.Font("Marlett", 8.7F, System.Drawing.FontStyle.Bold);
-            this.ButtonR11.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR11.HatchBrush = false;
-            this.ButtonR11.Image = null;
-            this.ButtonR11.Location = new System.Drawing.Point(0, 92);
-            this.ButtonR11.Name = "ButtonR11";
-            this.ButtonR11.Size = new System.Drawing.Size(16, 14);
-            this.ButtonR11.TabIndex = 6;
-            this.ButtonR11.Text = "u";
-            this.ButtonR11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ButtonR11.UseItAsScrollbar = false;
-            this.ButtonR11.UseVisualStyleBackColor = false;
-            this.ButtonR11.WindowFrame = System.Drawing.Color.Black;
-            // 
-            // ButtonR10
-            // 
-            this.ButtonR10.AppearsAsPressed = false;
-            this.ButtonR10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR10.ButtonDkShadow = System.Drawing.Color.Black;
-            this.ButtonR10.ButtonHilight = System.Drawing.Color.White;
-            this.ButtonR10.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ButtonR10.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ButtonR10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ButtonR10.FocusRectHeight = 1;
-            this.ButtonR10.FocusRectWidth = 1;
-            this.ButtonR10.Font = new System.Drawing.Font("Marlett", 8.7F, System.Drawing.FontStyle.Bold);
-            this.ButtonR10.ForeColor = System.Drawing.Color.Black;
-            this.ButtonR10.HatchBrush = false;
-            this.ButtonR10.Image = null;
-            this.ButtonR10.Location = new System.Drawing.Point(0, 0);
-            this.ButtonR10.Name = "ButtonR10";
-            this.ButtonR10.Size = new System.Drawing.Size(16, 14);
-            this.ButtonR10.TabIndex = 5;
-            this.ButtonR10.Text = "t";
-            this.ButtonR10.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ButtonR10.UseItAsScrollbar = false;
-            this.ButtonR10.UseVisualStyleBackColor = false;
-            this.ButtonR10.WindowFrame = System.Drawing.Color.Black;
+            // windowsDesktop1
+            // 
+            this.windowsDesktop1.AccentLevel = WinPaletter.Theme.Structures.Windows10x.AccentTaskbarLevels.None;
+            this.windowsDesktop1.ActiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ActiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.AfterGlowColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.windowsDesktop1.AfterGlowColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.windowsDesktop1.BackColor = System.Drawing.SystemColors.Desktop;
+            this.windowsDesktop1.Background = System.Drawing.Color.Empty;
+            this.windowsDesktop1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.windowsDesktop1.ButtonDkShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonFace = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonHilight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonLight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Classic = false;
+            this.windowsDesktop1.Color1 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color2 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color3 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color4 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color5 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color6 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color7 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color8 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Color9 = System.Drawing.Color.Empty;
+            this.windowsDesktop1.DarkMode_App = true;
+            this.windowsDesktop1.DarkMode_Win = true;
+            this.windowsDesktop1.EnableEditingColors = false;
+            this.windowsDesktop1.EnableGradient = true;
+            this.windowsDesktop1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.windowsDesktop1.GradientActiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GradientInactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GrayText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitleText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.IncreaseTBTransparency = false;
+            this.windowsDesktop1.Location = new System.Drawing.Point(4, 3);
+            this.windowsDesktop1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.windowsDesktop1.Metrics_BorderWidth = 1;
+            this.windowsDesktop1.Metrics_CaptionFont = new System.Drawing.Font("Segoe UI", 9F);
+            this.windowsDesktop1.Metrics_CaptionHeight = 22;
+            this.windowsDesktop1.Metrics_CaptionWidth = 22;
+            this.windowsDesktop1.Metrics_PaddedBorderWidth = 4;
+            this.windowsDesktop1.Name = "windowsDesktop1";
+            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11;
+            this.windowsDesktop1.resVS = null;
+            this.windowsDesktop1.Shadow = true;
+            this.windowsDesktop1.Size = new System.Drawing.Size(528, 297);
+            this.windowsDesktop1.TabIndex = 141;
+            this.windowsDesktop1.TB_Blur = false;
+            this.windowsDesktop1.TitlebarColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.windowsDesktop1.TitlebarColor_Enabled = false;
+            this.windowsDesktop1.TitlebarColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.windowsDesktop1.TitleText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Transparency = true;
+            this.windowsDesktop1.UseWin11ORB_WithWin10 = false;
+            this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level1 = false;
+            this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level2 = false;
+            this.windowsDesktop1.Win7Alpha = 100;
+            this.windowsDesktop1.Win7ColorBal = 100;
+            this.windowsDesktop1.Win7GlowBal = 100;
+            this.windowsDesktop1.Win7Noise = 1F;
+            this.windowsDesktop1.Window = System.Drawing.Color.Empty;
+            this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
+            this.windowsDesktop1.WindowsTheme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W11;
+            this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
+            this.windowsDesktop1.WindowsXPThemeColorScheme = null;
+            this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.WinVista = false;
+            // 
+            // retroDesktopColors1
+            // 
+            this.retroDesktopColors1.ActiveBorder = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ActiveTitle = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.AppWorkspace = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
+            this.retroDesktopColors1.Background = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonAlternateFace = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonDkShadow = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonFace = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonHilight = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonLight = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonShadow = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.ButtonText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Desktop = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.EnableEditingColors = false;
+            this.retroDesktopColors1.EnableGradient = true;
+            this.retroDesktopColors1.EnableTheming = false;
+            this.retroDesktopColors1.GradientActiveTitle = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.GradientInactiveTitle = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.GrayText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Hilight = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.HilightText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.HotTrackingColor = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.InactiveBorder = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.InactiveTitle = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.InactiveTitleText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.InfoText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.InfoWindow = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Location = new System.Drawing.Point(540, 3);
+            this.retroDesktopColors1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.retroDesktopColors1.Menu = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.MenuBar = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.MenuHilight = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.MenuText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Name = "retroDesktopColors1";
+            this.retroDesktopColors1.Scrollbar = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Size = new System.Drawing.Size(528, 297);
+            this.retroDesktopColors1.TabIndex = 0;
+            this.retroDesktopColors1.TitleText = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.Window = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.WindowFrame = System.Drawing.Color.Empty;
+            this.retroDesktopColors1.WindowText = System.Drawing.Color.Empty;
             // 
             // CMD1
             // 
@@ -1758,7 +717,7 @@ namespace WinPaletter
             this.CMD1.CMD_ScreenColorsBackground = 0;
             this.CMD1.CMD_ScreenColorsForeground = 7;
             this.CMD1.CustomTerminal = false;
-            this.CMD1.Location = new System.Drawing.Point(1071, 3);
+            this.CMD1.Location = new System.Drawing.Point(1075, 3);
             this.CMD1.Name = "CMD1";
             this.CMD1.PowerShell = false;
             this.CMD1.Raster = true;
@@ -1789,7 +748,7 @@ namespace WinPaletter
             this.CMD2.CMD_ScreenColorsBackground = 0;
             this.CMD2.CMD_ScreenColorsForeground = 7;
             this.CMD2.CustomTerminal = false;
-            this.CMD2.Location = new System.Drawing.Point(1605, 3);
+            this.CMD2.Location = new System.Drawing.Point(1609, 3);
             this.CMD2.Name = "CMD2";
             this.CMD2.PowerShell = false;
             this.CMD2.Raster = true;
@@ -1820,7 +779,7 @@ namespace WinPaletter
             this.CMD3.CMD_ScreenColorsBackground = 0;
             this.CMD3.CMD_ScreenColorsForeground = 7;
             this.CMD3.CustomTerminal = false;
-            this.CMD3.Location = new System.Drawing.Point(2139, 3);
+            this.CMD3.Location = new System.Drawing.Point(2143, 3);
             this.CMD3.Name = "CMD3";
             this.CMD3.PowerShell = false;
             this.CMD3.Raster = true;
@@ -1837,7 +796,7 @@ namespace WinPaletter
             this.Panel1.Controls.Add(this.PictureBox12);
             this.Panel1.Controls.Add(this.CursorsSize_Bar);
             this.Panel1.Controls.Add(this.Label17);
-            this.Panel1.Location = new System.Drawing.Point(2673, 3);
+            this.Panel1.Location = new System.Drawing.Point(2677, 3);
             this.Panel1.Name = "Panel1";
             this.Panel1.Padding = new System.Windows.Forms.Padding(3);
             this.Panel1.Size = new System.Drawing.Size(528, 297);
@@ -1851,6 +810,8 @@ namespace WinPaletter
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
             this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
             this.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cur_anim_btn.ImageAsVector = false;
+            this.cur_anim_btn.ImageVector = null;
             this.cur_anim_btn.Location = new System.Drawing.Point(356, 267);
             this.cur_anim_btn.Name = "cur_anim_btn";
             this.cur_anim_btn.Size = new System.Drawing.Size(141, 21);
@@ -2619,16 +1580,17 @@ namespace WinPaletter
             // 
             // cur_tip_btn
             // 
-            this.cur_tip_btn.CustomColor = System.Drawing.Color.Empty;
-            this.cur_tip_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.cur_tip_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
+            this.cur_tip_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.cur_tip_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_tip_btn.ForeColor = System.Drawing.Color.White;
             this.cur_tip_btn.Image = null;
+            this.cur_tip_btn.ImageAsVector = true;
+            this.cur_tip_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("cur_tip_btn.ImageVector")));
             this.cur_tip_btn.Location = new System.Drawing.Point(500, 267);
             this.cur_tip_btn.Name = "cur_tip_btn";
             this.cur_tip_btn.Size = new System.Drawing.Size(20, 21);
             this.cur_tip_btn.TabIndex = 71;
-            this.cur_tip_btn.Text = "?";
             this.cur_tip_btn.UseVisualStyleBackColor = false;
             this.cur_tip_btn.Click += new System.EventHandler(this.Cur_tip_btn_Click);
             // 
@@ -2653,7 +1615,7 @@ namespace WinPaletter
             this.CursorsSize_Bar.SmallChange = 20;
             this.CursorsSize_Bar.TabIndex = 68;
             this.CursorsSize_Bar.Value = 100;
-            this.CursorsSize_Bar.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.CursorsSize_Bar_Scroll);
+            this.CursorsSize_Bar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CursorsSize_Bar_Scroll);
             // 
             // Label17
             // 
@@ -2672,7 +1634,7 @@ namespace WinPaletter
             this.TabPage5.Location = new System.Drawing.Point(4, 24);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage5.Size = new System.Drawing.Size(1321, 599);
+            this.TabPage5.Size = new System.Drawing.Size(1321, 617);
             this.TabPage5.TabIndex = 3;
             this.TabPage5.Text = "2";
             // 
@@ -2682,8 +1644,122 @@ namespace WinPaletter
             this.search_results.Dock = System.Windows.Forms.DockStyle.Fill;
             this.search_results.Location = new System.Drawing.Point(10, 10);
             this.search_results.Name = "search_results";
-            this.search_results.Size = new System.Drawing.Size(1301, 579);
+            this.search_results.Size = new System.Drawing.Size(1301, 597);
             this.search_results.TabIndex = 4;
+            // 
+            // titlebarExtender1
+            // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender1.Controls.Add(this.search_panel);
+            this.titlebarExtender1.Controls.Add(this.Titlebar_lbl);
+            this.titlebarExtender1.Controls.Add(this.back_btn);
+            this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.titlebarExtender1.DropDWMEffect = false;
+            this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
+            this.titlebarExtender1.Name = "titlebarExtender1";
+            this.titlebarExtender1.Size = new System.Drawing.Size(1329, 52);
+            this.titlebarExtender1.TabIndex = 116;
+            this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+            // 
+            // search_panel
+            // 
+            this.search_panel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.search_panel.BackColor = System.Drawing.Color.Transparent;
+            this.search_panel.Controls.Add(this.search_btn);
+            this.search_panel.Controls.Add(this.search_box);
+            this.search_panel.Controls.Add(this.search_filter_btn);
+            this.search_panel.Location = new System.Drawing.Point(974, 12);
+            this.search_panel.Name = "search_panel";
+            this.search_panel.Size = new System.Drawing.Size(343, 30);
+            this.search_panel.TabIndex = 42;
+            // 
+            // search_btn
+            // 
+            this.search_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.search_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(217)))), ((int)(((byte)(251)))));
+            this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.search_btn.ForeColor = System.Drawing.Color.White;
+            this.search_btn.Image = null;
+            this.search_btn.ImageAsVector = true;
+            this.search_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("search_btn.ImageVector")));
+            this.search_btn.Location = new System.Drawing.Point(308, 3);
+            this.search_btn.Name = "search_btn";
+            this.search_btn.Size = new System.Drawing.Size(32, 24);
+            this.search_btn.TabIndex = 40;
+            this.search_btn.UseVisualStyleBackColor = false;
+            this.search_btn.Click += new System.EventHandler(this.Search_btn_Click);
+            // 
+            // search_box
+            // 
+            this.search_box.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.search_box.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.search_box.Location = new System.Drawing.Point(3, 3);
+            this.search_box.MaxLength = 32767;
+            this.search_box.Multiline = false;
+            this.search_box.Name = "search_box";
+            this.search_box.ReadOnly = false;
+            this.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.search_box.SelectedText = "";
+            this.search_box.SelectionLength = 0;
+            this.search_box.SelectionStart = 0;
+            this.search_box.Size = new System.Drawing.Size(261, 24);
+            this.search_box.TabIndex = 39;
+            this.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.search_box.UseSystemPasswordChar = false;
+            this.search_box.WordWrap = true;
+            this.search_box.KeyboardPress += new WinPaletter.UI.WP.TextBox.KeyboardPressEventHandler(this.Search_box_KeyPress);
+            // 
+            // search_filter_btn
+            // 
+            this.search_filter_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.search_filter_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(108)))), ((int)(((byte)(71)))));
+            this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.search_filter_btn.ForeColor = System.Drawing.Color.White;
+            this.search_filter_btn.Image = null;
+            this.search_filter_btn.ImageAsVector = true;
+            this.search_filter_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("search_filter_btn.ImageVector")));
+            this.search_filter_btn.Location = new System.Drawing.Point(270, 3);
+            this.search_filter_btn.Name = "search_filter_btn";
+            this.search_filter_btn.Size = new System.Drawing.Size(32, 24);
+            this.search_filter_btn.TabIndex = 41;
+            this.search_filter_btn.UseVisualStyleBackColor = false;
+            this.search_filter_btn.Click += new System.EventHandler(this.Search_filter_btn_Click);
+            // 
+            // Titlebar_lbl
+            // 
+            this.Titlebar_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.Titlebar_lbl.DrawOnGlass = false;
+            this.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Titlebar_lbl.Location = new System.Drawing.Point(57, 6);
+            this.Titlebar_lbl.Name = "Titlebar_lbl";
+            this.Titlebar_lbl.Size = new System.Drawing.Size(899, 40);
+            this.Titlebar_lbl.TabIndex = 38;
+            this.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
+            this.Titlebar_lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
+            // 
+            // back_btn
+            // 
+            this.back_btn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.back_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.back_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.back_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.back_btn.ForeColor = System.Drawing.Color.White;
+            this.back_btn.Image = null;
+            this.back_btn.ImageAsVector = true;
+            this.back_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("back_btn.ImageVector")));
+            this.back_btn.Location = new System.Drawing.Point(7, 6);
+            this.back_btn.Name = "back_btn";
+            this.back_btn.Size = new System.Drawing.Size(40, 40);
+            this.back_btn.TabIndex = 36;
+            this.back_btn.UseVisualStyleBackColor = false;
+            this.back_btn.Visible = false;
+            this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
             // Store
             // 
@@ -2692,8 +1768,8 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1329, 721);
             this.Controls.Add(this.Tabs);
-            this.Controls.Add(this.Titlebar_panel);
             this.Controls.Add(this.Status_pnl);
+            this.Controls.Add(this.titlebarExtender1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2705,9 +1781,6 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
             this.Load += new System.EventHandler(this.Store_Load);
             this.Shown += new System.EventHandler(this.Store_Shown);
-            this.Titlebar_panel.ResumeLayout(false);
-            this.search_panel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Titlebar_img)).EndInit();
             this.Status_pnl.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
@@ -2718,64 +1791,22 @@ namespace WinPaletter
             this.previewContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).EndInit();
             this.FlowLayoutPanel1.ResumeLayout(false);
-            this.tabs_preview.ResumeLayout(false);
-            this.TabPage4.ResumeLayout(false);
-            this.pnl_preview.ResumeLayout(false);
-            this.Window1.ResumeLayout(false);
-            this.Panel3.ResumeLayout(false);
-            this.TabPage6.ResumeLayout(false);
-            this.pnl_preview_classic.ResumeLayout(false);
-            this.ClassicTaskbar.ResumeLayout(false);
-            this.ClassicColorsPreview.ResumeLayout(false);
-            this.ClassicColorsPreview.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RetroShadow1)).EndInit();
-            this.Menu_Window.ResumeLayout(false);
-            this.menucontainer3.ResumeLayout(false);
-            this.highlight.ResumeLayout(false);
-            this.menuhilight.ResumeLayout(false);
-            this.menucontainer1.ResumeLayout(false);
-            this.WindowR3.ResumeLayout(false);
-            this.WindowR3.PerformLayout();
-            this.WindowR2.ResumeLayout(false);
-            this.menucontainer0.ResumeLayout(false);
-            this.PanelR1.ResumeLayout(false);
-            this.WindowR4.ResumeLayout(false);
-            this.programcontainer.ResumeLayout(false);
-            this.PanelR2.ResumeLayout(false);
             this.Panel1.ResumeLayout(false);
             this.Cursors_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
             this.TabPage5.ResumeLayout(false);
+            this.titlebarExtender1.ResumeLayout(false);
+            this.search_panel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
         internal UI.WP.TablessControl Tabs;
-        internal Panel pnl_preview;
-        internal UI.WP.AlertBox WXP_Alert2;
-        internal UI.Simulation.WinElement ActionCenter;
-        internal UI.Simulation.WinElement start;
-        internal UI.Simulation.WinElement taskbar;
-        internal UI.Simulation.Window Window2;
-        internal UI.Simulation.Window Window1;
-        internal Panel Panel3;
-        internal UI.WP.LabelAlt Label8;
-        internal UI.WP.LabelAlt setting_icon_preview;
-        internal UI.WP.LabelAlt lnk_preview;
-        internal Panel pnl_preview_classic;
-        internal UI.Retro.WindowR ClassicWindow1;
-        internal UI.Retro.WindowR ClassicWindow2;
-        internal UI.Retro.PanelRaisedR ClassicTaskbar;
-        internal UI.Retro.ButtonR ButtonR4;
-        internal UI.Retro.ButtonR ButtonR3;
-        internal UI.Retro.ButtonR ButtonR2;
         internal TabPage TabPage1;
         internal FlowLayoutPanel store_container;
         internal TabPage TabPage3;
         internal UI.WP.Button back_btn;
         internal System.ComponentModel.BackgroundWorker FilesFetcher;
-        internal Panel Titlebar_panel;
         internal UI.WP.LabelAlt Titlebar_lbl;
-        internal PictureBox Titlebar_img;
         internal Label themeSize_lbl;
         internal Label Label14;
         internal UI.WP.GroupBox previewContainer;
@@ -2785,34 +1816,6 @@ namespace WinPaletter
         internal Label Label26;
         internal PictureBox PictureBox14;
         internal UI.WP.Button Apply_btn;
-        internal Panel ClassicColorsPreview;
-        internal UI.WP.TransparentPictureBox RetroShadow1;
-        internal UI.Retro.WindowR Menu_Window;
-        internal Panel menucontainer3;
-        internal UI.WP.LabelAlt LabelR9;
-        internal Panel highlight;
-        internal Panel menuhilight;
-        internal UI.WP.LabelAlt LabelR5;
-        internal Panel menucontainer1;
-        internal UI.WP.LabelAlt LabelR6;
-        internal UI.Retro.WindowR WindowR3;
-        internal UI.Retro.ButtonR ButtonR5;
-        internal UI.WP.LabelAlt LabelR4;
-        internal UI.WP.LabelAlt LabelR13;
-        internal UI.Retro.WindowR WindowR2;
-        internal UI.Retro.TextBoxR TextBoxR1;
-        internal Panel menucontainer0;
-        internal UI.Retro.PanelR PanelR1;
-        internal UI.WP.LabelAlt LabelR3;
-        internal UI.WP.LabelAlt LabelR2;
-        internal UI.WP.LabelAlt LabelR1;
-        internal UI.Retro.WindowR WindowR1;
-        internal UI.Retro.WindowR WindowR4;
-        internal Panel programcontainer;
-        internal UI.Retro.ScrollBarR PanelR2;
-        internal UI.Retro.ButtonR ButtonR12;
-        internal UI.Retro.ButtonR ButtonR11;
-        internal UI.Retro.ButtonR ButtonR10;
         internal UI.WP.Button Edit_btn;
         internal UI.WP.Button RestartExplorer;
         internal UI.WP.TextBox search_box;
@@ -2845,7 +1848,7 @@ namespace WinPaletter
         internal UI.Controllers.CursorControl Cross;
         internal PictureBox PictureBox12;
         internal Label Label17;
-        internal UI.WP.Trackbar CursorsSize_Bar;
+        internal UI.WP.TrackBar CursorsSize_Bar;
         internal Timer Cursor_Timer;
         internal Panel search_panel;
         internal UI.WP.ProgressBar ProgressBar1;
@@ -2859,13 +1862,13 @@ namespace WinPaletter
         internal UI.WP.SeparatorV SeparatorVertical1;
         internal Panel Panel1;
         internal FlowLayoutPanel FlowLayoutPanel1;
-        internal UI.WP.TablessControl tabs_preview;
-        internal TabPage TabPage4;
-        internal TabPage TabPage6;
         internal UI.WP.TextBox desc_txt;
         internal UI.WP.AlertBox VersionAlert_lbl;
         internal UI.WP.Button author_url_button;
         internal UI.WP.Button Button1;
         internal Label Theme_MD5_lbl;
+        private Templates.RetroDesktopColors retroDesktopColors1;
+        private Templates.WindowsDesktop windowsDesktop1;
+        public UI.WP.TitlebarExtender titlebarExtender1;
     }
 }

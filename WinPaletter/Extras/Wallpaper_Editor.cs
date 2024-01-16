@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
 using System;
 using System.Collections;
@@ -10,13 +9,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Theme;
+using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class Wallpaper_Editor
     {
 
@@ -28,21 +27,100 @@ namespace WinPaletter
         private List<string> ImgLs1 = new();
         private List<string> ImgLs2 = new();
 
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Wallpaper");
+        }
+
         public Wallpaper_Editor()
         {
             InitializeComponent();
         }
 
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
+            ApplyWT();
+            Close();
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                ApplyWT();
+
+                TMx.Wallpaper.Apply(source_wallpapertone.Checked);
+                TMx.Win32.Apply();
+
+                if (source_wallpapertone.Checked) { WT.Apply(); }
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private void ModeSwitched(object sender, EventArgs e)
+        {
+            tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
+        }
+
         private void Wallpaper_Editor_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(Program.TM);
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.Store_Toggle_Wallpaper,
+                Enabled = Program.TM.Wallpaper.Enabled,
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = false,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+
+                OnModeAdvanced = ModeSwitched,
+                OnModeSimple = ModeSwitched,
+            };
+            LoadData(data);
+
+            LoadFromTM(Program.TM);
             index = 0;
             ApplyPreviewStyle();
 
-            switch (Program.PreviewStyle)
+            switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
                     {
@@ -104,167 +182,162 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Manager TM)
         {
+            AspectEnabled = TM.Wallpaper.Enabled;
+            RadioButton1.Checked = TM.Wallpaper.SlideShow_Folder_or_ImagesList;
+            RadioButton2.Checked = !TM.Wallpaper.SlideShow_Folder_or_ImagesList;
+
+            if (WT.Enabled)
             {
-                WallpaperEnabled.Checked = TM.Wallpaper.Enabled;
-                RadioButton1.Checked = TM.Wallpaper.SlideShow_Folder_or_ImagesList;
-                RadioButton2.Checked = !TM.Wallpaper.SlideShow_Folder_or_ImagesList;
-
-                if (WT.Enabled)
+                source_wallpapertone.Checked = true;
+            }
+            else
+            {
+                switch (TM.Wallpaper.WallpaperType)
                 {
-                    source_wallpapertone.Checked = true;
-                }
-                else
-                {
-                    switch (TM.Wallpaper.WallpaperType)
-                    {
 
-                        case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
-                            {
-                                source_pic.Checked = true;
-                                break;
-                            }
-                        case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
-                            {
-                                source_color.Checked = true;
-                                break;
-                            }
-                        case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
-                            {
-                                source_slideshow.Checked = true;
-                                break;
-                            }
-
-                        default:
-                            {
-                                source_pic.Checked = true;
-                                break;
-                            }
-                    }
-                }
-
-                TextBox1.Text = TM.Wallpaper.ImageFile;
-                switch (TM.Wallpaper.WallpaperStyle)
-                {
-                    case Theme.Structures.Wallpaper.WallpaperStyles.Tile:
+                    case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
                         {
-                            style_tile.Checked = true;
+                            source_pic.Checked = true;
                             break;
                         }
-                    case Theme.Structures.Wallpaper.WallpaperStyles.Centered:
+                    case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
                         {
-                            style_center.Checked = true;
+                            source_color.Checked = true;
                             break;
                         }
-                    case Theme.Structures.Wallpaper.WallpaperStyles.Stretched:
+                    case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
                         {
-                            style_stretch.Checked = true;
-                            break;
-                        }
-                    case Theme.Structures.Wallpaper.WallpaperStyles.Fill:
-                        {
-                            style_fill.Checked = true;
-                            break;
-                        }
-                    case Theme.Structures.Wallpaper.WallpaperStyles.Fit:
-                        {
-                            style_fit.Checked = true;
+                            source_slideshow.Checked = true;
                             break;
                         }
 
                     default:
                         {
-                            style_fill.Checked = true;
+                            source_pic.Checked = true;
                             break;
                         }
                 }
-
-                TextBox3.Text = WT.Image;
-
-                HBar.Value = WT.H;
-                SBar.Value = WT.S;
-                LBar.Value = WT.L;
-
-                TextBox2.Text = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
-                ListBox1.Items.Clear();
-                ListBox1.Items.AddRange(TM.Wallpaper.Wallpaper_Slideshow_Images);
-                Trackbar1.Value = TM.Wallpaper.Wallpaper_Slideshow_Interval;
-                CheckBox3.Checked = TM.Wallpaper.Wallpaper_Slideshow_Shuffle;
-
-                pnl_preview.BackColor = TM.Win32.Background;
-                color_pick.BackColor = TM.Win32.Background;
             }
+
+            TextBox1.Text = TM.Wallpaper.ImageFile;
+            switch (TM.Wallpaper.WallpaperStyle)
+            {
+                case Theme.Structures.Wallpaper.WallpaperStyles.Tile:
+                    {
+                        style_tile.Checked = true;
+                        break;
+                    }
+                case Theme.Structures.Wallpaper.WallpaperStyles.Centered:
+                    {
+                        style_center.Checked = true;
+                        break;
+                    }
+                case Theme.Structures.Wallpaper.WallpaperStyles.Stretched:
+                    {
+                        style_stretch.Checked = true;
+                        break;
+                    }
+                case Theme.Structures.Wallpaper.WallpaperStyles.Fill:
+                    {
+                        style_fill.Checked = true;
+                        break;
+                    }
+                case Theme.Structures.Wallpaper.WallpaperStyles.Fit:
+                    {
+                        style_fit.Checked = true;
+                        break;
+                    }
+
+                default:
+                    {
+                        style_fill.Checked = true;
+                        break;
+                    }
+            }
+
+            TextBox3.Text = WT.Image;
+
+            HBar.Value = WT.H;
+            SBar.Value = WT.S;
+            LBar.Value = WT.L;
+
+            TextBox2.Text = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
+            ListBox1.Items.Clear();
+            ListBox1.Items.AddRange(TM.Wallpaper.Wallpaper_Slideshow_Images);
+            trackBarX1.Value = TM.Wallpaper.Wallpaper_Slideshow_Interval;
+            CheckBox3.Checked = TM.Wallpaper.Wallpaper_Slideshow_Shuffle;
+
+            pnl_preview.BackColor = TM.Win32.Background;
+            color_pick.BackColor = TM.Win32.Background;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
             Cursor = Cursors.AppStarting;
 
+            TM.Wallpaper.Enabled = AspectEnabled;
+            TM.Wallpaper.SlideShow_Folder_or_ImagesList = RadioButton1.Checked;
+
+            if (source_pic.Checked)
             {
-                TM.Wallpaper.Enabled = WallpaperEnabled.Checked;
-                TM.Wallpaper.SlideShow_Folder_or_ImagesList = RadioButton1.Checked;
+                TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
+                WT.Enabled = false;
+            }
 
-                if (source_pic.Checked)
-                {
-                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
-                    WT.Enabled = false;
-                }
+            else if (source_color.Checked)
+            {
+                TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SolidColor;
+                WT.Enabled = false;
+            }
 
-                else if (source_color.Checked)
-                {
-                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SolidColor;
-                    WT.Enabled = false;
-                }
+            else if (source_slideshow.Checked)
+            {
+                TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SlideShow;
+                WT.Enabled = false;
+            }
 
-                else if (source_slideshow.Checked)
-                {
-                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SlideShow;
-                    WT.Enabled = false;
-                }
-
-                else if (source_wallpapertone.Checked)
-                {
-                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
-                    WT.Enabled = true;
-
-                }
-
-                TM.Wallpaper.ImageFile = TextBox1.Text;
-
-                if (style_tile.Checked)
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
-                }
-                else if (style_center.Checked)
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
-                }
-                else if (style_stretch.Checked)
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
-                }
-                else if (style_fill.Checked)
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
-                }
-                else if (style_fit.Checked)
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
-                }
-                else
-                {
-                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
-                }
-
-                TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
-                TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
-                TM.Wallpaper.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
-
-                TM.Wallpaper.Wallpaper_Slideshow_Interval = Trackbar1.Value;
-                TM.Wallpaper.Wallpaper_Slideshow_Shuffle = CheckBox3.Checked;
+            else if (source_wallpapertone.Checked)
+            {
+                TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
+                WT.Enabled = true;
 
             }
+
+            TM.Wallpaper.ImageFile = TextBox1.Text;
+
+            if (style_tile.Checked)
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
+            }
+            else if (style_center.Checked)
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
+            }
+            else if (style_stretch.Checked)
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
+            }
+            else if (style_fill.Checked)
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+            }
+            else if (style_fit.Checked)
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
+            }
+            else
+            {
+                TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+            }
+
+            TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
+            TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
+            TM.Wallpaper.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
+
+            TM.Wallpaper.Wallpaper_Slideshow_Interval = trackBarX1.Value;
+            TM.Wallpaper.Wallpaper_Slideshow_Shuffle = CheckBox3.Checked;
 
             TM.Win32.Background = color_pick.BackColor;
 
@@ -282,7 +355,7 @@ namespace WinPaletter
                 L = LBar.Value
             };
 
-            switch (Program.PreviewStyle)
+            switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
                     {
@@ -329,69 +402,6 @@ namespace WinPaletter
             }
         }
 
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM);
-            ApplyWT();
-            Forms.MainFrm.ApplyStylesToElements(Program.TM);
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            ApplyWT();
-
-            TMx.Wallpaper.Apply(source_wallpapertone.Checked);
-            TMx.Win32.Apply();
-
-            if (source_wallpapertone.Checked)
-            {
-                WT.Apply();
-            }
-
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void WallpaperEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             if (OpenImgDlg.ShowDialog() == DialogResult.OK)
@@ -402,7 +412,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (Program.PreviewStyle == WindowStyle.WXP)
+            if (Program.WindowStyle == WindowStyle.WXP)
             {
                 TextBox1.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
             }
@@ -468,18 +478,6 @@ namespace WinPaletter
                 Set_SlideshowSource();
                 ApplyPreviewStyle();
             }
-        }
-
-        private void Trackbar1_Scroll(object sender)
-        {
-            MD.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void MD_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
-            Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
         }
 
         public void MoveItem(int direction)
@@ -549,7 +547,7 @@ namespace WinPaletter
             }
         }
 
-        private void Source_pic_CheckedChanged(object sender)
+        private void Source_pic_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioImage)sender).Checked)
             {
@@ -561,7 +559,7 @@ namespace WinPaletter
             Panel1.Visible = false;
         }
 
-        private void Source_slideshow_CheckedChanged(object sender)
+        private void Source_slideshow_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioImage)sender).Checked)
             {
@@ -611,8 +609,6 @@ namespace WinPaletter
             else
             {
                 temp = img_tinted;
-
-
             }
 
             pnl_preview.Image = temp;
@@ -664,7 +660,7 @@ namespace WinPaletter
             ApplyHSLPreview();
         }
 
-        private void RadioButton1_CheckedChanged(object sender)
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioButton)sender).Checked)
             {
@@ -762,7 +758,13 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { pnl_preview };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } },
+                { pnl_preview, new string[] { nameof(pnl_preview.BackColor) } }
+            };
+
             Color C = Forms.ColorPickerDlg.Pick(CList);
             ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
@@ -828,7 +830,7 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void Style_fill_CheckedChanged(object sender)
+        private void Style_fill_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioImage)sender).Checked)
                 ApplyPreviewStyle();
@@ -836,61 +838,25 @@ namespace WinPaletter
 
         public void ApplyHSLPreview()
         {
-            if (source_wallpapertone.Enabled && img_untouched_forTint is not null)
+            Task.Run(() =>
             {
-                using (ImageProcessor.ImageFactory ImgF = new())
+                if (source_wallpapertone.Enabled && img_untouched_forTint is not null)
                 {
-                    ImgF.Load(img_untouched_forTint);
-                    ImgF.Hue(HBar.Value, true);
-                    ImgF.Saturation(SBar.Value - 100);
-                    ImgF.Brightness(LBar.Value - 100);
+                    using (ImageProcessor.ImageFactory ImgF = new())
+                    {
+                        ImgF.Load(img_untouched_forTint);
+                        ImgF.Hue(HBar.Value, true);
+                        ImgF.Saturation(SBar.Value * 2 - 100);
+                        ImgF.Brightness(LBar.Value * 2 - 100);
 
-                    img_tinted = (Bitmap)ImgF.Image.Clone();
-                    img_tinted_filled = (Bitmap)((Bitmap)img_tinted.Clone()).FillScale(pnl_preview.Size);
-                    img_tinted_tile = ((Bitmap)img_tinted.Clone()).Tile(pnl_preview.Size);
+                        img_tinted = (Bitmap)ImgF.Image.Clone();
+                        img_tinted_filled = (Bitmap)((Bitmap)img_tinted.Clone()).FillScale(pnl_preview.Size);
+                        img_tinted_tile = ((Bitmap)img_tinted.Clone()).Tile(pnl_preview.Size);
+                    }
+
+                    this.Invoke(ApplyPreviewStyle);
                 }
-
-                ApplyPreviewStyle();
-            }
-        }
-
-        private void ColorBar1_Scroll(object sender)
-        {
-            HB.Text = ((UI.WP.ColorBar)sender).Value.ToString();
-
-            ColorsExtensions.HSL_Structure HSL_ = new();
-            HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
-            HSL_.H = Conversions.ToInteger(((UI.WP.ColorBar)sender).Value);
-            HSL_.S = 1f;
-            HSL_.L = 0.5f;
-
-            SBar.AccentColor = HSL_.ToRGB();
-            SBar.H = HSL_.H;
-
-            LBar.AccentColor = HSL_.ToRGB();
-            LBar.H = HSL_.H;
-
-            ApplyHSLPreview();
-        }
-
-        private void ColorBar2_Scroll_1(object sender)
-        {
-            SB.Text = ((UI.WP.ColorBar)sender).Value.ToString();
-            ApplyHSLPreview();
-        }
-
-        private void ColorBar3_Scroll(object sender)
-        {
-            LB.Text = ((UI.WP.ColorBar)sender).Value.ToString();
-            ApplyHSLPreview();
-        }
-
-        private void HB_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), HBar.Maximum), HBar.Minimum).ToString();
-            HBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-            ApplyHSLPreview();
+            });
         }
 
         private void Button20_Click(object sender, EventArgs e)
@@ -901,26 +867,53 @@ namespace WinPaletter
                 {
                     ImgF.Load(TextBox3.Text);
                     ImgF.Hue(HBar.Value, true);
-                    ImgF.Saturation(SBar.Value - 100);
-                    ImgF.Brightness(LBar.Value - 100);
+                    ImgF.Saturation(SBar.Value * 2 - 100);
+                    ImgF.Brightness(LBar.Value * 2 - 100);
                     ImgF.Image.Save(SaveFileDialog2.FileName);
                 }
             }
         }
 
-        private void Button23_Click(object sender, EventArgs e)
+        private void colorBarX3_ValueChanged(object sender, EventArgs e)
         {
-            HBar.Value = 0;
+            ApplyHSLPreview();
         }
 
-        private void Button22_Click(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e)
         {
-            SBar.Value = 100;
+            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            {
+                textBox4.Text = OpenImgDlg.FileName;
+            }
         }
 
-        private void Button21_Click(object sender, EventArgs e)
+        private void textBox4_TextChanged(object sender, EventArgs e)
         {
-            LBar.Value = 100;
+            if (!AdvancedMode)
+            {
+                source_pic.Checked = true;
+                style_fill.Checked = true;
+                TextBox1.Text = textBox4.Text;
+            }
+        }
+
+        private void colorBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            ColorsExtensions.HSL HSL_ = new();
+            HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
+            HSL_.H = Conversions.ToInteger(((UI.WP.ColorBarX)sender).Value);
+            HSL_.S = 1f;
+            HSL_.L = 0.5f;
+
+            SBar.AccentColor = HSL_.ToRGB();
+            LBar.AccentColor = HSL_.ToRGB();
+
+            ApplyHSLPreview();
+        }
+
+        private void colorBarX2_ValueChanged(object sender, EventArgs e)
+        {
+            ApplyHSLPreview();
         }
 
         private void Button16_Click(object sender, EventArgs e)
@@ -929,7 +922,7 @@ namespace WinPaletter
 
             if (!File.Exists(WallpaperPath))
             {
-                if (Program.PreviewStyle == WindowStyle.WXP)
+                if (Program.WindowStyle == WindowStyle.WXP)
                 {
                     WallpaperPath = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
@@ -945,7 +938,7 @@ namespace WinPaletter
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            if (Program.PreviewStyle == WindowStyle.WXP)
+            if (Program.WindowStyle == WindowStyle.WXP)
             {
                 TextBox3.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
             }
@@ -956,7 +949,7 @@ namespace WinPaletter
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.PreviewStyle == WindowStyle.WXP ? $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.WindowStyle == WindowStyle.WXP ? $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }
@@ -968,27 +961,6 @@ namespace WinPaletter
                 TextBox3.Text = OpenImgDlg.FileName;
                 ApplyHSLPreview();
             }
-        }
-
-        private void SB_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), SBar.Maximum), SBar.Minimum).ToString();
-            SBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-            ApplyHSLPreview();
-        }
-
-        private void LB_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), LBar.Maximum), LBar.Minimum).ToString();
-            LBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-            ApplyHSLPreview();
-        }
-
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
-        {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Wallpaper");
         }
     }
 }

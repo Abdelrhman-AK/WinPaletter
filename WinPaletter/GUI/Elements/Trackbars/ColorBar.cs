@@ -212,7 +212,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         public event ScrollEventHandler Scroll;
 
@@ -402,7 +402,7 @@ namespace WinPaletter.UI.WP
                 case ModesList.Hue:
                     {
                         back = new(middleRect, Color.Black, Color.Black, 0f, false) { InterpolationColors = cb_H };
-                        ColorsExtensions.HSL_Structure HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
+                        ColorsExtensions.HSL HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
                         HSL_.H = (int)Math.Round(Value / (double)Maximum * 359d);
                         color = HSL_.ToRGB();
                         break;
@@ -410,12 +410,12 @@ namespace WinPaletter.UI.WP
 
                 case ModesList.Saturation:
                     {
-                        ColorsExtensions.HSL_Structure HSL_x1 = _AccentColor.ToHSL();
-                        ColorsExtensions.HSL_Structure HSL_x2 = _AccentColor.ToHSL();
+                        ColorsExtensions.HSL HSL_x1 = _AccentColor.ToHSL();
+                        ColorsExtensions.HSL HSL_x2 = _AccentColor.ToHSL();
                         HSL_x1.S = 0f;
                         HSL_x2.S = 1f;
                         back = new(middleRect, HSL_x1.ToRGB(), HSL_x2.ToRGB(), LinearGradientMode.Horizontal);
-                        ColorsExtensions.HSL_Structure HSL_ = _AccentColor.ToHSL();
+                        ColorsExtensions.HSL HSL_ = _AccentColor.ToHSL();
                         HSL_.S = (float)(Value / (double)Maximum);
                         color = HSL_.ToRGB();
                         break;
@@ -425,7 +425,7 @@ namespace WinPaletter.UI.WP
                     {
                         cb_L = new() { Positions = new[] { 0f, 1f / 2.0f, 1f }, Colors = new[] { Color.Black, _AccentColor, Color.White } };
                         back = new(middleRect, Color.Black, Color.Black, 0f, false) { InterpolationColors = cb_L };
-                        ColorsExtensions.HSL_Structure HSL_ = _AccentColor.ToHSL();
+                        ColorsExtensions.HSL HSL_ = _AccentColor.ToHSL();
                         HSL_.L = (float)(Value / (double)Maximum);
                         color = HSL_.ToRGB();
                         break;

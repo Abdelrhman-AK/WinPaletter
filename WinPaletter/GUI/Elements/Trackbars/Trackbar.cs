@@ -8,9 +8,9 @@ namespace WinPaletter.UI.WP
 {
     [Description("Themed TrackBar for WinPaletter UI")]
     [DefaultEvent("Scroll")]
-    public class Trackbar : Control
+    public class TrackBar : Control
     {
-        public Trackbar()
+        public TrackBar()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
@@ -67,6 +67,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _Maximum = 100;
         public int Maximum
         {
@@ -85,6 +86,7 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
+
 
         private int _Value;
         public int Value
@@ -108,9 +110,11 @@ namespace WinPaletter.UI.WP
                     InvalidateLayout();
                     InvalidatePosition();
                     Scroll?.Invoke(this);
+                    Refresh();
                 }
             }
         }
+
 
         private int _SmallChange = 1;
         public int SmallChange
@@ -127,6 +131,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         private int _LargeChange = 10;
         public int LargeChange
         {
@@ -142,6 +147,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -151,7 +157,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         public event ScrollEventHandler Scroll;
 
@@ -287,7 +293,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Voids
+        #region Methods
         private void InvalidateLayout()
         {
             LSA = new(0, 0, ButtonSize, Height);
@@ -340,14 +346,14 @@ namespace WinPaletter.UI.WP
             G.ExcludeClip(new Rectangle(-1, 0, 3, Height));
             G.ExcludeClip(new Rectangle(Width - 2, 0, 3, Height));
 
-            G.FillRoundedRect(scheme.Brushes.Back_Max, bar);
+            G.FillRoundedRect(scheme.Brushes.Back_Level2, bar);
             G.FillRoundedRect(scheme.Brushes.AccentAlt, new Rectangle(Thumb.X + 1, bar.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), bar.Height));
 
             G.ResetClip();
 
             Circle = new((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
 
-            G.FillEllipse(scheme.Brushes.Line, Circle);
+            G.FillEllipse(scheme.Brushes.Line_Hover_Level2, Circle);
 
             Rectangle smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             Rectangle smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);

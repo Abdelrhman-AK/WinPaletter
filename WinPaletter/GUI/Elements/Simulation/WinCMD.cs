@@ -80,7 +80,6 @@ namespace WinPaletter.UI.Simulation
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
 
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle RectCMD = new(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10);
@@ -523,10 +522,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._4x6:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_4x6;
+                                i0 = Assets.CMD_Raster.CMD_4x6;
                             else
-                                i0 = Properties.Resources.PS_4x6;
-                            i1 = Properties.Resources.CMD_4x6_P;
+                                i0 = Assets.PowerShell_Raster.PS_4x6;
+                            i1 = Assets.CMD_Raster.CMD_4x6_P;
                             pW = 120;
                             pH = 18;
                             pX = 2;
@@ -537,10 +536,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._6x8:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_6x8;
+                                i0 = Assets.CMD_Raster.CMD_6x8;
                             else
-                                i0 = Properties.Resources.PS_6x8;
-                            i1 = Properties.Resources.CMD_6x8_P;
+                                i0 = Assets.PowerShell_Raster.PS_6x8;
+                            i1 = Assets.CMD_Raster.CMD_6x8_P;
                             pW = 180;
                             pH = 24;
                             pX = 3;
@@ -551,10 +550,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._8x8:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_8x8;
+                                i0 = Assets.CMD_Raster.CMD_8x8;
                             else
-                                i0 = Properties.Resources.PS_8x8;
-                            i1 = Properties.Resources.CMD_8x8_P;
+                                i0 = Assets.PowerShell_Raster.PS_8x8;
+                            i1 = Assets.CMD_Raster.CMD_8x8_P;
                             pW = 240;
                             pH = 24;
                             pX = 4;
@@ -565,10 +564,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._16x8:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_16x8;
+                                i0 = Assets.CMD_Raster.CMD_16x8;
                             else
-                                i0 = Properties.Resources.PS_16x8;
-                            i1 = Properties.Resources.CMD_16x8_P;
+                                i0 = Assets.PowerShell_Raster.PS_16x8;
+                            i1 = Assets.CMD_Raster.CMD_16x8_P;
                             pW = 480;
                             pH = 24;
                             pX = 8;
@@ -579,10 +578,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._5x12:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_5x12;
+                                i0 = Assets.CMD_Raster.CMD_5x12;
                             else
-                                i0 = Properties.Resources.PS_5x12;
-                            i1 = Properties.Resources.CMD_5x12_P;
+                                i0 = Assets.PowerShell_Raster.PS_5x12;
+                            i1 = Assets.CMD_Raster.CMD_5x12_P;
                             pW = 150;
                             pH = 36;
                             pX = 3;
@@ -593,10 +592,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._7x12:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_7x12;
+                                i0 = Assets.CMD_Raster.CMD_7x12;
                             else
-                                i0 = Properties.Resources.PS_7x12;
-                            i1 = Properties.Resources.CMD_7x12_P;
+                                i0 = Assets.PowerShell_Raster.PS_7x12;
+                            i1 = Assets.CMD_Raster.CMD_7x12_P;
                             pW = 210;
                             pH = 36;
                             pX = 4;
@@ -607,10 +606,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._8x12:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_8x12;
+                                i0 = Assets.CMD_Raster.CMD_8x12;
                             else
-                                i0 = Properties.Resources.PS_8x12;
-                            i1 = Properties.Resources.CMD_8x12_P;
+                                i0 = Assets.PowerShell_Raster.PS_8x12;
+                            i1 = Assets.CMD_Raster.CMD_8x12_P;
                             pW = 240;
                             pH = 36;
                             pX = 4;
@@ -621,10 +620,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._16x12:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_16x12;
+                                i0 = Assets.CMD_Raster.CMD_16x12;
                             else
-                                i0 = Properties.Resources.PS_16x12;
-                            i1 = Properties.Resources.CMD_16x12_P;
+                                i0 = Assets.PowerShell_Raster.PS_16x12;
+                            i1 = Assets.CMD_Raster.CMD_16x12_P;
                             pW = 480;
                             pH = 36;
                             pX = 8;
@@ -635,10 +634,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._12x16:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_12x16;
+                                i0 = Assets.CMD_Raster.CMD_12x16;
                             else
-                                i0 = Properties.Resources.PS_12x16;
-                            i1 = Properties.Resources.CMD_12x16_P;
+                                i0 = Assets.PowerShell_Raster.PS_12x16;
+                            i1 = Assets.CMD_Raster.CMD_12x16_P;
                             pW = 360;
                             pH = 48;
                             pX = 6;
@@ -649,10 +648,10 @@ namespace WinPaletter.UI.Simulation
                     case Raster_Sizes._10x18:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_10x18;
+                                i0 = Assets.CMD_Raster.CMD_10x18;
                             else
-                                i0 = Properties.Resources.PS_10x18;
-                            i1 = Properties.Resources.CMD_10x18_P;
+                                i0 = Assets.PowerShell_Raster.PS_10x18;
+                            i1 = Assets.CMD_Raster.CMD_10x18_P;
                             pW = 300;
                             pH = 54;
                             pX = 8;
@@ -663,10 +662,10 @@ namespace WinPaletter.UI.Simulation
                     default:
                         {
                             if (!PowerShell)
-                                i0 = Properties.Resources.CMD_8x12;
+                                i0 = Assets.CMD_Raster.CMD_8x12;
                             else
-                                i0 = Properties.Resources.PS_8x12;
-                            i1 = Properties.Resources.CMD_8x12_P;
+                                i0 = Assets.PowerShell_Raster.PS_8x12;
+                            i1 = Assets.CMD_Raster.CMD_8x12_P;
                             pW = 240;
                             pH = 36;
                             pX = 4;
@@ -676,7 +675,7 @@ namespace WinPaletter.UI.Simulation
 
                 }
 
-                G.DrawImage(i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC), new Point(0, 1));
+                using (Bitmap b = i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC)) { G.DrawImage(b, new Point(0, 1)); }
 
                 RectMiddle = new((int)Math.Round(Rect.X + (Rect.Width - pW) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - 36) / 2d), pW, pH);
                 RectMiddleBorder = new(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
@@ -690,9 +689,10 @@ namespace WinPaletter.UI.Simulation
                     G.DrawRectangle(P, RectMiddleBorder);
                 }
 
-
-                G.DrawImage(i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF), new Point((int)Math.Round(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2d), (int)Math.Round(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2d)));
-
+                using (Bitmap b = i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF))
+                {
+                    G.DrawImage(b, new Point((int)Math.Round(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2d), (int)Math.Round(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2d)));
+                }
             }
 
             base.OnPaint(e);

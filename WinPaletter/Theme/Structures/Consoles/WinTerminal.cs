@@ -443,7 +443,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Save Windows Terminal settings data
+        /// ApplyToTM Windows Terminal settings data
         /// </summary>
         /// <param name="File">File into which data will be saved, either JSON or WinPaletter theme file</param>
         /// <param name="Mode">Either Windows Terminal JSON settings file or WinPaletter theme file</param>
@@ -494,9 +494,7 @@ namespace WinPaletter
 
                                     break;
                                 }
-
                         }
-
 
                         StreamReader St = new(SettingsFile);
                         string JSON_String = St.ReadToEnd();

@@ -1,22 +1,18 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.Theme;
-using WinPaletter.UI.WP;
+using WinPaletter.UI.Controllers;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class CMD
     {
         private Font F_cmd = new("Consolas", 18f, FontStyle.Regular);
-        private bool _Shown = false;
         public Edition _Edition = Edition.CMD;
 
         public enum Edition
@@ -26,90 +22,82 @@ namespace WinPaletter
             PowerShellx64
         }
 
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+        }
+
         public CMD()
         {
             InitializeComponent();
         }
 
-        #region    Voids not related to colors and shapes
-        private void CMD_Load(object sender, EventArgs e)
+        private void LoadFromWPTH(object sender, EventArgs e)
         {
-            _Shown = false;
-            this.LoadLanguage();
-            ApplyStyle(this);
-            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
-            RasterList.BringToFront();
-
-            ApplyFromTM(Program.TM, _Edition);
-            ApplyPreview();
-
-            CMD_PopupForegroundLbl.Font = Fonts.Console;
-            CMD_PopupBackgroundLbl.Font = Fonts.Console;
-            CMD_AccentForegroundLbl.Font = Fonts.Console;
-            CMD_AccentBackgroundLbl.Font = Fonts.Console;
-
-            switch (_Edition)
+            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
             {
-                case Edition.CMD:
-                    {
-                        Text = Program.Lang.CommandPrompt;
-                        Icon = Properties.Resources.icons8_command_line;
-                        Button4.Text = Program.Lang.Open_Testing_CMD;
-                        break;
-                    }
-
-                case Edition.PowerShellx86:
-                    {
-                        Text = Program.Lang.PowerShellx86;
-                        Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = Program.Lang.Open_Testing_PowerShellx86;
-                        break;
-                    }
-
-                case Edition.PowerShellx64:
-                    {
-                        Text = Program.Lang.PowerShellx64;
-                        Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = Program.Lang.Open_Testing_PowerShellx64;
-                        break;
-                    }
-
-            }
-
-            Button6.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-        }
-
-        protected override void OnDragOver(DragEventArgs e)
-        {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
-            {
-                Focus();
-                BringToFront();
-            }
-            else
-            {
-                return;
-            }
-
-            base.OnDragOver(e);
-        }
-
-        private void CheckBox1_CheckedChanged(object sender)
-        {
-            if (_Shown)
-            {
-                Program.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
-                Program.Settings.WindowsTerminals.Save();
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                LoadFromTM(TMx, _Edition);
+                TMx.Dispose();
             }
         }
 
-        private void Button10_Click(object sender, EventArgs e)
+        private void LoadFromCurrent(object sender, EventArgs e)
         {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx, _Edition);
+            TMx.Dispose();
+        }
 
-            if (CMDEnabled.Checked)
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx, _Edition);
+            TMx.Dispose();
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM, _Edition);
+            Close();
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
-                Cursor = Cursors.WaitCursor;
-                Theme.Manager TMx = new(Theme.Manager.Source.Registry);
                 ApplyToTM(TMx, _Edition);
                 ApplyToTM(Program.TM, _Edition);
 
@@ -140,34 +128,97 @@ namespace WinPaletter
                         }
 
                 }
+            }
+            Cursor = Cursors.Default;
+        }
 
-                TMx.Dispose();
+        private void CMD_Load(object sender, EventArgs e)
+        {
+            DesignerData data = new(this)
+            {
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = true,
+                CanSwitchMode = false,
 
-                Cursor = Cursors.Default;
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_11 = ImportWin11Preset,
+                OnImportFromScheme_10 = ImportWin10Preset,
+                OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_7 = ImportWin7Preset,
+                OnImportFromScheme_Vista = ImportWinVistaPreset,
+                OnImportFromScheme_XP = ImportWinXPPreset,
+            };
+
+            switch (_Edition)
+            {
+                case Edition.CMD:
+                    {
+                        Text = Program.Lang.CommandPrompt;
+                        Icon = Properties.Resources.icons8_command_line;
+                        Button4.Text = Program.Lang.Open_Testing_CMD;
+                        data.AspectName = Program.Lang.CommandPrompt;
+                        data.Enabled = Program.TM.CommandPrompt.Enabled;
+                        break;
+                    }
+
+                case Edition.PowerShellx86:
+                    {
+                        Text = Program.Lang.PowerShellx86;
+                        Icon = Properties.Resources.icons8_PowerShell;
+                        Button4.Text = Program.Lang.Open_Testing_PowerShellx86;
+                        data.AspectName = Program.Lang.PowerShellx86;
+                        data.Enabled = Program.TM.PowerShellx86.Enabled;
+                        break;
+                    }
+
+                case Edition.PowerShellx64:
+                    {
+                        Text = Program.Lang.PowerShellx64;
+                        Icon = Properties.Resources.icons8_PowerShell;
+                        Button4.Text = Program.Lang.Open_Testing_PowerShellx64;
+                        data.AspectName = Program.Lang.PowerShellx64;
+                        data.Enabled = Program.TM.PowerShellx64.Enabled;
+                        break;
+                    }
+            }
+
+            LoadData(data);
+
+            toggle1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
+            RasterList.BringToFront();
+
+            LoadFromTM(Program.TM, _Edition);
+            ApplyPreview();
+
+            CMD_PopupForegroundLbl.Font = Fonts.Console;
+            CMD_PopupBackgroundLbl.Font = Fonts.Console;
+            CMD_AccentForegroundLbl.Font = Fonts.Console;
+            CMD_AccentBackgroundLbl.Font = Fonts.Console;
+        }
+
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            {
+                Focus();
+                BringToFront();
             }
             else
             {
-                MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
+            base.OnDragOver(e);
         }
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM, _Edition);
-            Close();
-        }
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-        private void CMD_Shown(object sender, EventArgs e)
-        {
-            _Shown = true;
-            BringToFront();
-        }
-        #endregion
 
-        #region    Voids to modify colors or shapes
+        #region    Methods to modify colors or shapes
         public void ApplyCursorShape()
         {
             CMD_PreviewCursorInner.Dock = DockStyle.Fill;
@@ -245,7 +296,6 @@ namespace WinPaletter
             int all = CMD_PreviewCUR.Height - 4;
             CMD_PreviewCUR2.Height = (int)Math.Round(all * (CMD_CursorSizeBar.Value / (double)CMD_CursorSizeBar.Maximum));
             CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
-            CMD_PreviewCUR_Val.Text = CMD_CursorSizeBar.Value.ToString();
             ApplyCursorShape();
         }
         public void ApplyPreview()
@@ -747,35 +797,33 @@ namespace WinPaletter
         #endregion
 
         #region    TM Handling
-        public void ApplyFromTM(Theme.Manager TM, Edition Edition)
+        public void LoadFromTM(Theme.Manager TM, Edition Edition)
         {
             switch (Edition)
             {
                 case Edition.CMD:
                     {
-                        SetFromTM(TM.CommandPrompt);
+                        LoadFromTM(TM.CommandPrompt);
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        SetFromTM(TM.PowerShellx86);
+                        LoadFromTM(TM.PowerShellx86);
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        SetFromTM(TM.PowerShellx64);
+                        LoadFromTM(TM.PowerShellx64);
                         break;
                     }
-
             }
-
         }
 
-        public void SetFromTM(Theme.Structures.Console Console)
+        public void LoadFromTM(Theme.Structures.Console Console)
         {
-            CMDEnabled.Checked = Console.Enabled;
+            AspectEnabled = Console.Enabled;
 
             ColorTable00.BackColor = Console.ColorTable00;
             ColorTable01.BackColor = Console.ColorTable01;
@@ -876,8 +924,8 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
+                using (Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight }))
                 {
-                    Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
                     F_cmd = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
             }
@@ -885,7 +933,6 @@ namespace WinPaletter
             FontName.Text = F_cmd.Name;
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
             CMD_FontSizeBar.Value = (int)Math.Round(F_cmd.Size);
-            CMD_FontSizeVal.Text = F_cmd.Size.ToString();
 
             if (Console.FontSize == 393220)
                 RasterList.SelectedItem = "4x6";
@@ -921,7 +968,6 @@ namespace WinPaletter
             CMD_PreviewCUR2.BackColor = Console.W10_1909_CursorColor;
             CMD_EnhancedTerminal.Checked = Console.W10_1909_ForceV2;
             CMD_OpacityBar.Value = Console.W10_1909_WindowAlpha;
-            CMD_OpacityVal.Text = Conversion.Fix(Console.W10_1909_WindowAlpha / 255d * 100d).ToString();
             CMD_LineSelection.Checked = Console.W10_1909_LineSelection;
             CMD_TerminalScrolling.Checked = Console.W10_1909_TerminalScrolling;
             ApplyCursorShape();
@@ -934,7 +980,7 @@ namespace WinPaletter
         {
             Theme.Structures.Console Console = new()
             {
-                Enabled = CMDEnabled.Checked,
+                Enabled = AspectEnabled,
                 ColorTable00 = ColorTable00.BackColor,
                 ColorTable01 = ColorTable01.BackColor,
                 ColorTable02 = ColorTable02.BackColor,
@@ -1097,7 +1143,7 @@ namespace WinPaletter
         private void CommandPrompt_PopupForegroundBar_Scroll(object sender)
         {
             {
-                Trackbar temp = CMD_PopupForegroundBar;
+                UI.WP.TrackBar temp = CMD_PopupForegroundBar;
                 CMD_PopupForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_PopupForegroundLbl.Text += " (A)";
@@ -1120,7 +1166,7 @@ namespace WinPaletter
         private void CMD_PopupBackgroundBar_Scroll(object sender)
         {
             {
-                Trackbar temp = CMD_PopupBackgroundBar;
+                UI.WP.TrackBar temp = CMD_PopupBackgroundBar;
                 CMD_PopupBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_PopupBackgroundLbl.Text += " (A)";
@@ -1143,7 +1189,7 @@ namespace WinPaletter
         private void CMD_AccentForegroundBar_Scroll(object sender)
         {
             {
-                Trackbar temp = CMD_AccentForegroundBar;
+                UI.WP.TrackBar temp = CMD_AccentForegroundBar;
                 CMD_AccentForegroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_AccentForegroundLbl.Text += " (A)";
@@ -1167,7 +1213,7 @@ namespace WinPaletter
         private void CMD_AccentBackgroundBar_Scroll(object sender)
         {
             {
-                Trackbar temp = CMD_AccentBackgroundBar;
+                UI.WP.TrackBar temp = CMD_AccentBackgroundBar;
                 CMD_AccentBackgroundLbl.Text = temp.Value.ToString();
                 if (temp.Value == 10)
                     CMD_AccentBackgroundLbl.Text += " (A)";
@@ -1250,7 +1296,7 @@ namespace WinPaletter
             Button5.Enabled = !CMD_RasterToggle.Checked;
             CMD_FontWeightBox.Enabled = !CMD_RasterToggle.Checked;
 
-            if (_Shown)
+            if (IsShown)
             {
                 RasterList.Visible = CMD_RasterToggle.Checked;
                 ApplyPreview();
@@ -1259,14 +1305,14 @@ namespace WinPaletter
 
         private void CMD_FontWeightBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!_Shown)
-                return;
+            if (!IsShown) return;
+
             NativeMethods.GDI32.LogFont fx = new();
             F_cmd = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
             F_cmd.ToLogFont(fx);
             fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+            using (Font temp = Font.FromLogFont(fx))
             {
-                Font temp = Font.FromLogFont(fx);
                 F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
             }
             ApplyPreview();
@@ -1274,7 +1320,7 @@ namespace WinPaletter
 
         private void CMD_FontsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_Shown)
+            if (IsShown)
             {
                 F_cmd = new(FontName.Font.Name, F_cmd.Size, F_cmd.Style);
                 ApplyPreview();
@@ -1282,27 +1328,9 @@ namespace WinPaletter
 
         }
 
-        private void CMD_FontSizeBar_Scroll(object sender)
-        {
-            CMD_FontSizeVal.Text = CMD_FontSizeBar.Value.ToString();
-            if (_Shown)
-            {
-                F_cmd = new(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style);
-                ApplyPreview();
-            }
-        }
-
         private void RasterList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_Shown)
-            {
-                ApplyPreview();
-            }
-        }
-
-        private void CMD_CursorSizeBar_Scroll(object sender)
-        {
-            UpdateCurPreview();
+            if (IsShown) ApplyPreview();
         }
 
         private void CMD_CursorStyle_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -1325,26 +1353,24 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, CMD_PreviewCUR2 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } },
+                { CMD_PreviewCUR2, new string[] { nameof(CMD_PreviewCUR2.BackColor) } }
+            };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
             CMD_PreviewCUR2.BackColor = C;
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
 
             CList.Clear();
         }
 
-        private void CMD_OpacityBar_Scroll(object sender)
-        {
-            CMD_OpacityVal.Text = Conversion.Fix((((UI.WP.Trackbar)sender).Value / 255) * 100).ToString();
-        }
-
-
         private void ColorTable00_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 ApplyPreview();
@@ -1366,46 +1392,64 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, CMD1 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) }},
+            };
 
-            Conditions _conditions = new();
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                _conditions.CMD_ColorTable00 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable00) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                _conditions.CMD_ColorTable01 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable01) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                _conditions.CMD_ColorTable02 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable02) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                _conditions.CMD_ColorTable03 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable03) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                _conditions.CMD_ColorTable04 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable04) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                _conditions.CMD_ColorTable05 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable05) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                _conditions.CMD_ColorTable06 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable06) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                _conditions.CMD_ColorTable07 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable07) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                _conditions.CMD_ColorTable08 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable08) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                _conditions.CMD_ColorTable09 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable09) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                _conditions.CMD_ColorTable10 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable10) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                _conditions.CMD_ColorTable11 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable11) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                _conditions.CMD_ColorTable12 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable12) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                _conditions.CMD_ColorTable13 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable13) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                _conditions.CMD_ColorTable14 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable14) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                _conditions.CMD_ColorTable15 = true;
+                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable15) });
 
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
             ApplyPreview();
 
             UpdateFromTrack(1);
@@ -1416,69 +1460,15 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        private void Button6_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                bool ee = CMDEnabled.Checked;
-                ApplyFromTM(_Def, _Edition);
-                ApplyPreview();
-                CMDEnabled.Checked = ee;
-            }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
-                bool ee = CMDEnabled.Checked;
-                ApplyFromTM(TMx, _Edition);
-                ApplyPreview();
-                CMDEnabled.Checked = ee;
-                TMx.Dispose();
-            }
-        }
-
         private void Button25_Click(object sender, EventArgs e)
         {
-            MsgBox(Program.Lang.CMD_NotAllWeights, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+            Program.ToolTip.ToolTipText = Program.Lang.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.Image = Assets.Notifications.Info;
 
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            bool ee = CMDEnabled.Checked;
-            ApplyFromTM(TMx, _Edition);
-            ApplyPreview();
-            CMDEnabled.Checked = ee;
-            TMx.Dispose();
-        }
+            Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
 
-        private void CMD_FontSizeVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum).ToString();
-            CMD_FontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void CMD_PreviewCUR_Val_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum).ToString();
-            CMD_CursorSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void CMD_OpacityVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum).ToString();
-            CMD_OpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void CMDEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
+            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 5000);
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -1493,8 +1483,8 @@ namespace WinPaletter
                 NativeMethods.GDI32.LogFont fx = new();
                 F_cmd.ToLogFont(fx);
                 fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+                using (Font temp = Font.FromLogFont(fx))
                 {
-                    Font temp = Font.FromLogFont(fx);
                     F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
                 }
                 FontName.Font = new(FontDialog1.Font.Name, 9f, F_cmd.Style);
@@ -1502,9 +1492,27 @@ namespace WinPaletter
 
         }
 
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+            if (IsShown)
+            {
+                F_cmd = new(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style);
+                ApplyPreview();
+            }
+        }
+
+        private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
+        {
+            UpdateCurPreview();
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsShown)
+            {
+                Program.Settings.WindowsTerminals.ListAllFonts = toggle1.Checked;
+                Program.Settings.WindowsTerminals.Save();
+            }
         }
     }
 }

@@ -153,6 +153,75 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
 
+        /// <summary>
+        /// SetWindowsHookEx function: Installs an application-defined hook procedure into a hook chain.
+        /// This hook can monitor low-level mouse input events before the system processes them.
+        /// </summary>
+        /// <param name="idHook">The type of hook procedure to be installed.</param>
+        /// <param name="lpfn">A pointer to the hook procedure.</param>
+        /// <param name="hMod">A handle to the DLL containing the hook procedure pointed to by the lpfn parameter.</param>
+        /// <param name="dwThreadId">The identifier of the thread with which the hook procedure is to be associated.</param>
+        /// <returns>If the function succeeds, the return value is the handle to the hook procedure.
+        /// If the function fails, the return value is IntPtr.Zero.</returns>
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        /// <summary>
+        /// UnhookWindowsHookEx function: Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
+        /// </summary>
+        /// <param name="hhk">A handle to the hook to be removed.</param>
+        /// <returns>If the function succeeds, the return value is true.
+        /// If the function fails, the return value is false.</returns>
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        /// <summary>
+        /// CallNextHookEx function: Passes the hook information to the next hook procedure in the current hook chain.
+        /// </summary>
+        /// <param name="hhk">A handle to the current hook.</param>
+        /// <param name="nCode">The hook code passed to the current hook procedure.</param>
+        /// <param name="wParam">The wParam value passed to the current hook procedure.</param>
+        /// <param name="lParam">The lParam value passed to the current hook procedure.</param>
+        /// <returns>If the function succeeds, the return value is the result value returned by the next hook procedure in the chain.
+        /// If the function fails, the return value is IntPtr.Zero.</returns>
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// MSLLHOOKSTRUCT structure: Contains information about a low-level mouse input event.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MSLLHOOKSTRUCT
+        {
+            public POINT pt;
+            public uint mouseData;
+            public uint flags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        /// <summary>
+        /// POINT structure: Defines the x- and y-coordinates of a point in a two-dimensional plane.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int x;
+            public int y;
+        }
+
+        /// <summary>
+        /// LowLevelMouseProc delegate: Represents the method that will handle the low-level mouse input events.
+        /// </summary>
+        /// <param name="nCode">A code the hook procedure uses to determine how to process the message.</param>
+        /// <param name="wParam">The wParam value passed to the hook procedure.</param>
+        /// <param name="lParam">The lParam value passed to the hook procedure.</param>
+        /// <returns>If the function succeeds, the return value is the result value returned by the hook procedure.
+        /// If the function fails, the return value is IntPtr.Zero.</returns>
+        public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+
         // Constants for LoadImage
         public const uint IMAGE_CURSOR = 2;
 
@@ -295,7 +364,7 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// The size, in bytes, of this structure.
             /// </summary>
-            public int cbSize;
+            public uint cbSize;
 
             /// <summary>
             /// The width of the window border, in pixels.
@@ -323,7 +392,7 @@ namespace WinPaletter.NativeMethods
             public int iCaptionHeight;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the caption or title bar.
+            /// A LogFont structure that defines the font of the caption or title bar.
             /// </summary>
             public LogFont lfCaptionFont;
 
@@ -338,7 +407,7 @@ namespace WinPaletter.NativeMethods
             public int iSMCaptionHeight;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the small caption.
+            /// A LogFont structure that defines the font of the small caption.
             /// </summary>
             public LogFont lfSMCaptionFont;
 
@@ -353,17 +422,17 @@ namespace WinPaletter.NativeMethods
             public int iMenuHeight;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the menu bar.
+            /// A LogFont structure that defines the font of the menu bar.
             /// </summary>
             public LogFont lfMenuFont;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the status bar.
+            /// A LogFont structure that defines the font of the status bar.
             /// </summary>
             public LogFont lfStatusFont;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the message box window.
+            /// A LogFont structure that defines the font of the message box window.
             /// </summary>
             public LogFont lfMessageFont;
 
@@ -399,7 +468,7 @@ namespace WinPaletter.NativeMethods
             public int iTitleWrap;
 
             /// <summary>
-            /// A LOGFONT structure that defines the font of the icon label.
+            /// A LogFont structure that defines the font of the icon label.
             /// </summary>
             public LogFont lfFont;
         }

@@ -70,10 +70,7 @@ namespace WinPaletter
                 }
             }
 
-
             Save_Info(Program.TM);
-            Forms.MainFrm.themename_lbl.Text = $"{Program.TM.Info.ThemeName} ({Program.TM.Info.ThemeVersion})";
-            Forms.MainFrm.author_lbl.Text = $"{Program.Lang.By} {Program.TM.Info.Author}";
 
             Close();
         }
@@ -143,12 +140,17 @@ namespace WinPaletter
                 return;
             }
 
-            Conditions _conditions = new() { Background = true };
-            List<Control> CList = new() { color1, StoreItem1 };
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+            Dictionary<Control, string[]> CList = new()
+            {
+                { color1, new string[] { nameof(color1.BackColor) } },
+                { StoreItem1, new string[] { nameof(StoreItem1.TM.Info.Color1) } },
+            };
+
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             StoreItem1.TM.Info.Color1 = C;
             color1.BackColor = C;
+            StoreItem1.Refresh();
 
             CList.Clear();
         }
@@ -162,17 +164,23 @@ namespace WinPaletter
                 return;
             }
 
-            Conditions _conditions = new() { Background2 = true };
-            List<Control> CList = new() { color2, StoreItem1 };
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+
+            Dictionary<Control, string[]> CList = new()
+            {
+                { color2, new string[] { nameof(color2.BackColor) } },
+                { StoreItem1, new string[] { nameof(StoreItem1.TM.Info.Color2) } },
+            };
+
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             StoreItem1.TM.Info.Color2 = C;
             color2.BackColor = C;
+            StoreItem1.Refresh();
 
             CList.Clear();
         }
 
-        private void CheckBox1_CheckedChanged(object sender)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
@@ -187,7 +195,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox2_CheckedChanged(object sender)
+        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
@@ -202,7 +210,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox3_CheckedChanged(object sender)
+        private void CheckBox3_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
@@ -217,7 +225,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox4_CheckedChanged(object sender)
+        private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
@@ -232,7 +240,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox5_CheckedChanged(object sender)
+        private void CheckBox5_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
@@ -247,7 +255,7 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox6_CheckedChanged(object sender)
+        private void CheckBox6_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;

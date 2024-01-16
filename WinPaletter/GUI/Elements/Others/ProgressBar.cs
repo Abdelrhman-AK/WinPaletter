@@ -18,19 +18,19 @@ namespace WinPaletter.UI.WP
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
-            taskbarList.HrInit();
+            taskbarList?.HrInit();
             StyleChanged += ProgressBar_StyleChanged;
         }
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        readonly Interfaces.ITaskbarList3 taskbarList = (Interfaces.ITaskbarList3)new Interfaces.CTaskbarList();
+        readonly Interfaces.ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (Interfaces.ITaskbarList3)new Interfaces.CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
-        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur);
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise);
         #endregion
 
-        #region Events
+        #region Events/Overrides
         public event EventHandler StyleChanged;
         public event EventHandler ValueChanged;
 
@@ -271,7 +271,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Voids
+        #region Methods
 
         public new void PerformStep()
         {
@@ -324,7 +324,7 @@ namespace WinPaletter.UI.WP
         private void SetProgressState(TaskbarProgressBarState state)
         {
             if (DesignMode || FormHwnd == IntPtr.Zero) return;
-            taskbarList.SetProgressState(FormHwnd, state);
+            taskbarList?.SetProgressState(FormHwnd, state);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace WinPaletter.UI.WP
                 _val = 0;
             }
 
-            taskbarList.SetProgressValue(FormHwnd, (ulong)_val, 100);
+            taskbarList?.SetProgressValue(FormHwnd, (ulong)_val, 100);
         }
 
         #endregion

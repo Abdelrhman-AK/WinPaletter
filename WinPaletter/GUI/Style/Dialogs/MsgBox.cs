@@ -86,7 +86,7 @@ namespace WinPaletter.UI.Style
         /// <param name="Footer">Footer is the lowermost text (under the buttons) (It can accept URLs)</param>
         /// <param name="FooterIcon">Icon Type of the fotter</param>
         /// <param name="FooterCustomIcon">Icon of the fotter when its type is set to TaskDialogIcon.Custom</param>
-        /// <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means Administrator\Elevation is required</param>
+        /// <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means administrator\elevation is required</param>
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.None, object SubMessage = null, object CollapsedText = null, object ExpandedText = null, object ExpandedDetails = null, object DialogTitle = null, object Footer = null, TaskDialogIcon FooterIcon = TaskDialogIcon.Custom, Icon FooterCustomIcon = null, bool RequireElevation = false)
         {
@@ -307,7 +307,7 @@ namespace WinPaletter.UI.Style
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
         private static void TD_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
         {
             // Process.Start(e.Href)

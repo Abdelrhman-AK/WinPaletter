@@ -21,7 +21,7 @@
         public string LogoffNotFound { get; set; } = "Couldn't find logoff process in '{0}' directory. You should logoff your Windows profile manually.";
         public string ShutdownNotFound { get; set; } = "Couldn't find shutdown.exe in '{0}' directory. You should restart or shutdown your Windows manually.";
         public string ScalingTip { get; set; } = "Scaling option is only a preview, the cursor will be saved with different sizes and the suitable size will be loaded according to your DPI settings.";
-        public string RemoveExtMsg { get; set; } = "Are you sure from removing files association (*.wpth, *.wptp, *.wpsf) from registry?";
+        public string RemoveExtMsg { get; set; } = "Are you sure you want to remove file associations (*.wpth, *.wptp, *.wpsf) from the registry?";
         public string RemoveExtMsgNote { get; set; } = "Note: You can reassociate them by activating its checkbox and restarting WinPaletter";
         public string EmptyName { get; set; } = "You can't leave theme name empty. Please type a name to it";
         public string EmptyAuthorName { get; set; } = "You can't leave author's name empty. Please type author's name or your name.";
@@ -31,5 +31,6 @@
         public string RT_UseInstallWIM { get; set; } = "If you pressed no, an open file dialog will appear to select install.wim/install.esd file that will be repair source.";
         public string RestartExplorerIssue0 { get; set; } = "Restarting Explorer using an elevated WinPaletter on another user can cause issues with the desktop and taskbar. As a result, WinPaletter won't be able to restart Explorer";
         public string RestartExplorerIssue1 { get; set; } = "Try restarting Explorer yourself, or log off and log back on to your Windows profile to ensure the theme is fully applied.";
+        public string ReadjustColor { get; set; } = "If you notice any accessibility issues, please readjust the colors accordingly.";
     }
 }

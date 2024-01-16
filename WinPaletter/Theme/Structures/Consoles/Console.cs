@@ -222,7 +222,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Save console structure data into registry
+        /// ApplyToTM console structure data into registry
         /// </summary>
         /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>
         /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console or HKEY_USERS\...\Console</param>

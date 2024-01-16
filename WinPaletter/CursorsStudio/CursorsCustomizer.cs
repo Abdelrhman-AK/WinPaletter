@@ -195,7 +195,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, cursorPath);
                                     }
@@ -205,7 +206,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
@@ -264,7 +266,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, cursorPath);
                                     }
@@ -274,7 +277,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
@@ -288,7 +292,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, helpPath);
                                     }
@@ -302,7 +307,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, helpPath);
@@ -352,7 +358,8 @@ namespace WinPaletter
 
                                     if (CursorOptions.LoadingCircleBackNoise)
                                     {
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         {
                                             G.FillPath(noise, busyPath);
                                         }
@@ -360,7 +367,8 @@ namespace WinPaletter
 
                                     if (CursorOptions.LoadingCircleHotNoise)
                                     {
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                         {
                                             G.DrawPath(noisePen, busyLoaderPath);
@@ -375,7 +383,8 @@ namespace WinPaletter
 
                                     if (CursorOptions.LoadingCircleBackNoise)
                                     {
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         {
                                             G.FillPath(noise, busyPath);
                                         }
@@ -385,7 +394,8 @@ namespace WinPaletter
 
                                     if (CursorOptions.LoadingCircleHotNoise)
                                     {
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         {
                                             G.FillPath(noise, busyLoaderPath);
                                         }
@@ -405,7 +415,8 @@ namespace WinPaletter
                                         pen.StartCap = LineCap.Round;
                                         pen.EndCap = pen.StartCap;
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen2, CircleRect, -90, 360);
@@ -416,7 +427,8 @@ namespace WinPaletter
                                             }
                                         }
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
@@ -444,7 +456,8 @@ namespace WinPaletter
                                         pen.StartCap = LineCap.Round;
                                         pen.EndCap = pen.StartCap;
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen2, CircleRect, -90, 360);
@@ -455,7 +468,8 @@ namespace WinPaletter
                                             }
                                         }
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
@@ -519,7 +533,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, cursorPath);
                                     }
@@ -529,7 +544,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
@@ -550,7 +566,8 @@ namespace WinPaletter
 
                                         if (CursorOptions.LoadingCircleBackNoise)
                                         {
-                                            using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                            using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                            using (TextureBrush noise = new(bx))
                                             {
                                                 G.FillPath(noise, appLoadingPath);
                                             }
@@ -558,7 +575,8 @@ namespace WinPaletter
 
                                         if (CursorOptions.LoadingCircleHotNoise)
                                         {
-                                            using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                            using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                            using (TextureBrush noise = new(bx))
                                             using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                             {
                                                 G.DrawPath(noisePen, appLoadingCirclePath);
@@ -577,7 +595,8 @@ namespace WinPaletter
 
                                         if (CursorOptions.LoadingCircleBackNoise)
                                         {
-                                            using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                            using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                            using (TextureBrush noise = new(bx))
                                             {
                                                 G.FillPath(noise, appLoadingPath);
                                             }
@@ -587,7 +606,8 @@ namespace WinPaletter
 
                                         if (CursorOptions.LoadingCircleHotNoise)
                                         {
-                                            using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                            using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                            using (TextureBrush noise = new(bx))
                                             {
                                                 G.FillPath(noise, appLoadingCirclePath);
                                             }
@@ -608,7 +628,8 @@ namespace WinPaletter
                                         pen.StartCap = LineCap.Round;
                                         pen.EndCap = pen.StartCap;
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen2, CircleRect, -90, 360);
@@ -619,7 +640,8 @@ namespace WinPaletter
                                             }
                                         }
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
@@ -649,7 +671,8 @@ namespace WinPaletter
                                         pen.StartCap = LineCap.Round;
                                         pen.EndCap = pen.StartCap;
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen2, CircleRect, -90, 360);
@@ -660,7 +683,8 @@ namespace WinPaletter
                                             }
                                         }
 
-                                        using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity)))
+                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
+                                        using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
                                             G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
@@ -709,7 +733,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, noneBackgroundPath);
                                     }
@@ -719,7 +744,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, nonePath);
                                     }
@@ -759,7 +785,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, movePath);
                                     }
@@ -769,7 +796,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, movePath);
@@ -809,7 +837,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, upPath);
                                     }
@@ -819,7 +848,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, upPath);
@@ -859,7 +889,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, nsPath);
                                     }
@@ -869,7 +900,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, nsPath);
@@ -909,7 +941,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, ewPath);
                                     }
@@ -919,7 +952,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, ewPath);
@@ -959,7 +993,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, neswPath);
                                     }
@@ -969,7 +1004,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, neswPath);
@@ -1009,7 +1045,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, nwsePath);
                                     }
@@ -1019,7 +1056,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, nwsePath);
@@ -1060,7 +1098,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, penBackgroundPath);
                                     }
@@ -1070,7 +1109,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, penPath);
@@ -1110,15 +1150,16 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, handPath);
                                     }
                                 }
 
                                 using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, handPath); }
-
-                                using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                using (TextureBrush noise = new(bx))
                                 using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                 {
                                     G.DrawPath(noisePen, handPath);
@@ -1178,7 +1219,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, handPath);
                                     }
@@ -1188,7 +1230,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, handPath);
@@ -1199,7 +1242,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, pinPath);
                                     }
@@ -1209,7 +1253,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, pinCenterPointPath);
                                     }
@@ -1219,7 +1264,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, pinPath);
@@ -1281,7 +1327,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, handPath);
                                     }
@@ -1291,7 +1338,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, handPath);
@@ -1302,7 +1350,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, personPath);
                                     }
@@ -1312,7 +1361,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, personPath);
@@ -1356,7 +1406,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, iBeamPath);
                                     }
@@ -1366,7 +1417,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, iBeamPath);
@@ -1407,7 +1459,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.PrimaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     {
                                         G.FillPath(noise, crossPath);
                                     }
@@ -1417,7 +1470,8 @@ namespace WinPaletter
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
-                                    using (TextureBrush noise = new(Properties.Resources.GaussianBlurOpaque.Fade(CursorOptions.SecondaryNoiseOpacity)))
+                                    using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
+                                    using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.LineThickness))
                                     {
                                         G.DrawPath(noisePen, crossPath);
@@ -2042,7 +2096,7 @@ namespace WinPaletter
                     case ArrowStyle.Classic:
                         {
                             F = new("Marlett");
-                            using (Font font = new(F, 15f, FontStyle.Bold)) { path.AddString("s", F, (int)FontStyle.Bold, 15f, Rectangle, StringFormat.GenericDefault); }
+                            using (new Font(F, 15f, FontStyle.Bold)) { path.AddString("s", F, (int)FontStyle.Bold, 15f, Rectangle, StringFormat.GenericDefault); }
 
                             break;
                         }
@@ -2054,7 +2108,7 @@ namespace WinPaletter
                             else if (OS.W7 | OS.WVista) { F = new("Segoe UI"); }
                             else { F = new("Segoe UI Black"); }
 
-                            using (Font font = new(F, 15f, FontStyle.Bold)) { path.AddString("?", F, (int)FontStyle.Bold, 15f, Rectangle, StringFormat.GenericDefault); }
+                            using (new Font(F, 15f, FontStyle.Bold)) { path.AddString("?", F, (int)FontStyle.Bold, 15f, Rectangle, StringFormat.GenericDefault); }
 
                             break;
                         }

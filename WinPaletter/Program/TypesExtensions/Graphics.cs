@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageProcessor;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -37,88 +38,104 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        public static void DrawGlow(this Graphics G, Rectangle R, Color GlowColor, int GlowSize = 5, int GlowFade = 7)
+        public static void DrawGlow(this Graphics graphics, Rectangle rectangle, Color glowColor, int glowSize = 5, int glowFade = 7, bool rounded = false)
         {
             try
             {
-                if (GlowSize <= 0) GlowSize = 1;
-                if (GlowFade <= 0) GlowFade = 1;
+                if (glowSize <= 0) glowSize = 1;
+                if (glowFade <= 0) glowFade = 1;
 
-                Rectangle Rect = new(R.X - GlowSize - 2, R.Y - GlowSize - 2, R.Width + GlowSize * 2 + 3, R.Height + GlowSize * 2 + 3);
+                Rectangle glowRect = rounded ? GetRoundedRectangle(rectangle, glowSize) : new(rectangle.X - glowSize - 2, rectangle.Y - glowSize - 2, rectangle.Width + glowSize * 2 + 3, rectangle.Height + glowSize * 2 + 3);
 
-                using (Bitmap bm = new((int)Math.Round(Rect.Width / (double)GlowFade), (int)Math.Round(Rect.Height / (double)GlowFade)))
+                using (Bitmap glowBitmap = new Bitmap((int)Math.Round(glowRect.Width / (double)glowFade), (int)Math.Round(glowRect.Height / (double)glowFade)))
+                using (Graphics glowGraphics = Graphics.FromImage(glowBitmap))
                 {
-                    using (Graphics G2 = Graphics.FromImage(bm))
+                    Rectangle glowRect2 = new Rectangle(1, 1, glowBitmap.Width, glowBitmap.Height);
+
+                    using (SolidBrush glowBrush = new SolidBrush(glowColor))
                     {
-                        Rectangle Rect2 = new(1, 1, bm.Width, bm.Height);
-
-                        using (SolidBrush br = new(GlowColor))
-                        {
-                            G2.FillRectangle(br, Rect2);
-                        }
-
-                        G.DrawImage(bm, Rect);
+                        glowGraphics.FillRectangle(glowBrush, glowRect2);
                     }
+
+                    graphics.DrawImage(glowBitmap, glowRect);
                 }
             }
-            catch
-            {
-            }
+            catch (Exception ex) { }
+        }
+
+        private static Rectangle GetRoundedRectangle(Rectangle rectangle, int radius)
+        {
+            int diameter = 2 * radius;
+            Rectangle roundedRect = new(rectangle.X - radius, rectangle.Y - radius, rectangle.Width + diameter, rectangle.Height + diameter);
+            return roundedRect;
         }
 
         public static void DrawAeroEffect(this Graphics G, Rectangle Rect, Bitmap BackgroundBlurred, Color Color1, decimal ColorBalance, Color Color2, decimal GlowBalance, decimal alpha, int Radius, bool RoundedCorners)
         {
+            Rectangle _rect = new(Rect.X, Rect.Y, Rect.Width - 1, Rect.Height - 1);
+
             if (RoundedCorners)
             {
-                if (BackgroundBlurred != null)
-                    G.DrawRoundImage(BackgroundBlurred, Rect, Radius, true);
-
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
-                {
-                    G.FillRoundedRect(br, Rect, Radius, true);
-                }
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
-                {
-                    G.FillRoundedRect(br, Rect, Radius, true);
-                }
-
-                Color C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
-                Color C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
-
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
-                {
-                    G.FillRoundedRect(br, Rect, Radius, true);
-                }
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
-                {
-                    G.FillRoundedRect(br, Rect, Radius, true);
-                }
+                if (BackgroundBlurred is not null) G.DrawRoundImage(BackgroundBlurred, Rect, Radius, true);
+                using (SolidBrush br = new(Color.FromArgb((int)(alpha * 255), 0, 0, 0))) { G.FillRoundedRect(br, _rect, Radius, true); }
+                using (SolidBrush br = new(Color.FromArgb((int)(alpha * ColorBalance * 255), Color1))) { G.FillRoundedRect(br, _rect, Radius, true); }
             }
             else
             {
-                if (BackgroundBlurred is not null)
-                    G.DrawImage(BackgroundBlurred, Rect);
+                if (BackgroundBlurred is not null) G.DrawImage(BackgroundBlurred, Rect);
+                using (SolidBrush br = new(Color.FromArgb((int)(alpha * 255), 0, 0, 0))) { G.FillRectangle(br, _rect); }
+                using (SolidBrush br = new(Color.FromArgb((int)(alpha * ColorBalance * 255), Color1))) { G.FillRectangle(br, _rect); }
+            }
 
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
+            if (BackgroundBlurred != null)
+            {
+                Bitmap glowImage;
+                Bitmap colorImage;
+                Bitmap whiteImage;
+
+                using (ImageFactory imgF = new())
                 {
-                    G.FillRectangle(br, Rect);
-                }
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
-                {
-                    G.FillRectangle(br, Rect);
+                    imgF.Load(BackgroundBlurred);
+                    imgF.Filter(ImageProcessor.Imaging.Filters.Photo.MatrixFilters.GreyScale);
+                    imgF.Brightness(20);
+                    imgF.Tint(Color1.Blend(Color2, (double)ColorBalance));
+                    glowImage = imgF.Image.Clone() as Bitmap;
                 }
 
-                Color C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
-                Color C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
+                using (ImageFactory imgF = new())
+                {
+                    imgF.Load(BackgroundBlurred);
+                    imgF.Brightness(40);
+                    imgF.Tint(Color1);
+                    imgF.Alpha(50);
+                    colorImage = imgF.Image.Clone() as Bitmap;
+                }
 
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
+                using (ImageFactory imgF = new())
                 {
-                    G.FillRectangle(br, Rect);
+                    imgF.Load(BackgroundBlurred);
+                    imgF.Brightness(55);
+                    imgF.Tint(Color.White);
+                    imgF.Alpha(40);
+                    whiteImage = imgF.Image.Clone() as Bitmap;
                 }
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
+
+                if (RoundedCorners)
                 {
-                    G.FillRectangle(br, Rect);
+                    G.DrawRoundImage(glowImage.Fade((float)GlowBalance), _rect, Radius, true);
+                    G.DrawRoundImage(colorImage.Fade((float)(ColorBalance * GlowBalance)), _rect, Radius, true);
+                    G.DrawRoundImage(whiteImage.Fade((1f - (float)alpha) * (float)GlowBalance), _rect, Radius, true);
                 }
+                else
+                {
+                    G.DrawImage(glowImage.Fade((float)GlowBalance), _rect);
+                    G.DrawImage(colorImage.Fade((float)(ColorBalance * GlowBalance)), _rect);
+                    G.DrawImage(whiteImage.Fade((1f - (float)alpha) * (float)GlowBalance), _rect);
+                }
+
+                glowImage.Dispose();
+                colorImage.Dispose();
+                whiteImage.Dispose();
             }
         }
 
@@ -406,6 +423,41 @@ namespace WinPaletter.TypesExtensions
             catch
             {
             }
+        }
+
+        public static bool Contains(this PointF[] pointFs, PointF point)
+        {
+            // Check if the x-coordinate is between the x-coordinates of the bounding points
+            bool isXBetween = point.X >= Math.Min(pointFs[0].X, pointFs[1].X) && point.X <= Math.Max(pointFs[0].X, pointFs[1].X);
+
+            // Check if the y-coordinate is between the y-coordinates of the bounding points
+            bool isYBetween = point.Y >= Math.Min(pointFs[0].Y, pointFs[1].Y) && point.Y <= Math.Max(pointFs[0].Y, pointFs[1].Y);
+
+            // The point is between the bounding points if both x and y coordinates are between the corresponding coordinates of the bounding points
+            return isXBetween && isYBetween;
+        }
+
+        public static bool Contains(this Point[] points, PointF point)
+        {
+            if (points.Length < 2)
+                return false;
+
+            for (int i = 0; i < points.Length - 1; i++)
+            {
+                if (points[i].X <= point.X && points[i + 1].X >= point.X)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static bool BordersContains(this Rectangle rectangle, Point pointToCheck)
+        {
+            bool isOnBorderX = pointToCheck.X == rectangle.Left || pointToCheck.X == rectangle.Right;
+            bool isOnBorderY = pointToCheck.Y == rectangle.Top || pointToCheck.Y == rectangle.Bottom;
+
+            return (isOnBorderX && pointToCheck.Y >= rectangle.Top && pointToCheck.Y <= rectangle.Bottom) ||
+                   (isOnBorderY && pointToCheck.X >= rectangle.Left && pointToCheck.X <= rectangle.Right);
         }
     }
 }

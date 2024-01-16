@@ -40,6 +40,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 12 colors and appearance, and it can be customized.</summary>
         public Windows10x Windows12 = new()
         {
+            Enabled = true,
             Color_Index0 = Color.FromArgb(153, 235, 255),
             Color_Index1 = Color.FromArgb(76, 194, 255),
             Color_Index2 = Color.FromArgb(0, 145, 248),
@@ -63,6 +64,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 11 colors and appearance, and it can be customized.</summary>
         public Windows10x Windows11 = new()
         {
+            Enabled = true,
             Color_Index0 = Color.FromArgb(153, 235, 255),
             Color_Index1 = Color.FromArgb(76, 194, 255),
             Color_Index2 = Color.FromArgb(0, 145, 248),
@@ -86,6 +88,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 10 colors and appearance, and it can be customized.</summary>
         public Windows10x Windows10 = new()
         {
+            Enabled = true,
             Color_Index0 = Color.FromArgb(166, 216, 255),
             Color_Index1 = Color.FromArgb(118, 185, 237),
             Color_Index2 = Color.FromArgb(66, 156, 227),
@@ -109,6 +112,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 8.1 colors and appearance, and it can be customized.</summary>
         public Windows8x Windows81 = new()
         {
+            Enabled = true,
             ColorizationColor = Color.FromArgb(246, 195, 74),
             ColorizationColorBalance = 78,
             Start = 0,
@@ -126,6 +130,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 7 colors and appearance, and it can be customized.</summary>
         public Windows7 Windows7 = new()
         {
+            Enabled = true,
             ColorizationColor = Color.FromArgb(116, 184, 252),
             ColorizationAfterglow = Color.FromArgb(116, 184, 252),
             ColorizationColorBalance = 8,
@@ -140,6 +145,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows Vista colors and appearance, and it can be customized.</summary>
         public WindowsVista WindowsVista = new()
         {
+            Enabled = true,
             ColorizationColor = Color.FromArgb(64, 158, 254),
             Theme = Windows7.Themes.Aero
         };
@@ -147,6 +153,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows XP colors and appearance, and it can be customized.</summary>
         public WindowsXP WindowsXP = new()
         {
+            Enabled = true,
             Theme = WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
             ThemeFile = $@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles"
@@ -155,6 +162,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about classic Windows colors, and it can be customized.</summary>
         public Structures.Win32UI Win32 = new()
         {
+            Enabled = true,
             EnableTheming = true,
             EnableGradient = true,
             ActiveBorder = Color.FromArgb(180, 180, 180),
@@ -194,6 +202,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows 10/11 LogonUI appearance, and it can be customized.</summary>
         public LogonUI10x LogonUI10x = new()
         {
+            Enabled = true,
             DisableAcrylicBackgroundOnLogon = false,
             DisableLogonBackgroundImage = false,
             NoLockScreen = false
@@ -247,8 +256,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -261,8 +270,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -275,8 +284,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -289,8 +298,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -303,8 +312,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -317,8 +326,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>
@@ -331,8 +340,8 @@ namespace WinPaletter.Theme
             Enabled = false,
             Image = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp",
             H = 0,
-            S = 100,
-            L = 100
+            S = 50,
+            L = 50
         };
 
         /// <summary>Object derived of structure that has data about metrics and fonts, and it can be customized.</summary>

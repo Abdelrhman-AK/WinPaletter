@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Devcorp.Controls.VisualStyles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Retro;
@@ -12,25 +14,280 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class Win32UI
     {
         public Win32UI()
         {
             InitializeComponent();
         }
-        private void Button2_Click(object sender, EventArgs e)
+
+        private Color _btn_shadow;
+        private Color _btn_dkshadow;
+        private Color _btn_hilight;
+        private Color _btn_light;
+
+        private void LoadFromTHEME(object sender, EventArgs e)
         {
+            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            {
+                Toggle1.Checked = false;
+                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                {
+                    LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
+                }
+            }
+        }
+
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromMSSTYLES(object sender, EventArgs e)
+        {
+            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                string theme = OpenFileDialog2.FileName;
+
+                try
+                {
+                    // Newer versions of msstyles
+                    using (libmsstyle.VisualStyle visualStyle = new(theme)) { LoadFromWin32UI(visualStyle.ClassicColors()); }
+                    ApplyRetroPreview();
+                }
+                catch
+                {
+                    // Old msstyles (Windows XP)
+                    try
+                    {
+                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                        {
+                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                        }
+
+                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                        {
+                            using (VisualStyleFile vs = new(theme)) { LoadColors(vs.Metrics); }
+                            ApplyRetroPreview();
+                        }
+                    }
+                    catch (Exception ex) { throw ex; }
+                }
+            }
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
             Close();
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(Program.TM);
+
+            try
+            {
+                TMx.Win32.Apply();
+                TMx.Win32.Broadcast_UPM_ToDefUsers();
+            }
+            catch { }
+
+            TMx.Dispose();
+            Cursor = Cursors.Default;
+        }
+
+        private void SaveAsTHEME(object sender, EventArgs e)
+        {
+            if (SaveFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                List<string> s = new();
+                s.Clear();
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
+                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
+                s.Add(string.Empty);
+
+                s.Add(string.Format(@"[Control Panel\Colors]"));
+                s.Add($"ActiveTitle={activetitle_pick.BackColor.R} {activetitle_pick.BackColor.G} {activetitle_pick.BackColor.B}");
+                s.Add($"Background={background_pick.BackColor.R} {background_pick.BackColor.G} {background_pick.BackColor.B}");
+                s.Add($"Hilight={hilight_pick.BackColor.R} {hilight_pick.BackColor.G} {hilight_pick.BackColor.B}");
+                s.Add($"HilightText={hilighttext_pick.BackColor.R} {hilighttext_pick.BackColor.G} {hilighttext_pick.BackColor.B}");
+                s.Add($"TitleText={TitleText_pick.BackColor.R} {TitleText_pick.BackColor.G} {TitleText_pick.BackColor.B}");
+                s.Add($"Window={Window_pick.BackColor.R} {Window_pick.BackColor.G} {Window_pick.BackColor.B}");
+                s.Add($"WindowText={WindowText_pick.BackColor.R} {WindowText_pick.BackColor.G} {WindowText_pick.BackColor.B}");
+                s.Add($"Scrollbar={Scrollbar_pick.BackColor.R} {Scrollbar_pick.BackColor.G} {Scrollbar_pick.BackColor.B}");
+                s.Add($"InactiveTitle={InactiveTitle_pick.BackColor.R} {InactiveTitle_pick.BackColor.G} {InactiveTitle_pick.BackColor.B}");
+                s.Add($"Menu={menu_pick.BackColor.R} {menu_pick.BackColor.G} {menu_pick.BackColor.B}");
+                s.Add($"WindowFrame={Frame_pick.BackColor.R} {Frame_pick.BackColor.G} {Frame_pick.BackColor.B}");
+                s.Add($"MenuText={menutext_pick.BackColor.R} {menutext_pick.BackColor.G} {menutext_pick.BackColor.B}");
+                s.Add($"ActiveBorder={ActiveBorder_pick.BackColor.R} {ActiveBorder_pick.BackColor.G} {ActiveBorder_pick.BackColor.B}");
+                s.Add($"InactiveBorder={InactiveBorder_pick.BackColor.R} {InactiveBorder_pick.BackColor.G} {InactiveBorder_pick.BackColor.B}");
+                s.Add($"AppWorkspace={AppWorkspace_pick.BackColor.R} {AppWorkspace_pick.BackColor.G} {AppWorkspace_pick.BackColor.B}");
+                s.Add($"ButtonFace={btnface_pick.BackColor.R} {btnface_pick.BackColor.G} {btnface_pick.BackColor.B}");
+                s.Add($"ButtonShadow={btnshadow_pick.BackColor.R} {btnshadow_pick.BackColor.G} {btnshadow_pick.BackColor.B}");
+                s.Add($"GrayText={GrayText_pick.BackColor.R} {GrayText_pick.BackColor.G} {GrayText_pick.BackColor.B}");
+                s.Add($"ButtonText={btntext_pick.BackColor.R} {btntext_pick.BackColor.G} {btntext_pick.BackColor.B}");
+                s.Add($"InactiveTitleText={InactivetitleText_pick.BackColor.R} {InactivetitleText_pick.BackColor.G} {InactivetitleText_pick.BackColor.B}");
+                s.Add($"ButtonHilight={btnhilight_pick.BackColor.R} {btnhilight_pick.BackColor.G} {btnhilight_pick.BackColor.B}");
+                s.Add($"ButtonDkShadow={btndkshadow_pick.BackColor.R} {btndkshadow_pick.BackColor.G} {btndkshadow_pick.BackColor.B}");
+                s.Add($"ButtonLight={btnlight_pick.BackColor.R} {btnlight_pick.BackColor.G} {btnlight_pick.BackColor.B}");
+                s.Add($"InfoText={InfoText_pick.BackColor.R} {InfoText_pick.BackColor.G} {InfoText_pick.BackColor.B}");
+                s.Add($"InfoWindow={InfoWindow_pick.BackColor.R} {InfoWindow_pick.BackColor.G} {InfoWindow_pick.BackColor.B}");
+                s.Add($"GradientActiveTitle={GActivetitle_pick.BackColor.R} {GActivetitle_pick.BackColor.G} {GActivetitle_pick.BackColor.B}");
+                s.Add($"GradientInactiveTitle={GInactivetitle_pick.BackColor.R} {GInactivetitle_pick.BackColor.G} {GInactivetitle_pick.BackColor.B}");
+                s.Add($"ButtonAlternateFace={btnaltface_pick.BackColor.R} {btnaltface_pick.BackColor.G} {btnaltface_pick.BackColor.B}");
+                s.Add($"HotTrackingColor={hottracking_pick.BackColor.R} {hottracking_pick.BackColor.G} {hottracking_pick.BackColor.B}");
+                s.Add($"MenuHilight={menuhilight_pick.BackColor.R} {menuhilight_pick.BackColor.G} {menuhilight_pick.BackColor.B}");
+                s.Add($"MenuBar={menubar_pick.BackColor.R} {menubar_pick.BackColor.G} {menubar_pick.BackColor.B}");
+                s.Add($"Desktop={desktop_pick.BackColor.R} {desktop_pick.BackColor.G} {desktop_pick.BackColor.B}");
+
+                s.Add(string.Empty);
+
+                s.Add(string.Format("[MasterThemeSelector]"));
+                s.Add(string.Format("MTSM=DABJDKT"));
+
+                s.Add(string.Empty);
+                s.Add(@"[Control Panel\Desktop]");
+                s.Add("Wallpaper=");
+                s.Add("TileWallpaper=0");
+                s.Add("WallpaperStyle=10");
+                s.Add("Pattern=");
+                s.Add(string.Empty);
+
+                s.Add("[VisualStyles]");
+                s.Add("Path=");
+                s.Add("ColorStyle=@themeui.dll,-854");
+                s.Add("Size=@themeui.dll,-2019");
+                s.Add("Transparency=0");
+                s.Add(string.Empty);
+
+                try
+                {
+                    System.IO.File.WriteAllText(SaveFileDialog2.FileName, s.CString());
+                }
+                catch (Exception ex)
+                {
+                    Forms.BugReport.ThrowError(ex);
+                }
+
+            }
+        }
+
+        private void ModeSwitched(object sender, EventArgs e)
+        {
+            if (AdvancedMode)
+            {
+                preview.Width = preview.Right - (TabControl1.Right + 10);
+                preview.Left = TabControl1.Right + 10;
+                TabControl1.Visible = true;
+            }
+            else
+            {
+                preview.Width = preview.Right - TabControl1.Left;
+                preview.Left = TabControl1.Left;
+                TabControl1.Visible = false;
+            }
         }
 
         private void Win32UI_Load(object sender, EventArgs e)
         {
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.ClassicColors,
+                Enabled = Program.TM.Win32.Enabled,
+                Import_theme = true,
+                Import_msstyles = true,
+                GeneratePalette = false,
+                GenerateMSTheme = true,
+                Import_preset = true,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnSaveAsMSTheme = SaveAsTHEME,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromTHEME = LoadFromTHEME,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromMSSTYLES = LoadFromMSSTYLES,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_11 = ImportWin11Preset,
+                OnImportFromScheme_10 = ImportWin10Preset,
+                OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_7 = ImportWin7Preset,
+                OnImportFromScheme_Vista = ImportWinVistaPreset,
+                OnImportFromScheme_XP = ImportWinXPPreset,
+
+                OnModeAdvanced = ModeSwitched,
+                OnModeSimple = ModeSwitched,
+            };
+
+            LoadData(data);
+
+            splitContainer1.Panel2Collapsed = !checkBox1.Checked;
+
             ComboBox1.PopulateThemes();
             ComboBox1.SelectedIndex = 0;
             ApplyDefaultTMValues();
-            LoadTM(Program.TM);
-            SetMetrics(Program.TM);
+
+            LoadFromTM(Program.TM);
+            retroDesktopColors1.LoadMetrics(Program.TM);
+
             this.DoubleBuffer();
 
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
@@ -38,9 +295,6 @@ namespace WinPaletter
                 ColorItem.Click += ColorItem_Click;
                 ColorItem.DragDrop += ColorItem_DragDrop;
             }
-
-            this.LoadLanguage();
-            ApplyStyle(this);
         }
 
         private void Win32UI_FormClosing(object sender, FormClosingEventArgs e)
@@ -52,29 +306,10 @@ namespace WinPaletter
             }
         }
 
-        protected override void OnDragOver(DragEventArgs e)
-        {
-            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
-            {
-                Focus();
-                BringToFront();
-            }
-            else
-            {
-                return;
-            }
-
-            base.OnDragOver(e);
-        }
-
-        public void LoadTM(Theme.Manager TM)
-        {
-            LoadFromTM(TM);
-            ApplyRetroPreview();
-        }
 
         public void LoadFromTM(Theme.Manager TM)
         {
+            AspectEnabled = TM.Win32.Enabled;
             Toggle1.Checked = TM.Win32.EnableTheming;
             Toggle2.Checked = TM.Win32.EnableGradient;
             ActiveBorder_pick.BackColor = TM.Win32.ActiveBorder;
@@ -109,6 +344,151 @@ namespace WinPaletter
             hilight_pick.BackColor = TM.Win32.Hilight;
             menuhilight_pick.BackColor = TM.Win32.MenuHilight;
             desktop_pick.BackColor = TM.Win32.Desktop;
+
+            _btn_shadow = TM.Win32.ButtonShadow;
+            _btn_dkshadow = TM.Win32.ButtonDkShadow;
+            _btn_hilight = TM.Win32.ButtonHilight;
+            _btn_light = TM.Win32.ButtonLight;
+            trackBarX1.Value = 100;
+
+            retroDesktopColors1.LoadColors(TM);
+        }
+
+        public void LoadFromWin32UI(Theme.Structures.Win32UI win32ui)
+        {
+            AspectEnabled = win32ui.Enabled;
+            Toggle1.Checked = win32ui.EnableTheming;
+            Toggle2.Checked = win32ui.EnableGradient;
+            ActiveBorder_pick.BackColor = win32ui.ActiveBorder;
+            activetitle_pick.BackColor = win32ui.ActiveTitle;
+            AppWorkspace_pick.BackColor = win32ui.AppWorkspace;
+            background_pick.BackColor = win32ui.Background;
+            btnaltface_pick.BackColor = win32ui.ButtonAlternateFace;
+            btndkshadow_pick.BackColor = win32ui.ButtonDkShadow;
+            btnface_pick.BackColor = win32ui.ButtonFace;
+            btnhilight_pick.BackColor = win32ui.ButtonHilight;
+            btnlight_pick.BackColor = win32ui.ButtonLight;
+            btnshadow_pick.BackColor = win32ui.ButtonShadow;
+            btntext_pick.BackColor = win32ui.ButtonText;
+            GActivetitle_pick.BackColor = win32ui.GradientActiveTitle;
+            GInactivetitle_pick.BackColor = win32ui.GradientInactiveTitle;
+            GrayText_pick.BackColor = win32ui.GrayText;
+            hilighttext_pick.BackColor = win32ui.HilightText;
+            hottracking_pick.BackColor = win32ui.HotTrackingColor;
+            InactiveBorder_pick.BackColor = win32ui.InactiveBorder;
+            InactiveTitle_pick.BackColor = win32ui.InactiveTitle;
+            InactivetitleText_pick.BackColor = win32ui.InactiveTitleText;
+            InfoText_pick.BackColor = win32ui.InfoText;
+            InfoWindow_pick.BackColor = win32ui.InfoWindow;
+            menu_pick.BackColor = win32ui.Menu;
+            menubar_pick.BackColor = win32ui.MenuBar;
+            menutext_pick.BackColor = win32ui.MenuText;
+            Scrollbar_pick.BackColor = win32ui.Scrollbar;
+            TitleText_pick.BackColor = win32ui.TitleText;
+            Window_pick.BackColor = win32ui.Window;
+            Frame_pick.BackColor = win32ui.WindowFrame;
+            WindowText_pick.BackColor = win32ui.WindowText;
+            hilight_pick.BackColor = win32ui.Hilight;
+            menuhilight_pick.BackColor = win32ui.MenuHilight;
+            desktop_pick.BackColor = win32ui.Desktop;
+
+            _btn_shadow = win32ui.ButtonShadow;
+            _btn_dkshadow = win32ui.ButtonDkShadow;
+            _btn_hilight = win32ui.ButtonHilight;
+            _btn_light = win32ui.ButtonLight;
+            trackBarX1.Value = 100;
+
+            retroDesktopColors1.LoadColors(win32ui);
+        }
+
+        public void LoadFromRetroPreview(RetroDesktopColors retroDesktopColors)
+        {
+            Toggle1.Checked = retroDesktopColors.EnableTheming;
+            Toggle2.Checked = retroDesktopColors.EnableGradient;
+            ActiveBorder_pick.BackColor = retroDesktopColors.ActiveBorder;
+            activetitle_pick.BackColor = retroDesktopColors.ActiveTitle;
+            AppWorkspace_pick.BackColor = retroDesktopColors.AppWorkspace;
+            background_pick.BackColor = retroDesktopColors.Background;
+            btnaltface_pick.BackColor = retroDesktopColors.ButtonAlternateFace;
+            btndkshadow_pick.BackColor = retroDesktopColors.ButtonDkShadow;
+            btnface_pick.BackColor = retroDesktopColors.ButtonFace;
+            btnhilight_pick.BackColor = retroDesktopColors.ButtonHilight;
+            btnlight_pick.BackColor = retroDesktopColors.ButtonLight;
+            btnshadow_pick.BackColor = retroDesktopColors.ButtonShadow;
+            btntext_pick.BackColor = retroDesktopColors.ButtonText;
+            GActivetitle_pick.BackColor = retroDesktopColors.GradientActiveTitle;
+            GInactivetitle_pick.BackColor = retroDesktopColors.GradientInactiveTitle;
+            GrayText_pick.BackColor = retroDesktopColors.GrayText;
+            hilighttext_pick.BackColor = retroDesktopColors.HilightText;
+            hottracking_pick.BackColor = retroDesktopColors.HotTrackingColor;
+            InactiveBorder_pick.BackColor = retroDesktopColors.InactiveBorder;
+            InactiveTitle_pick.BackColor = retroDesktopColors.InactiveTitle;
+            InactivetitleText_pick.BackColor = retroDesktopColors.InactiveTitleText;
+            InfoText_pick.BackColor = retroDesktopColors.InfoText;
+            InfoWindow_pick.BackColor = retroDesktopColors.InfoWindow;
+            menu_pick.BackColor = retroDesktopColors.Menu;
+            menubar_pick.BackColor = retroDesktopColors.MenuBar;
+            menutext_pick.BackColor = retroDesktopColors.MenuText;
+            Scrollbar_pick.BackColor = retroDesktopColors.Scrollbar;
+            TitleText_pick.BackColor = retroDesktopColors.TitleText;
+            Window_pick.BackColor = retroDesktopColors.Window;
+            Frame_pick.BackColor = retroDesktopColors.WindowFrame;
+            WindowText_pick.BackColor = retroDesktopColors.WindowText;
+            hilight_pick.BackColor = retroDesktopColors.Hilight;
+            menuhilight_pick.BackColor = retroDesktopColors.MenuHilight;
+            desktop_pick.BackColor = retroDesktopColors.Desktop;
+
+            _btn_shadow = retroDesktopColors.ButtonShadow;
+            _btn_dkshadow = retroDesktopColors.ButtonDkShadow;
+            _btn_hilight = retroDesktopColors.ButtonHilight;
+            _btn_light = retroDesktopColors.ButtonLight;
+            trackBarX1.Value = 100;
+
+            Retro3DPreview1.BackColor = btnface_pick.BackColor;
+            Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor;
+            Retro3DPreview1.WindowFrame = Frame_pick.BackColor;
+            Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor;
+            Retro3DPreview1.ButtonLight = btnlight_pick.BackColor;
+            Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor;
+            Retro3DPreview1.ForeColor = btntext_pick.BackColor;
+            Retro3DPreview1.Refresh();
+        }
+
+        public void LoadColors(VisualStyleMetrics vs)
+        {
+            Forms.Win32UI.Toggle1.Checked = vs.FlatMenus;
+            //Forms.Win32UI.ActiveBorder_pick.BackColor = vs.Colors.ActiveBorder;
+            Forms.Win32UI.activetitle_pick.BackColor = vs.Colors.ActiveCaption;
+            Forms.Win32UI.AppWorkspace_pick.BackColor = vs.Colors.AppWorkspace;
+            Forms.Win32UI.background_pick.BackColor = vs.Colors.Background;
+            //Forms.Win32UI.btnaltface_pick.BackColor = vs.Colors.ButtonAlternativeFace;
+            Forms.Win32UI.btndkshadow_pick.BackColor = vs.Colors.DkShadow3d;
+            Forms.Win32UI.btnface_pick.BackColor = vs.Colors.Btnface;
+            Forms.Win32UI.btnhilight_pick.BackColor = vs.Colors.BtnHighlight;
+            Forms.Win32UI.btnlight_pick.BackColor = vs.Colors.Light3d;
+            Forms.Win32UI.btnshadow_pick.BackColor = vs.Colors.BtnShadow;
+            Forms.Win32UI.btntext_pick.BackColor = vs.Colors.WindowText;
+            Forms.Win32UI.GActivetitle_pick.BackColor = vs.Colors.GradientActiveCaption;
+            Forms.Win32UI.GInactivetitle_pick.BackColor = vs.Colors.GradientInactiveCaption;
+            Forms.Win32UI.GrayText_pick.BackColor = vs.Colors.GrayText;
+            Forms.Win32UI.hilighttext_pick.BackColor = vs.Colors.HighlightText;
+            Forms.Win32UI.hottracking_pick.BackColor = vs.Colors.HotTracking;
+            //Forms.Win32UI.InactiveBorder_pick.BackColor = vs.Colors.InactiveBorder;
+            Forms.Win32UI.InactiveTitle_pick.BackColor = vs.Colors.InactiveCaption;
+            Forms.Win32UI.InactivetitleText_pick.BackColor = vs.Colors.InactiveCaptionText;
+            //Forms.Win32UI.InfoText_pick.BackColor = vs.Colors.InfoText;
+            //Forms.Win32UI.InfoWindow_pick.BackColor = vs.Colors.InfoBk;
+            Forms.Win32UI.menu_pick.BackColor = vs.Colors.Menu;
+            Forms.Win32UI.menubar_pick.BackColor = vs.Colors.MenuBar;
+            Forms.Win32UI.menutext_pick.BackColor = vs.Colors.MenuText;
+            //Forms.Win32UI.Scrollbar_pick.BackColor = vs.Colors.ScrollBar;
+            Forms.Win32UI.TitleText_pick.BackColor = vs.Colors.CaptionText;
+            Forms.Win32UI.Window_pick.BackColor = vs.Colors.Window;
+            //Forms.Win32UI.Frame_pick.BackColor = vs.Colors.WindowFrame;
+            Forms.Win32UI.WindowText_pick.BackColor = vs.Colors.WindowText;
+            Forms.Win32UI.hilight_pick.BackColor = vs.Colors.Highlight;
+            Forms.Win32UI.menuhilight_pick.BackColor = vs.Colors.MenuHilight;
+            Forms.Win32UI.desktop_pick.BackColor = vs.Colors.Background;
         }
 
         public void ApplyDefaultTMValues()
@@ -152,6 +532,7 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
+            TM.Win32.Enabled = AspectEnabled;
             TM.Win32.EnableTheming = Toggle1.Checked;
             TM.Win32.EnableGradient = Toggle2.Checked;
             TM.Win32.ActiveBorder = ActiveBorder_pick.BackColor;
@@ -188,20 +569,6 @@ namespace WinPaletter
             TM.Win32.Desktop = desktop_pick.BackColor;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM);
-            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(Program.TM, Forms.MainFrm.ClassicTaskbar);
-            Forms.MainFrm.Window1.Refresh();
-            Forms.MainFrm.Window2.Refresh();
-            Close();
-        }
-
         private void ColorItem_Click(object sender, EventArgs e)
         {
             if (e is DragEventArgs) return;
@@ -220,579 +587,143 @@ namespace WinPaletter
             }
             catch { }
 
-            List<Control> CList = new();
-            CList.Add((Control)sender);
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) }},
+            };
 
-            Color C = ((UI.Controllers.ColorItem)sender).BackColor;
+            Color C = colorItem.BackColor;
+
             string CtrlName = ((UI.Controllers.ColorItem)sender).Name.ToString().ToLower();
 
             if (CtrlName == "activetitle_pick".ToLower())
-            {
-                CList.Add(WindowR2);
-                CList.Add(WindowR3);
-                CList.Add(WindowR4);
-
-                Conditions _conditions = new() { WindowRColor1 = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR2.Color1 = C;
-                WindowR3.Color1 = C;
-                WindowR4.Color1 = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ActiveTitle) });
 
             else if (CtrlName == "GActivetitle_pick".ToLower())
-            {
-                CList.Add(WindowR2);
-                CList.Add(WindowR3);
-                CList.Add(WindowR4);
-
-                Conditions _conditions = new() { WindowRColor2 = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR2.Color2 = C;
-                WindowR3.Color2 = C;
-                WindowR4.Color2 = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.GradientActiveTitle) });
 
             else if (CtrlName == "TitleText_pick".ToLower())
-            {
-                CList.Add(WindowR2);
-                CList.Add(WindowR3);
-                CList.Add(WindowR4);
-
-                Conditions _conditions = new() { WindowRForeColor = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR2.ForeColor = C;
-                WindowR3.ForeColor = C;
-                WindowR4.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.TitleText) });
 
             else if (CtrlName == "InactiveTitle_pick".ToLower())
-            {
-                CList.Add(WindowR1);
-                Conditions _conditions = new() { WindowRColor1 = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR1.Color1 = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.InactiveTitle) });
 
             else if (CtrlName == "GInactivetitle_pick".ToLower())
-            {
-                CList.Add(WindowR1);
-                Conditions _conditions = new() { WindowRColor2 = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR1.Color2 = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.GradientInactiveTitle) });
 
             else if (CtrlName == "InactivetitleText_pick".ToLower())
-            {
-                CList.Add(WindowR1);
-                Conditions _conditions = new() { WindowRForeColor = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR1.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.InactiveTitleText) });
 
             else if (CtrlName == "ActiveBorder_pick".ToLower())
-            {
-                CList.Add(WindowR2);
-                CList.Add(WindowR3);
-                CList.Add(WindowR4);
-
-                Conditions _conditions = new() { WindowRBorder = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR2.ColorBorder = C;
-                WindowR3.ColorBorder = C;
-                WindowR4.ColorBorder = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ActiveBorder) });
 
             else if (CtrlName == "InactiveBorder_pick".ToLower())
-            {
-                CList.Add(WindowR1);
-                Conditions _conditions = new() { WindowRBorder = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                WindowR1.ColorBorder = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.InactiveBorder) });
 
             else if (CtrlName == "Frame_pick".ToLower())
             {
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-
-                Conditions _conditions = new() { WindowRFrame = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.WindowFrame = C;
-
-                Retro3DPreview1.WindowFrame = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.WindowFrame) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.WindowFrame) });
             }
 
             else if (CtrlName == "btnface_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                CList.Add(PanelR2);
-                Conditions _conditions = new() { ButtonRFace = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                {
-                    if (!WindowR.UseItAsMenu)
-                        WindowR.BackColor = C;
-                    else
-                        WindowR.ButtonFace = C;
-                }
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.BackColor = C;
-
-                Retro3DPreview1.BackColor = C;
-                PanelR2.BackColor = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonFace) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.BackColor) });
             }
 
             else if (CtrlName == "btndkshadow_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                CList.Add(TextBoxR1);
-
-                Conditions _conditions = new() { ButtonRDkShadow = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    WindowR.ButtonDkShadow = C;
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.ButtonDkShadow = C;
-
-                Retro3DPreview1.ButtonDkShadow = C;
-                TextBoxR1.ButtonDkShadow = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonDkShadow) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonDkShadow) });
             }
 
             else if (CtrlName == "btnhilight_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                CList.Add(TextBoxR1);
-                CList.Add(PanelR1);
-                CList.Add(PanelR2);
-
-                Conditions _conditions = new() { ButtonRHilight = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    WindowR.ButtonHilight = C;
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.ButtonHilight = C;
-                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                    ButtonR.ButtonHilight = C;
-
-                TextBoxR1.ButtonHilight = C;
-                PanelR1.ButtonHilight = C;
-                PanelR2.ButtonHilight = C;
-                Retro3DPreview1.ButtonHilight = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonHilight) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonHilight) });
             }
 
             else if (CtrlName == "btnlight_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                CList.Add(TextBoxR1);
-
-                Conditions _conditions = new() { ButtonRLight = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    WindowR.ButtonLight = C;
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.ButtonLight = C;
-
-                TextBoxR1.ButtonLight = C;
-                Retro3DPreview1.ButtonLight = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonLight) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonLight) });
             }
 
             else if (CtrlName == "btnshadow_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                CList.Add(TextBoxR1);
-                CList.Add(PanelR1);
-
-                Conditions _conditions = new() { ButtonRShadow = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    WindowR.ButtonShadow = C;
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.ButtonShadow = C;
-                foreach (PanelRaisedR ButtonR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-                    ButtonR.ButtonShadow = C;
-
-                Retro3DPreview1.ButtonShadow = C;
-                TextBoxR1.ButtonShadow = C;
-                PanelR1.ButtonShadow = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonShadow) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonShadow) });
             }
 
             else if (CtrlName == "btntext_pick".ToLower())
             {
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    CList.Add(WindowR);
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    CList.Add(ButtonR);
-
-                CList.Add(Retro3DPreview1);
-                Conditions _conditions = new() { ButtonRText = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-                foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-                    WindowR.ButtonText = C;
-                foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-                    ButtonR.ForeColor = C;
-
-                Retro3DPreview1.ForeColor = C;
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.ButtonText) });
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ForeColor) });
             }
 
             else if (CtrlName == "AppWorkspace_pick".ToLower())
-            {
-                CList.Add(programcontainer);
-                Conditions _conditions = new() { RetroAppWorkspace = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                programcontainer.BackColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.AppWorkspace) });
 
             else if (CtrlName == "background_pick".ToLower())
-            {
-                CList.Add(pnl_preview);
-                Conditions _conditions = new() { RetroBackground = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                pnl_preview.BackColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.Background) });
 
             else if (CtrlName == "menu_pick".ToLower())
-            {
-                CList.Add(Menu_Window);
-
-                if (!Toggle1.Checked)
-                    CList.Add(PanelR1);
-                if (!Toggle1.Checked)
-                    CList.Add(menucontainer0);
-
-                Conditions _conditions = new() { RetroBackground = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                Menu_Window.BackColor = C;
-                Menu_Window.Invalidate();
-
-                if (!Toggle1.Checked)
-                    PanelR1.BackColor = C;
-                if (!Toggle1.Checked)
-                    menucontainer0.BackColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.Menu) });
 
             else if (CtrlName == "menubar_pick".ToLower())
-            {
-                if (Toggle1.Checked)
-                {
-                    CList.Add(menucontainer0);
-                    Conditions _conditions = new() { RetroBackground = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                    menucontainer0.BackColor = C;
-                }
-                else
-                {
-                    C = Forms.ColorPickerDlg.Pick(CList);
-                    ((UI.Controllers.ColorItem)sender).BackColor = C;
-                }
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.MenuBar) });
 
             else if (CtrlName == "hilight_pick".ToLower())
-            {
-                if (Toggle1.Checked)
-                {
-                    CList.Add(highlight);
-                    CList.Add(PanelR1);
-                    Conditions _conditions = new() { ButtonRShadow = true, RetroBackground = true, RetroHighlight17BitFixer = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                    highlight.BackColor = C;
-                    PanelR1.ButtonShadow = C;
-                }
-                else
-                {
-                    CList.Add(highlight);
-                    CList.Add(menuhilight);
-                    Conditions _conditions = new() { RetroBackground = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                    highlight.BackColor = C;
-                    menuhilight.BackColor = C;
-                }
-
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.Hilight) });
 
             else if (CtrlName == "menuhilight_pick".ToLower())
-            {
-                if (Toggle1.Checked)
-                {
-                    CList.Add(menuhilight);
-                    CList.Add(PanelR1);
-                    Conditions _conditions = new() { RetroBackground = true };
-                    C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                    menuhilight.BackColor = C;
-                    PanelR1.BackColor = C;
-                }
-                else
-                {
-                    C = Forms.ColorPickerDlg.Pick(CList);
-                    ((UI.Controllers.ColorItem)sender).BackColor = C;
-                }
-
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.MenuHilight) });
 
             else if (CtrlName == "menutext_pick".ToLower())
-            {
-                CList.Add(LabelR1);
-                if (!Toggle1.Checked)
-                    CList.Add(LabelR3);
-                CList.Add(LabelR6);
-
-                C = Forms.ColorPickerDlg.Pick(CList);
-
-                LabelR1.ForeColor = C;
-                if (!Toggle1.Checked)
-                    LabelR3.ForeColor = C;
-                LabelR6.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.MenuText) });
 
             else if (CtrlName == "hilighttext_pick".ToLower())
-            {
-                CList.Add(LabelR5);
-                if (Toggle1.Checked)
-                    CList.Add(LabelR3);
-
-                C = Forms.ColorPickerDlg.Pick(CList);
-                LabelR5.ForeColor = C;
-                if (Toggle1.Checked)
-                    LabelR3.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.HilightText) });
 
             else if (CtrlName == "GrayText_pick".ToLower())
-            {
-                CList.Add(LabelR2);
-                CList.Add(LabelR9);
-
-                C = Forms.ColorPickerDlg.Pick(CList);
-                LabelR2.ForeColor = C;
-                LabelR9.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.GrayText) });
 
             else if (CtrlName == "Window_pick".ToLower())
-            {
-                CList.Add(TextBoxR1);
-                Conditions _conditions = new() { RetroBackground = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                TextBoxR1.BackColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.Window) });
 
             else if (CtrlName == "WindowText_pick".ToLower())
-            {
-                CList.Add(TextBoxR1);
-                CList.Add(LabelR4);
-
-                Conditions _conditions = new() { WindowRText = true, WindowRForeColor = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                TextBoxR1.ForeColor = C;
-                LabelR4.ForeColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.WindowText) });
 
             else if (CtrlName == "InfoWindow_pick".ToLower())
-            {
-                CList.Add(LabelR13);
-                Conditions _conditions = new() { RetroBackground = true };
-                C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-                LabelR13.BackColor = C;
-            }
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.InfoWindow) });
 
             else if (CtrlName == "InfoText_pick".ToLower())
+                CList.Add(retroDesktopColors1, new string[] { nameof(retroDesktopColors1.InfoText) });
+
+            C = Forms.ColorPickerDlg.Pick(CList);
+
+            foreach (KeyValuePair<Control, string[]> item in CList)
             {
-                CList.Add(LabelR13);
-                C = Forms.ColorPickerDlg.Pick(CList);
-                LabelR13.ForeColor = C;
+                foreach (string prop in item.Value)
+                {
+                    item.Key.SetProperty(prop, C);
+                }
             }
 
-            else if (CtrlName == "Scrollbar_pick".ToLower())
-            {
-                C = Forms.ColorPickerDlg.Pick(CList);
-            }
-
-            else
-            {
-                C = Forms.ColorPickerDlg.Pick(CList);
-            }
-
-            ((ColorItem)sender).BackColor = C;
-
-            foreach (Control Ctrl in CList) { Ctrl.Refresh(); }
             CList.Clear();
-
-            WindowR1.Invalidate();
-            WindowR2.Invalidate();
-            WindowR3.Invalidate();
-            WindowR4.Invalidate();
-
-            Refresh17BitPreference();
         }
 
         private void ColorItem_DragDrop(object sender, DragEventArgs e)
         {
-            WindowR2.Color1 = activetitle_pick.BackColor;
-            WindowR3.Color1 = activetitle_pick.BackColor;
-            WindowR4.Color1 = activetitle_pick.BackColor;
-            WindowR2.Color2 = GActivetitle_pick.BackColor;
-            WindowR3.Color2 = GActivetitle_pick.BackColor;
-            WindowR4.Color2 = GActivetitle_pick.BackColor;
-            WindowR2.ForeColor = TitleText_pick.BackColor;
-            WindowR3.ForeColor = TitleText_pick.BackColor;
-            WindowR4.ForeColor = TitleText_pick.BackColor;
-            WindowR2.ColorBorder = ActiveBorder_pick.BackColor;
-            WindowR3.ColorBorder = ActiveBorder_pick.BackColor;
-            WindowR4.ColorBorder = ActiveBorder_pick.BackColor;
-
-            WindowR1.Color1 = InactiveTitle_pick.BackColor;
-            WindowR1.Color2 = GInactivetitle_pick.BackColor;
-            WindowR1.ForeColor = InactivetitleText_pick.BackColor;
-            WindowR1.ColorBorder = InactiveBorder_pick.BackColor;
-
-            Retro3DPreview1.WindowFrame = Frame_pick.BackColor;
-            Retro3DPreview1.BackColor = btnface_pick.BackColor;
-            Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor;
-            Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor;
-            Retro3DPreview1.ButtonLight = btnlight_pick.BackColor;
-            Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor;
-            Retro3DPreview1.ForeColor = btntext_pick.BackColor;
-
-            PanelR2.BackColor = btnface_pick.BackColor;
-            PanelR2.ButtonHilight = btnhilight_pick.BackColor;
-
-            TextBoxR1.BackColor = Window_pick.BackColor;
-            TextBoxR1.ForeColor = WindowText_pick.BackColor;
-            TextBoxR1.ButtonDkShadow = btndkshadow_pick.BackColor;
-            TextBoxR1.ButtonHilight = btnhilight_pick.BackColor;
-            TextBoxR1.ButtonLight = btnlight_pick.BackColor;
-            TextBoxR1.ButtonShadow = btnshadow_pick.BackColor;
-
-            PanelR1.ButtonHilight = btnhilight_pick.BackColor;
-            PanelR1.ButtonShadow = btnshadow_pick.BackColor;
-
-            programcontainer.BackColor = AppWorkspace_pick.BackColor;
-            pnl_preview.BackColor = background_pick.BackColor;
-            Menu_Window.BackColor = menu_pick.BackColor;
-            Menu_Window.Invalidate();
-
-            if (Toggle1.Checked)
-            {
-                highlight.BackColor = hilight_pick.BackColor;
-                menuhilight.BackColor = menuhilight_pick.BackColor;
-                LabelR3.ForeColor = hilighttext_pick.BackColor;
-                PanelR1.ButtonShadow = hilight_pick.BackColor;
-                PanelR1.BackColor = menuhilight_pick.BackColor;
-                menucontainer0.BackColor = menubar_pick.BackColor;
-            }
-            else
-            {
-                highlight.BackColor = hilight_pick.BackColor;
-                menuhilight.BackColor = hilight_pick.BackColor;
-                LabelR3.ForeColor = menutext_pick.BackColor;
-                PanelR1.BackColor = menu_pick.BackColor;
-                menucontainer0.BackColor = menu_pick.BackColor;
-            }
-
-            LabelR1.ForeColor = menutext_pick.BackColor;
-            LabelR2.ForeColor = GrayText_pick.BackColor;
-
-            LabelR4.ForeColor = WindowText_pick.BackColor;
-            LabelR5.ForeColor = hilighttext_pick.BackColor;
-            LabelR6.ForeColor = menutext_pick.BackColor;
-
-            LabelR9.ForeColor = GrayText_pick.BackColor;
-
-            LabelR13.BackColor = InfoWindow_pick.BackColor;
-            LabelR13.ForeColor = InfoText_pick.BackColor;
-
-            foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-            {
-                if (!WindowR.UseItAsMenu)
-                    WindowR.BackColor = btnface_pick.BackColor;
-                else
-                    WindowR.ButtonFace = btnface_pick.BackColor;
-
-                WindowR.ButtonDkShadow = btndkshadow_pick.BackColor;
-                WindowR.ButtonHilight = btnhilight_pick.BackColor;
-                WindowR.ButtonLight = btnlight_pick.BackColor;
-                WindowR.ButtonShadow = btnshadow_pick.BackColor;
-                WindowR.ButtonText = btntext_pick.BackColor;
-            }
-
-            foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-            {
-                ButtonR.WindowFrame = Frame_pick.BackColor;
-                ButtonR.BackColor = btnface_pick.BackColor;
-                ButtonR.ButtonDkShadow = btndkshadow_pick.BackColor;
-                ButtonR.ButtonHilight = btnhilight_pick.BackColor;
-                ButtonR.ButtonLight = btnlight_pick.BackColor;
-                ButtonR.ButtonShadow = btnshadow_pick.BackColor;
-                ButtonR.ForeColor = btntext_pick.BackColor;
-            }
-
-            foreach (PanelRaisedR PanelRaisedR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-            {
-                PanelRaisedR.ButtonHilight = btnhilight_pick.BackColor;
-                PanelRaisedR.ButtonShadow = btnshadow_pick.BackColor;
-            }
-
-            WindowR1.Invalidate();
-            WindowR2.Invalidate();
-            WindowR3.Invalidate();
-
-            Refresh17BitPreference();
-        }
-
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
-            {
-                Toggle1.Checked = false;
-                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-                {
-                    LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
-                }
-
-            }
+            ApplyRetroPreview();
         }
 
         public void LoadFromWin9xTheme(string File, Theme.Structures.Win32UI _DefWin32)
         {
             if (System.IO.File.Exists(File))
             {
-
                 using (INI _ini = new(File))
                 {
                     string Section = @"Control Panel\Colors";
@@ -849,265 +780,60 @@ namespace WinPaletter
                     menubar_pick.BackColor = _ini.Read(Section, "MenuBar", _DefWin32.MenuBar.ToWin32Reg()).FromWin32RegToColor();
                     menuhilight_pick.BackColor = _ini.Read(Section, "MenuHilight", _DefWin32.MenuHilight.ToWin32Reg()).FromWin32RegToColor();
                     desktop_pick.BackColor = _ini.Read(Section, "Desktop", _DefWin32.Desktop.ToWin32Reg()).FromWin32RegToColor();
-                }
 
+                    _btn_shadow = _ini.Read(Section, "ButtonShadow", _DefWin32.ButtonShadow.ToWin32Reg()).FromWin32RegToColor();
+                    _btn_hilight = _ini.Read(Section, "ButtonHilight", _DefWin32.ButtonHilight.ToWin32Reg()).FromWin32RegToColor();
+                    _btn_light = _ini.Read(Section, "ButtonLight", _DefWin32.ButtonLight.ToWin32Reg()).FromWin32RegToColor();
+                    _btn_dkshadow = _ini.Read(Section, "ButtonDkShadow", _DefWin32.ButtonDkShadow.ToWin32Reg()).FromWin32RegToColor();
+                    trackBarX1.Value = 100;
+                }
             }
 
             ApplyRetroPreview();
-        }
-
-        public void LoadFromWinThemeString(string String, string ThemeName)
-        {
-            if (string.IsNullOrWhiteSpace(String))
-            {
-                return;
-            }
-
-            if (!String.Contains("|"))
-            {
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(ThemeName))
-            {
-                return;
-            }
-
-            List<string> ls = new();
-            ls.Clear();
-
-            List<string> AllThemes = String.CList();
-            string SelectedTheme = string.Empty;
-            List<string> SelectedThemeList = new();
-
-            bool Found = false;
-
-            foreach (string th in AllThemes)
-            {
-                if ((th.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
-                {
-                    SelectedTheme = th.Replace("|", "\r\n");
-                    Found = true;
-                    break;
-                }
-            }
-
-            if (!Found)
-            {
-                return;
-            }
-
-            SelectedThemeList = SelectedTheme.CList();
-
-            bool FoundGradientActive = false;
-            bool FoundGradientInactive = false;
-
-            foreach (string x in SelectedThemeList)
-            {
-
-                if (x.StartsWith("activetitle=", StringComparison.OrdinalIgnoreCase))
-                {
-                    activetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                    if (!FoundGradientActive)
-                        GActivetitle_pick.BackColor = activetitle_pick.BackColor;
-                }
-
-                if (x.StartsWith("gradientactivetitle=", StringComparison.OrdinalIgnoreCase))
-                {
-                    GActivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                    FoundGradientActive = true;
-                }
-
-                if (x.StartsWith("inactivetitle=", StringComparison.OrdinalIgnoreCase))
-                {
-                    InactiveTitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                    if (!FoundGradientInactive)
-                        GInactivetitle_pick.BackColor = InactiveTitle_pick.BackColor;
-
-                }
-
-                if (x.StartsWith("gradientinactivetitle=", StringComparison.OrdinalIgnoreCase))
-                {
-                    GInactivetitle_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                    FoundGradientInactive = true;
-                }
-
-                if (x.StartsWith("background=", StringComparison.OrdinalIgnoreCase))
-                    background_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilight=", StringComparison.OrdinalIgnoreCase))
-                    hilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hilighttext=", StringComparison.OrdinalIgnoreCase))
-                    hilighttext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("titletext=", StringComparison.OrdinalIgnoreCase))
-                    TitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("window=", StringComparison.OrdinalIgnoreCase))
-                    Window_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowtext=", StringComparison.OrdinalIgnoreCase))
-                    WindowText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("scrollbar=", StringComparison.OrdinalIgnoreCase))
-                    Scrollbar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menu=", StringComparison.OrdinalIgnoreCase))
-                    menu_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("windowframe=", StringComparison.OrdinalIgnoreCase))
-                    Frame_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menutext=", StringComparison.OrdinalIgnoreCase))
-                    menutext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("activeborder=", StringComparison.OrdinalIgnoreCase))
-                    ActiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactiveborder=", StringComparison.OrdinalIgnoreCase))
-                    InactiveBorder_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("appworkspace=", StringComparison.OrdinalIgnoreCase))
-                    AppWorkspace_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonface=", StringComparison.OrdinalIgnoreCase))
-                    btnface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonshadow=", StringComparison.OrdinalIgnoreCase))
-                    btnshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("graytext=", StringComparison.OrdinalIgnoreCase))
-                    GrayText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttontext=", StringComparison.OrdinalIgnoreCase))
-                    btntext_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("inactivetitletext=", StringComparison.OrdinalIgnoreCase))
-                    InactivetitleText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonhilight=", StringComparison.OrdinalIgnoreCase))
-                    btnhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttondkshadow=", StringComparison.OrdinalIgnoreCase))
-                    btndkshadow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("buttonlight=", StringComparison.OrdinalIgnoreCase))
-                    btnlight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infotext=", StringComparison.OrdinalIgnoreCase))
-                    InfoText_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("infowindow=", StringComparison.OrdinalIgnoreCase))
-                    InfoWindow_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("hottrackingcolor=", StringComparison.OrdinalIgnoreCase))
-                    hottracking_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-
-                if (x.StartsWith("buttonalternateface=", StringComparison.OrdinalIgnoreCase))
-                    btnaltface_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menubar=", StringComparison.OrdinalIgnoreCase))
-                    menubar_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("menuhilight=", StringComparison.OrdinalIgnoreCase))
-                    menuhilight_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-                if (x.StartsWith("desktop=", StringComparison.OrdinalIgnoreCase))
-                    desktop_pick.BackColor = x.Split('=')[1].FromWin32RegToColor();
-            }
-
-            ApplyRetroPreview();
-        }
-
-        public void SetMetrics(Theme.Manager TM)
-        {
-            PanelR2.Width = TM.MetricsFonts.ScrollWidth;
-            menucontainer0.Height = TM.MetricsFonts.MenuHeight;
-
-            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
-
-            LabelR1.Font = TM.MetricsFonts.MenuFont;
-            LabelR2.Font = TM.MetricsFonts.MenuFont;
-            LabelR3.Font = TM.MetricsFonts.MenuFont;
-
-            LabelR9.Font = TM.MetricsFonts.MenuFont;
-            LabelR5.Font = TM.MetricsFonts.MenuFont;
-            LabelR6.Font = TM.MetricsFonts.MenuFont;
-
-            menucontainer1.Height = Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
-            highlight.Height = menucontainer1.Height + 1;
-            menucontainer3.Height = menucontainer1.Height + 1;
-            Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom;
-
-            LabelR4.Font = TM.MetricsFonts.MessageFont;
-
-            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
-            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
-            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
-
-            int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
-            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
-            Padding _Padding = new(iP, iT, iP, iP);
-
-            foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-            {
-                if (!WindowR.UseItAsMenu)
-                {
-                    SetClassicWindowMetrics(TM, WindowR);
-                    WindowR.Padding = _Padding;
-                }
-            }
-
-            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font);
-            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight;
-
-            Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
-            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);
-
-            WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10;
-            WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15;
-
-            LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2;
-            LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2;
-
-            RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
-
-            ButtonR1.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
-            ButtonR1.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
-            ButtonR1.Refresh();
         }
 
         public void ApplyRetroPreview()
         {
-            WindowR1.ColorGradient = Toggle2.Checked;
-            WindowR1.Color1 = InactiveTitle_pick.BackColor;
-            WindowR1.Color2 = GInactivetitle_pick.BackColor;
-            WindowR1.ForeColor = InactivetitleText_pick.BackColor;
-            WindowR1.ColorBorder = InactiveBorder_pick.BackColor;
+            retroDesktopColors1.Visible = false;
 
-            WindowR2.ColorGradient = Toggle2.Checked;
-            WindowR3.ColorGradient = Toggle2.Checked;
-            WindowR4.ColorGradient = Toggle2.Checked;
+            retroDesktopColors1.EnableGradient = Toggle2.Checked;
+            retroDesktopColors1.InactiveTitle = InactiveTitle_pick.BackColor;
+            retroDesktopColors1.GradientInactiveTitle = GInactivetitle_pick.BackColor;
+            retroDesktopColors1.InactiveTitleText = InactivetitleText_pick.BackColor;
+            retroDesktopColors1.InactiveBorder = InactiveBorder_pick.BackColor;
+            retroDesktopColors1.ActiveTitle = activetitle_pick.BackColor;
+            retroDesktopColors1.GradientActiveTitle = GActivetitle_pick.BackColor;
+            retroDesktopColors1.TitleText = TitleText_pick.BackColor;
+            retroDesktopColors1.ActiveBorder = ActiveBorder_pick.BackColor;
 
-            WindowR2.Color1 = activetitle_pick.BackColor;
-            WindowR3.Color1 = activetitle_pick.BackColor;
-            WindowR4.Color1 = activetitle_pick.BackColor;
+            retroDesktopColors1.ButtonFace = btnface_pick.BackColor;
+            retroDesktopColors1.ButtonDkShadow = btndkshadow_pick.BackColor;
+            retroDesktopColors1.ButtonHilight = btnhilight_pick.BackColor;
+            retroDesktopColors1.ButtonLight = btnlight_pick.BackColor;
+            retroDesktopColors1.ButtonShadow = btnshadow_pick.BackColor;
+            retroDesktopColors1.ButtonText = btntext_pick.BackColor;
+            retroDesktopColors1.WindowFrame = Frame_pick.BackColor;
 
-            WindowR2.Color2 = GActivetitle_pick.BackColor;
-            WindowR3.Color2 = GActivetitle_pick.BackColor;
-            WindowR4.Color2 = GActivetitle_pick.BackColor;
+            retroDesktopColors1.Window = Window_pick.BackColor;
+            retroDesktopColors1.WindowText = WindowText_pick.BackColor;
 
-            WindowR2.ForeColor = TitleText_pick.BackColor;
-            WindowR3.ForeColor = TitleText_pick.BackColor;
-            WindowR4.ForeColor = TitleText_pick.BackColor;
+            retroDesktopColors1.Menu = menu_pick.BackColor;
+            retroDesktopColors1.MenuBar = menubar_pick.BackColor;
+            retroDesktopColors1.MenuText = menutext_pick.BackColor;
+            retroDesktopColors1.MenuHilight = menuhilight_pick.BackColor;
+            retroDesktopColors1.Hilight = hilight_pick.BackColor;
+            retroDesktopColors1.HilightText = hilighttext_pick.BackColor;
+            retroDesktopColors1.Scrollbar = Scrollbar_pick.BackColor;
+            retroDesktopColors1.GrayText = GrayText_pick.BackColor;
 
-            WindowR2.ColorBorder = ActiveBorder_pick.BackColor;
-            WindowR3.ColorBorder = ActiveBorder_pick.BackColor;
-            WindowR4.ColorBorder = ActiveBorder_pick.BackColor;
+            retroDesktopColors1.AppWorkspace = AppWorkspace_pick.BackColor;
+            retroDesktopColors1.Background = background_pick.BackColor;
+            retroDesktopColors1.Desktop = desktop_pick.BackColor;
+            retroDesktopColors1.InfoText = InfoText_pick.BackColor;
+            retroDesktopColors1.InfoWindow = InfoWindow_pick.BackColor;
+            retroDesktopColors1.HotTrackingColor = hottracking_pick.BackColor;
 
-            foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
-            {
-                if (!WindowR.UseItAsMenu)
-                    WindowR.BackColor = btnface_pick.BackColor;
-
-                WindowR.ButtonDkShadow = btndkshadow_pick.BackColor;
-                WindowR.ButtonHilight = btnhilight_pick.BackColor;
-                WindowR.ButtonLight = btnlight_pick.BackColor;
-                WindowR.ButtonShadow = btnshadow_pick.BackColor;
-                WindowR.ButtonText = btntext_pick.BackColor;
-            }
-
-            foreach (ButtonR ButtonR in pnl_preview.GetAllControls().OfType<ButtonR>())
-            {
-                ButtonR.BackColor = btnface_pick.BackColor;
-                ButtonR.WindowFrame = Frame_pick.BackColor;
-                ButtonR.ButtonDkShadow = btndkshadow_pick.BackColor;
-                ButtonR.ButtonHilight = btnhilight_pick.BackColor;
-                ButtonR.ButtonLight = btnlight_pick.BackColor;
-                ButtonR.ButtonShadow = btnshadow_pick.BackColor;
-                ButtonR.ForeColor = btntext_pick.BackColor;
-            }
-
-            foreach (PanelRaisedR PanelRaisedR in pnl_preview.GetAllControls().OfType<PanelRaisedR>())
-            {
-                PanelRaisedR.ButtonHilight = btnhilight_pick.BackColor;
-                PanelRaisedR.ButtonShadow = btnshadow_pick.BackColor;
-            }
+            retroDesktopColors1.Visible = true;
 
             Retro3DPreview1.BackColor = btnface_pick.BackColor;
             Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor;
@@ -1117,340 +843,16 @@ namespace WinPaletter
             Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor;
             Retro3DPreview1.ForeColor = btntext_pick.BackColor;
             Retro3DPreview1.Refresh();
-
-            TextBoxR1.BackColor = Window_pick.BackColor;
-            TextBoxR1.ForeColor = WindowText_pick.BackColor;
-            TextBoxR1.ButtonDkShadow = btndkshadow_pick.BackColor;
-            TextBoxR1.ButtonHilight = btnhilight_pick.BackColor;
-            TextBoxR1.ButtonLight = btnlight_pick.BackColor;
-            TextBoxR1.ButtonShadow = btnshadow_pick.BackColor;
-            TextBoxR1.Refresh();
-
-            Menu_Window.ButtonFace = btnface_pick.BackColor;
-            Menu_Window.ButtonDkShadow = btndkshadow_pick.BackColor;
-            Menu_Window.ButtonHilight = btnhilight_pick.BackColor;
-            Menu_Window.ButtonLight = btnlight_pick.BackColor;
-            Menu_Window.ButtonShadow = btnshadow_pick.BackColor;
-            Menu_Window.BackColor = menu_pick.BackColor;
-            Menu_Window.Refresh();
-
-            PanelR1.ButtonHilight = btnhilight_pick.BackColor;
-            PanelR1.ButtonShadow = btnshadow_pick.BackColor;
-            PanelR1.BackColor = menu_pick.BackColor;
-
-            PanelR2.ButtonHilight = btnhilight_pick.BackColor;
-            PanelR2.BackColor = btnface_pick.BackColor;
-
-            programcontainer.BackColor = AppWorkspace_pick.BackColor;
-
-            pnl_preview.BackColor = background_pick.BackColor;
-
-            menucontainer0.BackColor = menubar_pick.BackColor;
-
-            highlight.BackColor = hilight_pick.BackColor;
-
-            menuhilight.BackColor = menuhilight_pick.BackColor;
-
-            LabelR6.ForeColor = menutext_pick.BackColor;
-
-            LabelR1.ForeColor = menutext_pick.BackColor;
-
-            LabelR5.ForeColor = hilighttext_pick.BackColor;
-
-            LabelR2.ForeColor = GrayText_pick.BackColor;
-
-            LabelR9.ForeColor = GrayText_pick.BackColor;
-
-            LabelR4.ForeColor = WindowText_pick.BackColor;
-
-            LabelR13.BackColor = InfoWindow_pick.BackColor;
-            LabelR13.ForeColor = InfoText_pick.BackColor;
-
-            Refresh17BitPreference();
-
-            RetroShadow1.Refresh();
         }
 
         private void Toggle1_CheckedChanged(object sender, EventArgs e)
         {
-            Refresh17BitPreference();
-        }
-
-        public void Refresh17BitPreference()
-        {
-
-            if (Toggle1.Checked)
-            {
-                // Theming Enabled (Menus Has colors and borders)
-                Menu_Window.Flat = true;
-                PanelR1.Flat = true;
-                PanelR1.BackColor = menuhilight_pick.BackColor;
-                PanelR1.ButtonShadow = hilight_pick.BackColor;
-
-                menuhilight.BackColor = menuhilight_pick.BackColor;  // Filling of selected item
-
-                highlight.BackColor = hilight_pick.BackColor;        // Outer Border of selected item
-
-                menucontainer0.BackColor = menubar_pick.BackColor;
-
-                LabelR3.ForeColor = hilighttext_pick.BackColor;
-            }
-            else
-            {
-                // Theming Disabled (Menus are retro 3D)
-                Menu_Window.Flat = false;
-                PanelR1.Flat = false;
-                PanelR1.BackColor = menu_pick.BackColor;
-                PanelR1.ButtonShadow = btnshadow_pick.BackColor;
-
-                menuhilight.BackColor = hilight_pick.BackColor;      // Both will have same color
-
-                highlight.BackColor = hilight_pick.BackColor;        // Both will have same color
-
-                menucontainer0.BackColor = menu_pick.BackColor;
-
-                LabelR3.ForeColor = menutext_pick.BackColor;
-            }
-
-            Menu_Window.Refresh();
-            PanelR1.Refresh();
-            menuhilight.Refresh();
-            highlight.Refresh();
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            LoadTM(TMx);
-            TMx.Dispose();
+            retroDesktopColors1.EnableTheming = Toggle1.Checked;
         }
 
         private void Toggle2_CheckedChanged(object sender, EventArgs e)
         {
-            WindowR1.ColorGradient = Toggle2.Checked;
-            WindowR2.ColorGradient = Toggle2.Checked;
-            WindowR3.ColorGradient = Toggle2.Checked;
-            WindowR4.ColorGradient = Toggle2.Checked;
-
-            WindowR1.Invalidate();
-            WindowR2.Invalidate();
-            WindowR3.Invalidate();
-            WindowR4.Invalidate();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-
-            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(Program.TM, Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(Program.TM, Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(Program.TM, Forms.MainFrm.ClassicTaskbar);
-
-            try
-            {
-                TMx.Win32.Apply();
-                TMx.Win32.Broadcast_UPM_ToDefUsers();
-            }
-            catch { }
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button6_Click(object sender, EventArgs e)
-        {
-            if (SaveFileDialog2.ShowDialog() == DialogResult.OK)
-            {
-                List<string> s = new();
-                s.Clear();
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
-                s.Add(string.Empty);
-
-                s.Add(string.Format(@"[Control Panel\Colors]"));
-
-                {
-                    Color temp = activetitle_pick.BackColor;
-                    s.Add($"{"ActiveTitle"}={temp.R} {temp.G} {temp.B}");
-                }
-                {
-                    Color temp1 = background_pick.BackColor;
-                    s.Add($"{"Background"}={temp1.R} {temp1.G} {temp1.B}");
-                }
-                {
-                    Color temp2 = hilight_pick.BackColor;
-                    s.Add($"{"Hilight"}={temp2.R} {temp2.G} {temp2.B}");
-                }
-                {
-                    Color temp3 = hilighttext_pick.BackColor;
-                    s.Add($"{"HilightText"}={temp3.R} {temp3.G} {temp3.B}");
-                }
-                {
-                    Color temp4 = TitleText_pick.BackColor;
-                    s.Add($"{"TitleText"}={temp4.R} {temp4.G} {temp4.B}");
-                }
-                {
-                    Color temp5 = Window_pick.BackColor;
-                    s.Add($"{"Window"}={temp5.R} {temp5.G} {temp5.B}");
-                }
-                {
-                    Color temp6 = WindowText_pick.BackColor;
-                    s.Add($"{"WindowText"}={temp6.R} {temp6.G} {temp6.B}");
-                }
-                {
-                    Color temp7 = Scrollbar_pick.BackColor;
-                    s.Add($"{"Scrollbar"}={temp7.R} {temp7.G} {temp7.B}");
-                }
-                {
-                    Color temp8 = InactiveTitle_pick.BackColor;
-                    s.Add($"{"InactiveTitle"}={temp8.R} {temp8.G} {temp8.B}");
-                }
-                {
-                    Color temp9 = menu_pick.BackColor;
-                    s.Add($"{"Menu"}={temp9.R} {temp9.G} {temp9.B}");
-                }
-                {
-                    Color temp10 = Frame_pick.BackColor;
-                    s.Add($"{"WindowFrame"}={temp10.R} {temp10.G} {temp10.B}");
-                }
-                {
-                    Color temp11 = menutext_pick.BackColor;
-                    s.Add($"{"MenuText"}={temp11.R} {temp11.G} {temp11.B}");
-                }
-                {
-                    Color temp12 = ActiveBorder_pick.BackColor;
-                    s.Add($"{"ActiveBorder"}={temp12.R} {temp12.G} {temp12.B}");
-                }
-                {
-                    Color temp13 = InactiveBorder_pick.BackColor;
-                    s.Add($"{"InactiveBorder"}={temp13.R} {temp13.G} {temp13.B}");
-                }
-                {
-                    Color temp14 = AppWorkspace_pick.BackColor;
-                    s.Add($"{"AppWorkspace"}={temp14.R} {temp14.G} {temp14.B}");
-                }
-                {
-                    Color temp15 = btnface_pick.BackColor;
-                    s.Add($"{"ButtonFace"}={temp15.R} {temp15.G} {temp15.B}");
-                }
-                {
-                    Color temp16 = btnshadow_pick.BackColor;
-                    s.Add($"{"ButtonShadow"}={temp16.R} {temp16.G} {temp16.B}");
-                }
-                {
-                    Color temp17 = GrayText_pick.BackColor;
-                    s.Add($"{"GrayText"}={temp17.R} {temp17.G} {temp17.B}");
-                }
-                {
-                    Color temp18 = btntext_pick.BackColor;
-                    s.Add($"{"ButtonText"}={temp18.R} {temp18.G} {temp18.B}");
-                }
-                {
-                    Color temp19 = InactivetitleText_pick.BackColor;
-                    s.Add($"{"InactiveTitleText"}={temp19.R} {temp19.G} {temp19.B}");
-                }
-                {
-                    Color temp20 = btnhilight_pick.BackColor;
-                    s.Add($"{"ButtonHilight"}={temp20.R} {temp20.G} {temp20.B}");
-                }
-                {
-                    Color temp21 = btndkshadow_pick.BackColor;
-                    s.Add($"{"ButtonDkShadow"}={temp21.R} {temp21.G} {temp21.B}");
-                }
-                {
-                    Color temp22 = btnlight_pick.BackColor;
-                    s.Add($"{"ButtonLight"}={temp22.R} {temp22.G} {temp22.B}");
-                }
-                {
-                    Color temp23 = InfoText_pick.BackColor;
-                    s.Add($"{"InfoText"}={temp23.R} {temp23.G} {temp23.B}");
-                }
-                {
-                    Color temp24 = InfoWindow_pick.BackColor;
-                    s.Add($"{"InfoWindow"}={temp24.R} {temp24.G} {temp24.B}");
-                }
-                {
-                    Color temp25 = GActivetitle_pick.BackColor;
-                    s.Add($"{"GradientActiveTitle"}={temp25.R} {temp25.G} {temp25.B}");
-                }
-                {
-                    Color temp26 = GInactivetitle_pick.BackColor;
-                    s.Add($"{"GradientInactiveTitle"}={temp26.R} {temp26.G} {temp26.B}");
-                }
-                {
-                    Color temp27 = btnaltface_pick.BackColor;
-                    s.Add($"{"ButtonAlternateFace"}={temp27.R} {temp27.G} {temp27.B}");
-                }
-                {
-                    Color temp28 = hottracking_pick.BackColor;
-                    s.Add($"{"HotTrackingColor"}={temp28.R} {temp28.G} {temp28.B}");
-                }
-                {
-                    Color temp29 = menuhilight_pick.BackColor;
-                    s.Add($"{"MenuHilight"}={temp29.R} {temp29.G} {temp29.B}");
-                }
-                {
-                    Color temp30 = menubar_pick.BackColor;
-                    s.Add($"{"MenuBar"}={temp30.R} {temp30.G} {temp30.B}");
-                }
-                {
-                    Color temp31 = desktop_pick.BackColor;
-                    s.Add($"{"Desktop"}={temp31.R} {temp31.G} {temp31.B}");
-                }
-                s.Add(string.Empty);
-
-                s.Add(string.Format("[MasterThemeSelector]"));
-                s.Add(string.Format("MTSM=DABJDKT"));
-
-                s.Add(string.Empty);
-                s.Add(@"[Control Panel\Desktop]");
-                s.Add("Wallpaper=");
-                s.Add("TileWallpaper=0");
-                s.Add("WallpaperStyle=10");
-                s.Add("Pattern=");
-                s.Add(string.Empty);
-
-                s.Add("[VisualStyles]");
-                s.Add("Path=");
-                s.Add("ColorStyle=@themeui.dll,-854");
-                s.Add("Size=@themeui.dll,-2019");
-                s.Add("Transparency=0");
-                s.Add(string.Empty);
-
-                try
-                {
-                    System.IO.File.WriteAllText(SaveFileDialog2.FileName, s.CString());
-                }
-                catch (Exception ex)
-                {
-                    Forms.BugReport.ThrowError(ex);
-                }
-
-            }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            Forms.VS2Win32UI.ShowDialog();
+            retroDesktopColors1.EnableGradient = Toggle2.Checked;
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1464,49 +866,286 @@ namespace WinPaletter
 
             Toggle1.Checked = condition0 | condition1 | condition2;
 
-            LoadFromWinThemeString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+            retroDesktopColors1.LoadFromWinThemeString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+
+            LoadFromRetroPreview(retroDesktopColors1);
         }
 
-        private void Menu_Window_SizeChanged(object sender, EventArgs e)
-        {
-            RetroShadow1.Size = Menu_Window.Size;
-            RetroShadow1.Location = Menu_Window.Location + (Size)new Point(6, 5);
-
-            using (Bitmap b = new(RetroShadow1.Width, RetroShadow1.Height))
-            using (Graphics G = Graphics.FromImage(b))
-            {
-                G.Clear(Color.Transparent);
-                G.DrawGlow(new(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
-                G.Save();
-                G.Dispose();
-                RetroShadow1.Image = new Bitmap(b);
-            }
-
-            RetroShadow1.BringToFront();
-            Menu_Window.BringToFront();
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            btndkshadow_pick.BackColor = btnface_pick.BackColor;
-            btnshadow_pick.BackColor = btnface_pick.BackColor;
-            btnhilight_pick.BackColor = btnface_pick.BackColor;
-            btnlight_pick.BackColor = btnface_pick.BackColor;
-            ApplyRetroPreview();
-        }
-
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            btndkshadow_pick.BackColor = btnshadow_pick.BackColor;
-            btnhilight_pick.BackColor = btnshadow_pick.BackColor;
-            btnlight_pick.BackColor = btnface_pick.BackColor;
-            btnshadow_pick.BackColor = btnface_pick.BackColor;
-            ApplyRetroPreview();
-        }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-classic-colors");
+        }
+
+        public void retroDesktopColors1_EditorInvoker(object sender, EditorEventArgs e)
+        {
+            Dictionary<Control, string[]> CList = new()
+            {
+                { retroDesktopColors1, new string[] { e.PropertyName }}
+            };
+
+            if (sender != retroDesktopColors1)
+            {
+                CList.Add((Control)sender, new string[] { e.PropertyName });
+            }
+
+            if (Forms.Win32UI_Fullscreen?.retroDesktopColors1 != null && sender != Forms.Win32UI_Fullscreen?.retroDesktopColors1)
+            {
+                CList.Add(Forms.Win32UI_Fullscreen.retroDesktopColors1, new string[] { e.PropertyName });
+            }
+
+            if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ActiveTitle).ToLower())
+                CList.Add(activetitle_pick, new string[] { nameof(activetitle_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.GradientActiveTitle).ToLower())
+                CList.Add(GActivetitle_pick, new string[] { nameof(GActivetitle_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.TitleText).ToLower())
+                CList.Add(TitleText_pick, new string[] { nameof(TitleText_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.InactiveTitle).ToLower())
+                CList.Add(InactiveTitle_pick, new string[] { nameof(InactiveTitle_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.GradientInactiveTitle).ToLower())
+                CList.Add(GInactivetitle_pick, new string[] { nameof(GInactivetitle_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.InactiveTitleText).ToLower())
+                CList.Add(InactivetitleText_pick, new string[] { nameof(InactivetitleText_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ActiveBorder).ToLower())
+                CList.Add(ActiveBorder_pick, new string[] { nameof(ActiveBorder_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.InactiveBorder).ToLower())
+                CList.Add(InactiveBorder_pick, new string[] { nameof(InactiveBorder_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.WindowFrame).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.WindowFrame) });
+                CList.Add(Frame_pick, new string[] { nameof(Frame_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonFace).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.BackColor) });
+                CList.Add(btnface_pick, new string[] { nameof(btnface_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonDkShadow).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonDkShadow) });
+                CList.Add(btndkshadow_pick, new string[] { nameof(btndkshadow_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonHilight).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonHilight) });
+                CList.Add(btnhilight_pick, new string[] { nameof(btnhilight_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonLight).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonLight) });
+                CList.Add(btnlight_pick, new string[] { nameof(btnlight_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonShadow).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ButtonShadow) });
+                CList.Add(btnshadow_pick, new string[] { nameof(btnshadow_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.ButtonText).ToLower())
+            {
+                CList.Add(Retro3DPreview1, new string[] { nameof(Retro3DPreview1.ForeColor) });
+                CList.Add(btntext_pick, new string[] { nameof(btntext_pick.BackColor) });
+            }
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.AppWorkspace).ToLower())
+                CList.Add(AppWorkspace_pick, new string[] { nameof(AppWorkspace_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Background).ToLower())
+                CList.Add(background_pick, new string[] { nameof(background_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Menu).ToLower())
+                CList.Add(menu_pick, new string[] { nameof(menu_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.MenuBar).ToLower())
+                CList.Add(menubar_pick, new string[] { nameof(menubar_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Hilight).ToLower())
+                CList.Add(hilight_pick, new string[] { nameof(hilight_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.MenuHilight).ToLower())
+                CList.Add(menuhilight_pick, new string[] { nameof(menuhilight_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.HilightText).ToLower())
+                CList.Add(hilighttext_pick, new string[] { nameof(hilighttext_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.HotTrackingColor).ToLower())
+                CList.Add(hottracking_pick, new string[] { nameof(hottracking_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Scrollbar).ToLower())
+                CList.Add(Scrollbar_pick, new string[] { nameof(Scrollbar_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Desktop).ToLower())
+                CList.Add(desktop_pick, new string[] { nameof(desktop_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.Window).ToLower())
+                CList.Add(Window_pick, new string[] { nameof(Window_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.WindowText).ToLower())
+                CList.Add(WindowText_pick, new string[] { nameof(WindowText_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.GrayText).ToLower())
+                CList.Add(GrayText_pick, new string[] { nameof(GrayText_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.InfoWindow).ToLower())
+                CList.Add(InfoWindow_pick, new string[] { nameof(InfoWindow_pick.BackColor) });
+
+            else if (e.PropertyName.ToLower() == nameof(retroDesktopColors1.InfoText).ToLower())
+                CList.Add(InfoText_pick, new string[] { nameof(InfoText_pick.BackColor) });
+
+            if (CList.ElementAt(CList.Count - 1).Key is ColorItem)
+            {
+                ColorItem colorItem = (ColorItem)CList.ElementAt(CList.Count - 1).Key;
+
+                if (colorItem.Parent != null && colorItem.Parent is TabPage)
+                {
+                    TabControl1.SelectedIndex = TabControl1.TabPages.IndexOf((TabPage)colorItem.Parent);
+                }
+
+                else if (colorItem.Parent != null && colorItem.Parent is UI.WP.GroupBox && colorItem.Parent.Parent != null & colorItem.Parent.Parent is TabPage)
+                {
+                    TabControl1.SelectedIndex = TabControl1.TabPages.IndexOf((TabPage)colorItem.Parent.Parent);
+                }
+            }
+
+            Color C = Forms.ColorPickerDlg.Pick(CList);
+
+            retroDesktopColors1.SetProperty(e.PropertyName ?? "BackColor", C);
+            ((Control)sender).SetProperty(e.PropertyName ?? "BackColor", C);
+
+            if (Forms.Win32UI_Fullscreen?.retroDesktopColors1 != null)
+            {
+                Forms.Win32UI_Fullscreen.retroDesktopColors1.SetProperty(e.PropertyName ?? "BackColor", C);
+            }
+
+            CList.ElementAt(CList.Count - 1).Key.SetProperty(CList.ElementAt(CList.Count - 1).Value.FirstOrDefault(), C);
+
+            CList.Clear();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            magnifier1.Enabled = checkBox1.Checked;
+            splitContainer1.Panel2Collapsed = !checkBox1.Checked;
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string result = Forms.Win32UI_Gallery.PickATheme();
+            if (!string.IsNullOrWhiteSpace(result) && ComboBox1.Items.Contains(result))
+            {
+                ComboBox1.SelectedItem = result;
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                Forms.Win32UI_Fullscreen.ShowDialog();
+                checkBox2.Checked = false;
+            }
+        }
+
+        private void Change3DStyle()
+        {
+            if (trackBarX1.Value == 100)
+            {
+                retroDesktopColors1.ButtonDkShadow = _btn_dkshadow;
+                retroDesktopColors1.ButtonHilight = _btn_hilight;
+                retroDesktopColors1.ButtonLight = _btn_light;
+                retroDesktopColors1.ButtonShadow = _btn_shadow;
+            }
+            else
+            {
+                if (radioButton2.Checked)
+                {
+                    if (trackBarX1.Value > 100)
+                    {
+                        float amount = (trackBarX1.Value - 100f) / 100f;
+                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_dkshadow.DarkDark(), amount);
+                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_shadow.DarkDark(), amount);
+                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_hilight.Dark(), amount);
+                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_light.Dark(), amount);
+                    }
+                    else if (trackBarX1.Value < 100)
+                    {
+                        float amount = 1f - (trackBarX1.Value) / 100f;
+                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_hilight, amount);
+                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_light, amount);
+                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_dkshadow, amount);
+                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_shadow, amount);
+                    }
+                }
+                else
+                {
+                    if (trackBarX1.Value > 100)
+                    {
+                        float amount = (trackBarX1.Value - 100f) / 100f;
+                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_shadow, amount);
+                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
+                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_shadow, amount);
+                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                    }
+                    else if (trackBarX1.Value < 100)
+                    {
+                        float amount = 1f - (trackBarX1.Value) / 100f;
+                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, retroDesktopColors1.ButtonFace, amount);
+                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
+                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, retroDesktopColors1.ButtonFace, amount);
+                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                    }
+                }
+            }
+
+            btnshadow_pick.BackColor = retroDesktopColors1.ButtonShadow;
+            btndkshadow_pick.BackColor = retroDesktopColors1.ButtonDkShadow;
+            btnhilight_pick.BackColor = retroDesktopColors1.ButtonHilight;
+            btnlight_pick.BackColor = retroDesktopColors1.ButtonLight;
+
+            Retro3DPreview1.ButtonDkShadow = retroDesktopColors1.ButtonDkShadow;
+            Retro3DPreview1.ButtonHilight = retroDesktopColors1.ButtonHilight;
+            Retro3DPreview1.ButtonLight = retroDesktopColors1.ButtonLight;
+            Retro3DPreview1.ButtonShadow = retroDesktopColors1.ButtonShadow;
+        }
+
+        static Color BlendColors(Color color1, Color color2, float amount)
+        {
+            amount = Math.Max(0, Math.Min(1, amount)); // Ensure amount is within [0, 1]
+
+            int r = (int)(color1.R * (1 - amount) + color2.R * amount);
+            int g = (int)(color1.G * (1 - amount) + color2.G * amount);
+            int b = (int)(color1.B * (1 - amount) + color2.B * amount);
+
+            return Color.FromArgb(r, g, b);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            Change3DStyle();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            Change3DStyle();
+        }
+
+        private void trackBarX1_Scroll(object sender, EventArgs e)
+        {
+            Change3DStyle();
         }
     }
 }

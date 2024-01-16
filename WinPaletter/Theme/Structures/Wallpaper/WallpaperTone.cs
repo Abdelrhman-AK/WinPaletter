@@ -61,7 +61,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Save the data only to registry without processing and applying target image
+        /// ApplyToTM the data only to registry without processing and applying target image
         /// </summary>
         /// <param name="WT">WallpaperTone structure</param>
         /// <param name="SubKey">
@@ -113,8 +113,6 @@ namespace WinPaletter.Theme.Structures
             SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
-
-            Forms.MainFrm.Update_Wallpaper_Preview();
         }
 
         /// <summary>Operator to check if two WallpaperTone structures are equal</summary>

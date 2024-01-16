@@ -32,7 +32,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Enable menu show animation</summary>
         public bool MenuAnimation;
 
-        /// <summary>Menu animation type. It can be fade or scroll</summary>
+        /// <summary>contextMenu animation type. It can be fade or scroll</summary>
         public MenuAnimType MenuFade;
 
         /// <summary>Fade selection after clicking on a menu item</summary>
@@ -53,7 +53,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Enable tooltip animation</summary>
         public bool TooltipAnimation;
 
-        /// <summary>Tooltip appearance animation. It can be fade or scroll</summary>
+        /// <summary>ToolTip appearance animation. It can be fade or scroll</summary>
         public MenuAnimType TooltipFade;
 
         /// <summary>Show shadow in icons labels at desktop</summary>

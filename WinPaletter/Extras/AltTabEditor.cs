@@ -1,87 +1,153 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class AltTabEditor
     {
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-switcher-(Alt-Tab-appearance)");
+        }
+
         public AltTabEditor()
         {
             InitializeComponent();
         }
+
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
+            Close();
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                TMx.AltTab.Apply();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
         private void AltTabEditor_Load(object sender, EventArgs e)
         {
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(Program.TM);
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.Store_Toggle_AltTab,
+                Enabled = Program.TM.AltTab.Enabled,
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = false,
+                CanSwitchMode = false,
 
-            switch (Program.PreviewStyle)
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+            };
+
+            LoadData(data);
+
+            LoadFromTM(Program.TM);
+
+            switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
                     {
-                        RadioImage1.Image = Properties.Resources.Native12;
+                        RadioImage1.Image = Assets.WinLogos.Win12;
                         break;
                     }
 
                 case WindowStyle.W11:
                     {
-                        RadioImage1.Image = Properties.Resources.Native11;
+                        RadioImage1.Image = Assets.WinLogos.Win11;
                         break;
                     }
 
                 case WindowStyle.W10:
                     {
-                        RadioImage1.Image = Properties.Resources.Native10;
+                        RadioImage1.Image = Assets.WinLogos.Win10;
                         break;
                     }
 
                 case WindowStyle.W81:
                     {
-                        RadioImage1.Image = Properties.Resources.Native8;
+                        RadioImage1.Image = Assets.WinLogos.Win81;
                         break;
                     }
 
                 case WindowStyle.W7:
                     {
-                        RadioImage1.Image = Properties.Resources.Native7;
+                        RadioImage1.Image = Assets.WinLogos.Win7;
                         break;
                     }
 
                 case WindowStyle.WVista:
                     {
-                        RadioImage1.Image = Properties.Resources.NativeVista;
+                        RadioImage1.Image = Assets.WinLogos.WinVista;
                         break;
                     }
 
                 case WindowStyle.WXP:
                     {
-                        RadioImage1.Image = Properties.Resources.NativeXP;
+                        RadioImage1.Image = Assets.WinLogos.WinXP;
                         break;
                     }
 
                 default:
                     {
-                        RadioImage1.Image = Properties.Resources.Native12;
+                        RadioImage1.Image = Assets.WinLogos.Win12;
                         break;
                     }
             }
 
-            RadioImage2.Image = Properties.Resources.NativeXP;
+            RadioImage2.Image = Assets.WinLogos.WinXP;
 
-            pnl_preview1.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            Classic_Preview1.BackgroundImage = Forms.MainFrm.pnl_preview_classic.BackgroundImage;
+            pnl_preview1.BackgroundImage = Program.Wallpaper;
+            Classic_Preview1.BackgroundImage = Program.Wallpaper;
 
             SetClassicPanelRaisedRColors(Program.TM, PanelRRaised1);
             SetClassicPanelColors(Program.TM, PanelR1);
 
             Panel1.BackColor = Program.TM.Win32.Hilight;
 
-            switch (Program.PreviewStyle)
+            switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
                     {
@@ -170,7 +236,7 @@ namespace WinPaletter
             LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
             GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.IsAllowed();
-            AlertBox1.Visible = Program.PreviewStyle == WindowStyle.W7;
+            AlertBox1.Visible = Program.WindowStyle == WindowStyle.W7;
 
             if (ExplorerPatcher.IsAllowed())
             {
@@ -201,14 +267,11 @@ namespace WinPaletter
             WinElement1.Top = (int)Math.Round((WinElement1.Parent.Height - WinElement1.Height) / 2d);
 
             tabs_preview_1.DoubleBuffer();
-
-            this.LoadLanguage();
-            ApplyStyle(this);
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Manager TM)
         {
-            AltTabEnabled.Checked = TM.AltTab.Enabled;
+            AspectEnabled = TM.AltTab.Enabled;
             RadioImage1.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.Default | TM.AltTab.Style == Theme.Structures.AltTab.Styles.EP_Win10;
             RadioImage2.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.ClassicNT;
             Trackbar1.Value = TM.AltTab.Win10Opacity;
@@ -216,93 +279,28 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            TM.AltTab.Enabled = AltTabEnabled.Checked;
+            TM.AltTab.Enabled = AspectEnabled;
             TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
             if (ExplorerPatcher.IsAllowed() & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
                 TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
             TM.AltTab.Win10Opacity = Trackbar1.Value;
         }
 
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            TMx.AltTab.Apply();
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM);
-            Close();
-        }
-
-        private void AltTabEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
-        private void Opacity_btn_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
-            Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Trackbar1_Scroll(object sender)
-        {
-            opacity_btn.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
-        }
-
-        private void RadioImage2_CheckedChanged(object sender)
+        private void RadioImage2_CheckedChanged(object sender, EventArgs e)
         {
             if (RadioImage2.Checked)
                 tabs_preview_1.SelectedIndex = 1;
         }
 
-        private void RadioImage1_CheckedChanged(object sender)
+        private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
             if (RadioImage1.Checked)
                 tabs_preview_1.SelectedIndex = 0;
         }
 
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-switcher-(Alt-Tab-appearance)");
+            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
         }
     }
 }

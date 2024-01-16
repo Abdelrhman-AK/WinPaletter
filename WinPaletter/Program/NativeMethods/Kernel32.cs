@@ -112,5 +112,16 @@ namespace WinPaletter.NativeMethods
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// GetModuleHandle function: Retrieves a module handle for the specified module.
+        /// If the function succeeds, the return value is a handle to the specified module.
+        /// If the function fails, the return value is IntPtr.Zero.
+        /// </summary>
+        /// <param name="lpModuleName">The name of the loaded module (usually a DLL) or NULL to get the handle of the calling module.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the specified module.
+        /// If the function fails, the return value is IntPtr.Zero.</returns>
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
     }
 }

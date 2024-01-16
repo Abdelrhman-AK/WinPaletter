@@ -213,8 +213,8 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Retrieves the logical font information for the current icon-title font.</b>
             /// <br></br>
-            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LOGFONT structure,
-            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to the LOGFONT structure to fill in.
+            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LogFont structure,
+            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to the LogFont structure to fill in.
             /// </summary>
             SPI_GETICONTITLELOGFONT = 0x001F,
 
@@ -237,8 +237,8 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Sets the font that is used for icon titles.</b>
             /// <br></br>
-            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LOGFONT structure,
-            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a LOGFONT structure.
+            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LogFont structure,
+            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a LogFont structure.
             /// </summary>
             SPI_SETICONTITLELOGFONT = 0x0022,
 
@@ -289,7 +289,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br>
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a <b><c>NONCLIENTMETRICS</c></b> structure that contains the new parameters.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(NONCLIENTMETRICS)</c></b>.
-            /// <br></br> • Also, the lfHeight member of the LOGFONT structure must be a negative value.
+            /// <br></br> • Also, the lfHeight member of the LogFont structure must be a negative value.
             /// </summary>
             SPI_SETNONCLIENTMETRICS = 0x002A,
 
@@ -1341,19 +1341,19 @@ namespace WinPaletter.NativeMethods
             SPI_SETMOUSEVANISH = 0x1021,
 
             /// <summary>
-            /// <b>Determines whether native User menus have flat menu appearance.</b>
+            /// <b>Determines whether native User menus have _flat menu appearance.</b>
             /// <br></br>
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a <b><c>bool</c></b> variable
-            /// <br></br>   that returns <b><c>true</c></b> if the flat menu appearance is set, or <b><c>false</c></b> otherwise.
+            /// <br></br>   that returns <b><c>true</c></b> if the _flat menu appearance is set, or <b><c>false</c></b> otherwise.
             /// <br></br>
             /// <br></br> • <i> (!) Windows 2000/NT, Windows Me/98/95: This value is not supported.</i>
             /// </summary>
             SPI_GETFLATMENU = 0x1022,
 
             /// <summary>
-            /// <b>Enables or disables flat menu appearance for native User menus.</b>
+            /// <b>Enables or disables _flat menu appearance for native User menus.</b>
             /// <br></br>
-            /// <br></br> • Set <b><c>pvParam</c></b> to <b><c>true</c></b> to enable flat menu appearance
+            /// <br></br> • Set <b><c>pvParam</c></b> to <b><c>true</c></b> to enable _flat menu appearance
             /// <br></br>   or <b><c>false</c></b> to disable it.
             /// <br></br> • When enabled, the menu bar uses COLOR_MENUBAR for the menubar background, COLOR_MENU for the menu-popup background,
             /// <br></br>   COLOR_MENUHILIGHT for the fill of the current menu selection, and COLOR_HILIGHT for the outline of the current menu selection.

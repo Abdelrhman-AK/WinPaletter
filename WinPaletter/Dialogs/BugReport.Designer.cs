@@ -202,10 +202,13 @@ namespace WinPaletter
             // Button5
             // 
             this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button5.CustomColor = System.Drawing.Color.Empty;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
+            this.Button5.ImageAsVector = false;
+            this.Button5.ImageVector = null;
             this.Button5.Location = new System.Drawing.Point(425, 396);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(115, 34);
@@ -217,10 +220,13 @@ namespace WinPaletter
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
             this.Button2.Location = new System.Drawing.Point(546, 396);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
@@ -232,10 +238,13 @@ namespace WinPaletter
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(667, 396);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
@@ -249,6 +258,7 @@ namespace WinPaletter
             this.Separator1.AlternativeLook = false;
             this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Separator1.BackColor = System.Drawing.Color.Transparent;
             this.Separator1.Location = new System.Drawing.Point(12, 118);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(770, 1);
@@ -289,10 +299,13 @@ namespace WinPaletter
             // Button6
             // 
             this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button6.CustomColor = System.Drawing.Color.Empty;
+            this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
+            this.Button6.ImageAsVector = false;
+            this.Button6.ImageVector = null;
             this.Button6.Location = new System.Drawing.Point(666, 6);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(100, 22);
@@ -304,10 +317,13 @@ namespace WinPaletter
             // Button4
             // 
             this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button4.CustomColor = System.Drawing.Color.Empty;
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
+            this.Button4.ImageAsVector = false;
+            this.Button4.ImageVector = null;
             this.Button4.Location = new System.Drawing.Point(629, 6);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(35, 22);
@@ -318,10 +334,13 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
             this.Button3.Location = new System.Drawing.Point(592, 6);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(35, 22);

@@ -20,8 +20,8 @@
         public string Verbose_User32_SMT { get; set; } = "Broadcasting all effects made to registry: {0}.{1}({2}, {3}, {4}, {5}, {6}, {7}, {8})";
         public string Verbose_SettingSlideshow { get; set; } = "Setting desktop slideshow data by modifying '{0}'";
         public string Verbose_SettingHSLImage { get; set; } = "Modifying HSL filters of selected image '{0}'";
-        public string Verbose_EnableExplorerBar { get; set; } = "Enabling explorer bar by renaming UIRibbon.dll into UIRibbon.dll_bak";
-        public string Verbose_RestoreExplorerBar { get; set; } = "Restoring explorer ribbon/bar by renaming UIRibbon.dll_bak into UIRibbon.dll";
+        public string Verbose_EnableExplorerBar { get; set; } = "Enabling Explorer bar by renaming UIRibbon.dll into UIRibbon.dll_bak";
+        public string Verbose_RestoreExplorerBar { get; set; } = "Restoring Explorer ribbon/bar by renaming UIRibbon.dll_bak into UIRibbon.dll";
         public string Verbose_GetInstanceLogonUIImg { get; set; } = "Getting an instance of LogonUI image into memory";
         public string Verbose_GetInstanceLockScreenImg { get; set; } = "Getting an instance of lock screen image into memory";
         public string Verbose_GrayscaleLogonUIImg { get; set; } = "Doing grayscale effect on LogonUI image";

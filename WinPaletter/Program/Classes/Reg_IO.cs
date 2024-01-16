@@ -39,7 +39,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or Administrator issues.
+        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="TreeView">TreeView used as a theme log</param>
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
@@ -317,7 +317,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or Administrator issues.
+        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
         /// <param name="ValueName">Name of value to be edited</param>
@@ -629,7 +629,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete registry value using elevated Command Prompt to try to solve security access issues or Administrator issues.
+        /// Delete registry value using elevated Command Prompt to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
         /// <param name="ValueName">Name of value to be edited</param>
@@ -705,10 +705,10 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Take ownership of a file (to current user) using elevated Command Prompt (Takeown) to try to solve security access issues or Administrator issues.
+        /// Take ownership of a file (to current user) using elevated Command Prompt (Takeown) to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="File">Target file</param>
-        /// <param name="AsAdministrator">Take ownership to Administrator instead of current user</param>
+        /// <param name="AsAdministrator">Take ownership to administrator instead of current user</param>
         public static void Takeown_File(string File, bool AsAdministrator = false)
         {
             if (System.IO.File.Exists(File))
@@ -726,10 +726,10 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Take ownership of a file (to current user) using elevated Command Prompt (ICACLS) to try to solve security access issues or Administrator issues.
+        /// Take ownership of a file (to current user) using elevated Command Prompt (ICACLS) to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="File">Target file</param>
-        /// <param name="AsAdministrator">Take ownership to Administrator instead of current user</param>
+        /// <param name="AsAdministrator">Take ownership to administrator instead of current user</param>
         public static void ICACLS(string File, bool AsAdministrator = false)
         {
             if (System.IO.File.Exists(File))
@@ -747,7 +747,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Move a file using elevated Command Prompt to try to solve security access issues or Administrator issues.
+        /// Move a file using elevated Command Prompt to try to solve security access issues or administrator issues.
         /// </summary>
         /// <param name="source">Target file</param>
         /// <param name="destination">Destination file</param>

@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
         Timer Timer = new() { Enabled = false, Interval = 500 };
 
-        private TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.15d));
+        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
         private bool tick = false;
@@ -65,6 +65,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _OpacityBackImage)
                 {
                     _OpacityBackImage = value;
+                    UpdateOpacityBackImageChanged();
                     Invalidate();
                 }
             }
@@ -79,35 +80,283 @@ namespace WinPaletter.UI.Simulation
                 if (value != _BackImage)
                 {
                     _BackImage = value;
-                    Invalidate();
                     UpdateOpacityBackImageChanged();
+                    Invalidate();
                 }
             }
         }
 
-        public Color Color_Titlebar { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Color_Titlebar_Unfocused { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Color_TabFocused { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Color_TabUnFocused { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public Color Color_Background { get; set; } = Color.Black;
-        public Color Color_Foreground { get; set; } = Color.White;
-        public Color Color_Selection { get; set; } = Color.Gray;
-        public Color Color_Cursor { get; set; } = Color.White;
-        public CursorShape_Enum CursorType { get; set; } = CursorShape_Enum.bar;
-        public int CursorHeight { get; set; } = 25;
-        public bool Light { get; set; } = false;
-        public bool UseAcrylicOnTitlebar { get; set; } = false;
-        public bool UseAcrylic { get; set; } = false;
-        public string TabTitle { get; set; } = string.Empty;
-        public Image TabIcon { get; set; }
-        public Color TabColor { get; set; } = Color.FromArgb(0, 0, 0, 0);
-        public bool PreviewVersion { get; set; } = true;
-        public string TabIconButItIsString { get; set; } = "";
-        public bool IsFocused { get; set; } = true;
+        private Color _color_Titlebar = Color.FromArgb(0, 0, 0, 0);
+        public Color Color_Titlebar
+        {
+            get => _color_Titlebar;
+            set
+            {
+                if (value != _color_Titlebar)
+                {
+                    _color_Titlebar = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0);
+        public Color Color_Titlebar_Unfocused
+        {
+            get => _color_Titlebar_Unfocused;
+            set
+            {
+                if (value != _color_Titlebar_Unfocused)
+                {
+                    _color_Titlebar_Unfocused = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_TabFocused = Color.FromArgb(0, 0, 0, 0);
+        public Color Color_TabFocused
+        {
+            get => _color_TabFocused;
+            set
+            {
+                if (value != _color_TabFocused)
+                {
+                    _color_TabFocused = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_TabUnFocused = Color.FromArgb(0, 0, 0, 0);
+        public Color Color_TabUnFocused
+        {
+            get => _color_TabUnFocused;
+            set
+            {
+                if (value != _color_TabUnFocused)
+                {
+                    _color_TabUnFocused = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_Background = Color.Black;
+        public Color Color_Background
+        {
+            get => _color_Background;
+            set
+            {
+                if (value != _color_Background)
+                {
+                    _color_Background = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_Foreground = Color.White;
+        public Color Color_Foreground
+        {
+            get => _color_Foreground;
+            set
+            {
+                if (value != _color_Foreground)
+                {
+                    _color_Foreground = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_Selection = Color.Gray;
+        public Color Color_Selection
+        {
+            get => _color_Selection;
+            set
+            {
+                if (value != _color_Selection)
+                {
+                    _color_Selection = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _color_Cursor = Color.White;
+        public Color Color_Cursor
+        {
+            get => _color_Cursor;
+            set
+            {
+                if (value != _color_Cursor)
+                {
+                    _color_Cursor = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private CursorShape_Enum _cursorType = CursorShape_Enum.bar;
+        public CursorShape_Enum CursorType
+        {
+            get => _cursorType;
+            set
+            {
+                if (value != _cursorType)
+                {
+                    _cursorType = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private int _cursorHeight = 25;
+        public int CursorHeight
+        {
+            get => _cursorHeight;
+            set
+            {
+                if (value != _cursorHeight)
+                {
+                    _cursorHeight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private bool _light = false;
+        public bool Light
+        {
+            get => _light;
+            set
+            {
+                if (value != _light)
+                {
+                    _light = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private bool _useAcrylicOnTitlebar = false;
+        public bool UseAcrylicOnTitlebar
+        {
+            get => _useAcrylicOnTitlebar;
+            set
+            {
+                if (value != _useAcrylicOnTitlebar)
+                {
+                    _useAcrylicOnTitlebar = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private bool _useAcrylic = false;
+        public bool UseAcrylic
+        {
+            get => _useAcrylic;
+            set
+            {
+                if (value != _useAcrylic)
+                {
+                    _useAcrylic = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private string _tabTitle = string.Empty;
+        public string TabTitle
+        {
+            get => _tabTitle;
+            set
+            {
+                if (value != _tabTitle)
+                {
+                    _tabTitle = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private Color _tabColor = Color.FromArgb(0, 0, 0, 0);
+        public Color TabColor
+        {
+            get => _tabColor;
+            set
+            {
+                if (value != _tabColor)
+                {
+                    _tabColor = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private bool _previewVersion = true;
+        public bool PreviewVersion
+        {
+            get => _previewVersion;
+            set
+            {
+                if (value != _previewVersion)
+                {
+                    _previewVersion = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private string _tabIconButItIsString = "";
+        public string TabIconButItIsString
+        {
+            get => _tabIconButItIsString;
+            set
+            {
+                if (value != _tabIconButItIsString)
+                {
+                    _tabIconButItIsString = value;
+                    Refresh();
+                }
+            }
+        }
+
+        private bool _isFocused = true;
+        public bool IsFocused
+        {
+            get => _isFocused;
+            set
+            {
+                if (value != _isFocused)
+                {
+                    _isFocused = value;
+                    Refresh();
+                }
+            }
+        }
+
+
+        private Image _tabIcon = null;
+        public Image TabIcon
+        {
+            get => _tabIcon;
+            set
+            {
+                if (value != _tabIcon)
+                {
+                    _tabIcon = value;
+                    Refresh();
+                }
+            }
+        }
+
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         protected override void OnHandleCreated(EventArgs e)
         {
@@ -140,11 +389,18 @@ namespace WinPaletter.UI.Simulation
             base.OnSizeChanged(e);
         }
 
+        protected override void OnFontChanged(EventArgs e)
+        {
+            Refresh();
+
+            base.OnFontChanged(e);
+        }
+
         private void UpdateOpacityBackImageChanged()
         {
             if (BackImage is not null)
             {
-                img = BackImage.Fade((double)(OpacityBackImage / 100f));
+                img = BackImage.Fade(OpacityBackImage / 100f);
                 Refresh();
             }
         }
@@ -157,7 +413,7 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
-        #region Voids/Functions
+        #region Methods
 
         private GraphicsPath RR(Rectangle r, int radius)
         {
@@ -299,13 +555,16 @@ namespace WinPaletter.UI.Simulation
 
         private void GetBack()
         {
-            adaptedBack = Program.Wallpaper;
-            adaptedBackBlurred = BitmapExtensions.Blur(new Bitmap(adaptedBack), 13);
+            if (Program.Wallpaper != null)
+            {
+                adaptedBack = Program.Wallpaper;
+                adaptedBackBlurred = adaptedBack.Blur(13);
+            }
         }
 
         private void NoiseBack()
         {
-            Noise = new(Properties.Resources.GaussianBlur.Fade(0.5d));
+            using (Bitmap b = Properties.Resources.Noise.Fade(0.5f)) { Noise = new(b); }
         }
 
         #endregion
@@ -327,7 +586,6 @@ namespace WinPaletter.UI.Simulation
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
 
-            DoubleBuffered = true;
 
             if (PreviewVersion)
             {
@@ -407,11 +665,11 @@ namespace WinPaletter.UI.Simulation
             Rectangle Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, (int)Math.Round(s2X.Width), (int)Math.Round(s2X.Height));
             Rectangle Rect_ConsoleText2 = new(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, (int)Math.Round(s3X.Width), (int)Math.Round(s3X.Height));
 
-            Rectangle Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1);
+            Rectangle Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y - 2, 50, Rect_ConsoleText2.Height - 1);
 
             if (UseAcrylic)
             {
-                G.DrawRoundImage(adaptedBackBlurred, Rect);
+                if (adaptedBackBlurred != null) G.DrawRoundImage(adaptedBackBlurred, Rect);
                 G.FillRoundedRect(Noise, Rect);
                 using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
                 {
@@ -422,7 +680,7 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                G.DrawRoundImage(adaptedBack, Rect);
+                if (adaptedBack != null) G.DrawRoundImage(adaptedBack, Rect);
                 using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
                 {
                     G.FillRoundedRect(br, Rect);
@@ -435,12 +693,12 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Program.Style.RoundedCorners)
                 {
-                    FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
+                    if (adaptedBackBlurred != null) FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
                     FillSemiRect(G, Noise, Rect_Titlebar);
                 }
                 else
                 {
-                    G.DrawImage(adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
+                    if (adaptedBackBlurred != null) G.DrawImage(adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
                     G.FillRectangle(Noise, Rect_Titlebar);
                 }
 
@@ -601,7 +859,7 @@ namespace WinPaletter.UI.Simulation
                 }
             }
 
-            using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat())
+            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
             {
                 using (SolidBrush br = new(Color_Foreground))
                 {

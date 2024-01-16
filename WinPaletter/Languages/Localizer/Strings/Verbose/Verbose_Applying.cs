@@ -49,7 +49,7 @@
         public string TM_Time_Cursors { get; set; } = "Total applying Windows cursors took {0} seconds";
         public string TM_SavingCursorsColors { get; set; } = "Saving Windows Cursors Colors to registry";
         public string KillingExplorer { get; set; } = "Killing Explorer (To be restarted)";
-        public string ExplorerRestarted { get; set; } = "Explorer Restarted. It took about {0} seconds to kill explorer";
+        public string ExplorerRestarted { get; set; } = "Explorer Restarted. It took about {0} seconds to kill Explorer";
         public string TM_AppliedWithErrors { get; set; } = "Applying theme done but with error/s. It took {0} seconds";
         public string TM_Applied { get; set; } = "Applying theme done. It took {0} seconds";
         public string TM_AllDone { get; set; } = "All operations are done";

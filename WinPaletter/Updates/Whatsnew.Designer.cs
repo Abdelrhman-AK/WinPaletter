@@ -363,6 +363,8 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
+            this.Button4.ImageAsVector = false;
+            this.Button4.ImageVector = null;
             this.Button4.Location = new System.Drawing.Point(10, 84);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(347, 34);
@@ -415,6 +417,8 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
+            this.Button5.ImageAsVector = false;
+            this.Button5.ImageVector = null;
             this.Button5.Location = new System.Drawing.Point(10, 100);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(347, 34);
@@ -502,6 +506,8 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
+            this.Button6.ImageAsVector = false;
+            this.Button6.ImageVector = null;
             this.Button6.Location = new System.Drawing.Point(10, 100);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(347, 34);
@@ -554,6 +560,8 @@ namespace WinPaletter
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
+            this.Button7.ImageAsVector = false;
+            this.Button7.ImageVector = null;
             this.Button7.Location = new System.Drawing.Point(10, 100);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(347, 34);
@@ -606,6 +614,8 @@ namespace WinPaletter
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
+            this.button9.ImageAsVector = false;
+            this.button9.ImageVector = null;
             this.button9.Location = new System.Drawing.Point(10, 80);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(347, 34);
@@ -657,6 +667,8 @@ namespace WinPaletter
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = null;
+            this.Button8.ImageAsVector = false;
+            this.Button8.ImageVector = null;
             this.Button8.Location = new System.Drawing.Point(10, 100);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(347, 34);
@@ -837,6 +849,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
             this.Button3.Location = new System.Drawing.Point(12, 515);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(100, 34);
@@ -854,6 +868,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
             this.Button2.Location = new System.Drawing.Point(647, 515);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -870,6 +886,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(733, 515);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);

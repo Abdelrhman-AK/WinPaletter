@@ -102,7 +102,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Explorer process file path
         /// </summary>
-        public readonly static string explorer = $"{Windows}\\explorer.exe";
+        public readonly static string Explorer = $"{Windows}\\explorer.exe";
 
         /// <summary>
         /// Task Scheduler command process file path
@@ -124,9 +124,9 @@ namespace WinPaletter.GlobalVariables
 
         #region Windows themes
         /// <summary>
-        /// Temporary theme file (for preview)
+        /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme = $"{appData}\\VisualStyles\\Luna\\luna.theme";
+        public static string MSTheme_Temp => $"{appData}\\VisualStyles\\temp.theme";
 
         /// <summary>
         /// Temporary theme directory (for preview)
@@ -151,24 +151,34 @@ namespace WinPaletter.GlobalVariables
         public readonly static string CMD = $"{System32}\\cmd.exe";
 
         /// <summary>
+        /// PowerShell x86 process file directory
+        /// </summary>
+        public readonly static string PS86_dir = $"{System32}\\WindowsPowerShell\\v1.0";
+
+        /// <summary>
         /// PowerShell x86 process file path
         /// </summary>
-        public readonly static string PS86_app = $"{System32}\\WindowsPowerShell\\v1.0";
+        public readonly static string PS86_app = $"{PS86_dir}\\powershell.exe";
+
+        /// <summary>
+        /// PowerShell x64 process file directory
+        /// </summary>
+        public readonly static string PS64_dir = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
         /// PowerShell x64 process file path
         /// </summary>
-        public readonly static string PS64_app = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
+        public readonly static string PS64_app = $"{PS64_dir}\\powershell.exe";
 
         /// <summary>
         /// PowerShell x86 registry key path
         /// </summary>
-        public readonly static string PS86_reg = $"{PS86_app.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public readonly static string PS86_reg = $"{PS86_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// PowerShell x64 registry key path
         /// </summary>
-        public readonly static string PS64_reg = $"{PS64_app.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public readonly static string PS64_reg = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// Microsoft Terminal JSON settings file

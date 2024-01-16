@@ -12,8 +12,8 @@ namespace WinPaletter
         /// Associate WinPaletter Files Types in Registry
         /// </summary>
         /// <param name="extension">Extension is the file type to be registered (eg ".wpth")</param>
-        /// <param name="className">ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")</param>
-        /// <param name="description">Textual description (eg "WinPaletter ThemeFile")</param>
+        /// <param name="className">ClassName is the name of the associated class (eg "WinPaletter.WindowsXPThemePath")</param>
+        /// <param name="description">Textual description (eg "WinPaletter WindowsXPThemePath")</param>
         /// <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
         public static void CreateFileAssociation(string extension, string className, string description, string iconPath, string exeProgram)
         {
@@ -51,7 +51,7 @@ namespace WinPaletter
         /// Removes WinPaletter Files Types Associate From Registry
         /// </summary>
         /// <param name="extension">Extension is the file type to be removed (eg ".wpth")</param>
-        /// <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.ThemeFile")</param>
+        /// <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.WindowsXPThemePath")</param>
         public static void DeleteFileAssociation(string extension, string className)
         {
 

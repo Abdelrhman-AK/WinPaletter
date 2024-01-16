@@ -3,12 +3,122 @@ using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
+using WinPaletter.WindowsColors;
 
 namespace WinPaletter
 {
     internal partial class Forms
     {
         private readonly static string ex_msg = "Property can only be set to nothing";
+
+
+        private static Win11Colors _Win11Colors;
+        public static Win11Colors Win11Colors
+        {
+            get
+            {
+                _Win11Colors = CreateInstance(_Win11Colors);
+                return _Win11Colors;
+            }
+            set
+            {
+                if (value == _Win11Colors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Win11Colors);
+            }
+        }
+
+        private static Win10Colors _Win10Colors;
+        public static Win10Colors Win10Colors
+        {
+            get
+            {
+                _Win10Colors = CreateInstance(_Win10Colors);
+                return _Win10Colors;
+            }
+            set
+            {
+                if (value == _Win10Colors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Win10Colors);
+            }
+        }
+
+        private static Win81Colors _Win81Colors;
+        public static Win81Colors Win81Colors
+        {
+            get
+            {
+                _Win81Colors = CreateInstance(_Win81Colors);
+                return _Win81Colors;
+            }
+            set
+            {
+                if (value == _Win81Colors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Win81Colors);
+            }
+        }
+
+        private static Win7Colors _Win7Colors;
+        public static Win7Colors Win7Colors
+        {
+            get
+            {
+                _Win7Colors = CreateInstance(_Win7Colors);
+                return _Win7Colors;
+            }
+            set
+            {
+                if (value == _Win7Colors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Win7Colors);
+            }
+        }
+
+        private static WinVistaColors _WinVistaColors;
+        public static WinVistaColors WinVistaColors
+        {
+            get
+            {
+                _WinVistaColors = CreateInstance(_WinVistaColors);
+                return _WinVistaColors;
+            }
+            set
+            {
+                if (value == _WinVistaColors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _WinVistaColors);
+            }
+        }
+
+        private static WinXPColors _WinXPColors;
+        public static WinXPColors WinXPColors
+        {
+            get
+            {
+                _WinXPColors = CreateInstance(_WinXPColors);
+                return _WinXPColors;
+            }
+            set
+            {
+                if (value == _WinXPColors)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _WinXPColors);
+            }
+        }
 
 
         private static ColorInfoDragDrop _ColorInfoDragDrop;
@@ -66,26 +176,6 @@ namespace WinPaletter
                 DisposeInstance(ref _SubMenu);
             }
         }
-
-
-        private static Converter_Form _Converter_Form;
-        public static Converter_Form Converter_Form
-        {
-            get
-            {
-                _Converter_Form = CreateInstance(_Converter_Form);
-                return _Converter_Form;
-            }
-            set
-            {
-                if (value == _Converter_Form)
-                    return;
-                if (value is not null)
-                    throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _Converter_Form);
-            }
-        }
-
 
         private static CursorsStudio _CursorsStudio;
         public static CursorsStudio CursorsStudio
@@ -368,6 +458,24 @@ namespace WinPaletter
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
                 DisposeInstance(ref _ScreenSaver_Editor);
+            }
+        }
+
+        private static ScreenSavers_List _ScreenSavers_List;
+        public static ScreenSavers_List ScreenSavers_List
+        {
+            get
+            {
+                _ScreenSavers_List = CreateInstance(_ScreenSavers_List);
+                return _ScreenSavers_List;
+            }
+            set
+            {
+                if (value == _ScreenSavers_List)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _ScreenSavers_List);
             }
         }
 
@@ -672,44 +780,6 @@ namespace WinPaletter
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
                 DisposeInstance(ref _Metrics_Fonts);
-            }
-        }
-
-
-        private static VS2Metrics _VS2Metrics;
-        public static VS2Metrics VS2Metrics
-        {
-            get
-            {
-                _VS2Metrics = CreateInstance(_VS2Metrics);
-                return _VS2Metrics;
-            }
-            set
-            {
-                if (value == _VS2Metrics)
-                    return;
-                if (value is not null)
-                    throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _VS2Metrics);
-            }
-        }
-
-
-        private static PaletteGenerateDashboard _PaletteGenerateDashboard;
-        public static PaletteGenerateDashboard PaletteGenerateDashboard
-        {
-            get
-            {
-                _PaletteGenerateDashboard = CreateInstance(_PaletteGenerateDashboard);
-                return _PaletteGenerateDashboard;
-            }
-            set
-            {
-                if (value == _PaletteGenerateDashboard)
-                    return;
-                if (value is not null)
-                    throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _PaletteGenerateDashboard);
             }
         }
 
@@ -1113,21 +1183,40 @@ namespace WinPaletter
         }
 
 
-        private static VS2Win32UI _VS2Win32UI;
-        public static VS2Win32UI VS2Win32UI
+        private static Win32UI_Fullscreen _Win32UI_Fullscreen;
+        public static Win32UI_Fullscreen Win32UI_Fullscreen
         {
             get
             {
-                _VS2Win32UI = CreateInstance(_VS2Win32UI);
-                return _VS2Win32UI;
+                _Win32UI_Fullscreen = CreateInstance(_Win32UI_Fullscreen);
+                return _Win32UI_Fullscreen;
             }
             set
             {
-                if (value == _VS2Win32UI)
+                if (value == _Win32UI_Fullscreen)
                     return;
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _VS2Win32UI);
+                DisposeInstance(ref _Win32UI_Fullscreen);
+            }
+        }
+
+
+        private static Win32UI_Gallery _Win32UI_Gallery;
+        public static Win32UI_Gallery Win32UI_Gallery
+        {
+            get
+            {
+                _Win32UI_Gallery = CreateInstance(_Win32UI_Gallery);
+                return _Win32UI_Gallery;
+            }
+            set
+            {
+                if (value == _Win32UI_Gallery)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Win32UI_Gallery);
             }
         }
 
@@ -1204,6 +1293,42 @@ namespace WinPaletter
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
                 DisposeInstance(ref _MainFrm);
+            }
+        }
+
+        private static Dashboard _Dashboard;
+        public static Dashboard Dashboard
+        {
+            get
+            {
+                _Dashboard = CreateInstance(_Dashboard);
+                return _Dashboard;
+            }
+            set
+            {
+                if (value == _Dashboard)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _Dashboard);
+            }
+        }
+
+        private static BackupThemes_List _BackupThemes_List;
+        public static BackupThemes_List BackupThemes_List
+        {
+            get
+            {
+                _BackupThemes_List = CreateInstance(_BackupThemes_List);
+                return _BackupThemes_List;
+            }
+            set
+            {
+                if (value == _BackupThemes_List)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _BackupThemes_List);
             }
         }
 

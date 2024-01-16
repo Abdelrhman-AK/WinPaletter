@@ -95,10 +95,10 @@ namespace WinPaletter
             // Label174
             // 
             this.Label174.BackColor = System.Drawing.Color.Transparent;
-            this.Label174.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label174.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label174.Location = new System.Drawing.Point(42, 42);
             this.Label174.Name = "Label174";
-            this.Label174.Size = new System.Drawing.Size(54, 24);
+            this.Label174.Size = new System.Drawing.Size(72, 24);
             this.Label174.TabIndex = 193;
             this.Label174.Text = "Tab title:";
             this.Label174.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -136,7 +136,7 @@ namespace WinPaletter
             // Label164
             // 
             this.Label164.BackColor = System.Drawing.Color.Transparent;
-            this.Label164.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label164.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label164.Location = new System.Drawing.Point(42, 12);
             this.Label164.Name = "Label164";
             this.Label164.Size = new System.Drawing.Size(72, 24);
@@ -157,7 +157,7 @@ namespace WinPaletter
             // Label153
             // 
             this.Label153.BackColor = System.Drawing.Color.Transparent;
-            this.Label153.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label153.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label153.Location = new System.Drawing.Point(42, 72);
             this.Label153.Name = "Label153";
             this.Label153.Size = new System.Drawing.Size(62, 24);
@@ -202,7 +202,7 @@ namespace WinPaletter
             // Label166
             // 
             this.Label166.BackColor = System.Drawing.Color.Transparent;
-            this.Label166.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label166.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label166.Location = new System.Drawing.Point(42, 102);
             this.Label166.Name = "Label166";
             this.Label166.Size = new System.Drawing.Size(75, 24);
@@ -246,7 +246,6 @@ namespace WinPaletter
             // 
             // TerAcrylic
             // 
-            this.TerAcrylic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.TerAcrylic.Checked = false;
             this.TerAcrylic.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TerAcrylic.ForeColor = System.Drawing.Color.White;
@@ -311,7 +310,7 @@ namespace WinPaletter
             this.AlertBox1.CenterText = false;
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox1.Image = global::WinPaletter.Properties.Resources.notify_info;
+            this.AlertBox1.Image = global::WinPaletter.Assets.Notifications.Info;
             this.AlertBox1.Location = new System.Drawing.Point(12, 174);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(437, 32);

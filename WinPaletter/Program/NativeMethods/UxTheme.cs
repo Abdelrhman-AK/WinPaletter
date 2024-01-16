@@ -40,7 +40,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public static uint WTNCA_NODRAWICON = 0x2U;
         /// <summary>
-        /// Do Not Show the System Menu
+        /// Do Not Show the System contextMenu
         /// </summary>
         public static uint WTNCA_NOSYSMENU = 0x4U;
         /// <summary>

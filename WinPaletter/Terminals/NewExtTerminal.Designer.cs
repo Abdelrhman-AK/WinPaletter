@@ -64,7 +64,7 @@ namespace WinPaletter
             this.Label102.ForeColor = System.Drawing.Color.White;
             this.Label102.Location = new System.Drawing.Point(42, 12);
             this.Label102.Name = "Label102";
-            this.Label102.Size = new System.Drawing.Size(39, 24);
+            this.Label102.Size = new System.Drawing.Size(56, 24);
             this.Label102.TabIndex = 100;
             this.Label102.Text = "Path:";
             this.Label102.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -77,11 +77,13 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.Location = new System.Drawing.Point(234, 105);
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(245, 105);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 201;
@@ -94,11 +96,13 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.Location = new System.Drawing.Point(320, 105);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(331, 105);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(160, 34);
             this.Button1.TabIndex = 200;
@@ -116,24 +120,27 @@ namespace WinPaletter
             this.AlertBox1.CenterText = false;
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox1.Image = global::WinPaletter.Properties.Resources.notify_warning;
+            this.AlertBox1.Image = global::WinPaletter.Assets.Notifications.Warning;
             this.AlertBox1.Location = new System.Drawing.Point(12, 44);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(468, 49);
+            this.AlertBox1.Size = new System.Drawing.Size(479, 49);
             this.AlertBox1.TabIndex = 199;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "This feature is experimental, you should be sure that you are selecting a console" +
-    " application not WinForm\\Desktop application, and in system drive (C:\\)";
+            this.AlertBox1.Text = "This feature is experimental. Ensure that you are selecting a console application" +
+    ", not a WinForm/Desktop application, and that it is located on the system drive " +
+    "(C:).";
             // 
             // Button16
             // 
             this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button16.CustomColor = System.Drawing.Color.Empty;
-            this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
-            this.Button16.Image = ((System.Drawing.Image)(resources.GetObject("Button16.Image")));
-            this.Button16.Location = new System.Drawing.Point(450, 12);
+            this.Button16.Image = null;
+            this.Button16.ImageAsVector = true;
+            this.Button16.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button16.ImageVector")));
+            this.Button16.Location = new System.Drawing.Point(461, 12);
             this.Button16.Name = "Button16";
             this.Button16.Size = new System.Drawing.Size(30, 24);
             this.Button16.TabIndex = 193;
@@ -145,7 +152,7 @@ namespace WinPaletter
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
-            this.TextBox1.Location = new System.Drawing.Point(87, 12);
+            this.TextBox1.Location = new System.Drawing.Point(104, 12);
             this.TextBox1.MaxLength = 32767;
             this.TextBox1.Multiline = false;
             this.TextBox1.Name = "TextBox1";
@@ -154,7 +161,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(357, 24);
+            this.TextBox1.Size = new System.Drawing.Size(351, 24);
             this.TextBox1.TabIndex = 102;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -165,7 +172,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(492, 151);
+            this.ClientSize = new System.Drawing.Size(503, 151);
             this.Controls.Add(this.Button2);
             this.Controls.Add(this.Button1);
             this.Controls.Add(this.AlertBox1);

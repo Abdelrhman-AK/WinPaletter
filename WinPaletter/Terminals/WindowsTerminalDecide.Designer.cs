@@ -35,175 +35,191 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsTerminalDecide));
-            PictureBox1 = new PictureBox();
-            Label7 = new Label();
-            Label144 = new Label();
-            Label1 = new Label();
-            Button2 = new UI.WP.Button();
-            Button2.Click += new EventHandler(Button2_Click);
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            RadioImage2 = new UI.WP.RadioImage();
-            RadioImage1 = new UI.WP.RadioImage();
-            Panel1 = new Panel();
-            AlertBox1 = new UI.WP.AlertBox();
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).BeginInit();
-            Panel1.SuspendLayout();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsTerminalDecide));
+            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Label7 = new System.Windows.Forms.Label();
+            this.Label144 = new System.Windows.Forms.Label();
+            this.Label1 = new System.Windows.Forms.Label();
+            this.Button2 = new WinPaletter.UI.WP.Button();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.RadioImage2 = new WinPaletter.UI.WP.RadioImage();
+            this.RadioImage1 = new WinPaletter.UI.WP.RadioImage();
+            this.Panel1 = new System.Windows.Forms.Panel();
+            this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.Panel1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // PictureBox1
             // 
-            PictureBox1.Image = (Image)resources.GetObject("PictureBox1.Image");
-            PictureBox1.Location = new Point(12, 12);
-            PictureBox1.Name = "PictureBox1";
-            PictureBox1.Size = new Size(35, 35);
-            PictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox1.TabIndex = 0;
-            PictureBox1.TabStop = false;
+            this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
+            this.PictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox1.Name = "PictureBox1";
+            this.PictureBox1.Size = new System.Drawing.Size(35, 35);
+            this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox1.TabIndex = 0;
+            this.PictureBox1.TabStop = false;
             // 
             // Label7
             // 
-            Label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Label7.BackColor = Color.Transparent;
-            Label7.Font = new("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label7.Location = new Point(53, 12);
-            Label7.Name = "Label7";
-            Label7.Size = new Size(344, 89);
-            Label7.TabIndex = 85;
-            Label7.Text = "WinPaletter saves the Windows Terminal Stable and Preview in separete areas in th" + "e theme file." + '\r' + '\n' + '\r' + '\n' + "From which one do you want to be imported into current open edi" + "tor?";
+            this.Label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label7.BackColor = System.Drawing.Color.Transparent;
+            this.Label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label7.Location = new System.Drawing.Point(53, 12);
+            this.Label7.Name = "Label7";
+            this.Label7.Size = new System.Drawing.Size(344, 89);
+            this.Label7.TabIndex = 85;
+            this.Label7.Text = "WinPaletter saves the Windows Terminal Stable and Preview in separate areas in th" +
+    "e theme file. \r\n\r\nFrom which one would you like to import into the currently ope" +
+    "n editor?";
             // 
             // Label144
             // 
-            Label144.BackColor = Color.Transparent;
-            Label144.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label144.Location = new Point(131, 197);
-            Label144.Name = "Label144";
-            Label144.Size = new Size(64, 20);
-            Label144.TabIndex = 88;
-            Label144.Text = "Stable";
-            Label144.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label144.BackColor = System.Drawing.Color.Transparent;
+            this.Label144.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label144.Location = new System.Drawing.Point(131, 197);
+            this.Label144.Name = "Label144";
+            this.Label144.Size = new System.Drawing.Size(64, 20);
+            this.Label144.TabIndex = 88;
+            this.Label144.Text = "Stable";
+            this.Label144.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label1
             // 
-            Label1.BackColor = Color.Transparent;
-            Label1.Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Label1.Location = new Point(213, 197);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(64, 20);
-            Label1.TabIndex = 89;
-            Label1.Text = "Preview";
-            Label1.TextAlign = ContentAlignment.MiddleCenter;
+            this.Label1.BackColor = System.Drawing.Color.Transparent;
+            this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.Location = new System.Drawing.Point(213, 197);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(64, 20);
+            this.Label1.TabIndex = 89;
+            this.Label1.Text = "Preview";
+            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Button2
             // 
-            Button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button2.BackColor = Color.FromArgb(14, 51, 75);
-            Button2.Font = new("Segoe UI", 9.0f);
-            Button2.ForeColor = Color.White;
-            Button2.Image = null;
-            Button2.Location = new Point(231, 305);
-            Button2.Name = "Button2";
-            Button2.Size = new Size(80, 34);
-            Button2.TabIndex = 108;
-            Button2.Text = "Cancel";
-            Button2.UseVisualStyleBackColor = false;
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button2.ForeColor = System.Drawing.Color.White;
+            this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(231, 305);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(80, 34);
+            this.Button2.TabIndex = 108;
+            this.Button2.Text = "Cancel";
+            this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(14, 51, 75);
-            Button1.Font = new("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = null;
-            Button1.ImageAlign = ContentAlignment.MiddleLeft;
-            Button1.Location = new Point(317, 305);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(80, 34);
-            Button1.TabIndex = 107;
-            Button1.Text = "OK";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = null;
+            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(317, 305);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(80, 34);
+            this.Button1.TabIndex = 107;
+            this.Button1.Text = "OK";
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // RadioImage2
             // 
-            RadioImage2.Checked = false;
-            RadioImage2.Font = new("Segoe UI", 9.0f);
-            RadioImage2.ForeColor = Color.White;
-            RadioImage2.Image = (Image)resources.GetObject("RadioImage2.Image");
-            RadioImage2.Location = new Point(213, 130);
-            RadioImage2.Name = "RadioImage2";
-            RadioImage2.Size = new Size(64, 64);
-            RadioImage2.TabIndex = 87;
+            this.RadioImage2.Checked = false;
+            this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioImage2.ForeColor = System.Drawing.Color.White;
+            this.RadioImage2.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage2.Image")));
+            this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage2.Location = new System.Drawing.Point(213, 130);
+            this.RadioImage2.Name = "RadioImage2";
+            this.RadioImage2.Size = new System.Drawing.Size(64, 64);
+            this.RadioImage2.TabIndex = 87;
+            this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // RadioImage1
             // 
-            RadioImage1.Checked = false;
-            RadioImage1.Font = new("Segoe UI", 9.0f);
-            RadioImage1.ForeColor = Color.White;
-            RadioImage1.Image = (Image)resources.GetObject("RadioImage1.Image");
-            RadioImage1.Location = new Point(131, 130);
-            RadioImage1.Name = "RadioImage1";
-            RadioImage1.Size = new Size(64, 64);
-            RadioImage1.TabIndex = 86;
+            this.RadioImage1.Checked = false;
+            this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioImage1.ForeColor = System.Drawing.Color.White;
+            this.RadioImage1.Image = ((System.Drawing.Image)(resources.GetObject("RadioImage1.Image")));
+            this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage1.Location = new System.Drawing.Point(131, 130);
+            this.RadioImage1.Name = "RadioImage1";
+            this.RadioImage1.Size = new System.Drawing.Size(64, 64);
+            this.RadioImage1.TabIndex = 86;
+            this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Panel1
             // 
-            Panel1.BackColor = Color.FromArgb(10, 92, 144);
-            Panel1.Controls.Add(PictureBox1);
-            Panel1.Controls.Add(Label7);
-            Panel1.Dock = DockStyle.Top;
-            Panel1.Location = new Point(0, 0);
-            Panel1.Name = "Panel1";
-            Panel1.Size = new Size(409, 110);
-            Panel1.TabIndex = 109;
+            this.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(144)))));
+            this.Panel1.Controls.Add(this.PictureBox1);
+            this.Panel1.Controls.Add(this.Label7);
+            this.Panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel1.Location = new System.Drawing.Point(0, 0);
+            this.Panel1.Name = "Panel1";
+            this.Panel1.Size = new System.Drawing.Size(409, 110);
+            this.Panel1.TabIndex = 109;
             // 
             // AlertBox1
             // 
-            AlertBox1.AlertStyle = UI.WP.AlertBox.Style.Adaptive;
-            AlertBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AlertBox1.BackColor = Color.FromArgb(70, 51, 2);
-            AlertBox1.CenterText = false;
-            AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new("Segoe UI", 9.0f);
-            AlertBox1.Image = Properties.Resources.notify_warning;
-            AlertBox1.Location = new Point(12, 248);
-            AlertBox1.Name = "AlertBox1";
-            AlertBox1.Size = new Size(385, 49);
-            AlertBox1.TabIndex = 199;
-            AlertBox1.TabStop = false;
-            AlertBox1.Text = "This will override the already existing terminal settings (but won't delete them " + "even if they are not visible)";
+            this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
+            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(51)))), ((int)(((byte)(2)))));
+            this.AlertBox1.CenterText = false;
+            this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox1.Image = global::WinPaletter.Assets.Notifications.Warning;
+            this.AlertBox1.Location = new System.Drawing.Point(12, 248);
+            this.AlertBox1.Name = "AlertBox1";
+            this.AlertBox1.Size = new System.Drawing.Size(385, 49);
+            this.AlertBox1.TabIndex = 199;
+            this.AlertBox1.TabStop = false;
+            this.AlertBox1.Text = "This will override the existing terminal settings (though it won\'t delete them, e" +
+    "ven if they are not visible).";
             // 
             // WindowsTerminalDecide
             // 
-            AcceptButton = Button1;
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(4, 43, 67);
-            ClientSize = new Size(409, 351);
-            Controls.Add(AlertBox1);
-            Controls.Add(Button2);
-            Controls.Add(Button1);
-            Controls.Add(Label1);
-            Controls.Add(Label144);
-            Controls.Add(RadioImage2);
-            Controls.Add(RadioImage1);
-            Controls.Add(Panel1);
-            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "WindowsTerminalDecide";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Decide";
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).EndInit();
-            Panel1.ResumeLayout(false);
-            Load += new EventHandler(WindowsTerminalDecide_Load);
-            ResumeLayout(false);
+            this.AcceptButton = this.Button1;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(43)))), ((int)(((byte)(67)))));
+            this.ClientSize = new System.Drawing.Size(409, 351);
+            this.Controls.Add(this.AlertBox1);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.Label144);
+            this.Controls.Add(this.RadioImage2);
+            this.Controls.Add(this.RadioImage1);
+            this.Controls.Add(this.Panel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "WindowsTerminalDecide";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Decide";
+            this.Load += new System.EventHandler(this.WindowsTerminalDecide_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.Panel1.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
 

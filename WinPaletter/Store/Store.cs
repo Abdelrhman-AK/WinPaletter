@@ -1,5 +1,4 @@
-﻿using Devcorp.Controls.VisualStyles;
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +11,6 @@ using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -37,7 +35,6 @@ namespace WinPaletter
         private int Cycles = 0;
         private WebClient WebCL;
 
-        private readonly Converter _Converter = new();
         private bool ApplyOrEditToggle = true;
         private Settings.Structures.Appearance oldAppearance = Program.Settings.Appearance;
 
@@ -48,292 +45,16 @@ namespace WinPaletter
         }
         #endregion
 
-        #region Preview Voids
+        #region Preview Methods
 
         public void Adjust_Preview(Theme.Manager TM)
         {
-
-            Program.Wallpaper = Program.FetchSuitableWallpaper(TM, Program.PreviewStyle);
-            pnl_preview.BackgroundImage = Program.Wallpaper;
-            pnl_preview_classic.BackgroundImage = Program.Wallpaper;
-
-            ApplyWinElementsColors(TM, Program.PreviewStyle, false, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview);
-            ApplyWindowStyles(TM, Program.PreviewStyle, Window1, Window2);
-            ApplyWinElementsStyle(TM, Program.PreviewStyle, taskbar, start, ActionCenter, Window1, Window2, Panel3, lnk_preview, ClassicTaskbar, ButtonR2, ButtonR3, ButtonR4, ClassicWindow1, ClassicWindow2, Forms.MainFrm.WXP_VS_ReplaceColors.Checked, Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked, Forms.MainFrm.WXP_VS_ReplaceFonts.Checked);
-
-            AdjustPreview_ModernOrClassic(TM, Program.PreviewStyle, tabs_preview, WXP_Alert2);
-        }
-
-        private void Menu_Window_SizeChanged(object sender, EventArgs e)
-        {
-            RetroShadow1.Size = Menu_Window.Size;
-            RetroShadow1.Location = Menu_Window.Location + (Size)new Point(6, 5);
-
-            Bitmap b = new(RetroShadow1.Width, RetroShadow1.Height);
-            Graphics G = Graphics.FromImage(b);
-            G.DrawGlow(new Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0));
-            G.Save();
-            RetroShadow1.Image = b;
-            G.Dispose();
-
-            RetroShadow1.BringToFront();
-            Menu_Window.BringToFront();
-        }
-
-
-        public void SetClassicMetrics(Theme.Manager TM)
-        {
-            try
-            {
-                if ((Program.PreviewStyle == WindowStyle.WXP && Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
-                {
-                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
-                    {
-                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
-                        {
-                            TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
-                        }
-                    }
-
-                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
-                    {
-                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
-                        {
-                            TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            PanelR2.Width = TM.MetricsFonts.ScrollWidth;
-            menucontainer0.Height = TM.MetricsFonts.MenuHeight;
-
-            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
-
-            LabelR1.Font = TM.MetricsFonts.MenuFont;
-            LabelR2.Font = TM.MetricsFonts.MenuFont;
-            LabelR3.Font = TM.MetricsFonts.MenuFont;
-
-            LabelR9.Font = TM.MetricsFonts.MenuFont;
-            LabelR5.Font = TM.MetricsFonts.MenuFont;
-            LabelR6.Font = TM.MetricsFonts.MenuFont;
-
-            menucontainer1.Height = Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
-            highlight.Height = menucontainer1.Height + 1;
-            menucontainer3.Height = menucontainer1.Height + 1;
-            Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom;
-
-            LabelR4.Font = TM.MetricsFonts.MessageFont;
-
-            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
-            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
-            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
-
-            int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
-            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
-            System.Windows.Forms.Padding _Padding = new(iP, iT, iP, iP);
-
-            foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
-            {
-                if (!WindowR.UseItAsMenu)
-                {
-                    SetClassicWindowMetrics(TM, WindowR);
-                    WindowR.Padding = _Padding;
-                }
-            }
-
-
-
-            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font);
-            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight;
-
-            Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
-            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);
-
-            WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10;
-            WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15;
-
-            LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2;
-            LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2;
-
-            RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
-
-            ButtonR5.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
-            ButtonR5.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
-            ButtonR5.Refresh();
-        }
-
-        public void ApplyRetroPreview(Theme.Manager TM)
-        {
-            try
-            {
-                if ((Program.PreviewStyle == WindowStyle.WXP && Forms.MainFrm.WXP_VS_ReplaceColors.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
-                {
-                    if (System.IO.File.Exists(PathsExt.MSTheme) & !string.IsNullOrEmpty(PathsExt.MSTheme))
-                    {
-                        using (VisualStyleFile vs = new(PathsExt.MSTheme))
-                        {
-                            TM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            WindowR1.ColorGradient = TM.Win32.EnableGradient;
-            WindowR1.Color1 = TM.Win32.InactiveTitle;
-            WindowR1.Color2 = TM.Win32.GradientInactiveTitle;
-            WindowR1.ForeColor = TM.Win32.InactiveTitleText;
-            WindowR1.ColorBorder = TM.Win32.InactiveBorder;
-
-            WindowR2.ColorGradient = TM.Win32.EnableGradient;
-            WindowR3.ColorGradient = TM.Win32.EnableGradient;
-            WindowR4.ColorGradient = TM.Win32.EnableGradient;
-
-            WindowR2.Color1 = TM.Win32.ActiveTitle;
-            WindowR3.Color1 = TM.Win32.ActiveTitle;
-            WindowR4.Color1 = TM.Win32.ActiveTitle;
-
-            WindowR2.Color2 = TM.Win32.GradientActiveTitle;
-            WindowR3.Color2 = TM.Win32.GradientActiveTitle;
-            WindowR4.Color2 = TM.Win32.GradientActiveTitle;
-
-            WindowR2.ForeColor = TM.Win32.TitleText;
-            WindowR3.ForeColor = TM.Win32.TitleText;
-            WindowR4.ForeColor = TM.Win32.TitleText;
-
-            WindowR2.ColorBorder = TM.Win32.ActiveBorder;
-            WindowR3.ColorBorder = TM.Win32.ActiveBorder;
-            WindowR4.ColorBorder = TM.Win32.ActiveBorder;
-
-            foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
-            {
-                if (!WindowR.UseItAsMenu)
-                    WindowR.BackColor = TM.Win32.ButtonFace;
-
-                WindowR.ButtonDkShadow = TM.Win32.ButtonDkShadow;
-                WindowR.ButtonHilight = TM.Win32.ButtonHilight;
-                WindowR.ButtonHilight = TM.Win32.ButtonHilight;
-                WindowR.ButtonLight = TM.Win32.ButtonLight;
-                WindowR.ButtonShadow = TM.Win32.ButtonShadow;
-                WindowR.ButtonText = TM.Win32.ButtonText;
-            }
-
-            foreach (UI.Retro.ButtonR ButtonR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.ButtonR>())
-            {
-                ButtonR.WindowFrame = TM.Win32.WindowFrame;
-                ButtonR.BackColor = TM.Win32.ButtonFace;
-                ButtonR.ButtonDkShadow = TM.Win32.ButtonDkShadow;
-                ButtonR.ButtonHilight = TM.Win32.ButtonHilight;
-                ButtonR.ButtonLight = TM.Win32.ButtonLight;
-                ButtonR.ButtonShadow = TM.Win32.ButtonShadow;
-                ButtonR.ForeColor = TM.Win32.ButtonText;
-            }
-
-            foreach (UI.Retro.PanelRaisedR PanelRaisedR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.PanelRaisedR>())
-            {
-                PanelRaisedR.ButtonHilight = TM.Win32.ButtonHilight;
-                PanelRaisedR.ButtonShadow = TM.Win32.ButtonShadow;
-            }
-
-            TextBoxR1.BackColor = TM.Win32.Window;
-            TextBoxR1.ForeColor = TM.Win32.WindowText;
-            TextBoxR1.ButtonDkShadow = TM.Win32.ButtonDkShadow;
-            TextBoxR1.ButtonHilight = TM.Win32.ButtonHilight;
-            TextBoxR1.ButtonLight = TM.Win32.ButtonLight;
-            TextBoxR1.ButtonShadow = TM.Win32.ButtonShadow;
-            TextBoxR1.Refresh();
-
-            PanelR2.BackColor = TM.Win32.ButtonFace;
-            PanelR2.ButtonHilight = TM.Win32.ButtonHilight;
-
-            Menu_Window.ButtonFace = TM.Win32.ButtonFace;
-            Menu_Window.ButtonDkShadow = TM.Win32.ButtonDkShadow;
-            Menu_Window.ButtonHilight = TM.Win32.ButtonHilight;
-            Menu_Window.ButtonLight = TM.Win32.ButtonLight;
-            Menu_Window.ButtonShadow = TM.Win32.ButtonShadow;
-            Menu_Window.BackColor = TM.Win32.Menu;
-            Menu_Window.Refresh();
-
-            PanelR1.BackColor = TM.Win32.Menu;
-            PanelR1.ButtonHilight = TM.Win32.ButtonHilight;
-            PanelR1.ButtonShadow = TM.Win32.ButtonShadow;
-
-            programcontainer.BackColor = TM.Win32.AppWorkspace;
-
-            ClassicColorsPreview.BackColor = TM.Win32.Background;
-
-            menucontainer0.BackColor = TM.Win32.MenuBar;
-
-            highlight.BackColor = TM.Win32.Hilight;
-
-            menuhilight.BackColor = TM.Win32.MenuHilight;
-
-            LabelR6.ForeColor = TM.Win32.MenuText;
-            LabelR1.ForeColor = TM.Win32.MenuText;
-
-            LabelR5.ForeColor = TM.Win32.HilightText;
-
-            LabelR2.ForeColor = TM.Win32.GrayText;
-
-            LabelR9.ForeColor = TM.Win32.GrayText;
-
-            LabelR4.ForeColor = TM.Win32.WindowText;
-
-            LabelR13.BackColor = TM.Win32.InfoWindow;
-            LabelR13.ForeColor = TM.Win32.InfoText;
-
-            Refresh17BitPreference(TM);
-
-            RetroShadow1.Refresh();
-        }
-
-        public void Refresh17BitPreference(Theme.Manager TM)
-        {
-
-            if (TM.Win32.EnableTheming)
-            {
-                // Theming Enabled (Menus Has colors and borders)
-                Menu_Window.Flat = true;
-                PanelR1.Flat = true;
-                PanelR1.BackColor = TM.Win32.MenuHilight;
-                PanelR1.ButtonShadow = TM.Win32.Hilight;
-
-                menuhilight.BackColor = TM.Win32.MenuHilight;  // Filling of selected item
-
-                highlight.BackColor = TM.Win32.Hilight; // Outer Border of selected item
-
-                menucontainer0.BackColor = TM.Win32.MenuBar;
-
-                LabelR3.ForeColor = TM.Win32.HilightText;
-            }
-            else
-            {
-                // Theming Disabled (Menus are retro 3d)
-                Menu_Window.Flat = false;
-                PanelR1.Flat = false;
-                PanelR1.BackColor = TM.Win32.Menu;
-                PanelR1.ButtonShadow = TM.Win32.ButtonShadow;
-
-                menuhilight.BackColor = TM.Win32.Hilight; // Both will have same color
-
-                highlight.BackColor = TM.Win32.Hilight; // Both will have same color
-
-                menucontainer0.BackColor = TM.Win32.Menu;
-
-                LabelR3.ForeColor = TM.Win32.MenuText;
-            }
-
-            Menu_Window.Invalidate();
-            PanelR1.Invalidate();
-            menuhilight.Invalidate();
-            highlight.Invalidate();
-
+            windowsDesktop1.WindowStyle = Program.WindowStyle;
+            windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            windowsDesktop1.LoadFromTM(TM);
+
+            retroDesktopColors1.LoadColors(TM);
+            retroDesktopColors1.LoadMetrics(TM);
         }
 
         public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Theme.Structures.Console Console, bool PS)
@@ -507,19 +228,18 @@ namespace WinPaletter
             CursorControl.Prop_Shadow_OffsetX = Cursor.Shadow_OffsetX;
             CursorControl.Prop_Shadow_OffsetY = Cursor.Shadow_OffsetY;
         }
+
         #endregion
 
         #region Store form events
+
         private void Store_Load(object sender, EventArgs e)
         {
             Tabs.SelectedIndex = 0;
             oldAppearance = Program.Settings.Appearance;
 
             CenterToScreen();
-            UpdateExtendedTitlebar();
 
-            DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
-            ShowIcon = false;
             FinishedLoadingInitialTMs = false;
             _Shown = false;
 
@@ -531,21 +251,10 @@ namespace WinPaletter
             this.DoubleBuffer();
             Cursors_Container.DoubleBuffer();
 
-            taskbar.CopycatFrom(Forms.MainFrm.taskbar);
-            ActionCenter.CopycatFrom(Forms.MainFrm.ActionCenter);
-            start.CopycatFrom(Forms.MainFrm.start);
-            Window1.CopycatFrom(Forms.MainFrm.Window1);
-            Window2.CopycatFrom(Forms.MainFrm.Window2);
+            Apply_btn.Image = Forms.Dashboard.apply_btn.Image;
+            RestartExplorer.Image = Forms.Dashboard.Button19.Image;
 
-            Apply_btn.Image = Forms.MainFrm.apply_btn.Image;
-            RestartExplorer.Image = Forms.MainFrm.Button19.Image;
-
-            WXP_Alert2.Text = Forms.MainFrm.WXP_Alert2.Text;
-            WXP_Alert2.Size = WXP_Alert2.Parent.Size - new Size(40, 40);
-            WXP_Alert2.Location = new(20, 20);
-
-            pnl_preview.BackgroundImage = Forms.MainFrm.pnl_preview.BackgroundImage;
-            pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage;
+            windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
             Status_lbl.Font = Fonts.ConsoleMedium;
             themeSize_lbl.Font = Fonts.ConsoleLarge;
@@ -742,8 +451,8 @@ namespace WinPaletter
                     if (allProgress > 0)
                         FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
-                    // Convert themes managers into StoreItems, and exclude the old formats of WPTH
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && _Converter.GetFormat($@"{Dir}\{FileName}") == Converter_CP.WP_Format.JSON)
+                    // Convert themes managers into StoreItems, and exclude the old formats of OldFormat
+                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetFormat($@"{Dir}\{FileName}") == Manager.Format.JSON)
                     {
                         try
                         {
@@ -977,12 +686,11 @@ namespace WinPaletter
                             Forms.Store_Hover.Show();
 
                             Adjust_Preview(temp.TM);
-                            tabs_preview.SelectedIndex = 0;
-                            Forms.Store_Hover.img0 = tabs_preview.ToBitmap();
-                            tabs_preview.SelectedIndex = 1;
-                            Forms.Store_Hover.img1 = tabs_preview.ToBitmap();
+                            windowsDesktop1.Classic = false;
+                            Forms.Store_Hover.img0 = windowsDesktop1.ToBitmap();
+                            windowsDesktop1.Classic = true;
+                            Forms.Store_Hover.img1 = windowsDesktop1.ToBitmap();
                             Forms.Store_Hover.BackgroundImage = Forms.Store_Hover.img0;
-
                         }
 
                         break;
@@ -1032,9 +740,9 @@ namespace WinPaletter
                             Label6.ForeColor = Label14.ForeColor;
                             Theme_MD5_lbl.ForeColor = Label14.ForeColor;
 
+                            FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
+
                             Adjust_Preview(StoreItem.TM);
-                            ApplyRetroPreview(StoreItem.TM);
-                            SetClassicMetrics(StoreItem.TM);
                             ApplyCMDPreview(CMD1, StoreItem.TM.CommandPrompt, false);
                             ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
                             ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
@@ -1173,7 +881,7 @@ namespace WinPaletter
         }
         #endregion
 
-        #region Voids\Functions
+        #region Methods\Functions
 
         #region    Store
         public void Apply_Theme()
@@ -1196,8 +904,6 @@ namespace WinPaletter
 
                 Program.TM_Original = (Theme.Manager)TMx.Clone();
             }
-
-            UpdateExtendedTitlebar();
         }
 
         public void DoActionsAfterPackDownload()
@@ -1213,24 +919,20 @@ namespace WinPaletter
                         Program.TM.Info.Author = Application.CompanyName;
                     Program.TM = selectedItem.TM;
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                    Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
-                    Forms.MainFrm.ApplyColorsToElements(Program.TM);
-                    Forms.MainFrm.LoadFromTM(Program.TM);
+                    Forms.Dashboard.LoadFromTM(Program.TM);
                     UpdateTitlebarColors();
                 }
             }
             else
             {
                 // Edit button is pressed
-                WindowState = FormWindowState.Minimized;
-                Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, null, null, null);
+                Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
+                Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, null, null, null);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                 Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
                     Program.TM.Info.Author = Application.CompanyName;
-                Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
-                Forms.MainFrm.LoadFromTM(Program.TM);
-                Forms.MainFrm.ApplyColorsToElements(Program.TM);
+                Forms.Dashboard.LoadFromTM(Program.TM);
             }
         }
 
@@ -1360,104 +1062,10 @@ namespace WinPaletter
             }
         }
 
-        public void UpdateExtendedTitlebar()
-        {
-            System.Windows.Forms.Padding Pd = new(0, Titlebar_panel.Height, 0, 0);
-            Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0);
-            bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
-
-            if (OS.W12 || OS.W11 || OS.W10)
-            {
-                CompositionEnabled &= Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
-            }
-
-            if (CompositionEnabled)
-            {
-                Titlebar_lbl.DrawOnGlass = true;
-                Titlebar_panel.BackColor = Color.Black;
-
-                if (OS.W12 || OS.W11)
-                {
-                    this.DrawMica(Pd);
-                }
-
-                else if (OS.W10 || OS.W81 || OS.W8 || OS.W7 || OS.WVista)
-                {
-                    this.DrawAero(Pd);
-                    if (OS.W10)
-                        DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
-                }
-
-                else
-                {
-                    this.DrawMica(Pd);
-                }
-            }
-
-            else if (OS.W7 || OS.WVista)
-            {
-                Titlebar_lbl.DrawOnGlass = false;
-
-                if (OS.W7)
-                {
-                    if (Program.TM.Windows7.Theme != Theme.Structures.Windows7.Themes.Classic)
-                    {
-                        Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234);
-                    }
-                    else
-                    {
-                        Titlebar_panel.BackColor = Program.TM.Win32.ButtonFace;
-                    }
-                }
-
-                else if (OS.WVista)
-                {
-                    if (Program.TM.WindowsVista.Theme != Theme.Structures.Windows7.Themes.Classic)
-                    {
-                        Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234);
-                    }
-                    else
-                    {
-                        Titlebar_panel.BackColor = Program.TM.Win32.ButtonFace;
-                    }
-
-                }
-            }
-
-            else if (OS.WXP)
-            {
-                Titlebar_lbl.DrawOnGlass = false;
-
-                if (Program.TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
-                {
-                    Titlebar_panel.BackColor = Program.Style.Schemes.Main.Colors.Back;
-                }
-                else
-                {
-                    Titlebar_panel.BackColor = Program.TM.Win32.ButtonFace;
-                }
-            }
-
-            else
-            {
-                Titlebar_lbl.DrawOnGlass = true;
-                if (OS.W12 || OS.W11 || OS.W10)
-                    DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
-                this.DrawAero(Pd);
-
-
-            }
-
-            Titlebar_lbl.DrawOnGlass = Titlebar_lbl.DrawOnGlass;
-
-            UpdateTitlebarColors();
-        }
-
         public void UpdateTitlebarColors()
         {
             Titlebar_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
             search_box.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
-            back_btn.Image = Program.Style.DarkMode ? Properties.Resources.Store_BackBtn : Properties.Resources.Store_BackBtn.Invert();
         }
         #endregion
 
@@ -1520,7 +1128,7 @@ namespace WinPaletter
             Tabs.SelectedIndex = 0;
             Program.Animator.HideSync(back_btn);
 
-            Titlebar_lbl.Text = Text;
+            Titlebar_lbl.Text = "";
             Program.Animator.ShowSync(Tabs);
         }
 
@@ -1630,7 +1238,13 @@ namespace WinPaletter
 
         private void Cur_tip_btn_Click(object sender, EventArgs e)
         {
-            MsgBox(Program.Lang.ScalingTip, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Program.ToolTip.ToolTipText = Program.Lang.ScalingTip;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.Image = Assets.Notifications.Info;
+
+            Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
+
+            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 7000);
         }
         #endregion
 
@@ -1660,13 +1274,13 @@ namespace WinPaletter
 
             foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
             {
-                i.Prop_Scale = (float)((UI.WP.Trackbar)sender).Value / 100f;
+                i.Prop_Scale = (float)((UI.WP.TrackBar)sender).Value / 100f;
                 i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
                 i.Height = i.Width;
                 i.Refresh();
             }
 
-            Label17.Text = $"{Program.Lang.Scaling} ({(float)((UI.WP.Trackbar)sender).Value / 100f}x)";
+            Label17.Text = $"{Program.Lang.Scaling} ({(float)((UI.WP.TrackBar)sender).Value / 100f}x)";
         }
 
         private void Search_box_KeyPress(object sender, KeyPressEventArgs e)

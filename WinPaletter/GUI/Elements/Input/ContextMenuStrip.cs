@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -8,6 +9,23 @@ namespace WinPaletter.UI.WP
     [ToolboxItem(false)]
     public class ContextMenuStripRenderer : ToolStripRenderer
     {
+        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+        {
+            if (this == null) return;
+
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.TextRenderingHint = Program.Style.RenderingHint;
+
+            Config.Scheme scheme = e.ToolStrip.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+            Rectangle rect = new(0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
+
+            G.FillRectangle(scheme.Brushes.Back, rect);
+            G.DrawRectangle(scheme.Pens.Line_Hover, rect);
+
+            base.OnRenderToolStripBackground(e);
+        }
+
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             if (e.Item.Selected)
@@ -29,6 +47,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
+            if (string.IsNullOrEmpty(e.Text)) return;
+
             if (e.Item.Selected)
             {
                 e.TextColor = Program.Style.Schemes.Main.Colors.ForeColor_Accent;
@@ -38,7 +58,41 @@ namespace WinPaletter.UI.WP
                 e.TextColor = Program.Style.DarkMode ? Color.White : Color.Black;
             }
 
+            if (e.ToolStrip is ContextMenuStrip)
+            {
+                e.Item.AutoSize = false;
+
+                int textHeight = ((ContextMenuStrip)e.ToolStrip).ItemHeight;
+                Rectangle textRect = new(e.TextRectangle.Left, e.TextRectangle.Top, e.TextRectangle.Width, textHeight);
+                e.TextRectangle = textRect;
+                e.Item.Height = textHeight + 3;
+            }
+
             base.OnRenderItemText(e);
+        }
+
+        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
+        {
+            if (!e.Item.Selected)
+            {
+                Graphics G = e.Graphics;
+                G.SmoothingMode = SmoothingMode.AntiAlias;
+
+                Rectangle itemRectangle = e.Item.ContentRectangle;
+
+                G.FillRoundedRect(Program.Style.Schemes.Tertiary.Brushes.Back_Checked_Hover, itemRectangle);
+                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, itemRectangle);
+            }
+        }
+
+        protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
+        {
+            Rectangle rectangle = new(0, 0, e.Image.Width, e.Image.Height);
+            Rectangle bounds = new(0, 0, Math.Min(e.Item.ContentRectangle.Width, e.Item.ContentRectangle.Height), Math.Min(e.Item.ContentRectangle.Width, e.Item.ContentRectangle.Height));
+            rectangle.X = 2 + e.Item.ContentRectangle.X + (bounds.Width - rectangle.Width) / 2;
+            rectangle.Y = e.Item.ContentRectangle.Y + (bounds.Height - rectangle.Height) / 2;
+
+            e.Graphics.DrawImage(e.Image, rectangle);
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -70,6 +124,10 @@ namespace WinPaletter.UI.WP
             Renderer = new ContextMenuStripRenderer();
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public int ItemHeight { get; set; } = 25;
+
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             if (this == null) return;
@@ -84,7 +142,7 @@ namespace WinPaletter.UI.WP
             G.FillRectangle(scheme.Brushes.Back, rect);
             G.DrawRectangle(scheme.Pens.Line_Hover, rect);
 
-            base.OnPaint(e);    
+            base.OnPaint(e);
         }
     }
 }

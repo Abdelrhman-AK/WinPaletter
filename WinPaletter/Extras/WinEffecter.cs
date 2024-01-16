@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,28 +9,130 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class WinEffecter
     {
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Effects");
+        }
+
         public WinEffecter()
         {
             InitializeComponent();
         }
-        private void WinEffecter_Load(object sender, EventArgs e)
-        {
-            this.LoadLanguage();
-            ApplyStyle(this);
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(Program.TM);
-            SetClassicButtonColors(Program.TM, ButtonR1);
 
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
+            Close();
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+
+                TMx.WindowsEffects.Apply();
+                TMx.Win32.Broadcast_UPM_ToDefUsers();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private void WinEffecter_Load(object sender, EventArgs e)
+        {
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.Store_Toggle_WindowsEffects,
+                Enabled = Program.TM.WindowsEffects.Enabled,
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = true,
+                CanSwitchMode = false,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_11 = ImportWin11Preset,
+                OnImportFromScheme_10 = ImportWin10Preset,
+                OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_7 = ImportWin7Preset,
+                OnImportFromScheme_Vista = ImportWinVistaPreset,
+                OnImportFromScheme_XP = ImportWinXPPreset,
+            };
+            LoadData(data);
+
+            LoadFromTM(Program.TM);
+            SetClassicButtonColors(Program.TM, ButtonR1);
+        }
+
+        public void LoadFromTM(Theme.Manager TM)
         {
             {
                 ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
-                EffectsEnabled.Checked = Effects.Enabled;
+                AspectEnabled = Effects.Enabled;
                 CheckBox1.Checked = Effects.WindowAnimation;
                 CheckBox2.Checked = Effects.WindowShadow;
                 CheckBox3.Checked = Effects.WindowUIEffects;
@@ -141,7 +242,7 @@ namespace WinPaletter
         {
             {
                 ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
-                Effects.Enabled = EffectsEnabled.Checked;
+                Effects.Enabled = AspectEnabled;
                 Effects.WindowAnimation = CheckBox1.Checked;
                 Effects.WindowShadow = CheckBox2.Checked;
                 Effects.WindowUIEffects = CheckBox3.Checked;
@@ -246,152 +347,17 @@ namespace WinPaletter
             }
         }
 
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            Forms.MainFrm.ApplyColorsToElements(TMx);
-            TMx.WindowsEffects.Apply();
-            TMx.Win32.Broadcast_UPM_ToDefUsers();
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            ApplyToTM(Program.TM);
-            Forms.MainFrm.ApplyColorsToElements(Program.TM);
-            Forms.MainFrm.ApplyStylesToElements(Program.TM, false);
-            Cursor = Cursors.Default;
-            Close();
-        }
-
-        private void EffectsEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
-        private void MD_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
-            Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Trackbar1_Scroll(object sender)
-        {
-            MD.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void Button4_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
-            Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
-            Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar3.Maximum), Trackbar3.Minimum).ToString();
-            Trackbar3.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar4.Maximum), Trackbar4.Minimum).ToString();
-            Trackbar4.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar6.Maximum), Trackbar6.Minimum).ToString();
-            Trackbar6.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Trackbar5_Scroll(object sender)
-        {
-            Button4.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
-        private void Trackbar2_Scroll(object sender)
-        {
-            Button1.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            ButtonR1.FocusRectWidth = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ButtonR1.Refresh();
-        }
-
-        private void Trackbar3_Scroll(object sender)
-        {
-            Button2.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            ButtonR1.FocusRectHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            ButtonR1.Refresh();
-        }
-
-        private void Trackbar4_Scroll(object sender)
-        {
-            Button3.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-            Panel2.Width = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-        }
-
-        private void Trackbar6_Scroll(object sender)
-        {
-            Button5.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
-
         private void Timer1_Tick(object sender, EventArgs e)
         {
             Panel2.Visible = !Panel2.Visible;
         }
 
-        private void RadioImage1_CheckedChanged(object sender)
+        private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Normal;
-                PictureBox32.Image = Properties.Resources.CF_Pie_Normal;
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Normal;
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Normal;
 
                 R1.BackColor = Color.FromArgb(204, 50, 47);
                 R2.BackColor = Color.FromArgb(233, 80, 63);
@@ -419,12 +385,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage5_CheckedChanged(object sender)
+        private void RadioImage5_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Grayscale;
-                PictureBox32.Image = Properties.Resources.CF_Pie_Grayscale;
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Grayscale;
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Grayscale;
 
                 R1.BackColor = Color.FromArgb(93, 93, 93);
                 R2.BackColor = Color.FromArgb(122, 122, 122);
@@ -452,12 +418,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage7_CheckedChanged(object sender)
+        private void RadioImage7_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Normal.Invert();
-                PictureBox32.Image = Properties.Resources.CF_Pie_Normal.Invert();
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Normal.Invert();
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Normal.Invert();
 
                 R1.BackColor = Color.FromArgb(53, 208, 211);
                 R2.BackColor = Color.FromArgb(28, 174, 193);
@@ -485,12 +451,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage6_CheckedChanged(object sender)
+        private void RadioImage6_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Grayscale.Invert();
-                PictureBox32.Image = Properties.Resources.CF_Pie_Grayscale.Invert();
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Grayscale.Invert();
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Grayscale.Invert();
 
                 R1.BackColor = Color.FromArgb(160, 160, 160);
                 R2.BackColor = Color.FromArgb(131, 131, 131);
@@ -518,12 +484,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage2_CheckedChanged(object sender)
+        private void RadioImage2_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Red_green_green_weak_deuteranopia;
-                PictureBox32.Image = Properties.Resources.CF_Pie_Red_green_green_weak_deuteranopia;
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Red_green_green_weak_deuteranopia;
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Red_green_green_weak_deuteranopia;
 
                 R1.BackColor = Color.FromArgb(255, 50, 20);
                 R2.BackColor = Color.FromArgb(255, 80, 35);
@@ -551,12 +517,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage3_CheckedChanged(object sender)
+        private void RadioImage3_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Red_green_red_weak_protanopia;
-                PictureBox32.Image = Properties.Resources.CF_Pie_Red_green_red_weak_protanopia;
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Red_green_red_weak_protanopia;
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Red_green_red_weak_protanopia;
 
                 R1.BackColor = Color.FromArgb(204, 121, 137);
                 R2.BackColor = Color.FromArgb(233, 151, 151);
@@ -584,12 +550,12 @@ namespace WinPaletter
             }
         }
 
-        private void RadioImage4_CheckedChanged(object sender)
+        private void RadioImage4_CheckedChanged(object sender, EventArgs e)
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Properties.Resources.CF_Img_Blue_yellow_tritanopia;
-                PictureBox32.Image = Properties.Resources.CF_Pie_Blue_yellow__tritanopia;
+                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Blue_yellow_tritanopia;
+                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Blue_yellow__tritanopia;
 
                 R1.BackColor = Color.FromArgb(160, 60, 47);
                 R2.BackColor = Color.FromArgb(180, 85, 63);
@@ -617,9 +583,261 @@ namespace WinPaletter
             }
         }
 
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Effects");
+            ButtonR1.FocusRectWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX2_ValueChanged(object sender, EventArgs e)
+        {
+            ButtonR1.FocusRectHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
+        {
+            Panel2.Width = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox1.Checked = TM.WindowsEffects.WindowAnimation;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox27.Checked = TM.WindowsEffects.AnimateControlsInsideWindow;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox2.Checked = TM.WindowsEffects.WindowShadow;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox3.Checked = TM.WindowsEffects.WindowUIEffects;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox11.Checked = TM.WindowsEffects.ShowWinContentDrag;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox21.Checked = TM.WindowsEffects.ShakeToMinimize;
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox4.Checked = TM.WindowsEffects.IconsShadow;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox10.Checked = TM.WindowsEffects.IconsDesktopTranslSel;
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox6.Checked = TM.WindowsEffects.MenuAnimation;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                ComboBox1.SelectedIndex = TM.WindowsEffects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox5.Checked = TM.WindowsEffects.MenuSelectionFade;
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox12.Checked = TM.WindowsEffects.KeyboardUnderline;
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox8.Checked = TM.WindowsEffects.ComboBoxAnimation;
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox7.Checked = TM.WindowsEffects.ListBoxSmoothScrolling;
+            }
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox9.Checked = TM.WindowsEffects.TooltipAnimation;
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                ComboBox2.SelectedIndex = TM.WindowsEffects.TooltipFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
+            }
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox17.Checked = TM.WindowsEffects.BalloonNotifications;
+            }
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox13.Checked = TM.WindowsEffects.AWT_Enabled;
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox14.Checked = TM.WindowsEffects.AWT_BringActivatedWindowToTop;
+            }
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox20.Checked = TM.WindowsEffects.SysListView32;
+            }
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            RadioButton1.Checked = true;
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox23.Checked = TM.WindowsEffects.DisableNavBar;
+            }
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox16.Checked = TM.WindowsEffects.Win11ClassicContextMenu;
+            }
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox22.Checked = TM.WindowsEffects.Win11BootDots;
+            }
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            RadioImage1.Checked = true;
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox15.Checked = TM.WindowsEffects.SnapCursorToDefButton;
+            }
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox19.Checked = TM.WindowsEffects.ShowSecondsInSystemClock;
+            }
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox18.Checked = TM.WindowsEffects.PaintDesktopVersion;
+            }
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox25.Checked = TM.WindowsEffects.FullScreenStartMenu;
+            }
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox24.Checked = TM.WindowsEffects.AutoHideScrollBars;
+            }
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                CheckBox26.Checked = TM.WindowsEffects.ClassicVolMixer;
+            }
         }
     }
 }

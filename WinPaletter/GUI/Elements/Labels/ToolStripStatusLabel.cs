@@ -28,8 +28,6 @@ namespace WinPaletter.UI.WP
                     G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
                 }
             }
-
-            base.OnPaint(e);
         }
     }
 }

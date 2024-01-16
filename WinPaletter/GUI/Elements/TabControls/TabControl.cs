@@ -23,10 +23,10 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.6d));
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
         #endregion
 
-        #region Events
+        #region Events/Overrides
         protected override void OnDragOver(DragEventArgs e)
         {
             if (e.Data.GetData(typeof(Controllers.ColorItem).FullName) is Controllers.ColorItem)
@@ -91,7 +91,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.RenderingHint;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -132,8 +131,8 @@ namespace WinPaletter.UI.WP
 
                         using (Config.Colors_Collection colors = new(img.AverageColor(), default, Program.Style.DarkMode))
                         {
-                            SelectedColor = Program.Style.DarkMode ? colors.Accent : colors.AccentAlt;
-                            SideTabeColor = Program.Style.DarkMode ? SelectedColor.LightLight() : SelectedColor.Dark(0.3f);
+                            SelectedColor = colors.Back_Checked;
+                            SideTabeColor = colors.AccentAlt;
                         }
                     }
                 }

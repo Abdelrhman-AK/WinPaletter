@@ -41,7 +41,7 @@ namespace WinPaletter.Dialogs
         {
             if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
-                Forms.MainFrm.LoggingOff = true;
+                Forms.Dashboard.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
@@ -59,7 +59,7 @@ namespace WinPaletter.Dialogs
         {
             if (MsgBox(Program.Lang.RestartQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1) == DialogResult.Yes)
             {
-                Forms.MainFrm.LoggingOff = true;
+                Forms.Dashboard.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))
@@ -77,7 +77,7 @@ namespace WinPaletter.Dialogs
         {
             if (MsgBox(Program.Lang.ShutdownQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1) == DialogResult.Yes)
             {
-                Forms.MainFrm.LoggingOff = true;
+                Forms.Dashboard.LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))

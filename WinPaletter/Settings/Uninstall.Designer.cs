@@ -130,7 +130,6 @@ namespace WinPaletter
             // 
             // CheckBox1
             // 
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = true;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
@@ -152,7 +151,6 @@ namespace WinPaletter
             // 
             // CheckBox2
             // 
-            this.CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox2.Checked = true;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
@@ -179,12 +177,14 @@ namespace WinPaletter
             this.RadioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = null;
+            this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage1.Location = new System.Drawing.Point(156, 292);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.Size = new System.Drawing.Size(280, 24);
             this.RadioImage1.TabIndex = 12;
             this.RadioImage1.Text = "Do nothing";
             this.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // RadioImage2
             // 
@@ -192,12 +192,14 @@ namespace WinPaletter
             this.RadioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = null;
+            this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage2.Location = new System.Drawing.Point(156, 322);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.Size = new System.Drawing.Size(280, 24);
             this.RadioImage2.TabIndex = 13;
             this.RadioImage2.Text = "Restore from a theme file you backed-up before";
             this.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // RadioImage3
             // 
@@ -205,12 +207,14 @@ namespace WinPaletter
             this.RadioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = null;
+            this.RadioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioImage3.Location = new System.Drawing.Point(156, 352);
             this.RadioImage3.Name = "RadioImage3";
             this.RadioImage3.Size = new System.Drawing.Size(280, 24);
             this.RadioImage3.TabIndex = 14;
             this.RadioImage3.Text = "Restore to default Windows";
             this.RadioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioImage3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Label4
             // 
@@ -242,6 +246,8 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
+            this.Button6.ImageAsVector = false;
+            this.Button6.ImageVector = null;
             this.Button6.Location = new System.Drawing.Point(578, 400);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(105, 34);
@@ -259,6 +265,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
             this.Button2.Location = new System.Drawing.Point(492, 400);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -286,7 +294,6 @@ namespace WinPaletter
             // 
             // CheckBox3
             // 
-            this.CheckBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox3.Checked = true;
             this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox3.ForeColor = System.Drawing.Color.White;

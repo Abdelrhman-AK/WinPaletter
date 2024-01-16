@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -10,18 +9,86 @@ using WinPaletter.Theme;
 
 namespace WinPaletter
 {
-
     public partial class Sounds_Editor
     {
         private string snd;
         private SoundPlayer SP = new();
         private bool AltPlayingMethod = false;
 
+        private void Sounds_Editor_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Sounds");
+        }
+
         public Sounds_Editor()
         {
             InitializeComponent();
         }
-        #region Main Voids
+
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromTHEME(object sender, EventArgs e)
+        {
+            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                {
+                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
+                }
+            }
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
+            Program.Settings.Save(Settings.Mode.Registry);
+
+            ApplyToTM(Program.TM);
+
+            Close();
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
+            Program.Settings.Save(Settings.Mode.Registry);
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                TMx.Sounds.Apply();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+
+        #region Main Methods
 
         private void Button20_Click(object sender, EventArgs e) // imageres.dll player
         {
@@ -218,16 +285,34 @@ namespace WinPaletter
 
         private void Sounds_Editor_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromTM(Program.TM);
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.Store_Toggle_Sounds,
+                Enabled = Program.TM.Sounds.Enabled,
+                Import_theme = true,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = false,
+                CanSwitchMode = false,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromTHEME = LoadFromTHEME,
+            };
+
+            LoadData(data);
+
+            LoadFromTM(Program.TM);
             CheckBox35_SFC.Checked = Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
 
             // Remove handler to avoid doubling/tripling events
             foreach (TabPage page in TabControl1.TabPages)
             {
-                foreach (UI.WP.GroupBox pnl in page.Controls.OfType<UI.WP.GroupBox>())
+                foreach (Panel pnl in page.Controls.OfType<Panel>())
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
@@ -249,7 +334,7 @@ namespace WinPaletter
 
             foreach (TabPage page in TabControl1.TabPages)
             {
-                foreach (UI.WP.GroupBox pnl in page.Controls.OfType<UI.WP.GroupBox>())
+                foreach (Panel pnl in page.Controls.OfType<Panel>())
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
@@ -268,7 +353,7 @@ namespace WinPaletter
         {
             foreach (TabPage page in TabControl1.TabPages)
             {
-                foreach (UI.WP.GroupBox pnl in page.Controls.OfType<UI.WP.GroupBox>())
+                foreach (Panel pnl in page.Controls.OfType<Panel>())
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
@@ -283,14 +368,14 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Manager TM)
         {
-            ApplyFromTM(TM.Sounds);
+            LoadFromTM(TM.Sounds);
         }
 
-        public void ApplyFromTM(Theme.Structures.Sounds Sounds)
+        public void LoadFromTM(Theme.Structures.Sounds Sounds)
         {
-            SoundsEnabled.Checked = Sounds.Enabled;
+            AspectEnabled = Sounds.Enabled;
             TextBox1.Text = Sounds.Snd_Win_SystemStart;
             TextBox2.Text = Sounds.Snd_Imageres_SystemStart;
             TextBox3.Text = Sounds.Snd_Win_SystemExit;
@@ -383,7 +468,7 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
-            Sounds.Enabled = SoundsEnabled.Checked;
+            Sounds.Enabled = AspectEnabled;
             Sounds.Snd_Win_SystemStart = TextBox1.Text;
             Sounds.Snd_Imageres_SystemStart = TextBox2.Text;
             Sounds.Snd_Win_SystemExit = TextBox3.Text;
@@ -473,65 +558,6 @@ namespace WinPaletter
             Sounds.Snd_Win_WindowsLock = textBox86.Text;
         }
 
-        private void ScrSvrEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
-        private void Button11_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
-            }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
-
-            ApplyToTM(Program.TM);
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-
-            Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
-
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            TMx.Sounds.Apply();
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void Button22_Click(object sender, EventArgs e)
         {
             TextBox2.Text = "Default";
@@ -545,17 +571,6 @@ namespace WinPaletter
         private void Button24_Click(object sender, EventArgs e)
         {
             TextBox2.Text = "Current";
-        }
-
-        private void Button259_Click(object sender, EventArgs e)
-        {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-                {
-                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
-                }
-            }
         }
 
         public void GetFromClassicThemeFile(string File, Theme.Structures.Sounds _DefaultSounds)
@@ -655,16 +670,431 @@ namespace WinPaletter
                 snd.Snd_SpeechRec_MisrecoSound = _ini.Read(string.Format(Scope_SpeechRec, "MisrecoSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_MisrecoSound).PhrasePath();
                 snd.Snd_SpeechRec_PanelSound = _ini.Read(string.Format(Scope_SpeechRec, "PanelSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_PanelSound).PhrasePath();
 
-                ApplyFromTM(snd);
+                LoadFromTM(snd);
                 GC.Collect();
                 GC.SuppressFinalize(snd);
             }
 
         }
 
-        private void Sounds_Editor_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        #region Restore default values
+
+        private void button259_Click_1(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Sounds");
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox1.Text = TMx.Sounds.Snd_Win_SystemStart; }
         }
+
+        private void button12_Click_1(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox3.Text = TMx.Sounds.Snd_Win_SystemExit; }
+        }
+
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox4.Text = TMx.Sounds.Snd_Win_WindowsLogoff; }
+        }
+
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox5.Text = TMx.Sounds.Snd_Win_WindowsLogon; }
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox6.Text = TMx.Sounds.Snd_Win_WindowsUnlock; }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox86.Text = TMx.Sounds.Snd_Win_WindowsLock; }
+        }
+
+        private void button7_Click_1(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox64.Text = TMx.Sounds.Snd_Win_ChangeTheme; }
+        }
+
+        private void button275_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox10.Text = TMx.Sounds.Snd_Win_SystemNotification; }
+        }
+
+        private void button274_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox7.Text = TMx.Sounds.Snd_Win_SystemQuestion; }
+        }
+
+        private void button273_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox8.Text = TMx.Sounds.Snd_Win_SystemExclamation; }
+        }
+
+        private void button272_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox9.Text = TMx.Sounds.Snd_Win_SystemAsterisk; }
+        }
+
+        private void button271_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox66.Text = TMx.Sounds.Snd_Win_SystemHand; }
+        }
+
+        private void button270_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox11.Text = TMx.Sounds.Snd_Win_WindowsUAC; }
+        }
+
+        private void button269_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox68.Text = TMx.Sounds.Snd_Win_AppGPFault; }
+        }
+
+        private void button283_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox16.Text = TMx.Sounds.Snd_Win_Open; }
+        }
+
+        private void button282_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox15.Text = TMx.Sounds.Snd_Win_Close; }
+        }
+
+        private void button281_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox14.Text = TMx.Sounds.Snd_Win_Maximize; }
+        }
+
+        private void button280_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox13.Text = TMx.Sounds.Snd_Win_Minimize; }
+        }
+
+        private void button279_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox12.Text = TMx.Sounds.Snd_Win_RestoreDown; }
+        }
+
+        private void button278_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox17.Text = TMx.Sounds.Snd_Win_RestoreUp; }
+        }
+
+        private void button292_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox45.Text = TMx.Sounds.Snd_Win_DeviceConnect; }
+        }
+
+        private void button291_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox46.Text = TMx.Sounds.Snd_Win_DeviceDisconnect; }
+        }
+
+        private void button290_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox47.Text = TMx.Sounds.Snd_Win_DeviceFail; }
+        }
+
+        private void button289_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox84.Text = TMx.Sounds.Snd_ChargerConnected; }
+        }
+
+        private void button288_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox85.Text = TMx.Sounds.Snd_ChargerDisconnected; }
+        }
+
+        private void button287_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox48.Text = TMx.Sounds.Snd_Win_LowBatteryAlarm; }
+        }
+
+        private void button286_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox49.Text = TMx.Sounds.Snd_Win_CriticalBatteryAlarm; }
+        }
+
+        private void button285_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox50.Text = TMx.Sounds.Snd_Win_PrintComplete; }
+        }
+
+        private void button284_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox52.Text = TMx.Sounds.Snd_Win_ProximityConnection; }
+        }
+
+        private void button297_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox79.Text = TMx.Sounds.Snd_Explorer_FaxLineRings; }
+        }
+
+        private void button296_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox51.Text = TMx.Sounds.Snd_Win_FaxBeep; }
+        }
+
+        private void button295_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox76.Text = TMx.Sounds.Snd_Explorer_FaxNew; }
+        }
+
+        private void button294_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox77.Text = TMx.Sounds.Snd_Explorer_FaxSent; }
+        }
+
+        private void button293_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox78.Text = TMx.Sounds.Snd_Explorer_FaxError; }
+        }
+
+        private void button306_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox62.Text = TMx.Sounds.Snd_Explorer_Navigating; }
+        }
+
+        private void button305_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox61.Text = TMx.Sounds.Snd_Explorer_EmptyRecycleBin; }
+        }
+
+        private void button304_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox56.Text = TMx.Sounds.Snd_Explorer_MoveMenuItem; }
+        }
+
+        private void button303_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox60.Text = TMx.Sounds.Snd_Explorer_ActivatingDocument; }
+        }
+
+        private void button302_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox63.Text = TMx.Sounds.Snd_Win_ShowBand; }
+        }
+
+        private void button301_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox59.Text = TMx.Sounds.Snd_Explorer_SecurityBand; }
+        }
+
+        private void button300_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox58.Text = TMx.Sounds.Snd_Explorer_BlockedPopup; }
+        }
+
+        private void button299_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox57.Text = TMx.Sounds.Snd_Explorer_FeedDiscovered; }
+        }
+
+        private void button298_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox75.Text = TMx.Sounds.Snd_Explorer_SearchProviderDiscovered; }
+        }
+
+        private void button315_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox55.Text = TMx.Sounds.Snd_Win_Default; }
+        }
+
+        private void button314_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox23.Text = TMx.Sounds.Snd_Win_Notification_Default; }
+        }
+
+        private void button313_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox22.Text = TMx.Sounds.Snd_Win_Notification_IM; }
+        }
+
+        private void button312_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox21.Text = TMx.Sounds.Snd_Win_MessageNudge; }
+        }
+
+        private void button311_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox20.Text = TMx.Sounds.Snd_Win_Notification_Mail; }
+        }
+
+        private void button310_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox65.Text = TMx.Sounds.Snd_Win_MailBeep; }
+        }
+
+        private void button309_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox19.Text = TMx.Sounds.Snd_Win_Notification_Proximity; }
+        }
+
+        private void button308_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox18.Text = TMx.Sounds.Snd_Win_Notification_Reminder; }
+        }
+
+        private void button307_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox24.Text = TMx.Sounds.Snd_Win_Notification_SMS; }
+        }
+
+        private void button325_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox31.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm; }
+        }
+
+        private void button324_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox30.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm2; }
+        }
+
+        private void button323_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox29.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm3; }
+        }
+
+        private void button322_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox28.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm4; }
+        }
+
+        private void button321_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox27.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm5; }
+        }
+
+        private void button320_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox26.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm6; }
+        }
+
+        private void button319_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox25.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm7; }
+        }
+
+        private void button318_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox34.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm8; }
+        }
+
+        private void button317_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox33.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm9; }
+        }
+
+        private void button316_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox32.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm10; }
+        }
+
+        private void button335_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox44.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call; }
+        }
+
+        private void button334_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox43.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call2; }
+        }
+
+        private void button333_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox42.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call3; }
+        }
+
+        private void button332_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox41.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call4; }
+        }
+
+        private void button331_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox40.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call5; }
+        }
+
+        private void button330_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox39.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call6; }
+        }
+
+        private void button329_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox38.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call7; }
+        }
+
+        private void button328_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox37.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call8; }
+        }
+
+        private void button327_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox36.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call9; }
+        }
+
+        private void button326_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox35.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call10; }
+        }
+
+        private void button341_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox70.Text = TMx.Sounds.Snd_SpeechRec_DisNumbersSound; }
+        }
+
+        private void button340_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox74.Text = TMx.Sounds.Snd_SpeechRec_PanelSound; }
+        }
+
+        private void button339_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox69.Text = TMx.Sounds.Snd_SpeechRec_MisrecoSound; }
+        }
+
+        private void button338_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox73.Text = TMx.Sounds.Snd_SpeechRec_HubOffSound; }
+        }
+
+        private void button337_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox72.Text = TMx.Sounds.Snd_SpeechRec_HubOnSound; }
+        }
+
+        private void button336_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox71.Text = TMx.Sounds.Snd_SpeechRec_HubSleepSound; }
+        }
+
+        private void button345_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox83.Text = TMx.Sounds.Snd_NetMeeting_PersonJoins; }
+        }
+
+        private void button344_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox82.Text = TMx.Sounds.Snd_NetMeeting_PersonLeaves; }
+        }
+
+        private void button343_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox80.Text = TMx.Sounds.Snd_NetMeeting_ReceiveCall; }
+        }
+
+        private void button342_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox81.Text = TMx.Sounds.Snd_NetMeeting_ReceiveRequestToJoin; }
+        }
+
+        private void button346_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
+        }
+
+        #endregion
+
     }
 }

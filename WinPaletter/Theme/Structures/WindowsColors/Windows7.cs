@@ -10,6 +10,9 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct Windows7 : ICloneable
     {
+        /// <summary> Controls if Windows 7 colors editing is enabled or not </summary> 
+        public bool Enabled;
+
         /// <summary>Main Windows color</summary>
         public Color ColorizationColor;
 
@@ -69,6 +72,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows7 data structure</param>
         public void Load(Windows7 @default)
         {
+            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, @default.Enabled));
+
             if (OS.W7 | OS.W8 | OS.W81)
             {
                 object y;
@@ -145,62 +150,69 @@ namespace WinPaletter.Theme.Structures
         /// Saves Windows7 data into registry
         /// </summary>
         /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        public void Apply(Theme.Manager TM, TreeView TreeView = null)
         {
-            switch (Theme)
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, Enabled);
+
+            if (Enabled)
             {
-                case Themes.Aero:
-                    {
-                        UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                switch (Theme)
+                {
+                    case Themes.Aero:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                        break;
-                    }
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
+                            break;
+                        }
 
-                case Themes.AeroOpaque:
-                    {
-                        UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                    case Themes.AeroOpaque:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1);
-                        break;
-                    }
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1);
+                            break;
+                        }
 
-                case Themes.Basic:
-                    {
-                        UxTheme.EnableTheming(1);
-                        UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                    case Themes.Basic:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                        break;
-                    }
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
+                            break;
+                        }
 
-                case Themes.Classic:
-                    {
-                        UxTheme.EnableTheming(0);
-                        break;
-                    }
+                    case Themes.Classic:
+                        {
+                            UxTheme.EnableTheming(0);
+                            break;
+                        }
 
+                }
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity);
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);
+
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
+                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1);
+
+                Program.RefreshDWM(TM);
             }
-
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity);
-
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);
-
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1);
         }
 
         /// <summary>Operator to check if two Windows7 structures are equal</summary>

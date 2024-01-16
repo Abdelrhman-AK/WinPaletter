@@ -9,7 +9,7 @@ namespace WinPaletter.UI.Style
         {
             DarkMode = Dark;
             RoundedCorners = Rounded;
-            Radius = 5;
+            Radius = 4;
             Animations = EnableAnimations;
 
             Schemes.Main = new(Accent, BackColor, Dark);
@@ -43,7 +43,7 @@ namespace WinPaletter.UI.Style
 
         public bool RoundedCorners { get; set; } = true;
 
-        public readonly int Radius = 5;
+        public readonly int Radius = 4;
 
         public Schemes_Collection Schemes = new();
 

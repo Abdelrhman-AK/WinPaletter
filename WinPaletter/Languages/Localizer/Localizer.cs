@@ -331,7 +331,7 @@ namespace WinPaletter
             {
                 foreach (Type f in Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t)))
                 {
-                    Form ins = new Form();
+                    Form ins = new();
                     ins = (Form)Activator.CreateInstance(f);
 
                     if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
@@ -348,7 +348,7 @@ namespace WinPaletter
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
 
-                                if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
+                                if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                 {
                                     j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
@@ -356,20 +356,21 @@ namespace WinPaletter
                                 {
                                     try
                                     {
-                                        if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
+                                        if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage) 
+                                            && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                         {
                                             j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                         }
                                     }
                                     catch
                                     {
-                                        j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
+                                        if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                     }
                                 }
 
                             }
 
-                            if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit))
+                            if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
                             {
                                 j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
                             }
@@ -411,7 +412,7 @@ namespace WinPaletter
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
 
-                                if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty))
+                                if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                 {
                                     j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
@@ -419,20 +420,21 @@ namespace WinPaletter
                                 {
                                     try
                                     {
-                                        if (!f.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
+                                        if (!f.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
+                                            && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                         {
                                             j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                         }
                                     }
                                     catch
                                     {
-                                        j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
+                                        if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                     }
                                 }
 
                             }
 
-                            if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()))
+                            if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
                             {
                                 j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
                             }

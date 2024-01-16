@@ -40,6 +40,7 @@ namespace WinPaletter.Dialogs
             this.animatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox36 = new System.Windows.Forms.PictureBox();
             this.log_lbl = new System.Windows.Forms.Label();
+            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.animatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
             this.SuspendLayout();
@@ -191,6 +192,11 @@ namespace WinPaletter.Dialogs
             this.log_lbl.TabIndex = 24;
             this.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // SaveFileDialog1
+            // 
+            this.SaveFileDialog1.DefaultExt = "wpt";
+            this.SaveFileDialog1.Filter = "Text file (*.txt)|*.txt";
+            // 
             // ThemeLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -228,5 +234,6 @@ namespace WinPaletter.Dialogs
         private UI.WP.AnimatedBox animatedBox1;
         private System.Windows.Forms.Timer timer1;
         internal UI.WP.Button button1;
+        internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
     }
 }

@@ -36,7 +36,7 @@
         public string TM_RestoreCursorsError { get; set; } = "Error occurred during resetting cursors to aero. Anyway, process will continue.";
         public string TM_RestoreCursorsErrorPressOK { get; set; } = "Pressing OK will show details of exception error.";
         public string TM_FatalErrorHappened { get; set; } = @"Fatal error happened and WinPaletter won't be able to continue theme applying. Press on 'Show Errors' for details.";
-        public string ErrorExplorerRestart { get; set; } = "Error in restarting explorer. Open rescue tools and open Explorer.";
+        public string ErrorExplorerRestart { get; set; } = "Error in restarting Explorer. Open rescue tools and open Explorer.";
         public string ErrorDetails { get; set; } = "Error details: ";
     }
 }

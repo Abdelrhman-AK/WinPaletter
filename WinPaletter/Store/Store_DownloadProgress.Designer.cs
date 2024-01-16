@@ -98,7 +98,7 @@ namespace WinPaletter
             // 
             // Label5
             // 
-            Label5.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label5.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label5.Location = new Point(42, 134);
             Label5.Name = "Label5";
             Label5.Size = new Size(117, 24);
@@ -108,7 +108,7 @@ namespace WinPaletter
             // 
             // Label6
             // 
-            Label6.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label6.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label6.Location = new Point(42, 104);
             Label6.Name = "Label6";
             Label6.Size = new Size(117, 24);
@@ -118,7 +118,7 @@ namespace WinPaletter
             // 
             // Label7
             // 
-            Label7.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Label7.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
             Label7.Location = new Point(42, 74);
             Label7.Name = "Label7";
             Label7.Size = new Size(117, 24);
@@ -157,7 +157,7 @@ namespace WinPaletter
             // 
             Button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Button3.BackColor = Color.FromArgb(34, 34, 34);
-            Button3.Font = new("Segoe UI", 9.0f);
+            Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
             Button3.Image = null;
             Button3.Location = new Point(592, 200);
@@ -195,7 +195,7 @@ namespace WinPaletter
             // 
             Label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Label1.BackColor = Color.Transparent;
-            Label1.Font = new("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Label1.Font = new Font("Segoe UI", 11.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
             Label1.Location = new Point(65, 10);
             Label1.Name = "Label1";
             Label1.Size = new Size(607, 48);
@@ -222,10 +222,10 @@ namespace WinPaletter
             Controls.Add(Label2);
             Controls.Add(ProgressBar1);
             Controls.Add(AnimatedBox1);
-            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new(4, 3, 4, 3);
+            Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Store_DownloadProgress";

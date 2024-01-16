@@ -103,5 +103,10 @@ namespace WinPaletter
         {
             Process.Start("https://github.com/Tyrrrz/Ressy");
         }
+
+        private void linkLabel15_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/nptr/msstyleEditor");
+        }
     }
 }

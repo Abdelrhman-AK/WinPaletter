@@ -1,9 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
-using System.Security.Principal;
 using System.Windows.Forms;
-using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -54,10 +52,10 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Window maximize WAV sound file path</summary>
         public string Snd_Win_Maximize;
 
-        /// <summary>Menu item click WAV sound file path</summary>
+        /// <summary>contextMenu item click WAV sound file path</summary>
         public string Snd_Win_MenuCommand;
 
-        /// <summary>Menu popup WAV sound file path</summary>
+        /// <summary>contextMenu popup WAV sound file path</summary>
         public string Snd_Win_MenuPopup;
 
         /// <summary>Message nudge WAV sound file path</summary>
@@ -220,7 +218,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Feed discovered WAV sound file path</summary>
         public string Snd_Explorer_FeedDiscovered;
 
-        /// <summary>Menu item moved WAV sound file path</summary>
+        /// <summary>contextMenu item moved WAV sound file path</summary>
         public string Snd_Explorer_MoveMenuItem;
 
         /// <summary>Folders navigation WAV sound file path</summary>

@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -42,7 +43,6 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Color FromWin32RegToColor(this string String)
         {
-
             try
             {
                 if (String.Contains(" "))
@@ -96,16 +96,15 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static SizeF Measure(this string text, Font font)
         {
+            return System.Windows.Forms.TextRenderer.MeasureText(text, font) + new SizeF(3, 2);
+        }
 
-            try
-            {
-                Bitmap TextBitmap = new(1, 1);
-                Graphics TextGraphics = Graphics.FromImage(TextBitmap);
-                return TextGraphics.MeasureString(text, font);
-            }
-            catch { }
-
-            return default;
+        /// <summary>
+        /// Measure String by a certain font and a certain width
+        /// </summary>
+        public static SizeF Measure(this string text, Font font, int maxWidth)
+        {
+            return System.Windows.Forms.TextRenderer.MeasureText(text, font, new Size(maxWidth, int.MaxValue), TextFormatFlags.WordBreak);
         }
 
 

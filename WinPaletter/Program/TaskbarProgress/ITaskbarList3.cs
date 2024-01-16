@@ -74,6 +74,4 @@ namespace WinPaletter.Interfaces
         /// <param name="tbpFlags">The progress state flags.</param>
         void SetProgressState(IntPtr hwnd, WinPaletter.UI.WP.ProgressBar.TaskbarProgressBarState tbpFlags);
     }
-
-
 }

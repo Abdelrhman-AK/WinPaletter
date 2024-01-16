@@ -10,6 +10,7 @@
         public string Cancel { get; set; } = "Cancel";
         public string Close { get; set; } = "Close";
         public string Retry { get; set; } = "Retry";
+        public string Error { get; set; } = "Error";
         public string ExpandNote { get; set; } = "Expand note";
         public string CollapseNote { get; set; } = "Collapse note";
         public string NewUpdate { get; set; } = "A new update is available";
@@ -43,6 +44,7 @@
         public string Scaling { get; set; } = "Scaling";
         public string Default { get; set; } = "Default";
         public string Untitled { get; set; } = "Untitled";
+        public string Tip { get; set; } = "Tip";
         public string WhatsNewInVersion { get; set; } = "What's new in {0}!";
         public string Uninstall_Comment { get; set; } = "This will help you delete WinPaletter and clean up its used data";
         public string WP_Theme_FileType { get; set; } = "WinPaletter Theme File";

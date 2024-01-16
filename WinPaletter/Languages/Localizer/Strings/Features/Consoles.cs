@@ -12,7 +12,7 @@
         public string CMD_NotAllWeights { get; set; } = "Not all weights are available according to your OS and the font itself. Normal and Bold ones are the basic ones.";
         public string PowerShellx86_notFound { get; set; } = "Microsoft PowerShell x86 is not installed.";
         public string PowerShellx64_notFound { get; set; } = "Microsoft PowerShell x64 is not installed.";
-        public string ExtTer_NotFound { get; set; } = "Terminal not found. Select a valid one from the list.";
+        public string ExtTer_NotFound { get; set; } = "Terminal is not found. Select a valid one from the list.";
         public string ExtTer_Set { get; set; } = "Terminal preferences are set successfully!";
         public string ExtTer_NewSuccess { get; set; } = "This key is entered into registry successfully.";
         public string ExtTer_NewError { get; set; } = "Couldn't write this entry to registry. Please check if this key already exists or check permissions.";

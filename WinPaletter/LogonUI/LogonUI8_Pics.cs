@@ -12,8 +12,6 @@ namespace WinPaletter
         private void LogonUI8_Pics_Load(object sender, EventArgs e)
         {
             DialogResult = DialogResult.None;
-            this.LoadLanguage();
-            ApplyStyle(this);
             Icon = Forms.LogonUI.Icon;
 
             if (Forms.LogonUI7.ID == 0)

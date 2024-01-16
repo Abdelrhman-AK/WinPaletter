@@ -10,15 +10,97 @@ namespace WinPaletter.UI.Retro
     [Description("Retro 3D Panel Preview with Windows 9x style")]
     public class Preview3D : Control
     {
+        public Preview3D()
+        {
+            DoubleBuffered = true;
+        }
 
         #region Properties
 
-        public Color WindowFrame { get; set; } = Color.Black;
-        public Color ButtonShadow { get; set; } = Color.FromArgb(128, 128, 128);
-        public Color ButtonDkShadow { get; set; } = Color.Black;
-        public Color ButtonHilight { get; set; } = Color.White;
-        public Color ButtonLight { get; set; } = Color.FromArgb(192, 192, 192);
-        public int LineSize { get; set; } = 6;
+        private Color windowFrame = Color.Black;
+        private Color buttonShadow = Color.FromArgb(128, 128, 128);
+        private Color buttonDkShadow = Color.Black;
+        private Color buttonHilight = Color.White;
+        private Color buttonLight = Color.FromArgb(192, 192, 192);
+        private int lineSize = 6;
+
+        public Color WindowFrame
+        {
+            get { return windowFrame; }
+            set
+            {
+                if (windowFrame != value)
+                {
+                    windowFrame = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonShadow
+        {
+            get { return buttonShadow; }
+            set
+            {
+                if (buttonShadow != value)
+                {
+                    buttonShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonDkShadow
+        {
+            get { return buttonDkShadow; }
+            set
+            {
+                if (buttonDkShadow != value)
+                {
+                    buttonDkShadow = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonHilight
+        {
+            get { return buttonHilight; }
+            set
+            {
+                if (buttonHilight != value)
+                {
+                    buttonHilight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public Color ButtonLight
+        {
+            get { return buttonLight; }
+            set
+            {
+                if (buttonLight != value)
+                {
+                    buttonLight = value;
+                    Refresh();
+                }
+            }
+        }
+
+        public int LineSize
+        {
+            get { return lineSize; }
+            set
+            {
+                if (lineSize != value)
+                {
+                    lineSize = value;
+                    Refresh();
+                }
+            }
+        }
 
         #endregion
 
@@ -28,7 +110,6 @@ namespace WinPaletter.UI.Retro
             Graphics G = Graphics.FromImage(B);
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = Program.Style.RenderingHint;
-            DoubleBuffered = true;
 
             // ################################################################################# Customizer
             SolidBrush BrushDkShadow = new(ButtonDkShadow);

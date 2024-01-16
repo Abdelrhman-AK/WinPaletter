@@ -80,8 +80,8 @@ namespace WinPaletter
             this.RadioButton1 = new WinPaletter.UI.WP.RadioImage();
             this.val2 = new WinPaletter.UI.WP.Button();
             this.val1 = new WinPaletter.UI.WP.Button();
-            this.Trackbar2 = new WinPaletter.UI.WP.Trackbar();
-            this.Trackbar1 = new WinPaletter.UI.WP.Trackbar();
+            this.Trackbar2 = new WinPaletter.UI.WP.TrackBar();
+            this.Trackbar1 = new WinPaletter.UI.WP.TrackBar();
             this.TabPage8 = new System.Windows.Forms.TabPage();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.Button7 = new WinPaletter.UI.WP.Button();
@@ -668,7 +668,7 @@ namespace WinPaletter
             this.Trackbar2.TabIndex = 31;
             this.Trackbar2.Text = "Trackbar2";
             this.Trackbar2.Value = 10;
-            this.Trackbar2.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar2_Scroll);
+            this.Trackbar2.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.Trackbar2_Scroll);
             // 
             // Trackbar1
             // 
@@ -683,7 +683,7 @@ namespace WinPaletter
             this.Trackbar1.TabIndex = 30;
             this.Trackbar1.Text = "Trackbar1";
             this.Trackbar1.Value = 15;
-            this.Trackbar1.Scroll += new WinPaletter.UI.WP.Trackbar.ScrollEventHandler(this.Trackbar1_Scroll);
+            this.Trackbar1.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.Trackbar1_Scroll);
             // 
             // TabPage8
             // 
@@ -1021,8 +1021,8 @@ namespace WinPaletter
         internal FlowLayoutPanel PaletteContainer;
         internal Label Label9;
         internal PictureBox PictureBox11;
-        internal UI.WP.Trackbar Trackbar2;
-        internal UI.WP.Trackbar Trackbar1;
+        internal UI.WP.TrackBar Trackbar2;
+        internal UI.WP.TrackBar Trackbar1;
         internal UI.WP.Button val1;
         internal UI.WP.Button val2;
         internal UI.WP.CheckBox CheckBox2;

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -38,7 +39,6 @@ namespace WinPaletter.UI.WP
             if (this == null) return;
 
             Graphics G = e.Graphics;
-            DoubleBuffered = true;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);

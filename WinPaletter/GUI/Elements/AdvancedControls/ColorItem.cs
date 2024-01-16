@@ -20,7 +20,7 @@ namespace WinPaletter.UI.Controllers
 
             Rect = new(0, 0, Width - 1, Height - 1);
             RectInner = new(1, 1, Width - 3, Height - 3);
-            Rect_DefColor = new(0, 0, Height, Height);
+            Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
             Timer2 = new() { Enabled = false, Interval = 1 };
 
             alpha = 0;
@@ -463,7 +463,7 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Voids/Functions
+        #region Methods
 
         public void UpdateColorsHistory()
         {
@@ -493,12 +493,12 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Events
+        #region Events/Overrides
         protected override void OnSizeChanged(EventArgs e)
         {
             Rect = new(0, 0, Width - 1, Height - 1);
             RectInner = new(1, 1, Width - 3, Height - 3);
-            Rect_DefColor = new(0, 0, Height, Height);
+            Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
 
             base.OnSizeChanged(e);
         }
@@ -601,7 +601,6 @@ namespace WinPaletter.UI.Controllers
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -638,7 +637,11 @@ namespace WinPaletter.UI.Controllers
                 {
                     using (TextureBrush br = new(Properties.Resources.BackgroundOpacity)) { G.FillRoundedRect(br, RectInner); }
 
-                    using (TextureBrush br = new(Properties.Resources.BackgroundOpacity.Fade(alpha / 255d))) { G.FillRoundedRect(br, Rect); }
+                    using (Bitmap b = Properties.Resources.BackgroundOpacity.Fade(alpha / 255f))
+                    using (TextureBrush br = new(b))
+                    {
+                        G.FillRoundedRect(br, Rect);
+                    }
                 }
 
                 if (!DesignMode && MakeAfterDropEffect && Program.Settings.NerdStats.DragAndDropRippleEffect)
@@ -734,12 +737,12 @@ namespace WinPaletter.UI.Controllers
                     {
                         using (SolidBrush br = new(DefaultBackColor))
                         {
-                            int L = Math.Max(6, RectInner.Height - 10);
+                            int L = 7;
                             int Y = (int)Math.Round(RectInner.Y + (RectInner.Height - L) / 2d);
                             Rectangle DefDotRect;
 
-                            if (!HoverOverDefColorDot) { DefDotRect = new(Y, Y, L, L); }
-                            else { DefDotRect = new(Y - 1, Y - 1, L + 2, L + 2); }
+                            if (!HoverOverDefColorDot) { DefDotRect = new(L, Y, L, L); }
+                            else { DefDotRect = new(L - 1, Y - 1, L + 2, L + 2); }
 
                             G.FillEllipse(br, DefDotRect);
                         }

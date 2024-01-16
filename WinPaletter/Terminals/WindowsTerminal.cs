@@ -7,17 +7,23 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class WindowsTerminal
     {
-        private bool _Shown = false;
         public WinTerminal.Version _Mode;
         public WinTerminal _Terminal;
         public WinTerminal _TerminalDefault;
+        public WinTerminal.Version SaveState;
+        public string CCat;
+
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Terminals-(Windows-10-and-later)");
+        }
 
         public WindowsTerminal()
         {
@@ -25,13 +31,180 @@ namespace WinPaletter
             InitializeComponent();
         }
 
+        private void LoadFromWPTH(object sender, EventArgs e)
+        {
+            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+                Load_FromTerminal();
+                TMx.Dispose();
+            }
+        }
+
+        private void LoadFromCurrent(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            Load_FromTerminal();
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            Load_FromTerminal();
+            TMx.Dispose();
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            switch (_Mode)
+            {
+                case WinTerminal.Version.Stable:
+                    {
+                        Program.TM.Terminal.Enabled = AspectEnabled;
+                        Program.TM.Terminal = _Terminal;
+                        break;
+                    }
+
+                case WinTerminal.Version.Preview:
+                    {
+                        Program.TM.TerminalPreview.Enabled = AspectEnabled;
+                        Program.TM.TerminalPreview = _Terminal;
+                        break;
+                    }
+            }
+
+            DialogResult = DialogResult.OK;
+
+            Close();
+        }
+
+        private void ImportFromJSON(object sender, EventArgs e)
+        {
+            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if (_Mode == WinTerminal.Version.Stable)
+                    {
+                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile);
+                        Load_FromTerminal();
+                    }
+
+                    else if (_Mode == WinTerminal.Version.Preview)
+                    {
+                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        Load_FromTerminal();
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Forms.BugReport.ThrowError(ex);
+                }
+            }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            if (AspectEnabled)
+            {
+                if (OS.W12 || OS.W11 || OS.W10)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        string TerDir;
+                        string TerPreDir;
+
+                        if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                        {
+                            TerDir = PathsExt.TerminalJSON;
+                            TerPreDir = PathsExt.TerminalPreviewJSON;
+                        }
+                        else
+                        {
+                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                            {
+                                TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
+                            }
+                            else
+                            {
+                                TerDir = PathsExt.TerminalJSON;
+                            }
+
+                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                            {
+                                TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
+                            }
+                            else
+                            {
+                                TerPreDir = PathsExt.TerminalPreviewJSON;
+                            }
+                        }
+
+                        if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
+                        {
+                            _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
+                        }
+
+                        if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
+                        {
+                            _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        }
+
+                        Cursor = Cursors.Default;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                }
+            }
+
+            else
+            {
+                MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+            Cursor = Cursors.Default;
+        }
+
         private void WindowsTerminal_Load(object sender, EventArgs e)
         {
-            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
+            DesignerData data = new(this)
+            {
+                AspectName = _Mode == WinTerminal.Version.Stable ? Program.Lang.TerminalStable : Program.Lang.TerminalPreview,
+                Enabled = _Mode == WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = false,
+                Import_JSON = true,
+                CanSwitchMode = false,
 
-            this.LoadLanguage();
-            ApplyStyle(this);
-            _Shown = false;
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromJSON = ImportFromJSON,
+            };
+
+            LoadData(data);
+
+            CheckBox1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
             switch (_Mode)
             {
@@ -40,7 +213,7 @@ namespace WinPaletter
                         _Terminal = Program.TM.Terminal;
                         _TerminalDefault = Program.TM.Terminal;
                         Text = Program.Lang.TerminalStable;
-                        TerEnabled.Checked = Program.TM.Terminal.Enabled;
+                        AspectEnabled = Program.TM.Terminal.Enabled;
                         break;
                     }
 
@@ -50,14 +223,13 @@ namespace WinPaletter
                         _TerminalDefault = Program.TM.TerminalPreview;
 
                         Text = Program.Lang.TerminalPreview;
-                        TerEnabled.Checked = Program.TM.TerminalPreview.Enabled;
+                        AspectEnabled = Program.TM.TerminalPreview.Enabled;
                         break;
                     }
 
             }
 
             Load_FromTerminal();
-
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -77,7 +249,6 @@ namespace WinPaletter
 
         public void Load_FromTerminal()
         {
-
             FillTerminalSchemes(_Terminal, TerSchemes);
             FillTerminalThemes(_Terminal, TerThemes);
             FillTerminalProfiles(_Terminal, TerProfiles);
@@ -119,7 +290,7 @@ namespace WinPaletter
                 TerTabActive.BackColor = default;
                 TerTabInactive.BackColor = default;
 
-                switch (Program.PreviewStyle)
+                switch (Program.WindowStyle)
                 {
                     case WindowStyle.W12:
                         {
@@ -158,7 +329,6 @@ namespace WinPaletter
 
             else if (TerThemes.Items.Contains(_Terminal.Theme))
             {
-
                 TerThemes.SelectedItem = _Terminal.Theme;
 
                 TerThemesContainer.Enabled = true;
@@ -173,18 +343,12 @@ namespace WinPaletter
                     Terminal1.Light = !(temp.Style.ToLower() == "light");
                     Terminal2.Light = !(temp.Style.ToLower() == "light");
                 }
-
             }
 
             ApplyPreview(_Terminal);
         }
 
-        private void WindowsTerminal_Shown(object sender, EventArgs e)
-        {
-            _Shown = true;
-        }
-
-        public void FillTerminalSchemes(WinTerminal Terminal, ComboBox Combobox)
+        public void FillTerminalSchemes(WinTerminal Terminal, UI.WP.ComboBox Combobox)
         {
             Combobox.Items.Clear();
 
@@ -193,10 +357,9 @@ namespace WinPaletter
                 for (int x = 0, loopTo = Terminal.Colors.Count - 1; x <= loopTo; x++)
                     Combobox.Items.Add(Terminal.Colors[x].Name);
             }
-
         }
 
-        public void FillTerminalThemes(WinTerminal Terminal, ComboBox Combobox)
+        public void FillTerminalThemes(WinTerminal Terminal, UI.WP.ComboBox Combobox)
         {
             Combobox.Items.Clear();
 
@@ -212,7 +375,7 @@ namespace WinPaletter
 
         }
 
-        public void FillTerminalProfiles(WinTerminal Terminal, ComboBox Combobox)
+        public void FillTerminalProfiles(WinTerminal Terminal, UI.WP.ComboBox Combobox)
         {
             Combobox.Items.Clear();
             Combobox.Items.Add("Default");
@@ -222,7 +385,6 @@ namespace WinPaletter
                 for (int x = 0, loopTo = Terminal.Profiles.Count - 1; x <= loopTo; x++)
                     Combobox.Items.Add(Terminal.Profiles[x].Name);
             }
-
         }
 
         private void TerSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -231,298 +393,289 @@ namespace WinPaletter
 
             try
             {
-                {
-                    TColors temp = _Terminal.Colors[TerSchemes.SelectedIndex];
-                    TerBackground.BackColor = temp.Background;
-                    TerForeground.BackColor = temp.Foreground;
-                    TerSelection.BackColor = temp.SelectionBackground;
-                    TerCursor.BackColor = temp.CursorColor;
+                TColors temp = _Terminal.Colors[TerSchemes.SelectedIndex];
+                TerBackground.BackColor = temp.Background;
+                TerForeground.BackColor = temp.Foreground;
+                TerSelection.BackColor = temp.SelectionBackground;
+                TerCursor.BackColor = temp.CursorColor;
 
-                    TerBlack.BackColor = temp.Black;
-                    TerBlue.BackColor = temp.Blue;
-                    TerGreen.BackColor = temp.Green;
-                    TerCyan.BackColor = temp.Cyan;
-                    TerRed.BackColor = temp.Red;
-                    TerPurple.BackColor = temp.Purple;
-                    TerYellow.BackColor = temp.Yellow;
-                    TerWhite.BackColor = temp.White;
+                TerBlack.BackColor = temp.Black;
+                TerBlue.BackColor = temp.Blue;
+                TerGreen.BackColor = temp.Green;
+                TerCyan.BackColor = temp.Cyan;
+                TerRed.BackColor = temp.Red;
+                TerPurple.BackColor = temp.Purple;
+                TerYellow.BackColor = temp.Yellow;
+                TerWhite.BackColor = temp.White;
 
-                    TerBlackB.BackColor = temp.BrightBlack;
-                    TerBlueB.BackColor = temp.BrightBlue;
-                    TerGreenB.BackColor = temp.BrightGreen;
-                    TerCyanB.BackColor = temp.BrightCyan;
-                    TerRedB.BackColor = temp.BrightRed;
-                    TerPurpleB.BackColor = temp.BrightPurple;
-                    TerYellowB.BackColor = temp.BrightYellow;
-                    TerWhiteB.BackColor = temp.BrightWhite;
-                }
+                TerBlackB.BackColor = temp.BrightBlack;
+                TerBlueB.BackColor = temp.BrightBlue;
+                TerGreenB.BackColor = temp.BrightGreen;
+                TerCyanB.BackColor = temp.BrightCyan;
+                TerRedB.BackColor = temp.BrightRed;
+                TerPurpleB.BackColor = temp.BrightPurple;
+                TerYellowB.BackColor = temp.BrightYellow;
+                TerWhiteB.BackColor = temp.BrightWhite;
 
-                {
-                    TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                    temp1.ColorScheme = TerSchemes.SelectedItem.ToString();
-                }
+                TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                temp1.ColorScheme = TerSchemes.SelectedItem.ToString();
 
-                if (_Shown)
-                    ApplyPreview(_Terminal);
+                if (IsShown) ApplyPreview(_Terminal);
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         public void SetDefaultsToScheme(string Scheme)
         {
             switch (Scheme.ToLower() ?? string.Empty)
             {
-
                 case var @case when @case == ("Campbell".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF0C0C0C".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF0C0C0C".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF0037DA".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF767676".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF3B78FF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF61D6D6".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF16C60C".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFB4009E".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFE74856".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFF2F2F2".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFF9F1A5".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF3A96DD".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF13A10E".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF881798".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFC50F1F".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC19C00".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(12, 12, 12);
+                        TerBlack.DefaultBackColor = Color.FromArgb(12, 12, 12);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 55, 218);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(118, 118, 118);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(59, 120, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(97, 214, 214);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(22, 198, 12);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(180, 0, 158);
+                        TerRedB.DefaultBackColor = Color.FromArgb(231, 72, 86);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(242, 242, 242);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(249, 241, 165);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(58, 150, 221);
+                        TerForeground.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerGreen.DefaultBackColor = Color.FromArgb(19, 161, 14);
+                        TerPurple.DefaultBackColor = Color.FromArgb(136, 23, 152);
+                        TerRed.DefaultBackColor = Color.FromArgb(197, 15, 31);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerYellow.DefaultBackColor = Color.FromArgb(196, 156, 0);
                         break;
                     }
 
                 case var case1 when case1 == ("Campbell Powershell".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF012456".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF0C0C0C".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF0037DA".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF767676".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF3B78FF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF61D6D6".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF16C60C".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFB4009E".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFE74856".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFF2F2F2".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFF9F1A5".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF3A96DD".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF13A10E".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF881798".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFC50F1F".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC19C00".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(1, 36, 86);
+                        TerBlack.DefaultBackColor = Color.FromArgb(12, 12, 12);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 55, 218);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(118, 118, 118);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(59, 120, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(97, 214, 214);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(22, 198, 12);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(180, 0, 158);
+                        TerRedB.DefaultBackColor = Color.FromArgb(231, 72, 86);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(242, 242, 242);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(249, 241, 165);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(58, 150, 221);
+                        TerForeground.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerGreen.DefaultBackColor = Color.FromArgb(19, 161, 14);
+                        TerPurple.DefaultBackColor = Color.FromArgb(136, 23, 152);
+                        TerRed.DefaultBackColor = Color.FromArgb(197, 15, 31);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerYellow.DefaultBackColor = Color.FromArgb(196, 156, 0);
                         break;
                     }
 
                 case var case2 when case2 == ("One Half Dark".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF282C34".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF282C34".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF61AFEF".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF5A6374".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF61AFEF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF56B6C2".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF98C379".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFC678DD".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFE06C75".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFDCDFE4".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFE5C07B".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF56B6C2".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFDCDFE4".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF98C379".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FFC678DD".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFE06C75".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFDCDFE4".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFE5C07B".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(40, 44, 52);
+                        TerBlack.DefaultBackColor = Color.FromArgb(40, 44, 52);
+                        TerBlue.DefaultBackColor = Color.FromArgb(97, 175, 239);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(90, 99, 116);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(97, 175, 239);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(86, 182, 194);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(152, 195, 121);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(198, 120, 221);
+                        TerRedB.DefaultBackColor = Color.FromArgb(224, 108, 117);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(220, 223, 228);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(229, 192, 123);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(86, 182, 194);
+                        TerForeground.DefaultBackColor = Color.FromArgb(220, 223, 228);
+                        TerGreen.DefaultBackColor = Color.FromArgb(152, 195, 121);
+                        TerPurple.DefaultBackColor = Color.FromArgb(198, 120, 221);
+                        TerRed.DefaultBackColor = Color.FromArgb(224, 108, 117);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(220, 223, 228);
+                        TerYellow.DefaultBackColor = Color.FromArgb(229, 192, 123);
                         break;
                     }
 
                 case var case3 when case3 == ("One Half Light".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FFFAFAFA".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF383A42".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF0184BC".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF4F525D".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF61AFEF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF56B5C1".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF98C379".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFC577DD".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFDF6C75".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFE4C07A".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FF4F525D".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF0997B3".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FF383A42".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF50A14F".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FFA626A4".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFE45649".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFFAFAFA".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC18301".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(250, 250, 250);
+                        TerBlack.DefaultBackColor = Color.FromArgb(56, 58, 66);
+                        TerBlue.DefaultBackColor = Color.FromArgb(1, 132, 188);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(79, 82, 93);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(97, 175, 239);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(86, 181, 193);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(152, 195, 121);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(197, 119, 221);
+                        TerRedB.DefaultBackColor = Color.FromArgb(223, 108, 117);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(228, 196, 122);
+                        TerCursor.DefaultBackColor = Color.FromArgb(79, 82, 93);
+                        TerCyan.DefaultBackColor = Color.FromArgb(9, 151, 179);
+                        TerForeground.DefaultBackColor = Color.FromArgb(56, 58, 66);
+                        TerGreen.DefaultBackColor = Color.FromArgb(80, 161, 79);
+                        TerPurple.DefaultBackColor = Color.FromArgb(166, 38, 164);
+                        TerRed.DefaultBackColor = Color.FromArgb(228, 86, 73);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(250, 250, 250);
+                        TerYellow.DefaultBackColor = Color.FromArgb(193, 131, 1);
                         break;
                     }
 
                 case var case4 when case4 == ("Solarized Dark".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF002B36".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF002B36".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF268BD2".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF073642".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF839496".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF93A1A1".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF586E75".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FF6C71C4".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFCB4B16".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFFDF6E3".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FF657B83".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF2AA198".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FF839496".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF859900".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FFD33682".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFDC322F".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFEEE8D5".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFB58900".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 43, 54);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 43, 54);
+                        TerBlue.DefaultBackColor = Color.FromArgb(38, 139, 210);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(7, 54, 66);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(131, 148, 150);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(147, 161, 161);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(88, 110, 117);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(108, 113, 196);
+                        TerRedB.DefaultBackColor = Color.FromArgb(203, 75, 22);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(253, 246, 227);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(101, 123, 131);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(42, 161, 152);
+                        TerForeground.DefaultBackColor = Color.FromArgb(131, 148, 150);
+                        TerGreen.DefaultBackColor = Color.FromArgb(133, 153, 0);
+                        TerPurple.DefaultBackColor = Color.FromArgb(211, 54, 130);
+                        TerRed.DefaultBackColor = Color.FromArgb(220, 50, 47);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(238, 232, 213);
+                        TerYellow.DefaultBackColor = Color.FromArgb(181, 137, 0);
                         break;
                     }
 
                 case var case5 when case5 == ("Solarized Light".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FFFDF6E3".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF002B36".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF268BD2".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF073642".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF839496".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF93A1A1".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF586E75".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FF6C71C4".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFCB4B16".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFFDF6E3".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FF657B83".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FF002B36".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF2AA198".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FF657B83".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF859900".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FFD33682".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFDC322F".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFEEE8D5".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFB58900".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(253, 246, 227);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 43, 54);
+                        TerBlue.DefaultBackColor = Color.FromArgb(38, 139, 210);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(7, 54, 66);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(131, 148, 150);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(147, 161, 161);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(88, 110, 117);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(108, 113, 196);
+                        TerRedB.DefaultBackColor = Color.FromArgb(203, 75, 22);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(253, 246, 227);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(101, 123, 131);
+                        TerCursor.DefaultBackColor = Color.FromArgb(0, 43, 54);
+                        TerCyan.DefaultBackColor = Color.FromArgb(42, 161, 152);
+                        TerForeground.DefaultBackColor = Color.FromArgb(101, 123, 131);
+                        TerGreen.DefaultBackColor = Color.FromArgb(133, 153, 0);
+                        TerPurple.DefaultBackColor = Color.FromArgb(211, 54, 130);
+                        TerRed.DefaultBackColor = Color.FromArgb(220, 50, 47);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(238, 232, 213);
+                        TerYellow.DefaultBackColor = Color.FromArgb(181, 137, 0);
                         break;
                     }
 
                 case var case6 when case6 == ("Tango Dark".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF3465A4".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF555753".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF729FCF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF34E2E2".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF8AE234".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFAD7FA8".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFEF2929".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFEEEEEC".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFFCE94F".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF06989A".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFD3D7CF".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF4E9A06".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF75507B".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFCC0000".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFD3D7CF".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC4A000".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(52, 101, 164);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(85, 87, 83);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(114, 159, 207);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(52, 226, 226);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(138, 226, 52);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(173, 127, 168);
+                        TerRedB.DefaultBackColor = Color.FromArgb(239, 41, 41);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(238, 238, 236);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(252, 233, 79);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(6, 152, 154);
+                        TerForeground.DefaultBackColor = Color.FromArgb(211, 215, 207);
+                        TerGreen.DefaultBackColor = Color.FromArgb(78, 154, 6);
+                        TerPurple.DefaultBackColor = Color.FromArgb(117, 80, 123);
+                        TerRed.DefaultBackColor = Color.FromArgb(204, 0, 0);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(211, 215, 207);
+                        TerYellow.DefaultBackColor = Color.FromArgb(196, 160, 0);
                         break;
                     }
 
                 case var case7 when case7 == ("Tango Light".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF3465A4".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF555753".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF729FCF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF34E2E2".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF8AE234".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFAD7FA8".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFEF2929".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFEEEEEC".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFFCE94F".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF06989A".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FF555753".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF4E9A06".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF75507B".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFCC0000".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFD3D7CF".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC4A000".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(52, 101, 164);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(85, 87, 83);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(114, 159, 207);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(52, 226, 226);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(138, 226, 52);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(173, 127, 168);
+                        TerRedB.DefaultBackColor = Color.FromArgb(239, 41, 41);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(238, 238, 236);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(252, 233, 79);
+                        TerCursor.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerCyan.DefaultBackColor = Color.FromArgb(6, 152, 154);
+                        TerForeground.DefaultBackColor = Color.FromArgb(85, 87, 83);
+                        TerGreen.DefaultBackColor = Color.FromArgb(78, 154, 6);
+                        TerPurple.DefaultBackColor = Color.FromArgb(117, 80, 123);
+                        TerRed.DefaultBackColor = Color.FromArgb(204, 0, 0);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(211, 215, 207);
+                        TerYellow.DefaultBackColor = Color.FromArgb(196, 160, 0);
                         break;
                     }
 
                 case var case8 when case8 == ("Vintage".ToLower() ?? string.Empty):
                     {
-                        TerBackground.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF000000".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF000080".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF808080".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF0000FF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF00FFFF".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF00FF00".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFFF00FF".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFFF0000".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFFFFF00".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF008080".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFC0C0C0".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF008000".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF800080".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FF800000".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFC0C0C0".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FF808000".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 0, 128);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(128, 128, 128);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(0, 0, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(0, 255, 255);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(0, 255, 0);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(255, 0, 255);
+                        TerRedB.DefaultBackColor = Color.FromArgb(255, 0, 0);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(255, 255, 0);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(0, 128, 128);
+                        TerForeground.DefaultBackColor = Color.FromArgb(192, 192, 192);
+                        TerGreen.DefaultBackColor = Color.FromArgb(0, 128, 0);
+                        TerPurple.DefaultBackColor = Color.FromArgb(128, 0, 128);
+                        TerRed.DefaultBackColor = Color.FromArgb(128, 0, 0);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(192, 192, 192);
+                        TerYellow.DefaultBackColor = Color.FromArgb(128, 128, 0);
                         break;
                     }
 
                 default:
                     {
-                        TerBackground.DefaultBackColor = "FF0C0C0C".FromHEXToColor(true);
-                        TerBlack.DefaultBackColor = "FF0C0C0C".FromHEXToColor(true);
-                        TerBlue.DefaultBackColor = "FF0037DA".FromHEXToColor(true);
-                        TerBlackB.DefaultBackColor = "FF767676".FromHEXToColor(true);
-                        TerBlueB.DefaultBackColor = "FF3B78FF".FromHEXToColor(true);
-                        TerCyanB.DefaultBackColor = "FF61D6D6".FromHEXToColor(true);
-                        TerGreenB.DefaultBackColor = "FF16C60C".FromHEXToColor(true);
-                        TerPurpleB.DefaultBackColor = "FFB4009E".FromHEXToColor(true);
-                        TerRedB.DefaultBackColor = "FFE74856".FromHEXToColor(true);
-                        TerWhiteB.DefaultBackColor = "FFF2F2F2".FromHEXToColor(true);
-                        TerYellowB.DefaultBackColor = "FFF9F1A5".FromHEXToColor(true);
-                        TerCursor.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerCyan.DefaultBackColor = "FF3A96DD".FromHEXToColor(true);
-                        TerForeground.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerGreen.DefaultBackColor = "FF13A10E".FromHEXToColor(true);
-                        TerPurple.DefaultBackColor = "FF881798".FromHEXToColor(true);
-                        TerRed.DefaultBackColor = "FFC50F1F".FromHEXToColor(true);
-                        TerSelection.DefaultBackColor = "FFFFFFFF".FromHEXToColor(true);
-                        TerWhite.DefaultBackColor = "FFCCCCCC".FromHEXToColor(true);
-                        TerYellow.DefaultBackColor = "FFC19C00".FromHEXToColor(true);
+                        TerBackground.DefaultBackColor = Color.FromArgb(12, 12, 12);
+                        TerBlack.DefaultBackColor = Color.FromArgb(12, 12, 12);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 55, 218);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(118, 118, 118);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(59, 120, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(97, 214, 214);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(22, 198, 12);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(180, 0, 158);
+                        TerRedB.DefaultBackColor = Color.FromArgb(231, 72, 86);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(242, 242, 242);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(249, 241, 165);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(58, 150, 221);
+                        TerForeground.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerGreen.DefaultBackColor = Color.FromArgb(19, 161, 14);
+                        TerPurple.DefaultBackColor = Color.FromArgb(136, 23, 152);
+                        TerRed.DefaultBackColor = Color.FromArgb(197, 15, 31);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerYellow.DefaultBackColor = Color.FromArgb(193, 156, 0);
                         break;
                     }
 
@@ -531,151 +684,92 @@ namespace WinPaletter
 
         private void TerProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            try
             {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                try
+                if (TerSchemes.Items.Contains(temp.ColorScheme))
+                    TerSchemes.SelectedItem = temp.ColorScheme;
+                else
+                    TerSchemes.SelectedItem = _Terminal.DefaultProf.ColorScheme;
+            }
+            catch { }
+
+            TerBackImage.Text = temp.BackgroundImage;
+            TerImageOpacity.Value = (int)Math.Round(temp.BackgroundImageOpacity * 100f);
+
+            TerCursorStyle.SelectedIndex = (int)temp.CursorShape;
+            TerCursorHeightBar.Value = temp.CursorHeight;
+
+            TerFontName.Text = temp.Font.Face;
+            NativeMethods.GDI32.LogFont fx = new();
+            Font f_cmd = new(temp.Font.Face, temp.Font.Size);
+            f_cmd.ToLogFont(fx);
+            fx.lfWeight = (int)temp.Font.Weight * 100;
+            f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
+            TerFontName.Font = new(f_cmd.Name, 9f, f_cmd.Style);
+
+            TerFontSizeBar.Value = temp.Font.Size;
+            TerFontWeight.SelectedIndex = (int)temp.Font.Weight;
+
+            TerAcrylic.Checked = temp.UseAcrylic;
+            TerOpacityBar.Value = temp.Opacity;
+
+            Terminal1.Opacity = temp.Opacity;
+            Terminal1.OpacityBackImage = temp.BackgroundImageOpacity * 100f;
+
+            if (!string.IsNullOrEmpty(temp.TabTitle))
+            {
+                Terminal1.TabTitle = temp.TabTitle;
+            }
+            else if (!string.IsNullOrEmpty(temp.Name))
+            {
+                Terminal1.TabTitle = temp.Name;
+            }
+            else if (TerProfiles.SelectedIndex == 0)
+            {
+                Terminal1.TabTitle = Program.Lang.Default;
+            }
+            else
+            {
+                Terminal1.TabTitle = Program.Lang.Untitled;
+            }
+
+            if (File.Exists(temp.Icon))
+            {
+                Terminal1.TabIcon = Bitmap_Mgr.Load(temp.Icon);
+            }
+
+            else
+            {
+                IntPtr intPtr = IntPtr.Zero;
+                NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                string path = string.Empty;
+                if (temp.Commandline is not null)
+                    path = temp.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
+                NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+
+                if (File.Exists(path))
                 {
-                    if (TerSchemes.Items.Contains(temp.ColorScheme))
-                        TerSchemes.SelectedItem = temp.ColorScheme;
-                    else
-                        TerSchemes.SelectedItem = _Terminal.DefaultProf.ColorScheme;
-                }
-                catch
-                {
-                }
-
-                TerBackImage.Text = temp.BackgroundImage;
-                TerImageOpacity.Value = (int)Math.Round(temp.BackgroundImageOpacity * 100f);
-
-                TerCursorStyle.SelectedIndex = (int)temp.CursorShape;
-                TerCursorHeightBar.Value = temp.CursorHeight;
-
-                TerFontName.Text = temp.Font.Face;
-                NativeMethods.GDI32.LogFont fx = new();
-                Font f_cmd = new(temp.Font.Face, temp.Font.Size);
-                f_cmd.ToLogFont(fx);
-                fx.lfWeight = (int)temp.Font.Weight * 100;
-                f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
-                TerFontName.Font = new(f_cmd.Name, 9f, f_cmd.Style);
-
-                TerFontSizeBar.Value = temp.Font.Size;
-                TerFontWeight.SelectedIndex = (int)temp.Font.Weight;
-
-                TerAcrylic.Checked = temp.UseAcrylic;
-                TerOpacityBar.Value = temp.Opacity;
-
-                Terminal1.Opacity = temp.Opacity;
-                Terminal1.OpacityBackImage = temp.BackgroundImageOpacity * 100f;
-
-                if (!string.IsNullOrEmpty(temp.TabTitle))
-                {
-                    Terminal1.TabTitle = temp.TabTitle;
-                }
-                else if (!string.IsNullOrEmpty(temp.Name))
-                {
-                    Terminal1.TabTitle = temp.Name;
-                }
-                else if (TerProfiles.SelectedIndex == 0)
-                {
-                    Terminal1.TabTitle = Program.Lang.Default;
+                    Terminal1.TabIcon = ((Icon)NativeMethods.DLLFunc.ExtractSmallIcon(path)).ToBitmap();
                 }
                 else
                 {
-                    Terminal1.TabTitle = Program.Lang.Untitled;
+                    Terminal1.TabIcon = null;
+                    Terminal1.TabIconButItIsString = "";
                 }
-
-                if (File.Exists(temp.Icon))
-                {
-                    Terminal1.TabIcon = Bitmap_Mgr.Load(temp.Icon);
-                }
-
-                else
-                {
-                    IntPtr intPtr = IntPtr.Zero;
-                    NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                    string path = string.Empty;
-                    if (temp.Commandline is not null)
-                        path = temp.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
-                    NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
-
-                    if (File.Exists(path))
-                    {
-                        Terminal1.TabIcon = ((Icon)NativeMethods.DLLFunc.ExtractSmallIcon(path)).ToBitmap();
-                    }
-                    else
-                    {
-                        Terminal1.TabIcon = null;
-                        Terminal1.TabIconButItIsString = "";
-                    }
-
-                }
-
             }
 
             ApplyPreview(_Terminal);
-
-        }
-
-        private void TerFontSizeBar_Scroll(object sender)
-        {
-            if (!_Shown)
-                return;
-
-            TerFontSizeVal.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-
-            Terminal1.Font = new(Terminal1.Font.Name, TerFontSizeBar.Value, Terminal1.Font.Style);
-
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.Font.Size = TerFontSizeBar.Value;
-            }
-        }
-
-        private void TerCursorHeightBar_Scroll(object sender)
-        {
-            Terminal1.CursorHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            Terminal1.Refresh();
-            TerCursorHeightVal.Text = TerCursorHeightBar.Value.ToString();
-            Terminal1.Refresh();
-
-            if (!_Shown)
-                return;
-
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.CursorHeight = Conversions.ToInteger(((UI.WP.Trackbar)sender).Value);
-            }
-        }
-
-        private void TerImageOpacity_Scroll(object sender)
-        {
-            TerImageOpacityVal.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-
-            Terminal1.OpacityBackImage = TerImageOpacity.Value;
-
-            if (!_Shown)
-                return;
-
-
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.BackgroundImageOpacity = (float)(TerImageOpacity.Value / 100d);
-            }
         }
 
         private void TerCursorStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             Terminal1.CursorType = (UI.Simulation.WinTerminal.CursorShape_Enum)TerCursorStyle.SelectedIndex;
-            Terminal1.Refresh();
 
-            if (!_Shown)
-                return;
+            if (!IsShown) return;
 
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.CursorShape = (TProfile.CursorShape_Enum)TerCursorStyle.SelectedIndex;
-            }
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.CursorShape = (TProfile.CursorShape_Enum)TerCursorStyle.SelectedIndex;
         }
 
         private void Button12_Click(object sender, EventArgs e)
@@ -687,10 +781,7 @@ namespace WinPaletter
 
         private void ColorClick(object sender, EventArgs e)
         {
-
-
-            if (e is DragEventArgs)
-                return;
+            if (e is DragEventArgs) return;
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
@@ -698,47 +789,16 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, Terminal1 };
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) }},
+            };
 
-            Conditions _conditions = new();
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                _conditions.CMD_ColorTable00 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                _conditions.CMD_ColorTable01 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                _conditions.CMD_ColorTable02 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                _conditions.CMD_ColorTable03 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                _conditions.CMD_ColorTable04 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                _conditions.CMD_ColorTable05 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                _conditions.CMD_ColorTable06 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                _conditions.CMD_ColorTable07 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                _conditions.CMD_ColorTable08 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                _conditions.CMD_ColorTable09 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                _conditions.CMD_ColorTable10 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                _conditions.CMD_ColorTable11 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                _conditions.CMD_ColorTable12 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                _conditions.CMD_ColorTable13 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                _conditions.CMD_ColorTable14 = true;
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                _conditions.CMD_ColorTable15 = true;
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
-
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
-
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
 
             CList.Clear();
         }
@@ -844,30 +904,55 @@ namespace WinPaletter
                 return;
             }
 
-            List<Control> CList = new() { (Control)sender, Terminal1, Terminal2 };
-
-            Conditions _conditions = new();
+            ColorItem colorItem = (ColorItem)sender;
+            Dictionary<Control, string[]> CList = new()
+            {
+                { colorItem, new string[] { nameof(colorItem.BackColor) } },
+            };
 
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
-                _conditions.Terminal_Back = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Background) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_Background) });
+            }
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
-                _conditions.Terminal_Fore = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Foreground) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_Foreground) });
+            }
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
-                _conditions.Terminal_Selection = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Selection) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_Selection) });
+            }
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
-                _conditions.Terminal_Cursor = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Cursor) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_Cursor) });
+            }
 
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
-                _conditions.Terminal_TabActive = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_TabFocused) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_TabFocused) });
+            }
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
-                _conditions.Terminal_TabInactive = true;
+            {
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_TabUnFocused) });
+                CList.Add(Terminal2, new string[] { nameof(Terminal1.Color_TabUnFocused) });
+            }
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
-                _conditions.Terminal_TitlebarActive = true;
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Titlebar) });
+
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
-                _conditions.Terminal_TitlebarInactive = true;
+                CList.Add(Terminal1, new string[] { nameof(Terminal1.Color_Titlebar_Unfocused) });
 
-
-            Color C = Forms.ColorPickerDlg.Pick(CList, _conditions);
+            Color C = Forms.ColorPickerDlg.Pick(CList);
 
             if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
             {
@@ -911,8 +996,8 @@ namespace WinPaletter
 
             ApplyPreview(_Terminal);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = C;
-            ((UI.Controllers.ColorItem)sender).Invalidate();
+            colorItem.BackColor = C;
+            colorItem.Invalidate();
 
             CList.Clear();
         }
@@ -978,7 +1063,7 @@ namespace WinPaletter
 
                     else if (TerThemes.SelectedItem.ToString().ToLower() == "system")
                     {
-                        switch (Program.PreviewStyle)
+                        switch (Program.WindowStyle)
                         {
                             case WindowStyle.W12:
                                 {
@@ -1025,16 +1110,9 @@ namespace WinPaletter
                     fx.lfWeight = (int)temp.Font.Weight * 100;
                     f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
                     Terminal1.Font = f_cmd;
-                    TerFontSizeVal.Text = f_cmd.Size.ToString();
                 }
-
-                Terminal1.Refresh();
-                Terminal2.Refresh();
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1055,32 +1133,25 @@ namespace WinPaletter
                 f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, temp.Style);
             }
             Terminal1.Font = f_cmd;
-            Terminal1.Refresh();
 
-            {
-                TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp1.Font.Weight = (TProfile.FontWeight_Enum)TerFontWeight.SelectedIndex;
-            }
-
+            TProfile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp1.Font.Weight = (TProfile.FontWeight_Enum)TerFontWeight.SelectedIndex;
         }
 
         private void TerThemes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!_Shown)
-                return;
+            if (!IsShown) return;
 
             if (TerThemes.SelectedIndex > 2)
             {
                 TerThemesContainer.Enabled = true;
 
-                {
-                    TTheme temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
-                    TerTitlebarActive.BackColor = temp.Titlebar_Active;
-                    TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
-                    TerTabActive.BackColor = temp.Tab_Active;
-                    TerTabInactive.BackColor = temp.Tab_Inactive;
-                    TerMode.Checked = !(temp.Style.ToLower() == "light");
-                }
+                TTheme temp = _Terminal.Themes[TerThemes.SelectedIndex - 3];
+                TerTitlebarActive.BackColor = temp.Titlebar_Active;
+                TerTitlebarInactive.BackColor = temp.Titlebar_Inactive;
+                TerTabActive.BackColor = temp.Tab_Active;
+                TerTabInactive.BackColor = temp.Tab_Inactive;
+                TerMode.Checked = !(temp.Style.ToLower() == "light");
             }
 
             else
@@ -1097,7 +1168,7 @@ namespace WinPaletter
                 if (TerThemes.SelectedIndex == 1)
                     TerMode.Checked = false;
 
-                switch (Program.PreviewStyle)
+                switch (Program.WindowStyle)
                 {
                     case WindowStyle.W12:
                         {
@@ -1207,40 +1278,17 @@ namespace WinPaletter
             }
         }
 
-        private void TerAcrylicBar_Scroll(object sender)
-        {
-            TerOpacityVal.Text = TerOpacityBar.Value.ToString();
-
-            Terminal1.Opacity = TerOpacityBar.Value;
-
-            Terminal1.Refresh();
-
-            if (_Shown)
-            {
-                {
-                    TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                    temp.Opacity = TerOpacityBar.Value;
-                }
-            }
-
-        }
-
-        private void TerAcrylic_CheckedChanged(object sender)
+        private void TerAcrylic_CheckedChanged(object sender, EventArgs e)
         {
             Terminal1.UseAcrylic = TerAcrylic.Checked;
 
-            Terminal1.Refresh();
+            if (!IsShown) return;
 
-            if (!_Shown)
-                return;
-
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.UseAcrylic = TerAcrylic.Checked;
-            }
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.UseAcrylic = TerAcrylic.Checked;
         }
 
-        private void CheckBox1_CheckedChanged(object sender)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked;
             Program.Settings.WindowsTerminals.Save();
@@ -1289,14 +1337,14 @@ namespace WinPaletter
                 case WinTerminal.Version.Stable:
                     {
                         if (File.Exists(TerDir))
-                            Interaction.Shell(@"explorer.exe shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
+                            Interaction.Shell(@$"{PathsExt.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
                         if (File.Exists(TerPreDir))
-                            Interaction.Shell(@"explorer.exe shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
+                            Interaction.Shell(@$"{PathsExt.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
                         break;
                     }
 
@@ -1326,13 +1374,10 @@ namespace WinPaletter
                 Terminal1.BackImage = null;
             }
 
-            if (!_Shown)
-                return;
+            if (!IsShown) return;
 
-            {
-                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
-                temp.BackgroundImage = TerBackImage.Text;
-            }
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.BackgroundImage = TerBackImage.Text;
 
             Terminal1.Invalidate();
         }
@@ -1352,41 +1397,13 @@ namespace WinPaletter
                 _Terminal.Themes[TerThemes.SelectedIndex - 3].Style = !TerMode.Checked ? "light" : "dark";
             }
 
-            if (_Shown)
-                ApplyPreview(_Terminal);
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            switch (_Mode)
-            {
-                case WinTerminal.Version.Stable:
-                    {
-                        Program.TM.Terminal.Enabled = TerEnabled.Checked;
-                        Program.TM.Terminal = _Terminal;
-                        break;
-                    }
-
-                case WinTerminal.Version.Preview:
-                    {
-                        Program.TM.TerminalPreview.Enabled = TerEnabled.Checked;
-                        Program.TM.TerminalPreview = _Terminal;
-                        break;
-                    }
-
-            }
-
-            DialogResult = DialogResult.OK;
-
-            Close();
+            if (IsShown) ApplyPreview(_Terminal);
         }
 
         private void WindowsTerminal_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult != DialogResult.OK)
             {
-
-
                 switch (_Mode)
                 {
                     case WinTerminal.Version.Stable:
@@ -1402,79 +1419,9 @@ namespace WinPaletter
                         }
 
                 }
-
             }
 
             DialogResult = DialogResult.Cancel;
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-
-            if (TerEnabled.Checked)
-            {
-                if (OS.W12 || OS.W11 || OS.W10)
-                {
-
-                    try
-                    {
-                        Cursor = Cursors.WaitCursor;
-
-                        string TerDir;
-                        string TerPreDir;
-
-                        if (!Program.Settings.WindowsTerminals.Path_Deflection)
-                        {
-                            TerDir = PathsExt.TerminalJSON;
-                            TerPreDir = PathsExt.TerminalPreviewJSON;
-                        }
-                        else
-                        {
-                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                            {
-                                TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
-                            }
-                            else
-                            {
-                                TerDir = PathsExt.TerminalJSON;
-                            }
-
-                            if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                            {
-                                TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
-                            }
-                            else
-                            {
-                                TerPreDir = PathsExt.TerminalPreviewJSON;
-                            }
-                        }
-
-                        if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
-                        {
-                            _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
-                        }
-
-                        if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
-                        {
-                            _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                        }
-
-                        Cursor = Cursors.Default;
-                    }
-
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-
-                }
-            }
-
-            else
-            {
-                MsgBox(Program.Lang.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -1527,63 +1474,6 @@ namespace WinPaletter
             }
         }
 
-        public WinTerminal.Version SaveState;
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
-            {
-
-                SaveState = _Mode;
-                if (Forms.WindowsTerminalDecide.ShowDialog() == DialogResult.OK)
-                {
-                    if (SaveState == WinTerminal.Version.Stable)
-                    {
-                        _Terminal = new(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile);
-                    }
-
-                    else if (SaveState == WinTerminal.Version.Preview)
-                    {
-                        _Terminal = new(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview);
-
-                    }
-
-                    Load_FromTerminal();
-                }
-
-            }
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
-            {
-
-                try
-                {
-
-                    if (_Mode == WinTerminal.Version.Stable)
-                    {
-                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile);
-                        Load_FromTerminal();
-                    }
-
-                    if (_Mode == WinTerminal.Version.Preview)
-                    {
-                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                        Load_FromTerminal();
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Forms.BugReport.ThrowError(ex);
-                }
-
-            }
-        }
-
         private void Button17_Click(object sender, EventArgs e)
         {
 
@@ -1619,7 +1509,6 @@ namespace WinPaletter
 
         private void Button18_Click(object sender, EventArgs e)
         {
-
             if (TerProfiles.SelectedIndex == 0)
             {
                 MsgBox(Program.Lang.Terminal_ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1646,7 +1535,6 @@ namespace WinPaletter
             _Terminal.Profiles.Add(P);
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
-
         }
 
         private void Button19_Click(object sender, EventArgs e)
@@ -1672,25 +1560,13 @@ namespace WinPaletter
             TerThemes.SelectedIndex = TerThemes.Items.Count - 1;
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-
-            Close();
-        }
-
-        public string CCat;
-
         private void Button6_Click(object sender, EventArgs e)
         {
-            {
-                UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
-                temp.Items.Clear();
-                CCat = null;
+            UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
+            temp.Items.Clear();
+            CCat = null;
 
-                foreach (object x in TerProfiles.Items)
-                    temp.Items.Add(x);
-            }
+            foreach (object x in TerProfiles.Items) temp.Items.Add(x);
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
@@ -1698,7 +1574,6 @@ namespace WinPaletter
                 {
                     if ((TerProfiles.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
-
                         TProfile CCatFrom = x == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[x - 1];
 
                         {
@@ -1725,9 +1600,7 @@ namespace WinPaletter
                             else
                                 TerSchemes.SelectedItem = _Terminal.DefaultProf.ColorScheme;
                         }
-                        catch
-                        {
-                        }
+                        catch { }
 
                         TerBackImage.Text = CCatFrom.BackgroundImage;
                         TerImageOpacity.Value = (int)Math.Round(CCatFrom.BackgroundImageOpacity * 100f);
@@ -1792,31 +1665,23 @@ namespace WinPaletter
                                 Terminal1.TabIcon = null;
                                 Terminal1.TabIconButItIsString = "";
                             }
-
-
                         }
 
                         break;
                     }
-
                 }
 
                 ApplyPreview(_Terminal);
-
             }
-
         }
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            {
-                UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
-                temp.Items.Clear();
-                CCat = null;
+            UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
+            temp.Items.Clear();
+            CCat = null;
 
-                foreach (object x in TerSchemes.Items)
-                    temp.Items.Add(x);
-            }
+            foreach (object x in TerSchemes.Items) temp.Items.Add(x);
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
@@ -1824,7 +1689,6 @@ namespace WinPaletter
                 {
                     if ((TerSchemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
-
                         TColors CCatFrom = _Terminal.Colors[x];
 
                         {
@@ -1878,11 +1742,8 @@ namespace WinPaletter
 
                         break;
                     }
-
                 }
-
             }
-
         }
 
         private void Button21_Click(object sender, EventArgs e)
@@ -1935,65 +1796,6 @@ namespace WinPaletter
             }
         }
 
-        private void Button22_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-
-            switch (_Mode)
-            {
-                case WinTerminal.Version.Stable:
-                    {
-                        _Terminal = TMx.Terminal;
-                        TerEnabled.Checked = TMx.Terminal.Enabled;
-                        break;
-                    }
-
-                case WinTerminal.Version.Preview:
-                    {
-                        _Terminal = TMx.TerminalPreview;
-                        TerEnabled.Checked = TMx.TerminalPreview.Enabled;
-                        break;
-                    }
-            }
-
-            Load_FromTerminal();
-
-            TMx.Dispose();
-        }
-
-        private void TerFontSizeVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum).ToString();
-            TerFontSizeBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void TerCursorHeightVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum).ToString();
-            TerCursorHeightBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void TerImageOpacityVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum).ToString();
-            TerImageOpacity.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void TerOpacityVal_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum).ToString();
-            TerOpacityBar.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void TerEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
-        }
-
         private void Button23_Click(object sender, EventArgs e)
         {
             FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
@@ -2011,12 +1813,47 @@ namespace WinPaletter
                 TerFontName.Font = new(FontDialog1.Font.Name, 9f, Terminal1.Font.Style);
                 TerFontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
             }
-
         }
 
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void TerCursorHeightBar_ValueChanged(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Windows-Terminals-(Windows-10-and-later)");
+            Terminal1.CursorHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+
+            if (!IsShown) return;
+
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.CursorHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+        }
+
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            Terminal1.OpacityBackImage = TerImageOpacity.Value;
+
+            if (!IsShown) return;
+
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.BackgroundImageOpacity = (float)(TerImageOpacity.Value / 100d);
+        }
+
+        private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
+        {
+            Terminal1.Opacity = TerOpacityBar.Value;
+
+            if (IsShown)
+            {
+                TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+                temp.Opacity = TerOpacityBar.Value;
+            }
+        }
+
+        private void trackBarX1_ValueChanged_2(object sender, EventArgs e)
+        {
+            if (!IsShown) return;
+
+            Terminal1.Font = new(Terminal1.Font.Name, TerFontSizeBar.Value, Terminal1.Font.Style);
+
+            TProfile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.DefaultProf : _Terminal.Profiles[TerProfiles.SelectedIndex - 1];
+            temp.Font.Size = TerFontSizeBar.Value;
         }
     }
 }

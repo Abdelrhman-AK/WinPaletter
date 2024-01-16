@@ -63,42 +63,42 @@ namespace WinPaletter
 
             if (OS.W12)
             {
-                RadioImage7.Image = Properties.Resources.Native12.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win12.Resize(20, 20);
             }
 
             if (OS.W11)
             {
-                RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win11.Resize(20, 20);
             }
 
             else if (OS.W10)
             {
-                RadioImage7.Image = Properties.Resources.Native10.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win10.Resize(20, 20);
             }
 
             else if (OS.W8 | OS.W81)
             {
-                RadioImage7.Image = Properties.Resources.Native8.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win81.Resize(20, 20);
             }
 
             else if (OS.W7)
             {
-                RadioImage7.Image = Properties.Resources.Native7.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win7.Resize(20, 20);
             }
 
             else if (OS.WVista)
             {
-                RadioImage7.Image = Properties.Resources.NativeVista.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.WinVista.Resize(20, 20);
             }
 
             else if (OS.WXP)
             {
-                RadioImage7.Image = Properties.Resources.NativeXP.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.WinXP.Resize(20, 20);
             }
 
             else
             {
-                RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
+                RadioImage7.Image = Assets.WinLogos.Win11.Resize(20, 20);
             }
 
 
@@ -176,7 +176,7 @@ namespace WinPaletter
 
                             switch (r1 ?? string.Empty)
                             {
-                                case "0":              // ' Save
+                                case "0":              // ' ApplyToTM
                                     {
                                         if (System.IO.File.Exists(SaveFileDialog.FileName))
                                         {
@@ -195,7 +195,7 @@ namespace WinPaletter
 
                                         break;
                                     }
-                                case "1":              // ' Save As
+                                case "1":              // ' ApplyToTM As
                                     {
                                         if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                                         {

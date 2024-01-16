@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,17 +7,43 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.Theme.Manager;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {
     internal partial class Program
     {
+        public static string GetUniqueFileName(string directoryPath, string baseFileName)
+        {
+            string fullFilePath = System.IO.Path.Combine(directoryPath, baseFileName);
+
+            if (!System.IO.File.Exists(fullFilePath))
+            {
+                // The file with the given name does not exist, so it is already unique
+                return fullFilePath;
+            }
+
+            // If the file exists, generate a unique file name
+            int counter = 1;
+            string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(baseFileName);
+            string fileExtension = System.IO.Path.GetExtension(baseFileName);
+
+            do
+            {
+                string uniqueFileName = $"{fileNameWithoutExtension}_{counter}{fileExtension}";
+                fullFilePath = System.IO.Path.Combine(directoryPath, uniqueFileName);
+                counter++;
+            }
+            while (System.IO.File.Exists(fullFilePath));
+
+            return fullFilePath;
+        }
+
         public static void SendCommand(string command, bool Wait = true)
         {
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
@@ -61,31 +86,31 @@ namespace WinPaletter
         private static void LoadThemeManager()
         {
             if (OS.W12)
-                PreviewStyle = PreviewHelpers.WindowStyle.W12;
+                WindowStyle = PreviewHelpers.WindowStyle.W12;
 
             if (OS.W11)
-                PreviewStyle = PreviewHelpers.WindowStyle.W11;
+                WindowStyle = PreviewHelpers.WindowStyle.W11;
 
             else if (OS.W10)
-                PreviewStyle = PreviewHelpers.WindowStyle.W10;
+                WindowStyle = PreviewHelpers.WindowStyle.W10;
 
             else if (OS.W81)
-                PreviewStyle = PreviewHelpers.WindowStyle.W81;
+                WindowStyle = PreviewHelpers.WindowStyle.W81;
 
             else if (OS.W8)
-                PreviewStyle = PreviewHelpers.WindowStyle.W81;
+                WindowStyle = PreviewHelpers.WindowStyle.W81;
 
             else if (OS.W7)
-                PreviewStyle = PreviewHelpers.WindowStyle.W7;
+                WindowStyle = PreviewHelpers.WindowStyle.W7;
 
             else if (OS.WVista)
-                PreviewStyle = PreviewHelpers.WindowStyle.WVista;
+                WindowStyle = PreviewHelpers.WindowStyle.WVista;
 
             else if (OS.WXP)
-                PreviewStyle = PreviewHelpers.WindowStyle.WXP;
+                WindowStyle = PreviewHelpers.WindowStyle.WXP;
 
             else
-                PreviewStyle = PreviewHelpers.WindowStyle.W12;
+                WindowStyle = PreviewHelpers.WindowStyle.W12;
 
             // Load Manager
             if (!ExternalLink)
@@ -95,14 +120,20 @@ namespace WinPaletter
             else
             {
                 TM = new(Theme.Manager.Source.File, ExternalLink_File);
-                Forms.MainFrm.OpenFileDialog1.FileName = ExternalLink_File;
-                Forms.MainFrm.SaveFileDialog1.FileName = ExternalLink_File;
+                Forms.Dashboard.OpenFileDialog1.FileName = ExternalLink_File;
+                Forms.Dashboard.SaveFileDialog1.FileName = ExternalLink_File;
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
             }
 
             TM_Original = (Theme.Manager)TM.Clone();
             TM_FirstTime = (Theme.Manager)TM.Clone();
+
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
+            {
+                string filename = Program.GetUniqueFileName(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                TM.Save(Source.File, filename);
+            }
         }
 
         private static void DeleteUpdateResiduals()
@@ -136,93 +167,6 @@ namespace WinPaletter
             }
         }
 
-        public static void CMD_Convert(string arg, bool KillProcessAfterConvert)
-        {
-            try
-            {
-                string[] arr = arg.Remove(0, "/convert:".Count()).Split('|');
-                string Source = arr[0];
-                string Destination = arr[1];
-                string Compress = Settings.FileTypeManagement.CompressThemeFile ? "1" : "0";
-                string OldWPTH = "0";
-                if (arr.Count() == 3)
-                    Compress = arr[2];
-                if (arr.Count() == 4)
-                    OldWPTH = arr[3];
-
-                Converter _Convert = new();
-
-                if (System.IO.File.Exists(Source) && !(_Convert.GetFormat(Source) == Converter_CP.WP_Format.Error))
-                {
-                    _Convert.Convert(Source, Destination, Compress == "1", OldWPTH == "1");
-                }
-                else
-                {
-                    MsgBox(Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error, Source);
-                }
-            }
-
-            catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
-
-            if (KillProcessAfterConvert) Program.ForceExit();
-        }
-
-        public static void CMD_Convert_List(string arg, bool KillProcessAfterConvert)
-        {
-            try
-            {
-                string source = arg.Remove(0, "/convert-list:".Count());
-                Converter _Convert = new();
-
-                if (System.IO.File.Exists(source))
-                {
-                    foreach (string File in System.IO.File.ReadAllLines(source))
-                    {
-                        string f;
-                        string compress = Settings.FileTypeManagement.CompressThemeFile ? "1" : "0";
-                        string OldWPTH = "0";
-
-                        if (!string.IsNullOrWhiteSpace(File))
-                        {
-                            if (!File.Contains("|"))
-                            {
-                                f = File.Replace("\"", string.Empty);
-                            }
-                            else
-                            {
-                                string[] arr = File.Split('|');
-                                f = arr[0].Replace("\"", string.Empty);
-                                if (arr.Count() == 2)
-                                    compress = arr[1];
-                                if (arr.Count() == 3)
-                                    compress = arr[2];
-                            }
-
-                            System.IO.FileInfo FI = new(f);
-                            string Name = System.IO.Path.GetFileNameWithoutExtension(FI.Name);
-                            string Dir = FI.FullName.Replace(FI.FullName.Split('\\').Last(), "WinPaletterConversion");
-                            string SaveAs = $@"{Dir}\{Name}.wpth";
-
-                            if (!(_Convert.GetFormat(f) == Converter_CP.WP_Format.Error))
-                            {
-                                if (!System.IO.Directory.Exists(Dir))
-                                    System.IO.Directory.CreateDirectory(Dir);
-                                _Convert.Convert(f, SaveAs, compress == "1", OldWPTH == "1");
-                            }
-                            else
-                            {
-                                MsgBox(Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error, f);
-                            }
-                        }
-                    }
-                }
-            }
-
-            catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
-
-            if (KillProcessAfterConvert) Program.ForceExit();
-        }
-
         public static void LoadLanguage()
         {
             if (Settings.Language.Enabled)
@@ -250,10 +194,7 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                try
-                {
-                    Monitor();
-                }
+                try { Monitor(); }
                 catch (Exception ex)
                 {
                     if (MsgBox(Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, $"{Lang.MonitorIssue2}\r\n{Lang.TM_RestoreCursorsErrorPressOK}") == DialogResult.OK)
@@ -270,24 +211,23 @@ namespace WinPaletter
 
         private static void InitializeImageLists()
         {
-            ImageLists.ThemeLog.Images.Add("info", Properties.Resources.notify_info);
-            ImageLists.ThemeLog.Images.Add("apply", Properties.Resources.notify_applying);
-            ImageLists.ThemeLog.Images.Add("error", Properties.Resources.notify_error);
-            ImageLists.ThemeLog.Images.Add("warning", Properties.Resources.notify_warning);
-            ImageLists.ThemeLog.Images.Add("time", Properties.Resources.notify_time);
-            ImageLists.ThemeLog.Images.Add("success", Properties.Resources.notify_success);
-            ImageLists.ThemeLog.Images.Add("skip", Properties.Resources.notify_skip);
-            ImageLists.ThemeLog.Images.Add("admin", Properties.Resources.notify_administrator);
-            ImageLists.ThemeLog.Images.Add("reg_add", Properties.Resources.notify_reg_add);
-            ImageLists.ThemeLog.Images.Add("reg_delete", Properties.Resources.notify_reg_delete);
-            ImageLists.ThemeLog.Images.Add("reg_skip", Properties.Resources.notify_reg_skip);
-            ImageLists.ThemeLog.Images.Add("task_add", Properties.Resources.notify_task_add);
-            ImageLists.ThemeLog.Images.Add("task_remove", Properties.Resources.notify_task_remove);
-            ImageLists.ThemeLog.Images.Add("file_rename", Properties.Resources.notify_file_rename);
-            ImageLists.ThemeLog.Images.Add("dll", Properties.Resources.notify_dll);
-            ImageLists.ThemeLog.Images.Add("pe_patch", Properties.Resources.notify_pe_patch);
-            ImageLists.ThemeLog.Images.Add("pe_backup", Properties.Resources.notify_pe_backup);
-            ImageLists.ThemeLog.Images.Add("pe_restore", Properties.Resources.notify_pe_restore);
+            ImageLists.ThemeLog.Images.Add("info", Assets.Notifications.Info);
+            ImageLists.ThemeLog.Images.Add("apply", Assets.Notifications.Applying);
+            ImageLists.ThemeLog.Images.Add("error", Assets.Notifications.Error);
+            ImageLists.ThemeLog.Images.Add("warning", Assets.Notifications.Warning);
+            ImageLists.ThemeLog.Images.Add("time", Assets.Notifications.Time);
+            ImageLists.ThemeLog.Images.Add("success", Assets.Notifications.Success);
+            ImageLists.ThemeLog.Images.Add("skip", Assets.Notifications.Skip);
+            ImageLists.ThemeLog.Images.Add("admin", Assets.Notifications.Administrator);
+            ImageLists.ThemeLog.Images.Add("reg_add", Assets.Notifications.Reg_add);
+            ImageLists.ThemeLog.Images.Add("reg_delete", Assets.Notifications.Reg_delete);
+            ImageLists.ThemeLog.Images.Add("reg_skip", Assets.Notifications.Reg_skip);
+            ImageLists.ThemeLog.Images.Add("task_remove", Assets.Notifications.Task_remove);
+            ImageLists.ThemeLog.Images.Add("file_rename", Assets.Notifications.File_rename);
+            ImageLists.ThemeLog.Images.Add("dll", Assets.Notifications.DLL);
+            ImageLists.ThemeLog.Images.Add("pe_patch", Assets.Notifications.PE_patch);
+            ImageLists.ThemeLog.Images.Add("pe_backup", Assets.Notifications.PE_backup);
+            ImageLists.ThemeLog.Images.Add("pe_restore", Assets.Notifications.PE_restore);
 
             ImageLists.Language.Images.Add("main", Properties.Resources.LangNode_Main);
             ImageLists.Language.Images.Add("value", Properties.Resources.LangNode_Value);
@@ -330,11 +270,6 @@ namespace WinPaletter
             {
                 System.IO.File.WriteAllBytes(file, data);
             }
-        }
-
-        private static void DetectIfWPStartedWithClassicTheme()
-        {
-            StartedWithClassicTheme = string.IsNullOrEmpty(UxTheme.GetCurrentVS().Item1);
         }
 
         private static void ExtractLuna()
@@ -516,7 +451,7 @@ namespace WinPaletter
                 {
                     if (TreeView is not null)
                     {
-                        Theme.Manager.AddNode(TreeView, Program.Lang.RestartExplorerIssue0 + ". " + Program.Lang.RestartExplorerIssue1, "warning");
+                        Theme.Manager.AddNode(TreeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
                     }
                     else
                     {
@@ -595,7 +530,7 @@ namespace WinPaletter
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())
             {
-                Forms.MainFrm.LoggingOff = true;
+                Forms.Dashboard.LoggingOff = true;
                 Forms.MainFrm.Close();
                 process.Kill();
                 wic.Undo();  // :)

@@ -44,11 +44,11 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return HSL_Structure From RGB Color
+        /// Return HSL From RGB Color
         /// </summary>
-        public static HSL_Structure ToHSL(this Color Color)
+        public static HSL ToHSL(this Color Color)
         {
-            HSL_Structure _hsl = new();
+            HSL _hsl = new();
 
             float r = Color.R / 255.0f;
             float g = Color.G / 255.0f;
@@ -99,10 +99,17 @@ namespace WinPaletter.TypesExtensions
             return _hsl;
         }
 
+        public static Color Saturate(this Color color, float saturation)
+        {
+            HSL hsl = color.ToHSL();
+            hsl.S = Math.Min(Math.Max(hsl.S * saturation, 0), 100); // Adjust saturation
+            return hsl.ToRGB();
+        }
+
         /// <summary>
-        /// Return RGB Color From HSL_Structure
+        /// Return RGB Color From HSL
         /// </summary>
-        public static Color ToRGB(this HSL_Structure hsl)
+        public static Color ToRGB(this HSL hsl)
         {
             byte r;
             byte g;
@@ -210,9 +217,7 @@ namespace WinPaletter.TypesExtensions
             {
                 return Color.FromArgb(color.A, (int)Math.Round(red), (int)Math.Round(green), (int)Math.Round(blue));
             }
-            catch
-            {
-            }
+            catch { }
 
             return default;
         }
@@ -223,6 +228,15 @@ namespace WinPaletter.TypesExtensions
         public static string ReturnFormat(this Color Color, ColorFormat Format, bool HexHash = false, bool Alpha = false)
         {
             string s = Program.Lang.Empty;
+
+            if (Format == ColorFormat.Default)
+            {
+                if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HEX) Format = ColorFormat.HEX;
+                else if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.RGB) Format = ColorFormat.RGB;
+                else if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HSL) Format = ColorFormat.HSL;
+                else if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.Dec) Format = ColorFormat.Dec;
+                else Format = ColorFormat.HEX;
+            }
 
             if (Color != Color.FromArgb(0, 0, 0, 0))
             {
@@ -261,12 +275,14 @@ namespace WinPaletter.TypesExtensions
 
             return s;
         }
+
         public enum ColorFormat
         {
             HEX,
             RGB,
             HSL,
-            Dec
+            Dec,
+            Default
         }
 
         /// <summary>
@@ -283,20 +299,18 @@ namespace WinPaletter.TypesExtensions
             b.Dispose();
         }
 
-        /// <summary>
-        /// Return Color by blending two colors
-        /// </summary>
+        /// <summary>Blends the specified colors together.</summary>
+        /// <param name="color">Color to blend onto the background color.</param>
+        /// <param name="backColor">Color to blend the other color onto.</param>
+        /// <param name="amount">How much of <paramref name="color"/> to keep,
+        /// “on top of” <paramref name="backColor"/>.</param>
+        /// <returns>The blended colors.</returns>
         public static Color Blend(this Color color, Color backColor, double amount)
         {
-            if (amount > 100d)
-                amount = 100d;
-            if (amount < 0d)
-                amount = 0d;
-
-            byte a = (byte)Math.Round((color.A * (amount / 100d) + backColor.A * (amount / 100d)) / 2d);
-            byte r = (byte)Math.Round((color.R * (amount / 100d) + backColor.R * (amount / 100d)) / 2d);
-            byte g = (byte)Math.Round((color.G * (amount / 100d) + backColor.G * (amount / 100d)) / 2d);
-            byte b = (byte)Math.Round((color.B * (amount / 100d) + backColor.B * (amount / 100d)) / 2d);
+            byte a = (byte)(color.A * amount + backColor.A * (1 - amount));
+            byte r = (byte)(color.R * amount + backColor.R * (1 - amount));
+            byte g = (byte)(color.G * amount + backColor.G * (1 - amount));
+            byte b = (byte)(color.B * amount + backColor.B * (1 - amount));
             return Color.FromArgb(a, r, g, b);
         }
 
@@ -364,10 +378,10 @@ namespace WinPaletter.TypesExtensions
             return !(Color.R * 0.2126d + Color.G * 0.7152d + Color.B * 0.0722d > 255d / 2d);
         }
 
-        public struct HSL_Structure
+        public struct HSL
         {
 
-            public HSL_Structure(int h, float s, float l)
+            public HSL(int h, float s, float l)
             {
                 H = h;
                 S = s;
@@ -380,12 +394,20 @@ namespace WinPaletter.TypesExtensions
 
             public float L { get; set; }
 
-            public bool Equals(HSL_Structure hsl)
+            public bool Equals(HSL hsl)
             {
                 return H == hsl.H && S == hsl.S && L == hsl.L;
             }
+
+            public static HSL operator +(HSL hsl1, HSL hsl2)
+            {
+                return new HSL(Math.Min(Math.Max(hsl1.H + hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S + hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L + hsl2.L, 0), 100));
+            }
+
+            public static HSL operator -(HSL hsl1, HSL hsl2)
+            {
+                return new HSL(Math.Min(Math.Max(hsl1.H - hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S - hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L - hsl2.L, 0), 100));
+            }
         }
-
     }
-
 }

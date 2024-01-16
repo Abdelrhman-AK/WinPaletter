@@ -24,6 +24,50 @@ namespace WinPaletter.TypesExtensions
             return retval;
         }
 
+        // Set the value of a property in an object
+        public static void SetProperty(this Control obj, string propertyName, object value)
+        {
+            PropertyInfo property = obj.GetType().GetProperty(propertyName);
+            if (property != null && property.CanWrite)
+            {
+                property.SetValue(obj, value);
+            }
+        }
+
+        // Get the value of a property in an object
+        public static T GetProperty<T>(this Control obj, string propertyName)
+        {
+            PropertyInfo property = obj.GetType().GetProperty(propertyName);
+            if (property != null && property.CanRead)
+            {
+                return (T)property.GetValue(obj);
+            }
+
+            return default(T);
+        }
+
+        // Set the value of a property in an object
+        public static void SetProperty(this object obj, string propertyName, object value)
+        {
+            PropertyInfo property = obj.GetType().GetProperty(propertyName);
+            if (property != null && property.CanWrite)
+            {
+                property.SetValue(obj, value);
+            }
+        }
+
+        // Get the value of a property in an object
+        public static T GetProperty<T>(this object obj, string propertyName)
+        {
+            PropertyInfo property = obj.GetType().GetProperty(propertyName);
+            if (property != null && property.CanRead)
+            {
+                return (T)property.GetValue(obj);
+            }
+
+            return default(T);
+        }
+
         /// <summary>
         /// Return graphical state of a control to a bitmap
         /// </summary>

@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Security.Principal;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -38,15 +40,22 @@ namespace WinPaletter
         public static bool Elevated => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         /// <summary>
-        /// Gets if WinPaletter's current version is designed as Beta or not
-        /// <br>Don't forget to make it <b>True</b> when you design a beta one</br>
+        /// Gets if WinPaletter's current version is designed as beta or not
+        /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public readonly static bool IsBeta = false;
+        public readonly static bool IsBeta = true;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
         /// </summary>
-        public static bool StartedWithClassicTheme = false;
+        public static bool ClassicThemeRunning
+        {
+            get
+            {
+                Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
+                return string.IsNullOrEmpty(ThemeTuple.Item1.ToString()) || !System.IO.File.Exists(ThemeTuple.Item1.ToString());
+            }
+        }
 
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
@@ -71,7 +80,7 @@ namespace WinPaletter
         /// <summary>
         /// Variable responsible for the preview type on forms
         /// </summary>
-        public static PreviewHelpers.WindowStyle PreviewStyle = PreviewHelpers.WindowStyle.W11;
+        public static PreviewHelpers.WindowStyle WindowStyle = PreviewHelpers.WindowStyle.W11;
 
         /// <summary>
         /// Global variables to manage WinPaletter theme
@@ -79,7 +88,7 @@ namespace WinPaletter
         public static Theme.Manager TM, TM_Original, TM_FirstTime;
 
         /// <summary>
-        /// Process that kills (stops by force) Windows explorer
+        /// Process that kills (stops by force) Windows Explorer
         /// </summary>
         public static readonly Process ExplorerKiller = new()
         {
@@ -94,13 +103,13 @@ namespace WinPaletter
         };
 
         /// <summary>
-        /// Process that starts Windows explorer
+        /// Process that starts Windows Explorer
         /// </summary>
         public static readonly Process Explorer_exe = new()
         {
             StartInfo = new()
             {
-                FileName = PathsExt.explorer,
+                FileName = PathsExt.Explorer,
                 WindowStyle = ProcessWindowStyle.Normal
             }
         };
@@ -144,5 +153,10 @@ namespace WinPaletter
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
         public static AnimatorNS.Animator Animator;
+
+        /// <summary>
+        /// A global ToolTip to be used in all forms
+        /// </summary>
+        public static UI.WP.ToolTip ToolTip = new();
     }
 }

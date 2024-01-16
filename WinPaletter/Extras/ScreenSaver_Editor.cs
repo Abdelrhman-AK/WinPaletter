@@ -2,110 +2,190 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class ScreenSaver_Editor
     {
-
         private Process Proc;
+
+        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Screen-Saver");
+        }
 
         public ScreenSaver_Editor()
         {
             InitializeComponent();
         }
 
-        private void ScreenSaver_Editor_Load(object sender, EventArgs e)
+        private void LoadFromWPTH(object sender, EventArgs e)
         {
-            Button12.Image = Forms.MainFrm.Button20.Image.Resize(16, 16);
-            pnl_preview.DoubleBuffer();
-            ApplyFromTM(Program.TM);
-
-            this.LoadLanguage();
-            ApplyStyle(this);
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
         }
 
-        public void ApplyFromTM(Theme.Manager TM)
+        private void LoadFromCurrent(object sender, EventArgs e)
         {
-            ScrSvrEnabled.Checked = TM.ScreenSaver.Enabled;
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadFromTHEME(object sender, EventArgs e)
+        {
+            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                {
+                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
+                }
+            }
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
+        {
+            ApplyToTM(Program.TM);
+            Close();
+        }
+
+        private void ImportWin11Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin10Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin81Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWin7Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinVistaPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+        }
+
+        private void ImportWinXPPreset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+        }
+
+        private void QuickApply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                TMx.ScreenSaver.Apply();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private void ScreenSaver_Editor_Load(object sender, EventArgs e)
+        {
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.Store_Toggle_ScreenSaver,
+                Enabled = Program.TM.ScreenSaver.Enabled,
+                Import_theme = true,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = true,
+                CanSwitchMode = false,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnQuickApply = QuickApply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromTHEME = LoadFromTHEME,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_11 = ImportWin11Preset,
+                OnImportFromScheme_10 = ImportWin10Preset,
+                OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_7 = ImportWin7Preset,
+                OnImportFromScheme_Vista = ImportWinVistaPreset,
+                OnImportFromScheme_XP = ImportWinXPPreset,
+            };
+
+            LoadData(data);
+
+            pnl_preview.DoubleBuffer();
+            LoadFromTM(Program.TM);
+        }
+
+        public void LoadFromTM(Theme.Manager TM)
+        {
+            AspectEnabled = TM.ScreenSaver.Enabled;
             TextBox1.Text = TM.ScreenSaver.File;
-            Trackbar5.Value = TM.ScreenSaver.TimeOut;
+            trackbarX1.Value = TM.ScreenSaver.TimeOut;
             CheckBox1.Checked = TM.ScreenSaver.IsSecure;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            TM.ScreenSaver.Enabled = ScrSvrEnabled.Checked;
+            TM.ScreenSaver.Enabled = AspectEnabled;
             TM.ScreenSaver.File = TextBox1.Text;
-            TM.ScreenSaver.TimeOut = Trackbar5.Value;
+            TM.ScreenSaver.TimeOut = trackbarX1.Value;
             TM.ScreenSaver.IsSecure = CheckBox1.Checked;
         }
 
-        private void Button11_Click(object sender, EventArgs e)
+        public void GetFromClassicThemeFile(string File, Theme.Structures.ScreenSaver _DefaultScrSvr)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (INI _ini = new(File))
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                ApplyFromTM(TMx);
-                TMx.Dispose();
+                TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
             }
-        }
-
-        private void Button9_Click(object sender, EventArgs e)
-        {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyFromTM(TMx);
-            TMx.Dispose();
-        }
-
-        private void Button12_Click(object sender, EventArgs e)
-        {
-            using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-            {
-                ApplyFromTM(_Def);
-            }
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            ApplyToTM(Program.TM);
-            Close();
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            TMx.ScreenSaver.Apply();
-            TMx.Dispose();
-            Cursor = Cursors.Default;
-        }
-
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void ScrSvrEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
+            Task.Run(() =>
             {
-                if (Proc is not null && !Proc.HasExited)
-                    Proc.Kill();
-                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
-            }
-        }
+                string filename = string.Empty;
+                int previewHandle = 0;
 
+                this.Invoke(() =>
+                {
+                    filename = TextBox1.Text;
+                    previewHandle = pnl_preview.Handle.ToInt32();
+                });
+
+                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                {
+                    if (Proc is not null && !Proc.HasExited) Proc.Kill();
+
+                    Proc = Process.GetProcessById(Interaction.Shell($"\"{filename}\" /p {previewHandle}"));
+                }
+            });
+        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -117,79 +197,82 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
+            Task.Run(() =>
             {
-                if (Proc is not null && !Proc.HasExited)
-                    Proc.Kill();
-                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
-            }
+                string filename = string.Empty;
+                int previewHandle = 0;
+
+                this.Invoke(() =>
+                {
+                    filename = TextBox1.Text;
+                    previewHandle = pnl_preview.Handle.ToInt32();
+                });
+
+                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                {
+                    if (Proc is not null && !Proc.HasExited) Proc.Kill();
+
+                    Proc = Process.GetProcessById(Interaction.Shell($"\"{filename}\" /p {previewHandle}"));
+                }
+            });
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            if (Proc is not null && !Proc.HasExited)
-                Proc.Kill();
+            if (Proc is not null && !Proc.HasExited) Proc.Kill();
         }
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
-                Interaction.Shell($"\"{TextBox1.Text}\" /s");
+            Task.Run(() =>
+            {
+                string filename = string.Empty;
+
+                this.Invoke(() => { filename = TextBox1.Text; });
+
+                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                {
+                    if (Proc is not null && !Proc.HasExited) Proc.Kill();
+
+                    Proc = Process.GetProcessById(Interaction.Shell($"\"{filename}\" /s"));
+                }
+            });
         }
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            if (Proc is not null && !Proc.HasExited)
-                Proc.Kill();
-            if (System.IO.File.Exists(TextBox1.Text) && System.IO.Path.GetExtension(TextBox1.Text).ToUpper() == ".SCR")
+            Task.Run(() =>
             {
-                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /c", AppWinStyle.NormalFocus));
-                Proc.WaitForExit();
-                Proc = Process.GetProcessById(Interaction.Shell($"\"{TextBox1.Text}\" /p {pnl_preview.Handle.ToInt32()}"));
-            }
+                string filename = string.Empty;
+                int previewHandle = 0;
+
+                this.Invoke(() =>
+                {
+                    filename = TextBox1.Text;
+                    previewHandle = pnl_preview.Handle.ToInt32();
+                });
+
+                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                {
+                    if (Proc is not null && !Proc.HasExited) Proc.Kill();
+
+                    Proc = Process.GetProcessById(Interaction.Shell($"\"{filename}\" /c", AppWinStyle.NormalFocus));
+                    Proc.WaitForExit();
+                    Proc = Process.GetProcessById(Interaction.Shell($"\"{filename}\" /p {previewHandle}"));
+                }
+            });
         }
 
         private void ScreenSaver_Editor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Proc is not null && !Proc.HasExited)
-                Proc.Kill();
+            if (Proc is not null && !Proc.HasExited) Proc.Kill();
         }
 
-        private void Trackbar5_Scroll(object sender)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Button4.Text = ((UI.WP.Trackbar)sender).Value.ToString();
-        }
+            string result = Forms.ScreenSavers_List.GetScreenSaver();
 
-        private void Button4_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar5.Maximum), Trackbar5.Minimum).ToString();
-            Trackbar5.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button259_Click(object sender, EventArgs e)
-        {
-
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (Manager _Def = Theme.Default.Get(Program.PreviewStyle))
-                {
-                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
-                }
-            }
-        }
-
-        public void GetFromClassicThemeFile(string File, Theme.Structures.ScreenSaver _DefaultScrSvr)
-        {
-            using (INI _ini = new(File))
-            {
-                TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
-            }
-        }
-
-        private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
-        {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Screen-Saver");
+            if (!string.IsNullOrEmpty(result)) TextBox1.Text = result;
         }
     }
 }

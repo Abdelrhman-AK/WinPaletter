@@ -24,7 +24,7 @@ namespace WinPaletter.UI.WP
         private Color C1, C2;
         private float _Angle = 0f;
         private bool _Focused = true;
-        private readonly TextureBrush Noise = new(Properties.Resources.GaussianBlur.Fade(0.9d));
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.9f));
         public enum Styles
         {
             SwapColors,
@@ -142,7 +142,7 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
-        #region Events
+        #region Events/Overrides
         protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode)

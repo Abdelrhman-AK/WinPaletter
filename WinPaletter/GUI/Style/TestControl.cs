@@ -13,7 +13,6 @@ namespace WinPaletter.UI.WP
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
-            DoubleBuffered = true;
             Font = new("Segoe UI", 9f);
             Text = string.Empty;
         }
@@ -21,10 +20,15 @@ namespace WinPaletter.UI.WP
         public enum States
         {
             None,
+            NoneLevel2,
             Hover,
+            HoverLevel2,
             CheckedHover,
             Checked,
-            Max
+            Max,
+            ButtonNone,
+            ButtonOver,
+            ButtonDown
         }
 
         #region Properties
@@ -35,9 +39,27 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
-        public Config.Scheme Scheme { get; set; } = Program.Style.Schemes.Main;
+        private Config.Scheme _scheme = Program.Style.Schemes.Main;
+        public Config.Scheme Scheme
+        {
+            get => _scheme;
+            set
+            {
+                _scheme = value;
+                Invalidate();
+            }
+        }
 
-        public States State { get; set; } = States.None;
+        private States _state = States.None;
+        public States State
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+                Invalidate();
+            }
+        }
 
         protected override CreateParams CreateParams
         {
@@ -62,7 +84,6 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -78,9 +99,19 @@ namespace WinPaletter.UI.WP
                     lC = Scheme.Colors.Line;
                     break;
 
+                case States.NoneLevel2:
+                    bkC = Scheme.Colors.Back_Level2;
+                    lC = Scheme.Colors.Line_Level2;
+                    break;
+
                 case States.Hover:
                     bkC = Scheme.Colors.Back_Hover;
                     lC = Scheme.Colors.Line_Hover;
+                    break;
+
+                case States.HoverLevel2:
+                    bkC = Scheme.Colors.Back_Hover_Level2;
+                    lC = Scheme.Colors.Line_Hover_Level2;
                     break;
 
                 case States.Max:
@@ -97,6 +128,21 @@ namespace WinPaletter.UI.WP
                     bkC = Scheme.Colors.Back_Checked_Hover;
                     lC = Scheme.Colors.Line_Checked_Hover;
                     break;
+
+                case States.ButtonNone:
+                    bkC = Scheme.Colors.Button;
+                    lC = LineColor(Scheme.Colors.Button);
+                    break;
+
+                case States.ButtonOver:
+                    bkC = Scheme.Colors.Button_Over;
+                    lC = LineColor(Scheme.Colors.Button_Over);
+                    break;
+
+                case States.ButtonDown:
+                    bkC = Scheme.Colors.Button_Down;
+                    lC = LineColor(Scheme.Colors.Button_Down);
+                    break;
             }
 
             using (SolidBrush br = new(bkC)) { G.FillRoundedRect(br, MainRect); }
@@ -104,8 +150,24 @@ namespace WinPaletter.UI.WP
             using (Pen P = new(lC)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
 
             using (SolidBrush br = new(bkC.IsDark() ? Color.White : Color.Black)) { G.DrawString(Text, Font, br, MainRect, ContentAlignment.MiddleCenter.ToStringFormat()); }
+        }
 
+        private Color LineColor(Color baseColor = default)
+        {
+            switch (State)
+            {
+                case States.ButtonNone:
+                    return baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f);
+
+                case States.ButtonOver:
+                    return baseColor.CB(baseColor.IsDark() ? 0.07f : -0.1f);
+
+                case States.ButtonDown:
+                    return baseColor.CB(baseColor.IsDark() ? 0.1f : -0.08f);
+
+                default:
+                    return baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f);
+            }
         }
     }
-
 }

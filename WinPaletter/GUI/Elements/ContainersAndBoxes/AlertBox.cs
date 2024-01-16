@@ -87,7 +87,7 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
-            DoubleBuffered = true;
+
             bool RTL = (int)RightToLeft == 1;
             bool DarkMode = Program.Style.DarkMode;
 
@@ -102,9 +102,19 @@ namespace WinPaletter.UI.WP
             {
                 case Style.Simple:
                     {
-                        borderColor = scheme1.Colors.Line;
-                        innerColor = scheme1.Colors.Back;
-                        textColor = scheme1.Colors.ForeColor;
+                        if (Parent is not WP.GroupBox)
+                        {
+                            borderColor = scheme1.Colors.Line;
+                            innerColor = scheme1.Colors.Back;
+                            textColor = scheme1.Colors.ForeColor;
+                        }
+                        else
+                        {
+                            borderColor = scheme1.Colors.Line_Level2;
+                            innerColor = scheme1.Colors.Back_Level2;
+                            textColor = scheme1.Colors.ForeColor;
+                        }
+
                         break;
                     }
 

@@ -31,10 +31,10 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Vertical spacing between desktop icons</summary>
         public int IconVerticalSpacing;
 
-        /// <summary>Menu height (if it is a horizontal menu)</summary>
+        /// <summary>contextMenu height (if it is a horizontal menu)</summary>
         public int MenuHeight;
 
-        /// <summary>Menu width (if it is a vertical menu)</summary>
+        /// <summary>contextMenu width (if it is a vertical menu)</summary>
         public int MenuWidth;
 
         /// <summary>Padding width of a Window border</summary>
@@ -76,7 +76,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Icons font</summary>
         public Font IconFont;
 
-        /// <summary>Menu font</summary>
+        /// <summary>contextMenu font</summary>
         public Font MenuFont;
 
         /// <summary>Message box font</summary>
@@ -281,7 +281,7 @@ namespace WinPaletter.Theme.Structures
                 if (!Program.Settings.ThemeApplyingBehavior.DelayMetrics)
                 {
                     NONCLIENTMETRICS NCM = new();
-                    NCM.cbSize = Marshal.SizeOf(NCM);
+                    NCM.cbSize = (uint)Marshal.SizeOf(NCM);
                     ICONMETRICS ICO = new();
                     ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Drawing;
 using System.IO;
@@ -11,7 +9,6 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Web.Caching;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -21,7 +18,7 @@ namespace WinPaletter
     /// </summary>
     public class User
     {
-        #region Events
+        #region Events/Overrides
         /// <summary>
         /// EventArgs that have data of user change event
         /// </summary>
@@ -53,7 +50,7 @@ namespace WinPaletter
             public string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
 
             /// <summary>
-            /// Return if user that invoked the event is Administrator or not
+            /// Return if user that invoked the event is administrator or not
             /// </summary>
             public bool Administrator { get { return IsAdmin(SID); } }
 
@@ -119,13 +116,13 @@ namespace WinPaletter
                             {
                                 if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (Program.TM != Program.TM_Original))
                                 {
-                                    Forms.ComplexSave.GetResponse(Forms.MainFrm.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                                    Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
                                 }
                             }
 
                             Program.InitializeApplication(false);
-                            
-                            if (MainFormIsOpened) { Forms.MainFrm.LoadData(); }
+
+                            if (MainFormIsOpened) { Forms.Dashboard.LoadData(); }
 
                             foreach (Form f in OpenForms)
                             {
@@ -359,7 +356,7 @@ namespace WinPaletter
         public static string ComputerName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
 
         /// <summary>
-        /// Return if current user is Administrator or not
+        /// Return if current user is administrator or not
         /// </summary>
         public static bool Administrator => IsAdmin(SID);
 
@@ -400,7 +397,7 @@ namespace WinPaletter
         public static string UserProfilePath { get { return GetUserProfilePath(SID); } }
         #endregion
 
-        #region Voids
+        #region Methods
         /// <summary>
         /// Get dictionary of SID, USERNAME\DOMAIN of all users
         /// </summary>
@@ -464,7 +461,7 @@ namespace WinPaletter
         {
             Dictionary<string, string> UsersList = GetUsers();
 
-            // Save settings into current user before reloading settings for new user
+            // ApplyToTM settings into current user before reloading settings for new user
             if (!SkipToCurrentUser) Program.Settings.Save(Settings.Mode.Registry);
 
             if (SkipToCurrentUser) { User.SID = GetActiveSessionSID(); }
@@ -578,9 +575,9 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Determines whether an User is an Administrator, in the current machine.
+        /// Determines whether an User is an administrator, in the current machine.
         /// </summary>
-        /// <returns><c>true</c> if user is an Administrator, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if user is an administrator, <c>false</c> otherwise.</returns>
         public static bool IsAdmin(string SID)
         {
             try

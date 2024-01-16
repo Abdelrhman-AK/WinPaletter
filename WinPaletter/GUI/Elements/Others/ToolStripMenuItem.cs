@@ -7,6 +7,11 @@ namespace WinPaletter.UI.WP
     [Description("ToolStripMenuItem fixed to respect dark/light mode")]
     public class ToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
     {
+        public ToolStripMenuItem()
+        {
+
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (this == null) return;
@@ -14,17 +19,26 @@ namespace WinPaletter.UI.WP
             Graphics G = e.Graphics;
 
             G.TextRenderingHint = Program.Style.RenderingHint;
-            G.Clear(BackColor);
+
+            if (this.Enabled && this.Selected)
+            {
+                G.FillRectangle(SystemBrushes.MenuHighlight, new Rectangle(1, 1, Width - 2, Height - 2));
+            }
+            else
+            {
+                using (SolidBrush br = new(BackColor))
+                {
+                    G.FillRectangle(br, new Rectangle(1, 1, Width - 2, Height - 2));
+                }
+            }
 
             using (StringFormat sf = base.TextAlign.ToStringFormat())
             {
                 using (SolidBrush br = new(ForeColor))
                 {
-                    G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                    G.DrawString(Text, Font, br, new Rectangle(1, 1, Width - 2, Height - 2), sf);
                 }
             }
-
-            base.OnPaint(e);
         }
     }
 }

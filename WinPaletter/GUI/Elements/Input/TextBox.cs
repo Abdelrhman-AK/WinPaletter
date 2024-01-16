@@ -32,7 +32,7 @@ namespace WinPaletter.UI.WP
                 Height = _Multiline ? Height - 8 : Height + 8
             };
 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             UpdateStyles();
 
             BackColor = Color.Transparent;
@@ -282,9 +282,22 @@ namespace WinPaletter.UI.WP
             }
         }
 
+
+        private int _focusAlpha = 255;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public int FocusAlpha
+        {
+            get => _focusAlpha;
+            set
+            {
+                _focusAlpha = value;
+                Refresh();
+            }
+        }
         #endregion
 
-        #region Events
+        #region Events/Overrides
 
         public event KeyboardPressEventHandler KeyboardPress;
 
@@ -425,6 +438,12 @@ namespace WinPaletter.UI.WP
 
             if (!DesignMode)
             {
+                if (FindForm() != null)
+                {
+                    FindForm().Activated += Form_Activated;
+                    FindForm().Deactivate += Form_Deactivate; ;
+                }
+
                 try
                 {
                     TB.TextChanged += OnBaseTextChanged;
@@ -441,6 +460,12 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
+                if (FindForm() != null)
+                {
+                    FindForm().Activated -= Form_Activated;
+                    FindForm().Deactivate -= Form_Deactivate; ;
+                }
+
                 try
                 {
                     TB.TextChanged -= OnBaseTextChanged;
@@ -459,6 +484,30 @@ namespace WinPaletter.UI.WP
             Refresh();
 
             base.OnForeColorChanged(e);
+        }
+
+        private void Form_Activated(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 255;
+            }
+        }
+
+        private void Form_Deactivate(object sender, EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                FocusAlpha = 100;
+            }
         }
 
         #endregion
@@ -484,7 +533,6 @@ namespace WinPaletter.UI.WP
             if (this == null) return;
 
             Graphics G = e.Graphics;
-            DoubleBuffered = true;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -500,7 +548,7 @@ namespace WinPaletter.UI.WP
             Color Line = scheme.Colors.Line_Checked;
             Color LineHover = scheme.Colors.Back_Hover;
             Color FadeInColor = Color.FromArgb(alpha, Line);
-            Color FadeOutColor = Color.FromArgb(255 - alpha, LineHover);
+            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), LineHover);
 
             if (TB.Focused | Focused)
             {
@@ -513,17 +561,17 @@ namespace WinPaletter.UI.WP
 
             else
             {
-                G.FillRoundedRect(scheme.Brushes.Back, InnerRect);
+                G.FillRoundedRect(Parent is not WP.GroupBox ? scheme.Brushes.Back : scheme.Brushes.Back_Level2, InnerRect);
 
-                using (SolidBrush br = new(scheme.Colors.Back)) { G.FillRoundedRect(br, InnerRect); }
+                using (SolidBrush br = new(scheme.Colors.Back_Level2)) { G.FillRoundedRect(br, InnerRect); }
 
-                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back))) { G.FillRoundedRect(br, OuterRect); }
+                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Level2))) { G.FillRoundedRect(br, OuterRect); }
 
                 using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
                 using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
-                _TB.BackColor = scheme.Colors.Back;
+                _TB.BackColor = scheme.Colors.Back_Level2;
             }
 
             base.OnPaint(e);
