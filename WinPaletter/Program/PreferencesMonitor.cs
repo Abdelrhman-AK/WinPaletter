@@ -1,256 +1,195 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Management;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
     internal partial class Program
     {
-        private static ManagementEventWatcher WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4;
+        static List<Tuple<ManagementEventWatcher, EventArrivedEventHandler>> Watchers = new();
 
-
-        private static readonly MethodInvoker UpdateDarkModeInvoker = new(() =>
-        {
-            GetDarkMode();
-            if (Settings.Appearance.AutoDarkMode)
-                ApplyStyle();
-        });
+        static Thread thread;
 
         private static MethodInvoker UpdateWallpaperInvoker()
         {
-            Bitmap wall = FetchSuitableWallpaper(TM, WindowStyle);
-            Forms.Metrics_Fonts.windowMetrics1.BackgroundImage = wall;
-            Forms.Metrics_Fonts.Desktop_icons.BackgroundImage = wall;
-            Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
-            Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
+
+            if (thread != null && thread.IsAlive) thread.Abort();
+
+            thread = new(() =>
+            {
+                Wallpaper_Unscaled = GetWallpaperFromRegistry();
+
+                Bitmap wall = FetchSuitableWallpaper(TM, WindowStyle);
+                Invoke(() =>
+                {
+                    Forms.Metrics_Fonts.windowMetrics1.BackgroundImage = wall;
+                    Forms.Metrics_Fonts.Desktop_icons.BackgroundImage = wall;
+                    Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
+                    Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
+                });
+            });
+
+            thread.Start();
+
             return null;
         }
 
-        private static void UpdateWallpaperForPreview()
+        private static Bitmap ThumbnailWallpaper
         {
-            using (Bitmap wall_New = new((Bitmap)GetWallpaperFromRegistry().Clone()))
-            {
-                Wallpaper_Unscaled = (Bitmap)wall_New.Clone();
-                Wallpaper = (Bitmap)wall_New.GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, null, IntPtr.Zero);
-            }
+            get => GetWallpaperFromRegistry().GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, null, IntPtr.Zero) as Bitmap;
         }
 
-        public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle PreviewConfig)
+        public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)
         {
             using (PictureBox picbox = new() { Size = Forms.Win11Colors.windowsDesktop1.Size, BackColor = TM.Win32.Background })
             {
-                Bitmap Wall;
+                Bitmap wallpaper;
 
                 if (!TM.Wallpaper.Enabled)
                 {
-                    UpdateWallpaperForPreview();
-                    Wall = Wallpaper;
+                    wallpaper = ThumbnailWallpaper;
                 }
                 else
                 {
-                    bool condition0 = PreviewConfig == PreviewHelpers.WindowStyle.W12 & TM.WallpaperTone_W12.Enabled;
-                    bool condition1 = PreviewConfig == PreviewHelpers.WindowStyle.W11 & TM.WallpaperTone_W11.Enabled;
-                    bool condition2 = PreviewConfig == PreviewHelpers.WindowStyle.W10 & TM.WallpaperTone_W10.Enabled;
-                    bool condition3 = PreviewConfig == PreviewHelpers.WindowStyle.W81 & TM.WallpaperTone_W81.Enabled;
-                    bool condition4 = PreviewConfig == PreviewHelpers.WindowStyle.W7 & TM.WallpaperTone_W7.Enabled;
-                    bool condition5 = PreviewConfig == PreviewHelpers.WindowStyle.WVista & TM.WallpaperTone_WVista.Enabled;
-                    bool condition6 = PreviewConfig == PreviewHelpers.WindowStyle.WXP & TM.WallpaperTone_WXP.Enabled;
-                    bool condition = condition0 || condition1 || condition2 || condition3 || condition4 || condition5 || condition6;
+                    wallpaper = GetTintedWallpaper(TM, previewConfig);
 
-                    if (condition)
+                    if (wallpaper == null)
                     {
-                        switch (PreviewConfig)
+                        wallpaper = TM.Wallpaper.WallpaperType switch
                         {
-                            case PreviewHelpers.WindowStyle.W12:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.W11:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W11);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.W10:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W10);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.W81:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W81);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.W7:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W7);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.WVista:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WVista);
-                                    break;
-                                }
-
-                            case PreviewHelpers.WindowStyle.WXP:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WXP);
-                                    break;
-                                }
-
-                            default:
-                                {
-                                    Wall = PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
-                                    break;
-                                }
-
-                        }
-                    }
-
-                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.Picture)
-                    {
-                        if (System.IO.File.Exists(TM.Wallpaper.ImageFile))
-                        {
-                            Wall = Bitmap_Mgr.Load(TM.Wallpaper.ImageFile);
-                        }
-                        else
-                        {
-                            UpdateWallpaperForPreview();
-                            Wall = Wallpaper;
-                        }
-                    }
-
-                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.SolidColor)
-                    {
-                        Wall = null;
-                    }
-
-                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.SlideShow)
-                    {
-
-                        if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
-                        {
-                            string[] ls = System.IO.Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", System.IO.SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")).ToArray();
-
-
-                            if (ls.Count() > 0 && System.IO.File.Exists(ls[0]))
-                            {
-                                Wall = Bitmap_Mgr.Load(ls[0]);
-                            }
-
-                            else
-                            {
-                                UpdateWallpaperForPreview();
-                                Wall = Wallpaper;
-                            }
-                        }
-
-                        else if (TM.Wallpaper.Wallpaper_Slideshow_Images.Count() > 0 && System.IO.File.Exists(TM.Wallpaper.Wallpaper_Slideshow_Images[0]))
-                        {
-                            Wall = Bitmap_Mgr.Load(TM.Wallpaper.Wallpaper_Slideshow_Images[0]);
-                        }
-                        else
-                        {
-                            UpdateWallpaperForPreview();
-                            Wall = Wallpaper;
-                        }
-                    }
-                    else
-                    {
-                        UpdateWallpaperForPreview();
-                        Wall = Wallpaper;
+                            Theme.Structures.Wallpaper.WallpaperTypes.Picture when System.IO.File.Exists(TM.Wallpaper.ImageFile) => Bitmap_Mgr.Load(TM.Wallpaper.ImageFile),
+                            Theme.Structures.Wallpaper.WallpaperTypes.SolidColor => null,
+                            Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(TM),
+                            _ => ThumbnailWallpaper
+                        };
                     }
                 }
 
-                if (Wall is not null)
+                if (wallpaper != null)
                 {
-
-                    double ScaleW = 1;
-                    double ScaleH = 1;
-
-                    if (Wall.Width > Screen.PrimaryScreen.Bounds.Size.Width | Wall.Height > Screen.PrimaryScreen.Bounds.Size.Height)
-                    {
-                        ScaleW = (1920 / (double)picbox.Size.Width);
-                        ScaleH = (1080 / (double)picbox.Size.Height);
-                    }
-
-                    Wall = Wall.Resize((int)Math.Round(Wall.Width / ScaleW), (int)Math.Round(Wall.Height / ScaleH));
-
-                    if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fill)
-                    {
-                        picbox.SizeMode = PictureBoxSizeMode.CenterImage;
-                        Wall = (Bitmap)((Bitmap)Wall.Clone()).FillScale(picbox.Size);
-                    }
-
-                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fit)
-                    {
-                        picbox.SizeMode = PictureBoxSizeMode.Zoom;
-                    }
-
-                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Stretched)
-                    {
-                        picbox.SizeMode = PictureBoxSizeMode.StretchImage;
-                    }
-
-                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Centered)
-                    {
-                        picbox.SizeMode = PictureBoxSizeMode.CenterImage;
-                    }
-
-                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Tile)
-                    {
-                        picbox.SizeMode = PictureBoxSizeMode.Normal;
-                        Wall = ((Bitmap)Wall.Clone()).Tile(picbox.Size);
-
-                    }
-
+                    wallpaper = GetWallpaperWithStyle(wallpaper, picbox.Size, TM.Wallpaper.WallpaperStyle);
                 }
 
-                picbox.Image = Wall;
-
+                picbox.Image = wallpaper;
                 return picbox.ToBitmap();
             }
         }
 
+        private static Bitmap GetTintedWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)
+        {
+            if (previewConfig == PreviewHelpers.WindowStyle.W12 && TM.WallpaperTone_W12.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.W11 && TM.WallpaperTone_W11.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W11);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.W10 && TM.WallpaperTone_W10.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W10);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.W81 && TM.WallpaperTone_W81.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W81);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.W7 && TM.WallpaperTone_W7.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W7);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.WVista && TM.WallpaperTone_WVista.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WVista);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.WXP && TM.WallpaperTone_WXP.Enabled)
+            {
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WXP);
+            }
+
+            return null;
+        }
+
+        private static Bitmap FetchSlideShowWallpaper(Theme.Manager TM)
+        {
+            string[] imageFiles = TM.Wallpaper.SlideShow_Folder_or_ImagesList
+                ? System.IO.Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", System.IO.SearchOption.TopDirectoryOnly)
+                    .Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif"))
+                    .ToArray()
+                : TM.Wallpaper.Wallpaper_Slideshow_Images;
+
+            if (imageFiles.Length > 0 && System.IO.File.Exists(imageFiles[0]))
+            {
+                return Bitmap_Mgr.Load(imageFiles[0]);
+            }
+
+            return ThumbnailWallpaper;
+        }
+
+        private static Bitmap GetWallpaperWithStyle(Bitmap wallpaper, Size targetSize, Theme.Structures.Wallpaper.WallpaperStyles wallpaperStyle)
+        {
+            double scaleW = 1;
+            double scaleH = 1;
+
+            if (wallpaper.Width > Screen.PrimaryScreen.Bounds.Size.Width || wallpaper.Height > Screen.PrimaryScreen.Bounds.Size.Height)
+            {
+                scaleW = 1920.0 / targetSize.Width;
+                scaleH = 1080.0 / targetSize.Height;
+            }
+
+            wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
+
+            return wallpaperStyle switch
+            {
+                Theme.Structures.Wallpaper.WallpaperStyles.Fill => (Bitmap)((Bitmap)wallpaper.Clone()).FillScale(targetSize),
+                Theme.Structures.Wallpaper.WallpaperStyles.Fit => wallpaper,
+                Theme.Structures.Wallpaper.WallpaperStyles.Stretched => wallpaper,
+                Theme.Structures.Wallpaper.WallpaperStyles.Centered => wallpaper,
+                Theme.Structures.Wallpaper.WallpaperStyles.Tile => ((Bitmap)wallpaper.Clone()).Tile(targetSize),
+                _ => wallpaper
+            };
+        }
+
         public static Bitmap GetWallpaperFromRegistry()
         {
-            string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString();
-            int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
+            string wallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString();
+            int wallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
 
-            if (System.IO.File.Exists(WallpaperPath) && WallpaperType != 1)
+            if (System.IO.File.Exists(wallpaperPath) && wallpaperType != 1)
             {
-                return new Bitmap(Bitmap_Mgr.Load(WallpaperPath).GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, null, IntPtr.Zero));
+                return Bitmap_Mgr.Load(wallpaperPath).GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, null, IntPtr.Zero) as Bitmap;
             }
             else
             {
-                return GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0").ToString().FromWin32RegToColor().ToBitmap(Computer.Screen.Bounds.Size);
+                string backgroundColor = GetReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", Theme.Default.Get().Win32.Background.ToWin32Reg()).ToString();
+                return backgroundColor.FromWin32RegToColor().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
             }
         }
 
         public static void WallpaperType_Changed(object sender, EventArrivedEventArgs e)
         {
-            int WallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
-            Stopwatch S = new();
-            if (WallpaperType != 1)
+            int wallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
+            Stopwatch stopwatch = new();
+
+            if (wallpaperType != 1)
             {
-                S.Reset();
-                S.Start();
+                stopwatch.Reset();
+                stopwatch.Start();
+
                 while (!System.IO.File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
                 {
-                    if (S.ElapsedMilliseconds > 5000L)
+                    if (stopwatch.ElapsedMilliseconds > 5000L)
                         break;
                 }
-                S.Stop();
+
+                stopwatch.Stop();
                 Wallpaper_Changed();
             }
         }
@@ -258,84 +197,81 @@ namespace WinPaletter
         public static void Monitor()
         {
             WindowsIdentity currentUser = WindowsIdentity.GetCurrent();
-            string KeyPath;
-            string valueName;
-            string Base;
 
-            KeyPath = @"Control Panel\Desktop";
-            valueName = "Wallpaper";
-            Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
-            WqlEventQuery query1 = new(Base);
-            WallMon_Watcher1 = new(query1);
+            RegisterRegistryChangeEvent(currentUser.User.Value, @"Control Panel\Desktop", "Wallpaper", Wallpaper_Changed_EventHandler);
+            RegisterRegistryChangeEvent(currentUser.User.Value, @"Control Panel\Colors", "Background", Wallpaper_Changed_EventHandler);
 
-            KeyPath = @"Control Panel\Colors";
-            valueName = "Background";
-            Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
-            WqlEventQuery query2 = new(Base);
-            WallMon_Watcher2 = new(query2);
-
-            WallMon_Watcher1.EventArrived += Wallpaper_Changed_EventHandler;
-            WallMon_Watcher1.Start();
-
-            WallMon_Watcher2.EventArrived += Wallpaper_Changed_EventHandler;
-            WallMon_Watcher2.Start();
-
-            if (OS.W12 || OS.W11 || OS.W10)
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
             {
-                KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
-                valueName = "BackgroundType";
-                Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
-                WqlEventQuery query3 = new(Base);
-                WallMon_Watcher3 = new(query3);
-
-                KeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-                valueName = "AppsUseLightTheme";
-                Base = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\{(KeyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
-                WqlEventQuery query4 = new(Base);
-                WallMon_Watcher4 = new(query4);
-
-                WallMon_Watcher3.EventArrived += WallpaperType_Changed;
-                WallMon_Watcher3.Start();
-
-                WallMon_Watcher4.EventArrived += DarkMode_Changed_EventHandler;
-                WallMon_Watcher4.Start();
+                RegisterRegistryChangeEvent(currentUser.User.Value, @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType_Changed);
+                RegisterRegistryChangeEvent(currentUser.User.Value, @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", DarkMode_Changed_EventHandler);
             }
-
             else
             {
                 SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
             }
+
+            Application.ApplicationExit += (sender, e) => StopWatchers();
         }
 
-        public static void OldWinPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        private static void RegisterRegistryChangeEvent(string hive, string keyPath, string valueName, EventArrivedEventHandler eventHandler)
+        {
+            string query = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{hive}\\{(keyPath.Replace(@"\", @"\\"))}' AND ValueName='{valueName}'";
+            WqlEventQuery eventQuery = new(query);
+            ManagementEventWatcher watcher = new(eventQuery);
+            watcher.EventArrived += eventHandler;
+            watcher.Start();
+
+            // Store the watcher for later cleanup
+            Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, eventHandler));
+        }
+
+        private static void StopWatchers()
+        {
+            foreach (var watcher in Watchers)
+            {
+                watcher.Item1.Stop();
+                watcher.Item1.EventArrived -= watcher.Item2;
+                watcher.Item1.Dispose();
+            }
+
+            Watchers.Clear();
+        }
+
+        private static void DarkMode_Changed_EventHandler(object sender, EventArgs e)
+        {
+            Invoke(() =>
+            {
+                GetDarkMode();
+                if (Settings.Appearance.AutoDarkMode) ApplyStyle();
+            });
+        }
+
+        private static void Wallpaper_Changed_EventHandler(object sender, EventArgs e)
+        {
+            Wallpaper_Changed();
+        }
+
+        private static void WallpaperType_Changed(object sender, EventArgs e)
+        {
+            Wallpaper_Changed();
+        }
+
+        private static void OldWinPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
         {
             if (OS.WXP && e.Category == UserPreferenceCategory.General)
             {
                 Wallpaper_Changed();
             }
-            else if (e.Category == UserPreferenceCategory.Desktop | e.Category == UserPreferenceCategory.Color)
+            else if (e.Category == UserPreferenceCategory.Desktop || e.Category == UserPreferenceCategory.Color)
+            {
                 Wallpaper_Changed();
-        }
-
-        public static void DarkMode_Changed_EventHandler(object sender, EventArgs e)
-        {
-            DarkMode_Changed();
-        }
-
-        public static void DarkMode_Changed()
-        {
-            Invoke(UpdateDarkModeInvoker);
-        }
-
-        public static void Wallpaper_Changed_EventHandler(object sender, EventArgs e)
-        {
-            Wallpaper_Changed();
+            }
         }
 
         public static void Wallpaper_Changed()
         {
             Invoke(UpdateWallpaperInvoker);
-
         }
     }
 }

@@ -251,8 +251,8 @@ namespace WinPaletter
             this.DoubleBuffer();
             Cursors_Container.DoubleBuffer();
 
-            Apply_btn.Image = Forms.Dashboard.apply_btn.Image;
-            RestartExplorer.Image = Forms.Dashboard.Button19.Image;
+            Apply_btn.Image = Forms.Home.apply_btn.Image;
+            RestartExplorer.Image = Forms.Home.Button19.Image;
 
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
@@ -301,6 +301,19 @@ namespace WinPaletter
             GC.WaitForPendingFinalizers();
             Status_lbl.SetText(string.Empty);
         }
+
+        private void Store_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
+
 
         #endregion
 
@@ -737,6 +750,9 @@ namespace WinPaletter
                             {
                                 Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
                             }
+
+                            back_btn.CustomColor = StoreItem.TM.Info.Color2;
+
                             Label6.ForeColor = Label14.ForeColor;
                             Theme_MD5_lbl.ForeColor = Label14.ForeColor;
 
@@ -749,13 +765,10 @@ namespace WinPaletter
                             LoadCursorsFromTM(StoreItem.TM);
                             Program.Style.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-                            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
+                            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
+                                .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
                             {
-                                if (i is UI.Controllers.CursorControl)
-                                {
-                                    if (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy)
-                                        AnimateList.Add(i);
-                                }
+                                AnimateList.Add(i);
                             }
 
                             themeSize_lbl.Text = new System.IO.FileInfo(StoreItem.FileName).Length.SizeString();
@@ -919,7 +932,7 @@ namespace WinPaletter
                         Program.TM.Info.Author = Application.CompanyName;
                     Program.TM = selectedItem.TM;
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                    Forms.Dashboard.LoadFromTM(Program.TM);
+                    Forms.Home.LoadFromTM(Program.TM);
                     UpdateTitlebarColors();
                 }
             }
@@ -927,12 +940,12 @@ namespace WinPaletter
             {
                 // Edit button is pressed
                 Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
-                Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, null, null, null);
+                Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, null, null, null);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                 Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
                     Program.TM.Info.Author = Application.CompanyName;
-                Forms.Dashboard.LoadFromTM(Program.TM);
+                Forms.Home.LoadFromTM(Program.TM);
             }
         }
 
@@ -1362,7 +1375,11 @@ namespace WinPaletter
 
         }
 
-        #endregion
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
 
+        #endregion
     }
 }

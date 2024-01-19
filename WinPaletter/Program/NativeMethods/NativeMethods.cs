@@ -115,10 +115,10 @@ namespace WinPaletter.NativeMethods
             int attributeValue = darkMode ? 1 : 0;
 
             // Set the dark mode attribute for the titlebar
-            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMATTRIB.USE_IMMERSIVE_DARK_MODE, ref attributeValue, Marshal.SizeOf<int>());
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref attributeValue, Marshal.SizeOf<int>());
 
             // Set the dark mode attribute for the border
-            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMATTRIB.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
         }
         #endregion
 

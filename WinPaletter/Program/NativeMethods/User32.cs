@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
@@ -824,10 +827,10 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="win32Window">The parent window.</param>
         /// <returns>A list of handles to the child windows.</returns>
-        public static List<IntPtr> GetChildWindowHandles(System.Windows.Forms.IWin32Window win32Window)
+        public static List<IntPtr> GetChildWindowHandles(IWin32Window win32Window)
         {
             // List to store child window handles
-            List<IntPtr> childHandles = new List<IntPtr>();
+            List<IntPtr> childHandles = new();
 
             // Get the handle of the parent window
             IntPtr hWndParent = win32Window.Handle;

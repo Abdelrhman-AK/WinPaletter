@@ -123,5 +123,20 @@ namespace WinPaletter.NativeMethods
         /// If the function fails, the return value is IntPtr.Zero.</returns>
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="lpFileName"></param>
+        /// <returns></returns>
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr LoadLibrary(string lpFileName);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="hModule"></param>
+        /// <returns></returns>
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool FreeLibrary(IntPtr hModule);
     }
 }

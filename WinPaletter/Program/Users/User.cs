@@ -116,13 +116,13 @@ namespace WinPaletter
                             {
                                 if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (Program.TM != Program.TM_Original))
                                 {
-                                    Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                                    Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
                                 }
                             }
 
                             Program.InitializeApplication(false);
 
-                            if (MainFormIsOpened) { Forms.Dashboard.LoadData(); }
+                            if (MainFormIsOpened) { Forms.Home.LoadData(); }
 
                             foreach (Form f in OpenForms)
                             {

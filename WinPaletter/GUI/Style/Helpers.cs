@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -191,6 +192,16 @@ namespace WinPaletter.UI.Style
 
             Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations);
 
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+            {
+                // try is used as a fallback for Windows 10 1809 and below
+                try
+                {
+                    UxTheme.SetPreferredAppMode(DarkMode ? UxTheme.PreferredAppMode.Dark : UxTheme.PreferredAppMode.Light);
+                }
+                catch { }
+            }
+
             // Apply the style to all open forms
             if (Form is null)
             {
@@ -213,13 +224,13 @@ namespace WinPaletter.UI.Style
                         if (OS.W12 || OS.W11)
                         {
                             int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
                         }
 
                         if (CustomR && !Program.Settings.Appearance.RoundedCorners)
                         {
                             int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
                         }
 
                         if (FormWasVisible)
@@ -245,13 +256,13 @@ namespace WinPaletter.UI.Style
                 if (OS.W12 || OS.W11)
                 {
                     int argpvAttribute2 = (int)DWMAPI.FormCornersType.Default;
-                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
+                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
                 }
 
                 if (CustomR && !Program.Settings.Appearance.RoundedCorners)
                 {
                     int argpvAttribute3 = (int)DWMAPI.FormCornersType.Rectangular;
-                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
+                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
                 }
 
                 if (Form.Visible)
@@ -259,39 +270,41 @@ namespace WinPaletter.UI.Style
             }
         }
 
-
         /// <summary>
         /// Applies a specific style to a window identified by its handle.
         /// </summary>
         /// <param name="Handle">The handle of the window to apply the style to.</param>
-        public static void ApplyStyle(IntPtr Handle)
+        /// <param name="isWindow">Specify if the handle is a window or child window (controls)</param>
+        public static void ApplyStyle(IntPtr Handle, bool isWindow = true)
         {
             // Determine if custom styling is applicable based on program settings and operating system
-            bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors &&
-                           !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
+            bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
 
-            // Apply dark titlebar style
-            DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
-
-            // SetControlTheme(Handle, Program.Style.DarkMode_App ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
-            // IntPtr hDC = User32.GetDC(Handle);
-            // User32.SetBkColor(hDC, BackColor.ToArgb() & 0x00FFFFFF);
-            // User32.SetTextColor(hDC, (Program.Style.DarkMode_App ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
-            // User32.ReleaseDC(Handle, hDC);
-
-            // Apply specific window corner preference for Windows 11/12
-            if (OS.W12 || OS.W11)
+            if (isWindow)
             {
-                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                // Apply dark titlebar style
+                if (isWindow) DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
+
+                // Apply specific window corner preference for Windows 11/12
+                if (OS.W12 || OS.W11)
+                {
+                    int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
+                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                }
+
+                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                if (CustomR && !Program.Settings.Appearance.RoundedCorners)
+                {
+                    int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                }
             }
 
-            // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-            if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-            {
-                int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-            }
+            //SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            //IntPtr hDC = User32.GetDC(Handle);
+            //User32.SetBkColor(hDC, Program.Style.Schemes.Main.Colors.BackColor.ToArgb() & 0x00FFFFFF);
+            //User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
+            //User32.ReleaseDC(Handle, hDC);
         }
 
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
@@ -491,36 +504,52 @@ namespace WinPaletter.UI.Style
         /// <returns>Zero if successful, otherwise an error code.</returns>
         public static int SetControlTheme(IntPtr handle, CtrlTheme theme)
         {
-            if (handle == IntPtr.Zero)
-                return 0;
-
-            switch (theme)
+            if (handle == IntPtr.Zero)  return 0;
+              
+            try
             {
-                case CtrlTheme.None:
-                    {
-                        // Set the control theme to None
-                        return UxTheme.SetWindowTheme(handle, string.Empty, null);
-                    }
-                case CtrlTheme.Explorer:
-                    {
-                        // Set the control theme to Explorer
-                        return UxTheme.SetWindowTheme(handle, "Explorer", null);
-                    }
-                case CtrlTheme.DarkExplorer:
-                    {
-                        // Set the control theme to DarkExplorer
-                        return UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", null);
-                    }
-                case CtrlTheme.Default:
-                    {
-                        // Set the control theme to the default system theme
-                        return UxTheme.SetWindowTheme(handle, null, null);
-                    }
-                default:
-                    {
-                        return 0;
-                    }
+                // Load the uxtheme.dll library
+                IntPtr uxtheme = Kernel32.LoadLibrary("uxtheme.dll");
+
+                switch (theme)
+                {
+                    case CtrlTheme.None:
+                        {
+                            // Set the control theme to None
+                            UxTheme.SetWindowTheme(handle, string.Empty, null);
+                            break;
+                        }
+                    case CtrlTheme.Explorer:
+                        {
+                            // Set the control theme to Explorer
+                            UxTheme.SetWindowTheme(handle, "Explorer", null);
+                            break;
+                        }
+                    case CtrlTheme.DarkExplorer:
+                        {
+                            // Set the control theme to DarkExplorer
+                            UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", null);
+                            break;
+                        }
+                    case CtrlTheme.Default:
+                        {
+                            // Set the control theme to the default system theme
+                            UxTheme.SetWindowTheme(handle, null, null);
+                            break;
+                        }
+                    default:
+                        {
+                            UxTheme.SetWindowTheme(handle, null, null);
+                            break;
+                        }
+                }
+
+                // Free the library
+                Kernel32.FreeLibrary(uxtheme);
+
+                return 1;
             }
+            catch { return 0; }
         }
     }
 }

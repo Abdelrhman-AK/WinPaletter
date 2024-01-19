@@ -14,7 +14,7 @@
         public string Designer_mode_advanced { get; set; } = "Advanced mode";
         public string Designer_mode_simple { get; set; } = "Simple mode";
         public string Designer_load_into_current_theme { get; set; } = "Load preferences into current theme";
-        public string Designer_quick_apply { get; set; } = "Quick apply";
+        public string Designer_apply { get; set; } = "Apply";
         public string Designer_saveas_MSTheme { get; set; } = "Save as *.theme file";
     }
 }

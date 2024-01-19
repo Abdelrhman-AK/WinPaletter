@@ -12,162 +12,151 @@ namespace WinPaletter.UI.Controllers
     {
         public TabsContainer()
         {
+            InitializeTabControl();
+
+            InitializeContextMenu();
+        }
+
+        private void InitializeTabControl()
+        {
             SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
             BackColor = Color.Transparent;
             DoubleBuffered = true;
             AllowDrop = true;
+        }
 
+        private void InitializeContextMenu()
+        {
             contextMenu.ItemHeight = 20;
 
-            ToolStripMenuItem closeButton = new("Close");
-            ToolStripMenuItem closeAllButThis = new("Close all but this");
-            ToolStripMenuItem closeAllToTheRight = new("Close all to the right");
-            ToolStripMenuItem closeAllToTheLeft = new("Close all to the left");
-            ToolStripMenuItem closeAll = new("Close all");
+            ToolStripMenuItem closeButton = new("Close") { Image = Assets.Tabs.ContextBox_Close };
+            ToolStripMenuItem closeAllButThis = new("Close all but this") { Image = Assets.Tabs.ContextBox_CloseAllButThis };
+            ToolStripMenuItem closeAllToTheRight = new("Close all to the right") { Image = Assets.Tabs.ContextBox_CloseRight };
+            ToolStripMenuItem closeAllToTheLeft = new("Close all to the left") { Image = Assets.Tabs.ContextBox_CloseLeft };
+            ToolStripMenuItem closeAll = new("Close all") { Image = Assets.Tabs.ContextBox_CloseAll };
             ToolStripSeparator toolStripSeparator = new();
-            ToolStripMenuItem detach = new("Detach");
-            ToolStripMenuItem detachAll = new("Detach all");
-            ToolStripMenuItem detachAllButThis = new("Detach all but this");
+            ToolStripMenuItem detach = new("Detach") { Image = Assets.Tabs.ContextBox_Detach };
+            ToolStripMenuItem detachAll = new("Detach all") { Image = Assets.Tabs.ContextBox_DetachAll };
+            ToolStripMenuItem detachAllButThis = new("Detach all but this") { Image = Assets.Tabs.ContextBox_DetachAllButThis };
 
             closeButton.Click += (s, e) => RemoveTab(contextItemDropped);
-            closeAllButThis.Click += (s, e) =>
+            closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
+            closeAllToTheRight.Click += (s, e) => CloseAllTabsToTheRight();
+            closeAllToTheLeft.Click += (s, e) => CloseAllTabsToTheLeft();
+            closeAll.Click += (s, e) => CloseAllTabs();
+            detach.Click += (s, e) => DetachTab(contextItemDropped);
+            detachAll.Click += (s, e) => DetachAllTabs();
+            detachAllButThis.Click += (s, e) => DetachAllTabsButThis();
+
+            contextMenu.Items.AddRange(new ToolStripItem[] { closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis, toolStripSeparator, detach, detachAll, detachAllButThis });
+        }
+
+        private void CloseAllTabsButThis()
+        {
+            if (collection.Count > 1)
             {
                 foreach (Tuple<TabPage, Rectangle, Bitmap> item in collection.ToArray().Clone() as Array)
                 {
                     if (item.Item1 != contextItemDropped.Item1)
                     {
-                        RemoveTab(item);
+                        RemoveTab(item, false);
                     }
                 }
-            };
-            closeAllToTheRight.Click += (s, e) =>
-            {
-                int index = collection.IndexOf(contextItemDropped);
+            }
+        }
 
-                for (int i = index + 1; i < collection.Count; i += 0)
+        private void CloseAllTabsToTheRight()
+        {
+            int index = collection.IndexOf(contextItemDropped);
+
+            for (int i = index + 1; i < collection.Count; i += 0)
+            {
+                RemoveTab(collection[i], false);
+            }
+        }
+
+        private void CloseAllTabsToTheLeft()
+        {
+            int index = collection.IndexOf(contextItemDropped);
+
+            for (int i = 0; i < index; i++)
+            {
+                RemoveTab(collection[0], false);
+            }
+        }
+
+        private void CloseAllTabs()
+        {
+            int count = collection.Count;
+            for (int i = 0; i < count; i++)
+            {
+                RemoveTab(collection[0], false);
+            }
+        }
+
+        private void DetachTab(Tuple<TabPage, Rectangle, Bitmap> tab)
+        {
+            if (tab.Item1.Controls.OfType<Form>().Count() > 0)
+            {
+                Form form = tab.Item1.Controls.OfType<Form>().FirstOrDefault();
+                DetachForm(form);
+            }
+
+            RemoveTab(tab, false);
+
+            if (collection.Count == 0)
+            {
+                TabControl.FindForm().Visible = false;
+            }
+        }
+
+        private void DetachAllTabs()
+        {
+            int count = collection.Count;
+            for (int i = 0; i <= count - 1; i++)
+            {
+                if (collection[0].Item1.Controls.OfType<Form>().Count() > 0)
+                    DetachTab(collection[0]);
+            }
+        }
+
+        private void DetachAllTabsButThis()
+        {
+            if (collection.Count > 1)
+            {
+                Form form = contextItemDropped.Item1.Controls.OfType<Form>().FirstOrDefault();
+                DetachAllTabs();
+                if (form != null)
                 {
-                    RemoveTab(collection[i]);
+                    AddFormIntoTab(form);
                 }
-            };
-            closeAllToTheLeft.Click += (s, e) =>
+            }
+        }
+
+        private void DetachForm(Form form)
+        {
+            form.Visible = false;
+            if (form.Parent != null && form.Parent is TabPage) form.Parent.Controls.Remove(form);
+            form.TopLevel = true;
+            form.FormBorderStyle = FormBorderStyle.Sizable;
+            form.WindowState = FormWindowState.Normal;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.Location = new(Screen.PrimaryScreen.WorkingArea.X + (Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2,
+                Screen.PrimaryScreen.WorkingArea.Y + (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2);
+
+            if (form is AspectsTemplate)
             {
-                int index = collection.IndexOf(contextItemDropped);
-
-                for (int i = 0; i < index; i++)
-                {
-                    RemoveTab(collection[0]);
-                }
-            };
-            closeAll.Click += (s, e) =>
+                (form as AspectsTemplate).titlebarExtender1.DropDWMEffect = true;
+            }
+            else if (form is Form && form.Controls.OfType<UI.WP.TitlebarExtender>().Count() > 0)
             {
-                int count = collection.Count;
-                for (int i = 0; i < count; i++)
-                {
-                    RemoveTab(collection[0]);
-                }
-            };
-            detach.Click += (s, e) =>
-            {
-                if (contextItemDropped.Item1.Controls.OfType<Form>().Count() > 0)
-                {
-                    Form form = contextItemDropped.Item1.Controls.OfType<Form>().FirstOrDefault();
-                    form.Visible = false;
-                    if (form.Parent != null && form.Parent is TabPage) form.Parent.Controls.Remove(form);
-                    form.TopLevel = true;
-                    form.FormBorderStyle = FormBorderStyle.Sizable;
-                    form.WindowState = FormWindowState.Normal;
-                    form.StartPosition = FormStartPosition.CenterScreen;
+                form.Controls.OfType<UI.WP.TitlebarExtender>().FirstOrDefault().DropDWMEffect = true;
+            }
 
-                    if (form is AspectsTemplate)
-                    {
-                        (form as AspectsTemplate).titlebarExtender1.DropDWMEffect = true;
-                    }
-                    else if (form is Form && form.Controls.OfType<UI.WP.TitlebarExtender>().Count() > 0)
-                    {
-                        form.Controls.OfType<UI.WP.TitlebarExtender>().FirstOrDefault().DropDWMEffect = true;
-                    }
+            form.Show();
+            ApplyStyle(form);
+            form.BringToFront();
 
-                    form.Show();
-                    ApplyStyle(form);
-                    RemoveTab(contextItemDropped);
-                }
-            };
-            detachAll.Click += (s, e) =>
-            {
-                int count = collection.Count;
-                for (int i = 0; i < count - 1; i++)
-                {
-                    if (collection[i].Item1.Controls.OfType<Form>().Count() > 0)
-                    {
-                        Form form = collection[i].Item1.Controls.OfType<Form>().FirstOrDefault();
-                        form.Visible = false;
-                        if (form.Parent != null && form.Parent is TabPage) form.Parent.Controls.Remove(form);
-                        form.TopLevel = true;
-                        form.FormBorderStyle = FormBorderStyle.Sizable;
-                        form.WindowState = FormWindowState.Normal;
-                        form.StartPosition = FormStartPosition.CenterScreen;
-
-                        if (form is AspectsTemplate)
-                        {
-                            (form as AspectsTemplate).titlebarExtender1.DropDWMEffect = true;
-                        }
-                        else if (form is Form && form.Controls.OfType<UI.WP.TitlebarExtender>().Count() > 0)
-                        {
-                            form.Controls.OfType<UI.WP.TitlebarExtender>().FirstOrDefault().DropDWMEffect = true;
-                        }
-
-                        form.Show();
-                        ApplyStyle(form);
-                        //RemoveTab(collection[i]);
-                    }
-                }
-            };
-            detachAllButThis.Click += (s, e) =>
-            {
-                int count = collection.Count;
-                for (int i = 0; i < count - 1; i++)
-                {
-                    if (collection[i].Item1 != contextItemDropped.Item1)
-                    {
-                        if (collection[i].Item1.Controls.OfType<Form>().Count() > 0)
-                        {
-                            Form form = collection[i].Item1.Controls.OfType<Form>().FirstOrDefault();
-                            form.Visible = false;
-                            if (form.Parent != null && form.Parent is TabPage) form.Parent.Controls.Remove(form);
-                            form.TopLevel = true;
-                            form.FormBorderStyle = FormBorderStyle.Sizable;
-                            form.WindowState = FormWindowState.Normal;
-                            form.StartPosition = FormStartPosition.CenterScreen;
-
-                            if (form is AspectsTemplate)
-                            {
-                                (form as AspectsTemplate).titlebarExtender1.DropDWMEffect = true;
-                            }
-                            else if (form is Form && form.Controls.OfType<UI.WP.TitlebarExtender>().Count() > 0)
-                            {
-                                form.Controls.OfType<UI.WP.TitlebarExtender>().FirstOrDefault().DropDWMEffect = true;
-                            }
-
-                            form.Show();
-                            ApplyStyle(form);
-                            //RemoveTab(collection[i]);
-                        }
-                    }
-                }
-            };
-
-            contextMenu.Items.AddRange(new ToolStripItem[]
-            {
-                closeButton,
-                closeAllButThis,
-                closeAllToTheRight,
-                closeAllToTheLeft,
-                closeAll,
-                toolStripSeparator,
-                detach,
-                detachAll,
-                detachAllButThis
-            });
         }
 
         #region Variables
@@ -178,7 +167,7 @@ namespace WinPaletter.UI.Controllers
         private bool overCloseButton = false;
 
         private int MaxWidth = 245;
-        private int paddingBetweenTabs = 6;
+        private int paddingBetweenTabs = 5;
 
         private bool forceChangeSelectedIndex = true;
 
@@ -187,7 +176,6 @@ namespace WinPaletter.UI.Controllers
         private bool isMovingTab = false;
         private bool isMovingToLast = false;
         private bool isMovingToFirst = false;
-        private bool isMovingBetweenTabs = false;
 
         private Point tabNewPoint = new();
         private Point tabOldPoint = new();
@@ -233,9 +221,17 @@ namespace WinPaletter.UI.Controllers
             TP.Text = form.Text;
             TP.Controls.Add(form);
 
-            form.FormClosed += TabForm_Closed;
-
             if (!DesignMode) Program.Animator.HideSync(TabControl);
+
+            form.Show();
+
+            forceChangeSelectedIndex = true;
+            TabControl.TabPages.Add(TP);
+            SelectedTab = TP;
+
+            TabControl.FindForm().Visible = true;
+
+            form.FormClosed += TabForm_Closed;
 
             if (form is AspectsTemplate)
             {
@@ -245,12 +241,6 @@ namespace WinPaletter.UI.Controllers
             {
                 form.Controls.OfType<UI.WP.TitlebarExtender>().FirstOrDefault().DropDWMEffect = false;
             }
-
-            form.Show();
-
-            forceChangeSelectedIndex = true;
-            TabControl.TabPages.Add(TP);
-            SelectedTab = TP;
 
             if (!DesignMode) Program.Animator.ShowSync(TabControl);
 
@@ -315,20 +305,28 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        private void RemoveTab(Tuple<TabPage, Rectangle, Bitmap> item)
+        private void RemoveTab(Tuple<TabPage, Rectangle, Bitmap> item, bool animate = true)
         {
-            if (!DesignMode) Program.Animator.HideSync(TabControl);
+            bool canAnimate = IndexFromRectangle(item.Item2) == SelectedIndex && animate;
+
+            if (!DesignMode && canAnimate) Program.Animator.HideSync(TabControl);
 
             int SI = SelectedIndex;
 
             if (item.Item1.Controls.OfType<Form>().Any())
             {
                 Form form = item.Item1.Controls.OfType<Form>().FirstOrDefault();
-                form.Close();
-                if (form != null && !form.Visible)
+                if (form != null)
                 {
-                    if (!DesignMode) Program.Animator.ShowSync(TabControl);
-                    return;
+                    form.Close();
+
+                    // Check if the form is successfully closed
+                    if (!form.IsDisposed)
+                    {
+                        // Form is not closed, return without continuing
+                        if (!DesignMode && canAnimate) Program.Animator.ShowSync(TabControl);
+                        return;
+                    }
                 }
             }
 
@@ -343,7 +341,7 @@ namespace WinPaletter.UI.Controllers
 
             Refresh();
 
-            if (!DesignMode) Program.Animator.ShowSync(TabControl);
+            if (!DesignMode && canAnimate) Program.Animator.ShowSync(TabControl);
         }
 
         private void SwapTabs(int from, int to)
@@ -393,27 +391,6 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        private void MoveTo(int from, int to)
-        {
-            if (collection != null)
-            {
-                Tuple<TabPage, Rectangle, Bitmap> itemFrom = collection[from];
-
-                collection.RemoveAt(from);
-                collection.Insert(to, itemFrom);
-
-                UpdateTabPositions(collection);
-
-                // to avoid bug of non-selection
-                forceChangeSelectedIndex = true;
-                SelectedIndex = to;
-
-                ResetModifiersToNull();
-
-                Refresh();
-            }
-        }
-
         private void MoveToFirst(int from)
         {
             if (collection != null)
@@ -441,7 +418,6 @@ namespace WinPaletter.UI.Controllers
             moveTo = -1;
             isMovingToLast = false;
             isMovingToFirst = false;
-            isMovingBetweenTabs = false;
             isMovingTab = false;
         }
 
@@ -457,6 +433,20 @@ namespace WinPaletter.UI.Controllers
             }
 
             return null;
+        }
+
+        private Rectangle GetTabRectangleAtMousePosition(MouseEventArgs e)
+        {
+            foreach (Tuple<TabPage, Rectangle, Bitmap> item in collection)
+            {
+                if (item.Item2.Contains(e.Location))
+                {
+                    return item.Item2;
+                }
+            }
+
+            // Return an empty rectangle if no tab is found at the current mouse position
+            return Rectangle.Empty;
         }
 
         private Tuple<TabPage, Rectangle, Bitmap> CreateTabDataTuple(TabPage page, int index)
@@ -549,10 +539,6 @@ namespace WinPaletter.UI.Controllers
 
         private void HandleCloseButtonClick(Tuple<TabPage, Rectangle, Bitmap> item)
         {
-            if (isMovingTab)
-            {
-                ResetModifiersToNull();
-            }
             RemoveTab(item);
         }
 
@@ -582,10 +568,6 @@ namespace WinPaletter.UI.Controllers
             if (item.Item1 != _tabControl.SelectedTab)
             {
                 SelectedIndex = IndexFromRectangle(item.Item2);
-                if (isMovingTab)
-                {
-                    ResetModifiersToNull();
-                }
             }
         }
 
@@ -618,36 +600,31 @@ namespace WinPaletter.UI.Controllers
 
         private void HandleTabMove(MouseEventArgs e)
         {
-            if (e.X > collection.Last().Item2.X)
+            Rectangle tabRectangle = GetTabRectangleAtMousePosition(e);
+
+            if (!tabRectangle.IsEmpty)
             {
-                SetTabMoveProperties(-1, true, false);
-            }
-            else if (e.X < collection.First().Item2.X)
-            {
-                SetTabMoveProperties(-1, false, true);
+                // Set properties for tab movement with index information
+                SetTabMoveProperties(IndexFromRectangle(tabRectangle), true, false, false, false);
             }
             else
             {
-                foreach (Tuple<TabPage, Rectangle, Bitmap> item in collection)
+                // Check if the cursor is to the right of the last tab
+                if (e.X > collection.Last().Item2.Right)
                 {
-                    if (item.Item2.Contains(e.Location))
-                    {
-                        SetTabMoveProperties(IndexFromRectangle(item.Item2), true, false);
-                        break;
-                    }
-                    else if (e.Location.X > item.Item2.Right && e.Location.X < collection[collection.IndexOf(item) + 1].Item2.Left)
-                    {
-                        SetTabMoveProperties(IndexFromRectangle(item.Item2), true, true);
-                    }
-                    else
-                    {
-                        isMovingTab = false;
-                    }
+                    SetTabMoveProperties(-1, true, false, true, false);
+                }
+                // Check if the cursor is to the left of the first tab
+                else if (e.X < collection.First().Item2.Left)
+                {
+                    SetTabMoveProperties(-1, true, true, false, false);
                 }
             }
 
+            // If tab movement is enabled, update the tab's position and refresh the UI
             if (isMovingTab)
             {
+                // Calculate the new position of the tab based on mouse movement
                 tabNewPoint = MousePosition - (Size)tabOldPoint;
                 Refresh();
             }
@@ -675,13 +652,12 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveBetweenTabs)
+        private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast, bool moveBetweenTabs)
         {
             moveTo = moveToIndex;
             isMovingTab = moveTab;
-            isMovingToFirst = moveBetweenTabs;
-            isMovingToLast = moveBetweenTabs;
-            isMovingBetweenTabs = moveBetweenTabs;
+            isMovingToFirst = moveToFirst;
+            isMovingToLast = moveToLast;
         }
 
         private void SetHoverProperties(Rectangle tabRectangle, MouseEventArgs e)
@@ -846,11 +822,7 @@ namespace WinPaletter.UI.Controllers
             {
                 MoveToFirst(moveFrom);
             }
-            else if (isMovingBetweenTabs)
-            {
-                MoveTo(moveFrom, moveTo);
-            }
-            else if (moveFrom != -1 && moveTo != -1 && moveFrom != moveTo)
+            else if (moveFrom > -1 && moveTo > -1 && moveFrom != moveTo)
             {
                 SwapTabs(moveFrom, moveTo);
             }

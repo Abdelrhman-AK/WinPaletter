@@ -85,6 +85,8 @@ namespace WinPaletter
             string guidText = Application.ProductName;
             Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall", true).DeleteSubKeyTree(guidText, false);
 
+            Program.UninstallDone = true;
+
             Environment.ExitCode = 0;
 
             Program.ForceExit();

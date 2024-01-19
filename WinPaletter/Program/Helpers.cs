@@ -120,8 +120,8 @@ namespace WinPaletter
             else
             {
                 TM = new(Theme.Manager.Source.File, ExternalLink_File);
-                Forms.Dashboard.OpenFileDialog1.FileName = ExternalLink_File;
-                Forms.Dashboard.SaveFileDialog1.FileName = ExternalLink_File;
+                Forms.Home.OpenFileDialog1.FileName = ExternalLink_File;
+                Forms.Home.SaveFileDialog1.FileName = ExternalLink_File;
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
             }
@@ -328,25 +328,22 @@ namespace WinPaletter
             }
         }
 
-        public static void InitializeSysEventsSounds(bool ForceUpdate = false)
+        public static void UpdateSysEventsSounds()
         {
-            bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
-            bool condition1 = !condition0 && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds));
-
-            if (ForceUpdate || condition1)
+            if (!Program.UninstallDone)
             {
-                //Update
-                if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
-                    Forms.SysEventsSndsInstaller.Install(false);
-                else
-                    Forms.SysEventsSndsInstaller.Setup();
-            }
+                bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
+                bool condition1 = !condition0 && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds));
 
-            if (condition0)
-            {
-                //Install
-                if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
-                    Forms.SysEventsSndsInstaller.Install(true);
+                if (condition1)
+                {
+                    //Update
+                    if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
+                    {
+                        Forms.SysEventsSndsInstaller.Install(false);
+                        return;
+                    }
+                }
             }
         }
 
@@ -530,7 +527,7 @@ namespace WinPaletter
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())
             {
-                Forms.Dashboard.LoggingOff = true;
+                Forms.Home.LoggingOff = true;
                 Forms.MainFrm.Close();
                 process.Kill();
                 wic.Undo();  // :)

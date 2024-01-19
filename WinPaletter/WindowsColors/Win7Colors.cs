@@ -46,7 +46,7 @@ namespace WinPaletter.WindowsColors
             Close();
         }
 
-        private void QuickApply(object sender, EventArgs e)
+        private void Apply(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
 
@@ -86,7 +86,7 @@ namespace WinPaletter.WindowsColors
                 Import_preset = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
-                OnQuickApply = QuickApply,
+                OnApply = Apply,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromCurrentApplied = LoadFromCurrent,

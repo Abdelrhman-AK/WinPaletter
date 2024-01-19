@@ -105,6 +105,7 @@ namespace WinPaletter
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.back_btn = new WinPaletter.UI.WP.Button();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.Status_pnl.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -1650,6 +1651,7 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender1.Controls.Add(this.pin_button);
             this.titlebarExtender1.Controls.Add(this.search_panel);
             this.titlebarExtender1.Controls.Add(this.Titlebar_lbl);
             this.titlebarExtender1.Controls.Add(this.back_btn);
@@ -1737,7 +1739,7 @@ namespace WinPaletter
             this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Titlebar_lbl.Location = new System.Drawing.Point(57, 6);
             this.Titlebar_lbl.Name = "Titlebar_lbl";
-            this.Titlebar_lbl.Size = new System.Drawing.Size(899, 40);
+            this.Titlebar_lbl.Size = new System.Drawing.Size(871, 40);
             this.Titlebar_lbl.TabIndex = 38;
             this.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
@@ -1761,6 +1763,24 @@ namespace WinPaletter
             this.back_btn.Visible = false;
             this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
+            // pin_button
+            // 
+            this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(934, 10);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.TabIndex = 128;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1781,6 +1801,7 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
             this.Load += new System.EventHandler(this.Store_Load);
             this.Shown += new System.EventHandler(this.Store_Shown);
+            this.ParentChanged += new System.EventHandler(this.Store_ParentChanged);
             this.Status_pnl.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
@@ -1870,5 +1891,6 @@ namespace WinPaletter
         private Templates.RetroDesktopColors retroDesktopColors1;
         private Templates.WindowsDesktop windowsDesktop1;
         public UI.WP.TitlebarExtender titlebarExtender1;
+        internal UI.WP.Button pin_button;
     }
 }

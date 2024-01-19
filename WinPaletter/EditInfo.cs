@@ -299,5 +299,22 @@ namespace WinPaletter
         {
             Process.Start($"{Properties.Resources.Link_Wiki}/Edit-theme-info");
         }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private void EditInfo_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
     }
 }

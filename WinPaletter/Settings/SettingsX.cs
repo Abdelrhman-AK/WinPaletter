@@ -359,7 +359,7 @@ namespace WinPaletter
             if (ch_EP)
             {
                 Program.EP = new();
-                Forms.Dashboard.LoadFromTM(Program.TM);
+                Forms.Home.LoadFromTM(Program.TM);
             }
 
             //if (ch_WPElevator)
@@ -837,7 +837,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.Uninstall.ShowDialog();
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -1005,5 +1005,21 @@ namespace WinPaletter
             User.Login(true);
         }
 
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private void SettingsX_PaddingChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
     }
 }

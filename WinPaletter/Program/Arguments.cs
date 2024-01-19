@@ -159,14 +159,14 @@ namespace WinPaletter
                         {
                             if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
                             {
-                                Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                                Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
                                 using (Theme.Manager TMx = new(Theme.Manager.Source.File, arg))
                                 {
-                                    Forms.Dashboard.OpenFileDialog1.FileName = arg;
-                                    Forms.Dashboard.SaveFileDialog1.FileName = arg;
+                                    Forms.Home.OpenFileDialog1.FileName = arg;
+                                    Forms.Home.SaveFileDialog1.FileName = arg;
 
-                                    Forms.Dashboard.LoadFromTM(TMx);
+                                    Forms.Home.LoadFromTM(TMx);
 
                                     if (!Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                                     {
@@ -200,13 +200,13 @@ namespace WinPaletter
                                 string File = arg.Remove(0, "/edit:".Count());
                                 File = File.Replace("\"", string.Empty);
 
-                                Forms.ComplexSave.GetResponse(Forms.Dashboard.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                                Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
                                 TM = new(Theme.Manager.Source.File, File);
                                 TM_Original = (Theme.Manager)TM.Clone();
-                                Forms.Dashboard.OpenFileDialog1.FileName = File;
-                                Forms.Dashboard.SaveFileDialog1.FileName = File;
-                                Forms.Dashboard.LoadFromTM(TM);
+                                Forms.Home.OpenFileDialog1.FileName = File;
+                                Forms.Home.SaveFileDialog1.FileName = File;
+                                Forms.Home.LoadFromTM(TM);
                             }
                         }
                     }

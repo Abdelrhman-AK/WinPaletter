@@ -11,7 +11,7 @@ namespace WinPaletter.UI.WP
     {
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -130,7 +130,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;

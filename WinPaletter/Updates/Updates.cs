@@ -60,7 +60,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Forms.Dashboard.NotifyUpdates.Visible = false;
+            Forms.Home.NotifyUpdates.Visible = false;
 
             if (url is null)
             {

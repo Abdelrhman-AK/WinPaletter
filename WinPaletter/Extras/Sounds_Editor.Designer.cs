@@ -759,6 +759,7 @@ namespace WinPaletter
             this.Label68 = new System.Windows.Forms.Label();
             this.Button210 = new WinPaletter.UI.WP.Button();
             this.TextBox67 = new WinPaletter.UI.WP.TextBox();
+            this.button347 = new WinPaletter.UI.WP.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.panel9.SuspendLayout();
@@ -989,7 +990,7 @@ namespace WinPaletter
             this.alertBox1.Image = ((System.Drawing.Image)(resources.GetObject("alertBox1.Image")));
             this.alertBox1.Location = new System.Drawing.Point(12, 437);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(850, 80);
+            this.alertBox1.Size = new System.Drawing.Size(707, 80);
             this.alertBox1.TabIndex = 214;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = resources.GetString("alertBox1.Text");
@@ -12669,17 +12670,36 @@ namespace WinPaletter
             this.TextBox67.UseSystemPasswordChar = false;
             this.TextBox67.WordWrap = true;
             // 
+            // button347
+            // 
+            this.button347.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button347.CustomColor = System.Drawing.Color.Empty;
+            this.button347.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.button347.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button347.Image = null;
+            this.button347.ImageAsVector = false;
+            this.button347.ImageVector = null;
+            this.button347.Location = new System.Drawing.Point(725, 437);
+            this.button347.Name = "button347";
+            this.button347.Size = new System.Drawing.Size(137, 80);
+            this.button347.TabIndex = 215;
+            this.button347.Text = "Install this service";
+            this.button347.UseVisualStyleBackColor = true;
+            this.button347.Click += new System.EventHandler(this.button347_Click);
+            // 
             // Sounds_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(874, 576);
+            this.Controls.Add(this.button347);
             this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.TabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Sounds_Editor";
@@ -12690,6 +12710,7 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.TabControl1, 0);
             this.Controls.SetChildIndex(this.alertBox1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
+            this.Controls.SetChildIndex(this.button347, 0);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
@@ -13611,5 +13632,6 @@ namespace WinPaletter
         internal UI.WP.Button button345;
         internal UI.WP.Button button344;
         internal UI.WP.Button button346;
+        private UI.WP.Button button347;
     }
 }

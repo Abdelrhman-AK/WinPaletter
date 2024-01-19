@@ -162,7 +162,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="cbAttribute">The size, in bytes, of the pvAttribute value.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
         [DllImport("dwmapi.dll")]
-        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMATTRIB dwAttribute, ref int pvAttribute, int cbAttribute);
+        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE dwAttribute, ref int pvAttribute, int cbAttribute);
 
         /// <summary>
         /// Sets the Desktop Window Manager (DWM) colorization parameters.
@@ -434,15 +434,131 @@ namespace WinPaletter.NativeMethods
         #endregion
 
         #region Enumerations
+
         /// <summary>
-        /// Enumerates Desktop Window Manager (DWM) attributes.
+        /// Enumerates the DWM (Desktop Window Manager) window attributes.
         /// </summary>
-        public enum DWMATTRIB : int
+        public enum DWMWINDOWATTRIBUTE : uint
         {
             /// <summary>
-            /// Specifies the type of the system backdrop.
+            /// Enables or disables non-client rendering in the window.
             /// </summary>
-            SYSTEMBACKDROP_TYPE = 38,
+            NCRENDERING_ENABLED,
+
+            /// <summary>
+            /// Sets the non-client rendering policy.
+            /// </summary>
+            NCRENDERING_POLICY,
+
+            /// <summary>
+            /// Forces the window's transitions to be disabled.
+            /// </summary>
+            TRANSITIONS_FORCEDISABLED,
+
+            /// <summary>
+            /// Allows non-client area painting.
+            /// </summary>
+            ALLOW_NCPAINT,
+
+            /// <summary>
+            /// Retrieves the bounds of the caption button area in the window's title bar.
+            /// </summary>
+            CAPTION_BUTTON_BOUNDS,
+
+            /// <summary>
+            /// Sets the non-client area right-to-left (RTL) layout.
+            /// </summary>
+            NONCLIENT_RTL_LAYOUT,
+
+            /// <summary>
+            /// Forces the window to display an iconic representation in the taskbar.
+            /// </summary>
+            FORCE_ICONIC_REPRESENTATION,
+
+            /// <summary>
+            /// Sets the Flip3D policy for the window.
+            /// </summary>
+            FLIP3D_POLICY,
+
+            /// <summary>
+            /// Retrieves the extended frame bounds.
+            /// </summary>
+            EXTENDED_FRAME_BOUNDS,
+
+            /// <summary>
+            /// Determines if the window has an iconic bitmap.
+            /// </summary>
+            HAS_ICONIC_BITMAP,
+
+            /// <summary>
+            /// Disallows Peek functionality on the window.
+            /// </summary>
+            DISALLOW_PEEK,
+
+            /// <summary>
+            /// Specifies whether the window is excluded from Peek functionality.
+            /// </summary>
+            EXCLUDED_FROM_PEEK,
+
+            /// <summary>
+            /// Cloaks or uncloaks the window.
+            /// </summary>
+            CLOAK,
+
+            /// <summary>
+            /// Retrieves the cloaked state of the window.
+            /// </summary>
+            CLOAKED,
+
+            /// <summary>
+            /// Freezes or unfreezes the window's representation in the DWM thumbnail.
+            /// </summary>
+            FREEZE_REPRESENTATION,
+
+            /// <summary>
+            /// Sets the update mode for non-client rendering.
+            /// </summary>
+            PASSIVE_UPDATE_MODE,
+
+            /// <summary>
+            /// Uses the host's backdrop brush.
+            /// </summary>
+            USE_HOSTBACKDROPBRUSH,
+
+            /// <summary>
+            /// Uses immersive dark mode.
+            /// </summary>
+            USE_IMMERSIVE_DARK_MODE = 20,
+
+            /// <summary>
+            /// Specifies the preferred corner for the window's top-left corner when window resizing is allowed.
+            /// </summary>
+            WINDOW_CORNER_PREFERENCE = 33,
+
+            /// <summary>
+            /// Sets the border color.
+            /// </summary>
+            BORDER_COLOR,
+
+            /// <summary>
+            /// Sets the caption color.
+            /// </summary>
+            CAPTION_COLOR,
+
+            /// <summary>
+            /// Sets the text color.
+            /// </summary>
+            TEXT_COLOR,
+
+            /// <summary>
+            /// Retrieves the visible frame border thickness.
+            /// </summary>
+            VISIBLE_FRAME_BORDER_THICKNESS,
+
+            /// <summary>
+            /// Specifies the system backdrop type.
+            /// </summary>
+            SYSTEMBACKDROP_TYPE,
 
             /// <summary>
             /// Specifies the Mica effect attribute.
@@ -450,29 +566,9 @@ namespace WinPaletter.NativeMethods
             MICA_EFFECT = 1029,
 
             /// <summary>
-            /// Specifies the attribute for using immersive dark mode.
+            /// The last value in the enumeration.
             /// </summary>
-            USE_IMMERSIVE_DARK_MODE = 20,
-
-            /// <summary>
-            /// Specifies the window corner preference attribute.
-            /// </summary>
-            WINDOW_CORNER_PREFERENCE = 33,
-
-            /// <summary>
-            /// Specifies the text color attribute.
-            /// </summary>
-            TEXT_COLOR = 36,
-
-            /// <summary>
-            /// Specifies the caption color attribute.
-            /// </summary>
-            CAPTION_COLOR = 35,
-
-            /// <summary>
-            /// Specifies the border color attribute.
-            /// </summary>
-            BORDER_COLOR = 34
+            LAST
         }
 
         /// <summary>

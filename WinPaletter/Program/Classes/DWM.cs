@@ -130,7 +130,7 @@ namespace WinPaletter
             int argpvAttribute = (int)FS;
 
             DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
-            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
             DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
         }
 

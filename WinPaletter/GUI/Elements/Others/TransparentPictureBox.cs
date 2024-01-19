@@ -17,7 +17,7 @@ namespace WinPaletter.UI.WP
         {
             base.OnPaintBackground(e);
 
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
 

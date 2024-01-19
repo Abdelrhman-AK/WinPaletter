@@ -1,6 +1,6 @@
 ﻿namespace WinPaletter
 {
-    partial class Dashboard
+    partial class Home
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -65,6 +65,7 @@
             this.Button19 = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender2 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.tip_label = new System.Windows.Forms.Label();
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
             this.Button12 = new WinPaletter.UI.WP.Button();
@@ -168,7 +169,7 @@
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAsVector = false;
             this.button1.ImageVector = null;
-            this.button1.Location = new System.Drawing.Point(905, 77);
+            this.button1.Location = new System.Drawing.Point(909, 78);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(217, 35);
@@ -322,7 +323,7 @@
             // 
             // card3
             // 
-            this.card3.Color = System.Drawing.Color.SteelBlue;
+            this.card3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(102)))), ((int)(((byte)(183)))));
             this.card3.Image = ((System.Drawing.Image)(resources.GetObject("card3.Image")));
             this.card3.Location = new System.Drawing.Point(555, 3);
             this.card3.Name = "card3";
@@ -334,7 +335,7 @@
             // 
             // card6
             // 
-            this.card6.Color = System.Drawing.Color.DarkRed;
+            this.card6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(193)))), ((int)(((byte)(241)))));
             this.card6.Image = ((System.Drawing.Image)(resources.GetObject("card6.Image")));
             this.card6.Location = new System.Drawing.Point(831, 3);
             this.card6.Name = "card6";
@@ -409,7 +410,7 @@
             // 
             // card11
             // 
-            this.card11.Color = System.Drawing.Color.DimGray;
+            this.card11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(63)))), ((int)(((byte)(91)))));
             this.card11.Image = ((System.Drawing.Image)(resources.GetObject("card11.Image")));
             this.card11.Location = new System.Drawing.Point(279, 275);
             this.card11.Name = "card11";
@@ -428,13 +429,13 @@
             this.card12.Name = "card12";
             this.card12.Size = new System.Drawing.Size(270, 130);
             this.card12.TabIndex = 129;
-            this.card12.Tag = "Modify preferences of Windows Switcher (Alt+Tab) appearance";
+            this.card12.Tag = "Modify preferences of Windows Switcher (Alt+Tab)";
             this.card12.Text = "Windows Switcher";
             this.card12.Click += new System.EventHandler(this.card12_Click);
             // 
             // card10
             // 
-            this.card10.Color = System.Drawing.Color.Purple;
+            this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
             this.card10.Location = new System.Drawing.Point(831, 275);
             this.card10.Name = "card10";
@@ -480,9 +481,9 @@
             this.apply_btn.Image = ((System.Drawing.Image)(resources.GetObject("apply_btn.Image")));
             this.apply_btn.ImageAsVector = false;
             this.apply_btn.ImageVector = null;
-            this.apply_btn.Location = new System.Drawing.Point(989, 5);
+            this.apply_btn.Location = new System.Drawing.Point(969, 5);
             this.apply_btn.Name = "apply_btn";
-            this.apply_btn.Size = new System.Drawing.Size(161, 37);
+            this.apply_btn.Size = new System.Drawing.Size(180, 37);
             this.apply_btn.TabIndex = 16;
             this.apply_btn.Text = "Apply whole theme";
             this.apply_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -500,9 +501,9 @@
             this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
             this.button41.ImageAsVector = false;
             this.button41.ImageVector = null;
-            this.button41.Location = new System.Drawing.Point(470, 5);
+            this.button41.Location = new System.Drawing.Point(325, 5);
             this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(174, 37);
+            this.button41.Size = new System.Drawing.Size(180, 37);
             this.button41.TabIndex = 35;
             this.button41.Text = "Support via PayPal";
             this.button41.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -517,14 +518,15 @@
             this.Button13.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button13.ForeColor = System.Drawing.Color.White;
-            this.Button13.Image = null;
+            this.Button13.Image = ((System.Drawing.Image)(resources.GetObject("Button13.Image")));
             this.Button13.ImageAsVector = false;
             this.Button13.ImageVector = null;
-            this.Button13.Location = new System.Drawing.Point(650, 5);
+            this.Button13.Location = new System.Drawing.Point(511, 5);
             this.Button13.Name = "Button13";
-            this.Button13.Size = new System.Drawing.Size(81, 37);
+            this.Button13.Size = new System.Drawing.Size(130, 37);
             this.Button13.TabIndex = 26;
             this.Button13.Text = "Exit";
+            this.Button13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button13.UseVisualStyleBackColor = false;
             this.Button13.Click += new System.EventHandler(this.Button13_Click);
             // 
@@ -539,9 +541,9 @@
             this.Button19.Image = ((System.Drawing.Image)(resources.GetObject("Button19.Image")));
             this.Button19.ImageAsVector = false;
             this.Button19.ImageVector = null;
-            this.Button19.Location = new System.Drawing.Point(843, 5);
+            this.Button19.Location = new System.Drawing.Point(783, 5);
             this.Button19.Name = "Button19";
-            this.Button19.Size = new System.Drawing.Size(140, 37);
+            this.Button19.Size = new System.Drawing.Size(180, 37);
             this.Button19.TabIndex = 29;
             this.Button19.Text = "Restart Explorer";
             this.Button19.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -559,9 +561,9 @@
             this.Button28.Image = ((System.Drawing.Image)(resources.GetObject("Button28.Image")));
             this.Button28.ImageAsVector = false;
             this.Button28.ImageVector = null;
-            this.Button28.Location = new System.Drawing.Point(737, 5);
+            this.Button28.Location = new System.Drawing.Point(647, 5);
             this.Button28.Name = "Button28";
-            this.Button28.Size = new System.Drawing.Size(100, 37);
+            this.Button28.Size = new System.Drawing.Size(130, 37);
             this.Button28.TabIndex = 34;
             this.Button28.Text = "Logoff";
             this.Button28.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -571,6 +573,7 @@
             // titlebarExtender2
             // 
             this.titlebarExtender2.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender2.Controls.Add(this.pin_button);
             this.titlebarExtender2.Controls.Add(this.tip_label);
             this.titlebarExtender2.Controls.Add(this.separatorV1);
             this.titlebarExtender2.Controls.Add(this.Button12);
@@ -597,6 +600,25 @@
             this.titlebarExtender2.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.titlebarExtender2.Text = "titlebarExtender2";
             // 
+            // pin_button
+            // 
+            this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(1058, 4);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 54);
+            this.pin_button.TabIndex = 155;
+            this.pin_button.Tag = "Pin this form into tabs";
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
             // tip_label
             // 
             this.tip_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -604,7 +626,7 @@
             this.tip_label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tip_label.Location = new System.Drawing.Point(607, 14);
             this.tip_label.Name = "tip_label";
-            this.tip_label.Size = new System.Drawing.Size(481, 34);
+            this.tip_label.Size = new System.Drawing.Size(443, 34);
             this.tip_label.TabIndex = 154;
             this.tip_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -698,7 +720,7 @@
             // Button31
             // 
             this.Button31.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Button31.CustomColor = System.Drawing.Color.Crimson;
+            this.Button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(84)))), ((int)(((byte)(166)))));
             this.Button31.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.Button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button31.ForeColor = System.Drawing.Color.White;
@@ -717,7 +739,7 @@
             // Button39
             // 
             this.Button39.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Button39.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button39.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(40)))), ((int)(((byte)(0)))));
             this.Button39.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.Button39.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button39.ForeColor = System.Drawing.Color.White;
@@ -932,7 +954,7 @@
             this.Button10.UseVisualStyleBackColor = false;
             this.Button10.Click += new System.EventHandler(this.Button10_Click);
             // 
-            // Dashboard
+            // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -945,14 +967,13 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "Dashboard";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dashboard";
+            this.Text = "WinPaletter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Dashboard_FormClosing);
-            this.Load += new System.EventHandler(this.Dashboard_Load);
+            this.Load += new System.EventHandler(this.Home_Load);
             this.Shown += new System.EventHandler(this.Dashboard_Shown);
+            this.ParentChanged += new System.EventHandler(this.Dashboard_ParentChanged);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -1017,5 +1038,6 @@
         private System.Windows.Forms.Label label3;
         internal UI.WP.Button button1;
         private System.Windows.Forms.Label tip_label;
+        internal UI.WP.Button pin_button;
     }
 }

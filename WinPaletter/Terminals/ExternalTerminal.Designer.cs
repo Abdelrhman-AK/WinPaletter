@@ -40,6 +40,7 @@ namespace WinPaletter
             this.FontDialog1 = new System.Windows.Forms.FontDialog();
             this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.btn_import = new WinPaletter.UI.WP.Button();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.Button10 = new WinPaletter.UI.WP.Button();
@@ -203,11 +204,30 @@ namespace WinPaletter
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.pin_button);
             this.flowLayoutPanel1.Controls.Add(this.btn_import);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1044, 40);
             this.flowLayoutPanel1.TabIndex = 124;
+            // 
+            // pin_button
+            // 
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(3, 3);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.TabIndex = 126;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            this.pin_button.ParentChanged += new System.EventHandler(this.pin_button_ParentChanged);
             // 
             // btn_import
             // 
@@ -218,7 +238,7 @@ namespace WinPaletter
             this.btn_import.Image = ((System.Drawing.Image)(resources.GetObject("btn_import.Image")));
             this.btn_import.ImageAsVector = false;
             this.btn_import.ImageVector = null;
-            this.btn_import.Location = new System.Drawing.Point(3, 3);
+            this.btn_import.Location = new System.Drawing.Point(43, 3);
             this.btn_import.Name = "btn_import";
             this.btn_import.Size = new System.Drawing.Size(235, 34);
             this.btn_import.TabIndex = 110;
@@ -1944,5 +1964,6 @@ namespace WinPaletter
         internal UI.WP.GroupBox GroupBox51;
         internal Label label4;
         private UI.WP.AlertBox alertBox1;
+        internal UI.WP.Button pin_button;
     }
 }

@@ -132,7 +132,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
-        private void QuickApply(object sender, EventArgs e)
+        private void Apply(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
             Theme.Manager TMx = new(Theme.Manager.Source.Registry);
@@ -259,7 +259,7 @@ namespace WinPaletter
                 Import_preset = true,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
-                OnQuickApply = QuickApply,
+                OnApply = Apply,
                 OnSaveAsMSTheme = SaveAsTHEME,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromTHEME = LoadFromTHEME,

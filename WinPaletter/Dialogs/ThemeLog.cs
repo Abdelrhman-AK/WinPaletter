@@ -25,6 +25,7 @@ namespace WinPaletter.Dialogs
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
             TreeView1.ImageList = ImageLists.ThemeLog;
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void ThemeLog_Closing(object sender, FormClosingEventArgs e)
@@ -52,7 +53,7 @@ namespace WinPaletter.Dialogs
         /// This will apply WinPaletter theme with showing theme log
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
-        public void Apply_Theme(Theme.Manager TM = null, bool AdditionalStoreTips = false)
+        public void Apply_Theme(Theme.Manager TM = null, bool AdditionalStoreTips = false, bool dontInvoke = false)
         {
             TM ??= Program.TM;
 
@@ -69,7 +70,7 @@ namespace WinPaletter.Dialogs
                     }
                 }
 
-                this.Show();
+                Show();
             }
 
             Apply_Thread = new(() =>
@@ -85,14 +86,25 @@ namespace WinPaletter.Dialogs
 
                 Cursor = Cursors.WaitCursor;
 
-                //Invoking is important to access controls from different thread
-                Invoke(new Action(() =>
+                if (!dontInvoke)
+                {
+                    //Invoking is important to access controls from different thread
+                    Program.Invoke(() =>
+                    {
+                        Button8.Visible = false;
+                        Button14.Visible = false;
+                        Button22.Visible = false;
+                        Button25.Visible = false;
+                    });
+                }
+                else
                 {
                     Button8.Visible = false;
                     Button14.Visible = false;
                     Button22.Visible = false;
                     Button25.Visible = false;
-                }));
+                }
+
 
                 // New method of restarting Explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
@@ -129,35 +141,60 @@ namespace WinPaletter.Dialogs
                 Cursor = Cursors.Default;
 
                 //Invoking is important to access controls from different thread
-                Invoke(new Action(() =>
+                if (!dontInvoke)
+                {
+                    Program.Invoke(() =>
+                    {
+                        log_lbl.Visible = true;
+                        Button8.Visible = true;
+                        Button22.Visible = true;
+                        Button25.Visible = true;
+                    });
+                }
+                else
                 {
                     log_lbl.Visible = true;
                     Button8.Visible = true;
                     Button22.Visible = true;
                     Button25.Visible = true;
-                }));
+                }
 
                 if (Exceptions.ThemeApply.Count != 0)
                 {
                     log_lbl.SetText(Program.Lang.TM_ErrorHappened);
 
-                    //Invoking is important to access controls from different thread
-                    Invoke(new Action(() =>
+                    if (!dontInvoke)
+                    {
+                        //Invoking is important to access controls from different thread
+                        Program.Invoke(() =>
                     {
                         Button14.Visible = true;
-                    }));
+                    });
+                    }
+                    else
+                    {
+                        Button14.Visible = true;
+                    }
                 }
-                else if (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed)
+                else if (dontInvoke || (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed))
                 {
                     log_lbl.SetText(string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds));
                     elapsedSecs = 1;
 
-                    //Invoking is important to access timer from different thread
-                    Invoke(new Action(() =>
+                    if (!dontInvoke)
+                    {
+                        //Invoking is important to access timer from different thread
+                        Program.Invoke(() =>
                     {
                         timer1.Enabled = true;
                         timer1.Start();
-                    }));
+                    });
+                    }
+                    else
+                    {
+                        timer1.Enabled = true;
+                        timer1.Start();
+                    }
                 }
                 else
                 {

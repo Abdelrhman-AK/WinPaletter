@@ -363,6 +363,7 @@ namespace WinPaletter
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
@@ -4629,7 +4630,7 @@ namespace WinPaletter
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.ImageAsVector = false;
             this.Button6.ImageVector = null;
-            this.Button6.Location = new System.Drawing.Point(481, 3);
+            this.Button6.Location = new System.Drawing.Point(521, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(130, 34);
             this.Button6.TabIndex = 20;
@@ -4648,7 +4649,7 @@ namespace WinPaletter
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
             this.Button5.ImageAsVector = false;
             this.Button5.ImageVector = null;
-            this.Button5.Location = new System.Drawing.Point(3, 3);
+            this.Button5.Location = new System.Drawing.Point(43, 3);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(200, 34);
             this.Button5.TabIndex = 19;
@@ -4667,7 +4668,7 @@ namespace WinPaletter
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
             this.Button4.ImageAsVector = false;
             this.Button4.ImageVector = null;
-            this.Button4.Location = new System.Drawing.Point(209, 3);
+            this.Button4.Location = new System.Drawing.Point(249, 3);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(130, 34);
             this.Button4.TabIndex = 17;
@@ -4686,7 +4687,7 @@ namespace WinPaletter
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
             this.Button3.ImageAsVector = false;
             this.Button3.ImageVector = null;
-            this.Button3.Location = new System.Drawing.Point(345, 3);
+            this.Button3.Location = new System.Drawing.Point(385, 3);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(130, 34);
             this.Button3.TabIndex = 16;
@@ -4738,6 +4739,7 @@ namespace WinPaletter
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.pin_button);
             this.flowLayoutPanel1.Controls.Add(this.Button5);
             this.flowLayoutPanel1.Controls.Add(this.Button4);
             this.flowLayoutPanel1.Controls.Add(this.Button3);
@@ -4771,6 +4773,23 @@ namespace WinPaletter
             this.bottom_buttons.Size = new System.Drawing.Size(1039, 48);
             this.bottom_buttons.TabIndex = 119;
             // 
+            // pin_button
+            // 
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(3, 3);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.TabIndex = 125;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -4792,6 +4811,7 @@ namespace WinPaletter
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsX_Load);
+            this.PaddingChanged += new System.EventHandler(this.SettingsX_PaddingChanged);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
@@ -5242,5 +5262,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox checkBox40;
         internal PictureBox pictureBox1;
         private UI.Controllers.TrackBarX trackBarX1;
+        internal UI.WP.Button pin_button;
     }
 }

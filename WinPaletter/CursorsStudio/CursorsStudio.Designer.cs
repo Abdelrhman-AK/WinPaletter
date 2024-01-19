@@ -1579,9 +1579,9 @@ namespace WinPaletter
             this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
-            this.Button10.Image = ((System.Drawing.Image)(resources.GetObject("Button10.Image")));
-            this.Button10.ImageAsVector = false;
-            this.Button10.ImageVector = null;
+            this.Button10.Image = null;
+            this.Button10.ImageAsVector = true;
+            this.Button10.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button10.ImageVector")));
             this.Button10.Location = new System.Drawing.Point(281, 463);
             this.Button10.Name = "Button10";
             this.Button10.Size = new System.Drawing.Size(20, 21);

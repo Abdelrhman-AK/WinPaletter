@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 using WinPaletter.UI.Retro;
@@ -28,9 +29,9 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
-        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
-        private Bitmap Noise7 = Assets.Win7Preview.AeroGlass;
-        private Bitmap Noise7Start = Assets.Win7Preview.StartGlass;
+        private static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
+        private static Bitmap Noise7 = Assets.Win7Preview.AeroGlass;
+        private static Bitmap Noise7Start = Assets.Win7Preview.StartGlass;
 
         private Bitmap back;
         private Bitmap back_blurred;
@@ -371,39 +372,43 @@ namespace WinPaletter.UI.Simulation
 
         public void CopycatFrom(WinElement element)
         {
-            Style = element.Style;
-            _NoisePower = element.NoisePower;
-            _BlurPower = element.BlurPower;
-            _Transparency = element.Transparency;
-            _DarkMode = element.DarkMode;
-            _AppUnderline = element.AppUnderline;
-            _AppBackground = element.AppBackground;
-            _ActionCenterButton_Normal = element.ActionCenterButton_Normal;
-            _ActionCenterButton_Hover = element.ActionCenterButton_Hover;
-            _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed;
-            _StartColor = element.StartColor;
-            _LinkColor = element.LinkColor;
-            _BackColorAlpha = (byte)element.BackColorAlpha;
-            BackColor = element.BackColor;
-            _Background2 = element.Background2;
-            _Win7ColorBal = element.Win7ColorBal;
-            _Win7GlowBal = element.Win7GlowBal;
-            UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10;
-            UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1;
-            UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2;
-            Shadow = element.Shadow;
-
-            Dock = element.Dock;
-            Size = element.Size;
-            Location = element.Location;
-            Text = element.Text;
-
             try
             {
+                Style = element.Style;
+                _NoisePower = element.NoisePower;
+                _BlurPower = element.BlurPower;
+                _Transparency = element.Transparency;
+                _DarkMode = element.DarkMode;
+                _AppUnderline = element.AppUnderline;
+                _AppBackground = element.AppBackground;
+                _ActionCenterButton_Normal = element.ActionCenterButton_Normal;
+                _ActionCenterButton_Hover = element.ActionCenterButton_Hover;
+                _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed;
+                _StartColor = element.StartColor;
+                _LinkColor = element.LinkColor;
+                _BackColorAlpha = (byte)element.BackColorAlpha;
+                BackColor = element.BackColor;
+                _Background2 = element.Background2;
+                _Win7ColorBal = element.Win7ColorBal;
+                _Win7GlowBal = element.Win7GlowBal;
+                UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10;
+                UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1;
+                UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2;
+                Shadow = element.Shadow;
+
+                Dock = element.Dock;
+                Size = element.Size;
+                Location = element.Location;
+                Text = element.Text;
+
                 ProcessBack();
                 Refresh();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Log or handle the exception appropriately
+                Console.WriteLine($"Error in CopycatFrom: {ex.Message}");
+            }
         }
 
         public void ProcessBack()
@@ -424,28 +429,31 @@ namespace WinPaletter.UI.Simulation
                 else
                     back = null;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Log or handle the exception appropriately
+                Console.WriteLine($"Error in GetBack: {ex.Message}");
+            }
         }
 
         public void BlurBack()
         {
-            if (Style == Styles.Taskbar11 | Style == Styles.Start11 | Style == Styles.ActionCenter11 | Style == Styles.AltTab11)
+            if (Style == Styles.Taskbar11 || Style == Styles.Start11 || Style == Styles.ActionCenter11 || Style == Styles.AltTab11)
             {
-                if (Transparency && back is not null)
+                if (Transparency && back != null)
                 {
                     if (DarkMode)
                     {
                         using (ImageFactory ImgF = new())
                         {
-                            ImgF.Load(back?.Blur(BlurPower));
-                            ImgF?.Saturation(60);
-                            back_blurred = ImgF?.Image?.Clone() as Bitmap;
+                            ImgF.Load(back.Blur(BlurPower));
+                            ImgF.Saturation(60);
+                            back_blurred = ImgF.Image?.Clone() as Bitmap;
                         }
                     }
-
                     else
                     {
-                        back_blurred = back?.Blur(BlurPower);
+                        back_blurred = back.Blur(BlurPower);
                     }
                 }
                 else
@@ -453,21 +461,20 @@ namespace WinPaletter.UI.Simulation
                     back_blurred = null;
                 }
             }
-
-            else if ((Style == Styles.Taskbar10 | Style == Styles.Start10 | Style == Styles.ActionCenter10) && Transparency)
+            else if ((Style == Styles.Taskbar10 || Style == Styles.Start10 || Style == Styles.ActionCenter10) && Transparency)
             {
-                back_blurred = back?.Blur(BlurPower);
+                back_blurred = back.Blur(BlurPower);
             }
-            else if ((Style == Styles.Start7Aero | Style == Styles.Taskbar7Aero | Style == Styles.StartVistaAero | Style == Styles.TaskbarVistaAero | Style == Styles.AltTab7Aero) && back != null)
+            else if ((Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.StartVistaAero || Style == Styles.TaskbarVistaAero || Style == Styles.AltTab7Aero) && back != null)
             {
-                back_blurred = back?.Blur(3);
+                back_blurred = back.Blur(3);
             }
         }
 
         public void NoiseBack()
         {
-            if (Style == Styles.ActionCenter11 | Style == Styles.Start11 | Style == Styles.Taskbar11 | Style == Styles.AltTab11 |
-                Style == Styles.ActionCenter10 | Style == Styles.Start10 | Style == Styles.Taskbar10)
+            if (Style == Styles.ActionCenter11 || Style == Styles.Start11 || Style == Styles.Taskbar11 || Style == Styles.AltTab11 ||
+                Style == Styles.ActionCenter10 || Style == Styles.Start10 || Style == Styles.Taskbar10)
             {
                 if (Transparency)
                 {
@@ -477,9 +484,8 @@ namespace WinPaletter.UI.Simulation
                     }
                 }
             }
-
-            else if (Style == Styles.Start7Aero | Style == Styles.Taskbar7Aero | Style == Styles.AltTab7Aero |
-                     Style == Styles.Start7Opaque | Style == Styles.Taskbar7Opaque | Style == Styles.AltTab7Opaque)
+            else if (Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.AltTab7Aero ||
+                     Style == Styles.Start7Opaque || Style == Styles.Taskbar7Opaque || Style == Styles.AltTab7Opaque)
             {
                 using (Bitmap b0 = Assets.Win7Preview.AeroGlass.Fade(_NoisePower / 100f))
                 using (Bitmap b1 = Assets.Win7Preview.StartGlass.Fade(_NoisePower / 100f))
@@ -494,7 +500,7 @@ namespace WinPaletter.UI.Simulation
 
         #region Events/Overrides
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             OnMouseMove_Down_Up(e);
 
@@ -524,18 +530,21 @@ namespace WinPaletter.UI.Simulation
                 CursorOverStartButton = startBtnRect.Contains(e.Location) && (Style == Styles.Taskbar10);
                 CursorOverTaskbar = !CursorOverTaskbarApp && !CursorOverTaskbarAppUnderline && !CursorOverStartButton && rect.Contains(e.Location) && (Style == Styles.Taskbar11 || Style == Styles.Taskbar10);
 
+                await Task.Delay(10);
                 Refresh();
             }
 
             base.OnMouseMove(e);
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        protected override async void OnMouseLeave(EventArgs e)
         {
             if (Style == Styles.ActionCenter11)
             {
                 _State_Btn1 = MouseState.Normal;
                 _State_Btn2 = MouseState.Normal;
+
+                await Task.Delay(10);
                 Refresh();
             }
 
@@ -551,6 +560,7 @@ namespace WinPaletter.UI.Simulation
                 CursorOverActionCenterButton = false;
                 CursorOverStartButton = false;
 
+                await Task.Delay(10);
                 Refresh();
             }
             base.OnMouseLeave(e);
@@ -607,7 +617,7 @@ namespace WinPaletter.UI.Simulation
             base.OnMouseUp(e);
         }
 
-        private void OnMouseMove_Down_Up(MouseEventArgs e)
+        private async void OnMouseMove_Down_Up(MouseEventArgs e)
         {
             if (Style == Styles.ActionCenter11)
             {
@@ -618,11 +628,14 @@ namespace WinPaletter.UI.Simulation
                     else
                         _State_Btn1 = MouseState.Pressed;
 
+                    await Task.Delay(10);
                     Refresh();
                 }
                 else if (_State_Btn1 != MouseState.Normal)
                 {
                     _State_Btn1 = MouseState.Normal;
+
+                    await Task.Delay(10);
                     Refresh();
                 }
 
@@ -632,11 +645,15 @@ namespace WinPaletter.UI.Simulation
                         _State_Btn2 = MouseState.Hover;
                     else
                         _State_Btn2 = MouseState.Pressed;
+
+                    await Task.Delay(10);
                     Refresh();
                 }
                 else if (!(_State_Btn2 == MouseState.Normal))
                 {
                     _State_Btn2 = MouseState.Normal;
+
+                    await Task.Delay(10);
                     Refresh();
                 }
             }
@@ -729,8 +746,6 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (this == null) return;
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -2621,7 +2636,6 @@ namespace WinPaletter.UI.Simulation
                     }
                     #endregion
             }
-
             base.OnPaint(e);
         }
     }

@@ -32,6 +32,22 @@ namespace WinPaletter.NativeMethods
         public static extern int SetWindowThemeAttribute(IntPtr hWnd, WindowThemeAttributeType wtype, ref WTA_OPTIONS attributes, uint size);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="preferredAppMode"></param>
+        /// <returns></returns>
+        [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern int SetPreferredAppMode(PreferredAppMode preferredAppMode);
+
+        public enum PreferredAppMode
+        {
+            Default = 0,
+            Dark = 1,
+            Light = 2,
+            SystemDefault = 3
+        }
+
+        /// <summary>
         /// Do Not Draw The Caption (Text)
         /// </summary>
         public static uint WTNCA_NODRAWCAPTION = 0x1U;

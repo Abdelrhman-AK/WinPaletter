@@ -291,24 +291,6 @@ namespace WinPaletter
         }
 
 
-        private static ComplexSave _ComplexSave;
-        public static ComplexSave ComplexSave
-        {
-            get
-            {
-                _ComplexSave = CreateInstance(_ComplexSave);
-                return _ComplexSave;
-            }
-            set
-            {
-                if (value == _ComplexSave)
-                    return;
-                if (value is not null)
-                    throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _ComplexSave);
-            }
-        }
-
 
         private static UserSwitch _UserSwitch;
         public static UserSwitch UserSwitch
@@ -1296,21 +1278,21 @@ namespace WinPaletter
             }
         }
 
-        private static Dashboard _Dashboard;
-        public static Dashboard Dashboard
+        private static Home _Home;
+        public static Home Home
         {
             get
             {
-                _Dashboard = CreateInstance(_Dashboard);
-                return _Dashboard;
+                _Home = CreateInstance(_Home);
+                return _Home;
             }
             set
             {
-                if (value == _Dashboard)
+                if (value == _Home)
                     return;
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _Dashboard);
+                DisposeInstance(ref _Home);
             }
         }
 

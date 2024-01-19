@@ -265,7 +265,7 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;

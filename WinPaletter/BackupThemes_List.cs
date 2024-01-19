@@ -117,7 +117,7 @@ namespace WinPaletter
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;
 
                     Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
-                    Forms.Dashboard.LoadFromTM(Program.TM);
+                    Forms.Home.LoadFromTM(Program.TM);
                 }
             }
         }
@@ -136,6 +136,7 @@ namespace WinPaletter
                 button3.Enabled = true;
                 button4.Enabled = true;
                 button5.Enabled = true;
+                button6.Enabled = true;
                 label1.Visible = false;
 
                 if (System.IO.File.Exists(listView1.SelectedItems[0].SubItems[1].Text))
@@ -160,6 +161,7 @@ namespace WinPaletter
                 button3.Enabled = false;
                 button4.Enabled = false;
                 button5.Enabled = false;
+                button6.Enabled = false;
                 label1.Visible = true;
             }
         }
@@ -233,6 +235,22 @@ namespace WinPaletter
         private void listView1_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
             e.DrawDefault = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                if (MsgBox(Program.Lang.Backup_RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
+                    Program.TM_Original = Program.TM.Clone() as Theme.Manager;
+                    Forms.ThemeLog.Apply_Theme();
+
+                    Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
+                    Forms.Home.LoadFromTM(Program.TM);
+                }
+            }
         }
     }
 }

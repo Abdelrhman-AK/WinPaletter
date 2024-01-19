@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI
@@ -18,7 +19,7 @@ namespace WinPaletter.UI
 
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        int shadowSize = 8;
+        int shadowSize = 1;
         int margin => (int)((alpha / 255f) * 0.6 * shadowSize);
         Rectangle rect_all => new(0, 0, Width - 1, Height - 1);
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
@@ -60,7 +61,7 @@ namespace WinPaletter.UI
             base.OnPaintBackground(pevent);
         }
 
-        protected override void OnMouseEnter(EventArgs e)
+        protected override async void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
 
@@ -75,6 +76,7 @@ namespace WinPaletter.UI
                 HoverSize = (int)(Math.Min(Width, Height) * 1.5);
             }
 
+            await Task.Delay(10);
             Animate();
 
             base.OnMouseEnter(e);
@@ -161,13 +163,15 @@ namespace WinPaletter.UI
             base.OnMouseUp(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             if (CanAnimate && State != MouseState.None)
             {
                 hoverPosition = this.PointToClient(MousePosition);
                 hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
+
+                await Task.Delay(10);
                 Refresh();
             }
 
@@ -244,8 +248,6 @@ namespace WinPaletter.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (this == null) return;
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -271,7 +273,8 @@ namespace WinPaletter.UI
             {
                 Rectangle imageRect = new(rect.X + rect.Width - Image.Width, rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
 
-                G.DrawGlow(rect_all, Color.FromArgb(alpha, _color.CB(-0.1f)), shadowSize, 30, true);
+                ////Disabled for better performance
+                //G.DrawGlow(rect_all, Color.FromArgb(alpha, _color.CB(-0.1f)), shadowSize, 30, true);
 
                 using (Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
                 using (SolidBrush br0 = new(colors.Back_Checked))
@@ -318,7 +321,8 @@ namespace WinPaletter.UI
             }
             else
             {
-                G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
+                ////Disabled for better performance
+                //G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
                 G.FillRoundedRect(scheme.Brushes.Back, rect_margin, radius);
 

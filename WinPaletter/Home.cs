@@ -11,7 +11,7 @@ using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
 {
-    public partial class Dashboard : Form
+    public partial class Home : Form
     {
         private bool _shown = false;
         private bool RaiseUpdate = false;
@@ -22,14 +22,14 @@ namespace WinPaletter
 
         public bool LoggingOff = false;
 
-        public Dashboard()
+        public Home()
         {
             InitializeComponent();
+            Icon = Forms.MainFrm.Icon;
         }
 
-        private void Dashboard_Load(object sender, EventArgs e)
+        private void Home_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainFrm.Icon;
             this.LoadLanguage();
             ApplyStyle(this);
 
@@ -49,7 +49,7 @@ namespace WinPaletter
 
             LoadData();
 
-            foreach (UI.WP.Button button in titlebarExtender2.Controls.OfType<UI.WP.Button>().Where(b => b.ImageAsVector))
+            foreach (UI.WP.Button button in titlebarExtender2.Controls.OfType<UI.WP.Button>())
             {
                 button.MouseEnter += (s, e) => tip_label.Text = (s as UI.WP.Button).Tag as string;
                 button.MouseLeave += (s, e) => tip_label.Text = string.Empty;
@@ -294,7 +294,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.ComplexSave.GetResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
@@ -303,7 +303,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            Forms.ComplexSave.GetResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
             SaveFileDialog1.FileName = null;
@@ -313,7 +313,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Forms.ComplexSave.GetResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
                 {
@@ -480,7 +480,24 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-           new UI.Style.SchemeEditor().Show();
+            new UI.Style.SchemeEditor().Show();
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private void Dashboard_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
         }
 
         private void BackgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)

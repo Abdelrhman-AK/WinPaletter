@@ -158,5 +158,15 @@ namespace WinPaletter
         /// A global ToolTip to be used in all forms
         /// </summary>
         public static UI.WP.ToolTip ToolTip = new();
+
+        /// <summary>
+        /// Delete WinPaletter reg on exit (used by uninstaller)
+        /// </summary>
+        public static bool DeleteWinPaletteReg = false;
+
+        /// <summary>
+        /// A boolean that represents if WinPaletter uninstaller has finished or not
+        /// </summary>
+        public static bool UninstallDone = false;
     }
 }

@@ -76,7 +76,7 @@ namespace WinPaletter
 
             _shown = false;
 
-            Location = Forms.Dashboard.card4.PointToScreen(Point.Empty);
+            Location = Forms.Home.card4.PointToScreen(Point.Empty);
 
             if (OS.W10)
                 PictureBox1.Image = Assets.WinLogos.Win10;

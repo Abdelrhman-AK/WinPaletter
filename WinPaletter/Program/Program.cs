@@ -70,7 +70,7 @@ namespace WinPaletter
 
                 ExecuteArgs();
                 LoadThemeManager();
-                InitializeSysEventsSounds();
+                UpdateSysEventsSounds();
 
                 Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
 
@@ -80,40 +80,12 @@ namespace WinPaletter
 
         private static void OnExit(object sender, EventArgs e)
         {
-            if (!OS.WXP)
-            {
-                try
-                {
-                    WallMon_Watcher1.Stop();
-                    WallMon_Watcher2.Stop();
-
-                    if (!OS.W7 & !OS.W81 & !OS.WVista)
-                    {
-                        WallMon_Watcher3.Stop();
-                        WallMon_Watcher4.Stop();
-                    }
-                }
-                catch { }
-            }
-
             DeleteUpdateResiduals();
 
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
             User.UserSwitch -= User.OnUserSwitch;
-
-            try
-            {
-                WallMon_Watcher1.EventArrived -= Wallpaper_Changed_EventHandler;
-                WallMon_Watcher2.EventArrived -= Wallpaper_Changed_EventHandler;
-                WallMon_Watcher3.EventArrived -= WallpaperType_Changed;
-                WallMon_Watcher4.EventArrived -= DarkMode_Changed_EventHandler;
-            }
-            catch
-            {
-            }
-
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 

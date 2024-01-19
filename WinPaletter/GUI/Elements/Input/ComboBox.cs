@@ -183,7 +183,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
@@ -229,7 +229,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (this == null) return;
+
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;

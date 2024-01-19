@@ -39,7 +39,6 @@ namespace WinPaletter
             public struct General
             {
                 public bool LicenseAccepted;
-                public string ComplexSaveResult;
                 public object MainFormWidth;
                 public object MainFormHeight;
                 public object MainFormStatus;
@@ -48,7 +47,6 @@ namespace WinPaletter
                 public void Load()
                 {
                     LicenseAccepted = Conversions.ToBoolean(GetReg(REG_General, "LicenseAccepted", false));
-                    ComplexSaveResult = GetReg(REG_General, "ComplexSaveResult", "2.1").ToString();
                     WhatsNewRecord = (string[])GetReg(REG_General, "WhatsNewRecord", new[] { string.Empty });
                     MainFormWidth = GetReg(REG_General_MainForm, "MainFormWidth", 1110);
                     MainFormHeight = GetReg(REG_General_MainForm, "MainFormHeight", 725);
@@ -58,7 +56,6 @@ namespace WinPaletter
                 public void Save()
                 {
                     EditReg(REG_General, "LicenseAccepted", LicenseAccepted, RegistryValueKind.DWord);
-                    EditReg(REG_General, "ComplexSaveResult", ComplexSaveResult, RegistryValueKind.String);
                     EditReg(REG_General, "WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString);
                     EditReg(REG_General_MainForm, "MainFormWidth", MainFormWidth, RegistryValueKind.DWord);
                     EditReg(REG_General_MainForm, "MainFormHeight", MainFormHeight, RegistryValueKind.DWord);
@@ -529,7 +526,6 @@ namespace WinPaletter
         public Structures.General General = new()
         {
             LicenseAccepted = false,
-            ComplexSaveResult = "2.1",
             MainFormWidth = 1110,
             MainFormHeight = 725,
             MainFormStatus = FormWindowState.Normal,

@@ -343,15 +343,15 @@ namespace WinPaletter.UI.Style
 
         }
 
-        private static void TD_Created(object sender, EventArgs e)
+        public static void TD_Created(object sender, EventArgs e)
         {
-            IntPtr hWnd = ((IWin32Window)sender).Handle;
+            IntPtr hWnd = (sender as IWin32Window).Handle;
 
-            ApplyStyle(hWnd);
+            ApplyStyle(hWnd, true);
 
-            foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(((IWin32Window)sender)))
+            foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(sender as IWin32Window))
             {
-                ApplyStyle(ChildHwnd);
+                ApplyStyle(ChildHwnd, false);
             }
         }
         #endregion

@@ -57,7 +57,7 @@ namespace WinPaletter
             UI.WP.Button button_saveas_MSTheme = buttons.Where(b => b.Name.StartsWith("btn_saveas_MSTheme")).FirstOrDefault() ?? null;
 
             UI.WP.Button button_load = buttons.Where(b => b.Name.StartsWith("btn_load_into_theme")).FirstOrDefault() ?? null; ;
-            UI.WP.Button button_quickapply = buttons.Where(b => b.Name.StartsWith("btn_quick_apply")).FirstOrDefault() ?? null; ;
+            UI.WP.Button button_apply = buttons.Where(b => b.Name.StartsWith("btn_apply")).FirstOrDefault() ?? null; ;
             UI.WP.Button button_cancel = buttons.Where(b => b.Name.StartsWith("btn_cancel")).FirstOrDefault() ?? null; ;
 
             UI.WP.RadioImage mode_advanced = modes.Where(b => b.Name.StartsWith("checker_mode_advanced")).FirstOrDefault() ?? null;
@@ -85,7 +85,7 @@ namespace WinPaletter
             mode_advanced.Text = Program.Lang.Designer_mode_advanced;
             mode_simple.Text = Program.Lang.Designer_mode_simple;
             button_load.Text = Program.Lang.Designer_load_into_current_theme;
-            button_quickapply.Text = Program.Lang.Designer_quick_apply;
+            button_apply.Text = Program.Lang.Designer_apply;
             button_cancel.Text = Program.Lang.Cancel;
             #endregion
 
@@ -207,8 +207,8 @@ namespace WinPaletter
             if (button_load != null)
                 button_load.Click += _data.OnLoadIntoCurrentTheme ?? null;
 
-            if (button_quickapply != null)
-                button_quickapply.Click += _data.OnQuickApply ?? null;
+            if (button_apply != null)
+                button_apply.Click += _data.OnApply ?? null;
 
             if (button_cancel != null)
                 button_cancel.Click += _data.OnCancel ?? null;
@@ -278,8 +278,8 @@ namespace WinPaletter
                 if (button_load != null)
                     button_load.Click -= _data.OnLoadIntoCurrentTheme ?? null;
 
-                if (button_quickapply != null)
-                    button_quickapply.Click -= _data.OnQuickApply ?? null;
+                if (button_apply != null)
+                    button_apply.Click -= _data.OnApply ?? null;
 
                 if (button_cancel != null)
                     button_cancel.Click -= _data.OnCancel ?? null;
@@ -430,6 +430,23 @@ namespace WinPaletter
         {
             Program.ToolTip.Hide(checker_img);
         }
+
+        private void AspectsTemplate_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
     }
 
     /// <summary>
@@ -460,7 +477,7 @@ namespace WinPaletter
         /// <summary>
         /// EventHandler associated with clicking on 'Quick apply' button
         /// </summary>
-        public System.EventHandler OnQuickApply { get; set; }
+        public System.EventHandler OnApply { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Cancel' button

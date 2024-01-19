@@ -139,6 +139,7 @@
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data">
       <Private>False</Private>
     </Reference>
@@ -278,6 +279,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PowerShell_Raster.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\Tabs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tabs.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\Win11Preview.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -318,11 +324,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WinVistaPreview.resx</DependentUpon>
     </Compile>
-    <Compile Include="Dashboard.cs">
+    <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
+    <Compile Include="Home.Designer.cs">
+      <DependentUpon>Home.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\UserPassword.cs">
       <SubType>Form</SubType>
@@ -388,6 +394,7 @@
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
     <Compile Include="Languages\Localizer\Strings\General\PaletteGenerator.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\SaveDialog.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Animation.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\CubicBezierTimingFunction.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Margins.cs" />
@@ -842,12 +849,6 @@
     <Compile Include="ColorItemControllers\ColorPickerDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\ComplexSave.Designer.cs">
-      <DependentUpon>ComplexSave.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\ComplexSave.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Dialogs\Saving_ex_list.Designer.cs">
       <DependentUpon>Saving_ex_list.cs</DependentUpon>
     </Compile>
@@ -1180,6 +1181,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PowerShell_Raster.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Tabs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tabs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets\Win11Preview.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Win11Preview.Designer.cs</LastGenOutput>
@@ -1215,8 +1220,8 @@
     <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
       <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dashboard.resx">
-      <DependentUpon>Dashboard.cs</DependentUpon>
+    <EmbeddedResource Include="Home.resx">
+      <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -1252,9 +1257,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorItemControllers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ComplexSave.resx">
-      <DependentUpon>ComplexSave.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">
       <DependentUpon>Saving_ex_list.cs</DependentUpon>
