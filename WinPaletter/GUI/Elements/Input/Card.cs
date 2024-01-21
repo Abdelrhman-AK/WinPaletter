@@ -335,19 +335,21 @@ namespace WinPaletter.UI
                 {
                     G.SetClip(clipPath, CombineMode.Intersect);
 
-                    GraphicsPath gp = new();
-
-                    gp.AddEllipse(hoverRect);
-                    PathGradientBrush pgb = new(gp)
+                    using (GraphicsPath gp = new())
                     {
-                        CenterPoint = hoverPosition,
-                        CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
-                        SurroundColors = new Color[] { Color.Transparent }
-                    };
+                        gp.AddEllipse(hoverRect);
+                        using (PathGradientBrush pgb = new(gp)
+                        {
+                            CenterPoint = hoverPosition,
+                            CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
+                            SurroundColors = new Color[] { Color.Transparent }
+                        })
+                        {
+                            G.FillEllipse(pgb, hoverRect);
+                        }
 
-                    G.FillEllipse(pgb, hoverRect);
-
-                    G.ResetClip();
+                        G.ResetClip();
+                    }
                 }
 
                 G.DrawRoundedRect(scheme.Pens.Line, rect_margin, radius);
@@ -409,7 +411,6 @@ namespace WinPaletter.UI
                     // Adjust this value as needed
                     sf.SetMeasurableCharacterRanges(new CharacterRange[] { new CharacterRange(0, 1) });
 
-
                     G.SetClip(clipPath, CombineMode.Intersect);
 
                     G.DrawString(Text, titleFont, br0, textRect, sf);
@@ -417,10 +418,10 @@ namespace WinPaletter.UI
                     if (descriptionRect != Rectangle.Empty) G.DrawString(Tag, Font, br1, descriptionRect, sf);
 
                     G.ResetClip();
-
-                    clipPath.Dispose();
                 }
             }
+
+            clipPath.Dispose();
         }
 
         public static float Lerp(float a, float b, float t)

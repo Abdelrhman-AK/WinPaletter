@@ -232,7 +232,7 @@ namespace WinPaletter.Theme
                 }
             }
 
-            foreach (TColors c in Terminal.Colors)
+            foreach (WinTerminal.Types.Scheme c in Terminal.Schemes)
             {
                 CL.Add(c.Background);
                 CL.Add(c.Foreground);
@@ -256,7 +256,7 @@ namespace WinPaletter.Theme
                 CL.Add(c.Yellow);
             }
 
-            foreach (TColors c in TerminalPreview.Colors)
+            foreach (WinTerminal.Types.Scheme c in TerminalPreview.Schemes)
             {
                 CL.Add(c.Background);
                 CL.Add(c.Foreground);
@@ -280,30 +280,30 @@ namespace WinPaletter.Theme
                 CL.Add(c.Yellow);
             }
 
-            foreach (TTheme c in Terminal.Themes)
+            foreach (WinTerminal.Types.Theme c in Terminal.Themes)
             {
-                CL.Add(c.Titlebar_Inactive);
-                CL.Add(c.Titlebar_Active);
-                CL.Add(c.Tab_Active);
-                CL.Add(c.Tab_Inactive);
+                CL.Add(c.Tab.Background);
+                CL.Add(c.Tab.UnfocusedBackground);
+                CL.Add(c.TabRow.Background);
+                CL.Add(c.TabRow.UnfocusedBackground);
             }
 
-            foreach (TTheme c in TerminalPreview.Themes)
+            foreach (WinTerminal.Types.Theme c in TerminalPreview.Themes)
             {
-                CL.Add(c.Titlebar_Inactive);
-                CL.Add(c.Titlebar_Active);
-                CL.Add(c.Tab_Active);
-                CL.Add(c.Tab_Inactive);
+                CL.Add(c.Tab.Background);
+                CL.Add(c.Tab.UnfocusedBackground);
+                CL.Add(c.TabRow.Background);
+                CL.Add(c.TabRow.UnfocusedBackground);
             }
 
-            foreach (TProfile c in Terminal.Profiles)
+            foreach (WinTerminal.Types.Profile c in Terminal.Profiles.List)
                 CL.Add(c.TabColor);
 
-            foreach (TProfile c in TerminalPreview.Profiles)
+            foreach (WinTerminal.Types.Profile c in TerminalPreview.Profiles.List)
                 CL.Add(c.TabColor);
 
-            CL.Add(Terminal.DefaultProf.TabColor);
-            CL.Add(TerminalPreview.DefaultProf.TabColor);
+            CL.Add(Terminal.Profiles.Defaults.TabColor);
+            CL.Add(TerminalPreview.Profiles.Defaults.TabColor);
 
             foreach (FieldInfo field in typeof(Theme.Structures.Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {

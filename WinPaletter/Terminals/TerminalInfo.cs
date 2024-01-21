@@ -8,7 +8,7 @@ namespace WinPaletter
 {
     public partial class TerminalInfo
     {
-        public TProfile Profile = new();
+        public WinTerminal.Types.Profile Profile = new();
 
         public TerminalInfo()
         {
@@ -79,13 +79,13 @@ namespace WinPaletter
 
         private void TerTabColor_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
-                {
-                    TProfile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
-                    temp.TabColor = TerTabColor.BackColor;
-                }
+                WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? 
+                    Forms.WindowsTerminal._Terminal.Profiles.Defaults : 
+                    Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+
+                temp.TabColor = TerTabColor.BackColor;
 
                 Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
                 return;
@@ -95,10 +95,11 @@ namespace WinPaletter
             {
                 Color cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
 
-                {
-                    TProfile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? Forms.WindowsTerminal._Terminal.DefaultProf : Forms.WindowsTerminal._Terminal.Profiles[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
-                    temp1.TabColor = cx;
-                }
+                WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                    Forms.WindowsTerminal._Terminal.Profiles.Defaults :
+                    Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+                
+                temp1.TabColor = cx;
 
                 Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
 

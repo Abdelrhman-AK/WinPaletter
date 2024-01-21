@@ -155,6 +155,7 @@ namespace WinPaletter.Theme
                                 if (Exceptions.ThemeLoad.Count > 0)
                                 {
                                     Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
+                                    Forms.Saving_ex_list.ApplyMode = false;
                                     Forms.Saving_ex_list.ShowDialog();
                                 }
                             }
@@ -173,9 +174,6 @@ namespace WinPaletter.Theme
                                 try { field.SetValue(this, field.GetValue(TMx)); }
                                 catch { };
                             }
-
-                        Start:
-                            ;
 
                             if (!System.IO.File.Exists(File)) return;
 
@@ -278,11 +276,12 @@ namespace WinPaletter.Theme
 
                                 foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                 {
-                                    Type type = field.FieldType;
-                                    JsonSerializerSettings JSet = new();
-
-                                    if (J[field.Name] is not null)
-                                        field.SetValue(this, J[field.Name].ToObject(type));
+                                    try
+                                    {
+                                        Type type = field.FieldType;
+                                        if (J[field.Name] is not null) field.SetValue(this, J[field.Name].ToObject(type));
+                                    }
+                                    catch (Exception ex) { Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex)); }
                                 }
                             }
 
@@ -293,6 +292,14 @@ namespace WinPaletter.Theme
                             }
 
                             else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
+
+                            // Application.OpenForms.OfType<Store>().Count() == 0 is to prevent this from running when Store is opened
+                            if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0)
+                            {
+                                Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
+                                Forms.Saving_ex_list.ApplyMode = false;
+                                Forms.Saving_ex_list.ShowDialog();
+                            }
                         }
 
                         break;
@@ -831,25 +838,25 @@ namespace WinPaletter.Theme
 
                 if (TM.Terminal.Enabled)
                 {
-                    x = TM.Terminal.DefaultProf.BackgroundImage;
+                    x = TM.Terminal.Profiles.Defaults.BackgroundImage;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_defprofile_backimg{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
-                            TM.Terminal.DefaultProf.BackgroundImage = ZipEntry;
+                            TM.Terminal.Profiles.Defaults.BackgroundImage = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    x = TM.Terminal.DefaultProf.Icon;
+                    x = TM.Terminal.Profiles.Defaults.Icon;
                     if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_defprofile_icon{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
-                            TM.Terminal.DefaultProf.Icon = ZipEntry;
+                            TM.Terminal.Profiles.Defaults.Icon = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    foreach (TProfile i in TM.Terminal.Profiles)
+                    foreach (WinTerminal.Types.Profile i in TM.Terminal.Profiles.List)
                     {
                         x = i.BackgroundImage;
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
@@ -873,25 +880,25 @@ namespace WinPaletter.Theme
 
                 if (TM.TerminalPreview.Enabled)
                 {
-                    x = TM.TerminalPreview.DefaultProf.BackgroundImage;
+                    x = TM.TerminalPreview.Profiles.Defaults.BackgroundImage;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_preview_defprofile_backimg{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
-                            TM.TerminalPreview.DefaultProf.BackgroundImage = ZipEntry;
+                            TM.TerminalPreview.Profiles.Defaults.BackgroundImage = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    x = TM.TerminalPreview.DefaultProf.Icon;
+                    x = TM.TerminalPreview.Profiles.Defaults.Icon;
                     if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_preview_defprofile_icon{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
-                            TM.TerminalPreview.DefaultProf.Icon = ZipEntry;
+                            TM.TerminalPreview.Profiles.Defaults.Icon = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
 
-                    foreach (TProfile i in TM.TerminalPreview.Profiles)
+                    foreach (WinTerminal.Types.Profile i in TM.TerminalPreview.Profiles.List)
                     {
                         x = i.BackgroundImage;
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))

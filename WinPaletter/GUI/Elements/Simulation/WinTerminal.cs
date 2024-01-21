@@ -580,12 +580,9 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
-
 
             if (PreviewVersion)
             {
@@ -649,7 +646,6 @@ namespace WinPaletter.UI.Simulation
                 Color_TabUnFocused = Color_Titlebar;
             }
 
-
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle Rect_Titlebar = new(0, 0, Width - 1, 32);
             Rectangle Rect_Console = new(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
@@ -659,7 +655,7 @@ namespace WinPaletter.UI.Simulation
             string s3 = $"{PathsExt.System32}>";
 
             SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
-            SizeF s2X = s2.Measure(Font) + new SizeF(2f, 0f);
+            SizeF s2X = s2.Measure(Font) + new SizeF(5f, 0f);
             SizeF s3X = s3.Measure(Font) + new SizeF(2f, 0f);
             Rectangle Rect_ConsoleText0 = new(8, Rect_Titlebar.Bottom + 8, (int)Math.Round(s1X.Width), (int)Math.Round(s1X.Height));
             Rectangle Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, (int)Math.Round(s2X.Width), (int)Math.Round(s2X.Height));
@@ -756,7 +752,7 @@ namespace WinPaletter.UI.Simulation
 
             Color TabFocusedFinalColor;
 
-            if (TabColor != Color.FromArgb(0, 0, 0, 0))
+            if (TabColor != Color.FromArgb(0, 0, 0, 0) && TabColor != Color.Empty)
             {
                 TabFocusedFinalColor = TabColor;
             }

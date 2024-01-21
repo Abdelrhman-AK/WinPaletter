@@ -144,6 +144,7 @@ namespace WinPaletter
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.icons8_command_line;
             this.LoadLanguage();
             ApplyStyle(this);
             _Shown = false;

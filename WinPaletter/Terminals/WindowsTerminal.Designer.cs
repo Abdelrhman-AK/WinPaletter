@@ -392,7 +392,7 @@ namespace WinPaletter
             this.TerThemesContainer.Controls.Add(this.Label10);
             this.TerThemesContainer.Controls.Add(this.Label9);
             this.TerThemesContainer.Enabled = false;
-            this.TerThemesContainer.Location = new System.Drawing.Point(4, 102);
+            this.TerThemesContainer.Location = new System.Drawing.Point(4, 100);
             this.TerThemesContainer.Name = "TerThemesContainer";
             this.TerThemesContainer.Size = new System.Drawing.Size(355, 152);
             this.TerThemesContainer.TabIndex = 213;
@@ -889,7 +889,7 @@ namespace WinPaletter
             this.TerCursor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerCursor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerCursor.DontShowInfo = false;
-            this.TerCursor.Location = new System.Drawing.Point(255, 194);
+            this.TerCursor.Location = new System.Drawing.Point(255, 192);
             this.TerCursor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerCursor.Name = "TerCursor";
             this.TerCursor.Size = new System.Drawing.Size(100, 24);
@@ -904,7 +904,7 @@ namespace WinPaletter
             this.TerWhiteB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.TerWhiteB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.TerWhiteB.DontShowInfo = false;
-            this.TerWhiteB.Location = new System.Drawing.Point(255, 441);
+            this.TerWhiteB.Location = new System.Drawing.Point(255, 439);
             this.TerWhiteB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerWhiteB.Name = "TerWhiteB";
             this.TerWhiteB.Size = new System.Drawing.Size(100, 24);
@@ -918,7 +918,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label150.BackColor = System.Drawing.Color.Transparent;
             this.Label150.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label150.Location = new System.Drawing.Point(36, 194);
+            this.Label150.Location = new System.Drawing.Point(36, 192);
             this.Label150.Name = "Label150";
             this.Label150.Size = new System.Drawing.Size(212, 24);
             this.Label150.TabIndex = 124;
@@ -932,7 +932,7 @@ namespace WinPaletter
             this.TerBlue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.TerBlue.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.TerBlue.DontShowInfo = false;
-            this.TerBlue.Location = new System.Drawing.Point(150, 262);
+            this.TerBlue.Location = new System.Drawing.Point(150, 260);
             this.TerBlue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerBlue.Name = "TerBlue";
             this.TerBlue.Size = new System.Drawing.Size(100, 24);
@@ -946,7 +946,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label151.BackColor = System.Drawing.Color.Transparent;
             this.Label151.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label151.Location = new System.Drawing.Point(36, 441);
+            this.Label151.Location = new System.Drawing.Point(36, 439);
             this.Label151.Name = "Label151";
             this.Label151.Size = new System.Drawing.Size(107, 24);
             this.Label151.TabIndex = 91;
@@ -960,7 +960,7 @@ namespace WinPaletter
             this.TerSelection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerSelection.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerSelection.DontShowInfo = false;
-            this.TerSelection.Location = new System.Drawing.Point(255, 164);
+            this.TerSelection.Location = new System.Drawing.Point(255, 162);
             this.TerSelection.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerSelection.Name = "TerSelection";
             this.TerSelection.Size = new System.Drawing.Size(100, 24);
@@ -974,7 +974,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label152.BackColor = System.Drawing.Color.Transparent;
             this.Label152.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label152.Location = new System.Drawing.Point(36, 164);
+            this.Label152.Location = new System.Drawing.Point(36, 162);
             this.Label152.Name = "Label152";
             this.Label152.Size = new System.Drawing.Size(212, 24);
             this.Label152.TabIndex = 122;
@@ -987,7 +987,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label147.BackColor = System.Drawing.Color.Transparent;
             this.Label147.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label147.Location = new System.Drawing.Point(36, 134);
+            this.Label147.Location = new System.Drawing.Point(36, 132);
             this.Label147.Name = "Label147";
             this.Label147.Size = new System.Drawing.Size(212, 24);
             this.Label147.TabIndex = 120;
@@ -1001,7 +1001,7 @@ namespace WinPaletter
             this.TerWhite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.TerWhite.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.TerWhite.DontShowInfo = false;
-            this.TerWhite.Location = new System.Drawing.Point(150, 441);
+            this.TerWhite.Location = new System.Drawing.Point(150, 439);
             this.TerWhite.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerWhite.Name = "TerWhite";
             this.TerWhite.Size = new System.Drawing.Size(100, 24);
@@ -1016,7 +1016,7 @@ namespace WinPaletter
             this.TerForeground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerForeground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerForeground.DontShowInfo = false;
-            this.TerForeground.Location = new System.Drawing.Point(255, 134);
+            this.TerForeground.Location = new System.Drawing.Point(255, 132);
             this.TerForeground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerForeground.Name = "TerForeground";
             this.TerForeground.Size = new System.Drawing.Size(100, 24);
@@ -1031,7 +1031,7 @@ namespace WinPaletter
             this.TerCyanB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.TerCyanB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.TerCyanB.DontShowInfo = false;
-            this.TerCyanB.Location = new System.Drawing.Point(255, 291);
+            this.TerCyanB.Location = new System.Drawing.Point(255, 289);
             this.TerCyanB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerCyanB.Name = "TerCyanB";
             this.TerCyanB.Size = new System.Drawing.Size(100, 24);
@@ -1045,7 +1045,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label145.BackColor = System.Drawing.Color.Transparent;
             this.Label145.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label145.Location = new System.Drawing.Point(36, 291);
+            this.Label145.Location = new System.Drawing.Point(36, 289);
             this.Label145.Name = "Label145";
             this.Label145.Size = new System.Drawing.Size(107, 24);
             this.Label145.TabIndex = 87;
@@ -1059,7 +1059,7 @@ namespace WinPaletter
             this.TerCyan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.TerCyan.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.TerCyan.DontShowInfo = false;
-            this.TerCyan.Location = new System.Drawing.Point(150, 291);
+            this.TerCyan.Location = new System.Drawing.Point(150, 289);
             this.TerCyan.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerCyan.Name = "TerCyan";
             this.TerCyan.Size = new System.Drawing.Size(100, 24);
@@ -1074,7 +1074,7 @@ namespace WinPaletter
             this.TerGreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.TerGreen.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.TerGreen.DontShowInfo = false;
-            this.TerGreen.Location = new System.Drawing.Point(150, 321);
+            this.TerGreen.Location = new System.Drawing.Point(150, 319);
             this.TerGreen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerGreen.Name = "TerGreen";
             this.TerGreen.Size = new System.Drawing.Size(100, 24);
@@ -1088,7 +1088,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label144.BackColor = System.Drawing.Color.Transparent;
             this.Label144.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label144.Location = new System.Drawing.Point(36, 321);
+            this.Label144.Location = new System.Drawing.Point(36, 319);
             this.Label144.Name = "Label144";
             this.Label144.Size = new System.Drawing.Size(107, 24);
             this.Label144.TabIndex = 86;
@@ -1102,7 +1102,7 @@ namespace WinPaletter
             this.TerBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBackground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBackground.DontShowInfo = false;
-            this.TerBackground.Location = new System.Drawing.Point(255, 104);
+            this.TerBackground.Location = new System.Drawing.Point(255, 102);
             this.TerBackground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerBackground.Name = "TerBackground";
             this.TerBackground.Size = new System.Drawing.Size(100, 24);
@@ -1117,7 +1117,7 @@ namespace WinPaletter
             this.TerYellow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.TerYellow.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.TerYellow.DontShowInfo = false;
-            this.TerYellow.Location = new System.Drawing.Point(150, 411);
+            this.TerYellow.Location = new System.Drawing.Point(150, 409);
             this.TerYellow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerYellow.Name = "TerYellow";
             this.TerYellow.Size = new System.Drawing.Size(100, 24);
@@ -1132,7 +1132,7 @@ namespace WinPaletter
             this.TerGreenB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.TerGreenB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.TerGreenB.DontShowInfo = false;
-            this.TerGreenB.Location = new System.Drawing.Point(255, 321);
+            this.TerGreenB.Location = new System.Drawing.Point(255, 319);
             this.TerGreenB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerGreenB.Name = "TerGreenB";
             this.TerGreenB.Size = new System.Drawing.Size(100, 24);
@@ -1146,7 +1146,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label143.BackColor = System.Drawing.Color.Transparent;
             this.Label143.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label143.Location = new System.Drawing.Point(36, 104);
+            this.Label143.Location = new System.Drawing.Point(36, 102);
             this.Label143.Name = "Label143";
             this.Label143.Size = new System.Drawing.Size(212, 24);
             this.Label143.TabIndex = 118;
@@ -1159,7 +1159,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label149.BackColor = System.Drawing.Color.Transparent;
             this.Label149.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label149.Location = new System.Drawing.Point(36, 411);
+            this.Label149.Location = new System.Drawing.Point(36, 409);
             this.Label149.Name = "Label149";
             this.Label149.Size = new System.Drawing.Size(107, 24);
             this.Label149.TabIndex = 90;
@@ -1173,7 +1173,7 @@ namespace WinPaletter
             this.TerBlack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBlack.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.TerBlack.DontShowInfo = false;
-            this.TerBlack.Location = new System.Drawing.Point(150, 231);
+            this.TerBlack.Location = new System.Drawing.Point(150, 229);
             this.TerBlack.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerBlack.Name = "TerBlack";
             this.TerBlack.Size = new System.Drawing.Size(100, 24);
@@ -1188,7 +1188,7 @@ namespace WinPaletter
             this.TerYellowB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.TerYellowB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.TerYellowB.DontShowInfo = false;
-            this.TerYellowB.Location = new System.Drawing.Point(255, 411);
+            this.TerYellowB.Location = new System.Drawing.Point(255, 409);
             this.TerYellowB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerYellowB.Name = "TerYellowB";
             this.TerYellowB.Size = new System.Drawing.Size(100, 24);
@@ -1202,7 +1202,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label142.BackColor = System.Drawing.Color.Transparent;
             this.Label142.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label142.Location = new System.Drawing.Point(36, 261);
+            this.Label142.Location = new System.Drawing.Point(36, 259);
             this.Label142.Name = "Label142";
             this.Label142.Size = new System.Drawing.Size(107, 24);
             this.Label142.TabIndex = 85;
@@ -1216,7 +1216,7 @@ namespace WinPaletter
             this.TerBlackB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.TerBlackB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.TerBlackB.DontShowInfo = false;
-            this.TerBlackB.Location = new System.Drawing.Point(255, 231);
+            this.TerBlackB.Location = new System.Drawing.Point(255, 229);
             this.TerBlackB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerBlackB.Name = "TerBlackB";
             this.TerBlackB.Size = new System.Drawing.Size(100, 24);
@@ -1231,7 +1231,7 @@ namespace WinPaletter
             this.TerPurple.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.TerPurple.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.TerPurple.DontShowInfo = false;
-            this.TerPurple.Location = new System.Drawing.Point(150, 381);
+            this.TerPurple.Location = new System.Drawing.Point(150, 379);
             this.TerPurple.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerPurple.Name = "TerPurple";
             this.TerPurple.Size = new System.Drawing.Size(100, 24);
@@ -1245,7 +1245,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label140.BackColor = System.Drawing.Color.Transparent;
             this.Label140.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label140.Location = new System.Drawing.Point(36, 231);
+            this.Label140.Location = new System.Drawing.Point(36, 229);
             this.Label140.Name = "Label140";
             this.Label140.Size = new System.Drawing.Size(107, 24);
             this.Label140.TabIndex = 4;
@@ -1259,7 +1259,7 @@ namespace WinPaletter
             this.TerPurpleB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.TerPurpleB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.TerPurpleB.DontShowInfo = false;
-            this.TerPurpleB.Location = new System.Drawing.Point(255, 381);
+            this.TerPurpleB.Location = new System.Drawing.Point(255, 379);
             this.TerPurpleB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerPurpleB.Name = "TerPurpleB";
             this.TerPurpleB.Size = new System.Drawing.Size(100, 24);
@@ -1274,7 +1274,7 @@ namespace WinPaletter
             this.TerBlueB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.TerBlueB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.TerBlueB.DontShowInfo = false;
-            this.TerBlueB.Location = new System.Drawing.Point(255, 262);
+            this.TerBlueB.Location = new System.Drawing.Point(255, 260);
             this.TerBlueB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerBlueB.Name = "TerBlueB";
             this.TerBlueB.Size = new System.Drawing.Size(100, 24);
@@ -1288,7 +1288,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label146.BackColor = System.Drawing.Color.Transparent;
             this.Label146.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label146.Location = new System.Drawing.Point(36, 351);
+            this.Label146.Location = new System.Drawing.Point(36, 349);
             this.Label146.Name = "Label146";
             this.Label146.Size = new System.Drawing.Size(107, 24);
             this.Label146.TabIndex = 88;
@@ -1301,7 +1301,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label148.BackColor = System.Drawing.Color.Transparent;
             this.Label148.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label148.Location = new System.Drawing.Point(36, 381);
+            this.Label148.Location = new System.Drawing.Point(36, 379);
             this.Label148.Name = "Label148";
             this.Label148.Size = new System.Drawing.Size(107, 24);
             this.Label148.TabIndex = 89;
@@ -1315,7 +1315,7 @@ namespace WinPaletter
             this.TerRedB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.TerRedB.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.TerRedB.DontShowInfo = false;
-            this.TerRedB.Location = new System.Drawing.Point(255, 351);
+            this.TerRedB.Location = new System.Drawing.Point(255, 349);
             this.TerRedB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerRedB.Name = "TerRedB";
             this.TerRedB.Size = new System.Drawing.Size(100, 24);
@@ -1330,7 +1330,7 @@ namespace WinPaletter
             this.TerRed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.TerRed.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.TerRed.DontShowInfo = false;
-            this.TerRed.Location = new System.Drawing.Point(150, 351);
+            this.TerRed.Location = new System.Drawing.Point(150, 349);
             this.TerRed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TerRed.Name = "TerRed";
             this.TerRed.Size = new System.Drawing.Size(100, 24);
@@ -1611,7 +1611,7 @@ namespace WinPaletter
             this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(6, 97);
+            this.separatorH2.Location = new System.Drawing.Point(6, 95);
             this.separatorH2.Name = "separatorH2";
             this.separatorH2.Size = new System.Drawing.Size(350, 1);
             this.separatorH2.TabIndex = 234;
@@ -1621,7 +1621,7 @@ namespace WinPaletter
             // 
             this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
-            this.PictureBox29.Location = new System.Drawing.Point(6, 441);
+            this.PictureBox29.Location = new System.Drawing.Point(6, 439);
             this.PictureBox29.Name = "PictureBox29";
             this.PictureBox29.Size = new System.Drawing.Size(24, 24);
             this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1656,7 +1656,7 @@ namespace WinPaletter
             // 
             this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
-            this.PictureBox30.Location = new System.Drawing.Point(6, 411);
+            this.PictureBox30.Location = new System.Drawing.Point(6, 409);
             this.PictureBox30.Name = "PictureBox30";
             this.PictureBox30.Size = new System.Drawing.Size(24, 24);
             this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1667,7 +1667,7 @@ namespace WinPaletter
             // 
             this.PictureBox31.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
-            this.PictureBox31.Location = new System.Drawing.Point(6, 381);
+            this.PictureBox31.Location = new System.Drawing.Point(6, 379);
             this.PictureBox31.Name = "PictureBox31";
             this.PictureBox31.Size = new System.Drawing.Size(24, 24);
             this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1678,7 +1678,7 @@ namespace WinPaletter
             // 
             this.PictureBox15.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(6, 104);
+            this.PictureBox15.Location = new System.Drawing.Point(6, 102);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
             this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1689,7 +1689,7 @@ namespace WinPaletter
             // 
             this.PictureBox34.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
-            this.PictureBox34.Location = new System.Drawing.Point(6, 351);
+            this.PictureBox34.Location = new System.Drawing.Point(6, 349);
             this.PictureBox34.Name = "PictureBox34";
             this.PictureBox34.Size = new System.Drawing.Size(24, 24);
             this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1700,7 +1700,7 @@ namespace WinPaletter
             // 
             this.PictureBox19.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox19.Image")));
-            this.PictureBox19.Location = new System.Drawing.Point(6, 134);
+            this.PictureBox19.Location = new System.Drawing.Point(6, 132);
             this.PictureBox19.Name = "PictureBox19";
             this.PictureBox19.Size = new System.Drawing.Size(24, 24);
             this.PictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1711,7 +1711,7 @@ namespace WinPaletter
             // 
             this.PictureBox26.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
-            this.PictureBox26.Location = new System.Drawing.Point(6, 321);
+            this.PictureBox26.Location = new System.Drawing.Point(6, 319);
             this.PictureBox26.Name = "PictureBox26";
             this.PictureBox26.Size = new System.Drawing.Size(24, 24);
             this.PictureBox26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1722,7 +1722,7 @@ namespace WinPaletter
             // 
             this.PictureBox20.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox20.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox20.Image")));
-            this.PictureBox20.Location = new System.Drawing.Point(6, 164);
+            this.PictureBox20.Location = new System.Drawing.Point(6, 162);
             this.PictureBox20.Name = "PictureBox20";
             this.PictureBox20.Size = new System.Drawing.Size(24, 24);
             this.PictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1733,7 +1733,7 @@ namespace WinPaletter
             // 
             this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
-            this.PictureBox28.Location = new System.Drawing.Point(6, 291);
+            this.PictureBox28.Location = new System.Drawing.Point(6, 289);
             this.PictureBox28.Name = "PictureBox28";
             this.PictureBox28.Size = new System.Drawing.Size(24, 24);
             this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1744,7 +1744,7 @@ namespace WinPaletter
             // 
             this.PictureBox21.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox21.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox21.Image")));
-            this.PictureBox21.Location = new System.Drawing.Point(6, 194);
+            this.PictureBox21.Location = new System.Drawing.Point(6, 192);
             this.PictureBox21.Name = "PictureBox21";
             this.PictureBox21.Size = new System.Drawing.Size(24, 24);
             this.PictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1755,7 +1755,7 @@ namespace WinPaletter
             // 
             this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
-            this.PictureBox23.Location = new System.Drawing.Point(6, 261);
+            this.PictureBox23.Location = new System.Drawing.Point(6, 259);
             this.PictureBox23.Name = "PictureBox23";
             this.PictureBox23.Size = new System.Drawing.Size(24, 24);
             this.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1768,7 +1768,7 @@ namespace WinPaletter
             this.Separator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator3.BackColor = System.Drawing.Color.Transparent;
-            this.Separator3.Location = new System.Drawing.Point(6, 224);
+            this.Separator3.Location = new System.Drawing.Point(6, 222);
             this.Separator3.Name = "Separator3";
             this.Separator3.Size = new System.Drawing.Size(349, 1);
             this.Separator3.TabIndex = 222;
@@ -1778,7 +1778,7 @@ namespace WinPaletter
             // 
             this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
-            this.PictureBox22.Location = new System.Drawing.Point(6, 231);
+            this.PictureBox22.Location = new System.Drawing.Point(6, 229);
             this.PictureBox22.Name = "PictureBox22";
             this.PictureBox22.Size = new System.Drawing.Size(24, 24);
             this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2185,6 +2185,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowsTerminal";

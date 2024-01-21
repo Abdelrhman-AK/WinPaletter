@@ -356,12 +356,12 @@ namespace WinPaletter
 
         public bool AspectEnabled
         {
-            get => !DesignMode ? _data.Enabled : false;
+            get => !DesignMode && _data != null ? _data.Enabled : false;
             set
             {
                 if (!DesignMode)
                 {
-                    if (_data.Enabled != value)
+                    if (_data != null && _data.Enabled != value)
                     {
                         _data.Enabled = value;
                         if (Toggle != null) Toggle.Checked = value;

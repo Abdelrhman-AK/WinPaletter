@@ -126,8 +126,8 @@ namespace WinPaletter
                 ExternalLink_File = string.Empty;
             }
 
-            TM_Original = (Theme.Manager)TM.Clone();
-            TM_FirstTime = (Theme.Manager)TM.Clone();
+            TM_Original = TM.Clone() as Theme.Manager;
+            TM_FirstTime = TM.Clone() as Theme.Manager;
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
             {
@@ -140,14 +140,10 @@ namespace WinPaletter
         {
             try
             {
-                if (System.IO.File.Exists("oldWinpaletter.trash"))
-                    System.IO.File.Delete("oldWinpaletter.trash");
-                if (System.IO.File.Exists("oldWinpaletter_2.trash"))
-                    System.IO.File.Delete("oldWinpaletter_2.trash");
+                if (System.IO.File.Exists("oldWinpaletter.trash")) System.IO.File.Delete("oldWinpaletter.trash");
+                if (System.IO.File.Exists("oldWinpaletter_2.trash")) System.IO.File.Delete("oldWinpaletter_2.trash"); 
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private static void GetMemoryFonts()
@@ -182,7 +178,7 @@ namespace WinPaletter
             }
         }
 
-        public static void CheckIfLicenseChecked()
+        public static void CheckIfLicenseIsAccepted()
         {
             if (!Settings.General.LicenseAccepted)
             {
@@ -255,9 +251,7 @@ namespace WinPaletter
                     CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{PathsExt.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
                 }
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private static void WriteIfChangedOrNotExists(string file, byte[] data)
@@ -332,10 +326,7 @@ namespace WinPaletter
         {
             if (!Program.UninstallDone)
             {
-                bool condition0 = !System.IO.File.Exists(PathsExt.SysEventsSounds);
-                bool condition1 = !condition0 && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds));
-
-                if (condition1)
+                if (System.IO.File.Exists(PathsExt.SysEventsSounds) && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds)))
                 {
                     //Update
                     if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
@@ -351,18 +342,16 @@ namespace WinPaletter
         {
             if (!Settings.General.WhatsNewRecord.Contains(Version))
             {
-                // ### Pop up WhatsNew
+                // Display the What's New pop-up
                 ShowWhatsNew = true;
 
-                List<string> ver = new();
-                ver.Clear();
-                ver.Add(Version);
+                // Update version information
+                List<string> versionHistory = new() { Version };
+                versionHistory.AddRange(Settings.General.WhatsNewRecord);
+                versionHistory = versionHistory.Distinct().ToList();
+                Settings.General.WhatsNewRecord = versionHistory.ToArray();
 
-                foreach (string X in Settings.General.WhatsNewRecord.ToArray())
-                    ver.Add(X);
-
-                ver = ver.DeDuplicate();
-                Settings.General.WhatsNewRecord = ver.ToArray();
+                // Save updated settings
                 Settings.General.Save();
             }
             else
@@ -383,24 +372,28 @@ namespace WinPaletter
                         {
                             if (OS.W8 || OS.W81)
                             {
-                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
-                                temp.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
-                                temp.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
+                                {
+                                    clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb(),
+                                    nIntensity = (uint)TM.Windows81.ColorizationColorBalance
+                                };
                                 DWMAPI.DwmSetColorizationParameters(ref temp, false);
                             }
 
                             else if (OS.W7)
                             {
-                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new();
-                                temp.clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb();
-                                temp.nIntensity = (uint)TM.Windows7.ColorizationColorBalance;
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
+                                {
+                                    clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb(),
+                                    nIntensity = (uint)TM.Windows7.ColorizationColorBalance,
 
-                                temp.clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb();
-                                temp.clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance;
+                                    clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb(),
+                                    clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance,
 
-                                temp.clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance;
-                                temp.clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity;
-                                temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                                    clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance,
+                                    clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity,
+                                    fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque
+                                };
                                 DWMAPI.DwmSetColorizationParameters(ref temp, false);
                             }
 
@@ -473,9 +466,9 @@ namespace WinPaletter
         /// <returns>
         ///    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsNetworkAvailable()
+        public static bool IsNetworkAvailable
         {
-            return Wininet.CheckNet();
+            get => Wininet.CheckNet();
         }
 
         public static bool Ping(string url)

@@ -1,10 +1,16 @@
 ﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 using WinPaletter.NativeMethods;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
@@ -69,18 +75,64 @@ namespace WinPaletter
 
         public void AutoUpdatesCheck()
         {
-            if (OS.WXP || OS.WVista)
-                return;
+            if (OS.WXP || OS.WVista) return;
 
             StableInt = 0;
             BetaInt = 0;
             UpdateChannel = 0;
-            ChannelFixer = 0;
-            if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable)
-                ChannelFixer = 0;
-            if (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Beta)
-                ChannelFixer = 1;
-            BackgroundWorker1.RunWorkerAsync();
+            ChannelFixer = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? 0 : 1;
+
+            if (Program.IsNetworkAvailable)
+            {
+                try
+                {
+                    using (WebClient webClient = new())
+                    {
+                        RaiseUpdate = false;
+                        ver = string.Empty;
+
+                        Updates_ls = webClient.DownloadString(Properties.Resources.Link_Updates).CList();
+
+                        foreach (var updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
+                        {
+                            string[] updateParts = updateInfo.Split(' ');
+
+                            if (updateParts.Length >= 2)
+                            {
+                                if (updateParts[0] == "Stable") StableInt = Updates_ls.IndexOf(updateInfo);
+                                if (updateParts[0] == "Beta") BetaInt = Updates_ls.IndexOf(updateInfo);
+                            }
+                        }
+
+                        UpdateChannel = (ChannelFixer == 0) ? StableInt : BetaInt;
+
+                        ver = Updates_ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
+
+                        RaiseUpdate = !string.IsNullOrEmpty(ver) && ver.CompareTo(Program.Version) == 1;
+                    }
+                }
+                catch (WebException ex)
+                {
+                    // Handle the exception, e.g., log or display an error message
+                    Console.WriteLine($"WebException: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    // Handle other exceptions, e.g., log or display an error message
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
+            }
+
+            Invoke(() =>
+            {
+                if (RaiseUpdate)
+                {
+                    Forms.Updates.ls = Updates_ls;
+                    NotifyUpdates.Visible = true;
+                    Button5.ImageVector = Properties.Resources.Update_Dot;
+                    NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
+                }
+            });
         }
 
         private void userButton_Click(object sender, EventArgs e)
@@ -134,7 +186,8 @@ namespace WinPaletter
         {
             Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
         }
-        private void card2_Click(object sender, EventArgs e)
+
+        private void card1_Click(object sender, EventArgs e)
         {
             Form form;
 
@@ -174,7 +227,7 @@ namespace WinPaletter
             Forms.MainFrm.tabsContainer1.AddFormIntoTab(form);
         }
 
-        private void card1_Click(object sender, EventArgs e)
+        private void card2_Click(object sender, EventArgs e)
         {
             Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Win32UI);
         }
@@ -420,7 +473,6 @@ namespace WinPaletter
 
         private void Button28_Click(object sender, EventArgs e)
         {
-
             if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
                 LoggingOff = true;
@@ -451,25 +503,14 @@ namespace WinPaletter
         {
             _shown = true;
 
-            if (Program.Settings.Updates.AutoCheck)
-                AutoUpdatesCheck();
-
-            if (Program.ShowWhatsNew)
-                Forms.Whatsnew.ShowDialog();
+            if (Program.Settings.Updates.AutoCheck) Task.Run(AutoUpdatesCheck);
+            if (Program.ShowWhatsNew) Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
         }
 
         private void NotifyUpdates_BalloonTipClicked(object sender, EventArgs e)
         {
             NotifyUpdates.Visible = false;
-
-            if (Application.OpenForms[Forms.Updates.Name] is null)
-            {
-                Forms.Updates.ShowDialog();
-            }
-            else
-            {
-                Forms.Updates.Focus();
-            }
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Updates);
         }
 
         private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
@@ -481,6 +522,11 @@ namespace WinPaletter
         private void button1_Click(object sender, EventArgs e)
         {
             new UI.Style.SchemeEditor().Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void pin_button_Click(object sender, EventArgs e)
@@ -497,55 +543,6 @@ namespace WinPaletter
             else
             {
                 pin_button.Visible = true;
-            }
-        }
-
-        private void BackgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            if (Program.IsNetworkAvailable())
-            {
-                try
-                {
-                    WebClient WebCL = new();
-                    RaiseUpdate = false;
-                    ver = string.Empty;
-
-                    Updates_ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
-
-                    for (int x = 0, loopTo = Updates_ls.Count - 1; x <= loopTo; x++)
-                    {
-                        if (!string.IsNullOrEmpty(Updates_ls[x]) & !(Updates_ls[x].IndexOf("#") == 0))
-                        {
-                            if (Updates_ls[x].Split(' ')[0] == "Stable")
-                                StableInt = x;
-                            if (Updates_ls[x].Split(' ')[0] == "Beta")
-                                BetaInt = x;
-                        }
-                    }
-
-                    if (ChannelFixer == 0)
-                        UpdateChannel = StableInt;
-                    if (ChannelFixer == 1)
-                        UpdateChannel = BetaInt;
-
-                    ver = Updates_ls[UpdateChannel].Split(' ')[1];
-
-                    RaiseUpdate = ver.CompareTo(Program.Version) == +1;
-                }
-                catch
-                {
-                }
-            }
-        }
-
-        private void BackgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (RaiseUpdate)
-            {
-                Forms.Updates.ls = Updates_ls;
-                NotifyUpdates.Visible = true;
-                Button5.ImageVector = Properties.Resources.Update_Dot;
-                NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
             }
         }
     }

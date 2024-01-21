@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -109,7 +110,7 @@ namespace WinPaletter.UI.WP
 
         #region Animator
         private readonly Timer Timer = new() { Enabled = false, Interval = 25 };
-        private void Timer_Tick(object sender, EventArgs e)
+        private async void Timer_Tick(object sender, EventArgs e)
         {
             if (!DesignMode)
             {
@@ -121,11 +122,11 @@ namespace WinPaletter.UI.WP
                     {
                         if (Color == C1 | Color == Color1)
                         {
-                            System.Threading.Tasks.Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+                            await Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
                         }
                         else
                         {
-                            System.Threading.Tasks.Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+                            await Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
                         }
                     }
                 }

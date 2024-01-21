@@ -70,6 +70,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
+            // titlebarExtender1
+            // 
+            this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
+            // 
             // OpenThemeDialog
             // 
             this.OpenThemeDialog.DefaultExt = "wpt";
@@ -78,10 +82,19 @@
             // windowsDesktop1
             // 
             this.windowsDesktop1.AccentLevel = WinPaletter.Theme.Structures.Windows10x.AccentTaskbarLevels.None;
+            this.windowsDesktop1.ActiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ActiveTitle = System.Drawing.Color.Empty;
             this.windowsDesktop1.AfterGlowColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.windowsDesktop1.AfterGlowColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.windowsDesktop1.BackColor = System.Drawing.SystemColors.Desktop;
+            this.windowsDesktop1.Background = System.Drawing.Color.Empty;
             this.windowsDesktop1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.windowsDesktop1.ButtonDkShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonFace = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonHilight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonLight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonText = System.Drawing.Color.Empty;
             this.windowsDesktop1.Classic = false;
             this.windowsDesktop1.Color1 = System.Drawing.Color.Empty;
             this.windowsDesktop1.Color2 = System.Drawing.Color.Empty;
@@ -95,7 +108,14 @@
             this.windowsDesktop1.DarkMode_App = true;
             this.windowsDesktop1.DarkMode_Win = true;
             this.windowsDesktop1.EnableEditingColors = true;
+            this.windowsDesktop1.EnableGradient = true;
             this.windowsDesktop1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.windowsDesktop1.GradientActiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GradientInactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GrayText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitleText = System.Drawing.Color.Empty;
             this.windowsDesktop1.IncreaseTBTransparency = false;
             this.windowsDesktop1.Location = new System.Drawing.Point(3, 3);
             this.windowsDesktop1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -114,6 +134,7 @@
             this.windowsDesktop1.TitlebarColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.windowsDesktop1.TitlebarColor_Enabled = false;
             this.windowsDesktop1.TitlebarColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.windowsDesktop1.TitleText = System.Drawing.Color.Empty;
             this.windowsDesktop1.Transparency = true;
             this.windowsDesktop1.UseWin11ORB_WithWin10 = false;
             this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level1 = false;
@@ -122,11 +143,14 @@
             this.windowsDesktop1.Win7ColorBal = 100;
             this.windowsDesktop1.Win7GlowBal = 100;
             this.windowsDesktop1.Win7Noise = 100F;
+            this.windowsDesktop1.Window = System.Drawing.Color.Empty;
+            this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowsTheme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.WXP;
             this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
             this.windowsDesktop1.WindowsXPThemeColorScheme = null;
             this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             // 
             // groupBox2
@@ -149,6 +173,8 @@
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(383, 304);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
@@ -285,6 +311,8 @@
             this.WXP_VS_Browse.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_VS_Browse.ForeColor = System.Drawing.Color.White;
             this.WXP_VS_Browse.Image = ((System.Drawing.Image)(resources.GetObject("WXP_VS_Browse.Image")));
+            this.WXP_VS_Browse.ImageAsVector = false;
+            this.WXP_VS_Browse.ImageVector = null;
             this.WXP_VS_Browse.Location = new System.Drawing.Point(483, 43);
             this.WXP_VS_Browse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WXP_VS_Browse.Name = "WXP_VS_Browse";
@@ -527,10 +555,12 @@
             this.Controls.Add(this.GroupBox47);
             this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.Name = "WinXPColors";
             this.Text = "Windows XP themes";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WinXPColors_FormClosed);
             this.Load += new System.EventHandler(this.WinXPColors_Load);
+            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.GroupBox47, 0);
             this.Controls.SetChildIndex(this.GroupBox48, 0);

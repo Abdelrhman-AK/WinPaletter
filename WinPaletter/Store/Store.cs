@@ -628,11 +628,9 @@ namespace WinPaletter
 
         private void FilesFetcher_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-
             if (Program.Settings.Store.Online_or_Offline)
             {
-
-                if (!Program.IsNetworkAvailable())
+                if (!Program.IsNetworkAvailable)
                 {
                     Status_lbl.SetText(Program.Lang.Store_NoNetwork);
 
@@ -650,7 +648,6 @@ namespace WinPaletter
                     OnlineMode();
                 }
             }
-
             else
             {
                 StartedAsOnlineOrOffline = false;

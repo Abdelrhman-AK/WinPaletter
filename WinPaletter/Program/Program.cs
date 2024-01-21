@@ -60,7 +60,7 @@ namespace WinPaletter
                 // Data of following methods depends on current selected user
                 ExtractLuna();
 
-                CheckIfLicenseChecked();
+                CheckIfLicenseIsAccepted();
                 AssociateFiles();
                 StartWallpaperMonitor();
 

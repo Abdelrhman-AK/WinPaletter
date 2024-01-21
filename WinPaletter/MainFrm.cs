@@ -29,7 +29,7 @@ namespace WinPaletter
             /* return false; means that Windows should not close the form
                return true; means that Windows should close the form */
 
-            if ((Program.TM != Program.TM_Original) && Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
+            if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && Program.TM != Program.TM_Original)
             {
                 if (!OS.WXP)
                 {
@@ -164,7 +164,6 @@ namespace WinPaletter
                 return true;
             }
         }
-
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {

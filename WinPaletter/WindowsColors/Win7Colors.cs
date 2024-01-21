@@ -801,7 +801,7 @@ namespace WinPaletter.WindowsColors
 
         private void RefreshDWM()
         {
-            if (AspectEnabled && Program.Settings.Miscellaneous.Win7LivePreview)
+            if (Program.Settings.Miscellaneous.Win7LivePreview && AspectEnabled)
             {
                 Task.Run(() =>
                 {

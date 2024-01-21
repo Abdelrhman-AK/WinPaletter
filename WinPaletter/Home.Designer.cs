@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.winXP = new WinPaletter.UI.WP.RadioImage();
@@ -45,8 +44,8 @@
             this.win10 = new WinPaletter.UI.WP.RadioImage();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.card2 = new WinPaletter.UI.Card();
             this.card1 = new WinPaletter.UI.Card();
+            this.card2 = new WinPaletter.UI.Card();
             this.card3 = new WinPaletter.UI.Card();
             this.card6 = new WinPaletter.UI.Card();
             this.card5 = new WinPaletter.UI.Card();
@@ -83,6 +82,7 @@
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button20 = new WinPaletter.UI.WP.Button();
             this.Button10 = new WinPaletter.UI.WP.Button();
+            this.button4 = new WinPaletter.UI.WP.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -100,13 +100,6 @@
             this.SaveFileDialog1.DefaultExt = "wpt";
             this.SaveFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
-            // BackgroundWorker1
-            // 
-            this.BackgroundWorker1.WorkerReportsProgress = true;
-            this.BackgroundWorker1.WorkerSupportsCancellation = true;
-            this.BackgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
-            this.BackgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
-            // 
             // NotifyUpdates
             // 
             this.NotifyUpdates.Text = "WinPaletter";
@@ -117,6 +110,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.winXP);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.button1);
@@ -277,8 +271,8 @@
             // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.card2);
             this.flowLayoutPanel1.Controls.Add(this.card1);
+            this.flowLayoutPanel1.Controls.Add(this.card2);
             this.flowLayoutPanel1.Controls.Add(this.card3);
             this.flowLayoutPanel1.Controls.Add(this.card6);
             this.flowLayoutPanel1.Controls.Add(this.card5);
@@ -295,31 +289,31 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1123, 426);
             this.flowLayoutPanel1.TabIndex = 153;
             // 
-            // card2
-            // 
-            this.card2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(39)))), ((int)(((byte)(84)))));
-            this.card2.Image = ((System.Drawing.Image)(resources.GetObject("card2.Image")));
-            this.card2.Location = new System.Drawing.Point(3, 3);
-            this.card2.Name = "card2";
-            this.card2.Size = new System.Drawing.Size(270, 130);
-            this.card2.TabIndex = 121;
-            this.card2.Tag = "Personalize your Windows color scheme for a visually pleasing, tailored environme" +
-    "nt";
-            this.card2.Text = "Windows Colors";
-            this.card2.Click += new System.EventHandler(this.card2_Click);
-            // 
             // card1
             // 
-            this.card1.Color = System.Drawing.Color.Teal;
+            this.card1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(39)))), ((int)(((byte)(84)))));
             this.card1.Image = ((System.Drawing.Image)(resources.GetObject("card1.Image")));
-            this.card1.Location = new System.Drawing.Point(279, 3);
+            this.card1.Location = new System.Drawing.Point(3, 3);
             this.card1.Name = "card1";
             this.card1.Size = new System.Drawing.Size(270, 130);
-            this.card1.TabIndex = 120;
-            this.card1.Tag = "Revamp the look of classic Windows elements, including 3D objects and more, to re" +
-    "fresh your system\'s visual aesthetics";
-            this.card1.Text = "Classic Colors";
+            this.card1.TabIndex = 121;
+            this.card1.Tag = "Personalize your Windows color scheme for a visually pleasing, tailored environme" +
+    "nt";
+            this.card1.Text = "Windows Colors";
             this.card1.Click += new System.EventHandler(this.card1_Click);
+            // 
+            // card2
+            // 
+            this.card2.Color = System.Drawing.Color.Teal;
+            this.card2.Image = ((System.Drawing.Image)(resources.GetObject("card2.Image")));
+            this.card2.Location = new System.Drawing.Point(279, 3);
+            this.card2.Name = "card2";
+            this.card2.Size = new System.Drawing.Size(270, 130);
+            this.card2.TabIndex = 120;
+            this.card2.Tag = "Revamp the look of classic Windows elements, including 3D objects and more, to re" +
+    "fresh your system\'s visual aesthetics";
+            this.card2.Text = "Classic Colors";
+            this.card2.Click += new System.EventHandler(this.card2_Click);
             // 
             // card3
             // 
@@ -954,6 +948,25 @@
             this.Button10.UseVisualStyleBackColor = false;
             this.Button10.Click += new System.EventHandler(this.Button10_Click);
             // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.CustomColor = System.Drawing.Color.Empty;
+            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.ImageAsVector = false;
+            this.button4.ImageVector = null;
+            this.button4.Location = new System.Drawing.Point(905, 28);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(217, 35);
+            this.button4.TabIndex = 157;
+            this.button4.Tag = "Settings";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -996,8 +1009,8 @@
         internal UI.WP.Button userButton;
         internal UI.WP.Button Button5;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private UI.Card card2;
         private UI.Card card1;
+        private UI.Card card2;
         private UI.Card card3;
         private UI.Card card6;
         private UI.Card card5;
@@ -1029,7 +1042,6 @@
         internal UI.WP.Button Button7;
         internal System.Windows.Forms.OpenFileDialog OpenFileDialog1;
         internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
-        internal System.ComponentModel.BackgroundWorker BackgroundWorker1;
         internal System.Windows.Forms.NotifyIcon NotifyUpdates;
         private UI.WP.SeparatorV separatorV1;
         private UI.WP.GroupBox groupBox1;
@@ -1039,5 +1051,6 @@
         internal UI.WP.Button button1;
         private System.Windows.Forms.Label tip_label;
         internal UI.WP.Button pin_button;
+        internal UI.WP.Button button4;
     }
 }
