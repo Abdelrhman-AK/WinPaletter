@@ -195,6 +195,7 @@
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml">
       <Private>False</Private>
@@ -324,6 +325,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WinVistaPreview.resx</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,7 +349,8 @@
     <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\AdvancedControls\TabsContainer.cs">
+    <Compile Include="Tabs\TabData.cs" />
+    <Compile Include="Tabs\TabsContainer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Input\Card.cs">
@@ -427,10 +432,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AspectsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Elements\ContainersAndBoxes\TitlebarExtender.cs">
+    <Compile Include="Tabs\TitlebarExtender.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\ContainersAndBoxes\TitlebarExtender.Designer.cs">
+    <Compile Include="Tabs\TitlebarExtender.Designer.cs">
       <DependentUpon>TitlebarExtender.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Elements\Input\ContextMenuStrip.cs" />
@@ -589,10 +594,10 @@
     <Compile Include="Templates\WindowMetrics.Designer.cs">
       <DependentUpon>WindowMetrics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Templates\TabsForm.cs">
+    <Compile Include="Tabs\TabsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Templates\TabsForm.Designer.cs">
+    <Compile Include="Tabs\TabsForm.Designer.cs">
       <DependentUpon>TabsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Templates\WindowsDesktop.cs">
@@ -640,12 +645,6 @@
     <Compile Include="Theme\Structures\WindowsColors\WindowsXP.cs" />
     <Compile Include="Theme\Structures\Others\WinEffects.cs" />
     <Compile Include="GlobalUsings.cs" />
-    <Compile Include="ColorItemControllers\ColorInfoDragDrop.Designer.cs">
-      <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ColorItemControllers\ColorInfoDragDrop.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Dialogs\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
@@ -1217,9 +1216,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinVistaPreview.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
-      <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -1351,6 +1347,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\Uninstall.resx">
       <DependentUpon>Uninstall.cs</DependentUpon>
@@ -1385,7 +1382,7 @@
     <EmbeddedResource Include="Templates\WindowMetrics.resx">
       <DependentUpon>WindowMetrics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Templates\TabsForm.resx">
+    <EmbeddedResource Include="Tabs\TabsForm.resx">
       <DependentUpon>TabsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\WindowsDesktop.resx">

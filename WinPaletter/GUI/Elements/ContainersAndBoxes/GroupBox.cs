@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WinPaletter.TypesExtensions;
 
 namespace WinPaletter.UI.WP
 {
@@ -19,6 +20,7 @@ namespace WinPaletter.UI.WP
         }
 
         #region Properties
+
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -36,8 +38,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -51,12 +51,12 @@ namespace WinPaletter.UI.WP
                 BackColor = ParentColor.CB((float)(ParentColor.IsDark() ? 0.04d : -0.05d));
 
                 using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, Rect); }
-
                 using (Pen P = new(ParentColor.CB((float)(ParentColor.IsDark() ? 0.06d : -0.07d)))) { G.DrawRoundedRect(P, Rect); }
             }
             else
             {
                 G.FillRectangle(Program.Style.Schemes.Main.Brushes.Back, Rect);
+                G.DrawRectangle(Program.Style.Schemes.Main.Pens.Line, Rect);
             }
 
             base.OnPaint(e);

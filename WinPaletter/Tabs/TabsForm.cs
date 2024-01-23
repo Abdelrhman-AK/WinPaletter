@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
-namespace WinPaletter.Templates
+namespace WinPaletter.Tabs
 {
     public partial class TabsForm : Form
     {

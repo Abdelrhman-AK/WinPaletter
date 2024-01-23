@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -10,55 +11,33 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Return most used color from a bitmap
         /// </summary>
-        public static Color AverageColor(this Bitmap Bitmap)
+        public static Color AverageColor(this Bitmap bitmap)
         {
+            if (bitmap is null || bitmap.Width == 0 || bitmap.Height == 0) return Color.Empty;
+
             try
             {
-                using (Bitmap bmp = (Bitmap)Bitmap.Clone())
+                int totalR = 0, totalG = 0, totalB = 0;
+
+                for (int x = 0; x < bitmap.Width; x++)
                 {
-                    int totalR = 0;
-                    int totalG = 0;
-                    int totalB = 0;
-
-                    try
+                    for (int y = 0; y < bitmap.Height; y++)
                     {
-                        if (bmp is not null)
-                        {
-                            for (int x = 0, loopTo = bmp.Width - 1; x <= loopTo; x++)
-                            {
-                                for (int y = 0, loopTo1 = bmp.Height - 1; y <= loopTo1; y++)
-                                {
-                                    Color pixel = bmp.GetPixel(x, y);
-                                    totalR += pixel.R;
-                                    totalG += pixel.G;
-                                    totalB += pixel.B;
-                                }
-                            }
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-
-                    if (bmp is not null)
-                    {
-                        int totalPixels = bmp.Height * bmp.Width;
-                        int averageR = totalR / totalPixels;
-                        int averageg = totalG / totalPixels;
-                        int averageb = totalB / totalPixels;
-                        return Color.FromArgb(averageR, averageg, averageb);
-                    }
-                    else
-                    {
-                        return Color.FromArgb(80, 80, 80);
+                        Color pixel = bitmap.GetPixel(x, y);
+                        totalR += pixel.R;
+                        totalG += pixel.G;
+                        totalB += pixel.B;
                     }
                 }
+
+                int totalPixels = bitmap.Height * bitmap.Width;
+                int averageR = totalR / totalPixels;
+                int averageG = totalG / totalPixels;
+                int averageB = totalB / totalPixels;
+
+                return Color.FromArgb(averageR, averageG, averageB);
             }
-            catch
-            {
-                return Color.Empty;
-            }
+            catch { return Color.Empty; }
         }
 
         /// <summary>
@@ -66,7 +45,8 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Color AverageColor(this Image Image)
         {
-            return ((Bitmap)Image).AverageColor();
+            if (Image is Bitmap bitmap) return bitmap.AverageColor();
+            return Color.Empty;
         }
 
         /// <summary>
@@ -76,66 +56,76 @@ namespace WinPaletter.TypesExtensions
         {
             if (bitmap is null) return null;
 
-            using (Bitmap img = new(bitmap))
+            Bitmap img = new(bitmap);
+            int imgWidth = img.Width;
+            int imgHeight = img.Height;
+
+            using (Graphics G = Graphics.FromImage(img))
+            using (ImageAttributes att = new())
             {
-                using (Graphics G = Graphics.FromImage(img))
-                {
-                    G.SmoothingMode = SmoothingMode.AntiAlias;
+                G.SmoothingMode = SmoothingMode.AntiAlias;
 
-                    ImageAttributes att = new();
-                    ColorMatrix m = new() { Matrix33 = 0.4f };
-                    att.SetColorMatrix(m);
+                ColorMatrix m = new() { Matrix33 = 0.4f };
+                att.SetColorMatrix(m);
 
-                    for (double x = -BlurForce, loopTo = BlurForce; x <= loopTo; x += 0.5d)
-                        G.DrawImage(img, new Rectangle((int)Math.Round(x), 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att);
+                for (double x = -BlurForce, loopTo = BlurForce; x <= loopTo; x += 0.5d)
+                    G.DrawImage(img, new Rectangle((int)Math.Round(x), 0, imgWidth - 1, imgHeight - 1), 0, 0, imgWidth - 1, imgHeight - 1, GraphicsUnit.Pixel, att);
 
-                    for (double y = -BlurForce, loopTo = BlurForce; y <= loopTo; y += 0.5d)
-                        G.DrawImage(img, new Rectangle(0, (int)Math.Round(y), img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att);
+                for (double y = -BlurForce, loopTo = BlurForce; y <= loopTo; y += 0.5d)
+                    G.DrawImage(img, new Rectangle(0, (int)Math.Round(y), imgWidth - 1, imgHeight - 1), 0, 0, imgWidth - 1, imgHeight - 1, GraphicsUnit.Pixel, att);
 
-                    G.Save();
-                    att.Dispose();
-                    return new Bitmap(img);
-                }
+                G.Save();
+
+                return img;
             }
         }
 
         /// <summary>
         /// Return noised bitmap (noise of Windows 10 Acrylic style or Windows 7 Aero glass)
         /// </summary>
-        public static Bitmap Noise(this Bitmap bmp, NoiseMode NoiseMode, float opacity)
+        public static Bitmap Noise(this Bitmap bitmap, NoiseMode NoiseMode, float opacity)
         {
-            try
+            if (bitmap is null) return null;
+            Bitmap img = new(bitmap);
+
+            using (Graphics G = Graphics.FromImage(img))
             {
-                Graphics G = Graphics.FromImage(bmp);
+                G.SmoothingMode = SmoothingMode.AntiAlias;
 
                 if (NoiseMode == NoiseMode.Acrylic)
                 {
                     using (Bitmap b = Properties.Resources.Noise.Fade(opacity))
                     using (TextureBrush br = new(b))
                     {
-                        G.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                        G.FillRectangle(br, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
                     }
                 }
                 else if (NoiseMode == NoiseMode.Aero)
                 {
                     using (Bitmap b = Assets.Win7Preview.AeroGlass.Fade(opacity))
                     {
-                        G.DrawImage(b, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                        G.DrawImage(b, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
                     }
                 }
 
                 G.Save();
-                G.Dispose();
-                return bmp;
             }
-            catch
-            {
-                return null;
-            }
+
+            return img;
         }
+
+        /// <summary>
+        /// Noise bitmap modes
+        /// </summary>
         public enum NoiseMode
         {
+            /// <summary>
+            /// Aero glass reflection
+            /// </summary>
             Aero,
+            /// <summary>
+            /// Acrylic noise effect of Windows 10 and later
+            /// </summary>
             Acrylic
         }
 
@@ -144,7 +134,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color NewColor)
         {
-            using (Bitmap outputImage = new(inputImage.Width, inputImage.Height))
+            Bitmap outputImage = new(inputImage.Width, inputImage.Height);
             using (Graphics G = Graphics.FromImage(outputImage))
             {
                 for (int y = 0, loopTo = inputImage.Height - 1; y <= loopTo; y++)
@@ -166,83 +156,61 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 G.DrawImage(outputImage, 0, 0);
-                return outputImage.Clone() as Bitmap;
+                return outputImage;
             }
         }
 
         /// <summary>
-        /// Return image filled in the scale of size you choose
+        /// Return bitmap filled in the scale of size you choose (looks like Windows 7+ fill wallpaper style)
         /// </summary>
-        public static Bitmap FillScale(Bitmap Bitmap, Size Size)
+        public static Bitmap FillScale(this Bitmap bitmap, Size size)
         {
             try
             {
-                int sourceWidth = Bitmap.Width;
-                int sourceHeight = Bitmap.Height;
-                decimal nPercent = 0;
-                decimal nPercentW = 0;
-                decimal nPercentH = 0;
-                nPercentW = Size.Width / (decimal)sourceWidth;
-                nPercentH = Size.Height / (decimal)sourceHeight;
+                // Check if the input bitmap is null
+                if (bitmap == null) return bitmap;
 
-                if (nPercentH < nPercentW)
+                // Get the current screen size
+                Size screenSize = Screen.PrimaryScreen.Bounds.Size;
+
+                // Calculate scaling factors for width and height to maintain aspect ratio
+                decimal nPercentW = screenSize.Width / (decimal)bitmap.Width;
+                decimal nPercentH = screenSize.Height / (decimal)bitmap.Height;
+
+                // Choose the maximum scaling factor to maintain the aspect ratio and fill the screen
+                decimal nPercent = Math.Max(nPercentW, nPercentH);
+
+                // Calculate the destination width and height based on the scaling factor
+                int destWidth = (int)Math.Round(bitmap.Width * nPercent);
+                int destHeight = (int)Math.Round(bitmap.Height * nPercent);
+
+                // Create a new bitmap with the screen size and resolution
+                Bitmap bmPhoto = new(screenSize.Width, screenSize.Height, PixelFormat.Format32bppArgb);
+
+                bmPhoto.SetResolution(bitmap.HorizontalResolution, bitmap.VerticalResolution);
+
+                // Calculate the starting position for centering the image on the screen
+                int x = Math.Max((screenSize.Width - destWidth) / 2, 0);
+                int y = Math.Max((screenSize.Height - destHeight) / 2, 0);
+
+                // Create a graphics object from the new bitmap
+                using (Graphics grPhoto = Graphics.FromImage(bmPhoto))
                 {
-                    nPercent = nPercentH;
-                    Convert.ToInt16((Size.Width - sourceWidth * nPercent) / 2);
-                }
-                else
-                {
-                    nPercent = nPercentW;
-                    Convert.ToInt16((Size.Height - sourceHeight * nPercent) / 2);
+                    // Set the interpolation mode for better quality scaling
+                    grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                    // Draw the original image onto the new bitmap with the calculated size and center it on the screen
+                    grPhoto.DrawImage(bitmap, new Rectangle(x, y, destWidth, destHeight));
                 }
 
-                int destWidth = (int)Math.Round(sourceWidth * nPercent);
-                int destHeight = (int)Math.Round(sourceHeight * nPercent);
-
-                Bitmap bmPhoto = new(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
-                bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution);
-                Graphics grPhoto = Graphics.FromImage(bmPhoto);
-                grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                grPhoto.DrawImage(Bitmap, new Rectangle(0, 0, destWidth, destHeight));
-                grPhoto.Dispose();
-                Bitmap bm = bmPhoto.Clone(new Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb);
-                decimal f;
-
-                if (nPercentH < nPercentW)
-                {
-                    f = Size.Width - bm.Width;
-                    bm = bm.Resize(Size.Width, (int)Math.Round(Size.Height + f));
-                    int x = (int)Math.Round(1d / 3d * (double)f);
-                    int correctionFactor = bm.Height + x <= Size.Height ? Size.Height : bm.Height - x;
-                    return bm.Clone(new Rectangle(0, (int)Math.Round(1d / 3d * (double)f), Size.Width, correctionFactor), PixelFormat.Format32bppArgb);
-                }
-                else
-                {
-                    f = Size.Height - bm.Height;
-                    bm = bm.Resize(Size.Width, (int)Math.Round(Size.Height + f));
-                    int x = (int)Math.Round(1d / 3d * (double)f);
-                    int correctionFactor = bm.Width + x <= Size.Width ? Size.Width : bm.Width - x;
-                    return bm.Clone(new Rectangle(x, 0, correctionFactor, Size.Height), PixelFormat.Format32bppArgb);
-                }
+                // Return the final image that fills the screen
+                return bmPhoto.Resize(size);
             }
             catch
             {
-                return Bitmap;
-            }
-        }
-
-        /// <summary>
-        /// Return Image filled in the scale of size you choose
-        /// </summary>
-        public static Image FillScale(this Image Image, Size Size)
-        {
-            if (Image != null)
-                using (Bitmap bmp = new(Image))
-                {
-                    return FillScale(bmp, Size);
-                }
-            else
+                // Return null or the original bitmap in case of an exception
                 return null;
+            }
         }
 
         /// <summary>
@@ -273,7 +241,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Resize image in the size you choose
         /// </summary>
-        public static Image Resize(this Bitmap bmSource, Size TargetSize)
+        public static Bitmap Resize(this Bitmap bmSource, Size TargetSize)
         {
             return bmSource.Resize(TargetSize.Width, TargetSize.Height);
         }
@@ -281,7 +249,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Resize Image in the size you choose
         /// </summary>
-        public static Image Resize(this Image imSource, int TargetWidth, int TargetHeight)
+        public static Bitmap Resize(this Image imSource, int TargetWidth, int TargetHeight)
         {
             return ((Bitmap)imSource).Resize(TargetWidth, TargetHeight);
         }
@@ -289,7 +257,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Resize Image in the size you choose
         /// </summary>
-        public static Image Resize(this Image imSource, Size TargetSize)
+        public static Bitmap Resize(this Image imSource, Size TargetSize)
         {
             return ((Bitmap)imSource).Resize(TargetSize.Width, TargetSize.Height);
         }
@@ -315,7 +283,7 @@ namespace WinPaletter.TypesExtensions
             imageAttributes.SetColorMatrix(colorMatrix);
 
             // Create a destination bitmap with the same size as the original
-            Bitmap tintedBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+            Bitmap tintedBitmap = new(originalBitmap.Width, originalBitmap.Height);
 
             // Draw the original bitmap onto the destination bitmap using the image attributes
             using (Graphics g = Graphics.FromImage(tintedBitmap))
@@ -336,15 +304,15 @@ namespace WinPaletter.TypesExtensions
         {
             if (originalBitmap == null) return null;
 
-            using (Bitmap bmp = new(originalBitmap.Width, originalBitmap.Height))
+            Bitmap bmp = new(originalBitmap.Width, originalBitmap.Height);
             using (Graphics G = Graphics.FromImage(bmp))
             {
                 ColorMatrix matrix = new() { Matrix33 = opacity };
                 ImageAttributes attributes = new();
                 attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
                 G.DrawImage(originalBitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
-                return bmp.Clone() as Bitmap;
 
+                return bmp;
             }
         }
 
@@ -416,15 +384,16 @@ namespace WinPaletter.TypesExtensions
         /// <returns></returns>
         public static Bitmap Tile(this Bitmap bmp, Size Size)
         {
-            using (Bitmap B = new(Size.Width, Size.Height))
+            Bitmap B = new(Size.Width, Size.Height);
+            using (Graphics G = Graphics.FromImage(B))
             {
-                Graphics G = Graphics.FromImage(B);
                 G.SmoothingMode = SmoothingMode.HighSpeed;
                 TextureBrush tb = new(bmp);
                 G.FillRectangle(tb, new Rectangle(0, 0, Size.Width, Size.Height));
                 G.Save();
-                return (Bitmap)B.Clone();
             }
+
+            return B;
         }
 
         /// <summary>

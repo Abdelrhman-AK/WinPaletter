@@ -198,6 +198,23 @@ namespace WinPaletter.UI
             base.OnLostFocus(e);
         }
 
+        protected override void OnClick(EventArgs e)
+        {
+            if (CanAnimate)
+            {
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                alpha = 0;
+                HoverSize = 0;
+            }
+
+            Animate();
+
+            base.OnClick(e);
+        }
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -407,10 +424,6 @@ namespace WinPaletter.UI
                 using (SolidBrush br1 = new(Color.FromArgb(alpha, ForeColor)))
                 using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                 {
-                    // Set character spacing (kerning) to remove increased spaces inbetween words
-                    // Adjust this value as needed
-                    sf.SetMeasurableCharacterRanges(new CharacterRange[] { new CharacterRange(0, 1) });
-
                     G.SetClip(clipPath, CombineMode.Intersect);
 
                     G.DrawString(Text, titleFont, br0, textRect, sf);

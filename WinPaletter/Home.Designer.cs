@@ -36,7 +36,6 @@
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.winXP = new WinPaletter.UI.WP.RadioImage();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new WinPaletter.UI.WP.Button();
             this.winVista = new WinPaletter.UI.WP.RadioImage();
             this.win11 = new WinPaletter.UI.WP.RadioImage();
             this.win81 = new WinPaletter.UI.WP.RadioImage();
@@ -63,7 +62,7 @@
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.Button19 = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
-            this.titlebarExtender2 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.titlebarExtender2 = new WinPaletter.Tabs.TitlebarExtender();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.tip_label = new System.Windows.Forms.Label();
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
@@ -82,7 +81,6 @@
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button20 = new WinPaletter.UI.WP.Button();
             this.Button10 = new WinPaletter.UI.WP.Button();
-            this.button4 = new WinPaletter.UI.WP.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -110,10 +108,8 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.winXP);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.winVista);
             this.groupBox2.Controls.Add(this.win11);
             this.groupBox2.Controls.Add(this.win81);
@@ -133,7 +129,7 @@
             this.winXP.ForeColor = System.Drawing.Color.White;
             this.winXP.Image = ((System.Drawing.Image)(resources.GetObject("winXP.Image")));
             this.winXP.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.winXP.Location = new System.Drawing.Point(6, 40);
+            this.winXP.Location = new System.Drawing.Point(6, 39);
             this.winXP.Name = "winXP";
             this.winXP.Size = new System.Drawing.Size(95, 70);
             this.winXP.TabIndex = 151;
@@ -153,25 +149,6 @@
             this.label3.Text = "Target Windows edition";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.CustomColor = System.Drawing.Color.Empty;
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAsVector = false;
-            this.button1.ImageVector = null;
-            this.button1.Location = new System.Drawing.Point(909, 78);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(217, 35);
-            this.button1.TabIndex = 156;
-            this.button1.Tag = "Settings";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // winVista
             // 
             this.winVista.Checked = false;
@@ -179,7 +156,7 @@
             this.winVista.ForeColor = System.Drawing.Color.White;
             this.winVista.Image = ((System.Drawing.Image)(resources.GetObject("winVista.Image")));
             this.winVista.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.winVista.Location = new System.Drawing.Point(107, 40);
+            this.winVista.Location = new System.Drawing.Point(107, 39);
             this.winVista.Name = "winVista";
             this.winVista.Size = new System.Drawing.Size(95, 70);
             this.winVista.TabIndex = 150;
@@ -195,7 +172,7 @@
             this.win11.ForeColor = System.Drawing.Color.White;
             this.win11.Image = ((System.Drawing.Image)(resources.GetObject("win11.Image")));
             this.win11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.win11.Location = new System.Drawing.Point(511, 40);
+            this.win11.Location = new System.Drawing.Point(511, 39);
             this.win11.Name = "win11";
             this.win11.Size = new System.Drawing.Size(95, 70);
             this.win11.TabIndex = 146;
@@ -211,7 +188,7 @@
             this.win81.ForeColor = System.Drawing.Color.White;
             this.win81.Image = ((System.Drawing.Image)(resources.GetObject("win81.Image")));
             this.win81.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.win81.Location = new System.Drawing.Point(309, 40);
+            this.win81.Location = new System.Drawing.Point(309, 39);
             this.win81.Name = "win81";
             this.win81.Size = new System.Drawing.Size(95, 70);
             this.win81.TabIndex = 148;
@@ -227,7 +204,7 @@
             this.win7.ForeColor = System.Drawing.Color.White;
             this.win7.Image = ((System.Drawing.Image)(resources.GetObject("win7.Image")));
             this.win7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.win7.Location = new System.Drawing.Point(208, 40);
+            this.win7.Location = new System.Drawing.Point(208, 39);
             this.win7.Name = "win7";
             this.win7.Size = new System.Drawing.Size(95, 70);
             this.win7.TabIndex = 149;
@@ -243,7 +220,7 @@
             this.win10.ForeColor = System.Drawing.Color.White;
             this.win10.Image = ((System.Drawing.Image)(resources.GetObject("win10.Image")));
             this.win10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.win10.Location = new System.Drawing.Point(410, 40);
+            this.win10.Location = new System.Drawing.Point(410, 39);
             this.win10.Name = "win10";
             this.win10.Size = new System.Drawing.Size(95, 70);
             this.win10.TabIndex = 147;
@@ -948,25 +925,6 @@
             this.Button10.UseVisualStyleBackColor = false;
             this.Button10.Click += new System.EventHandler(this.Button10_Click);
             // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.CustomColor = System.Drawing.Color.Empty;
-            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.ImageAsVector = false;
-            this.button4.ImageVector = null;
-            this.button4.Location = new System.Drawing.Point(905, 28);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(217, 35);
-            this.button4.TabIndex = 157;
-            this.button4.Tag = "Settings";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -999,7 +957,7 @@
 
         #endregion
 
-        private UI.WP.TitlebarExtender titlebarExtender2;
+        private Tabs.TitlebarExtender titlebarExtender2;
         internal UI.WP.Button Button12;
         internal UI.WP.Button Button6;
         internal UI.WP.Button Button11;
@@ -1048,9 +1006,7 @@
         private System.Windows.Forms.Label label2;
         private UI.WP.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
-        internal UI.WP.Button button1;
         private System.Windows.Forms.Label tip_label;
         internal UI.WP.Button pin_button;
-        internal UI.WP.Button button4;
     }
 }

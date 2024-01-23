@@ -98,7 +98,7 @@ namespace WinPaletter
             this.Label17 = new System.Windows.Forms.Label();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
-            this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.search_panel = new System.Windows.Forms.Panel();
             this.search_btn = new WinPaletter.UI.WP.Button();
             this.search_box = new WinPaletter.UI.WP.TextBox();
@@ -1890,7 +1890,7 @@ namespace WinPaletter
         internal Label Theme_MD5_lbl;
         private Templates.RetroDesktopColors retroDesktopColors1;
         private Templates.WindowsDesktop windowsDesktop1;
-        public UI.WP.TitlebarExtender titlebarExtender1;
+        public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
     }
 }

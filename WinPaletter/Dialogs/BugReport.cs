@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -129,6 +130,19 @@ namespace WinPaletter
             }
         }
 
+        public static IEnumerable<Exception> GetAllInnerExceptions(Exception exception)
+        {
+            var exceptions = new List<Exception>();
+
+            while (exception != null)
+            {
+                exceptions.Add(exception);
+                exception = exception.InnerException;
+            }
+
+            return exceptions;
+        }
+
         public void ThrowError(Exception Exception, bool NoRecovery = false, int Win32Error = -1)
         {
             if (Win32Error == -1) { Win32Error = Marshal.GetLastWin32Error(); }
@@ -145,7 +159,25 @@ namespace WinPaletter
             if (Exception is not null)
             {
                 AddException("Exception", Exception, TreeView1);
-                if (Exception.InnerException != null) { AddException("Inner exception", Exception.InnerException, TreeView1, Win32Error); }
+                if (Exception.InnerException != null) 
+                { 
+                    AddException("Inner exception", Exception.InnerException, TreeView1, Win32Error);
+
+                    try
+                    {
+                        IEnumerable<Exception> exceptions = GetAllInnerExceptions(Exception.InnerException);
+                        if (exceptions.Count() > 0)
+                        {
+                            int i = 0;
+                            foreach (Exception ex in exceptions)
+                            {
+                                AddException($"Sub inner exception {i}", Exception.InnerException, TreeView1, Win32Error);
+                                i++;
+                            }
+                        }
+                    }
+                    catch { }
+                }
             }
 
             if (Win32Error != 0)
@@ -259,7 +291,6 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-
             if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
             {
                 Process.Start($@"{PathsExt.appData}\Reports");
@@ -275,7 +306,6 @@ namespace WinPaletter
             {
                 MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{PathsExt.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void TreeView1_DoubleClick(object sender, EventArgs e)

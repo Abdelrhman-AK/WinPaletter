@@ -14,5 +14,6 @@ namespace WinPaletter
         public string Backup_ThemeName { get; set; } = "Theme name";
         public string Backup_FilePath { get; set; } = "File path";
         public string Backup_CreationDateTime { get; set; } = "Creation date\\time";
+        public string Backup_NO { get; set; } = "backup\\s";
     }
 }

@@ -203,8 +203,6 @@ namespace WinPaletter.UI.Controllers
 
                 ColorClipboard.CopiedColor = BackColor;
 
-                Forms.ColorInfoDragDrop.Close();
-
                 base.OnDragDrop(e);
             }
 
@@ -269,74 +267,6 @@ namespace WinPaletter.UI.Controllers
 
                 }
 
-                if (!SwapNotCopy)
-                {
-                    switch (AfterDropEffect)
-                    {
-                        case AfterDropEffects.Invert:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Invert;
-                                break;
-                            }
-
-                        case AfterDropEffects.Darker:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Darker;
-                                break;
-                            }
-
-                        case AfterDropEffects.Lighter:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Lighter;
-                                break;
-                            }
-
-                        case AfterDropEffects.Mix:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy_Mix;
-                                break;
-                            }
-
-                        default:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Copy;
-                                break;
-                            }
-                    }
-                }
-
-                else
-                {
-                    switch (AfterDropEffect)
-                    {
-                        case AfterDropEffects.Invert:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Invert;
-                                break;
-                            }
-
-                        case AfterDropEffects.Darker:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Darker;
-                                break;
-                            }
-
-                        case AfterDropEffects.Lighter:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap_Lighter;
-                                break;
-                            }
-
-                        default:
-                            {
-                                Forms.ColorInfoDragDrop.Label1.Text = Program.Lang.ColorItem_Swap;
-                                break;
-                            }
-
-                    }
-
-                }
-
                 if (!((ColorItem)e.Data.GetData(GetType().FullName)).DragDefaultColor)
                 {
                     DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
@@ -344,83 +274,6 @@ namespace WinPaletter.UI.Controllers
                 else
                 {
                     DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).DefaultBackColor;
-                }
-
-                switch (AfterDropEffect)
-                {
-                    case AfterDropEffects.Invert:
-                        {
-                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Invert();
-                            break;
-                        }
-
-                    case AfterDropEffects.Darker:
-                        {
-                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Dark();
-                            break;
-                        }
-
-                    case AfterDropEffects.Lighter:
-                        {
-                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Light();
-                            break;
-                        }
-
-                    case AfterDropEffects.Mix:
-                        {
-                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Blend(BackColor, 100d);
-                            break;
-                        }
-
-                    default:
-                        {
-                            Forms.ColorInfoDragDrop.Color_From.BackColor = DraggedColor;
-                            break;
-                        }
-
-                }
-
-                DraggedColor = Forms.ColorInfoDragDrop.Color_From.BackColor;
-
-                if (!SwapNotCopy)
-                {
-                    Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
-                }
-                else
-                {
-                    switch (AfterDropEffect)
-                    {
-                        case AfterDropEffects.Invert:
-                            {
-                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Invert();
-                                break;
-                            }
-
-                        case AfterDropEffects.Darker:
-                            {
-                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Dark();
-                                break;
-                            }
-
-                        case AfterDropEffects.Lighter:
-                            {
-                                Forms.ColorInfoDragDrop.Color_To.BackColor = base.BackColor.Light();
-                                break;
-                            }
-
-                        default:
-                            {
-                                Forms.ColorInfoDragDrop.Color_To.BackColor = BackColor;
-                                break;
-                            }
-
-                    }
-                }
-
-                if (Program.Settings.NerdStats.DragAndDropColorsGuide)
-                {
-                    Forms.ColorInfoDragDrop.Location = new(e.X + 15, e.Y + 15);
-                    Forms.ColorInfoDragDrop.Visible = true;
                 }
             }
 
@@ -430,7 +283,6 @@ namespace WinPaletter.UI.Controllers
                 Refresh();
 
                 e.Effect = DragDropEffects.None;
-                Forms.ColorInfoDragDrop.Visible = false;
             }
 
             base.OnDragEnter(e);
@@ -441,7 +293,6 @@ namespace WinPaletter.UI.Controllers
             base.OnDragLeave(e);
             DragDropMouseHovering = false;
             Refresh();
-            Forms.ColorInfoDragDrop.Visible = false;
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -451,12 +302,10 @@ namespace WinPaletter.UI.Controllers
                 DragDropMouseHovering = true;
                 Refresh();
                 base.OnDragOver(e);
-                Forms.ColorInfoDragDrop.Location = new(e.X + 15, e.Y + 15);
             }
             else
             {
                 e.Effect = DragDropEffects.None;
-                Forms.ColorInfoDragDrop.Visible = false;
             }
 
         }
@@ -644,7 +493,7 @@ namespace WinPaletter.UI.Controllers
                     }
                 }
 
-                if (!DesignMode && MakeAfterDropEffect && Program.Settings.NerdStats.DragAndDropRippleEffect)
+                if (!DesignMode && MakeAfterDropEffect && CanAnimate)
                 {
                     // Make ripple effect on dropping a color
 
@@ -690,7 +539,7 @@ namespace WinPaletter.UI.Controllers
                     }
                 }
 
-                else if (!DesignMode && DragDropMouseHovering && Program.Settings.NerdStats.DragAndDropRippleEffect)
+                else if (!DesignMode && DragDropMouseHovering && CanAnimate)
                 {
                     // Make circle hover effect on dragging over a color
 

@@ -140,19 +140,19 @@ namespace WinPaletter
 
             if (wallpaper.Width > Screen.PrimaryScreen.Bounds.Size.Width || wallpaper.Height > Screen.PrimaryScreen.Bounds.Size.Height)
             {
-                scaleW = 1920.0 / targetSize.Width;
-                scaleH = 1080.0 / targetSize.Height;
+                scaleW = Screen.PrimaryScreen.Bounds.Width / targetSize.Width;
+                scaleH = Screen.PrimaryScreen.Bounds.Height / targetSize.Height;
             }
 
             wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
 
             return wallpaperStyle switch
             {
-                Theme.Structures.Wallpaper.WallpaperStyles.Fill => (Bitmap)((Bitmap)wallpaper.Clone()).FillScale(targetSize),
+                Theme.Structures.Wallpaper.WallpaperStyles.Fill => wallpaper.FillScale(targetSize),
                 Theme.Structures.Wallpaper.WallpaperStyles.Fit => wallpaper,
                 Theme.Structures.Wallpaper.WallpaperStyles.Stretched => wallpaper,
                 Theme.Structures.Wallpaper.WallpaperStyles.Centered => wallpaper,
-                Theme.Structures.Wallpaper.WallpaperStyles.Tile => ((Bitmap)wallpaper.Clone()).Tile(targetSize),
+                Theme.Structures.Wallpaper.WallpaperStyles.Tile => wallpaper.Tile(targetSize),
                 _ => wallpaper
             };
         }

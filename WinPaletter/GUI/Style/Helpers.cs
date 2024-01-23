@@ -415,9 +415,9 @@ namespace WinPaletter.UI.Style
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is WP.TitlebarExtender)
+            else if (ctrl is Tabs.TitlebarExtender)
             {
-                WP.TitlebarExtender titlebarExtender = ctrl as WP.TitlebarExtender;
+                Tabs.TitlebarExtender titlebarExtender = ctrl as Tabs.TitlebarExtender;
                 if (!titlebarExtender.DropDWMEffect)
                 {
                     Config.Scheme scheme = titlebarExtender.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;

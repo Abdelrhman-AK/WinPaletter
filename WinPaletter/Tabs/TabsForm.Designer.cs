@@ -1,4 +1,4 @@
-﻿namespace WinPaletter.Templates
+﻿namespace WinPaletter.Tabs
 {
     partial class TabsForm
     {
@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
-            this.tabsContainer1 = new WinPaletter.UI.Controllers.TabsContainer();
+            this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
+            this.tabsContainer1 = new Tabs.TabsContainer();
             this.BetaBadge = new WinPaletter.UI.WP.AlertBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.titlebarExtender1.SuspendLayout();
@@ -114,8 +114,8 @@
 
         #endregion
 
-        private UI.WP.TitlebarExtender titlebarExtender1;
-        public UI.Controllers.TabsContainer tabsContainer1;
+        private Tabs.TitlebarExtender titlebarExtender1;
+        public Tabs.TabsContainer tabsContainer1;
         internal UI.WP.AlertBox BetaBadge;
         private System.Windows.Forms.Panel panel1;
     }

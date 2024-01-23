@@ -294,7 +294,7 @@ namespace WinPaletter.Theme
                             else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
                             // Application.OpenForms.OfType<Store>().Count() == 0 is to prevent this from running when Store is opened
-                            if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0)
+                            if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0 && Application.OpenForms.OfType<BackupThemes_List>().Count() == 0)
                             {
                                 Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
                                 Forms.Saving_ex_list.ApplyMode = false;

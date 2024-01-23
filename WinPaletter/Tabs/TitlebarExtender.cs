@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using WinPaletter.NativeMethods;
 
-namespace WinPaletter.UI.WP
+namespace WinPaletter.Tabs
 {
     public partial class TitlebarExtender : ContainerControl
     {

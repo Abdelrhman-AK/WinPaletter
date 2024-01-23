@@ -38,7 +38,7 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExternalTerminal));
             this.OpenWPTHDlg = new System.Windows.Forms.OpenFileDialog();
             this.FontDialog1 = new System.Windows.Forms.FontDialog();
-            this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.btn_import = new WinPaletter.UI.WP.Button();
@@ -1954,7 +1954,7 @@ namespace WinPaletter
         private UI.Controllers.TrackBarX ExtTerminal_CursorSizeBar;
         private UI.Controllers.TrackBarX ExtTerminal_OpacityBar;
         private UI.WP.GroupBox bottom_buttons;
-        public UI.WP.TitlebarExtender titlebarExtender1;
+        public Tabs.TitlebarExtender titlebarExtender1;
         private FlowLayoutPanel flowLayoutPanel1;
         internal UI.WP.Button btn_import;
         internal UI.WP.ComboBox ComboBox1;

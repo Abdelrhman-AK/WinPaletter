@@ -421,8 +421,6 @@ namespace WinPaletter
                 public bool MoreLabelTransparency;
                 public bool DotDefaultChangedIndicator;
                 public bool DragAndDrop;
-                public bool DragAndDropColorsGuide;
-                public bool DragAndDropRippleEffect;
                 public bool Classic_Color_Picker;
 
                 public enum Formats
@@ -442,8 +440,6 @@ namespace WinPaletter
                     MoreLabelTransparency = Conversions.ToBoolean(GetReg(REG_NerdStats, "MoreLabelTransparency", false));
                     DotDefaultChangedIndicator = Conversions.ToBoolean(GetReg(REG_NerdStats, "DotDefaultChangedIndicator", true));
                     DragAndDrop = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDrop", true));
-                    DragAndDropColorsGuide = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDropColorsGuide", true));
-                    DragAndDropRippleEffect = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDropRippleEffect", true));
                     Classic_Color_Picker = Conversions.ToBoolean(GetReg(REG_NerdStats, "Classic_Color_Picker", false));
                 }
 
@@ -456,8 +452,6 @@ namespace WinPaletter
                     EditReg(REG_NerdStats, "MoreLabelTransparency", MoreLabelTransparency);
                     EditReg(REG_NerdStats, "DotDefaultChangedIndicator", DotDefaultChangedIndicator);
                     EditReg(REG_NerdStats, "DragAndDrop", DragAndDrop);
-                    EditReg(REG_NerdStats, "DragAndDropColorsGuide", DragAndDropColorsGuide);
-                    EditReg(REG_NerdStats, "DragAndDropRippleEffect", DragAndDropRippleEffect);
                     EditReg(REG_NerdStats, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord);
 
                 }
@@ -638,8 +632,6 @@ namespace WinPaletter
             UseWindowsMonospacedFont = false,
             DotDefaultChangedIndicator = true,
             DragAndDrop = true,
-            DragAndDropColorsGuide = true,
-            DragAndDropRippleEffect = true,
             Classic_Color_Picker = false
         };
 

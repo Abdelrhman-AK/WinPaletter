@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -15,13 +17,17 @@ namespace WinPaletter
         }
 
         Thread th;
+        private Icon icon = Properties.Resources.fileextension;
 
         private void BackupThemes_List_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
             ApplyStyle(this);
 
+            CheckForIllegalCrossThreadCalls = false;
+
             PopulateThemesBackups();
+            this.DoubleBuffer();
 
             // Set up columns for the ListView
             listView1.View = View.Details;
@@ -30,8 +36,6 @@ namespace WinPaletter
             listView1.Columns.Add(Program.Lang.Backup_FilePath, 400);
             listView1.Columns.Add(Program.Lang.Backup_CreationDateTime, 150);
 
-            CheckForIllegalCrossThreadCalls = false;
-
             label3.Font = Fonts.ConsoleMedium;
 
             windowsDesktop1.WindowStyle = Program.WindowStyle;
@@ -39,6 +43,8 @@ namespace WinPaletter
 
         private void PopulateThemesBackups()
         {
+            Cursor = Cursors.WaitCursor;
+
             listView1.Items.Clear();
 
             // Set the ImageList for the ListView
@@ -52,7 +58,7 @@ namespace WinPaletter
 
             if (!System.IO.Directory.Exists(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen"))
                 System.IO.Directory.CreateDirectory(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen");
-                                   
+
             string[] themes_onThemeApply = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
             string[] themes_onThemeOpen = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnThemeOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
             string[] themes_onAppOpen = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
@@ -67,18 +73,25 @@ namespace WinPaletter
             listView1.Groups.Add(group1);
             listView1.Groups.Add(group3);
 
-            // Populate the ListView
-            AddBackups(listView1, imageList1, themes_onAppOpen, group1);
-            AddBackups(listView1, imageList1, themes_onThemeApply, group2);
-            AddBackups(listView1, imageList1, themes_onThemeOpen, group3);
+            IEnumerable<string> backups = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories);
+            label3.Text = backups.Sum(fileInfo => new FileInfo(fileInfo).Length).SizeString();
+            label4.Text = $"{backups.Count()} {Program.Lang.Backup_NO}";
 
-            // Resize the columns
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            Task.Run(() =>
+            {
+                // Populate the ListView
+                AddBackups(listView1, imageList1, themes_onAppOpen, group1);
+                AddBackups(listView1, imageList1, themes_onThemeApply, group2);
+                AddBackups(listView1, imageList1, themes_onThemeOpen, group3);
 
-            label3.Text = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length).SizeString();
+                // Resize the columns
+                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            
+                Cursor = Cursors.Default;
+            });
         }
 
-        static void AddBackups(ListView listView, ImageList imageList, string[] files, ListViewGroup group)
+        void AddBackups(ListView listView, ImageList imageList, string[] files, ListViewGroup group)
         {
             foreach (string file in files)
             {
@@ -87,9 +100,6 @@ namespace WinPaletter
                     using (Theme.Manager TMx = new(Theme.Manager.Source.File, file))
                     {
                         string name = TMx.Info.ThemeName;
-
-                        Icon icon = Properties.Resources.fileextension;
-
                         ListViewItem item = new(name);
                         item.SubItems.Add(file);
                         item.SubItems.Add(File.GetCreationTime(file).ToString());
@@ -97,9 +107,7 @@ namespace WinPaletter
                         item.Group = group;
 
                         imageList.Images.Add(name, icon.ToBitmap());
-
                         listView.Items.Add(item);
-
                         listView.Items[listView.Items.Count - 1].ImageIndex = imageList.Images.Count - 1;
                     }
                 }
@@ -251,6 +259,11 @@ namespace WinPaletter
                     Forms.Home.LoadFromTM(Program.TM);
                 }
             }
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
         }
     }
 }

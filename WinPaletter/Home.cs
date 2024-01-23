@@ -519,15 +519,10 @@ namespace WinPaletter
             Forms.MainFrm.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            new UI.Style.SchemeEditor().Show();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            
-        }
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        ////new UI.Style.SchemeEditor().Show();
+        //}
 
         private void pin_button_Click(object sender, EventArgs e)
         {

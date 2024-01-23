@@ -34,21 +34,26 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
-            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
-            this.Button20 = new WinPaletter.UI.WP.Button();
-            this.PictureBox4 = new System.Windows.Forms.PictureBox();
-            this.button5 = new WinPaletter.UI.WP.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new WinPaletter.UI.WP.Button();
+            this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pin_button = new WinPaletter.UI.WP.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Button20 = new WinPaletter.UI.WP.Button();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.button6 = new WinPaletter.UI.WP.Button();
+            this.button5 = new WinPaletter.UI.WP.Button();
+            this.button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.windowsDesktop1 = new WinPaletter.Templates.WindowsDesktop();
-            this.button6 = new WinPaletter.UI.WP.Button();
+            this.titlebarExtender1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.bottom_buttons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,11 +67,11 @@
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
             this.listView1.LabelWrap = false;
-            this.listView1.Location = new System.Drawing.Point(13, 12);
+            this.listView1.Location = new System.Drawing.Point(13, 58);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.OwnerDraw = true;
-            this.listView1.Size = new System.Drawing.Size(732, 571);
+            this.listView1.Size = new System.Drawing.Size(732, 525);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listView1_DrawColumnHeader);
@@ -90,31 +95,110 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(752, 320);
+            this.label1.Location = new System.Drawing.Point(755, 366);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(534, 29);
             this.label1.TabIndex = 208;
             this.label1.Text = "Select an item to preview it";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // bottom_buttons
+            // titlebarExtender1
             // 
-            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
-            this.bottom_buttons.Controls.Add(this.button6);
-            this.bottom_buttons.Controls.Add(this.Button20);
-            this.bottom_buttons.Controls.Add(this.PictureBox4);
-            this.bottom_buttons.Controls.Add(this.button5);
-            this.bottom_buttons.Controls.Add(this.label3);
-            this.bottom_buttons.Controls.Add(this.button1);
-            this.bottom_buttons.Controls.Add(this.label2);
-            this.bottom_buttons.Controls.Add(this.Button2);
-            this.bottom_buttons.Controls.Add(this.button4);
-            this.bottom_buttons.Controls.Add(this.button3);
-            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 589);
-            this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(1298, 48);
-            this.bottom_buttons.TabIndex = 207;
+            this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender1.Controls.Add(this.flowLayoutPanel1);
+            this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.titlebarExtender1.DropDWMEffect = false;
+            this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
+            this.titlebarExtender1.Name = "titlebarExtender1";
+            this.titlebarExtender1.Size = new System.Drawing.Size(1298, 52);
+            this.titlebarExtender1.TabIndex = 209;
+            this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.pin_button);
+            this.flowLayoutPanel1.Controls.Add(this.label4);
+            this.flowLayoutPanel1.Controls.Add(this.separatorV1);
+            this.flowLayoutPanel1.Controls.Add(this.label2);
+            this.flowLayoutPanel1.Controls.Add(this.label3);
+            this.flowLayoutPanel1.Controls.Add(this.Button20);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1282, 40);
+            this.flowLayoutPanel1.TabIndex = 124;
+            // 
+            // pin_button
+            // 
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(3, 3);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.TabIndex = 125;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(43, 11);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.label4.Size = new System.Drawing.Size(14, 17);
+            this.label4.TabIndex = 213;
+            this.label4.Text = "0";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // separatorV1
+            // 
+            this.separatorV1.AlternativeLook = false;
+            this.separatorV1.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV1.Location = new System.Drawing.Point(63, 3);
+            this.separatorV1.Name = "separatorV1";
+            this.separatorV1.Size = new System.Drawing.Size(1, 34);
+            this.separatorV1.TabIndex = 214;
+            this.separatorV1.TabStop = false;
+            this.separatorV1.Text = "separatorV1";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(70, 11);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.label2.Size = new System.Drawing.Size(96, 17);
+            this.label2.TabIndex = 209;
+            this.label2.Text = "All backups size:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(172, 11);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 2, 5, 0);
+            this.label3.Size = new System.Drawing.Size(18, 17);
+            this.label3.TabIndex = 210;
+            this.label3.Text = "0";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Button20
             // 
@@ -126,7 +210,7 @@
             this.Button20.Image = null;
             this.Button20.ImageAsVector = false;
             this.Button20.ImageVector = null;
-            this.Button20.Location = new System.Drawing.Point(290, 12);
+            this.Button20.Location = new System.Drawing.Point(196, 8);
             this.Button20.Name = "Button20";
             this.Button20.Size = new System.Drawing.Size(90, 24);
             this.Button20.TabIndex = 211;
@@ -134,16 +218,40 @@
             this.Button20.UseVisualStyleBackColor = false;
             this.Button20.Click += new System.EventHandler(this.Button20_Click);
             // 
-            // PictureBox4
+            // bottom_buttons
             // 
-            this.PictureBox4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.PictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(8, 12);
-            this.PictureBox4.Name = "PictureBox4";
-            this.PictureBox4.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox4.TabIndex = 212;
-            this.PictureBox4.TabStop = false;
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.button6);
+            this.bottom_buttons.Controls.Add(this.button5);
+            this.bottom_buttons.Controls.Add(this.button1);
+            this.bottom_buttons.Controls.Add(this.Button2);
+            this.bottom_buttons.Controls.Add(this.button4);
+            this.bottom_buttons.Controls.Add(this.button3);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 589);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(1298, 48);
+            this.bottom_buttons.TabIndex = 207;
+            // 
+            // button6
+            // 
+            this.button6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button6.CustomColor = System.Drawing.Color.Empty;
+            this.button6.Enabled = false;
+            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button6.ForeColor = System.Drawing.Color.White;
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.ImageAsVector = false;
+            this.button6.ImageVector = null;
+            this.button6.Location = new System.Drawing.Point(981, 7);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(145, 34);
+            this.button6.TabIndex = 213;
+            this.button6.Text = "Restore and apply";
+            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 
@@ -165,18 +273,6 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(168, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 24);
-            this.label3.TabIndex = 210;
-            this.label3.Text = "0";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -196,18 +292,6 @@
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 24);
-            this.label2.TabIndex = 209;
-            this.label2.Text = "All backups size:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Button2
             // 
@@ -273,7 +357,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.groupBox2.Controls.Add(this.windowsDesktop1);
-            this.groupBox2.Location = new System.Drawing.Point(752, 12);
+            this.groupBox2.Location = new System.Drawing.Point(755, 58);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 303);
@@ -354,32 +438,13 @@
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             // 
-            // button6
-            // 
-            this.button6.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button6.CustomColor = System.Drawing.Color.Empty;
-            this.button6.Enabled = false;
-            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.ImageAsVector = false;
-            this.button6.ImageVector = null;
-            this.button6.Location = new System.Drawing.Point(981, 7);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(145, 34);
-            this.button6.TabIndex = 213;
-            this.button6.Text = "Restore and apply";
-            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // BackupThemes_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1298, 637);
+            this.Controls.Add(this.titlebarExtender1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.groupBox2);
@@ -395,8 +460,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Themes backups";
             this.Load += new System.EventHandler(this.BackupThemes_List_Load);
+            this.titlebarExtender1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.bottom_buttons.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -419,7 +486,11 @@
         internal System.Windows.Forms.Label label2;
         internal System.Windows.Forms.Label label3;
         internal UI.WP.Button Button20;
-        internal System.Windows.Forms.PictureBox PictureBox4;
         internal UI.WP.Button button6;
+        public Tabs.TitlebarExtender titlebarExtender1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        internal UI.WP.Button pin_button;
+        private UI.WP.SeparatorV separatorV1;
+        internal System.Windows.Forms.Label label4;
     }
 }

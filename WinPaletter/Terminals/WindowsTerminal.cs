@@ -1411,7 +1411,7 @@ namespace WinPaletter
             }
             else if (File.Exists(TerBackImage.Text))
             {
-                Terminal1.BackImage = Bitmap_Mgr.Load(TerBackImage.Text).FillScale(Terminal1.Size).Resize(Terminal1.Width - 2, Terminal1.Height - 32);
+                Terminal1.BackImage = Bitmap_Mgr.Load(TerBackImage.Text).FillScale(new(Terminal1.Width - 2, Terminal1.Height - 32));
             }
 
             else

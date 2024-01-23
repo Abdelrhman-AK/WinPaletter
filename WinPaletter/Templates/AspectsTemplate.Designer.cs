@@ -35,7 +35,7 @@
             this.btn_cancel = new WinPaletter.UI.WP.Button();
             this.checker_mode_advanced = new WinPaletter.UI.WP.RadioImage();
             this.btn_load_into_theme = new WinPaletter.UI.WP.Button();
-            this.titlebarExtender1 = new WinPaletter.UI.WP.TitlebarExtender();
+            this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.btn_import = new WinPaletter.UI.WP.Button();
@@ -330,7 +330,7 @@
         internal UI.WP.Toggle checker;
         internal UI.WP.Button btn_saveas_MSTheme;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        public UI.WP.TitlebarExtender titlebarExtender1;
+        public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
     }
 }

@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -46,36 +49,35 @@ namespace WinPaletter
 
         public void Read(Settings Sets)
         {
-            CheckBox1.Checked = Sets.FileTypeManagement.AutoAddExt;
+            toggle6.Checked = Sets.FileTypeManagement.AutoAddExt;
 
             RadioButton1.Checked = Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
             RadioButton2.Checked = !Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
 
-            CheckBox2.Checked = Sets.ThemeApplyingBehavior.AutoRestartExplorer;
-            CheckBox7.Checked = Sets.ThemeApplyingBehavior.AutoApplyCursors;
-            CheckBox16.Checked = Sets.ThemeApplyingBehavior.ResetCursorsToAero;
+            toggle8.Checked = Sets.ThemeApplyingBehavior.AutoRestartExplorer;
+            toggle12.Checked = Sets.ThemeApplyingBehavior.AutoApplyCursors;
+            toggle13.Checked = Sets.ThemeApplyingBehavior.ResetCursorsToAero;
 
-            CheckBox5.Checked = Sets.Updates.AutoCheck;
-            CheckBox9.Checked = Sets.Miscellaneous.Win7LivePreview;
+            toggle1.Checked = Sets.Updates.AutoCheck;
+            toggle35.Checked = Sets.Miscellaneous.Win7LivePreview;
 
             ComboBox2.SelectedIndex = Sets.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? 0 : 1;
-            CheckBox17.Checked = Sets.ThemeApplyingBehavior.ShowSaveConfirmation;
-            CheckBox33.Checked = Sets.FileTypeManagement.CompressThemeFile;
+            toggle9.Checked = Sets.ThemeApplyingBehavior.ShowSaveConfirmation;
+            toggle7.Checked = Sets.FileTypeManagement.CompressThemeFile;
 
-            RadioButton3.Checked = Sets.Appearance.DarkMode;
-            RadioButton4.Checked = !Sets.Appearance.DarkMode;
-            CheckBox6.Checked = Sets.Appearance.AutoDarkMode;
-            CheckBox30.Checked = Sets.Appearance.ManagedByTheme;
+            toggle3.Checked = Sets.Appearance.DarkMode;
+            toggle4.Checked = Sets.Appearance.AutoDarkMode;
+            toggle5.Checked = Sets.Appearance.ManagedByTheme;
 
-            CheckBox8.Checked = Sets.Language.Enabled;
+            toggle2.Checked = Sets.Language.Enabled;
             TextBox3.Text = Sets.Language.File;
 
-            CheckBox12.Checked = Sets.WindowsTerminals.Bypass;
-            CheckBox13.Checked = Sets.WindowsTerminals.ListAllFonts;
-            CheckBox14.Checked = Sets.WindowsTerminals.Path_Deflection;
+            toggle20.Checked = Sets.WindowsTerminals.Bypass;
+            toggle21.Checked = Sets.WindowsTerminals.ListAllFonts;
+            toggle22.Checked = Sets.WindowsTerminals.Path_Deflection;
             TextBox1.Text = Sets.WindowsTerminals.Terminal_Stable_Path;
             TextBox2.Text = Sets.WindowsTerminals.Terminal_Preview_Path;
-            CheckBox15.Checked = Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences;
+            toggle14.Checked = Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences;
 
             switch (Sets.NerdStats.Type)
             {
@@ -100,12 +102,12 @@ namespace WinPaletter
                         break;
                     }
             }
-            CheckBox10.Checked = Sets.NerdStats.Enabled;
+            toggle25.Checked = Sets.NerdStats.Enabled;
             CheckBox11.Checked = Sets.NerdStats.ShowHexHash;
-            CheckBox3.Checked = Sets.NerdStats.MoreLabelTransparency;
-            CheckBox31.Checked = Sets.NerdStats.UseWindowsMonospacedFont;
-            CheckBox34.Checked = Sets.NerdStats.DotDefaultChangedIndicator;
-            CheckBox32.Checked = Sets.NerdStats.Classic_Color_Picker;
+            toggle27.Checked = Sets.NerdStats.MoreLabelTransparency;
+            toggle28.Checked = Sets.NerdStats.UseWindowsMonospacedFont;
+            toggle26.Checked = Sets.NerdStats.DotDefaultChangedIndicator;
+            toggle30.Checked = Sets.NerdStats.Classic_Color_Picker;
 
             switch (Sets.ThemeLog.VerboseLevel)
             {
@@ -129,12 +131,12 @@ namespace WinPaletter
 
             }
 
-            CheckBox18.Checked = Sets.ThemeLog.CountDown;
+            toggle19.Checked = Sets.ThemeLog.CountDown;
             trackBarX1.Value = Sets.ThemeLog.CountDown_Seconds;
-            CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked = Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose;
+            toggle18.Checked = Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose;
 
-            CheckBox20.Checked = Sets.ExplorerPatcher.Enabled;
-            CheckBox21.Checked = Sets.ExplorerPatcher.Enabled_Force;
+            toggle23.Checked = Sets.ExplorerPatcher.Enabled;
+            toggle24.Checked = Sets.ExplorerPatcher.Enabled_Force;
             EP_Start_10.Checked = Sets.ExplorerPatcher.UseStart10;
             EP_Start_11.Checked = !Sets.ExplorerPatcher.UseStart10;
             EP_Start_10_Type.SelectedIndex = (int)Sets.ExplorerPatcher.StartStyle;
@@ -143,7 +145,7 @@ namespace WinPaletter
             EP_ORB_10.Checked = Sets.ExplorerPatcher.TaskbarButton10;
             EP_ORB_11.Checked = !Sets.ExplorerPatcher.TaskbarButton10;
 
-            CheckBox22.Checked = Sets.ThemeApplyingBehavior.DelayMetrics;
+            toggle11.Checked = Sets.ThemeApplyingBehavior.DelayMetrics;
 
             RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
@@ -151,7 +153,7 @@ namespace WinPaletter
             RadioButton10.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
             RadioButton9.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
             RadioButton7.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
-            CheckBox25.Checked = Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT;
+            toggle10.Checked = Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT;
             RadioButton12.Checked = Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton11.Checked = !(Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
             RadioButton14.Checked = Sets.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
@@ -165,16 +167,17 @@ namespace WinPaletter
             RadioButton22.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton23.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
             RadioButton21.Checked = Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
-            CheckBox35_SFC.Checked = Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
-            CheckBox36.Checked = Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
+            toggle15.Checked = Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
+            toggle16.Checked = Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
             RadioButton25.Checked = Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
             RadioButton24.Checked = !Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
-            CheckBox35.Checked = Sets.NerdStats.DragAndDrop;
-            CheckBox37.Checked = Sets.NerdStats.DragAndDropColorsGuide;
-            CheckBox38.Checked = Sets.NerdStats.DragAndDropRippleEffect;
+            toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
             Label38.Text = CalcStoreCache().SizeString();
             Label43.Text = CalcThemesResCache().SizeString();
+            label2.Text = CalcBackupsCache().SizeString();
+            label5.Text = CalcExErrors().SizeString();
+            label7.Text = CalcAppCore().SizeString();
 
             RadioImage1.Checked = Sets.Store.Online_or_Offline;
             RadioImage2.Checked = !Sets.Store.Online_or_Offline;
@@ -195,12 +198,12 @@ namespace WinPaletter
             CheckBox26.Checked = Sets.Store.Search_Descriptions;
             CheckBox27.Checked = Sets.Store.Search_AuthorsNames;
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
-            CheckBox4.Checked = Sets.Store.ShowTips;
+            toggle17.Checked = Sets.Store.ShowTips;
 
-            checkBox19.Checked = Sets.BackupTheme.Enabled;
-            checkBox39.Checked = Sets.BackupTheme.AutoBackupOnAppOpen;
-            checkBox40.Checked = Sets.BackupTheme.AutoBackupOnApply;
-            checkBox41.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
+            toggle31.Checked = Sets.BackupTheme.Enabled;
+            toggle33.Checked = Sets.BackupTheme.AutoBackupOnAppOpen;
+            toggle32.Checked = Sets.BackupTheme.AutoBackupOnApply;
+            toggle34.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
             textBox4.Text = Sets.BackupTheme.BackupPath;
         }
 
@@ -218,41 +221,41 @@ namespace WinPaletter
 
             {
                 ref Settings Settings = ref Program.Settings;
-                if (Settings.Appearance.DarkMode != RadioButton3.Checked)
+                if (Settings.Appearance.DarkMode != toggle3.Checked)
                     ch_appearance = true;
-                if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
+                if (Settings.Appearance.AutoDarkMode != toggle4.Checked)
                     ch_appearance = true;
-                if (Settings.Appearance.ManagedByTheme != CheckBox30.Checked)
+                if (Settings.Appearance.ManagedByTheme != toggle5.Checked)
                     ch_appearance = true;
 
-                if (Settings.NerdStats.Enabled != CheckBox10.Checked)
+                if (Settings.NerdStats.Enabled != toggle25.Checked)
                     ch_nerd = true;
                 if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
                     ch_nerd = true;
                 if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
+                if (Settings.NerdStats.MoreLabelTransparency != toggle27.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
+                if (Settings.NerdStats.UseWindowsMonospacedFont != toggle28.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
+                if (Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
                     ch_nerd = true;
 
-                if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
+                if (Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
                     ch_terminal = true;
                 if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
                     ch_terminal = true;
                 if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
                     ch_terminal = true;
 
-                if (Settings.Language.Enabled != CheckBox8.Checked)
+                if (Settings.Language.Enabled != toggle2.Checked)
                     ch_lang = true;
                 if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
                     ch_lang = true;
 
-                if (Settings.ExplorerPatcher.Enabled != CheckBox20.Checked)
+                if (Settings.ExplorerPatcher.Enabled != toggle23.Checked)
                     ch_EP = true;
-                if (Settings.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
+                if (Settings.ExplorerPatcher.Enabled_Force != toggle24.Checked)
                     ch_EP = true;
                 if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
                     ch_EP = true;
@@ -344,7 +347,7 @@ namespace WinPaletter
 
             if (ch_lang)
             {
-                if (CheckBox8.Checked)
+                if (toggle2.Checked)
                 {
                     Program.Lang = new();
                     Program.Lang.Load(Program.Settings.Language.File);
@@ -362,10 +365,6 @@ namespace WinPaletter
                 Forms.Home.LoadFromTM(Program.TM);
             }
 
-            //if (ch_WPElevator)
-            //    if (!Program.isElevated && !Program.Settings.Miscellaneous.DontUseWPElevatorConsole)
-            //        MyApplication.CMD_Wrapper.Start();
-
             Cursor = Cursors.Default;
 
             MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -373,42 +372,40 @@ namespace WinPaletter
 
         public void Write(Settings Sets, Settings.Mode Mode, string File = "")
         {
-            Sets.FileTypeManagement.AutoAddExt = CheckBox1.Checked;
+            Sets.FileTypeManagement.AutoAddExt = toggle6.Checked;
             Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked;
-            Sets.ThemeApplyingBehavior.AutoRestartExplorer = CheckBox2.Checked;
-            Sets.ThemeApplyingBehavior.AutoApplyCursors = CheckBox7.Checked;
-            Sets.ThemeApplyingBehavior.ResetCursorsToAero = CheckBox16.Checked;
+            Sets.ThemeApplyingBehavior.AutoRestartExplorer = toggle8.Checked;
+            Sets.ThemeApplyingBehavior.AutoApplyCursors = toggle12.Checked;
+            Sets.ThemeApplyingBehavior.ResetCursorsToAero = toggle13.Checked;
 
-            Sets.Updates.AutoCheck = CheckBox5.Checked;
-            Sets.Miscellaneous.Win7LivePreview = CheckBox9.Checked;
+            Sets.Updates.AutoCheck = toggle1.Checked;
+            Sets.Miscellaneous.Win7LivePreview = toggle35.Checked;
             Sets.Updates.Channel = (Settings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
 
-            Sets.Appearance.DarkMode = RadioButton3.Checked;
-            Sets.Appearance.AutoDarkMode = CheckBox6.Checked;
-            Sets.Appearance.ManagedByTheme = CheckBox30.Checked;
+            Sets.Appearance.DarkMode = toggle3.Checked;
+            Sets.Appearance.AutoDarkMode = toggle4.Checked;
+            Sets.Appearance.ManagedByTheme = toggle5.Checked;
 
-            Sets.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox17.Checked;
-            Sets.FileTypeManagement.CompressThemeFile = CheckBox33.Checked;
+            Sets.ThemeApplyingBehavior.ShowSaveConfirmation = toggle9.Checked;
+            Sets.FileTypeManagement.CompressThemeFile = toggle7.Checked;
 
-            Sets.Language.Enabled = CheckBox8.Checked;
+            Sets.Language.Enabled = toggle2.Checked;
             Sets.Language.File = TextBox3.Text;
-            Sets.NerdStats.Enabled = CheckBox10.Checked;
+            Sets.NerdStats.Enabled = toggle25.Checked;
             Sets.NerdStats.Type = (Settings.Structures.NerdStats.Formats)ComboBox3.SelectedIndex;
             Sets.NerdStats.ShowHexHash = CheckBox11.Checked;
-            Sets.NerdStats.MoreLabelTransparency = CheckBox3.Checked;
-            Sets.NerdStats.UseWindowsMonospacedFont = CheckBox31.Checked;
-            Sets.NerdStats.DotDefaultChangedIndicator = CheckBox34.Checked;
-            Sets.NerdStats.DragAndDrop = CheckBox35.Checked;
-            Sets.NerdStats.DragAndDropColorsGuide = CheckBox37.Checked;
-            Sets.NerdStats.DragAndDropRippleEffect = CheckBox38.Checked;
-            Sets.NerdStats.Classic_Color_Picker = CheckBox32.Checked;
+            Sets.NerdStats.MoreLabelTransparency = toggle27.Checked;
+            Sets.NerdStats.UseWindowsMonospacedFont = toggle28.Checked;
+            Sets.NerdStats.DotDefaultChangedIndicator = toggle26.Checked;
+            Sets.NerdStats.DragAndDrop = toggle29.Checked;
+            Sets.NerdStats.Classic_Color_Picker = toggle30.Checked;
 
-            Sets.WindowsTerminals.Bypass = CheckBox12.Checked;
-            Sets.WindowsTerminals.ListAllFonts = CheckBox13.Checked;
-            Sets.WindowsTerminals.Path_Deflection = CheckBox14.Checked;
+            Sets.WindowsTerminals.Bypass = toggle20.Checked;
+            Sets.WindowsTerminals.ListAllFonts = toggle21.Checked;
+            Sets.WindowsTerminals.Path_Deflection = toggle22.Checked;
             Sets.WindowsTerminals.Terminal_Stable_Path = TextBox1.Text;
             Sets.WindowsTerminals.Terminal_Preview_Path = TextBox2.Text;
-            Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences = CheckBox15.Checked;
+            Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences = toggle14.Checked;
 
             if (VL0.Checked)
                 Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.None;
@@ -419,22 +416,22 @@ namespace WinPaletter
             if (VL2.Checked)
                 Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-            Sets.ThemeLog.CountDown = CheckBox18.Checked;
+            Sets.ThemeLog.CountDown = toggle19.Checked;
             Sets.ThemeLog.CountDown_Seconds = trackBarX1.Value;
-            Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked;
+            Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = toggle18.Checked;
 
-            Sets.ExplorerPatcher.Enabled = CheckBox20.Checked;
-            Sets.ExplorerPatcher.Enabled_Force = CheckBox21.Checked;
+            Sets.ExplorerPatcher.Enabled = toggle23.Checked;
+            Sets.ExplorerPatcher.Enabled_Force = toggle24.Checked;
             Sets.ExplorerPatcher.UseStart10 = EP_Start_10.Checked;
             Sets.ExplorerPatcher.StartStyle = (ExplorerPatcher.StartStyles)EP_Start_10_Type.SelectedIndex;
             Sets.ExplorerPatcher.UseTaskbar10 = EP_Taskbar_10.Checked;
             Sets.ExplorerPatcher.TaskbarButton10 = EP_ORB_10.Checked;
-            Sets.ThemeApplyingBehavior.DelayMetrics = CheckBox22.Checked;
+            Sets.ThemeApplyingBehavior.DelayMetrics = toggle11.Checked;
 
-            Sets.BackupTheme.Enabled = checkBox19.Checked;
-            Sets.BackupTheme.AutoBackupOnAppOpen = checkBox39.Checked;
-            Sets.BackupTheme.AutoBackupOnApply = checkBox40.Checked;
-            Sets.BackupTheme.AutoBackupOnThemeLoad = checkBox41.Checked;
+            Sets.BackupTheme.Enabled = toggle31.Checked;
+            Sets.BackupTheme.AutoBackupOnAppOpen = toggle33.Checked;
+            Sets.BackupTheme.AutoBackupOnApply = toggle32.Checked;
+            Sets.BackupTheme.AutoBackupOnThemeLoad = toggle34.Checked;
             Sets.BackupTheme.BackupPath = textBox4.Text;
 
             if (RadioButton5.Checked)
@@ -454,7 +451,7 @@ namespace WinPaletter
             if (RadioButton7.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
 
-            Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT = CheckBox25.Checked;
+            Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT = toggle10.Checked;
 
             if (RadioButton12.Checked)
                 Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
@@ -490,8 +487,8 @@ namespace WinPaletter
             if (RadioButton21.Checked)
                 Sets.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
-            Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox36.Checked;
+            Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = toggle15.Checked;
+            Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = toggle16.Checked;
             Sets.ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked;
 
             Sets.Store.Online_or_Offline = RadioImage1.Checked;
@@ -501,7 +498,7 @@ namespace WinPaletter
             Sets.Store.Search_Descriptions = CheckBox26.Checked;
             Sets.Store.Search_AuthorsNames = CheckBox27.Checked;
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
-            Sets.Store.ShowTips = CheckBox4.Checked;
+            Sets.Store.ShowTips = toggle17.Checked;
 
             Sets.Save(Mode, File);
         }
@@ -514,71 +511,67 @@ namespace WinPaletter
 
             {
                 ref Settings Settings = ref Program.Settings;
-                if (Settings.FileTypeManagement.AutoAddExt != CheckBox1.Checked)
+                if (Settings.FileTypeManagement.AutoAddExt != toggle7.Checked)
                     Changed = true;
                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer != CheckBox2.Checked)
+                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer != toggle8.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.AutoApplyCursors != CheckBox7.Checked)
+                if (Settings.ThemeApplyingBehavior.AutoApplyCursors != toggle12.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != CheckBox16.Checked)
+                if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != toggle13.Checked)
                     Changed = true;
-                if (Settings.Updates.AutoCheck != CheckBox5.Checked)
+                if (Settings.Updates.AutoCheck != toggle1.Checked)
                     Changed = true;
                 if ((int)Settings.Updates.Channel != ComboBox2.SelectedIndex)
                     Changed = true;
-                if (Settings.Miscellaneous.Win7LivePreview != CheckBox9.Checked)
+                if (Settings.Miscellaneous.Win7LivePreview != toggle35.Checked)
                     Changed = true;
-                if (Settings.NerdStats.Classic_Color_Picker != CheckBox32.Checked)
+                if (Settings.NerdStats.Classic_Color_Picker != toggle30.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != CheckBox17.Checked)
+                if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != toggle9.Checked)
                     Changed = true;
-                if (Settings.FileTypeManagement.CompressThemeFile != CheckBox33.Checked)
-                    Changed = true;
-
-                if (Settings.Appearance.DarkMode != RadioButton3.Checked)
-                    Changed = true;
-                if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
-                    Changed = true;
-                if (Settings.Appearance.ManagedByTheme != CheckBox30.Checked)
+                if (Settings.FileTypeManagement.CompressThemeFile != toggle7.Checked)
                     Changed = true;
 
-                if (Settings.Language.Enabled != CheckBox8.Checked)
+                if (Settings.Appearance.DarkMode != toggle3.Checked)
+                    Changed = true;
+                if (Settings.Appearance.AutoDarkMode != toggle4.Checked)
+                    Changed = true;
+                if (Settings.Appearance.ManagedByTheme != toggle5.Checked)
+                    Changed = true;
+
+                if (Settings.Language.Enabled != toggle2.Checked)
                     Changed = true;
                 if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
                     Changed = true;
 
-                if (Settings.NerdStats.Enabled != CheckBox10.Checked)
+                if (Settings.NerdStats.Enabled != toggle25.Checked)
                     Changed = true;
                 if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
                     Changed = true;
                 if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
                     Changed = true;
-                if (Settings.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
+                if (Settings.NerdStats.MoreLabelTransparency != toggle27.Checked)
                     Changed = true;
-                if (Settings.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
+                if (Settings.NerdStats.UseWindowsMonospacedFont != toggle28.Checked)
                     Changed = true;
-                if (Settings.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
+                if (Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
                     Changed = true;
-                if (Settings.NerdStats.DragAndDrop != CheckBox35.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.DragAndDropColorsGuide != CheckBox37.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.DragAndDropRippleEffect != CheckBox38.Checked)
+                if (Settings.NerdStats.DragAndDrop != toggle29.Checked)
                     Changed = true;
 
-                if (Settings.WindowsTerminals.Bypass != CheckBox12.Checked)
+                if (Settings.WindowsTerminals.Bypass != toggle20.Checked)
                     Changed = true;
-                if (Settings.WindowsTerminals.ListAllFonts != CheckBox13.Checked)
+                if (Settings.WindowsTerminals.ListAllFonts != toggle21.Checked)
                     Changed = true;
-                if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
+                if (Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
                     Changed = true;
                 if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
                     Changed = true;
                 if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != CheckBox15.Checked)
+                if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != toggle14.Checked)
                     Changed = true;
 
                 if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
@@ -587,16 +580,16 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
                     Changed = true;
-                if (Settings.ThemeLog.CountDown != CheckBox18.Checked)
+                if (Settings.ThemeLog.CountDown != toggle19.Checked)
                     Changed = true;
                 if (Settings.ThemeLog.CountDown_Seconds != trackBarX1.Value)
                     Changed = true;
-                if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked)
+                if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != toggle18.Checked)
                     Changed = true;
 
-                if (Settings.ExplorerPatcher.Enabled != CheckBox20.Checked)
+                if (Settings.ExplorerPatcher.Enabled != toggle23.Checked)
                     Changed = true;
-                if (Settings.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
+                if (Settings.ExplorerPatcher.Enabled_Force != toggle24.Checked)
                     Changed = true;
                 if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
                     Changed = true;
@@ -607,7 +600,7 @@ namespace WinPaletter
                 if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     Changed = true;
 
-                if (Settings.ThemeApplyingBehavior.DelayMetrics != CheckBox22.Checked)
+                if (Settings.ThemeApplyingBehavior.DelayMetrics != toggle11.Checked)
                     Changed = true;
 
                 if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
@@ -623,7 +616,7 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT != CheckBox25.Checked)
+                if (Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT != toggle10.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
                     Changed = true;
@@ -651,9 +644,9 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != CheckBox35_SFC.Checked)
+                if (Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != toggle15.Checked)
                     Changed = true;
-                if (Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != CheckBox36.Checked)
+                if (Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != toggle16.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.PE_ModifyByDefault != RadioButton25.Checked)
                     Changed = true;
@@ -671,16 +664,16 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.Store.Offline_SubFolders != CheckBox29.Checked)
                     Changed = true;
-                if (Settings.Store.ShowTips != CheckBox4.Checked)
+                if (Settings.Store.ShowTips != toggle17.Checked)
                     Changed = true;
 
-                if (Settings.BackupTheme.Enabled != checkBox19.Checked)
+                if (Settings.BackupTheme.Enabled != toggle31.Checked)
                     Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnAppOpen != checkBox39.Checked)
+                if (Settings.BackupTheme.AutoBackupOnAppOpen != toggle33.Checked)
                     Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnApply != checkBox40.Checked)
+                if (Settings.BackupTheme.AutoBackupOnApply != toggle32.Checked)
                     Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnThemeLoad != checkBox41.Checked)
+                if (Settings.BackupTheme.AutoBackupOnThemeLoad != toggle34.Checked)
                     Changed = true;
                 if (Settings.BackupTheme.BackupPath != textBox4.Text)
                     Changed = true;
@@ -792,6 +785,57 @@ namespace WinPaletter
             }
         }
 
+        public int CalcBackupsCache()
+        {
+            if (Directory.Exists(Program.Settings.BackupTheme.BackupPath))
+            {
+                return (int)Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int CalcExErrors()
+        {
+            if (Directory.Exists($"{PathsExt.appData}\\Reports"))
+            {
+                return (int)Directory.EnumerateFiles($"{PathsExt.appData}\\Reports", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int CalcAppCore()
+        {
+            int s0, s1;
+
+            if (Directory.Exists(PathsExt.appData))
+            {
+                s0 = (int)Directory.EnumerateFiles(PathsExt.appData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                s0 -= CalcExErrors() - CalcThemesResCache();
+                if (Program.Settings.BackupTheme.BackupPath.StartsWith(PathsExt.appData, StringComparison.OrdinalIgnoreCase)) s0 -= CalcBackupsCache();
+            }
+            else
+            {
+                s0 = 0;
+            }
+
+            if (Directory.Exists(PathsExt.ProgramFilesData))
+            {
+                s1 = (int)Directory.EnumerateFiles(PathsExt.ProgramFilesData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+            }
+            else
+            {
+                s1 = 0;
+            }
+
+            return s0 + s1;
+        }
+
         private void Button12_Click(object sender, EventArgs e)
         {
             SaveSettings();
@@ -827,8 +871,7 @@ namespace WinPaletter
         {
             if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
             {
-
-                CheckBox1.Checked = false;
+                toggle6.Checked = false;
                 Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
                 Program.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");
                 Program.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
@@ -1020,6 +1063,35 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
+            {
+                Process.Start($@"{PathsExt.appData}\Reports");
+            }
+            else
+            {
+                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{PathsExt.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Directory.Delete($"{PathsExt.appData}\\Reports", true);
+            }
+            catch
+            {
+            }
+            label5.Text = CalcExErrors().SizeString();
         }
     }
 }

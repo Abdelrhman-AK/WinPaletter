@@ -121,25 +121,6 @@ namespace WinPaletter
         }
 
 
-        private static ColorInfoDragDrop _ColorInfoDragDrop;
-        public static ColorInfoDragDrop ColorInfoDragDrop
-        {
-            get
-            {
-                _ColorInfoDragDrop = CreateInstance(_ColorInfoDragDrop);
-                return _ColorInfoDragDrop;
-            }
-            set
-            {
-                if (value == _ColorInfoDragDrop)
-                    return;
-                if (value is not null)
-                    throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _ColorInfoDragDrop);
-            }
-        }
-
-
         private static ColorPickerDlg _ColorPickerDlg;
         public static ColorPickerDlg ColorPickerDlg
         {

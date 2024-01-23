@@ -515,38 +515,6 @@ namespace WinPaletter
             }
         }
 
-        public Bitmap GetWall(string file)
-        {
-            if (File.Exists(file))
-            {
-                try
-                {
-                    using (Bitmap bmp = new(Bitmap_Mgr.Load(file)))
-                    {
-
-                        float ScaleW = 1f;
-                        float ScaleH = 1f;
-
-                        if (bmp.Width > Screen.PrimaryScreen.Bounds.Size.Width | bmp.Height > Screen.PrimaryScreen.Bounds.Size.Height)
-                        {
-                            ScaleW = (float)(1920d / pnl_preview.Size.Width);
-                            ScaleH = (float)(1080d / pnl_preview.Size.Height);
-                        }
-
-                        return (Bitmap)bmp.GetThumbnailImage((int)Math.Round(bmp.Width / ScaleW), (int)Math.Round(bmp.Height / ScaleH), null, IntPtr.Zero);
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         private void Source_pic_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioImage)sender).Checked)
@@ -712,9 +680,9 @@ namespace WinPaletter
             {
                 if (File.Exists(TextBox1.Text))
                 {
-                    img = (Bitmap)GetWall(TextBox1.Text).GetThumbnailImage(Program.Computer.Screen.Bounds.Width, Program.Computer.Screen.Bounds.Height, null, IntPtr.Zero);
-                    img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
-                    img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
+                    img = Bitmap_Mgr.Load(TextBox1.Text);
+                    img_filled = img.FillScale(pnl_preview.Size);
+                    img_tile = img.Tile(pnl_preview.Size);
                 }
                 else
                 {
@@ -728,7 +696,7 @@ namespace WinPaletter
             {
                 if (File.Exists(TextBox3.Text))
                 {
-                    img_untouched_forTint = GetWall(TextBox3.Text);
+                    img_untouched_forTint = Bitmap_Mgr.Load(TextBox3.Text);
                     ApplyHSLPreview();
                 }
 
@@ -791,9 +759,9 @@ namespace WinPaletter
                         if (index > ImgLs1.Count - 1)
                             index = 0;
 
-                        img = GetWall(ImgLs1[index]);
-                        img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
-                        img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
+                        img = Bitmap_Mgr.Load(ImgLs1[index]);
+                        img_filled = img.FillScale(pnl_preview.Size);
+                        img_tile = img.Tile(pnl_preview.Size);
 
                         Label3.Text = $"{index + 1}/{ImgLs1.Count}";
                     }
@@ -819,9 +787,10 @@ namespace WinPaletter
 
                     if (index > ImgLs2.Count - 1)
                         index = 0;
-                    img = GetWall(ImgLs2[index]);
-                    img_filled = (Bitmap)((Bitmap)img.Clone()).FillScale(pnl_preview.Size);
-                    img_tile = ((Bitmap)img.Clone()).Tile(pnl_preview.Size);
+
+                    img = Bitmap_Mgr.Load(ImgLs2[index]);
+                    img_filled = img.FillScale(pnl_preview.Size);
+                    img_tile = img.Tile(pnl_preview.Size);
 
                     Label3.Text = $"{index + 1}/{ImgLs2.Count}";
                 }
@@ -849,9 +818,9 @@ namespace WinPaletter
                         ImgF.Saturation(SBar.Value * 2 - 100);
                         ImgF.Brightness(LBar.Value * 2 - 100);
 
-                        img_tinted = (Bitmap)ImgF.Image.Clone();
-                        img_tinted_filled = (Bitmap)((Bitmap)img_tinted.Clone()).FillScale(pnl_preview.Size);
-                        img_tinted_tile = ((Bitmap)img_tinted.Clone()).Tile(pnl_preview.Size);
+                        img_tinted = ImgF.Image.Clone() as Bitmap;
+                        img_tinted_filled = img_tinted.FillScale(pnl_preview.Size);
+                        img_tinted_tile = img_tinted.Tile(pnl_preview.Size);
                     }
 
                     this.Invoke(ApplyPreviewStyle);
