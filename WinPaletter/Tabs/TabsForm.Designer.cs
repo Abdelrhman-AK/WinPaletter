@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
-            this.tabsContainer1 = new Tabs.TabsContainer();
-            this.BetaBadge = new WinPaletter.UI.WP.AlertBox();
+            this.tabsContainer1 = new WinPaletter.Tabs.TabsContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BetaBadge = new WinPaletter.UI.WP.AlertBox();
             this.titlebarExtender1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +54,7 @@
             // tabsContainer1
             // 
             this.tabsContainer1.AllowDrop = true;
-            this.tabsContainer1.BackColor = System.Drawing.Color.Black;
+            this.tabsContainer1.BackColor = System.Drawing.Color.Transparent;
             this.tabsContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsContainer1.Location = new System.Drawing.Point(0, 0);
             this.tabsContainer1.Name = "tabsContainer1";
@@ -64,6 +64,17 @@
             this.tabsContainer1.TabControl = null;
             this.tabsContainer1.TabIndex = 120;
             this.tabsContainer1.DoubleClick += new System.EventHandler(this.tabsContainer1_DoubleClick);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.BetaBadge);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(878, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.panel1.Size = new System.Drawing.Size(55, 34);
+            this.panel1.TabIndex = 122;
             // 
             // BetaBadge
             // 
@@ -80,17 +91,6 @@
             this.BetaBadge.TabIndex = 121;
             this.BetaBadge.TabStop = false;
             this.BetaBadge.Text = "BETA";
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.BetaBadge);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(878, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(55, 34);
-            this.panel1.TabIndex = 122;
             // 
             // TabsForm
             // 

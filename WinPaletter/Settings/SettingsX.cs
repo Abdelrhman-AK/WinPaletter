@@ -511,7 +511,10 @@ namespace WinPaletter
 
             {
                 ref Settings Settings = ref Program.Settings;
-                if (Settings.FileTypeManagement.AutoAddExt != toggle7.Checked)
+
+                if (Settings.Updates.AutoCheck != toggle1.Checked)
+                    Changed = true;
+                if (Settings.FileTypeManagement.AutoAddExt != toggle6.Checked)
                     Changed = true;
                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
                     Changed = true;
@@ -520,8 +523,6 @@ namespace WinPaletter
                 if (Settings.ThemeApplyingBehavior.AutoApplyCursors != toggle12.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != toggle13.Checked)
-                    Changed = true;
-                if (Settings.Updates.AutoCheck != toggle1.Checked)
                     Changed = true;
                 if ((int)Settings.Updates.Channel != ComboBox2.SelectedIndex)
                     Changed = true;

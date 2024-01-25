@@ -67,8 +67,8 @@ namespace WinPaletter.UI.WP
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            using (LinearGradientBrush lgb0 = new(Rect, scheme.Colors.Back, _color, LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(Rect, scheme.Colors.Line_Hover, _color_line, LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb0 = new(Rect, _color, scheme.Colors.Back, LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(Rect, _color_line, scheme.Colors.Line_Hover, LinearGradientMode.Horizontal))
             using (Pen P = new(lgb1))
             {
                 G.FillRoundedRect(lgb0, Rect);

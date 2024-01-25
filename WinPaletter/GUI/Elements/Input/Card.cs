@@ -288,7 +288,7 @@ namespace WinPaletter.UI
 
             if (Image is not null)
             {
-                Rectangle imageRect = new(rect.X + rect.Width - Image.Width, rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
+                Rectangle imageRect = new(rect.X + rect.Width - Image.Width - 5, rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
 
                 ////Disabled for better performance
                 //G.DrawGlow(rect_all, Color.FromArgb(alpha, _color.CB(-0.1f)), shadowSize, 30, true);

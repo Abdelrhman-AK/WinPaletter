@@ -44,7 +44,8 @@ namespace WinPaletter
             // 
             // tabsContainer1
             // 
-            this.tabsContainer1.Size = new System.Drawing.Size(1154, 34);
+            this.tabsContainer1.BackColor = System.Drawing.Color.Transparent;
+            this.tabsContainer1.Size = new System.Drawing.Size(1099, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
             // 
             // imageList1

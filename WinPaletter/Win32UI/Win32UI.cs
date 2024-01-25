@@ -102,36 +102,6 @@ namespace WinPaletter
             Close();
         }
 
-        private void ImportWin11Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin10Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin81Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin7Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWinVistaPreset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWinXPPreset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
-        }
-
         private void Apply(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -256,7 +226,7 @@ namespace WinPaletter
                 Import_msstyles = true,
                 GeneratePalette = false,
                 GenerateMSTheme = true,
-                Import_preset = true,
+                Import_preset = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
@@ -266,12 +236,6 @@ namespace WinPaletter
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromMSSTYLES = LoadFromMSSTYLES,
                 OnImportFromCurrentApplied = LoadFromCurrent,
-                OnImportFromScheme_11 = ImportWin11Preset,
-                OnImportFromScheme_10 = ImportWin10Preset,
-                OnImportFromScheme_81 = ImportWin81Preset,
-                OnImportFromScheme_7 = ImportWin7Preset,
-                OnImportFromScheme_Vista = ImportWinVistaPreset,
-                OnImportFromScheme_XP = ImportWinXPPreset,
 
                 OnModeAdvanced = ModeSwitched,
                 OnModeSimple = ModeSwitched,
@@ -309,49 +273,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            AspectEnabled = TM.Win32.Enabled;
-            Toggle1.Checked = TM.Win32.EnableTheming;
-            Toggle2.Checked = TM.Win32.EnableGradient;
-            ActiveBorder_pick.BackColor = TM.Win32.ActiveBorder;
-            activetitle_pick.BackColor = TM.Win32.ActiveTitle;
-            AppWorkspace_pick.BackColor = TM.Win32.AppWorkspace;
-            background_pick.BackColor = TM.Win32.Background;
-            btnaltface_pick.BackColor = TM.Win32.ButtonAlternateFace;
-            btndkshadow_pick.BackColor = TM.Win32.ButtonDkShadow;
-            btnface_pick.BackColor = TM.Win32.ButtonFace;
-            btnhilight_pick.BackColor = TM.Win32.ButtonHilight;
-            btnlight_pick.BackColor = TM.Win32.ButtonLight;
-            btnshadow_pick.BackColor = TM.Win32.ButtonShadow;
-            btntext_pick.BackColor = TM.Win32.ButtonText;
-            GActivetitle_pick.BackColor = TM.Win32.GradientActiveTitle;
-            GInactivetitle_pick.BackColor = TM.Win32.GradientInactiveTitle;
-            GrayText_pick.BackColor = TM.Win32.GrayText;
-            hilighttext_pick.BackColor = TM.Win32.HilightText;
-            hottracking_pick.BackColor = TM.Win32.HotTrackingColor;
-            InactiveBorder_pick.BackColor = TM.Win32.InactiveBorder;
-            InactiveTitle_pick.BackColor = TM.Win32.InactiveTitle;
-            InactivetitleText_pick.BackColor = TM.Win32.InactiveTitleText;
-            InfoText_pick.BackColor = TM.Win32.InfoText;
-            InfoWindow_pick.BackColor = TM.Win32.InfoWindow;
-            menu_pick.BackColor = TM.Win32.Menu;
-            menubar_pick.BackColor = TM.Win32.MenuBar;
-            menutext_pick.BackColor = TM.Win32.MenuText;
-            Scrollbar_pick.BackColor = TM.Win32.Scrollbar;
-            TitleText_pick.BackColor = TM.Win32.TitleText;
-            Window_pick.BackColor = TM.Win32.Window;
-            Frame_pick.BackColor = TM.Win32.WindowFrame;
-            WindowText_pick.BackColor = TM.Win32.WindowText;
-            hilight_pick.BackColor = TM.Win32.Hilight;
-            menuhilight_pick.BackColor = TM.Win32.MenuHilight;
-            desktop_pick.BackColor = TM.Win32.Desktop;
-
-            _btn_shadow = TM.Win32.ButtonShadow;
-            _btn_dkshadow = TM.Win32.ButtonDkShadow;
-            _btn_hilight = TM.Win32.ButtonHilight;
-            _btn_light = TM.Win32.ButtonLight;
-            trackBarX1.Value = 100;
-
-            retroDesktopColors1.LoadColors(TM);
+            LoadFromWin32UI(TM.Win32);
         }
 
         public void LoadFromWin32UI(Theme.Structures.Win32UI win32ui)
@@ -399,6 +321,15 @@ namespace WinPaletter
             trackBarX1.Value = 100;
 
             retroDesktopColors1.LoadColors(win32ui);
+
+            Retro3DPreview1.BackColor = win32ui.ButtonFace;
+            Retro3DPreview1.ButtonDkShadow = win32ui.ButtonDkShadow;
+            Retro3DPreview1.WindowFrame = win32ui.WindowFrame;
+            Retro3DPreview1.ButtonHilight = win32ui.ButtonHilight;
+            Retro3DPreview1.ButtonLight = win32ui.ButtonLight;
+            Retro3DPreview1.ButtonShadow = win32ui.ButtonShadow;
+            Retro3DPreview1.ForeColor = win32ui.ButtonText;
+            Retro3DPreview1.Refresh();
         }
 
         public void LoadFromRetroPreview(RetroDesktopColors retroDesktopColors)
@@ -444,13 +375,13 @@ namespace WinPaletter
             _btn_light = retroDesktopColors.ButtonLight;
             trackBarX1.Value = 100;
 
-            Retro3DPreview1.BackColor = btnface_pick.BackColor;
-            Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor;
-            Retro3DPreview1.WindowFrame = Frame_pick.BackColor;
-            Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor;
-            Retro3DPreview1.ButtonLight = btnlight_pick.BackColor;
-            Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor;
-            Retro3DPreview1.ForeColor = btntext_pick.BackColor;
+            Retro3DPreview1.BackColor = retroDesktopColors.ButtonFace;
+            Retro3DPreview1.ButtonDkShadow = retroDesktopColors.ButtonDkShadow;
+            Retro3DPreview1.WindowFrame = retroDesktopColors.WindowFrame;
+            Retro3DPreview1.ButtonHilight = retroDesktopColors.ButtonHilight;
+            Retro3DPreview1.ButtonLight = retroDesktopColors.ButtonLight;
+            Retro3DPreview1.ButtonShadow = retroDesktopColors.ButtonShadow;
+            Retro3DPreview1.ForeColor = retroDesktopColors.ButtonText;
             Retro3DPreview1.Refresh();
         }
 

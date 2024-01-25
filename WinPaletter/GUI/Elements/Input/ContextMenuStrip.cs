@@ -130,8 +130,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -140,7 +138,7 @@ namespace WinPaletter.UI.WP
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
             G.FillRectangle(scheme.Brushes.Back, rect);
-            G.DrawRectangle(scheme.Pens.Line_Hover, rect);
+            G.DrawRectangle(scheme.Pens.Line_Hover_Level2, rect);
 
             base.OnPaint(e);
         }

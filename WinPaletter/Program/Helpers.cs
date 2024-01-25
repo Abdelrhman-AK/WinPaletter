@@ -115,7 +115,7 @@ namespace WinPaletter
             // Load Manager
             if (!ExternalLink)
             {
-                TM = new(Theme.Manager.Source.Registry);
+                if (TM is null) TM = new(Theme.Manager.Source.Registry);
             }
             else
             {
@@ -520,6 +520,7 @@ namespace WinPaletter
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())
             {
+                Environment.ExitCode = 0;
                 Forms.Home.LoggingOff = true;
                 Forms.MainFrm.Close();
                 process.Kill();

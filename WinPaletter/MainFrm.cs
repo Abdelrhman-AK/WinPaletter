@@ -1,9 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
 
 namespace WinPaletter
@@ -31,133 +28,29 @@ namespace WinPaletter
 
             if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && Program.TM != Program.TM_Original)
             {
-                if (!OS.WXP)
+                DialogResult result = MsgBox(Program.Lang.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                bool sucess;
+
+                if (result == DialogResult.Yes)
                 {
-                    TaskDialog TD = new()
+                    if (System.IO.File.Exists(SaveFileDialog.FileName) || SaveFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        RightToLeft = Program.Lang.RightToLeft,
-                        ButtonStyle = TaskDialogButtonStyle.Standard,
-                        CenterParent = true,
-                        WindowTitle = Application.ProductName,
-                        MainInstruction = Program.Lang.SaveDialog_Question,
-                        MainIcon = TaskDialogIcon.Custom,
-                        Content = Program.Lang.SaveDialog_Content,
-                        AllowDialogCancellation = true,
-                        CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON) ?? SystemIcons.Question,
-                    };
-
-                    TD.Created += TD_Created;
-
-                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Lang.Yes };
-                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Lang.No };
-                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Lang.Cancel };
-
-                    TD.Buttons.Add(yesButton);
-                    TD.Buttons.Add(noButton);
-                    TD.Buttons.Add(cancelButton);
-
-                    TaskDialogRadioButton radio_dontapply = new() { Text = Program.Lang.SaveDialog_DontApply, Checked = true };
-                    TaskDialogRadioButton radio_apply = new() { Text = Program.Lang.SaveDialog_Apply, Checked = false };
-                    TaskDialogRadioButton radio_apply1stTheme = new() { Text = Program.Lang.SaveDialog_Apply1stTheme, Checked = false };
-                    TaskDialogRadioButton radio_applyDefWindows = new() { Text = Program.Lang.SaveDialog_ApplyDefWindows, Checked = false };
-
-                    TD.RadioButtons.Add(radio_dontapply);
-                    TD.RadioButtons.Add(radio_apply);
-                    TD.RadioButtons.Add(radio_apply1stTheme);
-                    TD.RadioButtons.Add(radio_applyDefWindows);
-
-                    //Cause of a try is to prevent a crash if there is no sound device
-                    try { Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation); } catch { }
-
-                    DialogResult result = DialogResult.Yes;
-                    TaskDialogButton resultButton = TD.ShowDialog();
-
-                    if (resultButton == yesButton)
-                    {
-                        result = DialogResult.Yes;
-                    }
-                    else if (resultButton == noButton)
-                    {
-                        result = DialogResult.No;
-                    }
-                    else if (resultButton == cancelButton)
-                    {
-                        result = DialogResult.Cancel;
+                        Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                        Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                     }
 
-                    TD.Created -= TD_Created;
-
-                    resultButton.Dispose();
-                    yesButton.Dispose();
-                    noButton.Dispose();
-                    cancelButton.Dispose();
-                    TD.Dispose();
-
-                    bool sucess;
-
-                    if (result == DialogResult.Yes)
-                    {
-                        if (System.IO.File.Exists(SaveFileDialog.FileName) || SaveFileDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                        }
-
-                        sucess = true;
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        sucess = true;
-                    }
-                    else
-                    {
-                        sucess = false;
-                    }
-
-                    if (sucess)
-                    {
-                        if (radio_apply.Checked)
-                        {
-                            if (Apply_Theme_Sub is not null) Apply_Theme_Sub();
-                        }
-                        else if (radio_apply1stTheme.Checked)
-                        {
-                            if (Apply_FirstTheme_Sub is not null) Apply_FirstTheme_Sub();
-                        }
-                        else if (radio_applyDefWindows.Checked)
-                        {
-                            if (Apply_DefaultWin_Sub is not null) Apply_DefaultWin_Sub();
-                        }
-                    }
-
-                    return sucess;
+                    sucess = true;
+                }
+                else if (result == DialogResult.No)
+                {
+                    sucess = true;
                 }
                 else
                 {
-                    MsgBoxResult result = Interaction.MsgBox(Program.Lang.SaveDialog_Question, MsgBoxStyle.YesNoCancel | MsgBoxStyle.Question, Application.ProductName);
-                    if (result == MsgBoxResult.Yes)
-                    {
-                        if (System.IO.File.Exists(SaveFileDialog.FileName) || SaveFileDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                            if (Apply_Theme_Sub is not null) Apply_Theme_Sub();
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else if (result == MsgBoxResult.No)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    sucess = false;
                 }
+
+                return sucess;
             }
             else
             {

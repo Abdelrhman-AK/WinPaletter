@@ -1,18 +1,25 @@
-﻿using System;
+﻿using AnimatorNS;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
-using WinPaletter.UI.Retro;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.Tabs
 {
+    /// <summary>
+    /// Tabs container control that can handle multiple TabPages with forms inside them. For better appearance, use it with TabControl of <see cref="UI.WP.TablessControl"/> and forms having <see cref="TitlebarExtender"/>.
+    /// </summary>
     public class TabsContainer : Control
     {
+        /// <summary>
+        /// Initialize TabsContainer
+        /// </summary>
         public TabsContainer()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
@@ -24,6 +31,8 @@ namespace WinPaletter.Tabs
         }
 
         #region Variables
+
+        private bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         private List<TabData> collection = new();
         private Rectangle hoveredRectangle;
@@ -84,6 +93,10 @@ namespace WinPaletter.Tabs
             contextMenu.Items.AddRange(new ToolStripItem[] { closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis, toolStripSeparator, detach, detachAll, detachAllButThis });
         }
 
+        /// <summary>
+        /// Generate a tab page that have form inside, and add it into the tab control
+        /// </summary>
+        /// <param name="form"></param>
         public void AddFormIntoTab(Form form)
         {
             Cursor = Cursors.WaitCursor;
@@ -106,12 +119,15 @@ namespace WinPaletter.Tabs
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
             form.AllowDrop = true;
+            form.WindowState = FormWindowState.Normal;
 
             TP.Text = form.Text;
+            // If there is a bug, make TP.Controls.Add(form); here, not after adding and selecting tab page
             TP.Controls.Add(form);
 
             if (!DesignMode) Program.Animator.HideSync(TabControl);
 
+            // If there is a bug, make form.Show(); here, not after adding and selecting tab page
             form.Show();
 
             forceChangeSelectedIndex = true;
@@ -183,24 +199,26 @@ namespace WinPaletter.Tabs
 
                 foreach (TabPage page in _tabControl.TabPages)
                 {
-                    collection.Add(CreateTabDataTuple(page, i));
+                    collection.Add(CreateTabData(page, i));
 
                     i++;
                 }
             }
         }
 
-        private void RemoveTab(TabData tabData, bool animate = true)
+        private async void RemoveTab(TabData tabData, bool animate = true, bool detach = false)
         {
             bool canAnimate = IndexFromRectangle(tabData.Rectangle) == SelectedIndex && animate;
+
+            tabData.IsRemoving = true;
 
             if (!DesignMode && canAnimate) Program.Animator.HideSync(TabControl);
 
             int SI = SelectedIndex;
 
-            if (tabData.Form != null)
+            if (!detach && tabData.Form != null)
             {
-                tabData.Form?.Close();
+                tabData.Form.Close();
 
                 // Check if the form is successfully closed
                 if (tabData.Form != null && !tabData.Form.IsDisposed)
@@ -211,14 +229,29 @@ namespace WinPaletter.Tabs
                 }
             }
 
-            //if (!canAnimate) AfterRemovingTab(tabData, canAnimate, SI);
-            //else
-            //{
-            //    FluentTransitions.Transition.With(tabData, nameof(tabData.TabTop), Height)
-            //    .HookOnCompletion(() => { })
-            //    .CriticalDamp(TimeSpan.FromMilliseconds(animate ? Program.AnimationDuration_Quick : 1));
-            //}
+            if (!canAnimate) AfterRemovingTab(tabData, canAnimate, SI);
+            else
+            {
+                await Task.Run(() =>
+                {
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(tabData, nameof(tabData.TabTop), Height)
+                        .HookOnCompletion(() => { Invoke(() => AfterRemovingTab(tabData, canAnimate, SI)); })
+                        .CriticalDamp(TimeSpan.FromMilliseconds(animate ? Program.AnimationDuration_Quick : 1));
+                    }
+                    else
+                    {
+                        tabData.TabTop = Height;
+                        AfterRemovingTab(tabData, canAnimate, SI);
+                    }
 
+                });
+            }
+        }
+
+        private void AfterRemovingTab(TabData tabData, bool animate, int SI)
+        {
             collection.Remove(tabData);
 
             UpdateTabPositions(collection);
@@ -241,6 +274,9 @@ namespace WinPaletter.Tabs
             {
                 TabData itemFrom = collection[from];
                 TabData itemTo = collection[to];
+
+                if (itemFrom == null || itemFrom.IsRemoving) return;
+                if (itemTo == null || itemTo.IsRemoving) return;
 
                 collection[from] = itemTo;
                 collection[to] = itemFrom;
@@ -265,6 +301,8 @@ namespace WinPaletter.Tabs
             {
                 TabData itemFrom = collection.ElementAt(from);
 
+                if (itemFrom == null || itemFrom.IsRemoving) return;
+
                 collection.RemoveAt(from);
                 collection.Add(itemFrom);
 
@@ -287,6 +325,8 @@ namespace WinPaletter.Tabs
             if (collection != null)
             {
                 TabData itemFrom = collection[from];
+
+                if (itemFrom == null || itemFrom.IsRemoving) return;
 
                 collection.RemoveAt(from);
                 collection.Insert(0, itemFrom);
@@ -327,7 +367,7 @@ namespace WinPaletter.Tabs
             return Rectangle.Empty;
         }
 
-        private TabData CreateTabDataTuple(TabPage page, int index)
+        private TabData CreateTabData(TabPage page, int index)
         {
             Rectangle tabRectangle = new(index * tabWidth + paddingBetweenTabs, upperTabPadding, tabWidth - paddingBetweenTabs, tabHeight);
             return new TabData(this, page, tabRectangle);
@@ -345,10 +385,26 @@ namespace WinPaletter.Tabs
 
             if (_selectedIndex >= 0 && _selectedIndex < collectionCount)
             {
-                for (int i = 0; i < collectionCount; i++)
+                List<TabData> tabDatas = new(collection);
+                collection.Clear();
+
+                //for (int i = 0; i < collectionCount; i++)
+                //{
+                //    TabData tabData = CreateTabData(_tabControl.TabPages[i], i);
+                //    tabData.Selected = i == _selectedIndex;
+                //    collection.Add(tabData);
+                //}
+
+                int i = 0;
+                foreach (TabData tabData in tabDatas)
                 {
-                    collection[i] = CreateTabDataTuple(collection[i].TabPage, i);
-                    collection[i].Selected = collection[i] == collection[_selectedIndex];
+                    if (tabData != null && tabData.TabPage != null && !tabData.IsRemoving)
+                    {
+                        TabData tabDataX = CreateTabData(tabData.TabPage, i);
+                        tabDataX.Selected = i == _selectedIndex;
+                        collection.Add(tabDataX);
+                        i++;
+                    }
                 }
             }
         }
@@ -375,7 +431,7 @@ namespace WinPaletter.Tabs
                     List<TabData> tabDatas = new(collection);
                     foreach (TabData t in tabDatas)
                     {
-                        t.Selected = collection[_selectedIndex] == t;
+                        t.Selected = collection[_selectedIndex] == t && !t.IsRemoving;
                     }
                 }
                 else
@@ -418,16 +474,19 @@ namespace WinPaletter.Tabs
                 List<TabData> tabDatas = new(collection);
                 foreach (TabData tabData in tabDatas)
                 {
-                    if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
+                    if (!tabData.IsRemoving)
                     {
-                        moveFrom = IndexFromRectangle(tabData.Rectangle);
-                        tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
+                        if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
+                        {
+                            moveFrom = IndexFromRectangle(tabData.Rectangle);
+                            tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
 
-                        break;
-                    }
-                    else
-                    {
-                        locationOldPoint = MousePosition - (Size)FindForm()?.Location;
+                            break;
+                        }
+                        else
+                        {
+                            locationOldPoint = MousePosition - (Size)FindForm()?.Location;
+                        }
                     }
                 }
             }
@@ -593,9 +652,11 @@ namespace WinPaletter.Tabs
         {
             if (tabData.Form != null) DetachForm(tabData.Form);
 
-            RemoveTab(tabData, false);
+            RemoveTab(tabData, false, true);
 
             if (collection.Count == 0) TabControl.FindForm().Visible = false;
+
+            tabData.Form.Visible = true;
         }
 
         private void DetachAllTabs()
@@ -619,7 +680,7 @@ namespace WinPaletter.Tabs
         private void DetachForm(Form form)
         {
             form.Visible = false;
-            if (form.Parent != null && form.Parent is TabPage) form.Parent.Controls.Remove(form);
+            if (form.Parent != null) form.Parent.Controls.Remove(form);
             form.TopLevel = true;
             form.FormBorderStyle = FormBorderStyle.Sizable;
             form.WindowState = FormWindowState.Normal;
@@ -639,14 +700,15 @@ namespace WinPaletter.Tabs
             form.Show();
             ApplyStyle(form);
             form.BringToFront();
-
         }
 
         #endregion
 
         #region Properties
 
-        private TabControl _tabControl;
+        /// <summary>
+        /// Hooked TabControl. It is better to be <see cref="UI.WP.TablessControl"/>
+        /// </summary>
         public TabControl TabControl
         {
             get => _tabControl;
@@ -663,15 +725,17 @@ namespace WinPaletter.Tabs
                 }
             }
         }
+        private TabControl _tabControl;
 
-
-        private int _selectedIndex;
+        /// <summary>
+        /// Selected index of tabs and tabpage in current TabControl
+        /// </summary>
         public int SelectedIndex
         {
             get => _selectedIndex;
             set
             {
-                if (_selectedIndex != value || forceChangeSelectedIndex)
+                if ((_selectedIndex != value || forceChangeSelectedIndex))
                 {
                     forceChangeSelectedIndex = false;
                     _selectedIndex = AdjustSelectedIndex(value);
@@ -681,7 +745,11 @@ namespace WinPaletter.Tabs
                 }
             }
         }
+        private int _selectedIndex;
 
+        /// <summary>
+        /// Selected tab in current TabControl
+        /// </summary>
         public TabPage SelectedTab
         {
             get => _selectedIndex >= 0 && _selectedIndex < collection?.Count
@@ -692,7 +760,7 @@ namespace WinPaletter.Tabs
                 if (_tabControl != null)
                 {
                     _tabControl.SelectedTab = value;
-                    int index = collection.FindIndex(t => t.TabPage == value);
+                    int index = collection.FindIndex(t => t.TabPage == value && !t.IsRemoving);
                     if (index > -1) SelectedIndex = index;
                 }
             }
@@ -702,53 +770,107 @@ namespace WinPaletter.Tabs
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Delegate to FormShown event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void FormShownDelegate(object sender, TabDataEventArgs e);
+
+        /// <summary>
+        /// Associated form in tab is shown
+        /// </summary>
         public event FormShownDelegate FormShown;
 
+        /// <summary>
+        /// Delegate to FormClosed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void FormClosedDelegate(object sender, TabDataEventArgs e);
+
+        /// <summary>
+        /// Associated form in tab is closed
+        /// </summary>
         public event FormClosedDelegate FormClosed;
 
+        /// <summary>
+        /// Delegate to FormTextChanged event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void FormTextChangedDelegate(object sender, TabDataEventArgs e);
+
+        /// <summary>
+        /// Associated form's text in tab is changed
+        /// </summary>
         public event FormTextChangedDelegate FormTextChanged;
 
+        /// <summary>
+        /// Associated form in tab is shown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void OnFormShown(object sender, TabDataEventArgs e)
         {
             FormShown?.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Associated form's text in tab is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void OnFormTextChanged(object sender, TabDataEventArgs e)
         {
             FormTextChanged?.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Associated form in tab is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public virtual void OnFormClosed(object sender, TabDataEventArgs e)
         {
             FormClosed?.Invoke(sender, e);
 
         }
 
-        private void _tabControl_ControlAdded(object sender, ControlEventArgs e)
+        private async void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
             if (_tabControl != null && e.Control is TabPage)
             {
                 TabPage page = e.Control as TabPage;
 
-                collection.Add(CreateTabDataTuple(page, collection.Count));
+                collection.Add(CreateTabData(page, collection.Count));
 
                 collection[collection.Count - 1].TabTop = Height;
 
                 SelectedIndex = collection.Count - 1;
 
-                //FluentTransitions.Transition.With(collection[collection.Count - 1], nameof(TabData.TabTop), upperTabPadding)
-                //    .HookOnCompletion(() =>
-                //    {
-                //        UpdateTabPositions(collection);
-                //        Refresh();
-                //    })
-                //    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-
-                UpdateTabPositions(collection);
-                Refresh();
+                await Task.Run(() =>
+                {
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(collection[collection.Count - 1], nameof(TabData.TabTop), upperTabPadding)
+                            .HookOnCompletion(() =>
+                            {
+                                Invoke(() =>
+                                {
+                                    UpdateTabPositions(collection);
+                                    Refresh();
+                                });
+                            })
+                            .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    }
+                    else
+                    {
+                        collection[collection.Count - 1].TabTop = upperTabPadding;
+                        UpdateTabPositions(collection);
+                        Refresh();
+                    }
+                });
             }
         }
 
@@ -954,17 +1076,28 @@ namespace WinPaletter.Tabs
 
         #endregion
 
+        /// <summary>
+        /// Paint background of control
+        /// </summary>
+        /// <param name="pevent"></param>
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
             base.OnPaintBackground(pevent);
         }
 
+        /// <summary>
+        /// Paint control
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
+
+            // Makes background drawn properly, and transparent
+            InvokePaintBackground(this, e);
 
             if (_tabControl != null)
             {
@@ -985,6 +1118,12 @@ namespace WinPaletter.Tabs
             }
         }
 
+        /// <summary>
+        /// Helper to draw tab element
+        /// </summary>
+        /// <param name="G"></param>
+        /// <param name="tabData"></param>
+        /// <param name="isMoving"></param>
         private void DrawTab(Graphics G, TabData tabData, bool isMoving = false)
         {
             Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(tabNewPoint.X, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);

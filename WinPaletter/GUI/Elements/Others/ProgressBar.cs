@@ -36,7 +36,27 @@ namespace WinPaletter.UI.WP
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (!DesignMode) FormHwnd = FindForm().Handle;
+            if (!DesignMode)
+            {
+                if (FindForm() != null)
+                {
+                    Form form = FindForm();
+
+                    if (form.Parent == null) 
+                    {
+                        FormHwnd = form.Handle;
+                    }
+                    else if (form.Parent is TabPage tabPage && tabPage.Parent != null)
+                    { 
+                        form = tabPage.Parent.FindForm();
+                        if (form != null) FormHwnd = form.Handle; else FormHwnd = Forms.MainFrm.Handle;
+                    }
+                    else
+                    {
+                        FormHwnd = Forms.MainFrm.Handle;
+                    }
+                }
+            }
 
             base.OnHandleCreated(e);
         }

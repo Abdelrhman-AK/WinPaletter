@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
@@ -310,6 +311,23 @@ namespace WinPaletter
             }
         }
 
+        private static ArgsHelp _ArgsHelp;
+        public static ArgsHelp ArgsHelp
+        {
+            get
+            {
+                _ArgsHelp = CreateInstance(_ArgsHelp);
+                return _ArgsHelp;
+            }
+            set
+            {
+                if (value == _ArgsHelp)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _ArgsHelp);
+            }
+        }
 
         private static LicenseForm _LicenseForm;
         public static LicenseForm LicenseForm
@@ -1295,44 +1313,39 @@ namespace WinPaletter
             }
         }
 
-
-        [ThreadStatic()]
-        private static Hashtable m_FormBeingCreated;
+        private static Dictionary<Type, object> formBeingCreated;
 
         [DebuggerHidden()]
-        private static T CreateInstance<T>(T Instance) where T : Form, new()
+        private static T CreateInstance<T>(T instance) where T : Form, new()
         {
-            if (Instance is null || Instance.IsDisposed)
+            if (instance is null || instance.IsDisposed)
             {
-                if (m_FormBeingCreated is not null)
+                formBeingCreated ??= new Dictionary<Type, object>();
+
+                if (formBeingCreated.ContainsKey(typeof(T)))
                 {
-                    if (m_FormBeingCreated.ContainsKey(typeof(T)) == true)
-                    {
-                        throw new InvalidOperationException(Microsoft.VisualBasic.CompilerServices.Utils.GetResourceString("WinForms_RecursiveFormCreate"));
-                    }
+                    throw new InvalidOperationException($"Recursive form creation is not allowed in {nameof(CreateInstance)}<{typeof(T).Name}>.");
                 }
-                else
-                {
-                    m_FormBeingCreated = new();
-                }
-                m_FormBeingCreated.Add(typeof(T), null);
+
+                formBeingCreated[typeof(T)] = null;
+
                 try
                 {
                     return new T();
                 }
                 catch (System.Reflection.TargetInvocationException ex) when (ex.InnerException is not null)
                 {
-                    string BetterMessage = Microsoft.VisualBasic.CompilerServices.Utils.GetResourceString("WinForms_SeeInnerException", ex.InnerException.Message);
-                    throw new InvalidOperationException(BetterMessage, ex.InnerException);
+                    string betterMessage = $"Error creating form: {ex.InnerException.Message}";
+                    throw new InvalidOperationException(betterMessage, ex.InnerException);
                 }
                 finally
                 {
-                    m_FormBeingCreated.Remove(typeof(T));
+                    formBeingCreated.Remove(typeof(T));
                 }
             }
             else
             {
-                return Instance;
+                return instance;
             }
         }
 

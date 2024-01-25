@@ -1,22 +1,40 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.ServiceModel.Dispatcher;
 using System.Windows.Forms;
-using WinPaletter.UI.WP;
 
 namespace WinPaletter.Tabs
 {
+    /// <summary>
+    /// Class that has data of tabs in <see cref="TabsContainer"/>.
+    /// </summary>
     public class TabData : IDisposable
     {
-        IconChangeMessageHandler iconChangeDetector;
+        #region Fields and Properties
 
-        private TabsContainer tabsContainer;
+        /// <summary>
+        /// Icon change message handler.
+        /// </summary>
+        private IconChangeMessageHandler iconChangeDetector;
+
+        /// <summary>
+        /// Tabs container reference.
+        /// </summary>
+        private readonly TabsContainer tabsContainer;
+
+        /// <summary>
+        /// Reference to the associated form's title bar extender.
+        /// </summary>
         private TitlebarExtender TitlebarExtender => Form?.Controls?.OfType<TitlebarExtender>().FirstOrDefault();
 
+        /// <summary>
+        /// Text property for the tab.
+        /// </summary>
         public string Text { get; set; }
 
-        private Rectangle _rectangle = Rectangle.Empty;
+        /// <summary>
+        /// Rectangle property for the tab's location.
+        /// </summary>
         public Rectangle Rectangle
         {
             get => _rectangle;
@@ -26,6 +44,7 @@ namespace WinPaletter.Tabs
                 {
                     _rectangle = value;
 
+                    // Update title bar extender if selected and rectangle is not empty
                     if (TitlebarExtender != null && Selected && _rectangle != Rectangle.Empty)
                     {
                         TitlebarExtender.TabLocation = _rectangle;
@@ -33,32 +52,46 @@ namespace WinPaletter.Tabs
                 }
             }
         }
+        private Rectangle _rectangle = Rectangle.Empty;
 
+        /// <summary>
+        /// Image property for the tab.
+        /// </summary>
         public Bitmap Image { get; set; }
 
+        /// <summary>
+        /// Reference to the associated tab page.
+        /// </summary>
         public TabPage TabPage { get; set; }
 
-        private Form _form = null;
+        /// <summary>
+        /// Reference to the associated form.
+        /// </summary>
         public Form Form
         {
             get => _form;
             private set
             {
-                UnsubscripeEvents();
+                UnsubscribeEvents();
 
                 if (_form != value)
                 {
                     _form = value;
-                    SubscripeEvents();
+                    SubscribeEvents();
                 }
             }
         }
+        private Form _form = null;
 
-        private bool _shown = false;
+        /// <summary>
+        /// Flag indicating whether the form is shown.
+        /// </summary>
         public bool Shown => _shown;
+        private bool _shown = false;
 
-
-        private bool _selected = false;
+        /// <summary>
+        /// Flag indicating whether the tab is selected.
+        /// </summary>
         public bool Selected
         {
             get => _selected;
@@ -67,6 +100,8 @@ namespace WinPaletter.Tabs
                 if (_selected != value)
                 {
                     _selected = value;
+
+                    // Update title bar extender if selected and rectangle is not empty
                     if (TitlebarExtender != null && _selected && _rectangle != Rectangle.Empty)
                     {
                         TitlebarExtender.TabLocation = _rectangle;
@@ -74,7 +109,11 @@ namespace WinPaletter.Tabs
                 }
             }
         }
+        private bool _selected = false;
 
+        /// <summary>
+        /// Property representing the top position of the tab.
+        /// </summary>
         public int TabTop
         {
             get => Rectangle.Top;
@@ -88,7 +127,77 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void SubscripeEvents()
+        /// <summary>
+        /// Flag indicating whether the tab is being removed.
+        /// </summary>
+        public bool IsRemoving
+        {
+            get => _isRemoving;
+            set
+            {
+                if (value != _isRemoving)
+                {
+                    _isRemoving = value;
+                }
+            }
+        }
+        private bool _isRemoving = false;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="tabsContainer">Tabs container reference.</param>
+        /// <param name="tabPage">Reference to the associated tab page.</param>
+        /// <param name="rectangle">Rectangle property for the tab's location.</param>
+        public TabData(TabsContainer tabsContainer, TabPage tabPage, Rectangle rectangle)
+        {
+            this.tabsContainer = tabsContainer;
+            TabPage = tabPage;
+            Form = TabPage?.Controls?.OfType<Form>().FirstOrDefault();
+            Text = tabPage.Text;
+            Rectangle = rectangle;
+            Image = new Icon(Form?.Icon ?? Forms.MainFrm.Icon, 16, 16).ToBitmap();
+        }
+
+        #endregion
+
+        #region Events and Delegates
+
+        /// <summary>
+        /// Delegate void for icon change.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void IconChangedDelegate(object sender, TabDataEventArgs e);
+
+        /// <summary>
+        /// Event for icon change.
+        /// </summary>
+        public event IconChangedDelegate IconChanged;
+
+        /// <summary>
+        /// Event handler for icon change.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void OnIconChanged(TabDataEventArgs e)
+        {
+            IconChanged?.Invoke(this, e);
+            Image = Form?.Icon.ToBitmap() ?? Forms.MainFrm.Icon.ToBitmap();
+            tabsContainer?.Refresh();
+        }
+
+        #endregion
+
+        #region Event Subscription and Unsubscription
+
+        /// <summary>
+        /// Subscribe to form events.
+        /// </summary>
+        private void SubscribeEvents()
         {
             if (_form != null)
             {
@@ -100,7 +209,10 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void UnsubscripeEvents()
+        /// <summary>
+        /// Unsubscribe from form events.
+        /// </summary>
+        private void UnsubscribeEvents()
         {
             if (_form != null)
             {
@@ -108,10 +220,19 @@ namespace WinPaletter.Tabs
                 _form.TextChanged -= _form_TextChanged;
                 _form.FormClosed -= _form_FormClosed;
 
-                iconChangeDetector.Dispose();
+                iconChangeDetector?.Dispose();
             }
         }
 
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Event handler for form shown.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         private void _form_Shown(object sender, EventArgs e)
         {
             _shown = true;
@@ -119,87 +240,154 @@ namespace WinPaletter.Tabs
             tabsContainer.Refresh();
         }
 
+        /// <summary>
+        /// Event handler for form text changed.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         private void _form_TextChanged(object sender, EventArgs e)
         {
             Text = _form.Text;
-            tabsContainer.OnFormTextChanged(_form, new TabDataEventArgs(this));
-            tabsContainer.Refresh();
-        }
-
-        private void _form_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            _shown = false;
-            ((Form)sender).Parent?.Dispose();
-            tabsContainer.OnFormClosed(_form, new TabDataEventArgs(this));
-        }
-
-        public delegate void IconChangedDelegate(object sender, TabDataEventArgs e);
-        public event IconChangedDelegate IconChanged;
-
-        public virtual void OnIconChanged(TabDataEventArgs e)
-        {
-            IconChanged?.Invoke(this, e);
-            Image = Form?.Icon.ToBitmap() ?? Forms.MainFrm.Icon.ToBitmap();
-            tabsContainer?.Refresh();
+            tabsContainer?.OnFormTextChanged(_form, new TabDataEventArgs(this));
+            tabsContainer?.Invalidate(this.Rectangle);
         }
 
         /// <summary>
-        /// Create an instance of TabData
+        /// Event handler for form closed.
         /// </summary>
-        /// <param name="tabPage"></param>
-        /// <param name="rectangle"></param>
-        public TabData(TabsContainer tabsContainer, TabPage tabPage, Rectangle rectangle)
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
+        private void _form_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.tabsContainer = tabsContainer;
-            TabPage = tabPage;
-            Form = TabPage?.Controls?.OfType<Form>().FirstOrDefault();
-            Text = tabPage.Text;
-            Rectangle = rectangle;
-            Image = new Icon(Form?.Icon ?? Forms.MainFrm.Icon, 16, 16).ToBitmap();
+            _shown = false;
+            if ((sender as Form).Parent is not null)
+            {
+                if ((sender as Form).Parent is TabPage tabPage && tabPage != null && tabPage.Parent != null) Program.Animator.HideSync(tabPage?.Parent);
+
+                ((Form)sender).Parent?.Dispose();
+            }
+
+            tabsContainer.OnFormClosed(_form, new TabDataEventArgs(this));
         }
 
+        #endregion
+
+        #region IDisposable Implementation
+
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose()
         {
-            UnsubscripeEvents();
+            UnsubscribeEvents();
+
+            TabPage?.Dispose();
+            Image?.Dispose();
         }
 
+        #endregion
     }
 
+    /// <summary>
+    /// Event arguments for tab data events.
+    /// </summary>
     public class TabDataEventArgs : EventArgs
     {
+        /// <summary>
+        /// TabData associated with the event.
+        /// </summary>
         public TabData TabData { get; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="tabData">TabData associated with the event.</param>
         public TabDataEventArgs(TabData tabData)
         {
             TabData = tabData;
         }
     }
 
+    /// <summary>
+    /// Handles the WM_SETICON message for icon changes.
+    /// </summary>
     public class IconChangeMessageHandler : NativeWindow, IDisposable
     {
+        #region Constants
+
+        /// <summary>
+        /// Windows message constant for setting the icon.
+        /// </summary>
         private const int WM_SETICON = 0x80;
 
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// Reference to the TabData.
+        /// </summary>
         private TabData TabData;
 
+        /// <summary>
+        /// Last known icon handle.
+        /// </summary>
+        private IntPtr lastIconHandle = IntPtr.Zero;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="handle">Handle to the window.</param>
+        /// <param name="tabData">Reference to the associated TabData.</param>
         public IconChangeMessageHandler(IntPtr handle, TabData tabData)
         {
             this.TabData = tabData;
             AssignHandle(handle);
         }
 
+        #endregion
+
+        #region NativeWindow Overrides
+
+        /// <summary>
+        /// Overrides the window procedure to handle WM_SETICON message.
+        /// </summary>
+        /// <param name="m">Message object.</param>
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
 
+            // Check for the WM_SETICON message
             if (m.Msg == WM_SETICON)
             {
-                TabData.OnIconChanged(new(TabData));
+                // Get the current icon handle
+                IntPtr currentIconHandle = NativeMethods.User32.SendMessage(Handle, 0x7F /*WM_GETICON*/, (IntPtr)1, IntPtr.Zero);
+
+                // If the icon handle has changed, trigger the OnIconChanged event
+                if (lastIconHandle == IntPtr.Zero || lastIconHandle != currentIconHandle)
+                {
+                    lastIconHandle = currentIconHandle;
+                    TabData.OnIconChanged(new(TabData));
+                }
             }
         }
 
+        #endregion
+
+        #region IDisposable Implementation
+
+        /// <summary>
+        /// Disposes the IconChangeMessageHandler.
+        /// </summary>
         public void Dispose()
         {
             ReleaseHandle();
         }
+
+        #endregion
     }
 }

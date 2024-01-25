@@ -95,6 +95,10 @@
       <HintPath>packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CommandLine, Version=2.9.1.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.9.1\lib\net461\CommandLine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Cyotek.Windows.Forms.ColorPicker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.2.0.0-beta.7\lib\net472\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
@@ -260,6 +264,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Accessibility_Vision.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\Banners.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Banners.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\CMD_Raster.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,6 +333,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WinVistaPreview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ArgsHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ArgsHelp.Designer.cs">
+      <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
@@ -399,7 +414,6 @@
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
     <Compile Include="Languages\Localizer\Strings\General\PaletteGenerator.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\SaveDialog.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Animation.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\CubicBezierTimingFunction.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Margins.cs" />
@@ -461,7 +475,6 @@
     <Compile Include="Languages\Localizer\Strings\Features\WinTerminals.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\W10xLegends.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\Store.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\ColorPicker.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Converter.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Users.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Services.cs" />
@@ -475,7 +488,7 @@
     <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Applying.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Messages.cs" />
     <Compile Include="Languages\Localizer\Strings\General\WindowsEditions.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\General.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\AppGeneral.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BitmapOps.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\EOANIWriter.cs" />
@@ -1164,6 +1177,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Banners.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Banners.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets\CMD_Raster.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CMD_Raster.Designer.cs</LastGenOutput>
@@ -1215,6 +1232,9 @@
     <EmbeddedResource Include="Assets\WinVistaPreview.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinVistaPreview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
+      <DependentUpon>ArgsHelp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

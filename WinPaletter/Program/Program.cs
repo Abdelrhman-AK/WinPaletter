@@ -93,7 +93,7 @@ namespace WinPaletter
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                ExecuteArgs_ProgramStarted(e.CommandLine.Skip(1).ToArray());
+                ExecuteArgs(e.CommandLine.ToArray(), false);
                 wic.Undo();
             }
         }

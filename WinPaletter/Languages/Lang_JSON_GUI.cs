@@ -359,9 +359,9 @@ namespace WinPaletter
                         {
                             Name = ctrl.Name,
                             Text = ctrl.Text,
-                            Text_English = OriginalForm.Controls.Find(ctrl.Name, true).First().Text,
+                            Text_English = !string.IsNullOrEmpty(ctrl.Name) ? OriginalForm.Controls.Find(ctrl.Name, true).FirstOrDefault()?.Text ?? string.Empty : string.Empty,
                             Tag = ctrl.Tag ?? string.Empty,
-                            Tag_English = (string)(OriginalForm.Controls.Find(ctrl.Name, true).First().Tag ?? string.Empty),
+                            Tag_English = !string.IsNullOrEmpty(ctrl.Name) ? (OriginalForm.Controls.Find(ctrl.Name, true).FirstOrDefault()?.Tag as string ?? string.Empty) : string.Empty,
                             Anchor = ctrl.Anchor,
                             Padding = ctrl.Padding,
                             Font = ctrl.Font,
@@ -372,46 +372,34 @@ namespace WinPaletter
                             Location = ctrl.Location
                         };
 
-                        if (ctrl is Label)
+                        if (ctrl is Label label)
                         {
-                            {
-                                Label temp = (Label)ctrl;
-                                c.TextAlign = temp.TextAlign;
-                                c.ImageAlign = temp.ImageAlign;
-                                c.TextImageRelation = TextImageRelation.ImageBeforeText;
-                            }
+                            c.TextAlign = label.TextAlign;
+                            c.ImageAlign = label.ImageAlign;
+                            c.TextImageRelation = TextImageRelation.ImageBeforeText;
                         }
 
-                        else if (ctrl is UI.WP.Button)
+                        else if (ctrl is UI.WP.Button button)
                         {
-                            {
-                                UI.WP.Button temp1 = (UI.WP.Button)ctrl;
-                                c.TextAlign = temp1.TextAlign;
-                                c.ImageAlign = temp1.ImageAlign;
-                                c.Image = temp1.Image;
-                                c.TextImageRelation = temp1.TextImageRelation;
-                            }
+                            c.TextAlign = button.TextAlign;
+                            c.ImageAlign = button.ImageAlign;
+                            c.Image = button.Image;
+                            c.TextImageRelation = button.TextImageRelation;
                         }
 
-                        else if (ctrl is Button)
+                        else if (ctrl is Button wf_button)
                         {
-                            {
-                                Button temp2 = (Button)ctrl;
-                                c.TextAlign = temp2.TextAlign;
-                                c.ImageAlign = temp2.ImageAlign;
-                                c.Image = temp2.Image;
-                                c.TextImageRelation = temp2.TextImageRelation;
-                            }
+                            c.TextAlign = wf_button.TextAlign;
+                            c.ImageAlign = wf_button.ImageAlign;
+                            c.Image = wf_button.Image;
+                            c.TextImageRelation = wf_button.TextImageRelation;
                         }
 
-                        else if (ctrl is UI.WP.RadioImage)
+                        else if (ctrl is UI.WP.RadioImage radioImage)
                         {
-                            {
-                                UI.WP.RadioImage temp3 = (UI.WP.RadioImage)ctrl;
-                                c.Text = !string.IsNullOrWhiteSpace(temp3.Text) ? temp3.Text : string.Empty;
-                                c.Image = temp3.Image;
-                                c.TextImageRelation = temp3.TextImageRelation;
-                            }
+                            c.Text = !string.IsNullOrWhiteSpace(radioImage.Text) ? radioImage.Text : string.Empty;
+                            c.Image = radioImage.Image;
+                            c.TextImageRelation = radioImage.TextImageRelation;
                         }
 
                         else if (ctrl is UI.WP.CheckBox || ctrl is UI.WP.RadioButton)
@@ -419,13 +407,10 @@ namespace WinPaletter
                             c.TextAlign = ContentAlignment.MiddleLeft;
                         }
 
-                        else if (ctrl is UI.WP.AlertBox)
+                        else if (ctrl is UI.WP.AlertBox alertBox)
                         {
-                            {
-                                UI.WP.AlertBox temp4 = (UI.WP.AlertBox)ctrl;
-                                c.Image = null;
-                                c.TextAlign = ContentAlignment.MiddleLeft;
-                            }
+                            c.Image = null;
+                            c.TextAlign = ContentAlignment.MiddleLeft;
                         }
 
 
@@ -436,7 +421,6 @@ namespace WinPaletter
 
                     else if (Condition3)
                     {
-
                         PictureBox c = new()
                         {
                             Name = ctrl.Name,
@@ -449,12 +433,11 @@ namespace WinPaletter
                             Margin = ctrl.Margin,
                             RightToLeft = ctrl.RightToLeft,
                             Location = ctrl.Location,
-                            Image = ((PictureBox)ctrl).Image,
-                            SizeMode = ((PictureBox)ctrl).SizeMode
+                            Image = (ctrl as PictureBox).Image,
+                            SizeMode = (ctrl as PictureBox).SizeMode
                         };
 
                         To.Controls.Add(c);
-
                     }
 
                 }
@@ -702,7 +685,6 @@ namespace WinPaletter
 
         private void Lang_JSON_GUI_Load(object sender, EventArgs e)
         {
-
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
             Icon = Forms.Lang_JSON_Manage.Icon;
@@ -935,6 +917,11 @@ namespace WinPaletter
         private void Button14_Click(object sender, EventArgs e)
         {
             Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation");
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
         }
     }
 }

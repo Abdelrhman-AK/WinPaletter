@@ -14,8 +14,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
 
             G.TextRenderingHint = Program.Style.RenderingHint;

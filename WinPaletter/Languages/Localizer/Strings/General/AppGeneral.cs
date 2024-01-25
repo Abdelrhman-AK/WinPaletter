@@ -54,7 +54,8 @@
         public string Dark { get; set; } = "Dark";
         public string Light { get; set; } = "Light";
         public string System_ { get; set; } = "System";
-        public string ApplyingMode_ErrorDialog { get; set; } = "You can continue, the theme has been applied without these elements"; 
-        public string LoadingMode_ErrorDialog { get; set; } = "You can continue, the theme has been loaded without these elements";
+        public string ApplyingMode_ErrorDialog { get; set; } = "You can continue; the theme has been applied without these elements";
+        public string LoadingMode_ErrorDialog { get; set; } = "You can continue; the theme has been loaded without these elements";
+
     }
 }

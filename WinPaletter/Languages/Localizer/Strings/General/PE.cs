@@ -7,7 +7,8 @@
         public string PE_ResourceType { get; set; } = "Type";
         public string PE_ResourceID { get; set; } = "ID";
         public string PE_ResourceLanguageCode { get; set; } = "Language code";
-        public string PE_RunSFCinCMD_Node { get; set; } = "Run this in Command Prompt as administrator to restore PE file integrity (health)";
-        public string PE_DontForgetToRestart { get; set; } = "Don't forget to restart your Windows after that to complete restoring PE file integrity";
+        public string PE_RunSFCinCMD_Node { get; set; } = "Run this in Command Prompt as an administrator to restore PE file integrity (health)";
+        public string PE_DontForgetToRestart { get; set; } = "Don't forget to restart your Windows after that to complete restoring PE file integrity.";
+
     }
 }

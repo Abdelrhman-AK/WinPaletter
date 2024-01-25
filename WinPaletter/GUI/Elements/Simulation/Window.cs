@@ -814,7 +814,7 @@ namespace WinPaletter.UI.Simulation
         {
             if (!DesignMode && EnableEditingColors)
             {
-                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10) && TitlebarRect.Contains(e.Location);
+                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10) && TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
                 CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
                   Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
                 Refresh();
@@ -824,9 +824,8 @@ namespace WinPaletter.UI.Simulation
             {
                 if (isMoving_Grip_topCenter)
                 {
-                    Metrics_CaptionHeight = e.Location.Y - (_Metrics_PaddedBorderWidth + _Metrics_BorderWidth + (int)(GripSize * 0.5));
+                    Metrics_CaptionHeight = e.Location.Y - (_Metrics_PaddedBorderWidth + _Metrics_BorderWidth) - GripSize * 2;
                 }
-
                 if (isMoving_Grip_padding_left)
                 {
                     Metrics_PaddedBorderWidth = (e.Location.X - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;

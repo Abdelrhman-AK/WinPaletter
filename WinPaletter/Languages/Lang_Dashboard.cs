@@ -39,7 +39,8 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.Lang_JSON_GUI.ShowDialog();
+            Close();
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Lang_JSON_GUI);
         }
     }
 }

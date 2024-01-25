@@ -24,6 +24,19 @@ namespace WinPaletter.UI.Retro
         private Color buttonLight = Color.FromArgb(192, 192, 192);
         private int lineSize = 6;
 
+        public new Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                if (base.BackColor != value)
+                {
+                    base.BackColor = value;
+                    Refresh();
+                }
+            }
+        }
+
         public Color WindowFrame
         {
             get { return windowFrame; }

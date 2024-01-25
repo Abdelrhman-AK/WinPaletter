@@ -75,7 +75,7 @@
             this.btn_apply.Image = ((System.Drawing.Image)(resources.GetObject("btn_apply.Image")));
             this.btn_apply.ImageAsVector = false;
             this.btn_apply.ImageVector = null;
-            this.btn_apply.Location = new System.Drawing.Point(512, 6);
+            this.btn_apply.Location = new System.Drawing.Point(498, 6);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(115, 36);
             this.btn_apply.TabIndex = 213;
@@ -111,7 +111,7 @@
             this.btn_cancel.Image = null;
             this.btn_cancel.ImageAsVector = false;
             this.btn_cancel.ImageVector = null;
-            this.btn_cancel.Location = new System.Drawing.Point(426, 6);
+            this.btn_cancel.Location = new System.Drawing.Point(412, 6);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(80, 36);
             this.btn_cancel.TabIndex = 212;
@@ -148,9 +148,9 @@
             this.btn_load_into_theme.Image = ((System.Drawing.Image)(resources.GetObject("btn_load_into_theme.Image")));
             this.btn_load_into_theme.ImageAsVector = false;
             this.btn_load_into_theme.ImageVector = null;
-            this.btn_load_into_theme.Location = new System.Drawing.Point(633, 6);
+            this.btn_load_into_theme.Location = new System.Drawing.Point(619, 6);
             this.btn_load_into_theme.Name = "btn_load_into_theme";
-            this.btn_load_into_theme.Size = new System.Drawing.Size(245, 36);
+            this.btn_load_into_theme.Size = new System.Drawing.Size(260, 36);
             this.btn_load_into_theme.TabIndex = 211;
             this.btn_load_into_theme.Text = "0";
             this.btn_load_into_theme.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;

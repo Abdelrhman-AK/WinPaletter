@@ -3099,8 +3099,8 @@ namespace WinPaletter
             this.label75.Name = "label75";
             this.label75.Size = new System.Drawing.Size(705, 34);
             this.label75.TabIndex = 18;
-            this.label75.Text = "When restoring the default startup sound, perform an SFC scan on imageres.dll to " +
-    "ensure its integrity (health) after Windows restart";
+            this.label75.Text = "Always ignore PE resources modification dialog alert and do the following action " +
+    "on PE file resources without showing this alert";
             this.label75.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toggle16

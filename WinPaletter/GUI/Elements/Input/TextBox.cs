@@ -24,15 +24,16 @@ namespace WinPaletter.UI.WP
                 ReadOnly = _ReadOnly,
                 UseSystemPasswordChar = _UseSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
-                Location = new(1, 0),
-                Width = Width,
                 Cursor = Cursors.IBeam,
-                ScrollBars = Scrollbars,
-                WordWrap = WordWrap,
-                Height = _Multiline ? Height - 8 : Height + 8
+                ScrollBars = _Scrollbars,
+                WordWrap = _WordWrap,
             };
 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            alpha = 0;
+
+            SetTBSizes();
+
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             UpdateStyles();
 
             BackColor = Color.Transparent;
@@ -40,55 +41,50 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
+
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        public System.Windows.Forms.TextBox _TB;
-
-        private System.Windows.Forms.TextBox TB
+        public System.Windows.Forms.TextBox TB
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
-            get
-            {
-                return _TB;
-            }
+            get => tb;
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
             {
-                if (_TB != null)
+                if (tb != null)
                 {
-                    _TB.MouseDown -= TB_MouseDown;
-                    _TB.MouseEnter -= TB_MouseEnter;
-                    _TB.MouseUp -= TB_MouseEnter;
-                    _TB.MouseLeave -= TB_MouseLeave;
-                    _TB.LostFocus -= TB_LostFocus;
+                    tb.MouseDown -= TB_MouseDown;
+                    tb.MouseEnter -= TB_MouseEnter;
+                    tb.MouseUp -= TB_MouseUp;
+                    tb.MouseLeave -= TB_MouseLeave;
+                    tb.LostFocus -= TB_LostFocus;
+                    tb.TextChanged -= OnBaseTextChanged;
+                    tb.KeyDown -= OnBaseKeyDown;
+                    tb.KeyPress -= OnKeyPress;
                 }
 
-                _TB = value;
-                if (_TB != null)
+                tb = value;
+
+                if (tb != null)
                 {
-                    _TB.MouseDown += TB_MouseDown;
-                    _TB.MouseEnter += TB_MouseEnter;
-                    _TB.MouseUp += TB_MouseEnter;
-                    _TB.MouseLeave += TB_MouseLeave;
-                    _TB.LostFocus += TB_LostFocus;
+                    tb.MouseDown += TB_MouseDown;
+                    tb.MouseEnter += TB_MouseEnter;
+                    tb.MouseUp += TB_MouseUp;
+                    tb.MouseLeave += TB_MouseLeave;
+                    tb.LostFocus += TB_LostFocus;
+                    tb.TextChanged += OnBaseTextChanged;
+                    tb.KeyDown += OnBaseKeyDown;
+                    tb.KeyPress += OnKeyPress;
                 }
             }
         }
-
-        private MouseState State = MouseState.None;
-
-        public enum MouseState : byte
-        {
-            None = 0,
-            Over = 1,
-            Down = 2,
-            Block = 3
-        }
+        private System.Windows.Forms.TextBox tb;
 
         #endregion
 
         #region Properties
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public override Color BackColor { get; set; }
 
@@ -103,7 +99,7 @@ namespace WinPaletter.UI.WP
                 if (value != _TextAlign)
                 {
                     _TextAlign = value;
-                    if (TB is not null) { TB.TextAlign = value; }
+                    if (tb is not null) { tb.TextAlign = value; }
                 }
             }
         }
@@ -119,7 +115,7 @@ namespace WinPaletter.UI.WP
                 if (value != _MaxLength)
                 {
                     _MaxLength = value;
-                    if (TB is not null) { TB.MaxLength = value; }
+                    if (tb is not null) { tb.MaxLength = value; }
                 }
             }
         }
@@ -135,7 +131,7 @@ namespace WinPaletter.UI.WP
                 if (value != _ReadOnly)
                 {
                     _ReadOnly = value;
-                    if (TB is not null) { TB.ReadOnly = value; }
+                    if (tb is not null) { tb.ReadOnly = value; }
                 }
             }
         }
@@ -151,7 +147,7 @@ namespace WinPaletter.UI.WP
                 if (value != _UseSystemPasswordChar)
                 {
                     _UseSystemPasswordChar = value;
-                    if (TB is not null) { TB.UseSystemPasswordChar = value; }
+                    if (tb is not null) { tb.UseSystemPasswordChar = value; }
                 }
             }
         }
@@ -169,15 +165,15 @@ namespace WinPaletter.UI.WP
                     _Multiline = value;
                     if (TB is not null)
                     {
-                        TB.Multiline = value;
+                        tb.Multiline = value;
 
                         if (value)
                         {
-                            TB.Height = Height - 8;
+                            tb.Height = Height - 8;
                         }
                         else
                         {
-                            Height = TB.Height + 8;
+                            Height = tb.Height + 8;
                         }
                     }
                 }
@@ -198,7 +194,7 @@ namespace WinPaletter.UI.WP
                 if (value != base.Text)
                 {
                     base.Text = value;
-                    if (TB is not null) { TB.Text = value; }
+                    if (TB is not null) { tb.Text = value; }
                 }
             }
         }
@@ -212,16 +208,10 @@ namespace WinPaletter.UI.WP
                 if (value != base.Font)
                 {
                     base.Font = value;
-                    if (TB is not null)
+                    if (tb is not null)
                     {
-                        TB.Font = value;
-                        TB.Location = new(3, 4);
-                        TB.Width = Width;
-
-                        if (!_Multiline)
-                        {
-                            Height = TB.Height + 8;
-                        }
+                        tb.Font = value;
+                        SetTBSizes();
                     }
                 }
             }
@@ -236,7 +226,7 @@ namespace WinPaletter.UI.WP
                 if (value != _Scrollbars)
                 {
                     _Scrollbars = value;
-                    TB.ScrollBars = value;
+                    tb.ScrollBars = value;
                 }
             }
         }
@@ -250,54 +240,56 @@ namespace WinPaletter.UI.WP
                 if (value != _WordWrap)
                 {
                     _WordWrap = value;
-                    TB.WordWrap = value;
+                    tb.WordWrap = value;
                 }
             }
         }
 
         public int SelectionStart
         {
-            get => TB.SelectionStart;
+            get => tb.SelectionStart;
             set
             {
-                if (value != TB.SelectionStart) { TB.SelectionStart = value; }
+                if (value != tb.SelectionStart) { tb.SelectionStart = value; }
             }
         }
 
         public int SelectionLength
         {
-            get => TB.SelectionLength;
+            get => tb.SelectionLength;
             set
             {
-                if (value != TB.SelectionLength) { TB.SelectionLength = value; }
+                if (value != tb.SelectionLength) { tb.SelectionLength = value; }
             }
         }
 
         public string SelectedText
         {
-            get => TB.SelectedText;
+            get => tb.SelectedText;
             set
             {
-                if (value != TB.SelectedText) { TB.SelectedText = value; }
+                if (value != tb.SelectedText) { tb.SelectedText = value; }
             }
         }
 
-
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
         #endregion
 
         #region Events/Overrides
+
+        void SetTBSizes()
+        {
+            tb.Location = new(4, 4);
+            tb.Width = Width - tb.Location.X * 2;
+
+            if (_Multiline)
+            {
+                tb.Height = Height - 8;
+            }
+            else
+            {
+                Height = tb.Height + 8;
+            }
+        }
 
         public event KeyboardPressEventHandler KeyboardPress;
 
@@ -305,29 +297,26 @@ namespace WinPaletter.UI.WP
 
         protected override void OnCreateControl()
         {
-            if (!Controls.Contains(TB))
-            {
-                Controls.Add(TB);
-            }
+            if (!Controls.Contains(TB)) Controls.Add(TB);
 
             base.OnCreateControl();
         }
 
         private void OnBaseTextChanged(object s, EventArgs e)
         {
-            Text = TB.Text;
+            Text = tb.Text;
         }
 
         private void OnBaseKeyDown(object s, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
             {
-                TB.SelectAll();
+                tb.SelectAll();
                 e.SuppressKeyPress = true;
             }
             if (e.Control && e.KeyCode == Keys.C)
             {
-                TB.Copy();
+                tb.Copy();
                 e.SuppressKeyPress = true;
             }
         }
@@ -339,25 +328,13 @@ namespace WinPaletter.UI.WP
 
         protected override void OnResize(EventArgs e)
         {
-            TB.Location = new(4, 4);
-            TB.Width = Width - TB.Location.X * 2;
-
-            if (_Multiline)
-            {
-                TB.Height = Height - 8;
-            }
-            else
-            {
-                Height = TB.Height + 8;
-            }
+            SetTBSizes();
 
             base.OnResize(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            State = MouseState.Down;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
@@ -366,160 +343,75 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            State = MouseState.Over;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
-            TB.Focus();
+            tb.Focus();
 
             base.OnMouseUp(e);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            State = MouseState.Over;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
-
 
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            State = MouseState.None;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
-
 
             base.OnMouseLeave(e);
         }
 
         private void TB_MouseDown(object sender, MouseEventArgs e)
         {
-            State = MouseState.Down;
-
-
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 0; }
+            OnMouseDown(e);
         }
 
         private void TB_MouseEnter(object sender, EventArgs e)
         {
-            State = MouseState.Over;
+            OnMouseEnter(e);
+        }
 
-
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 255; }
+        private void TB_MouseUp(object sender, MouseEventArgs e)
+        {
+            OnMouseUp(e);
         }
 
         private void TB_MouseLeave(object sender, EventArgs e)
         {
-            State = MouseState.None;
-
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 0; }
+            OnMouseLeave(e);
         }
 
         private void TB_LostFocus(object sender, EventArgs e)
         {
-            State = MouseState.None;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            alpha = 0;
-
-            if (!DesignMode)
-            {
-                if (FindForm() != null)
-                {
-                    FindForm().Activated += Form_Activated;
-                    FindForm().Deactivate += Form_Deactivate; ;
-                }
-
-                try
-                {
-                    TB.TextChanged += OnBaseTextChanged;
-                    TB.KeyDown += OnBaseKeyDown;
-                    TB.KeyPress += OnKeyPress;
-                }
-                catch { }
-            }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            if (!DesignMode)
-            {
-                if (FindForm() != null)
-                {
-                    FindForm().Activated -= Form_Activated;
-                    FindForm().Deactivate -= Form_Deactivate; ;
-                }
-
-                try
-                {
-                    TB.TextChanged -= OnBaseTextChanged;
-                    TB.KeyDown -= OnBaseKeyDown;
-                    TB.KeyPress -= OnKeyPress;
-                }
-                catch { }
-            }
-
-            base.OnHandleDestroyed(e);
-        }
-
         protected override void OnForeColorChanged(EventArgs e)
         {
-            TB.ForeColor = ForeColor;
-            Refresh();
+            tb.ForeColor = ForeColor;
 
             base.OnForeColorChanged(e);
-        }
-
-        private void Form_Activated(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 255;
-            }
-        }
-
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 100;
-            }
         }
 
         #endregion
 
         #region Animator
+
         private int _alpha = 0;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -530,8 +422,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
 
             //Makes background drawn properly, and transparent
@@ -540,7 +430,7 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = Program.Style.RenderingHint;
 
             Rectangle OuterRect = new(0, 0, Width - 1, Height - 1);
             Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
@@ -548,15 +438,15 @@ namespace WinPaletter.UI.WP
             Color Line = scheme.Colors.Line_Checked;
             Color LineHover = scheme.Colors.Back_Hover;
             Color FadeInColor = Color.FromArgb(alpha, Line);
-            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), LineHover);
+            Color FadeOutColor = Color.FromArgb(alpha, LineHover);
 
-            if (TB.Focused | Focused)
+            if (tb.Focused | Focused)
             {
                 G.FillRoundedRect(scheme.Brushes.Back_Checked, OuterRect);
 
                 G.DrawRoundedRect_LikeW11(scheme.Pens.Line_Checked_Hover, OuterRect);
 
-                _TB.BackColor = scheme.Colors.Back_Checked;
+                tb.BackColor = scheme.Colors.Back_Checked;
             }
 
             else
@@ -571,10 +461,8 @@ namespace WinPaletter.UI.WP
 
                 using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
-                _TB.BackColor = scheme.Colors.Back_Level2;
+                tb.BackColor = scheme.Colors.Back_Level2;
             }
-
-            base.OnPaint(e);
         }
     }
 }

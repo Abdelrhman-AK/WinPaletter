@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -55,10 +56,45 @@ namespace WinPaletter
 
             LoadData();
 
-            foreach (UI.WP.Button button in titlebarExtender2.Controls.OfType<UI.WP.Button>())
+            foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
                 button.MouseEnter += (s, e) => tip_label.Text = (s as UI.WP.Button).Tag as string;
                 button.MouseLeave += (s, e) => tip_label.Text = string.Empty;
+            }
+
+            switch (Program.WindowStyle)
+            {
+                case WindowStyle.W12:
+                    card1.Image = Assets.Banners.Win12;
+                    return;
+
+                case WindowStyle.W11:
+                    card1.Image = Assets.Banners.Win11;
+                    return;
+
+                case WindowStyle.W10:
+                    card1.Image = Assets.Banners.Win10;
+                    return;
+
+                case WindowStyle.W81:
+                    card1.Image = Assets.Banners.Win81;
+                    return;
+
+                case WindowStyle.W7:
+                    card1.Image = Assets.Banners.WinOld;
+                    return;
+
+                case WindowStyle.WVista:
+                    card1.Image = Assets.Banners.WinOld;
+                    return;
+
+                case WindowStyle.WXP:
+                    card1.Image = Assets.Banners.WinOld;
+                    return;
+
+                default:
+                    card1.Image = Assets.Banners.Win12;
+                    return;
             }
         }
 
@@ -418,6 +454,7 @@ namespace WinPaletter
             if (_shown && winXP.Checked)
             {
                 Program.WindowStyle = WindowStyle.WXP;
+                card1.Image = Assets.Banners.WinOld;
             }
         }
 
@@ -426,6 +463,7 @@ namespace WinPaletter
             if (_shown && winVista.Checked)
             {
                 Program.WindowStyle = WindowStyle.WVista;
+                card1.Image = Assets.Banners.WinOld;
             }
         }
 
@@ -434,6 +472,7 @@ namespace WinPaletter
             if (_shown && win7.Checked)
             {
                 Program.WindowStyle = WindowStyle.W7;
+                card1.Image = Assets.Banners.WinOld;
             }
         }
 
@@ -442,6 +481,7 @@ namespace WinPaletter
             if (_shown && win81.Checked)
             {
                 Program.WindowStyle = WindowStyle.W81;
+                card1.Image = Assets.Banners.Win81;
             }
         }
 
@@ -450,6 +490,7 @@ namespace WinPaletter
             if (_shown && win10.Checked)
             {
                 Program.WindowStyle = WindowStyle.W10;
+                card1.Image = Assets.Banners.Win10;
             }
         }
 
@@ -458,6 +499,7 @@ namespace WinPaletter
             if (_shown && win11.Checked)
             {
                 Program.WindowStyle = WindowStyle.W11;
+                card1.Image = Assets.Banners.Win11;
             }
         }
 
