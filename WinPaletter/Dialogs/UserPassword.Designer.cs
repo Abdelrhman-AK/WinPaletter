@@ -57,11 +57,13 @@ namespace WinPaletter.Dialogs
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button1.CustomColor = System.Drawing.Color.Empty;
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(151)))), ((int)(((byte)(206)))));
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Image = null;
+            this.button1.ImageAsVector = true;
+            this.button1.ImageVector = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
             this.button1.Location = new System.Drawing.Point(619, 186);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(33, 26);
@@ -93,6 +95,7 @@ namespace WinPaletter.Dialogs
             // 
             this.labelAlt1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt1.DrawOnGlass = false;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlt1.Location = new System.Drawing.Point(312, 123);
             this.labelAlt1.Name = "labelAlt1";
@@ -109,7 +112,9 @@ namespace WinPaletter.Dialogs
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
-            this.button2.Location = new System.Drawing.Point(300, 168);
+            this.button2.ImageAsVector = false;
+            this.button2.ImageVector = null;
+            this.button2.Location = new System.Drawing.Point(300, 185);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(221, 32);
             this.button2.TabIndex = 90;
@@ -119,11 +124,13 @@ namespace WinPaletter.Dialogs
             // button3
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button3.CustomColor = System.Drawing.Color.Empty;
-            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(151)))), ((int)(((byte)(206)))));
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Image = null;
+            this.button3.ImageAsVector = true;
+            this.button3.ImageVector = ((System.Drawing.Image)(resources.GetObject("button3.ImageVector")));
             this.button3.Location = new System.Drawing.Point(580, 186);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(33, 26);
@@ -138,7 +145,9 @@ namespace WinPaletter.Dialogs
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
-            this.button4.Location = new System.Drawing.Point(718, 168);
+            this.button4.ImageAsVector = false;
+            this.button4.ImageVector = null;
+            this.button4.Location = new System.Drawing.Point(718, 185);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(70, 32);
             this.button4.TabIndex = 92;
@@ -150,6 +159,7 @@ namespace WinPaletter.Dialogs
             // 
             this.labelAlt3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt3.DrawOnGlass = false;
             this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlt3.Location = new System.Drawing.Point(315, 153);
             this.labelAlt3.Name = "labelAlt3";
@@ -166,7 +176,9 @@ namespace WinPaletter.Dialogs
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
-            this.button5.Location = new System.Drawing.Point(527, 168);
+            this.button5.ImageAsVector = false;
+            this.button5.ImageVector = null;
+            this.button5.Location = new System.Drawing.Point(527, 185);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(185, 32);
             this.button5.TabIndex = 94;
@@ -184,9 +196,9 @@ namespace WinPaletter.Dialogs
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(12, 14);
+            this.alertBox2.Location = new System.Drawing.Point(12, 11);
             this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(776, 143);
+            this.alertBox2.Size = new System.Drawing.Size(776, 165);
             this.alertBox2.TabIndex = 97;
             this.alertBox2.TabStop = false;
             this.alertBox2.Text = resources.GetString("alertBox2.Text");
@@ -199,10 +211,10 @@ namespace WinPaletter.Dialogs
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 288);
+            this.panel1.Location = new System.Drawing.Point(0, 271);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(800, 212);
+            this.panel1.Size = new System.Drawing.Size(800, 229);
             this.panel1.TabIndex = 99;
             // 
             // UserPassword

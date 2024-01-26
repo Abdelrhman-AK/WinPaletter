@@ -140,6 +140,7 @@ namespace WinPaletter
             // 
             this.ColorEditor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.ColorEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ColorEditor1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ColorEditor1.Location = new System.Drawing.Point(3, 3);
             this.ColorEditor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorEditor1.Name = "ColorEditor1";
@@ -200,6 +201,8 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
+            this.Button6.ImageAsVector = false;
+            this.Button6.ImageVector = null;
             this.Button6.Location = new System.Drawing.Point(208, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
@@ -232,7 +235,6 @@ namespace WinPaletter
             // 
             // CheckBox1
             // 
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = true;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
@@ -315,6 +317,8 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
+            this.Button4.ImageAsVector = false;
+            this.Button4.ImageVector = null;
             this.Button4.Location = new System.Drawing.Point(243, 33);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
@@ -368,6 +372,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
             this.Button3.Location = new System.Drawing.Point(152, 274);
             this.Button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button3.Name = "Button3";
@@ -385,6 +391,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
             this.Button2.Location = new System.Drawing.Point(240, 274);
             this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button2.Name = "Button2";
@@ -448,6 +456,8 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(3, 235);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
@@ -591,7 +601,6 @@ namespace WinPaletter
             // 
             // CheckBox2
             // 
-            this.CheckBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox2.Checked = true;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
@@ -607,12 +616,14 @@ namespace WinPaletter
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
             this.RadioButton2.Image = null;
+            this.RadioButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioButton2.Location = new System.Drawing.Point(211, 3);
             this.RadioButton2.Name = "RadioButton2";
             this.RadioButton2.Size = new System.Drawing.Size(66, 24);
             this.RadioButton2.TabIndex = 133;
             this.RadioButton2.Text = "Image";
             this.RadioButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // RadioButton1
             // 
@@ -620,12 +631,14 @@ namespace WinPaletter
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
             this.RadioButton1.Image = null;
+            this.RadioButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RadioButton1.Location = new System.Drawing.Point(86, 3);
             this.RadioButton1.Name = "RadioButton1";
             this.RadioButton1.Size = new System.Drawing.Size(119, 24);
             this.RadioButton1.TabIndex = 132;
             this.RadioButton1.Text = "Current wallpaper";
             this.RadioButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RadioButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // val2
             // 
@@ -634,6 +647,8 @@ namespace WinPaletter
             this.val2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.val2.ForeColor = System.Drawing.Color.White;
             this.val2.Image = null;
+            this.val2.ImageAsVector = false;
+            this.val2.ImageVector = null;
             this.val2.Location = new System.Drawing.Point(243, 93);
             this.val2.Name = "val2";
             this.val2.Size = new System.Drawing.Size(34, 24);
@@ -648,6 +663,8 @@ namespace WinPaletter
             this.val1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.val1.ForeColor = System.Drawing.Color.White;
             this.val1.Image = null;
+            this.val1.ImageAsVector = false;
+            this.val1.ImageVector = null;
             this.val1.Location = new System.Drawing.Point(243, 63);
             this.val1.Name = "val1";
             this.val1.Size = new System.Drawing.Size(34, 24);
@@ -726,6 +743,8 @@ namespace WinPaletter
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = ((System.Drawing.Image)(resources.GetObject("Button7.Image")));
+            this.Button7.ImageAsVector = false;
+            this.Button7.ImageVector = null;
             this.Button7.Location = new System.Drawing.Point(247, 36);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";
@@ -852,6 +871,7 @@ namespace WinPaletter
             // 
             // ComboBox2
             // 
+            this.ComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ComboBox2.ForeColor = System.Drawing.Color.White;
@@ -909,7 +929,7 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(3, "icons8_time_machine_16px.png");
             this.ImageList1.Images.SetKeyName(4, "icons8_image_16px.png");
             this.ImageList1.Images.SetKeyName(5, "16.png");
-            this.ImageList1.Images.SetKeyName(6, "Logo16.png");
+            this.ImageList1.Images.SetKeyName(6, "16.png");
             // 
             // OpenFileDialog2
             // 

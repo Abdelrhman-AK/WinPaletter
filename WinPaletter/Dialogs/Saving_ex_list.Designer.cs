@@ -39,6 +39,8 @@ namespace WinPaletter
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.TreeView1 = new System.Windows.Forms.TreeView();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // Button1
@@ -51,9 +53,9 @@ namespace WinPaletter
             this.Button1.Image = null;
             this.Button1.ImageAsVector = false;
             this.Button1.ImageVector = null;
-            this.Button1.Location = new System.Drawing.Point(742, 415);
+            this.Button1.Location = new System.Drawing.Point(732, 7);
             this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(80, 34);
+            this.Button1.Size = new System.Drawing.Size(95, 34);
             this.Button1.TabIndex = 1;
             this.Button1.Text = "Continue";
             this.Button1.UseVisualStyleBackColor = false;
@@ -69,7 +71,7 @@ namespace WinPaletter
             this.Button2.Image = null;
             this.Button2.ImageAsVector = false;
             this.Button2.ImageVector = null;
-            this.Button2.Location = new System.Drawing.Point(446, 415);
+            this.Button2.Location = new System.Drawing.Point(436, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(290, 34);
             this.Button2.TabIndex = 2;
@@ -88,10 +90,10 @@ namespace WinPaletter
             this.TreeView1.FullRowSelect = true;
             this.TreeView1.Indent = 17;
             this.TreeView1.ItemHeight = 28;
-            this.TreeView1.Location = new System.Drawing.Point(12, 13);
+            this.TreeView1.Location = new System.Drawing.Point(12, 12);
             this.TreeView1.Name = "TreeView1";
             this.TreeView1.ShowLines = false;
-            this.TreeView1.Size = new System.Drawing.Size(810, 392);
+            this.TreeView1.Size = new System.Drawing.Size(810, 390);
             this.TreeView1.TabIndex = 6;
             // 
             // alertBox1
@@ -100,16 +102,28 @@ namespace WinPaletter
             this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.alertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox1.CenterText = false;
+            this.alertBox1.CenterText = true;
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(12, 415);
+            this.alertBox1.Location = new System.Drawing.Point(12, 7);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(428, 34);
+            this.alertBox1.Size = new System.Drawing.Size(418, 34);
             this.alertBox1.TabIndex = 7;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "You can continue, the theme has been loaded without these elements";
+            // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.alertBox1);
+            this.bottom_buttons.Controls.Add(this.Button1);
+            this.bottom_buttons.Controls.Add(this.Button2);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 413);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(834, 48);
+            this.bottom_buttons.TabIndex = 119;
             // 
             // Saving_ex_list
             // 
@@ -117,10 +131,8 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(834, 461);
-            this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.TreeView1);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -130,6 +142,7 @@ namespace WinPaletter
             this.Text = "Errors";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ThemeApply_list_Load);
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -137,5 +150,6 @@ namespace WinPaletter
         internal UI.WP.Button Button2;
         internal TreeView TreeView1;
         private UI.WP.AlertBox alertBox1;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

@@ -22,6 +22,14 @@ namespace WinPaletter
 
             CheckedListBox1.Items.Clear();
 
+            if (OS.W12 && TM.Windows12.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.W11 && TM.Windows11.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.W10 && TM.Windows10.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if ((OS.W8 || OS.W81) && TM.Windows81.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.W7 && TM.Windows7.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.WVista && TM.WindowsVista.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.WXP && TM.WindowsXP.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+
             if (TM.AppTheme.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_AppTheme, true);
             if (TM.LogonUI7.Enabled & (OS.W7 | OS.W8 | OS.W81))
@@ -66,6 +74,17 @@ namespace WinPaletter
         {
             for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++)
             {
+                if (CheckedListBox1.Items[i].ToString() == Program.Lang.WindowsColors)
+                {
+                    if (OS.W12) TM.Windows12.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.W11) TM.Windows11.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.W10) TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.W81) TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.W7) TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.WVista) TM.WindowsVista.Enabled = CheckedListBox1.GetItemChecked(i);
+                    if (OS.WXP) TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
+                }
+
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_AppTheme)
                     TM.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i);
 

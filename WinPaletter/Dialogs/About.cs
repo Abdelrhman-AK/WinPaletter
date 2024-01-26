@@ -30,11 +30,6 @@ namespace WinPaletter
             Process.Start(Properties.Resources.Link_Repository);
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://www.reddit.com/user/abdelrhman_ak");
-        }
-
         private void About_Load(object sender, EventArgs e)
         {
             Icon = Forms.MainFrm.Icon;
@@ -107,6 +102,23 @@ namespace WinPaletter
         private void linkLabel15_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/nptr/msstyleEditor");
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private void About_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
         }
     }
 }

@@ -61,12 +61,14 @@ namespace WinPaletter
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // Label2
@@ -157,7 +159,7 @@ namespace WinPaletter
             this.ProgressBar1.AnimationDuration = 1000;
             this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Location = new System.Drawing.Point(11, 364);
+            this.ProgressBar1.Location = new System.Drawing.Point(11, 365);
             this.ProgressBar1.Name = "ProgressBar1";
             this.ProgressBar1.Size = new System.Drawing.Size(395, 10);
             this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
@@ -352,11 +354,13 @@ namespace WinPaletter
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.Location = new System.Drawing.Point(162, 382);
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
+            this.Button3.Location = new System.Drawing.Point(168, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(80, 34);
             this.Button3.TabIndex = 2;
@@ -368,12 +372,14 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button1.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
             this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.Location = new System.Drawing.Point(248, 382);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(254, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(161, 34);
             this.Button1.TabIndex = 0;
@@ -381,12 +387,23 @@ namespace WinPaletter
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.Button1);
+            this.bottom_buttons.Controls.Add(this.Button3);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 383);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(421, 48);
+            this.bottom_buttons.TabIndex = 212;
+            // 
             // Updates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(421, 428);
+            this.ClientSize = new System.Drawing.Size(421, 431);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.CheckBox1);
             this.Controls.Add(this.PictureBox5);
@@ -402,8 +419,7 @@ namespace WinPaletter
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.AlertBox2);
             this.Controls.Add(this.Separator1);
-            this.Controls.Add(this.Button3);
-            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -425,6 +441,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -454,5 +471,6 @@ namespace WinPaletter
         internal UI.WP.AnimatedBox AnimatedBox1;
         internal PictureBox PictureBox1;
         internal Label Label17;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

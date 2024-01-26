@@ -49,6 +49,8 @@ namespace WinPaletter
 
             Label2.Font = Fonts.ConsoleMedium;
             Label3.Font = Fonts.ConsoleMedium;
+            label9.Font = Fonts.ConsoleMedium;
+
             TreeView1.Font = Fonts.ConsoleMedium;
 
             try { Forms.BK.Close(); }
@@ -151,7 +153,15 @@ namespace WinPaletter
 
             Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
 
-            Label3.Text = $"{Program.Version}{((Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty))}";
+            Label3.Text = $"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty)}";
+
+#if DEBUG
+            Label3.Text += ", Build: Debug";
+#else
+            Label3.Text += ", Build: Release";
+#endif
+
+            label9.Text = Debugger.IsAttached ? Program.Lang.Yes : Program.Lang.No;
 
             AlertBox1.Visible = NoRecovery;
             TreeView1.Nodes.Clear();
@@ -159,8 +169,8 @@ namespace WinPaletter
             if (Exception is not null)
             {
                 AddException("Exception", Exception, TreeView1);
-                if (Exception.InnerException != null) 
-                { 
+                if (Exception.InnerException != null)
+                {
                     AddException("Inner exception", Exception.InnerException, TreeView1, Win32Error);
 
                     try
@@ -187,6 +197,8 @@ namespace WinPaletter
             }
 
             TreeView1.ExpandAll();
+
+            TreeView1.SelectedNode = TreeView1.Nodes[0];
 
             if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
                 System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
@@ -252,6 +264,8 @@ namespace WinPaletter
             SB.AppendLine($"   Report.Date = \"{$"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}"}\";");
             SB.AppendLine($"   OS = \"{Label2.Text}\";");
             SB.AppendLine($"   WinPaletter.Version = \"{Label3.Text}\";");
+            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Name}\";");
+            SB.AppendLine($"   WinPaletter.Debugging = {(Debugger.IsAttached ? "true" : "false")};");
             SB.AppendLine();
 
             SB.AppendLine("//Error details");
@@ -318,6 +332,11 @@ namespace WinPaletter
             catch
             {
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Forms.RescueTools.ShowDialog();
         }
     }
 }

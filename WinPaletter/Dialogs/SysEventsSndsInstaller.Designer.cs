@@ -39,15 +39,16 @@ namespace WinPaletter
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox2 = new WinPaletter.UI.WP.TextBox();
             this.textBox1 = new WinPaletter.UI.WP.TextBox();
-            this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.title = new System.Windows.Forms.Label();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // SaveFileDialog1
@@ -89,34 +90,20 @@ namespace WinPaletter
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(850, 278);
+            this.textBox1.Size = new System.Drawing.Size(850, 282);
             this.textBox1.TabIndex = 87;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
             this.textBox1.WordWrap = true;
             // 
-            // Separator1
-            // 
-            this.Separator1.AlternativeLook = false;
-            this.Separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Separator1.BackColor = System.Drawing.Color.Transparent;
-            this.Separator1.Location = new System.Drawing.Point(14, 440);
-            this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(850, 1);
-            this.Separator1.TabIndex = 130;
-            this.Separator1.TabStop = false;
-            this.Separator1.Text = "Separator1";
-            // 
             // CheckBox1
             // 
             this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(14, 453);
+            this.CheckBox1.Location = new System.Drawing.Point(12, 12);
             this.CheckBox1.Name = "CheckBox1";
             this.CheckBox1.Size = new System.Drawing.Size(608, 24);
             this.CheckBox1.TabIndex = 129;
@@ -130,7 +117,9 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.Location = new System.Drawing.Point(628, 448);
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(632, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
             this.Button2.TabIndex = 128;
@@ -147,7 +136,9 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.Location = new System.Drawing.Point(749, 448);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(753, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
             this.Button1.TabIndex = 127;
@@ -193,6 +184,18 @@ namespace WinPaletter
             this.title.TabIndex = 85;
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.Button1);
+            this.bottom_buttons.Controls.Add(this.Button2);
+            this.bottom_buttons.Controls.Add(this.CheckBox1);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 446);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(874, 48);
+            this.bottom_buttons.TabIndex = 132;
+            // 
             // SysEventsSndsInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -202,11 +205,8 @@ namespace WinPaletter
             this.ControlBox = false;
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.Separator1);
-            this.Controls.Add(this.CheckBox1);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
             this.Controls.Add(this.AnimatedBox1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -221,6 +221,7 @@ namespace WinPaletter
             this.Load += new System.EventHandler(this.BugReport_Load);
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -228,11 +229,11 @@ namespace WinPaletter
         internal Label title;
         internal SaveFileDialog SaveFileDialog1;
         internal UI.WP.AnimatedBox AnimatedBox1;
-        internal UI.WP.SeparatorH Separator1;
         internal UI.WP.CheckBox CheckBox1;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button1;
         private UI.WP.TextBox textBox1;
         private UI.WP.TextBox textBox2;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

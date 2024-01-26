@@ -1710,7 +1710,7 @@ namespace WinPaletter
             this.alertBox1.TabIndex = 204;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "This is a one-time manual modification for an unspecified terminal, not automated" +
-    " or altered with each WinPalette theme application.";
+    " or altered with each WinPaletter theme application.";
             // 
             // label4
             // 

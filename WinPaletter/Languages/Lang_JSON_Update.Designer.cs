@@ -53,8 +53,10 @@ namespace WinPaletter
             this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // PictureBox1
@@ -131,7 +133,7 @@ namespace WinPaletter
             this.TextBox2.SelectedText = "";
             this.TextBox2.SelectionLength = 0;
             this.TextBox2.SelectionStart = 0;
-            this.TextBox2.Size = new System.Drawing.Size(352, 24);
+            this.TextBox2.Size = new System.Drawing.Size(341, 24);
             this.TextBox2.TabIndex = 17;
             this.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox2.UseSystemPasswordChar = false;
@@ -140,11 +142,13 @@ namespace WinPaletter
             // Button8
             // 
             this.Button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button8.CustomColor = System.Drawing.Color.Empty;
-            this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button8.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
+            this.Button8.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
-            this.Button8.Image = ((System.Drawing.Image)(resources.GetObject("Button8.Image")));
+            this.Button8.Image = null;
+            this.Button8.ImageAsVector = true;
+            this.Button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button8.ImageVector")));
             this.Button8.Location = new System.Drawing.Point(675, 12);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(40, 24);
@@ -155,11 +159,13 @@ namespace WinPaletter
             // Button1
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
-            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.Image = null;
+            this.Button1.ImageAsVector = true;
+            this.Button1.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button1.ImageVector")));
             this.Button1.Location = new System.Drawing.Point(675, 42);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(40, 24);
@@ -170,14 +176,16 @@ namespace WinPaletter
             // Button5
             // 
             this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(153)))), ((int)(((byte)(95)))));
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
-            this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.Location = new System.Drawing.Point(512, 42);
+            this.Button5.Image = null;
+            this.Button5.ImageAsVector = true;
+            this.Button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
+            this.Button5.Location = new System.Drawing.Point(501, 42);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(157, 24);
+            this.Button5.Size = new System.Drawing.Size(168, 24);
             this.Button5.TabIndex = 113;
             this.Button5.Text = "Generate new (English)";
             this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -194,7 +202,7 @@ namespace WinPaletter
             this.AlertBox7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox7.Image = null;
-            this.AlertBox7.Location = new System.Drawing.Point(12, 138);
+            this.AlertBox7.Location = new System.Drawing.Point(12, 156);
             this.AlertBox7.Name = "AlertBox7";
             this.AlertBox7.Size = new System.Drawing.Size(703, 40);
             this.AlertBox7.TabIndex = 114;
@@ -217,13 +225,15 @@ namespace WinPaletter
             // 
             this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
-            this.Button7.Location = new System.Drawing.Point(534, 241);
+            this.Button7.ImageAsVector = false;
+            this.Button7.ImageVector = null;
+            this.Button7.Location = new System.Drawing.Point(514, 7);
             this.Button7.Name = "Button7";
-            this.Button7.Size = new System.Drawing.Size(80, 34);
+            this.Button7.Size = new System.Drawing.Size(90, 34);
             this.Button7.TabIndex = 203;
             this.Button7.Text = "Cancel";
             this.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -238,9 +248,11 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.Location = new System.Drawing.Point(620, 241);
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
+            this.Button3.Location = new System.Drawing.Point(610, 7);
             this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(95, 34);
+            this.Button3.Size = new System.Drawing.Size(110, 34);
             this.Button3.TabIndex = 202;
             this.Button3.Text = "Save as ...";
             this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -267,15 +279,14 @@ namespace WinPaletter
             this.AlertBox1.Image = null;
             this.AlertBox1.Location = new System.Drawing.Point(12, 110);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(703, 22);
+            this.AlertBox1.Size = new System.Drawing.Size(703, 40);
             this.AlertBox1.TabIndex = 204;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "This feature is experimental, always create backups before starting. If any abnor" +
-    "mal results happened, post an issue in GitHub";
+            this.AlertBox1.Text = "This experimental feature requires caution; always create backups before initiati" +
+    "ng. In case of any unexpected outcomes, please report the issue on GitHub";
             // 
             // CheckBox1
             // 
-            this.CheckBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
@@ -286,6 +297,17 @@ namespace WinPaletter
             this.CheckBox1.Text = "Exclude global strings not found in the new file (Not recommended in backward com" +
     "ptability)";
             // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.Button3);
+            this.bottom_buttons.Controls.Add(this.Button7);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 239);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(727, 48);
+            this.bottom_buttons.TabIndex = 211;
+            // 
             // Lang_JSON_Update
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -294,8 +316,6 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(727, 287);
             this.Controls.Add(this.CheckBox1);
             this.Controls.Add(this.AlertBox1);
-            this.Controls.Add(this.Button7);
-            this.Controls.Add(this.Button3);
             this.Controls.Add(this.Separator1);
             this.Controls.Add(this.AlertBox7);
             this.Controls.Add(this.Button5);
@@ -307,6 +327,7 @@ namespace WinPaletter
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.PictureBox1);
             this.Controls.Add(this.Label1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI Historic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -321,6 +342,7 @@ namespace WinPaletter
             this.Load += new System.EventHandler(this.Lang_JSON_Update_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -342,5 +364,6 @@ namespace WinPaletter
         internal OpenFileDialog OpenJSONDlg;
         internal UI.WP.AlertBox AlertBox1;
         internal UI.WP.CheckBox CheckBox1;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

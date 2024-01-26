@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class EditInfo : Form
+    public partial class EditInfo : AspectsTemplate
     {
 
         // Form overrides dispose to clean up the component list.
@@ -97,9 +97,8 @@ namespace WinPaletter
             this.Label6 = new System.Windows.Forms.Label();
             this.Label7 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
-            this.Button2 = new WinPaletter.UI.WP.Button();
-            this.Button1 = new WinPaletter.UI.WP.Button();
             this.pin_button = new WinPaletter.UI.WP.Button();
+            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
@@ -125,6 +124,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
+            // titlebarExtender1
+            // 
+            this.titlebarExtender1.Size = new System.Drawing.Size(864, 52);
+            // 
             // TabControl1
             // 
             this.TabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
@@ -137,11 +140,11 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(30, 150);
-            this.TabControl1.Location = new System.Drawing.Point(12, 12);
+            this.TabControl1.Location = new System.Drawing.Point(12, 58);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(840, 471);
+            this.TabControl1.Size = new System.Drawing.Size(840, 423);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 26;
             // 
@@ -168,7 +171,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(154, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(682, 463);
+            this.TabPage1.Size = new System.Drawing.Size(682, 415);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Main info";
             // 
@@ -187,7 +190,8 @@ namespace WinPaletter
             this.AlertBox2.Size = new System.Drawing.Size(506, 22);
             this.AlertBox2.TabIndex = 138;
             this.AlertBox2.TabStop = false;
-            this.AlertBox2.Text = "You can include tags in descriptions to make search in store easier";
+            this.AlertBox2.Text = "You can include tags in descriptions to make searching in WinPaletter Store easie" +
+    "r";
             // 
             // PictureBox2
             // 
@@ -428,7 +432,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(154, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(682, 385);
+            this.TabPage3.Size = new System.Drawing.Size(682, 415);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Theme Resources Pack";
             // 
@@ -438,7 +442,7 @@ namespace WinPaletter
             this.Separator4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator4.BackColor = System.Drawing.Color.Transparent;
-            this.Separator4.Location = new System.Drawing.Point(6, 85);
+            this.Separator4.Location = new System.Drawing.Point(6, 106);
             this.Separator4.Name = "Separator4";
             this.Separator4.Size = new System.Drawing.Size(670, 1);
             this.Separator4.TabIndex = 143;
@@ -457,7 +461,7 @@ namespace WinPaletter
             this.AlertBox21.Image = null;
             this.AlertBox21.Location = new System.Drawing.Point(40, 36);
             this.AlertBox21.Name = "AlertBox21";
-            this.AlertBox21.Size = new System.Drawing.Size(636, 40);
+            this.AlertBox21.Size = new System.Drawing.Size(636, 64);
             this.AlertBox21.TabIndex = 142;
             this.AlertBox21.TabStop = false;
             this.AlertBox21.Text = resources.GetString("AlertBox21.Text");
@@ -496,13 +500,13 @@ namespace WinPaletter
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
-            this.AlertBox3.Location = new System.Drawing.Point(6, 357);
+            this.AlertBox3.Location = new System.Drawing.Point(6, 385);
             this.AlertBox3.Name = "AlertBox3";
             this.AlertBox3.Size = new System.Drawing.Size(670, 22);
             this.AlertBox3.TabIndex = 139;
             this.AlertBox3.TabStop = false;
-            this.AlertBox3.Text = "This is used especially in WinPaletter Store, if a user didn\'t accept this, the t" +
-    "heme won\'t be applied";
+            this.AlertBox3.Text = "This is especially applicable in the WinPaletter Store; if a user does not accept" +
+    " this, the theme will not be applied.";
             // 
             // Label14
             // 
@@ -510,7 +514,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label14.BackColor = System.Drawing.Color.Transparent;
             this.Label14.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label14.Location = new System.Drawing.Point(36, 92);
+            this.Label14.Location = new System.Drawing.Point(36, 113);
             this.Label14.Name = "Label14";
             this.Label14.Size = new System.Drawing.Size(640, 24);
             this.Label14.TabIndex = 18;
@@ -522,7 +526,7 @@ namespace WinPaletter
             // 
             this.PictureBox18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox18.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox18.Image")));
-            this.PictureBox18.Location = new System.Drawing.Point(6, 92);
+            this.PictureBox18.Location = new System.Drawing.Point(6, 113);
             this.PictureBox18.Name = "PictureBox18";
             this.PictureBox18.Size = new System.Drawing.Size(24, 24);
             this.PictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -535,7 +539,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox6.ForeColor = System.Drawing.Color.White;
-            this.TextBox6.Location = new System.Drawing.Point(6, 122);
+            this.TextBox6.Location = new System.Drawing.Point(6, 143);
             this.TextBox6.MaxLength = 32767;
             this.TextBox6.Multiline = true;
             this.TextBox6.Name = "TextBox6";
@@ -544,7 +548,7 @@ namespace WinPaletter
             this.TextBox6.SelectedText = "";
             this.TextBox6.SelectionLength = 0;
             this.TextBox6.SelectionStart = 0;
-            this.TextBox6.Size = new System.Drawing.Size(670, 229);
+            this.TextBox6.Size = new System.Drawing.Size(670, 233);
             this.TextBox6.TabIndex = 19;
             this.TextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox6.UseSystemPasswordChar = false;
@@ -588,7 +592,7 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(154, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(682, 385);
+            this.TabPage2.Size = new System.Drawing.Size(682, 415);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Store item info";
             // 
@@ -900,11 +904,11 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label8.BackColor = System.Drawing.Color.Transparent;
             this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label8.Location = new System.Drawing.Point(39, 109);
+            this.Label8.Location = new System.Drawing.Point(36, 105);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(636, 18);
+            this.Label8.Size = new System.Drawing.Size(640, 24);
             this.Label8.TabIndex = 22;
-            this.Label8.Text = "This theme is designed specifically for:";
+            this.Label8.Text = "This theme is designed to work better under:";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // color2
@@ -991,44 +995,6 @@ namespace WinPaletter
             this.PictureBox7.TabIndex = 14;
             this.PictureBox7.TabStop = false;
             // 
-            // Button2
-            // 
-            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button2.ForeColor = System.Drawing.Color.White;
-            this.Button2.Image = null;
-            this.Button2.ImageAsVector = false;
-            this.Button2.ImageVector = null;
-            this.Button2.Location = new System.Drawing.Point(586, 489);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(80, 34);
-            this.Button2.TabIndex = 25;
-            this.Button2.Text = "Cancel";
-            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button2.UseVisualStyleBackColor = false;
-            this.Button2.Click += new System.EventHandler(this.Button2_Click);
-            // 
-            // Button1
-            // 
-            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button1.ForeColor = System.Drawing.Color.White;
-            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAsVector = false;
-            this.Button1.ImageVector = null;
-            this.Button1.Location = new System.Drawing.Point(672, 489);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(180, 34);
-            this.Button1.TabIndex = 24;
-            this.Button1.Text = "Load into current theme";
-            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button1.UseVisualStyleBackColor = false;
-            this.Button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
             // pin_button
             // 
             this.pin_button.CustomColor = System.Drawing.Color.Empty;
@@ -1038,13 +1004,18 @@ namespace WinPaletter
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
             this.pin_button.ImageAsVector = false;
             this.pin_button.ImageVector = null;
-            this.pin_button.Location = new System.Drawing.Point(546, 489);
+            this.pin_button.Location = new System.Drawing.Point(89, 372);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
             this.pin_button.TabIndex = 127;
             this.pin_button.UseVisualStyleBackColor = false;
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
+            // OpenFileDialog1
+            // 
+            this.OpenFileDialog1.DefaultExt = "wpt";
+            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // EditInfo
             // 
@@ -1053,24 +1024,21 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(864, 535);
-            this.Controls.Add(this.pin_button);
             this.Controls.Add(this.TabControl1);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.ForeColor = System.Drawing.Color.White;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(420, 400);
             this.Name = "EditInfo";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit info";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.EditInfo_Load);
             this.ParentChanged += new System.EventHandler(this.EditInfo_ParentChanged);
+            this.Controls.SetChildIndex(this.TabControl1, 0);
+            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
@@ -1114,8 +1082,6 @@ namespace WinPaletter
         internal Label Label4;
         internal PictureBox PictureBox5;
         internal Label Label5;
-        internal UI.WP.Button Button1;
-        internal UI.WP.Button Button2;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal TabPage TabPage2;
@@ -1162,5 +1128,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox7;
         internal PictureBox PictureBox42;
         internal UI.WP.Button pin_button;
+        internal OpenFileDialog OpenFileDialog1;
     }
 }

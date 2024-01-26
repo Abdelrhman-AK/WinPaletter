@@ -148,42 +148,33 @@
         5r2Wx/MP42zSDARS93QAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Button8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button8.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
-        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
-        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
-        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
-        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
-        gg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACHSURBVDhPYxgc4P///4xAbA/EoVDsBcRcUGnCAKi4FIjRwU0g1oQqwQ+ACleBtaCCv0CcDcSa
+        QLwFiHcj4dlALAbVjtWA90AcAMRuUDY2MBWqHRMAJdmAuAiIf4NU4gCroMpxeoEQGDUAzQBsCYkQKIZq
+        BxsASso2QOxCJAapZYRqH1DAwAAAWL80BorLJgcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button1.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
-        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
-        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
-        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
-        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
-        gg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACHSURBVDhPYxgc4P///4xAbA/EoVDsBcRcUGnCAKi4FIjRwU0g1oQqwQ+ACleBtaCCv0CcDcSa
+        QLwFiHcj4dlALAbVjtWA90AcAMRuUDY2MBWqHRMAJdmAuAiIf4NU4gCroMpxeoEQGDUAzQBsCYkQKIZq
+        BxsASso2QOxCJAapZYRqH1DAwAAAWL80BorLJgcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button5.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAdBJREFUOE9joAr4//8/88uXL4Nev36dhoxfvXqVeu3aNUugPCNUKXYAVKj25s2b
-        L0D8HxkDDfm/d+/eD5s2bUqBKsUOgIo1gRirAdu3b/+/YMGCrxs3bkzD6RKgYpwG7Ny58//cuXNBhnzZ
-        tm1bFlQLKgAqxmoACD958uT/nTt3/t++fRuEb929e1ccqg0BgApxGvD6zev/l5/c/n/58e3/r968ugMM
-        bAmoNgQAKsRqwLobh/5bby75L7ss/r/0opj/Jiuyf9mtKoiBakMAoGIMA1Ze3/9fflUiWLPJypz/Rssy
-        /4vPDvsvOiP4n/AU/0CoVghANwDkbMtNRXCbKw7O/l++fyZI83+hKQH/BSb43oZqhQB0A64A/Qyzufno
-        4v/bbp8A44YD8/5rzYz/z9fr9Z+z01MGqh3TAFCggWw2WJrxv3jvtP9rrx38v+bq/v/52yf9V58a/Z+n
-        0x2/ASAvmAJth/r5f8nuaf+Ld04F2wzSzN3qeguqFQKAUaMC1PgZZgAIr768D+5n9emx/9WmRoE1c7W6
-        /mNvdPSGaoUAUBIFpjpTYJ6wR8bxm9srJSYHP4HZLNTh9RBDM0Hwn4GRo8dLnqPFSR7EhopCAQMDABbo
-        +DbY/AAuAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAADUSURBVDhPtZJLDgFBFEV7AYRViISwAUM7MiBMMLIJjcRIYik+i0BYBO3c6tdp/UHic5KTVN/3
+        XiXVVd5fCIKgiWNcmiNsWPk5NJVxjXnccIUla09CoYh7fMcWCzYWQ7hw5SRnvITLBFMbCyGo4tWVkujs
+        Mo16KzbuNhi4OMvQzKNn424DP8wcR+xjF1um1spOGBEfg49ZmDkOODHbZvStzSN8G//NEb77iYLg82sU
+        hHpIO1d+zQazD0mogHPUs02jTLeVP/wITXXsoG5Hal2z8i/xvDux0GjZO5f3yAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="AlertBox7.Text" xml:space="preserve">
-    <value>The Mechanism: this will open the old file and the new file, add back any missing entries from the old file, add the missing entries from the new file and modify the already existing outdated entries in the old file</value>
+    <value>The Mechanism: This will open the old file and the new file, reintroduce any missing entries from the old file, incorporate the absent entries from the new file, and update the already existing but outdated entries in the old file</value>
   </data>
   <data name="Button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

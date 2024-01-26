@@ -76,7 +76,20 @@ namespace WinPaletter
 
             _shown = false;
 
-            Location = Forms.Home.card4.PointToScreen(Point.Empty) - new Size((Width - Forms.Home.card4.Width) / 2, (Height - Forms.Home.card4.Height) / 2);
+            Size targetSize = Size;
+            Point targetLocation = Forms.Home.card4.PointToScreen(Point.Empty) - new Size((Width - Forms.Home.card4.Width) / 2, (Height - Forms.Home.card4.Height) / 2);
+
+            Size = Forms.Home.card4.Size;
+            Location = Forms.Home.card4.PointToScreen(Point.Empty);
+            panel1.Visible = false;
+
+            FluentTransitions.Transition
+                .With(this, nameof(this.Width), targetSize.Width)
+                .With(this, nameof(this.Height), targetSize.Height)
+                .With(this, nameof(this.Left), targetLocation.X)
+                .With(this, nameof(this.Top), targetLocation.Y)
+                .HookOnCompletion(() => Program.Animator.ShowSync(panel1))
+                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
             if (OS.W10)
                 PictureBox1.Image = Assets.WinLogos.Win10;

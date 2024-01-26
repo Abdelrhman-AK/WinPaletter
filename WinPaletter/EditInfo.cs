@@ -16,32 +16,31 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void EditInfo_Load(object sender, EventArgs e)
+        private void LoadFromWPTH(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
-            Load_Info(Program.TM);
-            TextBox3.Font = Fonts.ConsoleMedium;
-            TextBox6.Font = Fonts.ConsoleMedium;
-
+            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
+            }
         }
 
-        protected override void OnDragOver(DragEventArgs e)
+        private void LoadFromCurrent(object sender, EventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
-            {
-                Focus();
-                BringToFront();
-            }
-            else
-            {
-                return;
-            }
-
-            base.OnDragOver(e);
+            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void LoadFromDefault(object sender, EventArgs e)
+        {
+            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            LoadFromTM(TMx);
+            TMx.Dispose();
+        }
+
+        private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
             {
                 ref Localizer lang = ref Program.Lang;
@@ -70,12 +69,72 @@ namespace WinPaletter
                 }
             }
 
-            Save_Info(Program.TM);
+            ApplyToTM(Program.TM);
 
             Close();
         }
 
-        public void Load_Info(Theme.Manager TM)
+        private void Apply(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+
+                TMx.WindowsEffects.Apply();
+                TMx.Win32.Broadcast_UPM_ToDefUsers();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private void EditInfo_Load(object sender, EventArgs e)
+        {
+            DesignerData data = new(this)
+            {
+                AspectName = Program.Lang.ThemeInfo,
+                Enabled = true,
+                Import_theme = false,
+                Import_msstyles = false,
+                GeneratePalette = false,
+                GenerateMSTheme = false,
+                Import_preset = false,
+                CanSwitchMode = false,
+
+                OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
+                OnApply = Apply,
+                OnImportFromDefault = LoadFromDefault,
+                OnImportFromWPTH = LoadFromWPTH,
+                OnImportFromCurrentApplied = LoadFromCurrent,
+            };
+
+            LoadData(data);
+
+            this.LoadLanguage();
+            ApplyStyle(this);
+            LoadFromTM(Program.TM);
+            TextBox3.Font = Fonts.ConsoleMedium;
+            TextBox6.Font = Fonts.ConsoleMedium;
+        }
+
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            {
+                Focus();
+                BringToFront();
+            }
+            else
+            {
+                return;
+            }
+
+            base.OnDragOver(e);
+        }
+
+        public void LoadFromTM(Theme.Manager TM)
         {
             StoreItem1.TM = TM;
             TextBox1.Text = TM.Info.ThemeName;
@@ -98,7 +157,7 @@ namespace WinPaletter
             CheckBox6.Checked = TM.Info.DesignedFor_WinXP;
         }
 
-        public void Save_Info(Theme.Manager TM)
+        public void ApplyToTM(Theme.Manager TM)
         {
             TM.Info.ThemeName = string.Concat(TextBox1.Text.Split(System.IO.Path.GetInvalidFileNameChars())).Trim();
             TM.Info.ThemeVersion = TextBox2.Text;
@@ -118,11 +177,6 @@ namespace WinPaletter
             TM.Info.DesignedFor_Win7 = CheckBox4.Checked;
             TM.Info.DesignedFor_WinVista = CheckBox5.Checked;
             TM.Info.DesignedFor_WinXP = CheckBox6.Checked;
-        }
-
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void Color1_2_DragDrop(object sender, DragEventArgs e)

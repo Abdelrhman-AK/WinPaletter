@@ -39,21 +39,22 @@ namespace WinPaletter
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(12, 435);
+            this.checkBox1.Location = new System.Drawing.Point(12, 12);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(559, 24);
+            this.checkBox1.Size = new System.Drawing.Size(565, 24);
             this.checkBox1.TabIndex = 138;
             this.checkBox1.Text = "Show system profiles (EXPERIMENTAL - DO IT AT YOUR OWN RISK!)";
             this.checkBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox1_CheckedChanged);
@@ -93,8 +94,8 @@ namespace WinPaletter
             this.title.Name = "title";
             this.title.Size = new System.Drawing.Size(765, 35);
             this.title.TabIndex = 85;
-            this.title.Text = "Please select a Windows user on whose registry, WinPaletter should get and set da" +
-    "ta.";
+            this.title.Text = "Please choose a Windows user whose registry WinPaletter should access to retrieve" +
+    " and update data";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox1
@@ -129,7 +130,9 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.Location = new System.Drawing.Point(577, 430);
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(583, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
             this.Button2.TabIndex = 130;
@@ -146,7 +149,9 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.Location = new System.Drawing.Point(698, 430);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(704, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
             this.Button1.TabIndex = 129;
@@ -165,7 +170,7 @@ namespace WinPaletter
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(12, 306);
+            this.alertBox2.Location = new System.Drawing.Point(12, 307);
             this.alertBox2.Name = "alertBox2";
             this.alertBox2.Size = new System.Drawing.Size(801, 63);
             this.alertBox2.TabIndex = 139;
@@ -182,27 +187,36 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(12, 375);
+            this.AlertBox1.Location = new System.Drawing.Point(12, 377);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(801, 48);
             this.AlertBox1.TabIndex = 137;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "There are some theme items shared between all users (saved in HKEY_LOCAL_MACHINE)" +
-    ". So some items you modify in a user might affect other users.";
+            this.AlertBox1.Text = resources.GetString("AlertBox1.Text");
+            // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.Button1);
+            this.bottom_buttons.Controls.Add(this.checkBox1);
+            this.bottom_buttons.Controls.Add(this.Button2);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 434);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(825, 48);
+            this.bottom_buttons.TabIndex = 140;
             // 
             // UserSwitch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(825, 476);
+            this.ClientSize = new System.Drawing.Size(825, 482);
             this.Controls.Add(this.alertBox2);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.AlertBox1);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -218,6 +232,7 @@ namespace WinPaletter
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -233,5 +248,6 @@ namespace WinPaletter
         private UI.WP.CheckBox checkBox1;
         internal UI.WP.AlertBox alertBox2;
         internal UI.WP.AlertBox AlertBox1;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

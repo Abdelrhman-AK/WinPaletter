@@ -465,6 +465,7 @@ namespace WinPaletter.Dialogs
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rescue tools for critical Windows issues";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.RescueTools_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).EndInit();

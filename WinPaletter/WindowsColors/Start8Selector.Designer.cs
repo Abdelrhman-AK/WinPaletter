@@ -61,8 +61,10 @@ namespace WinPaletter
             this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.PictureBox32 = new System.Windows.Forms.PictureBox();
             this.Label41 = new System.Windows.Forms.Label();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).BeginInit();
+            this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // img1
@@ -353,7 +355,9 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.Location = new System.Drawing.Point(191, 493);
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(197, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 68;
@@ -370,7 +374,9 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.Location = new System.Drawing.Point(277, 493);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(283, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
             this.Button1.TabIndex = 67;
@@ -430,6 +436,17 @@ namespace WinPaletter
             this.Label41.Text = "Start background";
             this.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.Button1);
+            this.bottom_buttons.Controls.Add(this.Button2);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 491);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(369, 48);
+            this.bottom_buttons.TabIndex = 212;
+            // 
             // Start8Selector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -437,8 +454,7 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(369, 539);
             this.Controls.Add(this.GroupBox1);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -451,6 +467,7 @@ namespace WinPaletter
             this.Load += new System.EventHandler(this.Start8Selector_Load);
             this.GroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).EndInit();
+            this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -480,5 +497,6 @@ namespace WinPaletter
         internal UI.WP.GroupBox GroupBox1;
         internal PictureBox PictureBox32;
         internal Label Label41;
+        private UI.WP.GroupBox bottom_buttons;
     }
 }

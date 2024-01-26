@@ -6,6 +6,7 @@
         public string AspectDisabled { get; set; } = "Windows aspect ({0}) is disabled";
         public string AspectEnabledTip { get; set; } = "WinPaletter will apply it when you apply the whole theme";
         public string AspectDisabledTip { get; set; } = "WinPaletter will skip it and it won't be applied";
+        public string ThemeInfo { get; set; } = "Theme info";
         public string WindowsColors { get; set; } = "{0} colors";
         public string ClassicColors { get; set; } = "Classic colors";
         public string MetricsFonts { get; set; } = "Metrics and fonts";

@@ -25,6 +25,7 @@ namespace WinPaletter.UI
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
         Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
 
+
         public MouseState State = MouseState.None;
 
         private Point hoverPosition;
@@ -141,6 +142,7 @@ namespace WinPaletter.UI
             }
 
             Animate();
+
             base.OnMouseDown(e);
         }
 

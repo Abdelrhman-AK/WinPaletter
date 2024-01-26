@@ -35,227 +35,242 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(Lang_Add_Snippet));
-            Button3 = new UI.WP.Button();
-            Button3.Click += new EventHandler(Button3_Click);
-            Button2 = new UI.WP.Button();
-            Button2.Click += new EventHandler(Button2_Click);
-            ComboBox2 = new UI.WP.ComboBox();
-            Button1 = new UI.WP.Button();
-            Button1.Click += new EventHandler(Button1_Click);
-            ComboBox1 = new UI.WP.ComboBox();
-            PictureBox2 = new PictureBox();
-            Label2 = new Label();
-            Label1 = new Label();
-            PictureBox1 = new PictureBox();
-            AlertBox7 = new UI.WP.AlertBox();
-            Label3 = new Label();
-            Label4 = new Label();
-            AlertBox1 = new UI.WP.AlertBox();
-            ((System.ComponentModel.ISupportInitialize)PictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).BeginInit();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lang_Add_Snippet));
+            this.Button3 = new WinPaletter.UI.WP.Button();
+            this.Button2 = new WinPaletter.UI.WP.Button();
+            this.ComboBox2 = new WinPaletter.UI.WP.ComboBox();
+            this.Button1 = new WinPaletter.UI.WP.Button();
+            this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
+            this.PictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Label2 = new System.Windows.Forms.Label();
+            this.Label1 = new System.Windows.Forms.Label();
+            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.AlertBox7 = new WinPaletter.UI.WP.AlertBox();
+            this.Label3 = new System.Windows.Forms.Label();
+            this.Label4 = new System.Windows.Forms.Label();
+            this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.SuspendLayout();
             // 
             // Button3
             // 
-            Button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Button3.BackColor = Color.FromArgb(34, 34, 34);
-            Button3.Font = new("Segoe UI", 9.0f);
-            Button3.ForeColor = Color.White;
-            Button3.Image = null;
-            Button3.Location = new Point(416, 83);
-            Button3.Name = "Button3";
-            Button3.Size = new Size(75, 23);
-            Button3.TabIndex = 4;
-            Button3.Text = "Add layout";
-            Button3.UseVisualStyleBackColor = false;
+            this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button3.ForeColor = System.Drawing.Color.White;
+            this.Button3.Image = null;
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
+            this.Button3.Location = new System.Drawing.Point(416, 83);
+            this.Button3.Name = "Button3";
+            this.Button3.Size = new System.Drawing.Size(75, 23);
+            this.Button3.TabIndex = 4;
+            this.Button3.Text = "Add layout";
+            this.Button3.UseVisualStyleBackColor = false;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // Button2
             // 
-            Button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Button2.BackColor = Color.FromArgb(34, 34, 34);
-            Button2.Font = new("Segoe UI", 9.0f);
-            Button2.ForeColor = Color.White;
-            Button2.Image = null;
-            Button2.Location = new Point(335, 83);
-            Button2.Name = "Button2";
-            Button2.Size = new Size(75, 23);
-            Button2.TabIndex = 3;
-            Button2.Text = "Add";
-            Button2.UseVisualStyleBackColor = false;
+            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button2.ForeColor = System.Drawing.Color.White;
+            this.Button2.Image = null;
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(335, 83);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(75, 23);
+            this.Button2.TabIndex = 3;
+            this.Button2.Text = "Add";
+            this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // ComboBox2
             // 
-            ComboBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox2.DrawMode = DrawMode.OwnerDrawVariable;
-            ComboBox2.DropDownHeight = 250;
-            ComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox2.Font = new("Segoe UI", 9.0f);
-            ComboBox2.ForeColor = Color.White;
-            ComboBox2.FormattingEnabled = true;
-            ComboBox2.IntegralHeight = false;
-            ComboBox2.ItemHeight = 20;
-            ComboBox2.Location = new Point(96, 82);
-            ComboBox2.Name = "ComboBox2";
-            ComboBox2.Size = new Size(230, 26);
-            ComboBox2.TabIndex = 2;
+            this.ComboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.ComboBox2.DropDownHeight = 250;
+            this.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ComboBox2.ForeColor = System.Drawing.Color.White;
+            this.ComboBox2.FormattingEnabled = true;
+            this.ComboBox2.IntegralHeight = false;
+            this.ComboBox2.ItemHeight = 20;
+            this.ComboBox2.Location = new System.Drawing.Point(96, 82);
+            this.ComboBox2.Name = "ComboBox2";
+            this.ComboBox2.Size = new System.Drawing.Size(230, 26);
+            this.ComboBox2.TabIndex = 2;
             // 
-            // Button12
+            // Button1
             // 
-            Button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Button1.BackColor = Color.FromArgb(34, 34, 34);
-            Button1.Font = new("Segoe UI", 9.0f);
-            Button1.ForeColor = Color.White;
-            Button1.Image = null;
-            Button1.Location = new Point(416, 13);
-            Button1.Name = "Button1";
-            Button1.Size = new Size(75, 23);
-            Button1.TabIndex = 1;
-            Button1.Text = "Add";
-            Button1.UseVisualStyleBackColor = false;
+            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button1.ForeColor = System.Drawing.Color.White;
+            this.Button1.Image = null;
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(416, 13);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(75, 23);
+            this.Button1.TabIndex = 1;
+            this.Button1.Text = "Add";
+            this.Button1.UseVisualStyleBackColor = false;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // ComboBox1
             // 
-            ComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
-            ComboBox1.DropDownHeight = 250;
-            ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            ComboBox1.Font = new("Segoe UI", 9.0f);
-            ComboBox1.ForeColor = Color.White;
-            ComboBox1.FormattingEnabled = true;
-            ComboBox1.IntegralHeight = false;
-            ComboBox1.ItemHeight = 20;
-            ComboBox1.Location = new Point(96, 12);
-            ComboBox1.Name = "ComboBox1";
-            ComboBox1.Size = new Size(314, 26);
-            ComboBox1.TabIndex = 0;
+            this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.ComboBox1.DropDownHeight = 250;
+            this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ComboBox1.ForeColor = System.Drawing.Color.White;
+            this.ComboBox1.FormattingEnabled = true;
+            this.ComboBox1.IntegralHeight = false;
+            this.ComboBox1.ItemHeight = 20;
+            this.ComboBox1.Location = new System.Drawing.Point(96, 12);
+            this.ComboBox1.Name = "ComboBox1";
+            this.ComboBox1.Size = new System.Drawing.Size(314, 26);
+            this.ComboBox1.TabIndex = 0;
             // 
             // PictureBox2
             // 
-            PictureBox2.Image = (Image)resources.GetObject("PictureBox2.Image");
-            PictureBox2.Location = new Point(12, 12);
-            PictureBox2.Name = "PictureBox2";
-            PictureBox2.Size = new Size(24, 24);
-            PictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox2.TabIndex = 13;
-            PictureBox2.TabStop = false;
+            this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
+            this.PictureBox2.Location = new System.Drawing.Point(12, 12);
+            this.PictureBox2.Name = "PictureBox2";
+            this.PictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox2.TabIndex = 13;
+            this.PictureBox2.TabStop = false;
             // 
             // Label2
             // 
-            Label2.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label2.Location = new Point(42, 12);
-            Label2.Name = "Label2";
-            Label2.Size = new Size(48, 24);
-            Label2.TabIndex = 14;
-            Label2.Text = "Name:";
-            Label2.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label2.Location = new System.Drawing.Point(42, 12);
+            this.Label2.Name = "Label2";
+            this.Label2.Size = new System.Drawing.Size(48, 24);
+            this.Label2.TabIndex = 14;
+            this.Label2.Text = "Name:";
+            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label1
             // 
-            Label1.Font = new("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Label1.Location = new Point(42, 82);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(48, 24);
-            Label1.TabIndex = 16;
-            Label1.Text = "Code:";
-            Label1.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.Location = new System.Drawing.Point(42, 82);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(48, 24);
+            this.Label1.TabIndex = 16;
+            this.Label1.Text = "Code:";
+            this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox1
             // 
-            PictureBox1.Image = (Image)resources.GetObject("PictureBox1.Image");
-            PictureBox1.Location = new Point(12, 82);
-            PictureBox1.Name = "PictureBox1";
-            PictureBox1.Size = new Size(24, 24);
-            PictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            PictureBox1.TabIndex = 15;
-            PictureBox1.TabStop = false;
+            this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
+            this.PictureBox1.Location = new System.Drawing.Point(12, 82);
+            this.PictureBox1.Name = "PictureBox1";
+            this.PictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox1.TabIndex = 15;
+            this.PictureBox1.TabStop = false;
             // 
             // AlertBox7
             // 
-            AlertBox7.AlertStyle = UI.WP.AlertBox.Style.Notice;
-            AlertBox7.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AlertBox7.BackColor = Color.FromArgb(70, 91, 94);
-            AlertBox7.CenterText = true;
-            AlertBox7.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox7.Font = new("Segoe UI", 9.0f);
-            AlertBox7.Image = null;
-            AlertBox7.Location = new Point(12, 182);
-            AlertBox7.Name = "AlertBox7";
-            AlertBox7.Size = new Size(479, 22);
-            AlertBox7.TabIndex = 28;
-            AlertBox7.TabStop = false;
-            AlertBox7.Text = "These are just snippets to help you input correct data";
+            this.AlertBox7.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
+            this.AlertBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox7.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox7.CenterText = true;
+            this.AlertBox7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox7.Image = null;
+            this.AlertBox7.Location = new System.Drawing.Point(12, 182);
+            this.AlertBox7.Name = "AlertBox7";
+            this.AlertBox7.Size = new System.Drawing.Size(479, 22);
+            this.AlertBox7.TabIndex = 28;
+            this.AlertBox7.TabStop = false;
+            this.AlertBox7.Text = "These are just snippets to help you input correct data";
             // 
             // Label3
             // 
-            Label3.Font = new("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
-            Label3.Location = new Point(45, 41);
-            Label3.Name = "Label3";
-            Label3.Size = new Size(446, 24);
-            Label3.TabIndex = 30;
-            Label3.Text = @"Its correct place is (Information\lang)";
-            Label3.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label3.Location = new System.Drawing.Point(45, 41);
+            this.Label3.Name = "Label3";
+            this.Label3.Size = new System.Drawing.Size(446, 24);
+            this.Label3.TabIndex = 30;
+            this.Label3.Text = "Its correct place is (Information\\lang)";
+            this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label4
             // 
-            Label4.Font = new("Segoe UI", 9.0f, FontStyle.Italic, GraphicsUnit.Point, 0);
-            Label4.Location = new Point(45, 113);
-            Label4.Name = "Label4";
-            Label4.Size = new Size(446, 56);
-            Label4.TabIndex = 31;
-            Label4.Text = @"Codes's correct place is (Information\langcode)" + '\r' + '\n' + "Add layout's correct place is (I" + @"nformation\righttoleft)" + '\r' + '\n' + "Add layout will insert \"True\" if language code layout i" + "s right to left";
-            Label4.TextAlign = ContentAlignment.MiddleLeft;
+            this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label4.Location = new System.Drawing.Point(45, 113);
+            this.Label4.Name = "Label4";
+            this.Label4.Size = new System.Drawing.Size(446, 56);
+            this.Label4.TabIndex = 31;
+            this.Label4.Text = "Codes\'s correct place is (Information\\langcode)\r\nAdd layout\'s correct place is (I" +
+    "nformation\\righttoleft)\r\nAdd layout will insert \"True\" if language code layout i" +
+    "s right to left";
+            this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // AlertBox1
             // 
-            AlertBox1.AlertStyle = UI.WP.AlertBox.Style.Notice;
-            AlertBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AlertBox1.BackColor = Color.FromArgb(70, 91, 94);
-            AlertBox1.CenterText = true;
-            AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
-            AlertBox1.Font = new("Segoe UI", 9.0f);
-            AlertBox1.Image = null;
-            AlertBox1.Location = new Point(12, 210);
-            AlertBox1.Name = "AlertBox1";
-            AlertBox1.Size = new Size(479, 22);
-            AlertBox1.TabIndex = 29;
-            AlertBox1.TabStop = false;
-            AlertBox1.Text = "It should be in its correct place before pressing \"Add\" or \"Add Layout\"";
+            this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
+            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox1.CenterText = true;
+            this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox1.Image = null;
+            this.AlertBox1.Location = new System.Drawing.Point(12, 210);
+            this.AlertBox1.Name = "AlertBox1";
+            this.AlertBox1.Size = new System.Drawing.Size(479, 22);
+            this.AlertBox1.TabIndex = 29;
+            this.AlertBox1.TabStop = false;
+            this.AlertBox1.Text = "It should be in its correct place before pressing \"Add\" or \"Add Layout\"";
             // 
             // Lang_Add_Snippet
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            ClientSize = new Size(503, 244);
-            Controls.Add(Label4);
-            Controls.Add(Label3);
-            Controls.Add(AlertBox1);
-            Controls.Add(AlertBox7);
-            Controls.Add(Label1);
-            Controls.Add(PictureBox1);
-            Controls.Add(Label2);
-            Controls.Add(PictureBox2);
-            Controls.Add(Button3);
-            Controls.Add(Button2);
-            Controls.Add(ComboBox2);
-            Controls.Add(Button1);
-            Controls.Add(ComboBox1);
-            Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Lang_Add_Snippet";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Add language snippets";
-            ((System.ComponentModel.ISupportInitialize)PictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).EndInit();
-            Load += new EventHandler(Lang_Add_Snippet_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(503, 244);
+            this.Controls.Add(this.Label4);
+            this.Controls.Add(this.Label3);
+            this.Controls.Add(this.AlertBox1);
+            this.Controls.Add(this.AlertBox7);
+            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.PictureBox1);
+            this.Controls.Add(this.Label2);
+            this.Controls.Add(this.PictureBox2);
+            this.Controls.Add(this.Button3);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.ComboBox2);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.ComboBox1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Lang_Add_Snippet";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Add language snippets";
+            this.Load += new System.EventHandler(this.Lang_Add_Snippet_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.ResumeLayout(false);
 
         }
 

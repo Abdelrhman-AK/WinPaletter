@@ -923,5 +923,17 @@ namespace WinPaletter
         {
             Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
         }
+
+        private void Lang_JSON_GUI_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
     }
 }

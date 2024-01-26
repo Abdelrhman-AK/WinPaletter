@@ -1150,7 +1150,16 @@ namespace WinPaletter.Tabs
 
                         if (overCloseButton)
                         {
-                            G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked_Hover, closeRectangle(rect), 3);
+
+                            using (LinearGradientBrush lgb0 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked_Hover, scheme_secondary.Colors.Back_Checked_Hover, LinearGradientMode.Vertical))
+                            using (LinearGradientBrush lgb1 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked, scheme_secondary.Colors.Line_Checked_Hover, LinearGradientMode.Vertical))
+                            using (Pen P = new(lgb1))
+                            {
+                                G.FillEllipse(lgb0, closeRectangle(rect));
+                                G.DrawEllipse(P, closeRectangle(rect));
+                            }
+
+
                         }
                     }
                     else if (tabData.Selected)
@@ -1185,8 +1194,9 @@ namespace WinPaletter.Tabs
 
                 Rectangle closeRect = closeRectangle(rect);
                 closeRect.X++;
+                closeRect.Y++;
 
-                G.DrawString("x", Fonts.ConsoleMedium, br, closeRect, sf_close);
+                G.DrawString("✕", Fonts.ConsoleMedium, br, closeRect, sf_close);
 
                 if (icon != null) G.DrawImage(icon, iconRectangle(rect));
 

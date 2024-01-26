@@ -78,18 +78,20 @@ namespace WinPaletter.UI.WP
             //Draw noise
             G.FillRoundedRect(Noise, Rect);
 
-            //Draw image
-            if (Image != null)
-            {
-                ImageRect = new(Rect.X + 10, Rect.Y + (Rect.Height - _image.Height) / 2, _image.Width, _image.Height);
-                G.DrawImage(Image, ImageRect);
-            }
-
-            //Draw text
             using (SolidBrush B = new(ForeColor))
             using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
             {
-                G.DrawString(Text, Font, B, new Rectangle(ImageRect.Right + 10, 0, Width, Height), sf);
+                //Draw image
+                if (Image != null)
+                {
+                    ImageRect = new(Rect.X + 10, Rect.Y + (Rect.Height - _image.Height) / 2, _image.Width, _image.Height);
+                    G.DrawImage(Image, ImageRect);
+                    G.DrawString(Text, Font, B, new Rectangle(ImageRect.Right + 10, 0, Width, Height), sf);
+                }
+                else
+                {
+                    G.DrawString(Text, Font, B, new Rectangle(Rect.X + 10, Rect.Y, Rect.Width - 20, Rect.Height), sf);
+                }
             }
         }
     }

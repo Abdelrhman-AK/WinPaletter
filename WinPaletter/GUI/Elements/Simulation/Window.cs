@@ -18,7 +18,7 @@ namespace WinPaletter.UI.Simulation
             AdjustPadding();
             Font = new("Segoe UI", 9f);
             DoubleBuffered = true;
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
             BackColor = Color.Transparent;
         }
 
@@ -817,7 +817,8 @@ namespace WinPaletter.UI.Simulation
                 CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10) && TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
                 CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
                   Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
-                Refresh();
+
+                if (CursorOverTitlebar || CursorOverWindowAccent) Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
             }
 
             if (EnableEditingMetrics)
@@ -879,7 +880,7 @@ namespace WinPaletter.UI.Simulation
             {
                 CursorOverTitlebar = false;
                 CursorOverWindowAccent = false;
-                Refresh();
+                Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
             }
             else if (!DesignMode && EnableEditingMetrics)
             {

@@ -260,13 +260,7 @@ namespace WinPaletter.Tabs
         private void _form_FormClosed(object sender, FormClosedEventArgs e)
         {
             _shown = false;
-            if ((sender as Form).Parent is not null)
-            {
-                if ((sender as Form).Parent is TabPage tabPage && tabPage != null && tabPage.Parent != null) Program.Animator.HideSync(tabPage?.Parent);
-
-                ((Form)sender).Parent?.Dispose();
-            }
-
+            ((Form)sender).Parent?.Dispose();
             tabsContainer.OnFormClosed(_form, new TabDataEventArgs(this));
         }
 

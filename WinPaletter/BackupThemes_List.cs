@@ -86,7 +86,7 @@ namespace WinPaletter
 
                 // Resize the columns
                 listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            
+
                 Cursor = Cursors.Default;
             });
         }

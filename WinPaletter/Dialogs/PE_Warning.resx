@@ -168,9 +168,6 @@
         tWWgavHwATj9M4xtphe0YTFLnjprYfl5OPzr0Wg+Afghv04CqlUTAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="AlertBox1.Text" xml:space="preserve">
-    <value>There is a weak posibility that Windows Security (Defender) will consider this action as a suspicious action (like malwares) as WinPaletter will modify a system file. You can ignore Windows Security alert that might pop-up.</value>
-  </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAA7JJREFUWEft

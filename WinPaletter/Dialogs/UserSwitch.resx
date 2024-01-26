@@ -157,7 +157,10 @@
 </value>
   </data>
   <data name="alertBox2.Text" xml:space="preserve">
-    <value>Due to unknown reason, when you apply certain theme items to another user, you may notice that current user profile that opened WinPaletter is affected by the theme until logoff and log back on. After doing so, you will find that the selected user's profile is correctly themed, while the user who opened WinPalette retains their previous state and is unaffected by the theme.</value>
+    <value>For unknown reasons, applying specific theme items to another user may result in the current user profile that opened WinPaletter being temporarily influenced by the theme until a logoff and log back on. Following this, you'll observe that the selected user's profile is appropriately themed, whereas the user who initiated WinPaletter retains their previous state and remains unaffected by the theme.</value>
+  </data>
+  <data name="AlertBox1.Text" xml:space="preserve">
+    <value>Certain theme items are shared among all users and are stored in HKEY_LOCAL_MACHINE. Therefore, modifying certain items for one user may impact others, as these shared settings can affect the appearance across multiple user profiles.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

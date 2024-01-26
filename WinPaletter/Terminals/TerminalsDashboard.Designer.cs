@@ -50,14 +50,16 @@ namespace WinPaletter
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.SeparatorVertical1 = new WinPaletter.UI.WP.SeparatorV();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Label49
             // 
             this.Label49.BackColor = System.Drawing.Color.Transparent;
             this.Label49.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label49.Location = new System.Drawing.Point(6, 7);
+            this.Label49.Location = new System.Drawing.Point(7, 7);
             this.Label49.Name = "Label49";
             this.Label49.Size = new System.Drawing.Size(149, 19);
             this.Label49.TabIndex = 84;
@@ -68,7 +70,7 @@ namespace WinPaletter
             // 
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(170, 7);
+            this.Label2.Location = new System.Drawing.Point(171, 7);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(116, 19);
             this.Label2.TabIndex = 92;
@@ -77,7 +79,7 @@ namespace WinPaletter
             // 
             // PictureBox1
             // 
-            this.PictureBox1.Location = new System.Drawing.Point(304, 7);
+            this.PictureBox1.Location = new System.Drawing.Point(305, 7);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(18, 18);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -94,7 +96,9 @@ namespace WinPaletter
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
             this.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button5.Location = new System.Drawing.Point(173, 68);
+            this.Button5.ImageAsVector = false;
+            this.Button5.ImageVector = null;
+            this.Button5.Location = new System.Drawing.Point(174, 68);
             this.Button5.Name = "Button5";
             this.Button5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button5.Size = new System.Drawing.Size(149, 27);
@@ -112,7 +116,9 @@ namespace WinPaletter
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button6.Location = new System.Drawing.Point(173, 37);
+            this.Button6.ImageAsVector = false;
+            this.Button6.ImageVector = null;
+            this.Button6.Location = new System.Drawing.Point(174, 37);
             this.Button6.Name = "Button6";
             this.Button6.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button6.Size = new System.Drawing.Size(149, 27);
@@ -126,7 +132,7 @@ namespace WinPaletter
             // 
             this.Separator3.AlternativeLook = false;
             this.Separator3.BackColor = System.Drawing.Color.Transparent;
-            this.Separator3.Location = new System.Drawing.Point(173, 30);
+            this.Separator3.Location = new System.Drawing.Point(174, 30);
             this.Separator3.Name = "Separator3";
             this.Separator3.Size = new System.Drawing.Size(149, 1);
             this.Separator3.TabIndex = 93;
@@ -141,7 +147,9 @@ namespace WinPaletter
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
             this.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button3.Location = new System.Drawing.Point(7, 98);
+            this.Button3.ImageAsVector = false;
+            this.Button3.ImageVector = null;
+            this.Button3.Location = new System.Drawing.Point(8, 98);
             this.Button3.Name = "Button3";
             this.Button3.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button3.Size = new System.Drawing.Size(149, 27);
@@ -159,7 +167,9 @@ namespace WinPaletter
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
             this.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button4.Location = new System.Drawing.Point(7, 67);
+            this.Button4.ImageAsVector = false;
+            this.Button4.ImageVector = null;
+            this.Button4.Location = new System.Drawing.Point(8, 67);
             this.Button4.Name = "Button4";
             this.Button4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button4.Size = new System.Drawing.Size(149, 27);
@@ -177,7 +187,9 @@ namespace WinPaletter
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
             this.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button2.Location = new System.Drawing.Point(7, 129);
+            this.Button2.ImageAsVector = false;
+            this.Button2.ImageVector = null;
+            this.Button2.Location = new System.Drawing.Point(8, 129);
             this.Button2.Name = "Button2";
             this.Button2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button2.Size = new System.Drawing.Size(149, 27);
@@ -195,7 +207,9 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.Location = new System.Drawing.Point(7, 36);
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
+            this.Button1.Location = new System.Drawing.Point(8, 36);
             this.Button1.Name = "Button1";
             this.Button1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.Button1.Size = new System.Drawing.Size(149, 27);
@@ -209,7 +223,7 @@ namespace WinPaletter
             // 
             this.Separator1.AlternativeLook = false;
             this.Separator1.BackColor = System.Drawing.Color.Transparent;
-            this.Separator1.Location = new System.Drawing.Point(7, 30);
+            this.Separator1.Location = new System.Drawing.Point(8, 30);
             this.Separator1.Name = "Separator1";
             this.Separator1.Size = new System.Drawing.Size(149, 1);
             this.Separator1.TabIndex = 85;
@@ -219,11 +233,33 @@ namespace WinPaletter
             // 
             this.SeparatorVertical1.AlternativeLook = false;
             this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.SeparatorVertical1.Location = new System.Drawing.Point(162, 7);
+            this.SeparatorVertical1.Location = new System.Drawing.Point(163, 7);
             this.SeparatorVertical1.Name = "SeparatorVertical1";
             this.SeparatorVertical1.Size = new System.Drawing.Size(1, 149);
             this.SeparatorVertical1.TabIndex = 102;
             this.SeparatorVertical1.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.Label49);
+            this.panel1.Controls.Add(this.SeparatorVertical1);
+            this.panel1.Controls.Add(this.Label2);
+            this.panel1.Controls.Add(this.PictureBox1);
+            this.panel1.Controls.Add(this.Separator1);
+            this.panel1.Controls.Add(this.Button5);
+            this.panel1.Controls.Add(this.Button1);
+            this.panel1.Controls.Add(this.Button6);
+            this.panel1.Controls.Add(this.Button2);
+            this.panel1.Controls.Add(this.Separator3);
+            this.panel1.Controls.Add(this.Button4);
+            this.panel1.Controls.Add(this.Button3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(331, 163);
+            this.panel1.TabIndex = 103;
+            this.panel1.Visible = false;
             // 
             // TerminalsDashboard
             // 
@@ -232,18 +268,7 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(331, 163);
             this.ControlBox = false;
-            this.Controls.Add(this.SeparatorVertical1);
-            this.Controls.Add(this.PictureBox1);
-            this.Controls.Add(this.Button5);
-            this.Controls.Add(this.Button6);
-            this.Controls.Add(this.Separator3);
-            this.Controls.Add(this.Button3);
-            this.Controls.Add(this.Button4);
-            this.Controls.Add(this.Button2);
-            this.Controls.Add(this.Button1);
-            this.Controls.Add(this.Separator1);
-            this.Controls.Add(this.Label49);
-            this.Controls.Add(this.Label2);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -258,6 +283,7 @@ namespace WinPaletter
             this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
             this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -275,5 +301,6 @@ namespace WinPaletter
         internal PictureBox PictureBox1;
         internal ToolTip ToolTip1;
         internal UI.WP.SeparatorV SeparatorVertical1;
+        private Panel panel1;
     }
 }
