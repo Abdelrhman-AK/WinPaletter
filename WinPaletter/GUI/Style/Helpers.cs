@@ -1,11 +1,9 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.Controllers;
 
 namespace WinPaletter.UI.Style
 {
@@ -424,7 +422,7 @@ namespace WinPaletter.UI.Style
                     titlebarExtender.BackColor = scheme.Colors.Back_Hover;
                 }
 
-                Forms.MainFrm.tabsContainer1.Refresh();
+                Forms.MainForm.tabsContainer1.Refresh();
             }
 
             else if (ctrl is DataGridView)
@@ -504,8 +502,8 @@ namespace WinPaletter.UI.Style
         /// <returns>Zero if successful, otherwise an error code.</returns>
         public static int SetControlTheme(IntPtr handle, CtrlTheme theme)
         {
-            if (handle == IntPtr.Zero)  return 0;
-              
+            if (handle == IntPtr.Zero) return 0;
+
             try
             {
                 // Load the uxtheme.dll library

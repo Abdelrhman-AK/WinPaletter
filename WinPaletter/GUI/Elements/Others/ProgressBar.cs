@@ -42,18 +42,18 @@ namespace WinPaletter.UI.WP
                 {
                     Form form = FindForm();
 
-                    if (form.Parent == null) 
+                    if (form.Parent == null)
                     {
                         FormHwnd = form.Handle;
                     }
                     else if (form.Parent is TabPage tabPage && tabPage.Parent != null)
-                    { 
+                    {
                         form = tabPage.Parent.FindForm();
-                        if (form != null) FormHwnd = form.Handle; else FormHwnd = Forms.MainFrm.Handle;
+                        if (form != null) FormHwnd = form.Handle; else FormHwnd = Forms.MainForm.Handle;
                     }
                     else
                     {
-                        FormHwnd = Forms.MainFrm.Handle;
+                        FormHwnd = Forms.MainForm.Handle;
                     }
                 }
             }

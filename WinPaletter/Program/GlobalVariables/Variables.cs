@@ -10,6 +10,16 @@ namespace WinPaletter
     internal partial class Program
     {
         /// <summary>
+        /// A class that represents WinPaletter's Settings
+        /// </summary>
+        public static Settings Settings = new(Settings.Mode.Registry);
+
+        /// <summary>
+        /// Class represents colors for WinPaletter Controls (Styles)
+        /// </summary>
+        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor_Dark, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor_Dark, true, true, true);
+
+        /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
         public readonly static string Version = System.Windows.Forms.Application.ProductVersion;
@@ -58,16 +68,6 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Class represents colors for WinPaletter Controls (Styles)
-        /// </summary>
-        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor_Dark, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor_Dark, true, true, true);
-
-        /// <summary>
-        /// A class that represents WinPaletter's Settings
-        /// </summary>
-        public static Settings Settings = new(Settings.Mode.Registry);
-
-        /// <summary>
         /// A class that represents WinPaletter's Language Strings (Loaded at application startup)
         /// </summary>
         public static Localizer Lang = new();
@@ -113,11 +113,6 @@ namespace WinPaletter
                 WindowStyle = ProcessWindowStyle.Normal
             }
         };
-
-        /// <summary>
-        /// Relative to My.Computer in VB.NET
-        /// </summary>
-        internal static Microsoft.VisualBasic.Devices.Computer Computer = new();
 
         /// <summary>
         /// A class that contains info about ExplorerPatcher settings
@@ -168,5 +163,10 @@ namespace WinPaletter
         /// A boolean that represents if WinPaletter uninstaller has finished or not
         /// </summary>
         public static bool UninstallDone = false;
+
+        /// <summary>
+        /// Timeout for web requests in milliseconds
+        /// </summary>
+        public static int Timeout => 30 * 1000;
     }
 }

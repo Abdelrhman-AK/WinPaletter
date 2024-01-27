@@ -23,7 +23,7 @@ namespace WinPaletter
 
             try
             {
-                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
+                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
                 {
                     IsInstalled = true;
                 }
@@ -36,7 +36,7 @@ namespace WinPaletter
             { }
             finally
             {
-                Program.Computer.Registry.CurrentUser.Close();
+                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             if (!Program.Settings.ExplorerPatcher.Enabled_Force)
@@ -48,7 +48,7 @@ namespace WinPaletter
                     try
                     {
                         {
-                            RegistryKey temp = Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
+                            RegistryKey temp = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
                             UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
                             TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
                             StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
@@ -56,7 +56,7 @@ namespace WinPaletter
                     }
                     finally
                     {
-                        Program.Computer.Registry.CurrentUser.Close();
+                        Microsoft.Win32.Registry.CurrentUser.Close();
                     }
                 }
                 else

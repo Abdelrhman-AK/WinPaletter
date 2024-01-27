@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -15,7 +16,7 @@ namespace WinPaletter
             ApplyStyle(this);
             TextBox1.Font = Fonts.ConsoleLarge;
             TextBox1.Text = Properties.Resources.LICENSE;
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
         }
 
         private void Button1_Click(object sender, EventArgs e)

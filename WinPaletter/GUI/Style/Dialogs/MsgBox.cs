@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -159,13 +160,8 @@ namespace WinPaletter.UI.Style
 
                     else if (Icon == MessageBoxIcon.Question)
                     {
-                        try
-                        {
-                            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
-                        }
-                        catch
-                        {
-                        }
+                        try { SystemSounds.Exclamation.Play(); }
+                        catch { }
                         icon = TaskDialogIcon.Custom;
 
                         TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);

@@ -66,6 +66,19 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
+        private bool _animateChanges = true;
+        public bool AnimateChanges
+        {
+            get => _animateChanges;
+            set
+            {
+                if (_animateChanges != value)
+                {
+                    _animateChanges = value;
+                }
+            }
+        }
+
 
         private void trackBar1_Scroll(object sender)
         {
@@ -81,12 +94,26 @@ namespace WinPaletter.UI.Controllers
             object value = Math.Max(Math.Min(Conversion.Val(response), Maximum), Minimum);
             button.Text = value.ToString();
 
-            FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (_animateChanges)
+            {
+                FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                Value = Convert.ToInt32(value);
+            }
         }
 
         private void undo_Click(object sender, EventArgs e)
         {
-            FluentTransitions.Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (_animateChanges)
+            {
+                FluentTransitions.Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                Value = Math.Min(Math.Max(defaultValue, Minimum), Maximum);
+            }
         }
 
         private void value_btn_TextChanged(object sender, EventArgs e)

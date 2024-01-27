@@ -77,12 +77,32 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        private bool _animateChanges = true;
+        public bool AnimateChanges
+        {
+            get => _animateChanges;
+            set
+            {
+                if (_animateChanges != value)
+                {
+                    _animateChanges = value;
+                }
+            }
+        }
+
         private void value_btn_Click(object sender, EventArgs e)
         {
             string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
             ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), colorBar1.Maximum), colorBar1.Minimum).ToString();
 
-            FluentTransitions.Transition.With(this, nameof(Value), (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text))).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (_animateChanges)
+            {
+                FluentTransitions.Transition.With(this, nameof(Value), (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text))).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
+            }
         }
 
         private void undo_Click(object sender, EventArgs e)

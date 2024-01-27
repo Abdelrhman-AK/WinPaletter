@@ -1,6 +1,5 @@
 ﻿using Cyotek.Windows.Forms;
 using Devcorp.Controls.VisualStyles;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -249,12 +248,12 @@ namespace WinPaletter
                     Location = FirstControl.PointToScreen(Point.Empty) + (Size)new Point(-Width + FirstControl.Width + 5, FirstControl.Height - 1);
                 }
 
-                if (Location.Y + Height > Program.Computer.Screen.Bounds.Height)
-                    Location = new(Location.X, Program.Computer.Screen.Bounds.Height - Height);
+                if (Location.Y + Height > Screen.PrimaryScreen.Bounds.Height)
+                    Location = new(Location.X, Screen.PrimaryScreen.Bounds.Height - Height);
                 if (Location.Y < 0)
                     Location = new(Location.X, 0);
-                if (Location.X + Width > Program.Computer.Screen.Bounds.Width)
-                    Location = new(Program.Computer.Screen.Bounds.Width - Width, Location.Y);
+                if (Location.X + Width > Screen.PrimaryScreen.Bounds.Width)
+                    Location = new(Screen.PrimaryScreen.Bounds.Width - Width, Location.Y);
                 if (Location.X < 0)
                     Location = new(0, Location.Y);
 
@@ -409,24 +408,9 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            switch (RadioButton1.Checked)
-            {
-                case true:
-                    {
-                        img = Program.Wallpaper_Unscaled;
-                        break;
-                    }
+            img = RadioButton1.Checked ? Program.Wallpaper_Unscaled : Bitmap_Mgr.Load(TextBox1.Text);
 
-                case false:
-                    {
-                        img = Bitmap_Mgr.Load(TextBox1.Text);
-                        break;
-                    }
-
-            }
-
-            if (CheckBox2.Checked)
-                img = img.Resize(Forms.Win11Colors.windowsDesktop1.Size);
+            if (CheckBox2.Checked) img = img.Resize(300, 300);
 
             if (img is not null)
             {
@@ -452,7 +436,7 @@ namespace WinPaletter
             if (img is not null)
             {
                 ColorThiefDotNet.ColorThief ColorThiefX = new();
-                List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette((Bitmap)img, Trackbar1.Value, Trackbar2.Value, CheckBox1.Checked);
+                List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette(img as Bitmap, trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
 
                 foreach (ColorThiefDotNet.QuantizedColor C in Colors)
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B));
@@ -632,30 +616,6 @@ namespace WinPaletter
             {
 
             }
-        }
-
-        private void Ttl_h_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar1.Maximum), Trackbar1.Minimum).ToString();
-            Trackbar1.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Button8_Click(object sender, EventArgs e)
-        {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), Trackbar2.Maximum), Trackbar2.Minimum).ToString();
-            Trackbar2.Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-        }
-
-        private void Trackbar1_Scroll(object sender)
-        {
-            val1.Text = ((UI.WP.TrackBar)sender).Value.ToString();
-        }
-
-        private void Trackbar2_Scroll(object sender)
-        {
-            val2.Text = ((UI.WP.TrackBar)sender).Value.ToString();
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)

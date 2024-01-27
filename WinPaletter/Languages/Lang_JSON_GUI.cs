@@ -407,7 +407,7 @@ namespace WinPaletter
                             c.TextAlign = ContentAlignment.MiddleLeft;
                         }
 
-                        else if (ctrl is UI.WP.AlertBox alertBox)
+                        else if (ctrl is UI.WP.AlertBox)
                         {
                             c.Image = null;
                             c.TextAlign = ContentAlignment.MiddleLeft;
@@ -921,7 +921,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         private void Lang_JSON_GUI_ParentChanged(object sender, EventArgs e)

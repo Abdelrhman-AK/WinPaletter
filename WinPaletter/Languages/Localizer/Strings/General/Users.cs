@@ -9,7 +9,7 @@
         public string UserSwitch_TypeSystem { get; set; } = "Type: System profile";
         public string UserSwitch_LoginAs { get; set; } = "Log in as {0}";
         public string UserSwitch_SYSTEM_Alert0 { get; set; } = "You should know that system accounts are generally reserved for very specific system-level tasks and should be approached with extreme caution. Incorrect use of SYSTEM-level access can lead to system instability. Always follow best practices for security; this is to avoid system corruption.";
-        public string UserSwitch_SYSTEM_Alert1 { get; set; } = "Do you want to continue with this user? Pressing 'No' will continue with the administrator user that opened WinPaletter.";
+        public string UserSwitch_SYSTEM_Alert1 { get; set; } = "Do you want to continue with this user? Pressing 'No' will continue with the administrator user who opened WinPaletter.";
         public string UserSwitch_ERROR_UNKNOWN { get; set; } = "WinPaletter failed to log in to the selected user due to an unknown reason. Try continuing without a password.";
         public string UserSwitch_ERROR_LOGON_FAILURE { get; set; } = "The credentials provided for logging in (username and password) do not match a valid user account on the system or are incorrect.";
         public string UserSwitch_ERROR_LOGON_ACCESS_DENIED { get; set; } = "Access denied to the system account. Try continuing without a password.";

@@ -503,7 +503,7 @@ namespace WinPaletter
                     AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", true));
                     AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
                     AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
-                    BackupPath = GetReg(REG_Backup, "BackupPath", PathsExt.appData + "\\Backup\\Themes").ToString();
+                    BackupPath = GetReg(REG_Backup, "BackupPath", $"{PathsExt.appData}\\Backup\\Themes").ToString();
                 }
 
                 public void Save()
@@ -651,7 +651,7 @@ namespace WinPaletter
             AutoBackupOnAppOpen = true,
             AutoBackupOnApply = true,
             AutoBackupOnThemeLoad = false,
-            BackupPath = PathsExt.appData + "\\Backup\\Themes"
+            BackupPath = $"{PathsExt.appData}\\Backup\\Themes"
         };
 
         public enum Mode

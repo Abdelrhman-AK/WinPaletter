@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -168,137 +167,164 @@ namespace WinPaletter.Theme
                     {
                         using (Manager TMx = Default.Get())
                         {
-                            foreach (FieldInfo field in GetType().GetFields(bindingFlags))
-                            {
-                                Type type = field.FieldType;
-                                try { field.SetValue(this, field.GetValue(TMx)); }
-                                catch { };
-                            }
+                            BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
-                            if (!System.IO.File.Exists(File)) return;
-
-                            // Rough method to get theme name to create its proper resources pack folder
-                            foreach (string line in Decompress(File))
-                            {
-                                if (line.Trim().StartsWith("\"ThemeName\":", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    Info.ThemeName = line.Split(':')[1].ToString().Replace("\"", string.Empty).Replace(",", string.Empty).Trim();
-                                    break;
-                                }
-                            }
-
-                            List<string> txt = new();
-                            txt.Clear();
-                            string Pack = $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp";
-                            bool Pack_IsValid = System.IO.File.Exists(Pack) && new FileInfo(Pack).Length > 0L && Manager.GetFormat(File) == Manager.Format.JSON;
-                            string cache = $@"{PathsExt.ThemeResPackCache}\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
-
-                            // Extract theme resources pack
                             try
                             {
-                                if (Pack_IsValid & !IgnoreExtractionThemePack)
+                                // Copy values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter
+                                foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                 {
-                                    if (!Directory.Exists(cache))
-                                        Directory.CreateDirectory(cache);
-
-                                    using (FileStream s = new(Pack, FileMode.Open, FileAccess.Read))
+                                    Type fieldType = field.FieldType;
+                                    try
                                     {
-                                        using (ZipArchive archive = new(s, ZipArchiveMode.Read))
+                                        // Set the value of the current instance's field from default theme instance
+                                        field.SetValue(this, field.GetValue(TMx));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Handle exceptions and add them to the error list
+                                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
+                                    }
+                                }
+
+                                // Check if the theme file exists
+                                if (!System.IO.File.Exists(File)) return;
+
+                                // Extract theme name from the theme file
+                                foreach (string line in Decompress(File))
+                                {
+                                    if (line.Trim().ToLower().StartsWith("\"themename\":", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        // Set the theme name in the Info object
+                                        Info.ThemeName = line.Split(':')[1].ToString().Replace("\"", string.Empty).Replace(",", string.Empty).Trim();
+                                        break;
+                                    }
+                                }
+
+                                // Prepare variables for theme resources pack extraction
+                                List<string> txt = new();
+                                string packPath = $"{new FileInfo(File).DirectoryName}\\{Path.GetFileNameWithoutExtension(File)}.wptp";
+                                bool packIsValid = System.IO.File.Exists(packPath) && new FileInfo(packPath).Length > 0L && Manager.GetFormat(File) == Manager.Format.JSON;
+                                string cache = $"{PathsExt.ThemeResPackCache}\\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
+
+                                // Extract theme resources pack
+                                try
+                                {
+                                    if (packIsValid && !IgnoreExtractionThemePack)
+                                    {
+                                        if (!Directory.Exists(cache)) Directory.CreateDirectory(cache);
+
+                                        using (FileStream stream = new(packPath, FileMode.Open, FileAccess.Read))
+                                        using (ZipArchive archive = new(stream, ZipArchiveMode.Read))
                                         {
                                             foreach (ZipArchiveEntry entry in archive.Entries)
                                             {
-                                                if (entry.FullName.Contains(@"\"))
+                                                // Create directories if necessary and extract entries
+                                                if (entry.FullName.Contains("\\"))
                                                 {
                                                     string dest = Path.Combine(cache, entry.FullName);
-                                                    string dest_dir = dest.Replace($@"\{dest.Split('\\').Last()}", string.Empty);
-                                                    if (!Directory.Exists(dest_dir))
-                                                        Directory.CreateDirectory(dest_dir);
+                                                    string destDir = dest.Replace($"\\{dest.Split('\\').Last()}", string.Empty);
+
+                                                    if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
                                                 }
+
                                                 entry.ExtractToFile(Path.Combine(cache, entry.FullName), true);
                                             }
                                         }
-                                        s.Close();
-                                        s.Dispose();
                                     }
                                 }
-                            }
-
-                            catch (Exception ex)
-                            {
-                                Pack_IsValid = false;
-                                Forms.BugReport.ThrowError(ex);
-                            }
-
-                            txt = (List<string>)Decompress(File);
-
-                            if (IsValidJson(string.Join("\r\n", txt)))
-                            {
-                                // Replace %WinPaletterAppData% variable with a valid AppData folder path
-                                for (int x = 0, loopTo = txt.Count - 1; x <= loopTo; x++)
+                                catch (Exception ex)
                                 {
-                                    if (txt[x].Contains(":"))
-                                    {
-                                        string[] arr = txt[x].Split(':');
-                                        if (arr.Count() == 2 && arr[1].Contains("%WinPaletterAppData%"))
-                                        {
-                                            txt[x] = $"{arr[0]}:{(arr[1].Replace("%WinPaletterAppData%", PathsExt.appData.Replace(@"\", @"\\")))}";
-                                        }
-                                    }
+                                    packIsValid = false;
+                                    Forms.BugReport.ThrowError(ex);
                                 }
 
-                                JObject J = JObject.Parse(string.Join("\r\n", txt));
+                                // Decompress the theme file content
+                                txt = Decompress(File) as List<string>;
 
-                                // This will get the new added features to fix bug (null values on opening a theme file)
-                                try
+                                if (IsValidJson(string.Join("\r\n", txt)))
                                 {
-                                    JObject J_Original = JObject.Parse(TMx.ToString(true));
-                                    foreach (var item in J_Original)
+                                    // Replace %WinPaletterAppData% variable with a valid AppData folder path
+                                    for (int x = 0; x < txt.Count; x++)
                                     {
-                                        if (J[item.Key] is null && J_Original[item.Key] is not null)
-                                            J[item.Key] = J_Original[item.Key];
-                                        if (item.Value is not JValue)
+                                        if (txt[x].Contains(":"))
                                         {
-                                            foreach (KeyValuePair<string, JToken> prop in (JObject)item.Value)
+                                            string[] arr = txt[x].Split(':');
+                                            if (arr.Length == 2 && (arr[1] ?? "").ToLower().Contains("%WinPaletterAppData%".ToLower()))
                                             {
-                                                try
-                                                {
-                                                    if (J[item.Key][prop.Key] is null && J_Original[item.Key] is not null && J_Original[item.Key][prop.Key] is not null)
-                                                    {
-                                                        J[item.Key][prop.Key] = J_Original[item.Key][prop.Key];
-                                                    }
-                                                }
-                                                catch { }
+                                                txt[x] = $"{arr[0]}:{arr[1].Replace("%WinPaletterAppData%", PathsExt.appData.Replace("\\", "\\\\"))}";
                                             }
                                         }
                                     }
-                                }
-                                catch { }
 
-                                foreach (FieldInfo field in GetType().GetFields(bindingFlags))
-                                {
+                                    // Parse the decompressed content as JSON
+                                    JObject json = JObject.Parse(string.Join("\r\n", txt));
+                                    JObject json_original = JObject.Parse(TMx.ToString(true));
+
+                                    // Merge with the original theme manager data to make a new WinPaletter with new features can load a WPTH made by an old WinPaletter
                                     try
                                     {
-                                        Type type = field.FieldType;
-                                        if (J[field.Name] is not null) field.SetValue(this, J[field.Name].ToObject(type));
+                                        foreach (KeyValuePair<string, JToken?> item in json_original)
+                                        {
+                                            if (json[item.Key] is null && json_original[item.Key] is not null) json[item.Key] = json_original[item.Key];
+
+                                            if (item.Value is not JValue)
+                                            {
+                                                foreach (KeyValuePair<string, JToken> prop in item.Value as JObject)
+                                                {
+                                                    try
+                                                    {
+                                                        if (json[item.Key][prop.Key] is null && json_original[item.Key] is not null && json_original[item.Key][prop.Key] is not null)
+                                                        {
+                                                            json[item.Key][prop.Key] = json_original[item.Key][prop.Key];
+                                                        }
+                                                    }
+                                                    catch { }
+                                                }
+                                            }
+                                        }
                                     }
-                                    catch (Exception ex) { Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex)); }
+                                    catch { }
+
+                                    // Set values from JSON to the current instance's fields
+                                    foreach (FieldInfo field in GetType().GetFields(bindingFlags))
+                                    {
+                                        try
+                                        {
+                                            Type fieldType = field.FieldType;
+                                            if (json[field.Name] is not null) field.SetValue(this, json[field.Name].ToObject(fieldType));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            // Handle exceptions and add them to the error list
+                                            Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
+                                        }
+                                    }
+                                }
+                                else if (Manager.GetFormat(File) == Manager.Format.OldFormat)
+                                {
+                                    // Display a message box for old format themes
+                                    MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Convert_Detect_Old_OnLoadingTip);
+                                    return;
+                                }
+                                else
+                                {
+                                    // Display a message box for invalid JSON
+                                    MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
+                                // Display exception information if any
+                                if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0 && Application.OpenForms.OfType<BackupThemes_List>().Count() == 0)
+                                {
+                                    Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
+                                    Forms.Saving_ex_list.ApplyMode = false;
+                                    Forms.Saving_ex_list.ShowDialog();
                                 }
                             }
-
-                            else if (Manager.GetFormat(File) == Manager.Format.OldFormat)
+                            catch (Exception ex)
                             {
-                                MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Convert_Detect_Old_OnLoadingTip);
-                                return;
-                            }
-
-                            else { MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error); }
-
-                            // Application.OpenForms.OfType<Store>().Count() == 0 is to prevent this from running when Store is opened
-                            if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0 && Application.OpenForms.OfType<BackupThemes_List>().Count() == 0)
-                            {
-                                Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
-                                Forms.Saving_ex_list.ApplyMode = false;
-                                Forms.Saving_ex_list.ShowDialog();
+                                // Handle any unexpected exceptions
+                                Forms.BugReport.ThrowError(ex);
                             }
                         }
 
@@ -324,7 +350,7 @@ namespace WinPaletter.Theme
                         {
                             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApply)
                             {
-                                string filename = Program.GetUniqueFileName(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply", $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                                string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                                 Save(Source.File, filename);
                             }
 
@@ -753,7 +779,7 @@ namespace WinPaletter.Theme
                 case Source.File:
                     {
                         if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(File))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(File));
-   
+
                         if (System.IO.File.Exists(File))
                         {
                             try { FileSystem.Kill(File); }

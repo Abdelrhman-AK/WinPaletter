@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.Theme.Manager;
-using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {
@@ -131,7 +130,7 @@ namespace WinPaletter
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
             {
-                string filename = Program.GetUniqueFileName(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                 TM.Save(Source.File, filename);
             }
         }
@@ -141,7 +140,7 @@ namespace WinPaletter
             try
             {
                 if (System.IO.File.Exists("oldWinpaletter.trash")) System.IO.File.Delete("oldWinpaletter.trash");
-                if (System.IO.File.Exists("oldWinpaletter_2.trash")) System.IO.File.Delete("oldWinpaletter_2.trash"); 
+                if (System.IO.File.Exists("oldWinpaletter_2.trash")) System.IO.File.Delete("oldWinpaletter_2.trash");
             }
             catch { }
         }
@@ -476,7 +475,7 @@ namespace WinPaletter
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Timeout = 60000;
+                request.Timeout = Timeout;
                 request.AllowAutoRedirect = false;
                 request.Method = "HEAD";
 
@@ -522,7 +521,7 @@ namespace WinPaletter
             {
                 Environment.ExitCode = 0;
                 Forms.Home.LoggingOff = true;
-                Forms.MainFrm.Close();
+                Forms.MainForm.Close();
                 process.Kill();
                 wic.Undo();  // :)
             }

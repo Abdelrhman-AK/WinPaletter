@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -21,7 +22,7 @@ namespace WinPaletter
             Color c2 = c.CB((float)(Program.Style.DarkMode ? -0.75d : 0.75d));
             Panel1.BackColor = c1;
             BackColor = c2;
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
             RadioImage1.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Stable;
             RadioImage2.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Preview;
         }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.UI.Controllers;
@@ -446,7 +445,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
     }
 

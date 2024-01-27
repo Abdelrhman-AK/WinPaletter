@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -881,7 +878,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -1051,7 +1048,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         private void SettingsX_PaddingChanged(object sender, EventArgs e)
@@ -1068,7 +1065,7 @@ namespace WinPaletter
 
         private void button24_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
         }
 
         private void button26_Click(object sender, EventArgs e)

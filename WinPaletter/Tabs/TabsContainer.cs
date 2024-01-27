@@ -1,10 +1,8 @@
-﻿using AnimatorNS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
@@ -534,19 +532,19 @@ namespace WinPaletter.Tabs
             if (!tabRectangle.IsEmpty)
             {
                 // Set properties for tabData movement with index information
-                SetTabMoveProperties(IndexFromRectangle(tabRectangle), true, false, false, false);
+                SetTabMoveProperties(IndexFromRectangle(tabRectangle), true, false, false);
             }
             else
             {
                 // Check if the cursor is to the right of the last tabData
                 if (e.X > collection.Last().Rectangle.Right)
                 {
-                    SetTabMoveProperties(-1, true, false, true, false);
+                    SetTabMoveProperties(-1, true, false, true);
                 }
                 // Check if the cursor is to the left of the first tabData
                 else if (e.X < collection.First().Rectangle.Left)
                 {
-                    SetTabMoveProperties(-1, true, true, false, false);
+                    SetTabMoveProperties(-1, true, true, false);
                 }
             }
 
@@ -582,7 +580,7 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast, bool moveBetweenTabs)
+        private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast)
         {
             moveTo = moveToIndex;
             isMovingTab = moveTab;

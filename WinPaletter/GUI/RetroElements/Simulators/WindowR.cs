@@ -775,34 +775,34 @@ namespace WinPaletter.UI.Retro
             BtnHeight = Conversions.ToInteger(Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5));
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
 
-            _CloseBtn.Size = new(BtnWidth, BtnHeight);
-            _MinBtn.Size = new(BtnWidth, BtnHeight);
-            _MaxBtn.Size = new(BtnWidth, BtnHeight);
+            if (_CloseBtn != null) _CloseBtn.Size = new(BtnWidth, BtnHeight);
+            if (_MinBtn != null) _MinBtn.Size = new(BtnWidth, BtnHeight);
+            if (_MaxBtn != null) _MaxBtn.Size = new(BtnWidth, BtnHeight);
             Refresh();
         }
 
         private void AdjustLocations()
         {
-            _CloseBtn.Top = Metrics_PaddedBorderWidth + Metrics_BorderWidth + 5;
-            _MinBtn.Top = _CloseBtn.Top;
-            _MaxBtn.Top = _CloseBtn.Top;
+            if (_CloseBtn != null) _CloseBtn.Top = Metrics_PaddedBorderWidth + Metrics_BorderWidth + 5;
+            if (_MinBtn != null) _MinBtn.Top = _CloseBtn.Top;
+            if (_MaxBtn != null) _MaxBtn.Top = _CloseBtn.Top;
 
-            _CloseBtn.Left = Width - _CloseBtn.Width - _Metrics_PaddedBorderWidth - _Metrics_BorderWidth - 5;
+            if (_CloseBtn != null) _CloseBtn.Left = Width - _CloseBtn.Width - _Metrics_PaddedBorderWidth - _Metrics_BorderWidth - 5;
 
             if (MinimizeBox & MaximizeBox)
             {
-                _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
-                _MaxBtn.Left = _MinBtn.Left - _MaxBtn.Width;
+                if (_MinBtn != null && _CloseBtn != null) _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
+                if (_MaxBtn != null && _MinBtn != null) _MaxBtn.Left = _MinBtn.Left - _MaxBtn.Width;
             }
 
             else if (MaximizeBox)
             {
-                _MaxBtn.Left = _CloseBtn.Left - 2 - _MaxBtn.Width;
+                if (_MaxBtn != null && _CloseBtn != null) _MaxBtn.Left = _CloseBtn.Left - 2 - _MaxBtn.Width;
             }
 
             else if (MinimizeBox)
             {
-                _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
+                if (_MinBtn != null && _CloseBtn != null) _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
             }
 
         }
@@ -815,9 +815,9 @@ namespace WinPaletter.UI.Retro
                 i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
                 iFx = i0 / Math.Abs(Math.Min(17, 18));
                 Font f = new("Marlett", (float)(6.8d * (double)iFx));
-                _CloseBtn.Font = f;
-                _MinBtn.Font = f;
-                _MaxBtn.Font = f;
+                if (_CloseBtn != null) _CloseBtn.Font = f;
+                if (_MinBtn != null) _MinBtn.Font = f;
+                if (_MaxBtn != null) _MaxBtn.Font = f;
             }
             catch { }
         }

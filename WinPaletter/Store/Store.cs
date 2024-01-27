@@ -33,14 +33,13 @@ namespace WinPaletter
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
-        private WebClient WebCL;
+        private DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
         private Settings.Structures.Appearance oldAppearance = Program.Settings.Appearance;
 
         public Store()
         {
-            WebCL = new();
             InitializeComponent();
         }
         #endregion
@@ -52,7 +51,7 @@ namespace WinPaletter
             windowsDesktop1.WindowStyle = Program.WindowStyle;
             windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TM, Program.WindowStyle);
             windowsDesktop1.LoadFromTM(TM);
-
+            windowsDesktop1.LoadClassicColors(TM.Win32);
             retroDesktopColors1.LoadColors(TM);
             retroDesktopColors1.LoadMetrics(TM);
         }
@@ -372,7 +371,7 @@ namespace WinPaletter
                 // Get text of the DB from URL
                 Status_lbl.SetText(string.Format(Program.Lang.Store_Accessing, DB));
                 response.Clear();
-                response = WebCL.DownloadString(DB).CList();
+                response = DM.ReadString(DB).CList();
                 items.Clear();
 
                 // Add valid lines (Correct format) in a themes list
@@ -441,11 +440,9 @@ namespace WinPaletter
                             Status_lbl.SetText(string.Format(Program.Lang.Store_UpdateTheme, FileName, URL_ThemeFile));
                             try
                             {
-                                WebCL.DownloadFile(URL_ThemeFile, $@"{Dir}\{FileName}");
+                                DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
                             }
-                            catch
-                            {
-                            }
+                            catch { }
                         }
                     }
                     else
@@ -453,16 +450,13 @@ namespace WinPaletter
                         Status_lbl.SetText(string.Format(Program.Lang.Store_DownloadTheme, FileName, URL_ThemeFile));
                         try
                         {
-                            WebCL.DownloadFile(URL_ThemeFile, $@"{Dir}\{FileName}");
+                            DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
 
                     i += 1;
-                    if (allProgress > 0)
-                        FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                    if (allProgress > 0) FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
                     // Convert themes managers into StoreItems, and exclude the old formats of OldFormat
                     if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetFormat($@"{Dir}\{FileName}") == Manager.Format.JSON)
@@ -936,8 +930,8 @@ namespace WinPaletter
             else
             {
                 // Edit button is pressed
-                Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
-                Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, null, null, null);
+                Forms.MainForm.tabsContainer1.SelectedIndex = 0;
+                Forms.MainForm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, null, null, null);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                 Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
@@ -1138,7 +1132,7 @@ namespace WinPaletter
             Tabs.SelectedIndex = 0;
             Program.Animator.HideSync(back_btn);
 
-            Titlebar_lbl.Text = "";
+            Titlebar_lbl.Text = string.Empty;
             Program.Animator.ShowSync(Tabs);
         }
 
@@ -1374,7 +1368,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         #endregion

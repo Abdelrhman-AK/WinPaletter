@@ -202,27 +202,27 @@ namespace WinPaletter
 
         private void SubMenu_Load(object sender, EventArgs e)
         {
-            this.Icon = Forms.MainFrm.Icon;
+            this.Icon = Forms.MainForm.Icon;
             _shown = false;
 
             Point p = MousePosition;
 
-            if (p.Y + Height > Program.Computer.Screen.WorkingArea.Bottom)
+            if (p.Y + Height > Screen.PrimaryScreen.WorkingArea.Bottom)
             {
-                p.Y = Program.Computer.Screen.WorkingArea.Bottom - Height - 5;
+                p.Y = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 5;
             }
 
-            if (p.Y < Program.Computer.Screen.WorkingArea.Top)
+            if (p.Y < Screen.PrimaryScreen.WorkingArea.Top)
             {
                 p.Y = 0;
             }
 
-            if (p.X + Width > Program.Computer.Screen.WorkingArea.Right)
+            if (p.X + Width > Screen.PrimaryScreen.WorkingArea.Right)
             {
-                p.X = Program.Computer.Screen.WorkingArea.Right - Width - 5;
+                p.X = Screen.PrimaryScreen.WorkingArea.Right - Width - 5;
             }
 
-            if (p.X < Program.Computer.Screen.WorkingArea.Left)
+            if (p.X < Screen.PrimaryScreen.WorkingArea.Left)
             {
                 p.X = 0;
             }

@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
-using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -205,7 +204,7 @@ namespace WinPaletter
         {
             using (Manager _Def = Theme.Default.Get())
             {
-                _Def.Save(Theme.Manager.Source.Registry, "", null, true);
+                _Def.Save(Theme.Manager.Source.Registry, string.Empty, null, true);
 
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 

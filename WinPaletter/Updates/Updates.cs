@@ -5,42 +5,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class Updates
     {
-        private WebClient WebCL;
-        private WebClient _UC;
-        private WebClient UC
-        {
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            get
-            {
-                return _UC;
-            }
-
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            set
-            {
-                if (_UC != null)
-                {
-                    _UC.DownloadProgressChanged -= UC_DownloadProgressChanged;
-                    _UC.DownloadFileCompleted -= UC_DownloadFileCompleted;
-                }
-
-                _UC = value;
-                if (_UC != null)
-                {
-                    _UC.DownloadProgressChanged += UC_DownloadProgressChanged;
-                    _UC.DownloadFileCompleted += UC_DownloadFileCompleted;
-                }
-            }
-        }
+        private readonly DownloadManager DM = new();
 
         public string url = null;
         public string ver;
@@ -53,12 +24,12 @@ namespace WinPaletter
 
         public Updates()
         {
-            WebCL = new();
-            UC = new();
             InitializeComponent();
+            DM.DownloadProgressChanged += UC_DownloadProgressChanged;
+            DM.DownloadFileCompleted += UC_DownloadFileCompleted;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private async void Button1_Click(object sender, EventArgs e)
         {
             Forms.Home.NotifyUpdates.Visible = false;
 
@@ -83,9 +54,10 @@ namespace WinPaletter
                     {
                         Label17.SetText(Program.Lang.Checking);
 
-                        ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
+                        string response = await DM.ReadStringAsync(Properties.Resources.Link_Updates);
+                        ls = response.CList();
 
-                        foreach (var updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
+                        foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
                             string[] updateParts = updateInfo.Split(' ');
 
@@ -135,7 +107,7 @@ namespace WinPaletter
                 }
                 catch (Exception ex)
                 {
-                    //
+                    Forms.BugReport.ThrowError(ex);
                 }
 
                 Program.Animator.Show(AlertBox2, true);
@@ -161,8 +133,8 @@ namespace WinPaletter
                         if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
                     }
                     catch { }
-                    Program.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter.trash");
-                    UC.DownloadFileAsync(new Uri(url), OldName);
+                    System.IO.File.Move(OldName, "oldWinpaletter.trash");
+                    await DM.DownloadFileAsync(url, OldName);
                 }
 
                 if (RadioButton2.Checked)
@@ -174,7 +146,7 @@ namespace WinPaletter
                         Panel1.Enabled = false;
                         Button1.Enabled = false;
                         ProgressBar1.Visible = true;
-                        UC.DownloadFileAsync(new Uri(url), SaveFileDialog1.FileName);
+                        await DM.DownloadFileAsync(url, SaveFileDialog1.FileName);
                     }
                     else
                     {
@@ -195,7 +167,6 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            UC = new();
 
             LinkLabel3.Visible = false;
 
@@ -225,7 +196,7 @@ namespace WinPaletter
                 BetaInt = 0;
                 UpdateChannel = 0;
 
-                foreach (var updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
+                foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                 {
                     string[] updateParts = updateInfo.Split(' ');
 
@@ -274,7 +245,7 @@ namespace WinPaletter
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP); // Language string for both Windows XP and Windows Vista
+                AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, OS.WXP ? Program.Lang.OS_WinXP : Program.Lang.OS_WinVista);
             }
         }
 
@@ -310,9 +281,9 @@ namespace WinPaletter
             Close();
         }
 
-        private void UC_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void UC_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
         {
-            ProgressBar1.Value = e.ProgressPercentage;
+            ProgressBar1.Value = (int)e.ProgressPercentage;
         }
 
         private void UC_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -346,12 +317,10 @@ namespace WinPaletter
 
         public void DisturbActions()
         {
-            if (UC.IsBusy)
+            if (DM.IsBusy)
             {
                 Disturbed = true;
-
-                UC.CancelAsync();
-                UC.Dispose();
+                DM.StopDownload();
 
                 if (RadioButton1.Checked)
                 {
@@ -363,8 +332,8 @@ namespace WinPaletter
                     catch
                     {
                     }
-                    Program.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter_2.trash");
-                    Program.Computer.FileSystem.RenameFile("oldWinpaletter.trash", OldName.Split('\\').Last());
+                    System.IO.File.Move(OldName, "oldWinpaletter_2.trash");
+                    System.IO.File.Move("oldWinpaletter.trash", OldName.Split('\\').Last());
                     try
                     {
                         if (System.IO.File.Exists("oldWinpaletter_2.trash"))
@@ -376,7 +345,6 @@ namespace WinPaletter
                     {
                     }
                 }
-
             }
 
             if (RadioButton2.Checked)

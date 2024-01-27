@@ -124,7 +124,7 @@ namespace WinPaletter
             Value = string.Empty;
 
             // Loop through all forms nodes in JObj
-            foreach (var F in JSON_Forms)
+            foreach (KeyValuePair<string, JToken?> F in JSON_Forms)
             {
                 try
                 {
@@ -162,7 +162,7 @@ namespace WinPaletter
                             J_Controls = (JObject)J_Specific_Form["CONTROLS"];
 
                         // Loop through all child controls JObj nodes
-                        foreach (var ctrl in J_Controls)
+                        foreach (KeyValuePair<string, JToken?> ctrl in J_Controls)
                         {
                             try
                             {
@@ -356,7 +356,7 @@ namespace WinPaletter
                                 {
                                     try
                                     {
-                                        if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage) 
+                                        if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
                                             && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                         {
                                             j_child.Add($"{ctrl.Name}.Text", ctrl.Text);

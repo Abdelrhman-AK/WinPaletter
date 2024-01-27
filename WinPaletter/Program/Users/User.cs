@@ -97,7 +97,7 @@ namespace WinPaletter
 
                         using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                         {
-                            bool MainFormIsOpened = Application.OpenForms[Forms.MainFrm.Name] is not null;
+                            bool MainFormIsOpened = Application.OpenForms[Forms.MainForm.Name] is not null;
 
                             List<Form> OpenForms = new();
                             foreach (Form f in Application.OpenForms)
@@ -116,7 +116,7 @@ namespace WinPaletter
                             {
                                 if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (Program.TM != Program.TM_Original))
                                 {
-                                    Forms.MainFrm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                                    Forms.MainForm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
                                 }
                             }
 

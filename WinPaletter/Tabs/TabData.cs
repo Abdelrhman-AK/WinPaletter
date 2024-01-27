@@ -86,8 +86,7 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Flag indicating whether the form is shown.
         /// </summary>
-        public bool Shown => _shown;
-        private bool _shown = false;
+        public bool Shown { get; private set; } = false;
 
         /// <summary>
         /// Flag indicating whether the tab is selected.
@@ -160,7 +159,7 @@ namespace WinPaletter.Tabs
             Form = TabPage?.Controls?.OfType<Form>().FirstOrDefault();
             Text = tabPage.Text;
             Rectangle = rectangle;
-            Image = new Icon(Form?.Icon ?? Forms.MainFrm.Icon, 16, 16).ToBitmap();
+            Image = new Icon(Form?.Icon ?? Forms.MainForm.Icon, 16, 16).ToBitmap();
         }
 
         #endregion
@@ -186,7 +185,7 @@ namespace WinPaletter.Tabs
         public virtual void OnIconChanged(TabDataEventArgs e)
         {
             IconChanged?.Invoke(this, e);
-            Image = Form?.Icon.ToBitmap() ?? Forms.MainFrm.Icon.ToBitmap();
+            Image = Form?.Icon.ToBitmap() ?? Forms.MainForm.Icon.ToBitmap();
             tabsContainer?.Refresh();
         }
 
@@ -235,7 +234,7 @@ namespace WinPaletter.Tabs
         /// <param name="e">Event arguments.</param>
         private void _form_Shown(object sender, EventArgs e)
         {
-            _shown = true;
+            Shown = true;
             tabsContainer.OnFormShown(_form, new TabDataEventArgs(this));
             tabsContainer.Refresh();
         }
@@ -259,7 +258,7 @@ namespace WinPaletter.Tabs
         /// <param name="e">Event arguments.</param>
         private void _form_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _shown = false;
+            Shown = false;
             ((Form)sender).Parent?.Dispose();
             tabsContainer.OnFormClosed(_form, new TabDataEventArgs(this));
         }

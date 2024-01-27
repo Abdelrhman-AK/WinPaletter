@@ -81,8 +81,8 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ? 
-                    Forms.WindowsTerminal._Terminal.Profiles.Defaults : 
+                WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                    Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
 
                 temp.TabColor = TerTabColor.BackColor;
@@ -98,7 +98,7 @@ namespace WinPaletter
                 WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
-                
+
                 temp1.TabColor = cx;
 
                 Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);

@@ -25,8 +25,7 @@ namespace WinPaletter
             Application.ApplicationExit += OnExit;
             User.UserSwitch += User.OnUserSwitch;
 
-            if (OS.W7 | OS.WVista | OS.WXP)
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            if (OS.W7 | OS.WVista | OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
             DeleteUpdateResiduals();
             GetMemoryFonts();
@@ -34,7 +33,18 @@ namespace WinPaletter
 
             InitializeApplication(true);
 
-            SingleInstanceApplication.Run(Forms.MainFrm, StartupNextInstanceEventHandler);
+            SingleInstanceApplication.Run(Forms.MainForm, StartupNextInstanceEventHandler);
+        }
+
+        private static void OnExit(object sender, EventArgs e)
+        {
+            DeleteUpdateResiduals();
+
+            AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
+            AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
+            Application.ThreadException -= ThreadExceptionHandler;
+            User.UserSwitch -= User.OnUserSwitch;
+            SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 
         public static void InitializeApplication(bool ShowLoginDialog)
@@ -73,20 +83,10 @@ namespace WinPaletter
                 UpdateSysEventsSounds();
 
                 Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
+                Wallpaper_Unscaled = GetWallpaperFromRegistry();
 
                 wic.Undo();
             }
-        }
-
-        private static void OnExit(object sender, EventArgs e)
-        {
-            DeleteUpdateResiduals();
-
-            AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
-            AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
-            Application.ThreadException -= ThreadExceptionHandler;
-            User.UserSwitch -= User.OnUserSwitch;
-            SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 
         public static void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e)
@@ -96,12 +96,6 @@ namespace WinPaletter
                 ExecuteArgs(e.CommandLine.ToArray(), false);
                 wic.Undo();
             }
-        }
-
-        public static void BringApplicationToFront()
-        {
-            try { Application.OpenForms[Forms.MainFrm.Name].BringToFront(); }
-            catch { }
         }
     }
 }

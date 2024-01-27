@@ -50,18 +50,18 @@ namespace WinPaletter
             // Set the ImageList for the ListView
             listView1.SmallImageList = imageList1;
 
-            if (!System.IO.Directory.Exists(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply"))
-                System.IO.Directory.CreateDirectory(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply");
+            if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply"))
+                System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply");
 
-            if (!System.IO.Directory.Exists(Program.Settings.BackupTheme.BackupPath + "\\OnThemeOpen"))
-                System.IO.Directory.CreateDirectory(Program.Settings.BackupTheme.BackupPath + "\\OnThemeOpen");
+            if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen"))
+                System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen");
 
-            if (!System.IO.Directory.Exists(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen"))
-                System.IO.Directory.CreateDirectory(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen");
+            if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen"))
+                System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen");
 
-            string[] themes_onThemeApply = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
-            string[] themes_onThemeOpen = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnThemeOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
-            string[] themes_onAppOpen = Directory.GetFiles(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
+            string[] themes_onThemeApply = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
+            string[] themes_onThemeOpen = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
+            string[] themes_onAppOpen = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
 
             // Create three groups
             ListViewGroup group1 = new(Program.Lang.Backup_Group_AppOpen, HorizontalAlignment.Center);
@@ -124,7 +124,7 @@ namespace WinPaletter
                     Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;
 
-                    Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
+                    Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
                 }
             }
@@ -196,9 +196,9 @@ namespace WinPaletter
                 {
                     Program.Animator.HideSync(windowsDesktop1);
                     System.IO.File.Delete(listView1.SelectedItems[0].SubItems[1].Text);
-                    if (System.IO.File.Exists(System.IO.Path.GetFileNameWithoutExtension(listView1.SelectedItems[0].SubItems[1].Text) + ".wptp"))
+                    if (System.IO.File.Exists($"{System.IO.Path.GetFileNameWithoutExtension(listView1.SelectedItems[0].SubItems[1].Text)}.wptp"))
                     {
-                        System.IO.File.Delete(System.IO.Path.GetFileNameWithoutExtension(listView1.SelectedItems[0].SubItems[1].Text) + ".wptp");
+                        System.IO.File.Delete($"{System.IO.Path.GetFileNameWithoutExtension(listView1.SelectedItems[0].SubItems[1].Text)}.wptp");
                     }
 
                     PopulateThemesBackups();
@@ -215,7 +215,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + listView1.SelectedItems[0].SubItems[1].Text + "\"");
+                System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{listView1.SelectedItems[0].SubItems[1].Text}\"");
             }
         }
 
@@ -224,9 +224,9 @@ namespace WinPaletter
             if (MsgBox(Program.Lang.Backup_DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Program.Animator.HideSync(windowsDesktop1);
-                System.IO.Directory.Delete(Program.Settings.BackupTheme.BackupPath + "\\OnThemeApply", true);
-                System.IO.Directory.Delete(Program.Settings.BackupTheme.BackupPath + "\\OnThemeOpen", true);
-                System.IO.Directory.Delete(Program.Settings.BackupTheme.BackupPath + "\\OnAppOpen", true);
+                System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", true);
+                System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", true);
+                System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", true);
                 PopulateThemesBackups();
             }
         }
@@ -255,7 +255,7 @@ namespace WinPaletter
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;
                     Forms.ThemeLog.Apply_Theme();
 
-                    Forms.MainFrm.tabsContainer1.SelectedIndex = 0;
+                    Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
                 }
             }
@@ -263,7 +263,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
     }
 }

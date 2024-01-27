@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -153,7 +152,7 @@ namespace WinPaletter
 
             if (mostRecentFile != null && System.IO.File.Exists(mostRecentFile))
             {
-                return Bitmap_Mgr.Load(mostRecentFile).Resize(tabs_preview_1.Size) as Bitmap;
+                return Bitmap_Mgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
             }
             else
             {

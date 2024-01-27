@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -42,7 +43,7 @@ namespace WinPaletter
             CheckBox1.Enabled = true;
             CheckBox1.Checked = Program.Settings.UsersServices.ShowSysEventsSoundsInstaller;
 
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Beep);
+            SystemSounds.Beep.Play();
 
             textBox2.Select();
             textBox2.Focus();

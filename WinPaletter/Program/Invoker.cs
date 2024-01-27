@@ -6,7 +6,7 @@ namespace WinPaletter
     {
         public static object Invoke(Delegate method)
         {
-            return Forms.MainFrm.Invoke(method, null);
+            return Forms.MainForm.Invoke(method, null);
         }
     }
 }

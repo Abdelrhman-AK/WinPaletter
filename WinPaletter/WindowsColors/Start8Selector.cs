@@ -11,7 +11,7 @@ namespace WinPaletter
         }
         private void Start8Selector_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainFrm.Icon;
+            Icon = Forms.MainForm.Icon;
 
             this.LoadLanguage();
             ApplyStyle(this);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -28,7 +29,7 @@ namespace WinPaletter
             try { Forms.BK.Close(); } catch { }
             try { Forms.BK.Show(); } catch { }
 
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
 
             BringToFront();
         }

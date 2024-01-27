@@ -10,7 +10,6 @@ using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Retro;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {

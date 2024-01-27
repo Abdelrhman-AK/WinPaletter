@@ -250,7 +250,7 @@ namespace WinPaletter
                 }
                 finally
                 {
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
             }
 

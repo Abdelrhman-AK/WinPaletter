@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -1259,21 +1258,21 @@ namespace WinPaletter
         }
 
 
-        private static MainFrm _MainFrm;
-        public static MainFrm MainFrm
+        private static MainForm _MainForm;
+        public static MainForm MainForm
         {
             get
             {
-                _MainFrm = CreateInstance(_MainFrm);
-                return _MainFrm;
+                _MainForm = CreateInstance(_MainForm);
+                return _MainForm;
             }
             set
             {
-                if (value == _MainFrm)
+                if (value == _MainForm)
                     return;
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _MainFrm);
+                DisposeInstance(ref _MainForm);
             }
         }
 

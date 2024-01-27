@@ -32,7 +32,7 @@ namespace WinPaletter
 
         private void About_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainFrm.Icon;
+            Icon = Forms.MainForm.Icon;
             this.LoadLanguage();
             ApplyStyle(this);
             Label2.Text = Program.Version;
@@ -106,7 +106,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         private void About_ParentChanged(object sender, EventArgs e)

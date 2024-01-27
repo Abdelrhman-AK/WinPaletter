@@ -7,7 +7,7 @@ namespace WinPaletter
 {
 
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class MainFrm : TabsForm
+    public partial class MainForm : TabsForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -37,7 +37,7 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new WinPaletter.UI.WP.TablessControl();
             this.SuspendLayout();
@@ -64,7 +64,7 @@ namespace WinPaletter
             this.tabControl1.Size = new System.Drawing.Size(1154, 702);
             this.tabControl1.TabIndex = 121;
             // 
-            // MainFrm
+            // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -75,7 +75,7 @@ namespace WinPaletter
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1170, 765);
-            this.Name = "MainFrm";
+            this.Name = "MainForm";
             this.Text = "WinPaletter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrm_FormClosing);
             this.Load += new System.EventHandler(this.MainFrm_Load);

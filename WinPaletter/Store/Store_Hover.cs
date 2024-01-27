@@ -101,10 +101,10 @@ namespace WinPaletter
 
             }
 
-            if (p.X + Width > Program.Computer.Screen.Bounds.Width)
-                p = new(Program.Computer.Screen.Bounds.Width - Width, p.Y);
-            if (p.Y + Height > Program.Computer.Screen.Bounds.Height)
-                p = new(p.X, Program.Computer.Screen.Bounds.Height - Height);
+            if (p.X + Width > Screen.PrimaryScreen.Bounds.Width)
+                p = new(Screen.PrimaryScreen.Bounds.Width - Width, p.Y);
+            if (p.Y + Height > Screen.PrimaryScreen.Bounds.Height)
+                p = new(p.X, Screen.PrimaryScreen.Bounds.Height - Height);
             Location = p;
 
             _shown = false;

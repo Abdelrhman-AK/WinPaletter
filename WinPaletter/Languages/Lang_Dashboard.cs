@@ -40,7 +40,7 @@ namespace WinPaletter
         private void Button3_Click(object sender, EventArgs e)
         {
             Close();
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Lang_JSON_GUI);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Lang_JSON_GUI);
         }
     }
 }

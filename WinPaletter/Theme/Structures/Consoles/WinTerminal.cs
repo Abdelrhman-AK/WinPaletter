@@ -264,140 +264,140 @@ namespace WinPaletter
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("background")]
-                public Color Background { get; set; }
+                public Color Background { get; set; } = Color.FromArgb(12, 12, 12);
 
                 /// <summary>
                 /// Gets or sets the black color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("black")]
-                public Color Black { get; set; }
+                public Color Black { get; set; } = Color.FromArgb(12, 12, 12);
 
                 /// <summary>
                 /// Gets or sets the blue color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("blue")]
-                public Color Blue { get; set; }
+                public Color Blue { get; set; } = Color.FromArgb(0, 55, 218);
 
                 /// <summary>
                 /// Gets or sets the bright black color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightBlack")]
-                public Color BrightBlack { get; set; }
+                public Color BrightBlack { get; set; } = Color.FromArgb(118, 118, 118);
 
                 /// <summary>
                 /// Gets or sets the bright blue color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightBlue")]
-                public Color BrightBlue { get; set; }
+                public Color BrightBlue { get; set; } = Color.FromArgb(59, 120, 255);
 
                 /// <summary>
                 /// Gets or sets the bright cyan color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightCyan")]
-                public Color BrightCyan { get; set; }
+                public Color BrightCyan { get; set; } = Color.FromArgb(97, 214, 214);
 
                 /// <summary>
                 /// Gets or sets the bright green color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightGreen")]
-                public Color BrightGreen { get; set; }
+                public Color BrightGreen { get; set; } = Color.FromArgb(22, 198, 12);
 
                 /// <summary>
                 /// Gets or sets the bright purple color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightPurple")]
-                public Color BrightPurple { get; set; }
+                public Color BrightPurple { get; set; } = Color.FromArgb(180, 0, 158);
 
                 /// <summary>
                 /// Gets or sets the bright red color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightRed")]
-                public Color BrightRed { get; set; }
+                public Color BrightRed { get; set; } = Color.FromArgb(231, 72, 86);
 
                 /// <summary>
                 /// Gets or sets the bright white color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightWhite")]
-                public Color BrightWhite { get; set; }
+                public Color BrightWhite { get; set; } = Color.FromArgb(242, 242, 242);
 
                 /// <summary>
                 /// Gets or sets the bright yellow color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("brightYellow")]
-                public Color BrightYellow { get; set; }
+                public Color BrightYellow { get; set; } = Color.FromArgb(249, 241, 165);
 
                 /// <summary>
                 /// Gets or sets the cursor color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("cursorColor")]
-                public Color CursorColor { get; set; }
+                public Color CursorColor { get; set; } = Color.FromArgb(255, 255, 255);
 
                 /// <summary>
                 /// Gets or sets the cyan color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("cyan")]
-                public Color Cyan { get; set; }
+                public Color Cyan { get; set; } = Color.FromArgb(58, 150, 221);
 
                 /// <summary>
                 /// Gets or sets the foreground color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("foreground")]
-                public Color Foreground { get; set; }
+                public Color Foreground { get; set; } = Color.FromArgb(204, 204, 204);
 
                 /// <summary>
                 /// Gets or sets the green color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("green")]
-                public Color Green { get; set; }
+                public Color Green { get; set; } = Color.FromArgb(19, 161, 14);
 
                 /// <summary>
                 /// Gets or sets the purple color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("purple")]
-                public Color Purple { get; set; }
+                public Color Purple { get; set; } = Color.FromArgb(136, 23, 152);
 
                 /// <summary>
                 /// Gets or sets the red color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("red")]
-                public Color Red { get; set; }
+                public Color Red { get; set; } = Color.FromArgb(197, 15, 31);
 
                 /// <summary>
                 /// Gets or sets the selection background color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("selectionBackground")]
-                public Color SelectionBackground { get; set; }
+                public Color SelectionBackground { get; set; } = Color.FromArgb(255, 255, 255);
 
                 /// <summary>
                 /// Gets or sets the white color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("white")]
-                public Color White { get; set; }
+                public Color White { get; set; } = Color.FromArgb(204, 204, 204);
 
                 /// <summary>
                 /// Gets or sets the yellow color for the scheme.
                 /// </summary>
                 [JsonConverter(typeof(ColorConverter))]
                 [JsonProperty("yellow")]
-                public Color Yellow { get; set; }
+                public Color Yellow { get; set; } = Color.FromArgb(196, 156, 0);
             }
 
             /// <summary>
@@ -590,9 +590,9 @@ namespace WinPaletter
                 public override void WriteJson(JsonWriter writer, FontWeight value, JsonSerializer serializer)
                 {
                     // Use reflection to get the JsonProperty attribute value
-                    var enumType = typeof(FontWeight);
-                    var fieldInfo = enumType.GetField(value.ToString());
-                    var jsonPropertyAttribute = (JsonPropertyAttribute)Attribute.GetCustomAttribute(fieldInfo, typeof(JsonPropertyAttribute));
+                    Type enumType = typeof(FontWeight);
+                    FieldInfo fieldInfo = enumType.GetField(value.ToString());
+                    JsonPropertyAttribute jsonPropertyAttribute = (JsonPropertyAttribute)Attribute.GetCustomAttribute(fieldInfo, typeof(JsonPropertyAttribute));
 
                     serializer.Serialize(writer, jsonPropertyAttribute.PropertyName);
                 }
@@ -622,9 +622,9 @@ namespace WinPaletter
                 public override void WriteJson(JsonWriter writer, CursorShape value, JsonSerializer serializer)
                 {
                     // Use reflection to get the JsonProperty attribute value
-                    var enumType = typeof(CursorShape);
-                    var fieldInfo = enumType.GetField(value.ToString());
-                    var jsonPropertyAttribute = (JsonPropertyAttribute)Attribute.GetCustomAttribute(fieldInfo, typeof(JsonPropertyAttribute));
+                    Type enumType = typeof(CursorShape);
+                    FieldInfo fieldInfo = enumType.GetField(value.ToString());
+                    JsonPropertyAttribute jsonPropertyAttribute = (JsonPropertyAttribute)Attribute.GetCustomAttribute(fieldInfo, typeof(JsonPropertyAttribute));
 
                     serializer.Serialize(writer, jsonPropertyAttribute.PropertyName);
                 }

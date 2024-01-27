@@ -358,7 +358,7 @@ namespace WinPaletter
 
             else if (RadioButton3.Checked)
             {
-                bmpX = color_pick.BackColor.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                bmpX = color_pick.BackColor.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
             }
 
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
@@ -368,13 +368,13 @@ namespace WinPaletter
 
             else
             {
-                bmpX = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                bmpX = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
 
             }
 
             if (bmpX is not null)
             {
-                return (Bitmap)ApplyEffects((Bitmap)bmpX.Resize(pnl_preview.Size));
+                return (Bitmap)ApplyEffects(bmpX.Resize(pnl_preview.Size));
             }
             else
             {

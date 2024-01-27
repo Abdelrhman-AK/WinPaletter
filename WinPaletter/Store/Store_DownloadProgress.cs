@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class Store_DownloadProgress
     {
         public string URL;
@@ -15,9 +13,9 @@ namespace WinPaletter
         public string ThemeVersion;
 
         private Stopwatch SW = new();
-        private WebClient _ThemeDownloader;
+        private DownloadManager _ThemeDownloader;
 
-        private WebClient ThemeDownloader
+        private DownloadManager ThemeDownloader
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
             get
@@ -49,7 +47,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void Store_DownloadProgress_Load(object sender, EventArgs e)
+        private async void Store_DownloadProgress_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
             ApplyStyle(this);
@@ -65,19 +63,18 @@ namespace WinPaletter
             SW.Start();
 
             ThemeDownloader = new();
-            ThemeDownloader.DownloadFileAsync(new Uri(URL), File);
+            await ThemeDownloader.DownloadFileAsync(URL, File);
         }
 
-        private void ThemeDownloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void ThemeDownloader_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
         {
-
-            long Speed = (long)Math.Round(e.BytesReceived / SW.Elapsed.TotalSeconds);
+            long Speed = (long)Math.Round(e.BytesReceived / SW.Elapsed.TotalSeconds, 2);
             Label3.SetText(Speed.SizeString(true));
 
-            if (e.TotalBytesToReceive != 0L)
+            if (e.TotalBytesToReceive > 0L)
             {
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-                ProgressBar1.Value = e.ProgressPercentage;
+                ProgressBar1.Value = (int)e.ProgressPercentage;
                 Label2.SetText($"{e.BytesReceived.SizeString()}/{e.TotalBytesToReceive.SizeString()}");
                 TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
                 Label4.SetText(time.ToString(@"mm\:ss"));
@@ -89,8 +86,6 @@ namespace WinPaletter
                 Label2.SetText(e.BytesReceived.SizeString());
                 Label4.SetText(string.Empty);
             }
-
-
         }
 
         private void ThemeDownloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -113,14 +108,14 @@ namespace WinPaletter
         private void Store_DownloadProgress_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (ThemeDownloader.IsBusy)
-                ThemeDownloader.CancelAsync();
+                ThemeDownloader.StopDownload();
             ThemeDownloader.Dispose();
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
             if (ThemeDownloader.IsBusy)
-                ThemeDownloader.CancelAsync();
+                ThemeDownloader.StopDownload();
             DialogResult = DialogResult.Abort;
             Close();
         }

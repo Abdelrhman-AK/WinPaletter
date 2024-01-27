@@ -322,7 +322,7 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") is not null)
+                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") is not null)
                 {
                     Win11ClassicContextMenu = true;
                 }
@@ -337,12 +337,12 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                Program.Computer.Registry.CurrentUser.Close();
+                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             try
             {
-                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") is not null)
+                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") is not null)
                 {
                     SysListView32 = true;
                 }
@@ -357,7 +357,7 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                Program.Computer.Registry.CurrentUser.Close();
+                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             if (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
@@ -394,7 +394,7 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") is not null)
+                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") is not null)
                 {
                     DisableNavBar = true;
                 }
@@ -409,7 +409,7 @@ namespace WinPaletter.Theme.Structures
             }
             finally
             {
-                Program.Computer.Registry.CurrentUser.Close();
+                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars));
@@ -482,7 +482,7 @@ namespace WinPaletter.Theme.Structures
 
                 try
                 {
-                    if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
+                    if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
                     {
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
                     }
@@ -490,16 +490,16 @@ namespace WinPaletter.Theme.Structures
                 catch
                 {
                     // Do nothing
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
 
                 try
                 {
-                    if (Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
+                    if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
                     {
                         EditReg(TreeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
                     }
@@ -507,11 +507,11 @@ namespace WinPaletter.Theme.Structures
                 catch
                 {
                     // Do nothing
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
@@ -590,23 +590,23 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
-                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
+                            Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
-                            Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
+                            Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
                         }
                     }
                     catch
                     {
                         // Do nothing
-                        Program.Computer.Registry.CurrentUser.Close();
+                        Microsoft.Win32.Registry.CurrentUser.Close();
                     }
                     finally
                     {
-                        Program.Computer.Registry.CurrentUser.Close();
+                        Microsoft.Win32.Registry.CurrentUser.Close();
                     }
                 }
 
@@ -618,23 +618,23 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
-                            Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
+                            Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
                             if (TreeView is not null)
                                 Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
-                            Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
+                            Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
                         }
                     }
                     catch
                     {
                         // Do nothing
-                        Program.Computer.Registry.CurrentUser.Close();
+                        Microsoft.Win32.Registry.CurrentUser.Close();
                     }
                     finally
                     {
-                        Program.Computer.Registry.CurrentUser.Close();
+                        Microsoft.Win32.Registry.CurrentUser.Close();
                     }
                 }
 
@@ -644,23 +644,23 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
-                        Program.Computer.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
+                        Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, RegistryValueKind.String);
                     }
                     else
                     {
                         if (TreeView is not null)
                             Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
-                        Program.Computer.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
+                        Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
                     }
                 }
                 catch
                 {
                     // Do nothing
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
                 finally
                 {
-                    Program.Computer.Registry.CurrentUser.Close();
+                    Microsoft.Win32.Registry.CurrentUser.Close();
                 }
 
             }

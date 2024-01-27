@@ -44,12 +44,12 @@ namespace WinPaletter
             this.Label2 = new System.Windows.Forms.Label();
             this.trackBarX1 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox8 = new System.Windows.Forms.PictureBox();
+            this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.CheckBox7 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox10 = new System.Windows.Forms.PictureBox();
             this.CheckBox8 = new WinPaletter.UI.WP.CheckBox();
             this.CheckBox6 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox9 = new System.Windows.Forms.PictureBox();
-            this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.GroupBox8 = new WinPaletter.UI.WP.GroupBox();
             this.pnl_preview = new System.Windows.Forms.Panel();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
@@ -122,6 +122,7 @@ namespace WinPaletter
             // 
             this.trackBarX2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX2.AnimateChanges = false;
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 0;
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -163,6 +164,7 @@ namespace WinPaletter
             // 
             this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = false;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 0;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -185,6 +187,25 @@ namespace WinPaletter
             this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox8.TabIndex = 90;
             this.PictureBox8.TabStop = false;
+            // 
+            // ComboBox1
+            // 
+            this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ComboBox1.ForeColor = System.Drawing.Color.White;
+            this.ComboBox1.FormattingEnabled = true;
+            this.ComboBox1.ItemHeight = 20;
+            this.ComboBox1.Items.AddRange(new object[] {
+            "Acrylic (Looks Like Windows 10/11)",
+            "Aero"});
+            this.ComboBox1.Location = new System.Drawing.Point(39, 165);
+            this.ComboBox1.Name = "ComboBox1";
+            this.ComboBox1.Size = new System.Drawing.Size(352, 26);
+            this.ComboBox1.TabIndex = 85;
+            this.ComboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // CheckBox7
             // 
@@ -247,25 +268,6 @@ namespace WinPaletter
             this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox9.TabIndex = 91;
             this.PictureBox9.TabStop = false;
-            // 
-            // ComboBox1
-            // 
-            this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.ComboBox1.ForeColor = System.Drawing.Color.White;
-            this.ComboBox1.FormattingEnabled = true;
-            this.ComboBox1.ItemHeight = 20;
-            this.ComboBox1.Items.AddRange(new object[] {
-            "Acrylic (Looks Like Windows 10/11)",
-            "Aero"});
-            this.ComboBox1.Location = new System.Drawing.Point(39, 165);
-            this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(352, 26);
-            this.ComboBox1.TabIndex = 85;
-            this.ComboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // GroupBox8
             // 
@@ -533,6 +535,7 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogonUI7";

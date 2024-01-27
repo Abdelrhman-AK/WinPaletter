@@ -60,7 +60,7 @@ namespace WinPaletter.TypesExtensions
                     graphics.DrawImage(glowBitmap, glowRect);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         private static Rectangle GetRoundedRectangle(Rectangle rectangle, int radius)

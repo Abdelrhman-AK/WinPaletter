@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter.Dialogs
@@ -21,17 +15,17 @@ namespace WinPaletter.Dialogs
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.MainFrm.Icon;
+            Icon = Forms.MainForm.Icon;
 
             TextBox1.Font = Fonts.ConsoleMedium;
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-               System.IO.File.WriteAllText(SaveFileDialog1.FileName, TextBox1.Text);
+                System.IO.File.WriteAllText(SaveFileDialog1.FileName, TextBox1.Text);
             }
         }
 

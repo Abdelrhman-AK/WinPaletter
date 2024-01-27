@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace WinPaletter
             foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
 
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
 
             BringToFront();
 
@@ -134,7 +135,7 @@ namespace WinPaletter
 
         public static IEnumerable<Exception> GetAllInnerExceptions(Exception exception)
         {
-            var exceptions = new List<Exception>();
+            List<Exception> exceptions = new List<Exception>();
 
             while (exception != null)
             {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace WinPaletter
+﻿namespace WinPaletter
 {
     public partial class Localizer
     {

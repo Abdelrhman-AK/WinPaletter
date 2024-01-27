@@ -40,10 +40,10 @@ namespace WinPaletter
             {
                 get
                 {
-                    return new List<Example>() 
+                    return new List<Example>()
                     {
-                        new Example("Apply a theme from command line", new Options { Apply = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\My Theme.wpth" }),
-                        new Example("Edit a theme from command line", new Options { Edit = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\My Theme.wpth" }),
+                        new Example("Apply a theme from command line", new Options { Apply = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
+                        new Example("Edit a theme from command line", new Options { Edit = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
                     };
                 }
             }
@@ -83,7 +83,7 @@ namespace WinPaletter
             bool shouldExit = false;
             bool displayHelp = false;
 
-            var parser = new Parser(config => config.HelpWriter = null);
+            Parser parser = new Parser(config => config.HelpWriter = null);
 
             ParserResult<Options> result = parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()).WithParsed<Options>(o =>
             {
@@ -176,15 +176,15 @@ namespace WinPaletter
 
             if (displayHelp)
             {
-                    var helpText = HelpText.AutoBuild(result, h =>
-                    {
-                        h.AdditionalNewLineAfterOption = false;
-                        h.AddDashesToOption = true;
-                        h.MaximumDisplayWidth = 1000;
-                        h.Heading = Application.ProductName + " " + Program.Version;
-                        h.AddPreOptionsLine(" ");
-                        return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
-                    }, e => e);
+                HelpText helpText = HelpText.AutoBuild(result, h =>
+                {
+                    h.AdditionalNewLineAfterOption = false;
+                    h.AddDashesToOption = true;
+                    h.MaximumDisplayWidth = 1000;
+                    h.Heading = $"{Application.ProductName} {Program.Version}";
+                    h.AddPreOptionsLine(" ");
+                    return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
+                }, e => e);
 
                 Forms.ArgsHelp.TextBox1.Text = helpText;
                 Forms.ArgsHelp.ShowDialog();

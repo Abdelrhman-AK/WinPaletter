@@ -47,15 +47,10 @@ namespace WinPaletter.Theme
 
                 Directory.CreateDirectory(DirX);
 
-                foreach (string fileX in Program.Computer.FileSystem.GetFiles(DirX))
+                foreach (string fileX in System.IO.Directory.GetFiles(DirX))
                 {
-                    try
-                    {
-                        System.IO.File.Delete(fileX);
-                    }
-                    catch
-                    {
-                    }
+                    try { System.IO.File.Delete(fileX); }
+                    catch { }
                 }
 
                 List<Bitmap> bmpList = new();
@@ -69,7 +64,7 @@ namespace WinPaletter.Theme
                     case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             for (int i = 5031; i <= 5043; i += +1)
-                                bmpList.Add(PE_Functions.GetPNGFromDLL(PathsExt.imageres, i, "IMAGE", Program.Computer.Screen.Bounds.Size.Width, Program.Computer.Screen.Bounds.Size.Height));
+                                bmpList.Add(PE_Functions.GetPNGFromDLL(PathsExt.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
                             break;
                         }
 
@@ -77,11 +72,11 @@ namespace WinPaletter.Theme
                         {
                             if (System.IO.File.Exists(LogonElement.ImagePath))
                             {
-                                bmpList.Add((Bitmap)Bitmap_Mgr.Load(LogonElement.ImagePath).Resize(Program.Computer.Screen.Bounds.Size));
+                                bmpList.Add(Bitmap_Mgr.Load(LogonElement.ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
                             }
                             else
                             {
-                                bmpList.Add(Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                                bmpList.Add(Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
                             }
 
                             break;
@@ -89,7 +84,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
-                            bmpList.Add(LogonElement.Color.ToBitmap(Program.Computer.Screen.Bounds.Size));
+                            bmpList.Add(LogonElement.Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
                             break;
                         }
 
@@ -97,7 +92,7 @@ namespace WinPaletter.Theme
                         {
                             using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
                             {
-                                bmpList.Add((Bitmap)b.Resize(Program.Computer.Screen.Bounds.Size).Clone());
+                                bmpList.Add((Bitmap)b.Resize(Screen.PrimaryScreen.Bounds.Size).Clone());
                             }
 
                             break;
@@ -240,7 +235,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                                bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             }
 
                             break;
@@ -254,7 +249,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                                bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             }
 
                             break;
@@ -262,7 +257,7 @@ namespace WinPaletter.Theme
 
                     case Theme.Structures.LogonUI7.Sources.SolidColor:
                         {
-                            bmp = LogonUI7.Color.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            bmp = LogonUI7.Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             break;
                         }
 
@@ -278,7 +273,7 @@ namespace WinPaletter.Theme
 
                     default:
                         {
-                            bmp = Color.Black.ToBitmap(Program.Computer.Screen.Bounds.Size);
+                            bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             break;
                         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -67,7 +68,7 @@ namespace WinPaletter
 
             CheckedListBox1.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
 
-            Program.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
+            SystemSounds.Exclamation.Play();
         }
 
         private void Button1_Click(object sender, EventArgs e)

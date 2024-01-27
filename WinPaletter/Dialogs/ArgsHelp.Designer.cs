@@ -121,6 +121,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ArgsHelp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Command line help";
             this.Load += new System.EventHandler(this.ArgsHelp_Load);
             this.ResumeLayout(false);

@@ -1,17 +1,11 @@
 ﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
 using WinPaletter.NativeMethods;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
@@ -32,7 +26,7 @@ namespace WinPaletter
         public Home()
         {
             InitializeComponent();
-            Icon = Forms.MainFrm.Icon;
+            Icon = Forms.MainForm.Icon;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -109,7 +103,7 @@ namespace WinPaletter
 
         }
 
-        public void AutoUpdatesCheck()
+        public async void AutoUpdatesCheck()
         {
             if (OS.WXP || OS.WVista) return;
 
@@ -122,21 +116,22 @@ namespace WinPaletter
             {
                 try
                 {
-                    using (WebClient webClient = new())
+                    using (DownloadManager DM = new())
                     {
                         RaiseUpdate = false;
                         ver = string.Empty;
 
-                        Updates_ls = webClient.DownloadString(Properties.Resources.Link_Updates).CList();
+                        string result = await DM.ReadStringAsync(Properties.Resources.Link_Updates);
+                        Updates_ls = result.CList();
 
-                        foreach (var updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
+                        foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
                             string[] updateParts = updateInfo.Split(' ');
 
                             if (updateParts.Length >= 2)
                             {
-                                if (updateParts[0] == "Stable") StableInt = Updates_ls.IndexOf(updateInfo);
-                                if (updateParts[0] == "Beta") BetaInt = Updates_ls.IndexOf(updateInfo);
+                                if ((updateParts[0] ?? "stable").ToLower() == "stable") StableInt = Updates_ls.IndexOf(updateInfo);
+                                if ((updateParts[0] ?? "stable").ToLower() == "beta") BetaInt = Updates_ls.IndexOf(updateInfo);
                             }
                         }
 
@@ -178,7 +173,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.About);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.About);
         }
 
         private void Button39_Click(object sender, EventArgs e)
@@ -188,7 +183,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -209,18 +204,18 @@ namespace WinPaletter
                     return;
             }
 
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Store);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Store);
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
             Button5.ImageVector = Properties.Resources.Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
         }
 
         private void card1_Click(object sender, EventArgs e)
@@ -260,27 +255,27 @@ namespace WinPaletter
                 form = Forms.Win11Colors;
             }
 
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(form);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(form);
         }
 
         private void card2_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Win32UI);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Win32UI);
         }
 
         private void card3_Click(object sender, EventArgs e)
         {
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
-                Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
             else if (Program.WindowStyle == WindowStyle.W81 | Program.WindowStyle == WindowStyle.W7)
             {
-                Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.LogonUI7);
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI7);
             }
             else if (Program.WindowStyle == WindowStyle.WXP)
             {
-                Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.LogonUIXP);
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUIXP);
             }
             else if (Program.WindowStyle == WindowStyle.WVista)
             {
@@ -288,18 +283,18 @@ namespace WinPaletter
             }
             else
             {
-                Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
         }
 
         private void card6_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.CursorsStudio);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CursorsStudio);
         }
 
         private void card5_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Metrics_Fonts);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Metrics_Fonts);
         }
 
         private void card4_Click(object sender, EventArgs e)
@@ -342,29 +337,29 @@ namespace WinPaletter
                 Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W12;
             }
 
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Wallpaper_Editor);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Wallpaper_Editor);
         }
 
         private void card9_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.WinEffecter);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WinEffecter);
         }
 
         private void card7_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Sounds_Editor);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Sounds_Editor);
         }
 
         private void card11_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.ScreenSaver_Editor);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ScreenSaver_Editor);
         }
 
         private void card12_Click(object sender, EventArgs e)
         {
             if (Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista)
             {
-                Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.AltTabEditor);
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AltTabEditor);
             }
             else
             {
@@ -378,12 +373,12 @@ namespace WinPaletter
         private void card10_Click(object sender, EventArgs e)
         {
             Forms.ApplicationThemer.FixLanguageDarkModeBug = false;
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.ApplicationThemer);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ApplicationThemer);
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
@@ -392,7 +387,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
             SaveFileDialog1.FileName = null;
@@ -402,7 +397,7 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Forms.MainFrm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
                 {
@@ -441,12 +436,12 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.EditInfo);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.EditInfo);
         }
 
         private void btn_history_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
         }
 
         private void winXP_CheckedChanged(object sender, EventArgs e)
@@ -546,19 +541,19 @@ namespace WinPaletter
             _shown = true;
 
             if (Program.Settings.Updates.AutoCheck) Task.Run(AutoUpdatesCheck);
-            if (Program.ShowWhatsNew) Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
         }
 
         private void NotifyUpdates_BalloonTipClicked(object sender, EventArgs e)
         {
             NotifyUpdates.Visible = false;
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
         }
 
         private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.TabControl.Visible = false;
-            Forms.MainFrm.Close();
+            Forms.MainForm.tabsContainer1.TabControl.Visible = false;
+            Forms.MainForm.Close();
         }
 
         //private void button1_Click(object sender, EventArgs e)
@@ -568,7 +563,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainFrm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         private void Dashboard_ParentChanged(object sender, EventArgs e)

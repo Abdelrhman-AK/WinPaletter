@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Management;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
@@ -228,7 +227,7 @@ namespace WinPaletter
 
         private static void StopWatchers()
         {
-            foreach (var watcher in Watchers)
+            foreach (Tuple<ManagementEventWatcher, EventArrivedEventHandler> watcher in Watchers)
             {
                 watcher.Item1.Stop();
                 watcher.Item1.EventArrived -= watcher.Item2;
@@ -248,11 +247,6 @@ namespace WinPaletter
         }
 
         private static void Wallpaper_Changed_EventHandler(object sender, EventArgs e)
-        {
-            Wallpaper_Changed();
-        }
-
-        private static void WallpaperType_Changed(object sender, EventArgs e)
         {
             Wallpaper_Changed();
         }
