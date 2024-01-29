@@ -249,9 +249,12 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Filter_SaveText })
             {
-                System.IO.File.WriteAllText(SaveFileDialog1.FileName, GetDetails());
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    System.IO.File.WriteAllText(dlg.FileName, GetDetails());
+                }
             }
         }
 

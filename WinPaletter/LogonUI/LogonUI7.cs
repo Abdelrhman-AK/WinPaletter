@@ -20,13 +20,23 @@ namespace WinPaletter
             InitializeComponent();
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            pnl_preview.BackgroundImage?.Dispose();
+        }
+
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                using (Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LoadFromTM(TMx);
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
                 }
             }
         }
@@ -327,12 +337,12 @@ namespace WinPaletter
 
             if (RadioButton1.Checked)
             {
-                if (OS.W7 | OS.WVista)
+                if (OS.W7 || OS.WVista)
                 {
                     bmpX = PE_Functions.GetPNGFromDLL(PathsExt.imageres, 5038);
                 }
 
-                else if (OS.W8 | OS.W81)
+                else if (OS.W8x)
                 {
                     string SysLock;
                     if (!(ID == 1) & !(ID == 3))
@@ -487,9 +497,12 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                TextBox1.Text = OpenImgDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
             }
         }
 

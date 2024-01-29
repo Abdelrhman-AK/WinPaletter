@@ -36,10 +36,7 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sounds_Editor));
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
@@ -960,23 +957,9 @@ namespace WinPaletter
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(874, 52);
             // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.DefaultExt = "wav";
-            this.OpenFileDialog2.Filter = "WAV Audio File (*.wav)|*.wav";
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
             // BackgroundWorker1
             // 
             this.BackgroundWorker1.WorkerSupportsCancellation = true;
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*";
             // 
             // alertBox1
             // 
@@ -1455,7 +1438,7 @@ namespace WinPaletter
             this.TextBox2.UseSystemPasswordChar = false;
             this.TextBox2.WordWrap = true;
             // 
-            // Button19
+            // restartExplorer_btn
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -12908,9 +12891,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-
-        internal OpenFileDialog OpenFileDialog2;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal TabPage TabPage2;
@@ -13427,7 +13407,6 @@ namespace WinPaletter
         internal Label Label84;
         internal PictureBox PictureBox83;
         internal UI.WP.AlertBox AlertBox3;
-        internal OpenFileDialog OpenThemeDialog;
         internal Label Label85;
         internal PictureBox PictureBox84;
         internal UI.WP.CheckBox CheckBox35_SFC;

@@ -11,6 +11,39 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            color0.Image?.Dispose();
+            color1.Image?.Dispose();
+            color2.Image?.Dispose();
+            color3.Image?.Dispose();
+            color4.Image?.Dispose();
+            color5.Image?.Dispose();
+            color6.Image?.Dispose();
+            color7.Image?.Dispose();
+            color8.Image?.Dispose();
+            color9.Image?.Dispose();
+            color10.Image?.Dispose();
+            color11.Image?.Dispose();
+            color12.Image?.Dispose();
+            color13.Image?.Dispose();
+            color14.Image?.Dispose();
+            color15.Image?.Dispose();
+            color16.Image?.Dispose();
+            color17.Image?.Dispose();
+            color18.Image?.Dispose();
+            color19.Image?.Dispose();
+            color20.Image?.Dispose();
+            color21.Image?.Dispose();
+            color22.Image?.Dispose();
+            color23.Image?.Dispose();
+            color24.Image?.Dispose();
+        }
+
+
         private void LogonUI8Colors_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();

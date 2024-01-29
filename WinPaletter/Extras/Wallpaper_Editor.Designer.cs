@@ -36,8 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Wallpaper_Editor));
-            this.OpenImgDlg = new System.Windows.Forms.OpenFileDialog();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.Label21 = new System.Windows.Forms.Label();
@@ -115,14 +113,12 @@ namespace WinPaletter
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.TextBox2 = new WinPaletter.UI.WP.TextBox();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
-            this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.pnl_preview = new System.Windows.Forms.PictureBox();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.Label3 = new System.Windows.Forms.Label();
             this.Button14 = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -162,15 +158,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1169, 52);
-            // 
-            // OpenImgDlg
-            // 
-            this.OpenImgDlg.Filter = "Images (*.bmp;*.jpg;*.png;*.gif)|*.bmp;*.jpg;*.png;*.gif|All Files (*.*)|*.*";
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // TabControl1
             // 
@@ -893,7 +880,7 @@ namespace WinPaletter
             this.Button16.UseVisualStyleBackColor = false;
             this.Button16.Click += new System.EventHandler(this.Button16_Click);
             // 
-            // Button19
+            // restartExplorer_btn
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
@@ -1362,11 +1349,6 @@ namespace WinPaletter
             this.Button13.UseVisualStyleBackColor = false;
             this.Button13.Click += new System.EventHandler(this.Button13_Click);
             // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "PNG File|*.png";
-            // 
             // tablessControl1
             // 
             this.tablessControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1530,9 +1512,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-
-        internal OpenFileDialog OpenImgDlg;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal TabPage TabPage2;
@@ -1564,7 +1543,6 @@ namespace WinPaletter
         internal UI.WP.Button Button4;
         internal UI.WP.TextBox TextBox2;
         internal PictureBox PictureBox5;
-        internal FolderBrowserDialog FolderBrowserDialog1;
         internal ListBox ListBox1;
         internal PictureBox PictureBox6;
         internal UI.WP.Button Button17;
@@ -1612,7 +1590,6 @@ namespace WinPaletter
         internal Label Label20;
         internal UI.WP.AlertBox AlertBox3;
         internal UI.WP.Button Button20;
-        internal SaveFileDialog SaveFileDialog2;
         internal UI.WP.SeparatorH Separator4;
         private UI.Controllers.TrackBarX trackBarX1;
         private UI.WP.ColorBarX SBar;

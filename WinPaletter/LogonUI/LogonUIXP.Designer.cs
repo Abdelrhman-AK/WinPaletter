@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogonUIXP));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
@@ -63,11 +62,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(784, 52);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // GroupBox1
             // 
@@ -279,6 +273,7 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogonUIXP";
@@ -297,7 +292,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.GroupBox GroupBox3;
         internal Label Label2;
         internal Label Label1;

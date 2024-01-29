@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.winXP = new WinPaletter.UI.WP.RadioImage();
@@ -60,7 +58,7 @@
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.button41 = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
-            this.Button19 = new WinPaletter.UI.WP.Button();
+            this.restartExplorer_btn = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender2 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
@@ -90,16 +88,6 @@
             this.titlebarExtender2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.DefaultExt = "wpt";
-            this.SaveFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
             // NotifyUpdates
             // 
@@ -437,7 +425,7 @@
             this.bottom_buttons.Controls.Add(this.apply_btn);
             this.bottom_buttons.Controls.Add(this.button41);
             this.bottom_buttons.Controls.Add(this.Button13);
-            this.bottom_buttons.Controls.Add(this.Button19);
+            this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
             this.bottom_buttons.Controls.Add(this.Button28);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottom_buttons.Location = new System.Drawing.Point(0, 670);
@@ -505,25 +493,25 @@
             this.Button13.UseVisualStyleBackColor = false;
             this.Button13.Click += new System.EventHandler(this.Button13_Click);
             // 
-            // Button19
+            // restartExplorer_btn
             // 
-            this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.restartExplorer_btn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button19.CustomColor = System.Drawing.Color.Empty;
-            this.Button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button19.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button19.ForeColor = System.Drawing.Color.White;
-            this.Button19.Image = ((System.Drawing.Image)(resources.GetObject("Button19.Image")));
-            this.Button19.ImageAsVector = false;
-            this.Button19.ImageVector = null;
-            this.Button19.Location = new System.Drawing.Point(783, 5);
-            this.Button19.Name = "Button19";
-            this.Button19.Size = new System.Drawing.Size(180, 37);
-            this.Button19.TabIndex = 29;
-            this.Button19.Text = "Restart Explorer";
-            this.Button19.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button19.UseVisualStyleBackColor = false;
-            this.Button19.Click += new System.EventHandler(this.Button19_Click);
+            this.restartExplorer_btn.CustomColor = System.Drawing.Color.Empty;
+            this.restartExplorer_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.restartExplorer_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.restartExplorer_btn.ForeColor = System.Drawing.Color.White;
+            this.restartExplorer_btn.Image = ((System.Drawing.Image)(resources.GetObject("Button19.Image")));
+            this.restartExplorer_btn.ImageAsVector = false;
+            this.restartExplorer_btn.ImageVector = null;
+            this.restartExplorer_btn.Location = new System.Drawing.Point(783, 5);
+            this.restartExplorer_btn.Name = "Button19";
+            this.restartExplorer_btn.Size = new System.Drawing.Size(180, 37);
+            this.restartExplorer_btn.TabIndex = 29;
+            this.restartExplorer_btn.Text = "Restart Explorer";
+            this.restartExplorer_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.restartExplorer_btn.UseVisualStyleBackColor = false;
+            this.restartExplorer_btn.Click += new System.EventHandler(this.Button19_Click);
             // 
             // Button28
             // 
@@ -992,7 +980,7 @@
         internal UI.WP.Button apply_btn;
         internal UI.WP.Button button41;
         internal UI.WP.Button Button13;
-        internal UI.WP.Button Button19;
+        internal UI.WP.Button restartExplorer_btn;
         internal UI.WP.Button Button28;
         internal UI.WP.Button Button3;
         internal UI.WP.Button btn_history;
@@ -1001,8 +989,6 @@
         internal UI.WP.Button Button10;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button7;
-        internal System.Windows.Forms.OpenFileDialog OpenFileDialog1;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
         internal System.Windows.Forms.NotifyIcon NotifyUpdates;
         private UI.WP.SeparatorV separatorV1;
         private UI.WP.GroupBox groupBox1;

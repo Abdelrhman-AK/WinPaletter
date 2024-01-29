@@ -82,7 +82,7 @@ namespace WinPaletter.Theme.Structures
         {
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, @default.Enabled));
 
-            if (OS.W8 | OS.W81)
+            if (OS.W8x)
             {
                 object y;
 

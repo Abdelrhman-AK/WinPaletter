@@ -139,18 +139,19 @@ namespace WinPaletter
 
                 if (RadioButton2.Checked)
                 {
-                    SaveFileDialog1.FileName = $"WinPaletter ({ver})";
-
-                    if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Lang.Filter_SaveUpdateEXE })
                     {
-                        Panel1.Enabled = false;
-                        Button1.Enabled = false;
-                        ProgressBar1.Visible = true;
-                        await DM.DownloadFileAsync(url, SaveFileDialog1.FileName);
-                    }
-                    else
-                    {
-                        ProgressBar1.Visible = false;
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            Panel1.Enabled = false;
+                            Button1.Enabled = false;
+                            ProgressBar1.Visible = true;
+                            await DM.DownloadFileAsync(url, dlg.FileName);
+                        }
+                        else
+                        {
+                            ProgressBar1.Visible = false;
+                        }
                     }
                 }
 
@@ -346,13 +347,6 @@ namespace WinPaletter
                     }
                 }
             }
-
-            if (RadioButton2.Checked)
-            {
-                if (System.IO.File.Exists(SaveFileDialog1.FileName))
-                    FileSystem.Kill(SaveFileDialog1.FileName);
-            }
         }
-
     }
 }

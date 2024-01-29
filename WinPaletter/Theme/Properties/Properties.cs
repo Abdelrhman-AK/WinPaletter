@@ -18,6 +18,7 @@ namespace WinPaletter.Theme
             AuthorSocialMediaLink = string.Empty,
             Color1 = Color.FromArgb(0, 102, 204),
             Color2 = Color.FromArgb(122, 9, 9),
+            //DesignedFor_Win12 = true,
             DesignedFor_Win11 = true,
             DesignedFor_Win10 = true,
             DesignedFor_Win81 = true,
@@ -34,7 +35,7 @@ namespace WinPaletter.Theme
             BackColor = Color.FromArgb(25, 25, 25),
             AccentColor = Color.FromArgb(0, 81, 210),
             DarkMode = true,
-            RoundCorners = OS.WXP || OS.WVista | OS.W7 || OS.W11 || OS.W12
+            RoundCorners = OS.WXP || OS.WVista || OS.W7 || OS.W11 || OS.W12
         };
 
         /// <summary>Object derived of structure that has data about Windows 12 colors and appearance, and it can be customized.</summary>

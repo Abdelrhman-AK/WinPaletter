@@ -18,22 +18,22 @@ namespace WinPaletter
         {
 
             #region paths
-            private const string REG = @"HKEY_CURRENT_USER\Software\WinPaletter\Settings";
-            private const string REG_General = REG + @"\General";
-            private const string REG_General_MainForm = REG_General + @"\MainForm";
-            private const string REG_Updates = REG + @"\Updates";
-            private const string REG_FileTypeManagement = REG + @"\FileTypeManagement";
-            private const string REG_ThemeApplyingBehavior = REG + @"\ThemeApplyingBehavior";
-            private const string REG_Appearance = REG + @"\Appearance";
-            private const string REG_Language = REG + @"\Language";
-            private const string REG_EP = REG + @"\ExplorerPatcher";
-            private const string REG_ThemeLog = REG + @"\ThemeLog";
-            private const string REG_WindowsTerminals = REG + @"\WindowsTerminals";
-            private const string REG_Store = REG + @"\Store";
-            private const string REG_NerdStats = REG + @"\NerdStats";
-            private const string REG_UsersServices = REG + @"\UsersServices";
-            private const string REG_Miscellaneous = REG + @"\Miscellaneous";
-            private const string REG_Backup = REG + @"\Backup";
+            public static readonly string REG = @"HKEY_CURRENT_USER\Software\WinPaletter\Settings";
+            public static readonly string REG_General = REG + @"\General";
+            public static readonly string REG_General_MainForm = REG_General + @"\MainForm";
+            public static readonly string REG_Updates = REG + @"\Updates";
+            public static readonly string REG_FileTypeManagement = REG + @"\FileTypeManagement";
+            public static readonly string REG_ThemeApplyingBehavior = REG + @"\ThemeApplyingBehavior";
+            public static readonly string REG_Appearance = REG + @"\Appearance\NewGen";
+            public static readonly string REG_Language = REG + @"\Language";
+            public static readonly string REG_EP = REG + @"\ExplorerPatcher";
+            public static readonly string REG_ThemeLog = REG + @"\ThemeLog";
+            public static readonly string REG_WindowsTerminals = REG + @"\WindowsTerminals";
+            public static readonly string REG_Store = REG + @"\Store";
+            public static readonly string REG_NerdStats = REG + @"\NerdStats";
+            public static readonly string REG_UsersServices = REG + @"\UsersServices";
+            public static readonly string REG_Miscellaneous = REG + @"\Miscellaneous";
+            public static readonly string REG_Backup = REG + @"\Backup";
             #endregion
 
             public struct General

@@ -344,7 +344,7 @@ namespace WinPaletter
             }
 
 
-            //if ((OS.WVista || OS.W7 || OS.W8 || OS.W81) && Program.Settings.Miscellaneous.Win7LivePreview)
+            //if ((OS.WVista || OS.W7 || OS.W8x) && Program.Settings.Miscellaneous.Win7LivePreview)
             //{
             //    if (_conditions.LivePreview_Colorization)
             //    {
@@ -487,25 +487,36 @@ namespace WinPaletter
 
         private void Button4_Click_1(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                TextBox1.Text = OpenFileDialog1.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
+            
             }
         }
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Palettes, Title = Program.Lang.Filter_OpenPalette })
             {
-                ColorGrid1.Colors = ColorCollection.LoadPalette(OpenFileDialog2.FileName);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    ColorGrid1.Colors = ColorCollection.LoadPalette(dlg.FileName);
+                }
             }
         }
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
             {
-                TextBox2.Text = OpenThemeDialog.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox2.Text = dlg.FileName;
+                }
+            
             }
         }
 
@@ -565,7 +576,7 @@ namespace WinPaletter
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //if (DialogResult != DialogResult.OK & (OS.WVista | OS.W7 | OS.W8 | OS.W81) & Program.Settings.Miscellaneous.Win7LivePreview)
+            //if (DialogResult != DialogResult.OK & (OS.WVista | OS.W7 | OS.W8x) & Program.Settings.Miscellaneous.Win7LivePreview)
             //{
             //    if (_conditions.LivePreview_Colorization)
             //    {
@@ -692,6 +703,5 @@ namespace WinPaletter
                 }
             }
         }
-
     }
 }

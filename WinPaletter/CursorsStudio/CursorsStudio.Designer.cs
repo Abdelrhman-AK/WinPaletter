@@ -38,8 +38,6 @@ namespace WinPaletter
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CursorsStudio));
             this.Timer1 = new System.Windows.Forms.Timer(this.components);
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new WinPaletter.UI.WP.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label18 = new System.Windows.Forms.Label();
@@ -239,16 +237,6 @@ namespace WinPaletter
             // 
             this.Timer1.Interval = 30;
             this.Timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.DefaultExt = "wpt";
-            this.openFileDialog2.Filter = "Windows cursor file (*.cur)|*.cur|Animated cursor file (*.ani)|*.ani";
             // 
             // tabControl1
             // 
@@ -521,6 +509,7 @@ namespace WinPaletter
             // 
             this.trackBarX4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX4.AnimateChanges = true;
             this.trackBarX4.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX4.DefaultValue = 0;
             this.trackBarX4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -538,6 +527,7 @@ namespace WinPaletter
             // 
             this.trackBarX3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX3.AnimateChanges = true;
             this.trackBarX3.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX3.DefaultValue = 0;
             this.trackBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -555,6 +545,7 @@ namespace WinPaletter
             // 
             this.trackBarX2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX2.AnimateChanges = true;
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 0;
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -572,6 +563,7 @@ namespace WinPaletter
             // 
             this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 0;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1075,6 +1067,7 @@ namespace WinPaletter
             // 
             this.trackBarX8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX8.AnimateChanges = true;
             this.trackBarX8.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX8.DefaultValue = 2;
             this.trackBarX8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1092,6 +1085,7 @@ namespace WinPaletter
             // 
             this.trackBarX7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX7.AnimateChanges = true;
             this.trackBarX7.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX7.DefaultValue = 2;
             this.trackBarX7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1109,6 +1103,7 @@ namespace WinPaletter
             // 
             this.trackBarX6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX6.AnimateChanges = true;
             this.trackBarX6.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX6.DefaultValue = 30;
             this.trackBarX6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1126,6 +1121,7 @@ namespace WinPaletter
             // 
             this.trackBarX5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX5.AnimateChanges = true;
             this.trackBarX5.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX5.DefaultValue = 5;
             this.trackBarX5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1435,6 +1431,7 @@ namespace WinPaletter
             // 
             this.trackBarX9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX9.AnimateChanges = true;
             this.trackBarX9.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX9.DefaultValue = 0;
             this.trackBarX9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3101,7 +3098,6 @@ namespace WinPaletter
         internal UI.WP.Button Button5;
         internal Timer Timer1;
         internal UI.WP.Button Button6;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Button Button10;
         internal PictureBox PictureBox9;
         internal UI.WP.CheckBox CheckBox9;
@@ -3161,7 +3157,6 @@ namespace WinPaletter
         internal PictureBox pictureBox25;
         internal UI.WP.Button button20;
         private UI.WP.TextBox textBox1;
-        internal OpenFileDialog openFileDialog2;
         internal Label label18;
         private UI.Controllers.TrackBarX trackBarX1;
         private UI.Controllers.TrackBarX trackBarX2;

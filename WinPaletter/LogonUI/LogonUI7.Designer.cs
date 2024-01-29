@@ -36,8 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogonUI7));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.OpenImgDlg = new System.Windows.Forms.OpenFileDialog();
             this.GroupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.trackBarX2 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
@@ -87,15 +85,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(964, 52);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
-            // OpenImgDlg
-            // 
-            this.OpenImgDlg.Filter = "Images (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*";
             // 
             // GroupBox3
             // 
@@ -592,8 +581,6 @@ namespace WinPaletter
         internal PictureBox PictureBox8;
         internal PictureBox PictureBox11;
         internal UI.WP.Button Button3;
-        internal OpenFileDialog OpenFileDialog1;
-        internal OpenFileDialog OpenImgDlg;
         private UI.Controllers.TrackBarX trackBarX1;
         private UI.Controllers.TrackBarX trackBarX2;
     }

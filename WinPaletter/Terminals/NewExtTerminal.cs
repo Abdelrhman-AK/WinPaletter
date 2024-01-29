@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class NewExtTerminal
     {
         public NewExtTerminal()
@@ -13,9 +12,12 @@ namespace WinPaletter
         }
         private void Button16_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.EXE })
             {
-                TextBox1.Text = OpenFileDialog1.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
             }
         }
 

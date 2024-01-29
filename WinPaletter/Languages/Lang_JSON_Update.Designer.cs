@@ -49,8 +49,6 @@ namespace WinPaletter
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
-            this.SaveJSONDlg = new System.Windows.Forms.SaveFileDialog();
-            this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
@@ -259,14 +257,6 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // SaveJSONDlg
-            // 
-            this.SaveJSONDlg.Filter = "JSON File (*.json)|*.json|All Files (*.*)|*.*";
-            // 
-            // OpenJSONDlg
-            // 
-            this.OpenJSONDlg.Filter = "JSON File (*.json)|*.json";
-            // 
             // AlertBox1
             // 
             this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
@@ -360,8 +350,6 @@ namespace WinPaletter
         internal UI.WP.SeparatorH Separator1;
         internal UI.WP.Button Button7;
         internal UI.WP.Button Button3;
-        internal SaveFileDialog SaveJSONDlg;
-        internal OpenFileDialog OpenJSONDlg;
         internal UI.WP.AlertBox AlertBox1;
         internal UI.WP.CheckBox CheckBox1;
         private UI.WP.GroupBox bottom_buttons;

@@ -32,7 +32,6 @@
             this.TextBox1 = new WinPaletter.UI.WP.TextBox();
             this.button1 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // Separator1
@@ -102,11 +101,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.DefaultExt = "wpt";
-            this.SaveFileDialog1.Filter = "Text file (*.txt)|*.txt";
-            // 
             // ArgsHelp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -134,6 +128,5 @@
         internal UI.WP.TextBox TextBox1;
         private UI.WP.Button button1;
         private UI.WP.Button button2;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
     }
 }

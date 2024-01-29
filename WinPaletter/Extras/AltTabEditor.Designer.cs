@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltTabEditor));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.GroupBox4 = new WinPaletter.UI.WP.GroupBox();
@@ -88,11 +87,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(893, 52);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // AlertBox2
             // 
@@ -147,6 +141,7 @@ namespace WinPaletter
             // 
             this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar1.AnimateChanges = true;
             this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar1.DefaultValue = 100;
             this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -542,8 +537,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.GroupBox previewContainer;
         internal UI.WP.TablessControl tabs_preview_1;
         internal TabPage TabPage6;

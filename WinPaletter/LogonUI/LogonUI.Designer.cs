@@ -49,7 +49,6 @@ namespace WinPaletter
             this.LogonUI_Acrylic_Toggle = new WinPaletter.UI.WP.Toggle();
             this.Label18 = new System.Windows.Forms.Label();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.tabs_preview_1 = new WinPaletter.UI.WP.TablessControl();
@@ -230,11 +229,6 @@ namespace WinPaletter
             this.PictureBox16.TabIndex = 4;
             this.PictureBox16.TabStop = false;
             // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
             // previewContainer
             // 
             this.previewContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -388,6 +382,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogonUI";
@@ -424,7 +419,6 @@ namespace WinPaletter
         internal Label Label16;
         internal PictureBox PictureBox6;
         internal Label Label13;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.GroupBox previewContainer;
         internal UI.WP.TablessControl tabs_preview_1;
         internal TabPage TabPage6;

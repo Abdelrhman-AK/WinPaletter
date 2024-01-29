@@ -43,6 +43,12 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Decorative pattern for your theme displayed in WinPaletter Store. It can be any value from 0 to 10</summary>
         public int Pattern;
 
+        ///// <summary>
+        ///// This theme is designed especially for Windows 12
+        ///// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        ///// </summary>
+        //public bool DesignedFor_Win12;
+
         /// <summary>
         /// This theme is designed especially for Windows 11
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
@@ -99,6 +105,7 @@ namespace WinPaletter.Theme.Structures
             Color2 = Color.FromArgb(Convert.ToInt32(y));
 
             Pattern = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1));
+            //DesignedFor_Win12 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win12", true));
             DesignedFor_Win11 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", true));
             DesignedFor_Win10 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", true));
             DesignedFor_Win81 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", true));
@@ -125,6 +132,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb(), RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color2.ToArgb(), RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", Pattern, RegistryValueKind.DWord);
+            //EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win12", DesignedFor_Win12 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", DesignedFor_Win81 ? 1 : 0, RegistryValueKind.DWord);

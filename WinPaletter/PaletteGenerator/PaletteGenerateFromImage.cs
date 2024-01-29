@@ -114,8 +114,11 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
-                TextBox1.Text = OpenFileDialog1.FileName;
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                    TextBox1.Text = dlg.FileName;
+            }
         }
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)

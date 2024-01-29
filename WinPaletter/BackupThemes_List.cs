@@ -97,7 +97,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, file))
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, true, true))
                     {
                         string name = TMx.Info.ThemeName;
                         ListViewItem item = new(name);
@@ -155,7 +155,7 @@ namespace WinPaletter
                     {
                         Cursor = Cursors.AppStarting;
                         Program.Animator.HideSync(windowsDesktop1);
-                        windowsDesktop1.LoadFromTM(new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text));
+                        windowsDesktop1.LoadFromTM(new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, true, true));
                         Program.Animator.ShowSync(windowsDesktop1);
                         Cursor = Cursors.Default;
                     });
@@ -180,9 +180,12 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(listView1.SelectedItems[0].SubItems[1].Text))
                 {
-                    if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                     {
-                        System.IO.File.Copy(listView1.SelectedItems[0].SubItems[1].Text, SaveFileDialog1.FileName, true);
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            System.IO.File.Copy(listView1.SelectedItems[0].SubItems[1].Text, dlg.FileName, true);
+                        }
                     }
                 }
             }

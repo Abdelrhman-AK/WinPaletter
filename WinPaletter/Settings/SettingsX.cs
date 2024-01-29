@@ -39,8 +39,6 @@ namespace WinPaletter
             Label16.Text = lang.LangCode;
             Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
 
-            if (_External) OpenFileDialog1.FileName = _File;
-
             TextBox3.Text = Program.Settings.Language.File;
         }
 
@@ -847,21 +845,25 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-
-            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Filter_SaveWinPaletterSettings })
             {
-                Settings sets = new(Settings.Mode.Empty);
-                Write(sets, Settings.Mode.File, SaveFileDialog1.FileName);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Settings sets = new(Settings.Mode.Empty);
+                    Write(sets, Settings.Mode.File, dlg.FileName);
+                }
             }
-
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Filter_OpenWinPaletterSettings })
             {
-                Settings sets = new(Settings.Mode.File, OpenFileDialog1.FileName);
-                Read(sets);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Settings sets = new(Settings.Mode.File, dlg.FileName);
+                    Read(sets);
+                }
             }
         }
 
@@ -883,30 +885,28 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TextBox3.Text = OpenFileDialog2.FileName;
-
-                try
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    StreamReader _File = new(TextBox3.Text);
-                    JObject J = JObject.Parse(_File.ReadToEnd());
-                    _File.Close();
+                    TextBox3.Text = dlg.FileName;
 
-                    Label11.Text = J["Information"]["name"].ToString();
-                    Label12.Text = J["Information"]["translationversion"].ToString();
-                    Label14.Text = $"{J["Information"]["appver"]} {Program.Lang.AndBelow}";
-                    Label19.Text = J["Information"]["lang"].ToString();
-                    Label16.Text = J["Information"]["langcode"].ToString();
-                    Label22.Text = !(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
-                }
-                catch
-                {
-                }
+                    try
+                    {
+                        StreamReader _File = new(TextBox3.Text);
+                        JObject J = JObject.Parse(_File.ReadToEnd());
+                        _File.Close();
 
+                        Label11.Text = J["Information"]["name"].ToString();
+                        Label12.Text = J["Information"]["translationversion"].ToString();
+                        Label14.Text = $"{J["Information"]["appver"]} {Program.Lang.AndBelow}";
+                        Label19.Text = J["Information"]["lang"].ToString();
+                        Label16.Text = J["Information"]["langcode"].ToString();
+                        Label22.Text = !(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
+                    }
+                    catch { }
+                }
             }
-
         }
 
         private void Button8_Click(object sender, EventArgs e)
@@ -916,17 +916,29 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TextBox1.Text = OpenJSONDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        TextBox1.Text = dlg.FileName;
+                    }
+                }
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TextBox2.Text = OpenJSONDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        TextBox2.Text = dlg.FileName;
+                    }
+                }
             }
         }
 
@@ -985,12 +997,16 @@ namespace WinPaletter
                 }
                 dlg.Dispose();
             }
-            else if (FolderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            else
             {
-                if (!ListBox2.Items.Contains(FolderBrowserDialog1.SelectedPath))
-                    ListBox2.Items.Add(FolderBrowserDialog1.SelectedPath);
+                using (FolderBrowserDialog dlg = new())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
+                    }
+                }
             }
-
         }
 
         private void Button17_Click(object sender, EventArgs e)
@@ -1090,6 +1106,24 @@ namespace WinPaletter
             {
             }
             label5.Text = CalcExErrors().SizeString();
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            if (!OS.WXP)
+            {
+                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
+                }
+            }
+            else
+            {
+                using (FolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
+                }
+            }
         }
     }
 }

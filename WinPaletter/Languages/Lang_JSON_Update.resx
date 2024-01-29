@@ -150,27 +150,27 @@
   </data>
   <data name="Button8.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAACHSURBVDhPYxgc4P///4xAbA/EoVDsBcRcUGnCAKi4FIjRwU0g1oQqwQ+ACleBtaCCv0CcDcSa
-        QLwFiHcj4dlALAbVjtWA90AcAMRuUDY2MBWqHRMAJdmAuAiIf4NU4gCroMpxeoEQGDUAzQBsCYkQKIZq
-        BxsASso2QOxCJAapZYRqH1DAwAAAWL80BorLJgcAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAIdJREFUOE9j
+        GBzg////jEBsD8ShUOwFxFxQacIAqLgUiNHBTSDWhCrBD4AKV4G1oIK/QJwNxJpAvAWIdyPh2UAsBtWO
+        1YD3QBwAxG5QNjYwFaodEwAl2YC4CIh/g1TiAKugynF6gRAYNQDNAGwJiRAohmoHGwBKyjZA7EIkBqll
+        hGofUMDAAABYvzQGissmBwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button1.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAACHSURBVDhPYxgc4P///4xAbA/EoVDsBcRcUGnCAKi4FIjRwU0g1oQqwQ+ACleBtaCCv0CcDcSa
-        QLwFiHcj4dlALAbVjtWA90AcAMRuUDY2MBWqHRMAJdmAuAiIf4NU4gCroMpxeoEQGDUAzQBsCYkQKIZq
-        BxsASso2QOxCJAapZYRqH1DAwAAAWL80BorLJgcAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAIdJREFUOE9j
+        GBzg////jEBsD8ShUOwFxFxQacIAqLgUiNHBTSDWhCrBD4AKV4G1oIK/QJwNxJpAvAWIdyPh2UAsBtWO
+        1YD3QBwAxG5QNjYwFaodEwAl2YC4CIh/g1TiAKugynF6gRAYNQDNAGwJiRAohmoHGwBKyjZA7EIkBqll
+        hGofUMDAAABYvzQGissmBwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button5.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADUSURBVDhPtZJLDgFBFEV7AYRViISwAUM7MiBMMLIJjcRIYik+i0BYBO3c6tdp/UHic5KTVN/3
-        XiXVVd5fCIKgiWNcmiNsWPk5NJVxjXnccIUla09CoYh7fMcWCzYWQ7hw5SRnvITLBFMbCyGo4tWVkujs
-        Mo16KzbuNhi4OMvQzKNn424DP8wcR+xjF1um1spOGBEfg49ZmDkOODHbZvStzSN8G//NEb77iYLg82sU
-        hHpIO1d+zQazD0mogHPUs02jTLeVP/wITXXsoG5Hal2z8i/xvDux0GjZO5f3yAAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANRJREFUOE+1
+        kksOAUEURXsBhFWIhLABQzsyIEwwsgmNxEhiKT6LQFgE7dzq12n9QeJzkpNU3/deJdVV3l8IgqCJY1ya
+        I2xY+Tk0lXGNedxwhSVrT0KhiHt8xxYLNhZDuHDlJGe8hMsEUxsLIaji1ZWS6OwyjXorNu42GLg4y9DM
+        o2fjbgM/zBxH7GMXW6bWyk4YER+Dj1mYOQ44Mdtm9K3NI3wb/80RvvuJguDzaxSEekg7V37NBrMPSaiA
+        c9SzTaNMt5U//AhNdeygbkdqXbPyL/G8O7HQaNk7l/fIAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="AlertBox7.Text" xml:space="preserve">
@@ -189,10 +189,4 @@
         gg==
 </value>
   </data>
-  <metadata name="SaveJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="OpenJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>142, 17</value>
-  </metadata>
 </root>

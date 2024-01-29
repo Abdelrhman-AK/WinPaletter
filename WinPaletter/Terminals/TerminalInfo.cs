@@ -122,5 +122,16 @@ namespace WinPaletter
 
             CList.Clear();
         }
+
+        private void Button11_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_OpenPNG })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TerTabIcon.Text = dlg.FileName;
+                }
+            }
+        }
     }
 }

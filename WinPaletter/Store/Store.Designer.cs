@@ -35,7 +35,7 @@ namespace WinPaletter
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Store));
-            this.FilesFetcher = new System.ComponentModel.BackgroundWorker();
+            this.ThemesFetcher = new System.ComponentModel.BackgroundWorker();
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
@@ -99,13 +99,13 @@ namespace WinPaletter
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.search_panel = new System.Windows.Forms.Panel();
             this.search_btn = new WinPaletter.UI.WP.Button();
             this.search_box = new WinPaletter.UI.WP.TextBox();
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.back_btn = new WinPaletter.UI.WP.Button();
-            this.pin_button = new WinPaletter.UI.WP.Button();
             this.Status_pnl.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -124,13 +124,13 @@ namespace WinPaletter
             this.search_panel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // FilesFetcher
+            // ThemesFetcher
             // 
-            this.FilesFetcher.WorkerReportsProgress = true;
-            this.FilesFetcher.WorkerSupportsCancellation = true;
-            this.FilesFetcher.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FilesFetcher_DoWork);
-            this.FilesFetcher.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.FilesFetcher_ProgressChanged);
-            this.FilesFetcher.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FilesFetcher_RunWorkerCompleted);
+            this.ThemesFetcher.WorkerReportsProgress = true;
+            this.ThemesFetcher.WorkerSupportsCancellation = true;
+            this.ThemesFetcher.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FilesFetcher_DoWork);
+            this.ThemesFetcher.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.FilesFetcher_ProgressChanged);
+            this.ThemesFetcher.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FilesFetcher_RunWorkerCompleted);
             // 
             // Cursor_Timer
             // 
@@ -810,7 +810,6 @@ namespace WinPaletter
             this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
             this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
-            this.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cur_anim_btn.ImageAsVector = false;
             this.cur_anim_btn.ImageVector = null;
             this.cur_anim_btn.Location = new System.Drawing.Point(356, 267);
@@ -818,6 +817,7 @@ namespace WinPaletter
             this.cur_anim_btn.Size = new System.Drawing.Size(141, 21);
             this.cur_anim_btn.TabIndex = 72;
             this.cur_anim_btn.Text = "Animate (3 Cycles)";
+            this.cur_anim_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.cur_anim_btn.UseVisualStyleBackColor = false;
             this.cur_anim_btn.Click += new System.EventHandler(this.Cur_anim_btn_Click);
             // 
@@ -1663,6 +1663,24 @@ namespace WinPaletter
             this.titlebarExtender1.TabIndex = 116;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
+            // pin_button
+            // 
+            this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageAsVector = false;
+            this.pin_button.ImageVector = null;
+            this.pin_button.Location = new System.Drawing.Point(934, 10);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.TabIndex = 128;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
             // search_panel
             // 
             this.search_panel.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1763,24 +1781,6 @@ namespace WinPaletter
             this.back_btn.Visible = false;
             this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
-            // pin_button
-            // 
-            this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pin_button.CustomColor = System.Drawing.Color.Empty;
-            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.pin_button.ForeColor = System.Drawing.Color.White;
-            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageAsVector = false;
-            this.pin_button.ImageVector = null;
-            this.pin_button.Location = new System.Drawing.Point(934, 10);
-            this.pin_button.Name = "pin_button";
-            this.pin_button.Size = new System.Drawing.Size(34, 34);
-            this.pin_button.TabIndex = 128;
-            this.pin_button.UseVisualStyleBackColor = false;
-            this.pin_button.Visible = false;
-            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
-            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1826,7 +1826,7 @@ namespace WinPaletter
         internal FlowLayoutPanel store_container;
         internal TabPage TabPage3;
         internal UI.WP.Button back_btn;
-        internal System.ComponentModel.BackgroundWorker FilesFetcher;
+        internal System.ComponentModel.BackgroundWorker ThemesFetcher;
         internal UI.WP.LabelAlt Titlebar_lbl;
         internal Label themeSize_lbl;
         internal Label Label14;

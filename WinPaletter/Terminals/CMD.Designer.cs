@@ -38,7 +38,6 @@ namespace WinPaletter
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CMD));
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.OpenWPTHDlg = new System.Windows.Forms.OpenFileDialog();
             this.PictureBox15 = new System.Windows.Forms.PictureBox();
             this.CMD_AccentBackgroundLbl = new System.Windows.Forms.Label();
             this.CMD_PopupForegroundLbl = new System.Windows.Forms.Label();
@@ -138,7 +137,6 @@ namespace WinPaletter
             this.Label3 = new System.Windows.Forms.Label();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.CMD_OpacityBar = new WinPaletter.UI.Controllers.TrackBarX();
-            this.FontDialog1 = new System.Windows.Forms.FontDialog();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
@@ -174,10 +172,6 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(0, "0.png");
             this.ImageList1.Images.SetKeyName(1, "1.png");
             this.ImageList1.Images.SetKeyName(2, "3.png");
-            // 
-            // OpenWPTHDlg
-            // 
-            this.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth";
             // 
             // PictureBox15
             // 
@@ -1479,6 +1473,7 @@ namespace WinPaletter
             // 
             this.CMD_FontSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_FontSizeBar.AnimateChanges = true;
             this.CMD_FontSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_FontSizeBar.DefaultValue = 18;
             this.CMD_FontSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1517,6 +1512,7 @@ namespace WinPaletter
             // 
             this.CMD_CursorSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_CursorSizeBar.AnimateChanges = true;
             this.CMD_CursorSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_CursorSizeBar.DefaultValue = 20;
             this.CMD_CursorSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1569,6 +1565,7 @@ namespace WinPaletter
             // 
             this.CMD_OpacityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_OpacityBar.AnimateChanges = true;
             this.CMD_OpacityBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_OpacityBar.DefaultValue = 255;
             this.CMD_OpacityBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1580,11 +1577,6 @@ namespace WinPaletter
             this.CMD_OpacityBar.Size = new System.Drawing.Size(271, 24);
             this.CMD_OpacityBar.TabIndex = 134;
             this.CMD_OpacityBar.Value = 20;
-            // 
-            // FontDialog1
-            // 
-            this.FontDialog1.FixedPitchOnly = true;
-            this.FontDialog1.ShowEffects = false;
             // 
             // CMD
             // 
@@ -1704,7 +1696,6 @@ namespace WinPaletter
         internal Label Label60;
         internal Label Label35;
         internal ImageList ImageList1;
-        internal OpenFileDialog OpenWPTHDlg;
         internal UI.WP.ComboBox RasterList;
         internal UI.WP.Button Button25;
         internal UI.WP.TabControl TabControl1;
@@ -1728,7 +1719,6 @@ namespace WinPaletter
         internal TabPage TabPage4;
         internal Label FontName;
         internal UI.WP.Button Button5;
-        internal FontDialog FontDialog1;
         private UI.WP.SeparatorH separatorH1;
         private UI.Controllers.TrackBarX CMD_FontSizeBar;
         private UI.Controllers.TrackBarX CMD_CursorSizeBar;

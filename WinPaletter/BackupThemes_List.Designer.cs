@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BackupThemes_List));
             this.listView1 = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -84,11 +83,6 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(32, 32);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.DefaultExt = "wpt";
-            this.SaveFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
             // label1
             // 
@@ -480,7 +474,6 @@
         internal UI.WP.GroupBox groupBox2;
         public Templates.WindowsDesktop windowsDesktop1;
         private UI.WP.GroupBox bottom_buttons;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
         internal System.Windows.Forms.Label label1;
         internal UI.WP.Button button5;
         internal System.Windows.Forms.Label label2;

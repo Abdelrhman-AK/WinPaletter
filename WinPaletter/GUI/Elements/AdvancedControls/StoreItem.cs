@@ -51,9 +51,11 @@ namespace WinPaletter.UI.Controllers
             get => _TM;
             set
             {
+                _TM?.Dispose();
+
                 if (value is not null)
                 {
-                    _TM = (Theme.Manager)value.Clone();
+                    _TM = value;
                     UpdateBadges();
                     UpdatePattern(_TM.Info.Pattern);
                     ThemeManagerChanged?.Invoke(this, new EventArgs());
@@ -115,6 +117,15 @@ namespace WinPaletter.UI.Controllers
 
             base.OnMouseLeave(e);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _TM?.Dispose();
+            pattern?.Dispose();
+
+            base.Dispose(disposing);    
+        }
+
         #endregion
 
         #region Methods
@@ -123,18 +134,19 @@ namespace WinPaletter.UI.Controllers
             DesignedFor_Badges.Clear();
             if (_TM is not null)
             {
-                if (_TM.Info.DesignedFor_Win11)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor11);
-                if (_TM.Info.DesignedFor_Win10)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor10);
-                if (_TM.Info.DesignedFor_Win81)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor8);
-                if (_TM.Info.DesignedFor_Win7)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor7);
-                if (_TM.Info.DesignedFor_WinVista)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForVista);
-                if (_TM.Info.DesignedFor_WinXP)
-                    DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForXP);
+                //if (_TM.Info.DesignedFor_Win12) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor12);
+
+                if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor11);
+
+                if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor10);
+
+                if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor8);
+
+                if (_TM.Info.DesignedFor_Win7) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor7);
+
+                if (_TM.Info.DesignedFor_WinVista) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForVista);
+
+                if (_TM.Info.DesignedFor_WinXP) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForXP);
             }
             Refresh();
         }
@@ -216,7 +228,7 @@ namespace WinPaletter.UI.Controllers
                 {
                     imgF.Load(bmp);
                     imgF.Contrast(50);
-                    bmp = ((Bitmap)imgF.Image).Invert();
+                    bmp = (imgF.Image as Bitmap).Invert();
                 }
             }
             pattern = new(bmp);
@@ -244,20 +256,12 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (TM is not null)
-            {
-                G.TextRenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            }
-            else
-            {
-                G.TextRenderingHint = Program.Style.RenderingHint;
-            }
-
+            G.TextRenderingHint = TM is not null ?
+                                 (TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit)
+                                : Program.Style.RenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -272,14 +276,7 @@ namespace WinPaletter.UI.Controllers
 
             if (TM is not null)
             {
-                if (Program.Style.DarkMode)
-                {
-                    bkCC = Color.FromArgb(alpha, TM.Info.Color1.Dark());
-                }
-                else
-                {
-                    bkCC = Color.FromArgb(alpha, TM.Info.Color1.Light());
-                }
+                bkCC = Color.FromArgb(alpha, Program.Style.DarkMode ? TM.Info.Color1.Dark() : TM.Info.Color1.Light());
             }
 
             using (SolidBrush br = new(bkC)) { G.FillRoundedRect(br, rect_inner); }
@@ -314,26 +311,9 @@ namespace WinPaletter.UI.Controllers
                         G.DrawEllipse(P, Circle1);
                     }
                 }
-
             }
 
-            if (BackgroundImage is not null)
-            {
-                switch (State)
-                {
-                    case MouseState.Over:
-                        {
-                            G.DrawRoundImage(BackgroundImage, rect_outer);
-                            break;
-                        }
-
-                    default:
-                        {
-                            G.DrawRoundImage(BackgroundImage, rect_inner);
-                            break;
-                        }
-                }
-            }
+            if (BackgroundImage is not null) G.DrawRoundImage(BackgroundImage, State == MouseState.Over ? rect_outer : rect_inner);
 
             if (State != MouseState.None) G.FillRoundedRect(Noise, rect_inner);
 
@@ -374,14 +354,13 @@ namespace WinPaletter.UI.Controllers
 
                 string author = DoneByWinPaletter ? Application.ProductName : TM.Info.Author;
                 using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
+                using (Font f = new(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular))
+                using (SolidBrush br = new(FC))
                 {
-                    using (SolidBrush br = new(FC))
-                    {
-                        G.DrawString($"{Program.Lang.By} {author}", new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), br, Author_Rect, sf);
+                    G.DrawString($"{Program.Lang.By} {author}", f, br, Author_Rect, sf);
 
-                        G.DrawImage(Assets.WinPaletter_Store.ThemeVersion, VerRect);
-                        G.DrawString(TM.Info.ThemeVersion, Fonts.Console, br, Version_Rect, sf);
-                    }
+                    G.DrawImage(Assets.WinPaletter_Store.ThemeVersion, VerRect);
+                    G.DrawString(TM.Info.ThemeVersion, Fonts.Console, br, Version_Rect, sf);
                 }
 
                 for (int i = 0; i <= DesignedFor_Badges.Count - 1; i++)

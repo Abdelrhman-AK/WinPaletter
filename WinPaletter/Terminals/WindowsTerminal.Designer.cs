@@ -35,10 +35,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsTerminal));
-            this.ImgDlg = new System.Windows.Forms.OpenFileDialog();
-            this.SaveJSONDlg = new System.Windows.Forms.SaveFileDialog();
-            this.OpenWPTHDlg = new System.Windows.Forms.OpenFileDialog();
-            this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
             this.Button11 = new WinPaletter.UI.WP.Button();
             this.Button9 = new WinPaletter.UI.WP.Button();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
@@ -166,7 +162,6 @@ namespace WinPaletter
             this.TerImageOpacity = new WinPaletter.UI.Controllers.TrackBarX();
             this.Label57 = new System.Windows.Forms.Label();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
-            this.FontDialog1 = new System.Windows.Forms.FontDialog();
             this.TerThemesContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
@@ -209,22 +204,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1009, 52);
-            // 
-            // ImgDlg
-            // 
-            this.ImgDlg.Filter = "Files(*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*";
-            // 
-            // SaveJSONDlg
-            // 
-            this.SaveJSONDlg.Filter = "JSON File (*.json)|*.json|All Files (*.*)|*.*";
-            // 
-            // OpenWPTHDlg
-            // 
-            this.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth|All files (*.*)|*.*";
-            // 
-            // OpenJSONDlg
-            // 
-            this.OpenJSONDlg.Filter = "JSON File (*.json)|*.json";
             // 
             // Button11
             // 
@@ -298,7 +277,7 @@ namespace WinPaletter
             this.Button21.UseVisualStyleBackColor = false;
             this.Button21.Click += new System.EventHandler(this.Button21_Click);
             // 
-            // Button19
+            // restartExplorer_btn
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
@@ -1889,6 +1868,7 @@ namespace WinPaletter
             // 
             this.TerFontSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TerFontSizeBar.AnimateChanges = true;
             this.TerFontSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.TerFontSizeBar.DefaultValue = 11;
             this.TerFontSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2013,6 +1993,7 @@ namespace WinPaletter
             // 
             this.TerCursorHeightBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TerCursorHeightBar.AnimateChanges = true;
             this.TerCursorHeightBar.BackColor = System.Drawing.Color.Transparent;
             this.TerCursorHeightBar.DefaultValue = 20;
             this.TerCursorHeightBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2099,6 +2080,7 @@ namespace WinPaletter
             // 
             this.TerOpacityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TerOpacityBar.AnimateChanges = true;
             this.TerOpacityBar.BackColor = System.Drawing.Color.Transparent;
             this.TerOpacityBar.DefaultValue = 100;
             this.TerOpacityBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2127,6 +2109,7 @@ namespace WinPaletter
             // 
             this.TerImageOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TerImageOpacity.AnimateChanges = true;
             this.TerImageOpacity.BackColor = System.Drawing.Color.Transparent;
             this.TerImageOpacity.DefaultValue = 100;
             this.TerImageOpacity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2163,11 +2146,6 @@ namespace WinPaletter
             this.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox16.TabIndex = 126;
             this.PictureBox16.TabStop = false;
-            // 
-            // FontDialog1
-            // 
-            this.FontDialog1.FixedPitchOnly = true;
-            this.FontDialog1.ShowEffects = false;
             // 
             // WindowsTerminal
             // 
@@ -2308,13 +2286,9 @@ namespace WinPaletter
         internal PictureBox PictureBox40;
         internal UI.WP.CheckBox TerAcrylic;
         internal UI.WP.Button Button5;
-        internal OpenFileDialog ImgDlg;
         internal UI.WP.AlertBox AlertBox1;
         internal UI.WP.Button Button9;
         internal UI.WP.Button Button11;
-        internal SaveFileDialog SaveJSONDlg;
-        internal OpenFileDialog OpenWPTHDlg;
-        internal OpenFileDialog OpenJSONDlg;
         internal UI.WP.Button Button17;
         internal UI.WP.Button Button18;
         internal UI.WP.Button Button19;
@@ -2365,7 +2339,6 @@ namespace WinPaletter
         internal PictureBox PictureBox10;
         internal Label TerFontName;
         internal UI.WP.Button Button23;
-        internal FontDialog FontDialog1;
         private UI.Controllers.TrackBarX TerCursorHeightBar;
         private UI.Controllers.TrackBarX TerImageOpacity;
         private UI.Controllers.TrackBarX TerOpacityBar;

@@ -20,7 +20,7 @@ namespace WinPaletter
         private int StableInt, BetaInt, UpdateChannel;
         private int ChannelFixer;
         private List<string> Updates_ls = new();
-
+        public string file = string.Empty;
         public bool LoggingOff = false;
 
         public Home()
@@ -48,47 +48,47 @@ namespace WinPaletter
             winVista.Checked = Program.WindowStyle == WindowStyle.WVista;
             winXP.Checked = Program.WindowStyle == WindowStyle.WXP;
 
+            switch (Program.WindowStyle)
+            {
+                case WindowStyle.W12:
+                    card1.Image = Assets.Banners.Win12;
+                    break;
+
+                case WindowStyle.W11:
+                    card1.Image = Assets.Banners.Win11;
+                    break;
+
+                case WindowStyle.W10:
+                    card1.Image = Assets.Banners.Win10;
+                    break;
+
+                case WindowStyle.W81:
+                    card1.Image = Assets.Banners.Win81;
+                    break;
+
+                case WindowStyle.W7:
+                    card1.Image = Assets.Banners.WinOld;
+                    break;
+
+                case WindowStyle.WVista:
+                    card1.Image = Assets.Banners.WinOld;
+                    break;
+
+                case WindowStyle.WXP:
+                    card1.Image = Assets.Banners.WinOld;
+                    break;
+
+                default:
+                    card1.Image = Assets.Banners.Win12;
+                    break;
+            }
+
             LoadData();
 
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
                 button.MouseEnter += (s, e) => tip_label.Text = (s as UI.WP.Button).Tag as string;
                 button.MouseLeave += (s, e) => tip_label.Text = string.Empty;
-            }
-
-            switch (Program.WindowStyle)
-            {
-                case WindowStyle.W12:
-                    card1.Image = Assets.Banners.Win12;
-                    return;
-
-                case WindowStyle.W11:
-                    card1.Image = Assets.Banners.Win11;
-                    return;
-
-                case WindowStyle.W10:
-                    card1.Image = Assets.Banners.Win10;
-                    return;
-
-                case WindowStyle.W81:
-                    card1.Image = Assets.Banners.Win81;
-                    return;
-
-                case WindowStyle.W7:
-                    card1.Image = Assets.Banners.WinOld;
-                    return;
-
-                case WindowStyle.WVista:
-                    card1.Image = Assets.Banners.WinOld;
-                    return;
-
-                case WindowStyle.WXP:
-                    card1.Image = Assets.Banners.WinOld;
-                    return;
-
-                default:
-                    card1.Image = Assets.Banners.Win12;
-                    return;
             }
         }
 
@@ -378,59 +378,75 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            {
+                Forms.MainForm.ExitWithChangedFileResponse(dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            }
 
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-            SaveFileDialog1.FileName = null;
+            file = null;
         }
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            {
+                Forms.MainForm.ExitWithChangedFileResponse(dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+            }
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
-            SaveFileDialog1.FileName = null;
+            file = null;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (SaveFileDialog save_dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
             {
-                Forms.MainForm.ExitWithChangedFileResponse(SaveFileDialog1, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
-
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    Program.TM.Save(Source.File, filename);
-                }
+                    Forms.MainForm.ExitWithChangedFileResponse(save_dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
 
-                SaveFileDialog1.FileName = OpenFileDialog1.FileName;
-                Program.TM = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                    if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
+                    {
+                        string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                        Program.TM.Save(Source.File, filename);
+                    }
+
+                    file = dlg.FileName;
+                    Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
+                    Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                }
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
             {
-                Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog1.FileNames[0]);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                }
             }
         }
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            if (!System.IO.File.Exists(SaveFileDialog1.FileName))
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
             {
-                if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+                if (!System.IO.File.Exists(dlg.FileName))
                 {
-                    Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog1.FileNames[0]);
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                    }
                 }
-            }
-            else
-            {
-                Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog1.FileNames[0]);
+                else
+                {
+                    Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                }
             }
         }
 

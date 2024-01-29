@@ -182,6 +182,7 @@ namespace WinPaletter
             this.Button11.Size = new System.Drawing.Size(32, 24);
             this.Button11.TabIndex = 189;
             this.Button11.UseVisualStyleBackColor = false;
+            this.Button11.Click += new System.EventHandler(this.Button11_Click);
             // 
             // TerTabIcon
             // 

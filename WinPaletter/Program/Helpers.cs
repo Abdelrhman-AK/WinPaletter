@@ -119,8 +119,7 @@ namespace WinPaletter
             else
             {
                 TM = new(Theme.Manager.Source.File, ExternalLink_File);
-                Forms.Home.OpenFileDialog1.FileName = ExternalLink_File;
-                Forms.Home.SaveFileDialog1.FileName = ExternalLink_File;
+                Forms.Home.file = ExternalLink_File;
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
             }
@@ -369,7 +368,7 @@ namespace WinPaletter
                     {
                         if (DWMAPI.IsCompositionEnabled())
                         {
-                            if (OS.W8 || OS.W81)
+                            if (OS.W8x)
                             {
                                 DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
                                 {

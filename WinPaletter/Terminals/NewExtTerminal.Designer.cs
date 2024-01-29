@@ -38,7 +38,6 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewExtTerminal));
             this.PictureBox17 = new System.Windows.Forms.PictureBox();
             this.Label102 = new System.Windows.Forms.Label();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
@@ -70,10 +69,6 @@ namespace WinPaletter
             this.Label102.TabIndex = 100;
             this.Label102.Text = "Path:";
             this.Label102.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.Filter = "Executable File (*.exe)|*.exe";
             // 
             // Button2
             // 
@@ -215,7 +210,6 @@ namespace WinPaletter
         internal UI.WP.AlertBox AlertBox1;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button1;
-        internal OpenFileDialog OpenFileDialog1;
         private UI.WP.GroupBox bottom_buttons;
     }
 }

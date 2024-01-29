@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
+using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace WinPaletter
 {
@@ -32,6 +33,19 @@ namespace WinPaletter
             Process.Start($"{Properties.Resources.Link_Wiki}/Edit-Wallpaper");
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            img?.Dispose();
+            img_filled?.Dispose();
+            img_tile?.Dispose();
+            img_untouched_forTint?.Dispose();
+            img_tinted?.Dispose();
+            img_tinted_filled?.Dispose();
+            img_tinted_tile?.Dispose();
+        }
+
         public Wallpaper_Editor()
         {
             InitializeComponent();
@@ -39,11 +53,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -404,9 +422,12 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                TextBox1.Text = OpenImgDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
             }
         }
 
@@ -436,31 +457,37 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new();
-                if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
-                dlg.Dispose();
+                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
+                }
             }
-            else if (FolderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                TextBox2.Text = FolderBrowserDialog1.SelectedPath;
+            else
+            {
+                using (System.Windows.Forms.FolderBrowserDialog dlg = new())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
+                }
+            }
         }
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            OpenImgDlg.Multiselect = true;
-            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Multiselect = true, Title = Program.Lang.Filter_OpenImagesFiles })
             {
-                foreach (string x in OpenImgDlg.FileNames)
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (!ListBox1.Items.Contains(x))
-                        ListBox1.Items.Add(x);
+                    foreach (string x in dlg.FileNames)
+                    {
+                        if (!ListBox1.Items.Contains(x)) ListBox1.Items.Add(x);
+                    }
                 }
-            }
-            OpenImgDlg.Multiselect = false;
 
-            if (source_slideshow.Checked && RadioButton2.Checked)
-            {
-                Set_SlideshowSource();
-                ApplyPreviewStyle();
+                if (source_slideshow.Checked && RadioButton2.Checked)
+                {
+                    Set_SlideshowSource();
+                    ApplyPreviewStyle();
+                }
             }
         }
 
@@ -830,15 +857,18 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            if (File.Exists(TextBox3.Text) && SaveFileDialog2.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
             {
-                using (ImageProcessor.ImageFactory ImgF = new())
+                if (File.Exists(TextBox3.Text) && dlg.ShowDialog() == DialogResult.OK)
                 {
-                    ImgF.Load(TextBox3.Text);
-                    ImgF.Hue(HBar.Value, true);
-                    ImgF.Saturation(SBar.Value * 2 - 100);
-                    ImgF.Brightness(LBar.Value * 2 - 100);
-                    ImgF.Image.Save(SaveFileDialog2.FileName);
+                    using (ImageProcessor.ImageFactory ImgF = new())
+                    {
+                        ImgF.Load(TextBox3.Text);
+                        ImgF.Hue(HBar.Value, true);
+                        ImgF.Saturation(SBar.Value * 2 - 100);
+                        ImgF.Brightness(LBar.Value * 2 - 100);
+                        ImgF.Image.Save(dlg.FileName);
+                    }
                 }
             }
         }
@@ -850,9 +880,12 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                textBox4.Text = OpenImgDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    textBox4.Text = dlg.FileName;
+                }
             }
         }
 
@@ -925,10 +958,13 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            if (OpenImgDlg.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                TextBox3.Text = OpenImgDlg.FileName;
-                ApplyHSLPreview();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox3.Text = dlg.FileName;
+                    ApplyHSLPreview();
+                }
             }
         }
     }

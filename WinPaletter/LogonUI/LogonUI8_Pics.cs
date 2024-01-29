@@ -26,7 +26,6 @@ namespace WinPaletter
                 img4.Checked = true;
             if (Forms.LogonUI7.ID == 5)
                 img5.Checked = true;
-
         }
 
         private void Button2_Click(object sender, EventArgs e)

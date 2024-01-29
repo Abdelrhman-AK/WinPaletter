@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win11Colors));
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.GroupBox13 = new WinPaletter.UI.WP.GroupBox();
             this.Label42 = new System.Windows.Forms.Label();
             this.PictureBox10 = new System.Windows.Forms.PictureBox();
@@ -151,7 +150,6 @@
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.GroupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -197,11 +195,6 @@
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1104, 52);
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.DefaultExt = "wpt";
-            this.OpenThemeDialog.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
             // GroupBox13
             // 
@@ -2008,11 +2001,6 @@
             this.label15.Text = "Helpers";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "PNG File|*.png";
-            // 
             // Win11Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2074,8 +2062,6 @@
         }
 
         #endregion
-
-        internal System.Windows.Forms.OpenFileDialog OpenThemeDialog;
         internal UI.WP.GroupBox GroupBox13;
         internal UI.WP.Button copycat;
         internal System.Windows.Forms.Label Label42;
@@ -2197,6 +2183,5 @@
         internal System.Windows.Forms.Label label16;
         private UI.WP.SeparatorV separatorV2;
         internal UI.WP.Button Button1;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog2;
     }
 }

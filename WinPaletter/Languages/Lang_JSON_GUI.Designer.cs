@@ -38,9 +38,6 @@ namespace WinPaletter
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lang_JSON_GUI));
-            this.FontDialog1 = new System.Windows.Forms.FontDialog();
-            this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
-            this.SaveJSONDlg = new System.Windows.Forms.SaveFileDialog();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
@@ -150,14 +147,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // OpenJSONDlg
-            // 
-            this.OpenJSONDlg.Filter = "JSON File (*.json)|*.json";
-            // 
-            // SaveJSONDlg
-            // 
-            this.SaveJSONDlg.Filter = "JSON File (*.json)|*.json|All Files (*.*)|*.*";
             // 
             // Button12
             // 
@@ -940,6 +929,7 @@ namespace WinPaletter
             // 
             this.Label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label5.BackColor = System.Drawing.Color.Transparent;
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label5.Location = new System.Drawing.Point(8, 7);
             this.Label5.Name = "Label5";
@@ -1055,6 +1045,7 @@ namespace WinPaletter
             // 
             // PictureBox3
             // 
+            this.PictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox3.Image")));
             this.PictureBox3.Location = new System.Drawing.Point(6, 69);
             this.PictureBox3.Name = "PictureBox3";
@@ -1065,6 +1056,7 @@ namespace WinPaletter
             // 
             // PictureBox1
             // 
+            this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
             this.PictureBox1.Location = new System.Drawing.Point(6, 39);
             this.PictureBox1.Name = "PictureBox1";
@@ -1075,8 +1067,9 @@ namespace WinPaletter
             // 
             // Label2
             // 
+            this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(36, 300);
+            this.Label2.Location = new System.Drawing.Point(36, 299);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(285, 24);
             this.Label2.TabIndex = 17;
@@ -1085,6 +1078,7 @@ namespace WinPaletter
             // 
             // Label3
             // 
+            this.Label3.BackColor = System.Drawing.Color.Transparent;
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label3.Location = new System.Drawing.Point(36, 69);
             this.Label3.Name = "Label3";
@@ -1119,8 +1113,9 @@ namespace WinPaletter
             // 
             this.Label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(138, 40);
+            this.Label4.Location = new System.Drawing.Point(138, 39);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(184, 24);
             this.Label4.TabIndex = 18;
@@ -1128,6 +1123,7 @@ namespace WinPaletter
             // 
             // Label1
             // 
+            this.Label1.BackColor = System.Drawing.Color.Transparent;
             this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(36, 39);
             this.Label1.Name = "Label1";
@@ -1138,6 +1134,7 @@ namespace WinPaletter
             // 
             // PictureBox2
             // 
+            this.PictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
             this.PictureBox2.Location = new System.Drawing.Point(5, 299);
             this.PictureBox2.Name = "PictureBox2";
@@ -1376,9 +1373,6 @@ namespace WinPaletter
         internal Label Label1;
         internal SplitContainer SplitContainer1;
         internal UI.WP.Button Button6;
-        internal FontDialog FontDialog1;
-        internal OpenFileDialog OpenJSONDlg;
-        internal SaveFileDialog SaveJSONDlg;
         internal UI.WP.Button Button7;
         internal UI.WP.Button Button2;
         internal Label Label5;

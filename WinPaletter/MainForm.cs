@@ -60,13 +60,16 @@ namespace WinPaletter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            bool result = ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1,
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            {
+                bool result = ExitWithChangedFileResponse(dlg,
                             () => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
                             () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
                             () => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
                             );
 
-            e.Cancel = !result;
+                e.Cancel = !result;
+            }
 
             base.OnFormClosing(e);
         }

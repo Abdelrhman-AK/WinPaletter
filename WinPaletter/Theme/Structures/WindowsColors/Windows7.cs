@@ -74,7 +74,7 @@ namespace WinPaletter.Theme.Structures
         {
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, @default.Enabled));
 
-            if (OS.W7 | OS.W8 | OS.W81)
+            if (OS.W7 | OS.W8x)
             {
                 object y;
 

@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationThemer));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Label29 = new System.Windows.Forms.Label();
             this.PictureBox46 = new System.Windows.Forms.PictureBox();
             this.Label28 = new System.Windows.Forms.Label();
@@ -108,11 +107,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1022, 52);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // Label29
             // 
@@ -787,6 +781,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ApplicationThemer";
@@ -817,7 +812,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.Controllers.ColorItem BackColorPick;
         internal Label Label29;
         internal PictureBox PictureBox46;

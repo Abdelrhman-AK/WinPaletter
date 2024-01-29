@@ -34,12 +34,16 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
-                _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
-                Load_FromTerminal();
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+                        Load_FromTerminal();
+                    }
+                }
             }
         }
 
@@ -85,27 +89,30 @@ namespace WinPaletter
 
         private void ImportFromJSON(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                try
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (_Mode == WinTerminal.Version.Stable)
+                    try
                     {
-                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile);
-                        Load_FromTerminal();
+                        if (_Mode == WinTerminal.Version.Stable)
+                        {
+                            _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile);
+                            Load_FromTerminal();
+                        }
+
+                        else if (_Mode == WinTerminal.Version.Preview)
+                        {
+                            _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                            Load_FromTerminal();
+                        }
                     }
 
-                    else if (_Mode == WinTerminal.Version.Preview)
+                    catch (Exception ex)
                     {
-                        _Terminal = new(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                        Load_FromTerminal();
+                        MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Forms.BugReport.ThrowError(ex);
                     }
-                }
-
-                catch (Exception ex)
-                {
-                    MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Forms.BugReport.ThrowError(ex);
                 }
             }
         }
@@ -451,7 +458,7 @@ namespace WinPaletter
                 else
                     TerSchemes.SelectedIndex = 0;
             }
-            else if (TerSchemes.Items.Contains(schemeName)) TerSchemes.SelectedItem = schemeName; 
+            else if (TerSchemes.Items.Contains(schemeName)) TerSchemes.SelectedItem = schemeName;
             else if (TerSchemes.Items.Count > 1) TerSchemes.SelectedIndex = 1; else TerSchemes.SelectedIndex = 0;
 
             TerBackImage.Text = temp.BackgroundImage;
@@ -1432,9 +1439,12 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            if (ImgDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
             {
-                TerBackImage.Text = ImgDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TerBackImage.Text = dlg.FileName;
+                }
             }
         }
 
@@ -1498,26 +1508,29 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            if (OS.W12 || OS.W11 || OS.W10)
             {
-                if (OS.W12 || OS.W11 || OS.W10)
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
                 {
-                    string TerDir;
-                    string TerPreDir;
-
-                    TerDir = PathsExt.TerminalJSON;
-                    TerPreDir = PathsExt.TerminalPreviewJSON;
-
-                    if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
+                    if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        File.Copy(TerDir, SaveJSONDlg.FileName);
-                    }
 
-                    if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
-                    {
-                        File.Copy(TerPreDir, SaveJSONDlg.FileName);
-                    }
+                        string TerDir;
+                        string TerPreDir;
 
+                        TerDir = PathsExt.TerminalJSON;
+                        TerPreDir = PathsExt.TerminalPreviewJSON;
+
+                        if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
+                        {
+                            File.Copy(TerDir, dlg.FileName);
+                        }
+
+                        if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
+                        {
+                            File.Copy(TerPreDir, dlg.FileName);
+                        }
+                    }
                 }
             }
         }
@@ -1835,32 +1848,33 @@ namespace WinPaletter
 
         private void Button23_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
-            FontDialog1.Font = Terminal1.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Terminal1.Font, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
             {
-                TerFontName.Text = FontDialog1.Font.Name;
-                NativeMethods.GDI32.LogFont fx = new();
-                FontDialog1.Font.ToLogFont(fx);
-                fx.lfWeight = TerFontWeight.SelectedIndex * 100;
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Font temp = Font.FromLogFont(fx);
-                    Terminal1.Font = new(FontDialog1.Font.Name, FontDialog1.Font.Size, temp.Style);
-                }
-                TerFontName.Font = new(FontDialog1.Font.Name, 9f, Terminal1.Font.Style);
-                TerFontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
+                    TerFontName.Text = dlg.Font.Name;
+                    NativeMethods.GDI32.LogFont fx = new();
+                    dlg.Font.ToLogFont(fx);
+                    fx.lfWeight = TerFontWeight.SelectedIndex * 100;
+                    {
+                        Font temp = Font.FromLogFont(fx);
+                        Terminal1.Font = new(dlg.Font.Name, dlg.Font.Size, temp.Style);
+                    }
+                    TerFontName.Font = new(dlg.Font.Name, 9f, Terminal1.Font.Style);
+                    TerFontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
 
-                if (TerProfiles.SelectedIndex == 0)
-                {
-                    _Terminal.Profiles.Defaults.Font.Face = FontDialog1.Font.Name;
-                    _Terminal.Profiles.Defaults.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
-                    _Terminal.Profiles.Defaults.Font.Size = FontDialog1.Font.Size;
-                }
-                else if (TerProfiles.SelectedIndex > 0 && _Terminal.Profiles.List.Count > 0)
-                {
-                    _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Face = FontDialog1.Font.Name;
-                    _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
-                    _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Size = FontDialog1.Font.Size;
+                    if (TerProfiles.SelectedIndex == 0)
+                    {
+                        _Terminal.Profiles.Defaults.Font.Face = dlg.Font.Name;
+                        _Terminal.Profiles.Defaults.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
+                        _Terminal.Profiles.Defaults.Font.Size = dlg.Font.Size;
+                    }
+                    else if (TerProfiles.SelectedIndex > 0 && _Terminal.Profiles.List.Count > 0)
+                    {
+                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Face = dlg.Font.Name;
+                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
+                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Size = dlg.Font.Size;
+                    }
                 }
             }
         }

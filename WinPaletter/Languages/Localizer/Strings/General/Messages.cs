@@ -33,5 +33,7 @@
         public string RestartExplorerIssue1 { get; set; } = "Try restarting Explorer yourself, or log off and log back on to your Windows profile to ensure the theme is fully applied.";
         public string ReadjustColor { get; set; } = "If you notice any accessibility issues, please readjust the colors accordingly.";
         public string SaveDialog_Question { get; set; } = "Do you want to save the current WinPaletter theme as a file?";
+        public string ApplyingMode_ErrorDialog { get; set; } = "You can continue; the theme has been applied without these elements";
+        public string LoadingMode_ErrorDialog { get; set; } = "You can continue; the theme has been loaded without these elements";
     }
 }

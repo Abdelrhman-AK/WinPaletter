@@ -24,8 +24,6 @@ namespace WinPaletter
             if (Program.Settings.Language.Enabled & File.Exists(Program.Settings.Language.File))
             {
                 TreeView1.FromJSON(Program.Settings.Language.File, Path.GetFileName(Program.Settings.Language.File));
-                OpenJSONDlg.FileName = Program.Settings.Language.File;
-                SaveJSONDlg.FileName = Program.Settings.Language.File;
             }
         }
 
@@ -84,24 +82,25 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TreeView1.FromJSON(OpenJSONDlg.FileName, Path.GetFileName(OpenJSONDlg.FileName));
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TreeView1.FromJSON(dlg.FileName, Path.GetFileName(dlg.FileName));
+                }
             }
-
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                File.WriteAllText(SaveJSONDlg.FileName, TreeView1.Nodes[0].ToJSON());
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(dlg.FileName, TreeView1.Nodes[0].ToJSON());
+                }
             }
-
         }
-
 
         private void Button3_Click(object sender, EventArgs e)
         {
@@ -160,37 +159,48 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                Cursor = Cursors.WaitCursor;
-                Localizer Lang = new();
-                Lang.ExportJSON(SaveJSONDlg.FileName);
-                Lang.Dispose();
-                TreeView1.FromJSON(SaveJSONDlg.FileName, Path.GetFileName(SaveJSONDlg.FileName));
-                Cursor = Cursors.Default;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Cursor = Cursors.WaitCursor;
+                    Localizer Lang = new();
+                    Lang.ExportJSON(dlg.FileName);
+                    Lang.Dispose();
+                    TreeView1.FromJSON(dlg.FileName, Path.GetFileName(dlg.FileName));
+                    Cursor = Cursors.Default;
+                }
             }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                Cursor = Cursors.WaitCursor;
-                Localizer Lang = new();
-                Lang.ExportJSON(SaveJSONDlg.FileName);
-                Lang.Dispose();
-                Cursor = Cursors.Default;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        Cursor = Cursors.WaitCursor;
+                        Localizer Lang = new();
+                        Lang.ExportJSON(dlg.FileName);
+                        Lang.Dispose();
+                        Cursor = Cursors.Default;
+                    }
+                }
             }
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = TextBox1.Font;
-
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = TextBox1.Font })
             {
-                TextBox1.Font = FontDialog1.Font;
-                TextBox3.Font = FontDialog1.Font;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Font = dlg.Font;
+                    TextBox3.Font = dlg.Font;
+                }
+            
             }
         }
 

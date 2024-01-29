@@ -26,14 +26,14 @@ namespace WinPaletter
             if (OS.W12 && TM.Windows12.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
             if (OS.W11 && TM.Windows11.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
             if (OS.W10 && TM.Windows10.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if ((OS.W8 || OS.W81) && TM.Windows81.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if ((OS.W8x) && TM.Windows81.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
             if (OS.W7 && TM.Windows7.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
             if (OS.WVista && TM.WindowsVista.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
             if (OS.WXP && TM.WindowsXP.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
 
             if (TM.AppTheme.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_AppTheme, true);
-            if (TM.LogonUI7.Enabled & (OS.W7 | OS.W8 | OS.W81))
+            if (TM.LogonUI7.Enabled & (OS.W7 | OS.W8x))
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
             if (TM.LogonUIXP.Enabled & OS.WXP)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
@@ -91,7 +91,7 @@ namespace WinPaletter
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_LogonUI)
                 {
-                    if (OS.W7 | OS.W8 | OS.W81)
+                    if (OS.W7 | OS.W8x)
                     {
                         TM.LogonUI7.Enabled = CheckedListBox1.GetItemChecked(i);
                     }

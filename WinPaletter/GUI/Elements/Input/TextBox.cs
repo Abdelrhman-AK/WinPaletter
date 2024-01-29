@@ -435,9 +435,9 @@ namespace WinPaletter.UI.WP
             Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
 
             Color Line = scheme.Colors.Line_Checked;
-            Color LineHover = scheme.Colors.Back_Hover;
+            Color LineHover = Parent != null && Parent is not WP.GroupBox ? scheme.Colors.Back_Hover : scheme.Colors.Back_Hover_Level2;
             Color FadeInColor = Color.FromArgb(alpha, Line);
-            Color FadeOutColor = Color.FromArgb(alpha, LineHover);
+            Color FadeOutColor = Color.FromArgb(255 - alpha, LineHover);
 
             if (tb.Focused | Focused)
             {
@@ -451,8 +451,6 @@ namespace WinPaletter.UI.WP
             else
             {
                 G.FillRoundedRect(Parent is not WP.GroupBox ? scheme.Brushes.Back : scheme.Brushes.Back_Level2, InnerRect);
-
-                using (SolidBrush br = new(scheme.Colors.Back_Level2)) { G.FillRoundedRect(br, InnerRect); }
 
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Level2))) { G.FillRoundedRect(br, OuterRect); }
 

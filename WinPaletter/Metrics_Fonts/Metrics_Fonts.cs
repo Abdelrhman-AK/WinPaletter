@@ -25,11 +25,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -49,43 +53,46 @@ namespace WinPaletter
 
         private void LoadFromMSSTYLES(object sender, EventArgs e)
         {
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
             {
-                string theme = OpenFileDialog2.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string theme = dlg.FileName;
 
-                try
-                {
-                    // Newer versions of msstyles
-                    using (libmsstyle.VisualStyle visualStyle = new(theme))
-                    {
-                        Theme.Manager TMx = new(Manager.Source.Empty)
-                        {
-                            MetricsFonts = visualStyle.MetricsFonts()
-                        };
-                        LoadFromTM(TMx);
-                        TMx.Dispose();
-                    }
-                }
-                catch
-                {
-                    // Old msstyles (Windows XP)
                     try
                     {
-                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                        // Newer versions of msstyles
+                        using (libmsstyle.VisualStyle visualStyle = new(theme))
                         {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
-                        }
-
-                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
-                        {
-                            using (VisualStyleFile vs = new(theme))
+                            Theme.Manager TMx = new(Manager.Source.Empty)
                             {
-                                LoadMetrics(vs.Metrics);
-                            }
+                                MetricsFonts = visualStyle.MetricsFonts()
+                            };
+                            LoadFromTM(TMx);
+                            TMx.Dispose();
                         }
                     }
-                    catch (Exception ex) { throw ex; }
+                    catch
+                    {
+                        // Old msstyles (Windows XP)
+                        try
+                        {
+                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            {
+                                System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            }
+
+                            if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                            {
+                                using (VisualStyleFile vs = new(theme))
+                                {
+                                    LoadMetrics(vs.Metrics);
+                                }
+                            }
+                        }
+                        catch (Exception ex) { throw ex; }
+                    }
                 }
             }
         }
@@ -374,67 +381,79 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label1.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label1.Font })
             {
-                Label1.Font = FontDialog1.Font;
-                windowMetrics1.CaptionFont = FontDialog1.Font;
-                Label1.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Label1.Font = dlg.Font;
+                    windowMetrics1.CaptionFont = dlg.Font;
+                    Label1.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label2.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label2.Font })
             {
-                Label2.Font = FontDialog1.Font;
-                Desktop_icons.Font = FontDialog1.Font;
-                Label2.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Label2.Font = dlg.Font;
+                    Desktop_icons.Font = dlg.Font;
+                    Label2.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label3.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label3.Font })
             {
-                windowMetrics1.MenuFont = FontDialog1.Font;
-                Label3.Font = FontDialog1.Font;
-                Label3.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    windowMetrics1.MenuFont = Label3.Font;
+                    Label3.Font = Label3.Font;
+                    Label3.Text = Label3.Font.Name;
+                }
             }
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label4.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label4.Font })
             {
-                windowMetrics1.MessageFont = FontDialog1.Font;
-                Label4.Font = FontDialog1.Font;
-                Label4.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    windowMetrics1.MessageFont = dlg.Font;
+                    Label4.Font = dlg.Font;
+                    Label4.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label5.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label5.Font })
             {
-                windowMetrics1.SmCaptionFont = FontDialog1.Font;
-                Label5.Font = FontDialog1.Font;
-                Label5.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    windowMetrics1.SmCaptionFont = dlg.Font;
+                    Label5.Font = dlg.Font;
+                    Label5.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = Label6.Font;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = Label6.Font })
             {
-                windowMetrics1.StatusFont = FontDialog1.Font;
-                Label6.Font = FontDialog1.Font;
-                Label6.Text = FontDialog1.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    windowMetrics1.StatusFont = dlg.Font;
+                    Label6.Font = dlg.Font;
+                    Label6.Text = dlg.Font.Name;
+                }
             }
         }
 
@@ -450,31 +469,37 @@ namespace WinPaletter
 
         private void Button14_Click_1(object sender, EventArgs e)
         {
-            Font F = new(TextBox1.Text, 9f, FontStyle.Regular);
-            FontDialog2.Font = F;
-            if (FontDialog2.ShowDialog() == DialogResult.OK)
+            using (Font F = new(TextBox1.Text, 9f, FontStyle.Regular))
+            using (FontDialog dlg = new() { Font = F })
             {
-                TextBox1.Text = FontDialog2.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button15_Click_1(object sender, EventArgs e)
         {
-            Font F = new(TextBox2.Text, 9f, FontStyle.Regular);
-            FontDialog2.Font = F;
-            if (FontDialog2.ShowDialog() == DialogResult.OK)
+            using (Font F = new(TextBox2.Text, 9f, FontStyle.Regular))
+            using (FontDialog dlg = new() { Font = F })
             {
-                TextBox2.Text = FontDialog2.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox2.Text = dlg.Font.Name;
+                }
             }
         }
 
         private void Button17_Click(object sender, EventArgs e)
         {
-            Font F = new(TextBox3.Text, 9f, FontStyle.Regular);
-            FontDialog2.Font = F;
-            if (FontDialog2.ShowDialog() == DialogResult.OK)
+            using (Font F = new(TextBox3.Text, 9f, FontStyle.Regular))
+            using (FontDialog dlg = new() { Font = F })
             {
-                TextBox3.Text = FontDialog2.Font.Name;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox3.Text = dlg.Font.Name;
+                }
             }
         }
 
@@ -539,15 +564,13 @@ namespace WinPaletter
         {
             if (e.PropertyName == nameof(windowMetrics1.CaptionFont))
             {
-                FontDialog1.Font = windowMetrics1.CaptionFont;
-                Label1.Font = FontDialog1.Font;
-                Label1.Text = FontDialog1.Font.Name;
+                Label1.Font = windowMetrics1.CaptionFont;
+                Label1.Text = windowMetrics1.CaptionFont.Name;
             }
             else if (e.PropertyName == nameof(windowMetrics1.SmCaptionFont))
             {
-                FontDialog1.Font = windowMetrics1.SmCaptionFont;
-                Label5.Font = FontDialog1.Font;
-                Label5.Text = FontDialog1.Font.Name;
+                Label5.Font = windowMetrics1.SmCaptionFont;
+                Label5.Text = windowMetrics1.SmCaptionFont.Name;
             }
             else if (e.PropertyName == nameof(windowMetrics1.CaptionHeight))
             {
@@ -579,9 +602,8 @@ namespace WinPaletter
             }
             else if (e.PropertyName == nameof(windowMetrics1.MenuFont))
             {
-                FontDialog1.Font = windowMetrics1.MenuFont;
-                Label3.Font = FontDialog1.Font;
-                Label3.Text = FontDialog1.Font.Name;
+                Label3.Font = windowMetrics1.MenuFont;
+                Label3.Text = windowMetrics1.MenuFont.Name;
             }
             else if (e.PropertyName == nameof(windowMetrics1.ScrollWidth))
             {
@@ -593,15 +615,13 @@ namespace WinPaletter
             }
             else if (e.PropertyName == nameof(windowMetrics1.MessageFont))
             {
-                FontDialog1.Font = windowMetrics1.MessageFont;
-                Label4.Font = FontDialog1.Font;
-                Label4.Text = FontDialog1.Font.Name;
+                Label4.Font = windowMetrics1.MessageFont;
+                Label4.Text = windowMetrics1.MessageFont.Name;
             }
             else if (e.PropertyName == nameof(windowMetrics1.StatusFont))
             {
-                FontDialog1.Font = windowMetrics1.StatusFont;
-                Label6.Font = FontDialog1.Font;
-                Label6.Text = FontDialog1.Font.Name;
+                Label6.Font = windowMetrics1.StatusFont;
+                Label6.Text = windowMetrics1.StatusFont.Name;
             }
         }
 
@@ -621,10 +641,9 @@ namespace WinPaletter
             }
             else if (e.PropertyName == nameof(Desktop_icons.IconFont))
             {
-                FontDialog1.Font = Desktop_icons.IconFont;
-                Label2.Font = FontDialog1.Font;
-                Desktop_icons.Font = FontDialog1.Font;
-                Label2.Text = FontDialog1.Font.Name;
+                Label2.Font = Desktop_icons.IconFont;
+                Desktop_icons.Font = Desktop_icons.IconFont;
+                Label2.Text = Desktop_icons.IconFont.Name;
             }
         }
 

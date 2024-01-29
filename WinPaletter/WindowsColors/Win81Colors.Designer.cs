@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win81Colors));
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.windowsDesktop1 = new WinPaletter.Templates.WindowsDesktop();
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -73,14 +72,23 @@
             this.ColorizationColorBalance_bar = new WinPaletter.UI.Controllers.TrackBarX();
             this.ColorizationColor_pick = new WinPaletter.UI.Controllers.ColorItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
             this.easy_start = new WinPaletter.UI.WP.Button();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.easy_background = new WinPaletter.UI.Controllers.ColorItem();
-            this.easy_foreground = new WinPaletter.UI.Controllers.ColorItem();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox16 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.easy_foreground = new WinPaletter.UI.Controllers.ColorItem();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.colorBarX3 = new WinPaletter.UI.WP.ColorBarX();
             this.colorBarX2 = new WinPaletter.UI.WP.ColorBarX();
@@ -114,16 +122,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox16 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tablessControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.GroupBox13.SuspendLayout();
@@ -141,9 +139,15 @@
             this.GroupBox30.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
@@ -152,26 +156,28 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
-            this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
-            // OpenThemeDialog
+            // titlebarExtender1
             // 
-            this.OpenThemeDialog.DefaultExt = "wpt";
-            this.OpenThemeDialog.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
+            this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
             // 
             // windowsDesktop1
             // 
             this.windowsDesktop1.AccentLevel = WinPaletter.Theme.Structures.Windows10x.AccentTaskbarLevels.None;
+            this.windowsDesktop1.ActiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ActiveTitle = System.Drawing.Color.Empty;
             this.windowsDesktop1.AfterGlowColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.windowsDesktop1.AfterGlowColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.windowsDesktop1.BackColor = System.Drawing.SystemColors.Desktop;
+            this.windowsDesktop1.Background = System.Drawing.Color.Empty;
             this.windowsDesktop1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.windowsDesktop1.ButtonDkShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonFace = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonHilight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonLight = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonShadow = System.Drawing.Color.Empty;
+            this.windowsDesktop1.ButtonText = System.Drawing.Color.Empty;
             this.windowsDesktop1.Classic = false;
             this.windowsDesktop1.Color1 = System.Drawing.Color.Empty;
             this.windowsDesktop1.Color2 = System.Drawing.Color.Empty;
@@ -185,7 +191,14 @@
             this.windowsDesktop1.DarkMode_App = true;
             this.windowsDesktop1.DarkMode_Win = true;
             this.windowsDesktop1.EnableEditingColors = true;
+            this.windowsDesktop1.EnableGradient = true;
             this.windowsDesktop1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.windowsDesktop1.GradientActiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GradientInactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.GrayText = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveBorder = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitle = System.Drawing.Color.Empty;
+            this.windowsDesktop1.InactiveTitleText = System.Drawing.Color.Empty;
             this.windowsDesktop1.IncreaseTBTransparency = false;
             this.windowsDesktop1.Location = new System.Drawing.Point(3, 3);
             this.windowsDesktop1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -204,6 +217,7 @@
             this.windowsDesktop1.TitlebarColor_Active = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.windowsDesktop1.TitlebarColor_Enabled = false;
             this.windowsDesktop1.TitlebarColor_Inactive = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.windowsDesktop1.TitleText = System.Drawing.Color.Empty;
             this.windowsDesktop1.Transparency = true;
             this.windowsDesktop1.UseWin11ORB_WithWin10 = false;
             this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level1 = false;
@@ -212,11 +226,14 @@
             this.windowsDesktop1.Win7ColorBal = 100;
             this.windowsDesktop1.Win7GlowBal = 100;
             this.windowsDesktop1.Win7Noise = 0F;
+            this.windowsDesktop1.Window = System.Drawing.Color.Empty;
+            this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowsTheme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W81;
             this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
             this.windowsDesktop1.WindowsXPThemeColorScheme = null;
             this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             this.windowsDesktop1.EditorInvoker += new WinPaletter.Templates.WindowsDesktop.EditorInvokerEventHandler(this.windowsDesktop1_EditorInvoker);
             // 
@@ -507,6 +524,8 @@
             this.start.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.start.ForeColor = System.Drawing.Color.White;
             this.start.Image = null;
+            this.start.ImageAsVector = false;
+            this.start.ImageVector = null;
             this.start.Location = new System.Drawing.Point(300, 35);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(64, 64);
@@ -753,6 +772,7 @@
             // 
             this.ColorizationColorBalance_bar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColorizationColorBalance_bar.AnimateChanges = true;
             this.ColorizationColorBalance_bar.BackColor = System.Drawing.Color.Transparent;
             this.ColorizationColorBalance_bar.DefaultValue = 8;
             this.ColorizationColorBalance_bar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -798,6 +818,20 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox5.Controls.Add(this.easy_start);
+            this.groupBox5.Controls.Add(this.pictureBox5);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Location = new System.Drawing.Point(4, 247);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(517, 58);
+            this.groupBox5.TabIndex = 126;
+            // 
             // easy_start
             // 
             this.easy_start.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -806,12 +840,76 @@
             this.easy_start.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.easy_start.ForeColor = System.Drawing.Color.White;
             this.easy_start.Image = null;
+            this.easy_start.ImageAsVector = false;
+            this.easy_start.ImageVector = null;
             this.easy_start.Location = new System.Drawing.Point(465, 5);
             this.easy_start.Name = "easy_start";
             this.easy_start.Size = new System.Drawing.Size(48, 48);
             this.easy_start.TabIndex = 50;
             this.easy_start.UseVisualStyleBackColor = false;
             this.easy_start.Click += new System.EventHandler(this.start_Click);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(4, 14);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(40, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(419, 30);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Start background style";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox7.Controls.Add(this.pictureBox7);
+            this.groupBox7.Controls.Add(this.label6);
+            this.groupBox7.Controls.Add(this.easy_background);
+            this.groupBox7.Location = new System.Drawing.Point(4, 203);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(517, 38);
+            this.groupBox7.TabIndex = 125;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox7.TabIndex = 1;
+            this.pictureBox7.TabStop = false;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(40, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(425, 30);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Background color";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // easy_background
             // 
@@ -827,21 +925,6 @@
             this.easy_background.Size = new System.Drawing.Size(47, 28);
             this.easy_background.TabIndex = 4;
             this.easy_background.Click += new System.EventHandler(this.easy_background_Click);
-            // 
-            // easy_foreground
-            // 
-            this.easy_foreground.AllowDrop = true;
-            this.easy_foreground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.easy_foreground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(184)))), ((int)(((byte)(252)))));
-            this.easy_foreground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(184)))), ((int)(((byte)(252)))));
-            this.easy_foreground.DontShowInfo = true;
-            this.easy_foreground.Location = new System.Drawing.Point(465, 5);
-            this.easy_foreground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.easy_foreground.Name = "easy_foreground";
-            this.easy_foreground.Size = new System.Drawing.Size(47, 28);
-            this.easy_foreground.TabIndex = 3;
-            this.easy_foreground.Click += new System.EventHandler(this.easy_foreground_Click);
             // 
             // groupBox4
             // 
@@ -905,6 +988,59 @@
             this.label7.Text = "Options";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox6.Controls.Add(this.pictureBox16);
+            this.groupBox6.Controls.Add(this.label5);
+            this.groupBox6.Controls.Add(this.easy_foreground);
+            this.groupBox6.Location = new System.Drawing.Point(4, 159);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(517, 38);
+            this.groupBox6.TabIndex = 124;
+            // 
+            // pictureBox16
+            // 
+            this.pictureBox16.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox16.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox16.Image")));
+            this.pictureBox16.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox16.Name = "pictureBox16";
+            this.pictureBox16.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox16.TabIndex = 1;
+            this.pictureBox16.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(40, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(425, 30);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Foreground accent color";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // easy_foreground
+            // 
+            this.easy_foreground.AllowDrop = true;
+            this.easy_foreground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.easy_foreground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(184)))), ((int)(((byte)(252)))));
+            this.easy_foreground.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(184)))), ((int)(((byte)(252)))));
+            this.easy_foreground.DontShowInfo = true;
+            this.easy_foreground.Location = new System.Drawing.Point(465, 5);
+            this.easy_foreground.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.easy_foreground.Name = "easy_foreground";
+            this.easy_foreground.Size = new System.Drawing.Size(47, 28);
+            this.easy_foreground.TabIndex = 3;
+            this.easy_foreground.Click += new System.EventHandler(this.easy_foreground_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -930,8 +1066,10 @@
             // 
             // colorBarX3
             // 
+            this.colorBarX3.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX3.AnimateChanges = true;
             this.colorBarX3.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX3.Location = new System.Drawing.Point(111, 99);
@@ -945,8 +1083,10 @@
             // 
             // colorBarX2
             // 
+            this.colorBarX2.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX2.AnimateChanges = true;
             this.colorBarX2.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX2.Location = new System.Drawing.Point(111, 69);
@@ -960,8 +1100,10 @@
             // 
             // colorBarX1
             // 
+            this.colorBarX1.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX1.AnimateChanges = true;
             this.colorBarX1.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX1.Location = new System.Drawing.Point(111, 39);
@@ -1341,6 +1483,8 @@
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.ImageAsVector = false;
+            this.Button1.ImageVector = null;
             this.Button1.Location = new System.Drawing.Point(383, 304);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
@@ -1351,125 +1495,6 @@
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "PNG File|*.png";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox6.Controls.Add(this.pictureBox16);
-            this.groupBox6.Controls.Add(this.label5);
-            this.groupBox6.Controls.Add(this.easy_foreground);
-            this.groupBox6.Location = new System.Drawing.Point(4, 159);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(517, 38);
-            this.groupBox6.TabIndex = 124;
-            // 
-            // pictureBox16
-            // 
-            this.pictureBox16.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox16.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox16.Image")));
-            this.pictureBox16.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox16.Name = "pictureBox16";
-            this.pictureBox16.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox16.TabIndex = 1;
-            this.pictureBox16.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(40, 4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(425, 30);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Foreground accent color";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox7.Controls.Add(this.pictureBox7);
-            this.groupBox7.Controls.Add(this.label6);
-            this.groupBox7.Controls.Add(this.easy_background);
-            this.groupBox7.Location = new System.Drawing.Point(4, 203);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(517, 38);
-            this.groupBox7.TabIndex = 125;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox7.TabIndex = 1;
-            this.pictureBox7.TabStop = false;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(40, 4);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(425, 30);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Background color";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox5.Controls.Add(this.easy_start);
-            this.groupBox5.Controls.Add(this.pictureBox5);
-            this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(4, 247);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(517, 58);
-            this.groupBox5.TabIndex = 126;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(4, 14);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox5.TabIndex = 1;
-            this.pictureBox5.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(40, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(419, 30);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Start background style";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Win81Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1477,10 +1502,12 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tablessControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.Name = "Win81Colors";
             this.Text = "Windows 8.1 colors";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Win7Colors_FormClosed);
             this.Load += new System.EventHandler(this.Win7Colors_Load);
+            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.tablessControl1.ResumeLayout(false);
@@ -1500,9 +1527,15 @@
             this.GroupBox30.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
@@ -1511,26 +1544,17 @@
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        internal System.Windows.Forms.OpenFileDialog OpenThemeDialog;
         public Templates.WindowsDesktop windowsDesktop1;
         private UI.WP.TablessControl tablessControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         internal UI.WP.GroupBox groupBox2;
         internal UI.WP.Button Button1;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog2;
         internal UI.WP.GroupBox GroupBox11;
         internal System.Windows.Forms.PictureBox PictureBox13;
         internal System.Windows.Forms.Label Label28;

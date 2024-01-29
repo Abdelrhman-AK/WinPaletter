@@ -478,7 +478,7 @@ namespace WinPaletter.Theme.Structures
 
                 }
 
-                if (OS.W8 | OS.W81 | OS.W10 | OS.W11 | OS.W12)
+                if (OS.W8x | OS.W10 | OS.W11 | OS.W12)
                 {
                     Tasks.Delete(Tasks.TaskType.Shutdown, TreeView);
                     Tasks.Delete(Tasks.TaskType.Logoff, TreeView);

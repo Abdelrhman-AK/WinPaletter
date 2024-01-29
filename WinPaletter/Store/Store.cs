@@ -81,10 +81,8 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                {
-                    Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
-                    CMD.Font = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
-                }
+                Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
+                CMD.Font = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
             }
 
             CMD.PowerShell = PS;
@@ -182,14 +180,6 @@ namespace WinPaletter
             CursorTM_to_Cursor(Person, TM.Cursor_Person);
             CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
             CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
-
-            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
-            {
-                if (i is UI.Controllers.CursorControl)
-                {
-                    i.Invalidate();
-                }
-            }
         }
 
         public void CursorTM_to_Cursor(UI.Controllers.CursorControl CursorControl, Theme.Structures.Cursor Cursor)
@@ -234,6 +224,8 @@ namespace WinPaletter
 
         private void Store_Load(object sender, EventArgs e)
         {
+            RemoveAllStoreItems(store_container);
+
             Tabs.SelectedIndex = 0;
             oldAppearance = Program.Settings.Appearance;
 
@@ -245,13 +237,14 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this, true);
 
+            ThemesFetcher.RunWorkerAsync();
+
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
             this.DoubleBuffer();
-            Cursors_Container.DoubleBuffer();
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
-            RestartExplorer.Image = Forms.Home.Button19.Image;
+            RestartExplorer.Image = Forms.Home.restartExplorer_btn.Image;
 
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
@@ -264,13 +257,7 @@ namespace WinPaletter
 
         private void Store_Shown(object sender, EventArgs e)
         {
-            ShowIcon = true;
-            _Shown = true;
-            RemoveAllStoreItems(store_container);
-            FilesFetcher.RunWorkerAsync();
-
-            if (Program.Settings.Store.ShowTips)
-                Forms.Store_Intro.ShowDialog();
+            if (Program.Settings.Store.ShowTips) Forms.Store_Intro.ShowDialog();
         }
 
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
@@ -288,10 +275,8 @@ namespace WinPaletter
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
 
             Status_pnl.Visible = true;
-            Status_lbl.SetText(Program.Lang.Store_CleaningFromMemory);
-            Status_lbl.Refresh();
 
-            FilesFetcher.CancelAsync();
+            ThemesFetcher.CancelAsync();
             store_container.Visible = false;
             RemoveAllStoreItems(store_container);
             store_container.Visible = true;
@@ -312,7 +297,6 @@ namespace WinPaletter
                 pin_button.Visible = true;
             }
         }
-
 
         #endregion
 
@@ -399,7 +383,7 @@ namespace WinPaletter
 
                 }
 
-                FilesFetcher.ReportProgress(0);
+                ThemesFetcher.ReportProgress(0);
                 BeginInvoke(new Action(() => ProgressBar1.Visible = true));
 
                 int i = 0;
@@ -456,7 +440,7 @@ namespace WinPaletter
                     }
 
                     i += 1;
-                    if (allProgress > 0) FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                    if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
                     // Convert themes managers into StoreItems, and exclude the old formats of OldFormat
                     if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetFormat($@"{Dir}\{FileName}") == Manager.Format.JSON)
@@ -465,9 +449,8 @@ namespace WinPaletter
                         {
                             Status_lbl.SetText(string.Format(Program.Lang.Store_LoadingTheme, FileName));
 
-                            using (Theme.Manager TM = new(Theme.Manager.Source.File, $@"{Dir}\{FileName}", true))
+                            using (Theme.Manager TM = new(Theme.Manager.Source.File, $@"{Dir}\{FileName}", true, true))
                             {
-
                                 UI.Controllers.StoreItem ctrl = new()
                                 {
                                     FileName = $@"{Dir}\{FileName}",
@@ -489,14 +472,9 @@ namespace WinPaletter
                                 ctrl.MouseLeave += StoreItem_MouseLeave;
 
                                 BeginInvoke(new Action(() => store_container.Controls.Add(ctrl)));
-
                             }
                         }
-
-                        catch (Exception)
-                        {
-
-                        }
+                        catch (Exception) { }
                     }
 
                     Status_lbl.SetText(string.Empty);
@@ -504,7 +482,7 @@ namespace WinPaletter
                     i += 1;
 
                     if (allProgress > 0)
-                        FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                        ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
                 }
 
@@ -558,7 +536,7 @@ namespace WinPaletter
 
                                 Status_lbl.SetText($"Enumerating themes: \"{file}\"");
 
-                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, true))
+                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, true, true))
                                 {
                                     TMList.Add(file, TMx);
                                 }
@@ -571,7 +549,7 @@ namespace WinPaletter
                         i += 1;
 
                         if (allProgress > 0)
-                            FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                            ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
                     }
                 }
             }
@@ -604,7 +582,7 @@ namespace WinPaletter
                 i += 1;
 
                 if (allProgress > 0)
-                    FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                    ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
             }
 
             BeginInvoke(new Action(() =>
@@ -676,7 +654,6 @@ namespace WinPaletter
 
         public void StoreItem_Clicked(object sender, EventArgs e)
         {
-
             switch (((MouseEventArgs)e).Button)
             {
                 case MouseButtons.Right:
@@ -793,18 +770,21 @@ namespace WinPaletter
                             List<string> os_list = new();
                             os_list.Clear();
 
-                            if (StoreItem.TM.Info.DesignedFor_Win11)
-                                os_list.Add(Program.Lang.OS_Win11);
-                            if (StoreItem.TM.Info.DesignedFor_Win10)
-                                os_list.Add(Program.Lang.OS_Win10);
-                            if (StoreItem.TM.Info.DesignedFor_Win81)
-                                os_list.Add(Program.Lang.OS_Win81);
-                            if (StoreItem.TM.Info.DesignedFor_Win7)
-                                os_list.Add(Program.Lang.OS_Win7);
-                            if (StoreItem.TM.Info.DesignedFor_WinVista)
-                                os_list.Add(Program.Lang.OS_WinVista);
-                            if (StoreItem.TM.Info.DesignedFor_WinXP)
-                                os_list.Add(Program.Lang.OS_WinXP);
+                            //if (StoreItem.TM.Info.DesignedFor_Win12) os_list.Add(Program.Lang.OS_Win12);
+
+                            if (StoreItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.OS_Win11);
+
+                            if (StoreItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.OS_Win11);
+
+                            if (StoreItem.TM.Info.DesignedFor_Win10) os_list.Add(Program.Lang.OS_Win10);
+
+                            if (StoreItem.TM.Info.DesignedFor_Win81) os_list.Add(Program.Lang.OS_Win81);
+
+                            if (StoreItem.TM.Info.DesignedFor_Win7) os_list.Add(Program.Lang.OS_Win7);
+
+                            if (StoreItem.TM.Info.DesignedFor_WinVista) os_list.Add(Program.Lang.OS_WinVista);
+
+                            if (StoreItem.TM.Info.DesignedFor_WinXP) os_list.Add(Program.Lang.OS_WinXP);
 
                             string os_format = string.Empty;
                             if (os_list.Count == 1)
@@ -849,10 +829,7 @@ namespace WinPaletter
                             Tabs.SelectedIndex = 1;
 
                             Program.Animator.ShowSync(Tabs);
-
-                            // ' '' ''FluentTransitions.Transition.With(Titlebar_panel, nameof(BackColor), Titlebar_panel.BackColor, .Manager.Info.Color2, 10, 15)
                         }
-
 
                         Cursor = Cursors.Default;
                         break;
@@ -931,7 +908,12 @@ namespace WinPaletter
             {
                 // Edit button is pressed
                 Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-                Forms.MainForm.ExitWithChangedFileResponse(Forms.Home.SaveFileDialog1, null, null, null);
+
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                {
+                    Forms.MainForm.ExitWithChangedFileResponse(dlg, null, null, null);
+                }
+
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                 Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
@@ -942,15 +924,15 @@ namespace WinPaletter
 
         public void RemoveAllStoreItems(FlowLayoutPanel Container)
         {
-            for (int x = 0, loopTo = Container.Controls.Count - 1; x <= loopTo; x++)
+            int count = Container.Controls.Count - 1;
+            for (int x = 0;  x <= count; x++)
             {
-
-                if (Container.Controls[0] is UI.Controllers.StoreItem)
+                if (Container.Controls[0] is StoreItem storeItem && storeItem != null)
                 {
-                    ((UI.Controllers.StoreItem)Container.Controls[0]).MouseClick -= StoreItem_Clicked;
-                    ((UI.Controllers.StoreItem)Container.Controls[0]).ThemeManagerChanged -= StoreItem_ThemeManagerChanged;
-                    ((UI.Controllers.StoreItem)Container.Controls[0]).MouseEnter -= StoreItem_MouseEnter;
-                    ((UI.Controllers.StoreItem)Container.Controls[0]).MouseLeave -= StoreItem_MouseLeave;
+                    storeItem.MouseClick -= StoreItem_Clicked;
+                    storeItem.ThemeManagerChanged -= StoreItem_ThemeManagerChanged;
+                    storeItem.MouseEnter -= StoreItem_MouseEnter;
+                    storeItem.MouseLeave -= StoreItem_MouseLeave;
                 }
 
                 Container.Controls[0].Dispose();
@@ -1337,33 +1319,46 @@ namespace WinPaletter
                     return;
             }
 
-            using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
+            string selectedPath = string.Empty;
+
+            if (!OS.WXP)
             {
-                if (FD.ShowDialog() == DialogResult.OK)
+                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
                 {
-                    string filename = $@"{FD.SelectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
-
-                    if (!System.IO.Directory.Exists(FD.SelectedPath))
-                        System.IO.Directory.CreateDirectory(FD.SelectedPath);
-                    if (System.IO.File.Exists(filename))
-                        System.IO.File.Delete(filename);
-
-                    System.IO.File.Copy(selectedItem.FileName, filename);
-
-                    if (selectedItem.MD5_PackFile != "0")
-                    {
-                        string themepackfilename = $@"{FD.SelectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
-                        themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
-
-                        Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                        Forms.Store_DownloadProgress.File = themepackfilename;
-                        Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                        Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                        Forms.Store_DownloadProgress.ShowDialog();
-                    }
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+            else
+            {
+                using (FolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(selectedPath) && System.IO.Directory.Exists(selectedPath))
+            {
+                string filename = $@"{selectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
+
+                if (!System.IO.Directory.Exists(selectedPath))
+                    System.IO.Directory.CreateDirectory(selectedPath);
+                if (System.IO.File.Exists(filename))
+                    System.IO.File.Delete(filename);
+
+                System.IO.File.Copy(selectedItem.FileName, filename);
+
+                if (selectedItem.MD5_PackFile != "0")
+                {
+                    string themepackfilename = $@"{selectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
+                    themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
+
+                    Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
+                    Forms.Store_DownloadProgress.File = themepackfilename;
+                    Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                    Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
+                    Forms.Store_DownloadProgress.ShowDialog();
+                }
+            }
         }
 
         private void pin_button_Click(object sender, EventArgs e)

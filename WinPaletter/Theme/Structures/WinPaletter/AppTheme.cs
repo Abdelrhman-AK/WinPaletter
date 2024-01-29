@@ -45,16 +45,16 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AppTheme data structure</param>
         public void Load(AppTheme @default)
         {
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomColors", @default.Enabled));
-            Animations = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "Animations", @default.Animations));
-            BackColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "BackColor", @default.BackColor.ToArgb())));
-            AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "AccentColor", @default.AccentColor.ToArgb())));
-            SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "SecondaryColor", @default.SecondaryColor.ToArgb())));
-            TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "TertiaryColor", @default.TertiaryColor.ToArgb())));
-            DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "DisabledColor", @default.DisabledColor.ToArgb())));
-            DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
-            DarkMode = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomTheme", @default.DarkMode));
-            RoundCorners = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "RoundedCorners", @default.RoundCorners));
+            Enabled = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled));
+            Animations = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations));
+            BackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor.ToArgb())));
+            AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "AccentColor", @default.AccentColor.ToArgb())));
+            SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "SecondaryColor", @default.SecondaryColor.ToArgb())));
+            TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "TertiaryColor", @default.TertiaryColor.ToArgb())));
+            DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "DisabledColor", @default.DisabledColor.ToArgb())));
+            DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
+            DarkMode = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode));
+            RoundCorners = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners));
 
 
 
@@ -66,16 +66,16 @@ namespace WinPaletter.Theme.Structures
         /// <param name="TreeView">TreeView used as theme log</param>
         public void Apply(TreeView TreeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomColors", Enabled);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "BackColor", BackColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "AccentColor", AccentColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "CustomTheme", DarkMode);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "RoundedCorners", RoundCorners);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "Animations", Animations);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "SecondaryColor", SecondaryColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "TertiaryColor", TertiaryColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "DisabledColor", DisabledColor.ToArgb());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings\Appearance", "DisabledBackColor", DisabledBackColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "AccentColor", AccentColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "CustomTheme", DarkMode);
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "RoundedCorners", RoundCorners);
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "Animations", Animations);
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
+            EditReg(TreeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
             {
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;

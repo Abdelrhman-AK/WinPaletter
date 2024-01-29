@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>109, 17</value>
-  </metadata>
-  <metadata name="OpenJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>227, 17</value>
-  </metadata>
-  <metadata name="SaveJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>356, 17</value>
-  </metadata>
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -331,7 +322,7 @@
   <data name="PictureBox23.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAABOVJREFUOE9t1H1ME2ccB/AbKPVl4lyUyTYtnqUWwRdSFAYKYpVVGCgoZSAYJIgy
+        vgAADr4B6kKxwAAABOVJREFUOE9t1H1ME2ccB/AbKPVl4lyUyTYtnqUWwRdSFAYKYpVVGCgoZSAYJIgy
         4qbJzNTFMRbdsqhT5mlC6AamMhAPEKzlrUB5neh0jiwZMUv8o3ONLptWiNC7e/rdc6WdZvGS3x+Xu3zy
         e3seppRh/MyzlAtb54Qsa3tVqZGjRpukKRl2qgv7Hql59Tualnns4txBd1DWsFud1edWb/PGls6p0HWC
         fa8Fsxj5aZ/NBrXNVprN89VPW4LDxyk8/kOkfqxo8ImzoOeRkw+NG2udo2zPHpg4lTUoOTMHJGd6n+RM
@@ -447,6 +438,6 @@
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>51</value>
+    <value>60</value>
   </metadata>
 </root>

@@ -17,14 +17,24 @@ namespace WinPaletter
             FormClosing += LogonUIXP_FormClosing;
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            RadioImage2.Image?.Dispose();
+        }
+
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                using (Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LoadFromTM(TMx);
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
                 }
             }
         }

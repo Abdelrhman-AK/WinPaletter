@@ -236,11 +236,11 @@ namespace WinPaletter.UI.WP
             #region Colors System
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Color BackRect_Color = scheme.Colors.Back;
-            Color BackRect_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover);
+            Color BackRect_Color = scheme.Colors.Back_Level2;
+            Color BackRect_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover_Level2);
 
-            Color BackRect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover);
-            Color BackRect_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover);
+            Color BackRect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover_Level2);
+            Color BackRect_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover_Level2);
 
             Color Checked_Rect_Color = Color.FromArgb(alpha2, scheme.Colors.Back_Checked);
             Color Checked_Rect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
@@ -257,7 +257,7 @@ namespace WinPaletter.UI.WP
                 TextRect.X = 0;
             }
 
-            #region Check Sign x,y system
+            #region Check sign x, y coordinates
             int x1_Left = InnerRect.X + 3;
             int y1_Left = (int)Math.Round(0.8d * InnerRect.Height);
             int x2_Left = x1_Left;

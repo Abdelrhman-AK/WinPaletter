@@ -109,7 +109,7 @@ namespace WinPaletter.NativeMethods
         public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
         {
             // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8 || OS.W81)
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
                 return;
 
             int attributeValue = darkMode ? 1 : 0;

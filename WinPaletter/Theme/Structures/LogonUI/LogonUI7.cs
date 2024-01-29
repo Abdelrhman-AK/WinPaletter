@@ -73,7 +73,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows 7/8.1 LogonUI data structure</param>
         public void Load(LogonUI7 @default)
         {
-            if (OS.W7 | OS.W8 | OS.W81)
+            if (OS.W7 | OS.W8x)
             {
 
                 ImagePath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", string.Empty).ToString();

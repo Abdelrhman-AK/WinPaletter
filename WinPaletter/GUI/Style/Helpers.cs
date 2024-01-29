@@ -32,7 +32,7 @@ namespace WinPaletter.UI.Style
                     Program.Style.RoundedCorners = true;
                 }
 
-                else if (OS.W10 || OS.W8 || OS.W81)
+                else if (OS.W10 || OS.W8x)
                 {
                     Program.Style.RoundedCorners = false;
                 }
@@ -72,7 +72,7 @@ namespace WinPaletter.UI.Style
                 {
                     return true;
                 }
-                else if (OS.W10 || OS.W8 || OS.W81)
+                else if (OS.W10 || OS.W8x)
                 {
                     return false;
                 }

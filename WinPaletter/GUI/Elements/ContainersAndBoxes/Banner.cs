@@ -57,6 +57,11 @@ namespace WinPaletter.UI.WP
             Color _color = Enabled && ImageColor != Color.Empty ? ImageColor : scheme.Colors.Back_Checked;
             Color _color_line;
 
+            if (_color != Color.Empty)
+            {
+                if (Program.Style.DarkMode) _color = _color.Dark(0.2f); else _color = _color.CB(0.5f);
+            }
+
             using (Style.Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
             {
                 _color_line = colors.Line_Hover;

@@ -13,7 +13,6 @@
         public string Store_DownloadingPackForTheme { get; set; } = "Downloading resources pack for theme '{0}' version {1}.";
         public string Store_LoadingTheme { get; set; } = "Loading theme '{0}'.";
         public string Store_LowAppVersionAlert { get; set; } = "This theme is designed by WinPaletter {0}, which is higher than {1}. Please update WinPaletter to enjoy all new theme aspects and avoid errors.";
-        public string Store_CleaningFromMemory { get; set; } = "Cleaning store items from memory.";
         public string Store_NoIncludedData { get; set; } = "There is no included data.";
         public string Store_WontWork_Protocol { get; set; } = "Unfortunately, WinPaletter Store won't work as TLS 1.2 protocol isn't enabled in {0}. Do you want to continue?";
         public string Store_ThemeDesignedFor0 { get; set; } = "This theme can be applied to all supported versions of Windows, but it was designed for:";

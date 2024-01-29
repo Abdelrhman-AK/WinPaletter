@@ -98,7 +98,6 @@ namespace WinPaletter
             this.Label7 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
             this.pin_button = new WinPaletter.UI.WP.Button();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
@@ -1012,11 +1011,6 @@ namespace WinPaletter
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
             // EditInfo
             // 
             this.AllowDrop = true;
@@ -1128,6 +1122,5 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox7;
         internal PictureBox PictureBox42;
         internal UI.WP.Button pin_button;
-        internal OpenFileDialog OpenFileDialog1;
     }
 }

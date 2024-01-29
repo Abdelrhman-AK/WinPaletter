@@ -38,12 +38,16 @@ namespace WinPaletter
                 return;
             }
 
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
-                LoadFromTM(TMx);
-                ApplyPreview();
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                        ApplyPreview();
+                    }
+                }
             }
         }
 
@@ -1702,21 +1706,22 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
-            FontDialog1.Font = f_extterminal;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = f_extterminal, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
             {
-                f_extterminal = FontDialog1.Font;
-                FontName.Text = FontName.Font.Name;
-                ExtTerminal_FontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
-                NativeMethods.GDI32.LogFont fx = new();
-                f_extterminal.ToLogFont(fx);
-                fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
-                using (Font temp = Font.FromLogFont(fx))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
+                    f_extterminal = dlg.Font;
+                    FontName.Text = FontName.Font.Name;
+                    ExtTerminal_FontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
+                    NativeMethods.GDI32.LogFont fx = new();
+                    f_extterminal.ToLogFont(fx);
+                    fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100;
+                    using (Font temp = Font.FromLogFont(fx))
+                    {
+                        f_extterminal = new(temp.Name, f_extterminal.Size, temp.Style);
+                    }
+                    FontName.Font = new(dlg.Font.Name, 9f, f_extterminal.Style);
                 }
-                FontName.Font = new(FontDialog1.Font.Name, 9f, f_extterminal.Style);
             }
         }
 

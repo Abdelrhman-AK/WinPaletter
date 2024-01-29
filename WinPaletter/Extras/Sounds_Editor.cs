@@ -27,11 +27,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -51,11 +55,14 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
             {
-                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
+                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    {
+                        GetFromClassicThemeFile(dlg.FileName, _Def.Sounds);
+                    }
                 }
             }
         }
@@ -251,35 +258,39 @@ namespace WinPaletter
 
         public void BrowseForWAV(object sender, EventArgs e)
         {
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Lang.Filter_OpenScreensaver })
             {
-                UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
-                if (File.Exists(temp.Text))
                 {
-                    OpenFileDialog2.FileName = new FileInfo(temp.Text).Name;
-                    OpenFileDialog2.InitialDirectory = new FileInfo(temp.Text).DirectoryName;
-                }
-            }
-
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
-            {
-                snd = OpenFileDialog2.FileName;
-
-                ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text = snd;
-                try
-                {
-                    using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
+                    UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
+                    if (File.Exists(temp.Text))
                     {
-                        SP = new(FS);
-                        SP.Load();
-                        SP.Play();
+                        dlg.FileName = new FileInfo(temp.Text).Name;
+                        dlg.InitialDirectory = new FileInfo(temp.Text).DirectoryName;
                     }
                 }
-                catch (Exception)
+
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    AltPlayingMethod = true;
-                    NativeMethods.DLLFunc.PlayAudio(snd);
+                    snd = dlg.FileName;
+
+                    ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text = snd;
+                    try
+                    {
+                        using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
+                        {
+                            SP = new(FS);
+                            SP.Load();
+                            SP.Play();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        AltPlayingMethod = true;
+                        NativeMethods.DLLFunc.PlayAudio(snd);
+                    }
                 }
             }
+       
         }
         #endregion
 

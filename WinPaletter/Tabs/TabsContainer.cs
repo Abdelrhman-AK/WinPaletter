@@ -682,9 +682,7 @@ namespace WinPaletter.Tabs
             form.TopLevel = true;
             form.FormBorderStyle = FormBorderStyle.Sizable;
             form.WindowState = FormWindowState.Normal;
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.Location = new(Screen.PrimaryScreen.WorkingArea.X + (Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2,
-                Screen.PrimaryScreen.WorkingArea.Y + (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2);
+            form.CenterToScreen();
 
             if (form is AspectsTemplate)
             {

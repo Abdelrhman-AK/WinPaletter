@@ -27,8 +27,9 @@ namespace WinPaletter.Theme
         /// </summary>
         /// <param name="Source">Source from which WinPaletter will get theme data. It can be from registry, file or empty.</param>
         /// <param name="File">If selected source is file, this will specify WinPaletter theme file</param>
-        /// <param name="IgnoreExtractionThemePack">This will ignore theme resources pack extraction, useful for previewing or getting theme data quickly without data extraction.</param>
-        public Manager(Source Source, string File = "", bool IgnoreExtractionThemePack = false)
+        /// <param name="ignoreExtractionThemePack">This will ignore theme resources pack extraction, useful for previewing or getting theme data quickly without data extraction.</param>
+        /// <param name="ignoreErrors">This will ignore any errors that may occur during theme loading.</param>
+        public Manager(Source Source, string File = "", bool ignoreExtractionThemePack = false, bool ignoreErrors = false)
         {
             switch (Source)
             {
@@ -151,7 +152,7 @@ namespace WinPaletter.Theme
                                 Cursor_Cross.Load("Cross");
                                 #endregion
 
-                                if (Exceptions.ThemeLoad.Count > 0)
+                                if (!ignoreErrors && Exceptions.ThemeLoad.Count > 0)
                                 {
                                     Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
                                     Forms.Saving_ex_list.ApplyMode = false;
@@ -210,7 +211,7 @@ namespace WinPaletter.Theme
                                 // Extract theme resources pack
                                 try
                                 {
-                                    if (packIsValid && !IgnoreExtractionThemePack)
+                                    if (packIsValid && !ignoreExtractionThemePack)
                                     {
                                         if (!Directory.Exists(cache)) Directory.CreateDirectory(cache);
 
@@ -261,7 +262,7 @@ namespace WinPaletter.Theme
                                     JObject json = JObject.Parse(string.Join("\r\n", txt));
                                     JObject json_original = JObject.Parse(TMx.ToString(true));
 
-                                    // Merge with the original theme manager data to make a new WinPaletter with new features can load a WPTH made by an old WinPaletter
+                                    // Merge with the original theme manager data to make a new WinPaletter with new features can load a WinPaletterTheme made by an old WinPaletter
                                     try
                                     {
                                         foreach (KeyValuePair<string, JToken?> item in json_original)
@@ -314,7 +315,7 @@ namespace WinPaletter.Theme
                                 }
 
                                 // Display exception information if any
-                                if (Exceptions.ThemeLoad.Count > 0 && Application.OpenForms.OfType<Store>().Count() == 0 && Application.OpenForms.OfType<BackupThemes_List>().Count() == 0)
+                                if (!ignoreErrors && Exceptions.ThemeLoad.Count > 0)
                                 {
                                     Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
                                     Forms.Saving_ex_list.ApplyMode = false;
@@ -457,7 +458,7 @@ namespace WinPaletter.Theme
                                 Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
                             }
 
-                            if (OS.W8 || OS.W81)
+                            if (OS.W8x)
                             {
                                 Execute(new(() =>
                                 {

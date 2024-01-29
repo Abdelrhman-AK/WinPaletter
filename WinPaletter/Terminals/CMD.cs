@@ -34,11 +34,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
-                LoadFromTM(TMx, _Edition);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx, _Edition);
+                    }
+                }
             }
         }
 
@@ -1473,23 +1477,23 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            FontDialog1.FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts;
-            FontDialog1.Font = F_cmd;
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg = new() { Font = F_cmd, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
             {
-                F_cmd = FontDialog1.Font;
-                FontName.Text = FontName.Font.Name;
-                CMD_FontSizeBar.Value = (int)Math.Round(FontDialog1.Font.Size);
-                NativeMethods.GDI32.LogFont fx = new();
-                F_cmd.ToLogFont(fx);
-                fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
-                using (Font temp = Font.FromLogFont(fx))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
+                    F_cmd = dlg.Font;
+                    FontName.Text = FontName.Font.Name;
+                    CMD_FontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
+                    NativeMethods.GDI32.LogFont fx = new();
+                    F_cmd.ToLogFont(fx);
+                    fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+                    using (Font temp = Font.FromLogFont(fx))
+                    {
+                        F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
+                    }
+                    FontName.Font = new(dlg.Font.Name, 9f, F_cmd.Style);
                 }
-                FontName.Font = new(FontDialog1.Font.Name, 9f, F_cmd.Style);
             }
-
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)

@@ -35,7 +35,7 @@ namespace WinPaletter
                 button11.Image = Assets.WinLogos.Win10.Resize(20, 20);
             }
 
-            else if (OS.W8 | OS.W81)
+            else if (OS.W8x)
             {
                 button11.Image = Assets.WinLogos.Win81.Resize(20, 20);
             }
@@ -187,15 +187,18 @@ namespace WinPaletter
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                using (Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    TMx.Save(Theme.Manager.Source.Registry);
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        TMx.Save(Theme.Manager.Source.Registry);
 
-                    if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
+                        if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
-                    MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
         }
@@ -299,7 +302,7 @@ namespace WinPaletter
             {
                 Program.SendCommand($"{PathsExt.Explorer} ms-settings:display");
             }
-            else if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
+            else if (OS.WVista || OS.W7 || OS.W8x)
             {
                 Program.SendCommand($"dpiscaling");
             }

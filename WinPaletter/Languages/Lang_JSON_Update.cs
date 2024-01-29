@@ -23,127 +23,138 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TextBox1.Text = OpenJSONDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
             }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                TextBox2.Text = OpenJSONDlg.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox2.Text = dlg.FileName;
+                }
             }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                Cursor = Cursors.WaitCursor;
-                Localizer Lang = new();
-                Lang.ExportJSON(SaveJSONDlg.FileName);
-                Lang.Dispose();
-                TextBox2.Text = SaveJSONDlg.FileName;
-                Cursor = Cursors.Default;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Cursor = Cursors.WaitCursor;
+                    Localizer Lang = new();
+                    Lang.ExportJSON(dlg.FileName);
+                    Lang.Dispose();
+                    TextBox2.Text = dlg.FileName;
+                    Cursor = Cursors.Default;
+                }
             }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                Cursor = Cursors.WaitCursor;
-
-                string _output = SaveJSONDlg.FileName;
-
-                StreamReader _Old_File = new(TextBox1.Text);
-                JObject J_Old = JObject.Parse(_Old_File.ReadToEnd());
-                _Old_File.Close();
-
-                StreamReader _New_File = new(TextBox2.Text);
-                JObject J_New = JObject.Parse(_New_File.ReadToEnd());
-                _New_File.Close();
-
-                // Add information from the New File
-                JObject J_Output = new() { { "Information", J_New["Information"] } };
-
-                // Manage Global Strings
-                JObject J_GlobalStrings = new();
-                JObject x_old = (JObject)J_Old["Global Strings"];
-                JObject x_new = (JObject)J_New["Global Strings"];
-                foreach (JProperty j in x_new.Properties())
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (x_old[j.Name] is null)
-                        J_GlobalStrings.Add(j.Name, j.Value);       // Add Missing Strings From New JObj
-                }
+                    Cursor = Cursors.WaitCursor;
 
-                foreach (JProperty j in x_old.Properties())
-                {
-                    if (CheckBox1.Checked)
+                    string _output = dlg.FileName;
+
+                    StreamReader _Old_File = new(TextBox1.Text);
+                    JObject J_Old = JObject.Parse(_Old_File.ReadToEnd());
+                    _Old_File.Close();
+
+                    StreamReader _New_File = new(TextBox2.Text);
+                    JObject J_New = JObject.Parse(_New_File.ReadToEnd());
+                    _New_File.Close();
+
+                    // Add information from the New File
+                    JObject J_Output = new() { { "Information", J_New["Information"] } };
+
+                    // Manage Global Strings
+                    JObject J_GlobalStrings = new();
+                    JObject x_old = (JObject)J_Old["Global Strings"];
+                    JObject x_new = (JObject)J_New["Global Strings"];
+                    foreach (JProperty j in x_new.Properties())
                     {
-                        if (x_new.ContainsKey(j.Name))
-                            J_GlobalStrings.Add(j.Name, j.Value);  // Add with exclusion of Old JObj
-                    }
-                    else
-                    {
-                        J_GlobalStrings.Add(j.Name, j.Value);
-                    }                                    // Add Rest of items from Old JObj
-                }
-
-                J_Output.Add("Global Strings", J_GlobalStrings);
-
-                // Manage Forms
-                JObject J_Forms = new();
-                x_old = (JObject)J_Old["Forms Strings"];
-                x_new = (JObject)J_New["Forms Strings"];
-
-                foreach (JProperty j in x_new.Properties())
-                {
-
-                    if (x_old[j.Name] is null)
-                    {
-                        J_Forms.Add(j.Name, j.Value);                                         // Add Missing Forms From New JObj
+                        if (x_old[j.Name] is null)
+                            J_GlobalStrings.Add(j.Name, j.Value);       // Add Missing Strings From New JObj
                     }
 
-                    else
+                    foreach (JProperty j in x_old.Properties())
                     {
-                        JObject c_old = (JObject)x_old[j.Name]["Controls"];
-                        JObject c_new = (JObject)x_new[j.Name]["Controls"];
-                        JObject c = new();
-
-                        foreach (JProperty jj in c_new.Properties())
+                        if (CheckBox1.Checked)
                         {
-                            if (c_old[jj.Name] is null)
-                                c.Add(jj.Name, jj.Value);       // Add Missing Controls From New JObj
+                            if (x_new.ContainsKey(j.Name))
+                                J_GlobalStrings.Add(j.Name, j.Value);  // Add with exclusion of Old JObj
+                        }
+                        else
+                        {
+                            J_GlobalStrings.Add(j.Name, j.Value);
+                        }                                    // Add Rest of items from Old JObj
+                    }
+
+                    J_Output.Add("Global Strings", J_GlobalStrings);
+
+                    // Manage Forms
+                    JObject J_Forms = new();
+                    x_old = (JObject)J_Old["Forms Strings"];
+                    x_new = (JObject)J_New["Forms Strings"];
+
+                    foreach (JProperty j in x_new.Properties())
+                    {
+
+                        if (x_old[j.Name] is null)
+                        {
+                            J_Forms.Add(j.Name, j.Value);                                         // Add Missing Forms From New JObj
                         }
 
-                        foreach (JProperty jj in c_old.Properties())
-                            c.Add(jj.Name, jj.Value);                                         // Add Rest of controls from Old JObj
+                        else
+                        {
+                            JObject c_old = (JObject)x_old[j.Name]["Controls"];
+                            JObject c_new = (JObject)x_new[j.Name]["Controls"];
+                            JObject c = new();
 
-                        x_new[j.Name]["Controls"] = c;
-                        x_new[j.Name]["Text"] = x_old[j.Name]["Text"];
+                            foreach (JProperty jj in c_new.Properties())
+                            {
+                                if (c_old[jj.Name] is null)
+                                    c.Add(jj.Name, jj.Value);       // Add Missing Controls From New JObj
+                            }
+
+                            foreach (JProperty jj in c_old.Properties())
+                                c.Add(jj.Name, jj.Value);                                         // Add Rest of controls from Old JObj
+
+                            x_new[j.Name]["Controls"] = c;
+                            x_new[j.Name]["Text"] = x_old[j.Name]["Text"];
+
+                        }
 
                     }
 
+                    // Add Modification to the newly created JObj
+                    foreach (JProperty j in x_new.Properties())
+                    {
+                        if (!J_Forms.ContainsKey(j.Name))
+                            J_Forms.Add(j.Name, j.Value);
+                    }
+
+                    J_Output.Add("Forms Strings", J_Forms);
+
+                    File.WriteAllText(_output, J_Output.ToString());
+
+                    Cursor = Cursors.Default;
+
+                    MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                // Add Modification to the newly created JObj
-                foreach (JProperty j in x_new.Properties())
-                {
-                    if (!J_Forms.ContainsKey(j.Name))
-                        J_Forms.Add(j.Name, j.Value);
-                }
-
-                J_Output.Add("Forms Strings", J_Forms);
-
-                File.WriteAllText(_output, J_Output.ToString());
-
-                Cursor = Cursors.Default;
-
-                MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

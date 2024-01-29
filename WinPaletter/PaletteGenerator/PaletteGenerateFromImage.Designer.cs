@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerateFromImage));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.GroupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.Label3 = new System.Windows.Forms.Label();
@@ -47,7 +46,9 @@ namespace WinPaletter
             this.RadioButton7 = new WinPaletter.UI.WP.RadioButton();
             this.RadioButton5 = new WinPaletter.UI.WP.RadioButton();
             this.GroupBox3 = new WinPaletter.UI.WP.GroupBox();
+            this.Trackbar2 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox8 = new System.Windows.Forms.PictureBox();
+            this.Trackbar1 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox9 = new System.Windows.Forms.PictureBox();
             this.Label7 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
@@ -72,8 +73,6 @@ namespace WinPaletter
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.Trackbar1 = new WinPaletter.UI.Controllers.TrackBarX();
-            this.Trackbar2 = new WinPaletter.UI.Controllers.TrackBarX();
             this.GroupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.GroupBox3.SuspendLayout();
@@ -87,10 +86,6 @@ namespace WinPaletter
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.Filter = "Image Files|*.jpg;*.gif;*.png;*.bmp|All Files|*.*";
             // 
             // listBox1
             // 
@@ -227,6 +222,22 @@ namespace WinPaletter
             this.GroupBox3.TabIndex = 166;
             this.GroupBox3.Text = "GroupBox3";
             // 
+            // Trackbar2
+            // 
+            this.Trackbar2.AnimateChanges = true;
+            this.Trackbar2.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar2.DefaultValue = 10;
+            this.Trackbar2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar2.Location = new System.Drawing.Point(150, 33);
+            this.Trackbar2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar2.Maximum = 100;
+            this.Trackbar2.Minimum = 0;
+            this.Trackbar2.Name = "Trackbar2";
+            this.Trackbar2.Size = new System.Drawing.Size(365, 24);
+            this.Trackbar2.TabIndex = 172;
+            this.Trackbar2.Value = 10;
+            this.Trackbar2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
+            // 
             // PictureBox8
             // 
             this.PictureBox8.BackColor = System.Drawing.Color.Transparent;
@@ -237,6 +248,22 @@ namespace WinPaletter
             this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox8.TabIndex = 149;
             this.PictureBox8.TabStop = false;
+            // 
+            // Trackbar1
+            // 
+            this.Trackbar1.AnimateChanges = true;
+            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
+            this.Trackbar1.DefaultValue = 13;
+            this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Trackbar1.Location = new System.Drawing.Point(150, 3);
+            this.Trackbar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Trackbar1.Maximum = 100;
+            this.Trackbar1.Minimum = 13;
+            this.Trackbar1.Name = "Trackbar1";
+            this.Trackbar1.Size = new System.Drawing.Size(365, 24);
+            this.Trackbar1.TabIndex = 171;
+            this.Trackbar1.Value = 13;
+            this.Trackbar1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // PictureBox9
             // 
@@ -580,36 +607,6 @@ namespace WinPaletter
             this.label4.Text = "Trials (select an item to restore it):";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Trackbar1
-            // 
-            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar1.DefaultValue = 13;
-            this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Trackbar1.Location = new System.Drawing.Point(150, 3);
-            this.Trackbar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar1.Maximum = 100;
-            this.Trackbar1.Minimum = 13;
-            this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(365, 24);
-            this.Trackbar1.TabIndex = 171;
-            this.Trackbar1.Value = 13;
-            this.Trackbar1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
-            // 
-            // Trackbar2
-            // 
-            this.Trackbar2.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar2.DefaultValue = 10;
-            this.Trackbar2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Trackbar2.Location = new System.Drawing.Point(150, 33);
-            this.Trackbar2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar2.Maximum = 100;
-            this.Trackbar2.Minimum = 0;
-            this.Trackbar2.Name = "Trackbar2";
-            this.Trackbar2.Size = new System.Drawing.Size(365, 24);
-            this.Trackbar2.TabIndex = 172;
-            this.Trackbar2.Value = 10;
-            this.Trackbar2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
-            // 
             // PaletteGenerateFromImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -661,7 +658,6 @@ namespace WinPaletter
         internal UI.WP.TextBox TextBox1;
         internal Label Label1;
         internal FlowLayoutPanel ImgPaletteContainer;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
         internal PictureBox PictureBox8;

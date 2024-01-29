@@ -519,7 +519,7 @@ namespace WinPaletter.Theme.Structures
                 if (OS.W12 || OS.W11)
                     EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
 
-                if (OS.W8 | OS.W81 || OS.W10)
+                if (OS.W8x || OS.W10)
                 {
                     switch (Win11ExplorerBar)
                     {

@@ -37,12 +37,7 @@ namespace WinPaletter
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsX));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.FolderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -612,14 +607,6 @@ namespace WinPaletter
             this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
             // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.Filter = "WinPaletter Settings File (*.wpsf)|*.wpsf";
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.Filter = "WinPaletter Settings File (*.wpsf)|*.wpsf";
-            // 
             // ImageList1
             // 
             this.ImageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList1.ImageStream")));
@@ -638,14 +625,6 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(11, "Users");
             this.ImageList1.Images.SetKeyName(12, "Backup");
             this.ImageList1.Images.SetKeyName(13, "Miscellaneous");
-            // 
-            // OpenJSONDlg
-            // 
-            this.OpenJSONDlg.Filter = "JSON File (*.json)|*.json";
-            // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.Filter = "JSON File (*.json)|*.json";
             // 
             // titlebarExtender1
             // 
@@ -1447,16 +1426,16 @@ namespace WinPaletter
             // AlertBox9
             // 
             this.AlertBox9.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.AlertBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AlertBox9.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox9.CenterText = false;
             this.AlertBox9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox9.Image = null;
-            this.AlertBox9.Location = new System.Drawing.Point(3, 466);
+            this.AlertBox9.Location = new System.Drawing.Point(3, 449);
             this.AlertBox9.Name = "AlertBox9";
-            this.AlertBox9.Size = new System.Drawing.Size(817, 24);
+            this.AlertBox9.Size = new System.Drawing.Size(817, 28);
             this.AlertBox9.TabIndex = 30;
             this.AlertBox9.TabStop = false;
             this.AlertBox9.Text = "To return to English, uncheck the check-box, save settings and restart the applic" +
@@ -3732,6 +3711,7 @@ namespace WinPaletter
             // 
             this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 5;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -5271,7 +5251,7 @@ namespace WinPaletter
             this.PictureBox53.TabIndex = 49;
             this.PictureBox53.TabStop = false;
             // 
-            // Button19
+            // restartExplorer_btn
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.Empty;
@@ -5569,6 +5549,7 @@ namespace WinPaletter
             this.button23.Size = new System.Drawing.Size(34, 24);
             this.button23.TabIndex = 198;
             this.button23.UseVisualStyleBackColor = false;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // textBox4
             // 
@@ -6117,8 +6098,6 @@ namespace WinPaletter
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button3;
         internal UI.WP.Button Button4;
-        internal OpenFileDialog OpenFileDialog1;
-        internal SaveFileDialog SaveFileDialog1;
         internal UI.WP.Button Button5;
         internal UI.WP.Button Button6;
         internal PictureBox PictureBox5;
@@ -6168,7 +6147,6 @@ namespace WinPaletter
         internal UI.WP.TextBox TextBox1;
         internal Label Label24;
         internal Label Label23;
-        internal OpenFileDialog OpenJSONDlg;
         internal UI.WP.Button Button9;
         internal UI.WP.Button Button16;
         internal UI.WP.Button Button10;
@@ -6180,7 +6158,6 @@ namespace WinPaletter
         internal PictureBox PictureBox40;
         internal Label Label27;
         internal PictureBox PictureBox35;
-        internal OpenFileDialog OpenFileDialog2;
         internal UI.WP.Button Button11;
         internal UI.WP.ComboBox ComboBox2;
         internal UI.WP.Button Button12;
@@ -6263,7 +6240,6 @@ namespace WinPaletter
         internal UI.WP.Button Button15;
         internal UI.WP.Button Button14;
         internal ListBox ListBox1;
-        internal FolderBrowserDialog FolderBrowserDialog1;
         internal UI.WP.SeparatorH Separator16;
         internal PictureBox PictureBox65;
         internal UI.WP.CheckBox CheckBox26;

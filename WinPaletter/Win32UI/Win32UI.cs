@@ -27,23 +27,29 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
             {
-                Toggle1.Checked = false;
-                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
+                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    {
+                        LoadFromWin9xTheme(dlg.FileName, _Def.Win32);
+                    }
                 }
             }
         }
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -63,34 +69,37 @@ namespace WinPaletter
 
         private void LoadFromMSSTYLES(object sender, EventArgs e)
         {
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
             {
-                string theme = OpenFileDialog2.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string theme = dlg.FileName;
 
-                try
-                {
-                    // Newer versions of msstyles
-                    using (libmsstyle.VisualStyle visualStyle = new(theme)) { LoadFromWin32UI(visualStyle.ClassicColors()); }
-                    ApplyRetroPreview();
-                }
-                catch
-                {
-                    // Old msstyles (Windows XP)
                     try
                     {
-                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
-                        {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
-                        }
-
-                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
-                        {
-                            using (VisualStyleFile vs = new(theme)) { LoadColors(vs.Metrics); }
-                            ApplyRetroPreview();
-                        }
+                        // Newer versions of msstyles
+                        using (libmsstyle.VisualStyle visualStyle = new(theme)) { LoadFromWin32UI(visualStyle.ClassicColors()); }
+                        ApplyRetroPreview();
                     }
-                    catch (Exception ex) { throw ex; }
+                    catch
+                    {
+                        // Old msstyles (Windows XP)
+                        try
+                        {
+                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            {
+                                System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            }
+
+                            if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                            {
+                                using (VisualStyleFile vs = new(theme)) { LoadColors(vs.Metrics); }
+                                ApplyRetroPreview();
+                            }
+                        }
+                        catch (Exception ex) { throw ex; }
+                    }
                 }
             }
         }
@@ -121,81 +130,83 @@ namespace WinPaletter
 
         private void SaveAsTHEME(object sender, EventArgs e)
         {
-            if (SaveFileDialog2.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_SaveTheme })
             {
-                List<string> s = new();
-                s.Clear();
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
-                s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
-                s.Add(string.Empty);
-
-                s.Add(string.Format(@"[Control Panel\Colors]"));
-                s.Add($"ActiveTitle={activetitle_pick.BackColor.R} {activetitle_pick.BackColor.G} {activetitle_pick.BackColor.B}");
-                s.Add($"Background={background_pick.BackColor.R} {background_pick.BackColor.G} {background_pick.BackColor.B}");
-                s.Add($"Hilight={hilight_pick.BackColor.R} {hilight_pick.BackColor.G} {hilight_pick.BackColor.B}");
-                s.Add($"HilightText={hilighttext_pick.BackColor.R} {hilighttext_pick.BackColor.G} {hilighttext_pick.BackColor.B}");
-                s.Add($"TitleText={TitleText_pick.BackColor.R} {TitleText_pick.BackColor.G} {TitleText_pick.BackColor.B}");
-                s.Add($"Window={Window_pick.BackColor.R} {Window_pick.BackColor.G} {Window_pick.BackColor.B}");
-                s.Add($"WindowText={WindowText_pick.BackColor.R} {WindowText_pick.BackColor.G} {WindowText_pick.BackColor.B}");
-                s.Add($"Scrollbar={Scrollbar_pick.BackColor.R} {Scrollbar_pick.BackColor.G} {Scrollbar_pick.BackColor.B}");
-                s.Add($"InactiveTitle={InactiveTitle_pick.BackColor.R} {InactiveTitle_pick.BackColor.G} {InactiveTitle_pick.BackColor.B}");
-                s.Add($"Menu={menu_pick.BackColor.R} {menu_pick.BackColor.G} {menu_pick.BackColor.B}");
-                s.Add($"WindowFrame={Frame_pick.BackColor.R} {Frame_pick.BackColor.G} {Frame_pick.BackColor.B}");
-                s.Add($"MenuText={menutext_pick.BackColor.R} {menutext_pick.BackColor.G} {menutext_pick.BackColor.B}");
-                s.Add($"ActiveBorder={ActiveBorder_pick.BackColor.R} {ActiveBorder_pick.BackColor.G} {ActiveBorder_pick.BackColor.B}");
-                s.Add($"InactiveBorder={InactiveBorder_pick.BackColor.R} {InactiveBorder_pick.BackColor.G} {InactiveBorder_pick.BackColor.B}");
-                s.Add($"AppWorkspace={AppWorkspace_pick.BackColor.R} {AppWorkspace_pick.BackColor.G} {AppWorkspace_pick.BackColor.B}");
-                s.Add($"ButtonFace={btnface_pick.BackColor.R} {btnface_pick.BackColor.G} {btnface_pick.BackColor.B}");
-                s.Add($"ButtonShadow={btnshadow_pick.BackColor.R} {btnshadow_pick.BackColor.G} {btnshadow_pick.BackColor.B}");
-                s.Add($"GrayText={GrayText_pick.BackColor.R} {GrayText_pick.BackColor.G} {GrayText_pick.BackColor.B}");
-                s.Add($"ButtonText={btntext_pick.BackColor.R} {btntext_pick.BackColor.G} {btntext_pick.BackColor.B}");
-                s.Add($"InactiveTitleText={InactivetitleText_pick.BackColor.R} {InactivetitleText_pick.BackColor.G} {InactivetitleText_pick.BackColor.B}");
-                s.Add($"ButtonHilight={btnhilight_pick.BackColor.R} {btnhilight_pick.BackColor.G} {btnhilight_pick.BackColor.B}");
-                s.Add($"ButtonDkShadow={btndkshadow_pick.BackColor.R} {btndkshadow_pick.BackColor.G} {btndkshadow_pick.BackColor.B}");
-                s.Add($"ButtonLight={btnlight_pick.BackColor.R} {btnlight_pick.BackColor.G} {btnlight_pick.BackColor.B}");
-                s.Add($"InfoText={InfoText_pick.BackColor.R} {InfoText_pick.BackColor.G} {InfoText_pick.BackColor.B}");
-                s.Add($"InfoWindow={InfoWindow_pick.BackColor.R} {InfoWindow_pick.BackColor.G} {InfoWindow_pick.BackColor.B}");
-                s.Add($"GradientActiveTitle={GActivetitle_pick.BackColor.R} {GActivetitle_pick.BackColor.G} {GActivetitle_pick.BackColor.B}");
-                s.Add($"GradientInactiveTitle={GInactivetitle_pick.BackColor.R} {GInactivetitle_pick.BackColor.G} {GInactivetitle_pick.BackColor.B}");
-                s.Add($"ButtonAlternateFace={btnaltface_pick.BackColor.R} {btnaltface_pick.BackColor.G} {btnaltface_pick.BackColor.B}");
-                s.Add($"HotTrackingColor={hottracking_pick.BackColor.R} {hottracking_pick.BackColor.G} {hottracking_pick.BackColor.B}");
-                s.Add($"MenuHilight={menuhilight_pick.BackColor.R} {menuhilight_pick.BackColor.G} {menuhilight_pick.BackColor.B}");
-                s.Add($"MenuBar={menubar_pick.BackColor.R} {menubar_pick.BackColor.G} {menubar_pick.BackColor.B}");
-                s.Add($"Desktop={desktop_pick.BackColor.R} {desktop_pick.BackColor.G} {desktop_pick.BackColor.B}");
-
-                s.Add(string.Empty);
-
-                s.Add(string.Format("[MasterThemeSelector]"));
-                s.Add(string.Format("MTSM=DABJDKT"));
-
-                s.Add(string.Empty);
-                s.Add(@"[Control Panel\Desktop]");
-                s.Add("Wallpaper=");
-                s.Add("TileWallpaper=0");
-                s.Add("WallpaperStyle=10");
-                s.Add("Pattern=");
-                s.Add(string.Empty);
-
-                s.Add("[VisualStyles]");
-                s.Add("Path=");
-                s.Add("ColorStyle=@themeui.dll,-854");
-                s.Add("Size=@themeui.dll,-2019");
-                s.Add("Transparency=0");
-                s.Add(string.Empty);
-
-                try
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    System.IO.File.WriteAllText(SaveFileDialog2.FileName, s.CString());
-                }
-                catch (Exception ex)
-                {
-                    Forms.BugReport.ThrowError(ex);
-                }
+                    List<string> s = new();
+                    s.Clear();
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
+                    s.Add($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
+                    s.Add(string.Empty);
 
+                    s.Add(string.Format(@"[Control Panel\Colors]"));
+                    s.Add($"ActiveTitle={activetitle_pick.BackColor.R} {activetitle_pick.BackColor.G} {activetitle_pick.BackColor.B}");
+                    s.Add($"Background={background_pick.BackColor.R} {background_pick.BackColor.G} {background_pick.BackColor.B}");
+                    s.Add($"Hilight={hilight_pick.BackColor.R} {hilight_pick.BackColor.G} {hilight_pick.BackColor.B}");
+                    s.Add($"HilightText={hilighttext_pick.BackColor.R} {hilighttext_pick.BackColor.G} {hilighttext_pick.BackColor.B}");
+                    s.Add($"TitleText={TitleText_pick.BackColor.R} {TitleText_pick.BackColor.G} {TitleText_pick.BackColor.B}");
+                    s.Add($"Window={Window_pick.BackColor.R} {Window_pick.BackColor.G} {Window_pick.BackColor.B}");
+                    s.Add($"WindowText={WindowText_pick.BackColor.R} {WindowText_pick.BackColor.G} {WindowText_pick.BackColor.B}");
+                    s.Add($"Scrollbar={Scrollbar_pick.BackColor.R} {Scrollbar_pick.BackColor.G} {Scrollbar_pick.BackColor.B}");
+                    s.Add($"InactiveTitle={InactiveTitle_pick.BackColor.R} {InactiveTitle_pick.BackColor.G} {InactiveTitle_pick.BackColor.B}");
+                    s.Add($"Menu={menu_pick.BackColor.R} {menu_pick.BackColor.G} {menu_pick.BackColor.B}");
+                    s.Add($"WindowFrame={Frame_pick.BackColor.R} {Frame_pick.BackColor.G} {Frame_pick.BackColor.B}");
+                    s.Add($"MenuText={menutext_pick.BackColor.R} {menutext_pick.BackColor.G} {menutext_pick.BackColor.B}");
+                    s.Add($"ActiveBorder={ActiveBorder_pick.BackColor.R} {ActiveBorder_pick.BackColor.G} {ActiveBorder_pick.BackColor.B}");
+                    s.Add($"InactiveBorder={InactiveBorder_pick.BackColor.R} {InactiveBorder_pick.BackColor.G} {InactiveBorder_pick.BackColor.B}");
+                    s.Add($"AppWorkspace={AppWorkspace_pick.BackColor.R} {AppWorkspace_pick.BackColor.G} {AppWorkspace_pick.BackColor.B}");
+                    s.Add($"ButtonFace={btnface_pick.BackColor.R} {btnface_pick.BackColor.G} {btnface_pick.BackColor.B}");
+                    s.Add($"ButtonShadow={btnshadow_pick.BackColor.R} {btnshadow_pick.BackColor.G} {btnshadow_pick.BackColor.B}");
+                    s.Add($"GrayText={GrayText_pick.BackColor.R} {GrayText_pick.BackColor.G} {GrayText_pick.BackColor.B}");
+                    s.Add($"ButtonText={btntext_pick.BackColor.R} {btntext_pick.BackColor.G} {btntext_pick.BackColor.B}");
+                    s.Add($"InactiveTitleText={InactivetitleText_pick.BackColor.R} {InactivetitleText_pick.BackColor.G} {InactivetitleText_pick.BackColor.B}");
+                    s.Add($"ButtonHilight={btnhilight_pick.BackColor.R} {btnhilight_pick.BackColor.G} {btnhilight_pick.BackColor.B}");
+                    s.Add($"ButtonDkShadow={btndkshadow_pick.BackColor.R} {btndkshadow_pick.BackColor.G} {btndkshadow_pick.BackColor.B}");
+                    s.Add($"ButtonLight={btnlight_pick.BackColor.R} {btnlight_pick.BackColor.G} {btnlight_pick.BackColor.B}");
+                    s.Add($"InfoText={InfoText_pick.BackColor.R} {InfoText_pick.BackColor.G} {InfoText_pick.BackColor.B}");
+                    s.Add($"InfoWindow={InfoWindow_pick.BackColor.R} {InfoWindow_pick.BackColor.G} {InfoWindow_pick.BackColor.B}");
+                    s.Add($"GradientActiveTitle={GActivetitle_pick.BackColor.R} {GActivetitle_pick.BackColor.G} {GActivetitle_pick.BackColor.B}");
+                    s.Add($"GradientInactiveTitle={GInactivetitle_pick.BackColor.R} {GInactivetitle_pick.BackColor.G} {GInactivetitle_pick.BackColor.B}");
+                    s.Add($"ButtonAlternateFace={btnaltface_pick.BackColor.R} {btnaltface_pick.BackColor.G} {btnaltface_pick.BackColor.B}");
+                    s.Add($"HotTrackingColor={hottracking_pick.BackColor.R} {hottracking_pick.BackColor.G} {hottracking_pick.BackColor.B}");
+                    s.Add($"MenuHilight={menuhilight_pick.BackColor.R} {menuhilight_pick.BackColor.G} {menuhilight_pick.BackColor.B}");
+                    s.Add($"MenuBar={menubar_pick.BackColor.R} {menubar_pick.BackColor.G} {menubar_pick.BackColor.B}");
+                    s.Add($"Desktop={desktop_pick.BackColor.R} {desktop_pick.BackColor.G} {desktop_pick.BackColor.B}");
+
+                    s.Add(string.Empty);
+
+                    s.Add(string.Format("[MasterThemeSelector]"));
+                    s.Add(string.Format("MTSM=DABJDKT"));
+
+                    s.Add(string.Empty);
+                    s.Add(@"[Control Panel\Desktop]");
+                    s.Add("Wallpaper=");
+                    s.Add("TileWallpaper=0");
+                    s.Add("WallpaperStyle=10");
+                    s.Add("Pattern=");
+                    s.Add(string.Empty);
+
+                    s.Add("[VisualStyles]");
+                    s.Add("Path=");
+                    s.Add("ColorStyle=@themeui.dll,-854");
+                    s.Add("Size=@themeui.dll,-2019");
+                    s.Add("Transparency=0");
+                    s.Add(string.Empty);
+
+                    try
+                    {
+                        System.IO.File.WriteAllText(dlg.FileName, s.CString());
+                    }
+                    catch (Exception ex)
+                    {
+                        Forms.BugReport.ThrowError(ex);
+                    }
+                }
             }
         }
 

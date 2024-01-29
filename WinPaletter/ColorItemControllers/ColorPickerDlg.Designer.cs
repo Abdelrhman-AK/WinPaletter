@@ -43,7 +43,6 @@ namespace WinPaletter
             this.ColorWheel1 = new Cyotek.Windows.Forms.ColorWheel();
             this.ScreenColorPicker1 = new Cyotek.Windows.Forms.ScreenColorPicker();
             this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Label7 = new System.Windows.Forms.Label();
             this.PictureBox9 = new System.Windows.Forms.PictureBox();
@@ -98,9 +97,6 @@ namespace WinPaletter
             this.Label9 = new System.Windows.Forms.Label();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).BeginInit();
@@ -189,10 +185,6 @@ namespace WinPaletter
             this.BackgroundWorker1.WorkerSupportsCancellation = true;
             this.BackgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.BackgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.Filter = "Image Files|*.jpg;*.gif;*.png;*.bmp|All Files|*.*";
             // 
             // Button6
             // 
@@ -569,6 +561,7 @@ namespace WinPaletter
             // 
             // trackBarX2
             // 
+            this.trackBarX2.AnimateChanges = true;
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 10;
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -583,6 +576,7 @@ namespace WinPaletter
             // 
             // trackBarX1
             // 
+            this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 15;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -895,19 +889,6 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(5, "16.png");
             this.ImageList1.Images.SetKeyName(6, "16.png");
             // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.Filter = resources.GetString("OpenFileDialog2.Filter");
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.Filter = resources.GetString("SaveFileDialog1.Filter");
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|Visual Styles File (*.msstyles)|*.msstyles|All Fi" +
-    "les (*.*)|*.*";
-            // 
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
@@ -989,7 +970,6 @@ namespace WinPaletter
         internal Label Label6;
         internal PictureBox PictureBox7;
         internal PictureBox PictureBox8;
-        internal OpenFileDialog OpenFileDialog1;
         internal Label Label7;
         internal PictureBox PictureBox9;
         internal UI.WP.Button Button6;
@@ -998,14 +978,11 @@ namespace WinPaletter
         internal TabPage TabPage2;
         internal TabPage TabPage3;
         internal UI.WP.Button Button1;
-        internal OpenFileDialog OpenFileDialog2;
-        internal SaveFileDialog SaveFileDialog1;
         internal UI.WP.TextBox TextBox2;
         internal UI.WP.Button Button7;
         internal Label Label1;
         internal PictureBox PictureBox1;
         internal FlowLayoutPanel ThemePaletteContainer;
-        internal OpenFileDialog OpenThemeDialog;
         internal Label Label8;
         internal UI.WP.ComboBox ComboBox1;
         internal PictureBox PictureBox33;

@@ -7,7 +7,7 @@ namespace WinPaletter
 {
     public partial class TerminalsDashboard
     {
-        private readonly int _Speed = 20;
+        private readonly int _Speed = 10;
         private bool _shown;
 
         #region Form Shadow
@@ -89,7 +89,7 @@ namespace WinPaletter
                 .With(this, nameof(this.Left), targetLocation.X)
                 .With(this, nameof(this.Top), targetLocation.Y)
                 .HookOnCompletion(() => Program.Animator.ShowSync(panel1))
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
 
             if (OS.W10)
                 PictureBox1.Image = Assets.WinLogos.Win10;

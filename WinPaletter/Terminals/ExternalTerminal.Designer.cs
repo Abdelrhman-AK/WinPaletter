@@ -36,8 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExternalTerminal));
-            this.OpenWPTHDlg = new System.Windows.Forms.OpenFileDialog();
-            this.FontDialog1 = new System.Windows.Forms.FontDialog();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -177,15 +175,6 @@ namespace WinPaletter
             this.GroupBox73.SuspendLayout();
             this.GroupBox51.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // OpenWPTHDlg
-            // 
-            this.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth";
-            // 
-            // FontDialog1
-            // 
-            this.FontDialog1.FixedPitchOnly = true;
-            this.FontDialog1.ShowEffects = false;
             // 
             // titlebarExtender1
             // 
@@ -1286,6 +1275,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_FontSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExtTerminal_FontSizeBar.AnimateChanges = true;
             this.ExtTerminal_FontSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.ExtTerminal_FontSizeBar.DefaultValue = 18;
             this.ExtTerminal_FontSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1324,6 +1314,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_CursorSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExtTerminal_CursorSizeBar.AnimateChanges = true;
             this.ExtTerminal_CursorSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.ExtTerminal_CursorSizeBar.DefaultValue = 20;
             this.ExtTerminal_CursorSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1511,6 +1502,7 @@ namespace WinPaletter
             // 
             this.ExtTerminal_OpacityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExtTerminal_OpacityBar.AnimateChanges = true;
             this.ExtTerminal_OpacityBar.BackColor = System.Drawing.Color.Transparent;
             this.ExtTerminal_OpacityBar.DefaultValue = 255;
             this.ExtTerminal_OpacityBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1812,7 +1804,6 @@ namespace WinPaletter
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -1855,7 +1846,6 @@ namespace WinPaletter
         internal UI.Simulation.WinCMD CMD4;
         internal UI.WP.Button Button10;
         internal UI.WP.Button Button2;
-        internal OpenFileDialog OpenWPTHDlg;
         internal UI.WP.TabControl TabControl1;
         internal TabPage TabPage1;
         internal PictureBox PictureBox15;
@@ -1945,7 +1935,6 @@ namespace WinPaletter
         internal PictureBox PictureBox8;
         internal Label FontName;
         internal UI.WP.Button Button5;
-        internal FontDialog FontDialog1;
         internal UI.WP.Toggle toggle1;
         internal PictureBox pictureBox2;
         internal Label label8;

@@ -43,7 +43,6 @@ namespace WinPaletter
             this.RadioButton3 = new WinPaletter.UI.WP.RadioButton();
             this.RadioButton1 = new WinPaletter.UI.WP.RadioButton();
             this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.Label1 = new System.Windows.Forms.Label();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
@@ -167,11 +166,6 @@ namespace WinPaletter
             this.ProgressBar1.TabIndex = 3;
             this.ProgressBar1.TaskbarBroadcast = true;
             this.ProgressBar1.Visible = false;
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.FileName = "WinPaletter";
-            this.SaveFileDialog1.Filter = "Executable File|*.exe";
             // 
             // Label1
             // 
@@ -457,7 +451,6 @@ namespace WinPaletter
         internal UI.WP.RadioButton RadioButton3;
         internal UI.WP.RadioButton RadioButton1;
         internal UI.WP.ProgressBar ProgressBar1;
-        internal SaveFileDialog SaveFileDialog1;
         internal Label Label1;
         internal PictureBox PictureBox2;
         internal PictureBox PictureBox4;

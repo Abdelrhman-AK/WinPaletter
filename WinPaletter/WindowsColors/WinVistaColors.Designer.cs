@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WinVistaColors));
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.windowsDesktop1 = new WinPaletter.Templates.WindowsDesktop();
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -89,7 +88,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.tablessControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.GroupBox50.SuspendLayout();
@@ -115,11 +113,6 @@
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.DefaultExt = "wpt";
-            this.OpenThemeDialog.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
             // windowsDesktop1
             // 
@@ -263,6 +256,7 @@
             // 
             this.ColorizationColorBalance_bar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColorizationColorBalance_bar.AnimateChanges = true;
             this.ColorizationColorBalance_bar.BackColor = System.Drawing.Color.Transparent;
             this.ColorizationColorBalance_bar.DefaultValue = 8;
             this.ColorizationColorBalance_bar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -450,6 +444,7 @@
             // 
             this.trackBarX5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX5.AnimateChanges = true;
             this.trackBarX5.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX5.DefaultValue = 0;
             this.trackBarX5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -570,6 +565,7 @@
             this.colorBarX3.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX3.AnimateChanges = true;
             this.colorBarX3.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX3.Location = new System.Drawing.Point(111, 99);
@@ -586,6 +582,7 @@
             this.colorBarX2.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX2.AnimateChanges = true;
             this.colorBarX2.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX2.Location = new System.Drawing.Point(111, 69);
@@ -602,6 +599,7 @@
             this.colorBarX1.AccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(129)))), ((int)(((byte)(255)))));
             this.colorBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorBarX1.AnimateChanges = true;
             this.colorBarX1.BackColor = System.Drawing.Color.Transparent;
             this.colorBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.colorBarX1.Location = new System.Drawing.Point(111, 39);
@@ -993,11 +991,6 @@
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "PNG File|*.png";
-            // 
             // WinVistaColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1037,15 +1030,12 @@
         }
 
         #endregion
-
-        internal System.Windows.Forms.OpenFileDialog OpenThemeDialog;
         public Templates.WindowsDesktop windowsDesktop1;
         private UI.WP.TablessControl tablessControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         internal UI.WP.GroupBox groupBox2;
         internal UI.WP.Button Button1;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog2;
         internal UI.WP.GroupBox GroupBox11;
         internal System.Windows.Forms.PictureBox PictureBox13;
         internal UI.WP.RadioImage theme_aero;

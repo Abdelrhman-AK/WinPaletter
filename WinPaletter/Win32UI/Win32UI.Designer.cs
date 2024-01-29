@@ -37,9 +37,6 @@ namespace WinPaletter
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win32UI));
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.PictureBox34 = new System.Windows.Forms.PictureBox();
@@ -193,7 +190,6 @@ namespace WinPaletter
             this.button1 = new WinPaletter.UI.WP.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
             this.TabControl1.SuspendLayout();
@@ -263,20 +259,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(909, 52);
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*";
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "Theme File (*.theme)|*.theme|All Files (*.*)|*.*";
             // 
             // ImageList1
             // 
@@ -455,6 +437,7 @@ namespace WinPaletter
             // 
             this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 100;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2229,11 +2212,6 @@ namespace WinPaletter
             this.separatorH1.TabStop = false;
             this.separatorH1.Text = "separatorH1";
             // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.DefaultExt = "wpt";
-            this.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme";
-            // 
             // Win32UI
             // 
             this.AllowDrop = true;
@@ -2249,6 +2227,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Win32UI";
@@ -2432,14 +2411,11 @@ namespace WinPaletter
         internal TabPage TabPage2;
         internal TabPage TabPage3;
         internal TabPage TabPage4;
-        internal OpenFileDialog OpenThemeDialog;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Toggle Toggle1;
         internal UI.WP.ComboBox ComboBox1;
         internal UI.WP.Toggle Toggle2;
         internal PictureBox PictureBox34;
         internal Label Label30;
-        internal SaveFileDialog SaveFileDialog2;
         internal PictureBox PictureBox16;
         internal Label Label31;
         internal TabPage TabPage5;
@@ -2476,7 +2452,6 @@ namespace WinPaletter
         private UI.WP.RadioButton radioButton1;
         private UI.WP.RadioButton radioButton2;
         private UI.WP.SeparatorH separatorH1;
-        internal OpenFileDialog OpenFileDialog2;
         private UI.Controllers.TrackBarX trackBarX1;
         internal UI.WP.GroupBox groupBox4;
         internal Label label32;

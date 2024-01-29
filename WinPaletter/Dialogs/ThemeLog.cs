@@ -242,15 +242,18 @@ namespace WinPaletter.Dialogs
             timer1.Enabled = false;
             timer1.Stop();
 
-            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Filter_SaveText })
             {
-                StringBuilder sb = new();
-                sb.Clear();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    StringBuilder sb = new();
+                    sb.Clear();
 
-                foreach (TreeNode N in TreeView1.Nodes)
-                    sb.AppendLine($"[{N.ImageKey}]{"\t"} {N.Text}{"\r\n"}");
+                    foreach (TreeNode N in TreeView1.Nodes)
+                        sb.AppendLine($"[{N.ImageKey}]{"\t"} {N.Text}{"\r\n"}");
 
-                System.IO.File.WriteAllText(SaveFileDialog1.FileName, sb.ToString());
+                    System.IO.File.WriteAllText(dlg.FileName, sb.ToString());
+                }
             }
         }
 

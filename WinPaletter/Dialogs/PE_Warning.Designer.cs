@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PE_Warning));
-            this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
@@ -58,10 +57,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             this.bottom_buttons.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // SaveFileDialog1
-            // 
-            this.SaveFileDialog1.Filter = "Text File (*.txt)|*.txt";
             // 
             // Button4
             // 
@@ -331,7 +326,6 @@ namespace WinPaletter
         internal PictureBox PictureBox4;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
-        internal SaveFileDialog SaveFileDialog1;
         internal UI.WP.TreeView TreeView1;
         internal UI.WP.AnimatedBox AnimatedBox1;
         internal UI.WP.CheckBox CheckBox1;

@@ -25,11 +25,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -49,11 +53,14 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
             {
-                using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
+                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    {
+                        GetFromClassicThemeFile(dlg.FileName, _Def.ScreenSaver);
+                    }
                 }
             }
         }
@@ -189,9 +196,12 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Screensavers, Title = Program.Lang.Filter_OpenScreensaver })
             {
-                TextBox1.Text = OpenFileDialog2.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
             }
         }
 

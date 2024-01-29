@@ -187,5 +187,51 @@ namespace WinPaletter.Dialogs
         {
             Forms.Uninstall.Show();
         }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            Process.Start("control");
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+            {
+                Process.Start($"{PathsExt.Explorer} ms-settings:windowsupdate");
+            }
+            else if (OS.WXP)
+            {
+                if (System.IO.File.Exists($"{PathsExt.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll"))
+                {
+                    // Use legacy update if it is installed
+                    Process.Start($"{PathsExt.System32}\\rundll32.exe", $"\"{PathsExt.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll\",LaunchUpdateSite");
+                }
+                else
+                {
+                    // Use default update if legacy update is not installed
+                    Process.Start($"{PathsExt.System32}\\rundll32.exe", $"{PathsExt.System32}\\muweb.dll,LaunchMUSite");
+                }
+            }
+            else
+            {
+                Process.Start($"{PathsExt.System32}\\control.exe", "/name Microsoft.WindowsUpdate");
+            }
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (System.IO.File.Exists($"{PathsExt.System32}\\restore\\rstrui.exe"))
+            {
+                Process.Start($"{PathsExt.System32}\\restore\\rstrui.exe");
+            }
+            else if (System.IO.File.Exists($"{PathsExt.System32}\\rstrui.exe"))
+            {
+                Process.Start($"{PathsExt.System32}\\rstrui.exe");
+            }
+            else
+            {
+                Process.Start("control", "sysdm.cpl,,4");
+            }
+        }
     }
 }

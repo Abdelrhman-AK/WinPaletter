@@ -36,9 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lang_JSON_Manage));
-            this.SaveJSONDlg = new System.Windows.Forms.SaveFileDialog();
-            this.OpenJSONDlg = new System.Windows.Forms.OpenFileDialog();
-            this.FontDialog1 = new System.Windows.Forms.FontDialog();
             this.Label5 = new System.Windows.Forms.Label();
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
@@ -80,14 +77,6 @@ namespace WinPaletter
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // SaveJSONDlg
-            // 
-            this.SaveJSONDlg.Filter = "JSON File (*.json)|*.json|All Files (*.*)|*.*";
-            // 
-            // OpenJSONDlg
-            // 
-            this.OpenJSONDlg.Filter = "JSON File (*.json)|*.json";
             // 
             // Label5
             // 
@@ -634,8 +623,6 @@ namespace WinPaletter
         internal Label Label6;
         internal UI.WP.Button Button8;
         internal UI.WP.Button Button2;
-        internal SaveFileDialog SaveJSONDlg;
-        internal OpenFileDialog OpenJSONDlg;
         internal UI.WP.GroupBox GroupBox2;
         internal UI.WP.TextBox TextBox2;
         internal UI.WP.Button Button3;
@@ -649,7 +636,6 @@ namespace WinPaletter
         internal Label Label3;
         internal UI.WP.Button Button9;
         internal UI.WP.Button Button6;
-        internal FontDialog FontDialog1;
         internal UI.WP.Button Button7;
         internal UI.WP.Button Button11;
         internal UI.WP.Button Button10;

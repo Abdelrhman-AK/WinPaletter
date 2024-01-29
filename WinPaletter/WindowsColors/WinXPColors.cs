@@ -17,9 +17,15 @@ namespace WinPaletter.WindowsColors
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                using (Manager TMx = new(Theme.Manager.Source.File, OpenThemeDialog.FileName)) { LoadFromTM(TMx); }
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -288,7 +294,10 @@ namespace WinPaletter.WindowsColors
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (SaveFileDialog2.ShowDialog() == DialogResult.OK) windowsDesktop1.ToBitmap().Save(SaveFileDialog2.FileName);
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK) windowsDesktop1.ToBitmap().Save(dlg.FileName);
+            }
         }
 
 
@@ -383,7 +392,10 @@ namespace WinPaletter.WindowsColors
 
         private void WXP_VS_Browse_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog2.ShowDialog() == DialogResult.OK) WXP_VS_textbox.Text = OpenFileDialog2.FileName;
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK) WXP_VS_textbox.Text = dlg.FileName;          
+            }
         }
 
         private void WXP_VS_ColorsList_SelectedIndexChanged(object sender, EventArgs e)

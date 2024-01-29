@@ -37,7 +37,6 @@ namespace WinPaletter
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WinEffecter));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Timer1 = new System.Windows.Forms.Timer(this.components);
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
@@ -275,11 +274,6 @@ namespace WinPaletter
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(784, 52);
             // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
             // Timer1
             // 
             this.Timer1.Enabled = true;
@@ -339,7 +333,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(174, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(582, 411);
+            this.TabPage1.Size = new System.Drawing.Size(589, 411);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Window";
             // 
@@ -353,7 +347,7 @@ namespace WinPaletter
             this.button5.Image = null;
             this.button5.ImageAsVector = true;
             this.button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("button5.ImageVector")));
-            this.button5.Location = new System.Drawing.Point(542, 156);
+            this.button5.Location = new System.Drawing.Point(549, 156);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(34, 24);
             this.button5.TabIndex = 236;
@@ -370,7 +364,7 @@ namespace WinPaletter
             this.button4.Image = null;
             this.button4.ImageAsVector = true;
             this.button4.ImageVector = ((System.Drawing.Image)(resources.GetObject("button4.ImageVector")));
-            this.button4.Location = new System.Drawing.Point(542, 126);
+            this.button4.Location = new System.Drawing.Point(549, 126);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 24);
             this.button4.TabIndex = 235;
@@ -387,7 +381,7 @@ namespace WinPaletter
             this.button3.Image = null;
             this.button3.ImageAsVector = true;
             this.button3.ImageVector = ((System.Drawing.Image)(resources.GetObject("button3.ImageVector")));
-            this.button3.Location = new System.Drawing.Point(542, 96);
+            this.button3.Location = new System.Drawing.Point(549, 96);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(34, 24);
             this.button3.TabIndex = 234;
@@ -404,7 +398,7 @@ namespace WinPaletter
             this.button2.Image = null;
             this.button2.ImageAsVector = true;
             this.button2.ImageVector = ((System.Drawing.Image)(resources.GetObject("button2.ImageVector")));
-            this.button2.Location = new System.Drawing.Point(542, 66);
+            this.button2.Location = new System.Drawing.Point(549, 66);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 24);
             this.button2.TabIndex = 233;
@@ -421,7 +415,7 @@ namespace WinPaletter
             this.button1.Image = null;
             this.button1.ImageAsVector = true;
             this.button1.ImageVector = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
-            this.button1.Location = new System.Drawing.Point(542, 36);
+            this.button1.Location = new System.Drawing.Point(549, 36);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(34, 24);
             this.button1.TabIndex = 232;
@@ -438,7 +432,7 @@ namespace WinPaletter
             this.button21.Image = null;
             this.button21.ImageAsVector = true;
             this.button21.ImageVector = ((System.Drawing.Image)(resources.GetObject("button21.ImageVector")));
-            this.button21.Location = new System.Drawing.Point(542, 6);
+            this.button21.Location = new System.Drawing.Point(549, 6);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(34, 24);
             this.button21.TabIndex = 231;
@@ -601,7 +595,7 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(174, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(582, 411);
+            this.TabPage2.Size = new System.Drawing.Size(589, 411);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Icons";
             // 
@@ -615,7 +609,7 @@ namespace WinPaletter
             this.button6.Image = null;
             this.button6.ImageAsVector = true;
             this.button6.ImageVector = ((System.Drawing.Image)(resources.GetObject("button6.ImageVector")));
-            this.button6.Location = new System.Drawing.Point(542, 36);
+            this.button6.Location = new System.Drawing.Point(549, 36);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(34, 24);
             this.button6.TabIndex = 234;
@@ -632,7 +626,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageAsVector = true;
             this.button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
-            this.button7.Location = new System.Drawing.Point(542, 6);
+            this.button7.Location = new System.Drawing.Point(549, 6);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(34, 24);
             this.button7.TabIndex = 233;
@@ -707,7 +701,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(174, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(582, 411);
+            this.TabPage3.Size = new System.Drawing.Size(589, 411);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Menus";
             // 
@@ -721,7 +715,7 @@ namespace WinPaletter
             this.button8.Image = null;
             this.button8.ImageAsVector = true;
             this.button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("button8.ImageVector")));
-            this.button8.Location = new System.Drawing.Point(542, 156);
+            this.button8.Location = new System.Drawing.Point(549, 156);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(34, 24);
             this.button8.TabIndex = 238;
@@ -738,7 +732,7 @@ namespace WinPaletter
             this.button9.Image = null;
             this.button9.ImageAsVector = true;
             this.button9.ImageVector = ((System.Drawing.Image)(resources.GetObject("button9.ImageVector")));
-            this.button9.Location = new System.Drawing.Point(542, 126);
+            this.button9.Location = new System.Drawing.Point(549, 126);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(34, 24);
             this.button9.TabIndex = 237;
@@ -771,7 +765,7 @@ namespace WinPaletter
             this.button11.Image = null;
             this.button11.ImageAsVector = true;
             this.button11.ImageVector = ((System.Drawing.Image)(resources.GetObject("button11.ImageVector")));
-            this.button11.Location = new System.Drawing.Point(542, 6);
+            this.button11.Location = new System.Drawing.Point(549, 6);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(34, 24);
             this.button11.TabIndex = 235;
@@ -782,6 +776,7 @@ namespace WinPaletter
             // 
             this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar1.AnimateChanges = true;
             this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar1.DefaultValue = 400;
             this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -790,7 +785,7 @@ namespace WinPaletter
             this.Trackbar1.Maximum = 5000;
             this.Trackbar1.Minimum = 1;
             this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar1.Size = new System.Drawing.Size(543, 24);
             this.Trackbar1.TabIndex = 134;
             this.Trackbar1.Value = 400;
             // 
@@ -918,7 +913,7 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(174, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(582, 411);
+            this.TabPage4.Size = new System.Drawing.Size(589, 411);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Selection controls";
             // 
@@ -932,7 +927,7 @@ namespace WinPaletter
             this.button12.Image = null;
             this.button12.ImageAsVector = true;
             this.button12.ImageVector = ((System.Drawing.Image)(resources.GetObject("button12.ImageVector")));
-            this.button12.Location = new System.Drawing.Point(542, 36);
+            this.button12.Location = new System.Drawing.Point(549, 36);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(34, 24);
             this.button12.TabIndex = 236;
@@ -949,7 +944,7 @@ namespace WinPaletter
             this.button13.Image = null;
             this.button13.ImageAsVector = true;
             this.button13.ImageVector = ((System.Drawing.Image)(resources.GetObject("button13.ImageVector")));
-            this.button13.Location = new System.Drawing.Point(542, 6);
+            this.button13.Location = new System.Drawing.Point(549, 6);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(34, 24);
             this.button13.TabIndex = 235;
@@ -1079,6 +1074,7 @@ namespace WinPaletter
             // 
             this.Trackbar5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar5.AnimateChanges = true;
             this.Trackbar5.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar5.DefaultValue = 5;
             this.Trackbar5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1193,7 +1189,7 @@ namespace WinPaletter
             this.TabPage6.Location = new System.Drawing.Point(174, 4);
             this.TabPage6.Name = "TabPage6";
             this.TabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage6.Size = new System.Drawing.Size(582, 411);
+            this.TabPage6.Size = new System.Drawing.Size(589, 411);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Focus rectangle";
             // 
@@ -1201,6 +1197,7 @@ namespace WinPaletter
             // 
             this.Trackbar3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar3.AnimateChanges = true;
             this.Trackbar3.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar3.DefaultValue = 1;
             this.Trackbar3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1209,7 +1206,7 @@ namespace WinPaletter
             this.Trackbar3.Maximum = 4;
             this.Trackbar3.Minimum = 1;
             this.Trackbar3.Name = "Trackbar3";
-            this.Trackbar3.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar3.Size = new System.Drawing.Size(543, 24);
             this.Trackbar3.TabIndex = 142;
             this.Trackbar3.Value = 1;
             this.Trackbar3.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
@@ -1218,6 +1215,7 @@ namespace WinPaletter
             // 
             this.Trackbar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar2.AnimateChanges = true;
             this.Trackbar2.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar2.DefaultValue = 1;
             this.Trackbar2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1226,7 +1224,7 @@ namespace WinPaletter
             this.Trackbar2.Maximum = 4;
             this.Trackbar2.Minimum = 1;
             this.Trackbar2.Name = "Trackbar2";
-            this.Trackbar2.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar2.Size = new System.Drawing.Size(543, 24);
             this.Trackbar2.TabIndex = 141;
             this.Trackbar2.Value = 1;
             this.Trackbar2.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
@@ -1263,7 +1261,7 @@ namespace WinPaletter
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(36, 65);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(539, 24);
+            this.Label2.Size = new System.Drawing.Size(546, 24);
             this.Label2.TabIndex = 137;
             this.Label2.Text = "Height:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1313,7 +1311,7 @@ namespace WinPaletter
             this.TabPage7.Location = new System.Drawing.Point(174, 4);
             this.TabPage7.Name = "TabPage7";
             this.TabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage7.Size = new System.Drawing.Size(582, 411);
+            this.TabPage7.Size = new System.Drawing.Size(589, 411);
             this.TabPage7.TabIndex = 6;
             this.TabPage7.Text = "Text cursor (caret)";
             // 
@@ -1321,6 +1319,7 @@ namespace WinPaletter
             // 
             this.Trackbar4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar4.AnimateChanges = true;
             this.Trackbar4.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar4.DefaultValue = 1;
             this.Trackbar4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1329,7 +1328,7 @@ namespace WinPaletter
             this.Trackbar4.Maximum = 40;
             this.Trackbar4.Minimum = 1;
             this.Trackbar4.Name = "Trackbar4";
-            this.Trackbar4.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar4.Size = new System.Drawing.Size(543, 24);
             this.Trackbar4.TabIndex = 142;
             this.Trackbar4.Value = 1;
             this.Trackbar4.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_1);
@@ -1407,7 +1406,7 @@ namespace WinPaletter
             this.TabPage8.Location = new System.Drawing.Point(174, 4);
             this.TabPage8.Name = "TabPage8";
             this.TabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage8.Size = new System.Drawing.Size(582, 411);
+            this.TabPage8.Size = new System.Drawing.Size(589, 411);
             this.TabPage8.TabIndex = 7;
             this.TabPage8.Text = "Active Windows tracking";
             // 
@@ -1421,7 +1420,7 @@ namespace WinPaletter
             this.button14.Image = null;
             this.button14.ImageAsVector = true;
             this.button14.ImageVector = ((System.Drawing.Image)(resources.GetObject("button14.ImageVector")));
-            this.button14.Location = new System.Drawing.Point(542, 36);
+            this.button14.Location = new System.Drawing.Point(549, 36);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(34, 24);
             this.button14.TabIndex = 236;
@@ -1438,7 +1437,7 @@ namespace WinPaletter
             this.button18.Image = null;
             this.button18.ImageAsVector = true;
             this.button18.ImageVector = ((System.Drawing.Image)(resources.GetObject("button18.ImageVector")));
-            this.button18.Location = new System.Drawing.Point(542, 6);
+            this.button18.Location = new System.Drawing.Point(549, 6);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(34, 24);
             this.button18.TabIndex = 235;
@@ -1449,6 +1448,7 @@ namespace WinPaletter
             // 
             this.Trackbar6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Trackbar6.AnimateChanges = true;
             this.Trackbar6.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar6.DefaultValue = 0;
             this.Trackbar6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1457,7 +1457,7 @@ namespace WinPaletter
             this.Trackbar6.Maximum = 5000;
             this.Trackbar6.Minimum = 1;
             this.Trackbar6.Name = "Trackbar6";
-            this.Trackbar6.Size = new System.Drawing.Size(536, 24);
+            this.Trackbar6.Size = new System.Drawing.Size(544, 24);
             this.Trackbar6.TabIndex = 144;
             this.Trackbar6.Value = 1;
             // 
@@ -1552,7 +1552,7 @@ namespace WinPaletter
             this.TabPage11.Location = new System.Drawing.Point(174, 4);
             this.TabPage11.Name = "TabPage11";
             this.TabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage11.Size = new System.Drawing.Size(582, 411);
+            this.TabPage11.Size = new System.Drawing.Size(589, 411);
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Explorer (controls options)";
             // 
@@ -1566,7 +1566,7 @@ namespace WinPaletter
             this.button22.Image = null;
             this.button22.ImageAsVector = true;
             this.button22.ImageVector = ((System.Drawing.Image)(resources.GetObject("button22.ImageVector")));
-            this.button22.Location = new System.Drawing.Point(542, 235);
+            this.button22.Location = new System.Drawing.Point(549, 235);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(34, 24);
             this.button22.TabIndex = 241;
@@ -1583,7 +1583,7 @@ namespace WinPaletter
             this.button19.Image = null;
             this.button19.ImageAsVector = true;
             this.button19.ImageVector = ((System.Drawing.Image)(resources.GetObject("button19.ImageVector")));
-            this.button19.Location = new System.Drawing.Point(542, 36);
+            this.button19.Location = new System.Drawing.Point(549, 36);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(34, 24);
             this.button19.TabIndex = 240;
@@ -1600,7 +1600,7 @@ namespace WinPaletter
             this.button20.Image = null;
             this.button20.ImageAsVector = true;
             this.button20.ImageVector = ((System.Drawing.Image)(resources.GetObject("button20.ImageVector")));
-            this.button20.Location = new System.Drawing.Point(542, 6);
+            this.button20.Location = new System.Drawing.Point(549, 6);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(34, 24);
             this.button20.TabIndex = 239;
@@ -1619,7 +1619,7 @@ namespace WinPaletter
             this.AlertBox3.Image = null;
             this.AlertBox3.Location = new System.Drawing.Point(73, 265);
             this.AlertBox3.Name = "AlertBox3";
-            this.AlertBox3.Size = new System.Drawing.Size(503, 48);
+            this.AlertBox3.Size = new System.Drawing.Size(510, 48);
             this.AlertBox3.TabIndex = 238;
             this.AlertBox3.TabStop = false;
             this.AlertBox3.Text = "This will disable the navigation bar in Open/Save dialogs; anywhere else will req" +
@@ -1637,7 +1637,7 @@ namespace WinPaletter
             this.AlertBox2.Image = null;
             this.AlertBox2.Location = new System.Drawing.Point(73, 181);
             this.AlertBox2.Name = "AlertBox2";
-            this.AlertBox2.Size = new System.Drawing.Size(503, 48);
+            this.AlertBox2.Size = new System.Drawing.Size(510, 48);
             this.AlertBox2.TabIndex = 237;
             this.AlertBox2.TabStop = false;
             this.AlertBox2.Text = "Due to limitations in Windows 11, styles cannot be changed through the registry. " +
@@ -1656,7 +1656,7 @@ namespace WinPaletter
             this.AlertBox1.Image = null;
             this.AlertBox1.Location = new System.Drawing.Point(73, 154);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(503, 24);
+            this.AlertBox1.Size = new System.Drawing.Size(510, 24);
             this.AlertBox1.TabIndex = 236;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = "Default* is Command bar in Windows 11, Ribbon in Windows 10 and 8.1";
@@ -1784,7 +1784,7 @@ namespace WinPaletter
             this.TabPage10.Location = new System.Drawing.Point(174, 4);
             this.TabPage10.Name = "TabPage10";
             this.TabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage10.Size = new System.Drawing.Size(582, 411);
+            this.TabPage10.Size = new System.Drawing.Size(589, 411);
             this.TabPage10.TabIndex = 9;
             this.TabPage10.Text = "For Windows 11 only";
             // 
@@ -1798,7 +1798,7 @@ namespace WinPaletter
             this.button23.Image = null;
             this.button23.ImageAsVector = true;
             this.button23.ImageVector = ((System.Drawing.Image)(resources.GetObject("button23.ImageVector")));
-            this.button23.Location = new System.Drawing.Point(542, 36);
+            this.button23.Location = new System.Drawing.Point(549, 36);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(34, 24);
             this.button23.TabIndex = 242;
@@ -1815,7 +1815,7 @@ namespace WinPaletter
             this.button24.Image = null;
             this.button24.ImageAsVector = true;
             this.button24.ImageVector = ((System.Drawing.Image)(resources.GetObject("button24.ImageVector")));
-            this.button24.Location = new System.Drawing.Point(542, 6);
+            this.button24.Location = new System.Drawing.Point(549, 6);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(34, 24);
             this.button24.TabIndex = 241;
@@ -1888,7 +1888,7 @@ namespace WinPaletter
             this.TabPage12.Location = new System.Drawing.Point(174, 4);
             this.TabPage12.Name = "TabPage12";
             this.TabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage12.Size = new System.Drawing.Size(582, 411);
+            this.TabPage12.Size = new System.Drawing.Size(589, 411);
             this.TabPage12.TabIndex = 11;
             this.TabPage12.Text = "Color filters (accessibility)";
             // 
@@ -1902,7 +1902,7 @@ namespace WinPaletter
             this.button25.Image = null;
             this.button25.ImageAsVector = true;
             this.button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("button25.ImageVector")));
-            this.button25.Location = new System.Drawing.Point(438, 7);
+            this.button25.Location = new System.Drawing.Point(441, 7);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(34, 25);
             this.button25.TabIndex = 243;
@@ -1920,7 +1920,7 @@ namespace WinPaletter
             this.AlertBox4.Image = null;
             this.AlertBox4.Location = new System.Drawing.Point(6, 336);
             this.AlertBox4.Name = "AlertBox4";
-            this.AlertBox4.Size = new System.Drawing.Size(570, 68);
+            this.AlertBox4.Size = new System.Drawing.Size(577, 68);
             this.AlertBox4.TabIndex = 239;
             this.AlertBox4.TabStop = false;
             this.AlertBox4.Text = resources.GetString("AlertBox4.Text");
@@ -1933,7 +1933,7 @@ namespace WinPaletter
             this.RadioImage7.ForeColor = System.Drawing.Color.White;
             this.RadioImage7.Image = null;
             this.RadioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage7.Location = new System.Drawing.Point(309, 7);
+            this.RadioImage7.Location = new System.Drawing.Point(312, 7);
             this.RadioImage7.Name = "RadioImage7";
             this.RadioImage7.Size = new System.Drawing.Size(123, 25);
             this.RadioImage7.TabIndex = 6;
@@ -1950,7 +1950,7 @@ namespace WinPaletter
             this.RadioImage6.ForeColor = System.Drawing.Color.White;
             this.RadioImage6.Image = null;
             this.RadioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage6.Location = new System.Drawing.Point(309, 38);
+            this.RadioImage6.Location = new System.Drawing.Point(312, 38);
             this.RadioImage6.Name = "RadioImage6";
             this.RadioImage6.Size = new System.Drawing.Size(123, 25);
             this.RadioImage6.TabIndex = 5;
@@ -1967,7 +1967,7 @@ namespace WinPaletter
             this.RadioImage5.ForeColor = System.Drawing.Color.White;
             this.RadioImage5.Image = null;
             this.RadioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage5.Location = new System.Drawing.Point(180, 38);
+            this.RadioImage5.Location = new System.Drawing.Point(183, 38);
             this.RadioImage5.Name = "RadioImage5";
             this.RadioImage5.Size = new System.Drawing.Size(123, 25);
             this.RadioImage5.TabIndex = 4;
@@ -1984,7 +1984,7 @@ namespace WinPaletter
             this.RadioImage4.ForeColor = System.Drawing.Color.White;
             this.RadioImage4.Image = null;
             this.RadioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage4.Location = new System.Drawing.Point(180, 131);
+            this.RadioImage4.Location = new System.Drawing.Point(183, 131);
             this.RadioImage4.Name = "RadioImage4";
             this.RadioImage4.Size = new System.Drawing.Size(252, 25);
             this.RadioImage4.TabIndex = 3;
@@ -2001,7 +2001,7 @@ namespace WinPaletter
             this.RadioImage3.ForeColor = System.Drawing.Color.White;
             this.RadioImage3.Image = null;
             this.RadioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage3.Location = new System.Drawing.Point(180, 100);
+            this.RadioImage3.Location = new System.Drawing.Point(183, 100);
             this.RadioImage3.Name = "RadioImage3";
             this.RadioImage3.Size = new System.Drawing.Size(252, 25);
             this.RadioImage3.TabIndex = 2;
@@ -2018,7 +2018,7 @@ namespace WinPaletter
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = null;
             this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage2.Location = new System.Drawing.Point(180, 69);
+            this.RadioImage2.Location = new System.Drawing.Point(183, 69);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.Size = new System.Drawing.Size(252, 25);
             this.RadioImage2.TabIndex = 1;
@@ -2035,7 +2035,7 @@ namespace WinPaletter
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = null;
             this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage1.Location = new System.Drawing.Point(180, 7);
+            this.RadioImage1.Location = new System.Drawing.Point(183, 7);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.Size = new System.Drawing.Size(123, 25);
             this.RadioImage1.TabIndex = 0;
@@ -2054,7 +2054,7 @@ namespace WinPaletter
             this.Panel3.Controls.Add(this.Panel12);
             this.Panel3.Controls.Add(this.Panel8);
             this.Panel3.Controls.Add(this.Panel4);
-            this.Panel3.Location = new System.Drawing.Point(434, 162);
+            this.Panel3.Location = new System.Drawing.Point(437, 162);
             this.Panel3.Name = "Panel3";
             this.Panel3.Size = new System.Drawing.Size(147, 168);
             this.Panel3.TabIndex = 86;
@@ -2381,7 +2381,7 @@ namespace WinPaletter
             // 
             this.PictureBox33.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.PictureBox33.Image = global::WinPaletter.Assets.Accessibility_Vision.CF_Img_Normal;
-            this.PictureBox33.Location = new System.Drawing.Point(176, 162);
+            this.PictureBox33.Location = new System.Drawing.Point(179, 162);
             this.PictureBox33.Name = "PictureBox33";
             this.PictureBox33.Size = new System.Drawing.Size(252, 168);
             this.PictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2392,7 +2392,7 @@ namespace WinPaletter
             // 
             this.PictureBox32.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.PictureBox32.Image = global::WinPaletter.Assets.Accessibility_Vision.CF_Pie_Normal;
-            this.PictureBox32.Location = new System.Drawing.Point(2, 162);
+            this.PictureBox32.Location = new System.Drawing.Point(5, 162);
             this.PictureBox32.Name = "PictureBox32";
             this.PictureBox32.Size = new System.Drawing.Size(168, 168);
             this.PictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2425,7 +2425,7 @@ namespace WinPaletter
             this.TabPage9.Location = new System.Drawing.Point(174, 4);
             this.TabPage9.Name = "TabPage9";
             this.TabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage9.Size = new System.Drawing.Size(582, 411);
+            this.TabPage9.Size = new System.Drawing.Size(589, 411);
             this.TabPage9.TabIndex = 8;
             this.TabPage9.Text = "Miscellaneous";
             // 
@@ -2439,7 +2439,7 @@ namespace WinPaletter
             this.button26.Image = null;
             this.button26.ImageAsVector = true;
             this.button26.ImageVector = ((System.Drawing.Image)(resources.GetObject("button26.ImageVector")));
-            this.button26.Location = new System.Drawing.Point(542, 231);
+            this.button26.Location = new System.Drawing.Point(549, 231);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(34, 24);
             this.button26.TabIndex = 251;
@@ -2456,7 +2456,7 @@ namespace WinPaletter
             this.button27.Image = null;
             this.button27.ImageAsVector = true;
             this.button27.ImageVector = ((System.Drawing.Image)(resources.GetObject("button27.ImageVector")));
-            this.button27.Location = new System.Drawing.Point(542, 201);
+            this.button27.Location = new System.Drawing.Point(549, 201);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(34, 24);
             this.button27.TabIndex = 250;
@@ -2473,7 +2473,7 @@ namespace WinPaletter
             this.button28.Image = null;
             this.button28.ImageAsVector = true;
             this.button28.ImageVector = ((System.Drawing.Image)(resources.GetObject("button28.ImageVector")));
-            this.button28.Location = new System.Drawing.Point(542, 171);
+            this.button28.Location = new System.Drawing.Point(549, 171);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(34, 24);
             this.button28.TabIndex = 249;
@@ -2490,7 +2490,7 @@ namespace WinPaletter
             this.button29.Image = null;
             this.button29.ImageAsVector = true;
             this.button29.ImageVector = ((System.Drawing.Image)(resources.GetObject("button29.ImageVector")));
-            this.button29.Location = new System.Drawing.Point(542, 141);
+            this.button29.Location = new System.Drawing.Point(549, 141);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(34, 24);
             this.button29.TabIndex = 248;
@@ -2507,7 +2507,7 @@ namespace WinPaletter
             this.button30.Image = null;
             this.button30.ImageAsVector = true;
             this.button30.ImageVector = ((System.Drawing.Image)(resources.GetObject("button30.ImageVector")));
-            this.button30.Location = new System.Drawing.Point(542, 36);
+            this.button30.Location = new System.Drawing.Point(549, 36);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(34, 24);
             this.button30.TabIndex = 247;
@@ -2524,7 +2524,7 @@ namespace WinPaletter
             this.button31.Image = null;
             this.button31.ImageAsVector = true;
             this.button31.ImageVector = ((System.Drawing.Image)(resources.GetObject("button31.ImageVector")));
-            this.button31.Location = new System.Drawing.Point(542, 6);
+            this.button31.Location = new System.Drawing.Point(549, 6);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(34, 24);
             this.button31.TabIndex = 246;
@@ -2591,7 +2591,7 @@ namespace WinPaletter
             this.AlertBox6.Image = null;
             this.AlertBox6.Location = new System.Drawing.Point(36, 94);
             this.AlertBox6.Name = "AlertBox6";
-            this.AlertBox6.Size = new System.Drawing.Size(540, 40);
+            this.AlertBox6.Size = new System.Drawing.Size(547, 40);
             this.AlertBox6.TabIndex = 241;
             this.AlertBox6.TabStop = false;
             this.AlertBox6.Text = "If you are using Windows 11 version lower than the Moment 3 update, utilize Explo" +
@@ -2718,6 +2718,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WinEffecter";
@@ -2787,7 +2788,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-        internal OpenFileDialog OpenFileDialog1;
         internal PictureBox PictureBox4;
         internal UI.WP.CheckBox CheckBox3;
         internal PictureBox PictureBox3;

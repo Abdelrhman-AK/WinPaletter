@@ -36,9 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenSaver_Editor));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.trackbarX1 = new WinPaletter.UI.Controllers.TrackBarX();
@@ -66,20 +63,6 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1004, 52);
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
-            // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.DefaultExt = "wpt";
-            this.OpenFileDialog2.Filter = "Screen Saver (*.scr)|*.scr";
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*";
             // 
             // GroupBox1
             // 
@@ -122,6 +105,7 @@ namespace WinPaletter
             // 
             this.trackbarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackbarX1.AnimateChanges = true;
             this.trackbarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackbarX1.DefaultValue = 60;
             this.trackbarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -351,6 +335,7 @@ namespace WinPaletter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ScreenSaver_Editor";
@@ -369,7 +354,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.GroupBox previewContainer;
         internal Panel pnl_preview;
         internal Label Label4;
@@ -384,9 +368,7 @@ namespace WinPaletter
         internal UI.WP.Button Button13;
         internal UI.WP.Button Button6;
         internal UI.WP.Button Button5;
-        internal OpenFileDialog OpenFileDialog2;
         internal UI.WP.GroupBox GroupBox1;
-        internal OpenFileDialog OpenThemeDialog;
         private UI.Controllers.TrackBarX trackbarX1;
         internal UI.WP.Button button2;
     }

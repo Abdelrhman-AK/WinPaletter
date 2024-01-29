@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WinXPColors));
-            this.OpenThemeDialog = new System.Windows.Forms.OpenFileDialog();
             this.windowsDesktop1 = new WinPaletter.Templates.WindowsDesktop();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.SaveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox51 = new WinPaletter.UI.WP.GroupBox();
             this.Label76 = new System.Windows.Forms.Label();
             this.pictureBox36 = new System.Windows.Forms.PictureBox();
@@ -58,7 +56,6 @@
             this.Label63 = new System.Windows.Forms.Label();
             this.WXP_Luna_Silver = new WinPaletter.UI.WP.RadioImage();
             this.WXP_Luna_OliveGreen = new WinPaletter.UI.WP.RadioImage();
-            this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox2.SuspendLayout();
             this.groupBox51.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).BeginInit();
@@ -73,11 +70,6 @@
             // titlebarExtender1
             // 
             this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
-            // 
-            // OpenThemeDialog
-            // 
-            this.OpenThemeDialog.DefaultExt = "wpt";
-            this.OpenThemeDialog.Filter = "WinPaletter Theme (*.wpth)|*.wpth";
             // 
             // windowsDesktop1
             // 
@@ -184,11 +176,6 @@
             this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // SaveFileDialog2
-            // 
-            this.SaveFileDialog2.DefaultExt = "wpt";
-            this.SaveFileDialog2.Filter = "PNG File|*.png";
             // 
             // groupBox51
             // 
@@ -541,11 +528,6 @@
             this.WXP_Luna_OliveGreen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.WXP_Luna_OliveGreen.CheckedChanged += new System.EventHandler(this.WXP_Luna_OliveGreen_CheckedChanged);
             // 
-            // OpenFileDialog2
-            // 
-            this.OpenFileDialog2.DefaultExt = "wpt";
-            this.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme";
-            // 
             // WinXPColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -579,12 +561,9 @@
         }
 
         #endregion
-
-        internal System.Windows.Forms.OpenFileDialog OpenThemeDialog;
         public Templates.WindowsDesktop windowsDesktop1;
         internal UI.WP.GroupBox groupBox2;
         internal UI.WP.Button Button1;
-        internal System.Windows.Forms.SaveFileDialog SaveFileDialog2;
         internal UI.WP.GroupBox groupBox51;
         internal System.Windows.Forms.Label Label76;
         internal System.Windows.Forms.PictureBox pictureBox36;
@@ -609,6 +588,5 @@
         internal System.Windows.Forms.Label Label63;
         internal UI.WP.RadioImage WXP_Luna_Silver;
         internal UI.WP.RadioImage WXP_Luna_OliveGreen;
-        internal System.Windows.Forms.OpenFileDialog OpenFileDialog2;
     }
 }

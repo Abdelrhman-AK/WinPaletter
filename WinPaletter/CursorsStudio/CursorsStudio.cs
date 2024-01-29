@@ -29,11 +29,15 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
             {
-                Theme.Manager TMx = new(Theme.Manager.Source.File, OpenFileDialog1.FileName);
-                LoadFromTM(TMx);
-                TMx.Dispose();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    {
+                        LoadFromTM(TMx);
+                    }
+                }
             }
         }
 
@@ -1008,9 +1012,12 @@ namespace WinPaletter
 
         private void button20_Click(object sender, EventArgs e)
         {
-            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Lang.Filter_OpenCursor })
             {
-                textBox1.Text = openFileDialog2.FileName;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    textBox1.Text = dlg.FileName;
+                }
             }
         }
 

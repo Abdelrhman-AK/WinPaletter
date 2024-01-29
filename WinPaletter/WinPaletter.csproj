@@ -364,7 +364,10 @@
     <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Languages\Localizer\Strings\General\Filters.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
+    <Compile Include="Program\Filters.cs" />
+    <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
       <SubType>Component</SubType>

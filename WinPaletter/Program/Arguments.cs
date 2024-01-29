@@ -132,8 +132,7 @@ namespace WinPaletter
                 {
                     TM = new(Theme.Manager.Source.File, o.Edit);
                     TM_Original = (Theme.Manager)TM.Clone();
-                    Forms.Home.OpenFileDialog1.FileName = o.Edit;
-                    Forms.Home.SaveFileDialog1.FileName = o.Edit;
+                    Forms.Home.file = o.Edit;
                     Forms.Home.LoadFromTM(TM);
                     shouldExit = false;
                 }

@@ -36,7 +36,6 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerateFromColor));
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.GroupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.Label3 = new System.Windows.Forms.Label();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
@@ -78,10 +77,6 @@ namespace WinPaletter
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.Filter = "Image Files|*.jpg;*.gif;*.png;*.bmp|All Files|*.*";
             // 
             // GroupBox4
             // 
@@ -204,6 +199,7 @@ namespace WinPaletter
             // 
             // Trackbar1
             // 
+            this.Trackbar1.AnimateChanges = true;
             this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
             this.Trackbar1.DefaultValue = 13;
             this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -536,7 +532,6 @@ namespace WinPaletter
         internal Label Label2;
         internal Label Label1;
         internal FlowLayoutPanel ImgPaletteContainer;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
         internal PictureBox PictureBox8;

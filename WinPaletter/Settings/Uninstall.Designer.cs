@@ -40,7 +40,6 @@ namespace WinPaletter
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
-            this.OpenFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
@@ -168,11 +167,6 @@ namespace WinPaletter
             this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox4.TabIndex = 24;
             this.PictureBox4.TabStop = false;
-            // 
-            // OpenFileDialog1
-            // 
-            this.OpenFileDialog1.DefaultExt = "wpt";
-            this.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*";
             // 
             // AlertBox1
             // 
@@ -1202,7 +1196,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox3;
         internal PictureBox PictureBox4;
         internal UI.WP.AlertBox AlertBox1;
-        internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.AnimatedBox AnimatedBox1;
         private UI.WP.TablessControl tablessControl1;
         private TabPage tabPage1;

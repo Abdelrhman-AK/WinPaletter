@@ -754,28 +754,32 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            FontDialog1.Font = TextBox1.Font;
-
-            if (FontDialog1.ShowDialog() == DialogResult.OK)
+            using (FontDialog dlg =new() { Font = TextBox1.Font })
             {
-                TextBox1.Font = FontDialog1.Font;
-                TextBox2.Font = FontDialog1.Font;
-                data.Font = FontDialog1.Font;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Font = dlg.Font;
+                    TextBox2.Font = dlg.Font;
+                    data.Font = dlg.Font;
+                }
             }
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            if (OpenJSONDlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
             {
-                AlertBox1.Visible = false;
-                GroupBox8.Visible = true;
-                TabControl1.Visible = false;
-                Cursor = Cursors.WaitCursor;
-                LangFile = OpenJSONDlg.FileName;
-                OpenFile();
-                Cursor = Cursors.Default;
-                TabControl1.Visible = true;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    AlertBox1.Visible = false;
+                    GroupBox8.Visible = true;
+                    TabControl1.Visible = false;
+                    Cursor = Cursors.WaitCursor;
+                    LangFile = dlg.FileName;
+                    OpenFile();
+                    Cursor = Cursors.Default;
+                    TabControl1.Visible = true;
+                }
             }
         }
 
@@ -812,32 +816,38 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                AlertBox1.Visible = false;
-                TabControl1.Visible = false;
-                Cursor = Cursors.WaitCursor;
-                using (Localizer LangX = new())
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LangX.ExportJSON(SaveJSONDlg.FileName);
+                    AlertBox1.Visible = false;
+                    TabControl1.Visible = false;
+                    Cursor = Cursors.WaitCursor;
+                    using (Localizer LangX = new())
+                    {
+                        LangX.ExportJSON(dlg.FileName);
+                    }
+                    LangFile = dlg.FileName;
+                    OpenFile();
+                    Cursor = Cursors.Default;
+                    TabControl1.Visible = true;
                 }
-                LangFile = SaveJSONDlg.FileName;
-                OpenFile();
-                Cursor = Cursors.Default;
-                TabControl1.Visible = true;
             }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (SaveJSONDlg.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_SaveJSON })
             {
-                Cursor = Cursors.WaitCursor;
-                using (Localizer LangX = new())
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    LangX.ExportJSON(SaveJSONDlg.FileName);
+                    Cursor = Cursors.WaitCursor;
+                    using (Localizer LangX = new())
+                    {
+                        LangX.ExportJSON(dlg.FileName);
+                    }
+                    Cursor = Cursors.Default;
                 }
-                Cursor = Cursors.Default;
             }
         }
 

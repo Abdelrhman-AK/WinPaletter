@@ -264,11 +264,11 @@ namespace WinPaletter.UI.WP
             #region Colors System
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Color BackCircle_Color = scheme.Colors.Back;
-            Color BackCircle_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover);
+            Color BackCircle_Color = scheme.Colors.Back_Level2;
+            Color BackCircle_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover_Level2);
 
-            Color BackCircle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover);
-            Color BackCircle_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover);
+            Color BackCircle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover_Level2);
+            Color BackCircle_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover_Level2);
 
             Color Checked_Circle_Color = Color.FromArgb(alpha2, scheme.Colors.Back_Checked);
             Color Checked_Circle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
