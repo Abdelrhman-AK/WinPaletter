@@ -184,6 +184,18 @@ namespace WinPaletter.UI.WP
                 FocusAlpha = 100;
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (FindForm() != null)
+            {
+                FindForm().Activated -= Form_Activated;
+                FindForm().Deactivate -= Form_Deactivate; ;
+            }
+        }
+
         #endregion
 
         #region Animator

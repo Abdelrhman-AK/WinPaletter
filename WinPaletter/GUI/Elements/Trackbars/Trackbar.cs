@@ -21,7 +21,6 @@ namespace WinPaletter.UI.WP
             Text = string.Empty;
 
             _alpha = 0;
-            Invalidate();
         }
 
         #region Variables

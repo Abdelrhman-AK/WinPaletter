@@ -122,6 +122,7 @@ namespace WinPaletter.UI.Controllers
         {
             _TM?.Dispose();
             pattern?.Dispose();
+            Noise?.Dispose();
 
             base.Dispose(disposing);    
         }

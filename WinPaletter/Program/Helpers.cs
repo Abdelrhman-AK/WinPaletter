@@ -184,7 +184,7 @@ namespace WinPaletter
             }
         }
 
-        private static void StartWallpaperMonitor()
+        private static void StartMonitors()
         {
             if (!OS.WXP)
             {

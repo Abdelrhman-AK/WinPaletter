@@ -399,6 +399,14 @@ namespace WinPaletter.UI.WP
             base.OnForeColorChanged(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            tb?.Dispose();
+            Font?.Dispose();
+        }
+
         #endregion
 
         #region Animator

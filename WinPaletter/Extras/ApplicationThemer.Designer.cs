@@ -178,8 +178,8 @@ namespace WinPaletter
             // 
             this.BackColorPick.AllowDrop = true;
             this.BackColorPick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BackColorPick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.BackColorPick.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.BackColorPick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.BackColorPick.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.BackColorPick.DontShowInfo = false;
             this.BackColorPick.Location = new System.Drawing.Point(705, 39);
             this.BackColorPick.Name = "BackColorPick";
@@ -192,8 +192,8 @@ namespace WinPaletter
             // 
             this.AccentColor.AllowDrop = true;
             this.AccentColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AccentColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AccentColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AccentColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(175)))));
+            this.AccentColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(70)))), ((int)(((byte)(175)))));
             this.AccentColor.DontShowInfo = false;
             this.AccentColor.Location = new System.Drawing.Point(705, 99);
             this.AccentColor.Name = "AccentColor";
@@ -640,8 +640,8 @@ namespace WinPaletter
             // 
             this.colorItem3.AllowDrop = true;
             this.colorItem3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.colorItem3.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.colorItem3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
+            this.colorItem3.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
             this.colorItem3.DontShowInfo = false;
             this.colorItem3.Location = new System.Drawing.Point(705, 189);
             this.colorItem3.Name = "colorItem3";
@@ -698,8 +698,8 @@ namespace WinPaletter
             // 
             this.colorItem2.AllowDrop = true;
             this.colorItem2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(61)))), ((int)(((byte)(26)))));
-            this.colorItem2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(61)))), ((int)(((byte)(26)))));
+            this.colorItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
+            this.colorItem2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
             this.colorItem2.DontShowInfo = false;
             this.colorItem2.Location = new System.Drawing.Point(705, 159);
             this.colorItem2.Name = "colorItem2";
@@ -734,8 +734,8 @@ namespace WinPaletter
             // 
             this.colorItem1.AllowDrop = true;
             this.colorItem1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(0)))), ((int)(((byte)(36)))));
-            this.colorItem1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(0)))), ((int)(((byte)(36)))));
+            this.colorItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
+            this.colorItem1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
             this.colorItem1.DontShowInfo = false;
             this.colorItem1.Location = new System.Drawing.Point(705, 129);
             this.colorItem1.Name = "colorItem1";

@@ -184,6 +184,17 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (FindForm() != null)
+            {
+                FindForm().Activated -= Form_Activated;
+                FindForm().Deactivate -= Form_Deactivate; ;
+            }
+        }
+
         #endregion
 
         #region Methods

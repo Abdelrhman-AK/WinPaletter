@@ -102,7 +102,7 @@ namespace WinPaletter
                             List<Form> OpenForms = new();
                             foreach (Form f in Application.OpenForms)
                             {
-                                if (f != Forms.BK && f != Forms.UserSwitch && f.Visible)
+                                if (f != Forms.BK  && f != Forms.UserSwitch && f.Visible)
                                 {
                                     OpenForms.Add(f);
                                     f.Visible = false;

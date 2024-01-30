@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -47,7 +48,7 @@ namespace WinPaletter
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
         }
 
-        public static void InitializeApplication(bool ShowLoginDialog)
+        public static void InitializeApplication(bool showLoginDialog)
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
@@ -61,7 +62,7 @@ namespace WinPaletter
                 ApplyStyle();
                 LoadLanguage();
 
-                if (ShowLoginDialog)
+                if (showLoginDialog)
                 {
                     User.Login(false, ArgsCanSkipUserLogin);
                     return;
@@ -72,7 +73,7 @@ namespace WinPaletter
 
                 CheckIfLicenseIsAccepted();
                 AssociateFiles();
-                StartWallpaperMonitor();
+                StartMonitors();
 
                 BackupWindowsStartupSound();
                 CreateUninstaller();
@@ -83,7 +84,6 @@ namespace WinPaletter
                 UpdateSysEventsSounds();
 
                 Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
-                Wallpaper_Unscaled = GetWallpaperFromRegistry();
 
                 wic.Undo();
             }

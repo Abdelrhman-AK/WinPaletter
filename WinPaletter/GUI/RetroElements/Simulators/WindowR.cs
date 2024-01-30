@@ -766,6 +766,15 @@ namespace WinPaletter.UI.Retro
             base.OnMouseClick(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _CloseBtn?.Dispose();
+            _MinBtn?.Dispose();
+            _MaxBtn?.Dispose();
+        }
+
         #endregion
 
         #region Methods

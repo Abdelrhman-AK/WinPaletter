@@ -152,6 +152,14 @@ namespace WinPaletter.UI.WP
             base.OnDropDownClosed(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise?.Dispose();
+            Noise2?.Dispose();
+        }
+
         #endregion
 
         #region Animator

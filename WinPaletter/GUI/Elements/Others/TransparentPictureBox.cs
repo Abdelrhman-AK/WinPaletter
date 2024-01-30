@@ -16,8 +16,6 @@ namespace WinPaletter.UI.WP
         {
             base.OnPaintBackground(e);
 
-
-
             Graphics G = e.Graphics;
 
             int index = Parent.Controls.GetChildIndex(this);

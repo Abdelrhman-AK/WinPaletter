@@ -474,6 +474,16 @@ namespace WinPaletter.UI.Simulation
             try { Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100); } catch { }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise7?.Dispose();
+            AdaptedBack?.Dispose();
+            AdaptedBackBlurred?.Dispose();
+            resVS?.Dispose();
+        }
+
         #endregion
 
         #region Methods

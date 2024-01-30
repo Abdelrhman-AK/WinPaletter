@@ -109,6 +109,7 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Animator
+
         private readonly Timer Timer = new() { Enabled = false, Interval = 25 };
         private async void Timer_Tick(object sender, EventArgs e)
         {
@@ -141,6 +142,7 @@ namespace WinPaletter.UI.WP
                 Timer.Stop();
             }
         }
+
         #endregion
 
         #region Events/Overrides
@@ -223,6 +225,15 @@ namespace WinPaletter.UI.WP
 
             base.OnControlAdded(e);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Timer?.Dispose();
+            Noise?.Dispose();
+        }
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)

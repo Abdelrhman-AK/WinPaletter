@@ -411,6 +411,16 @@ namespace WinPaletter.UI.Simulation
             NoiseBack();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise?.Dispose();
+            adaptedBack?.Dispose();
+            adaptedBackBlurred?.Dispose();
+            img?.Dispose();
+        }
+
         #endregion
 
         #region Methods

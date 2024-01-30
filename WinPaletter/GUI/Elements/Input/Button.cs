@@ -699,6 +699,18 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise?.Dispose();
+            Menu?.Dispose();
+            _image?.Dispose();   
+            _imageVector?.Dispose();
+            _imageVectorOver?.Dispose();
+            _imageVectorDown?.Dispose();
+        }
+
         #endregion
 
         #region Animator

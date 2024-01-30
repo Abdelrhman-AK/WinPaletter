@@ -686,6 +686,14 @@ namespace WinPaletter.UI.Controllers
                 FocusAlpha = 100;
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            bmp?.Dispose();
+        }
+
         #endregion
 
         #region Animator

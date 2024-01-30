@@ -9,7 +9,7 @@ namespace WinPaletter.UI.Style
         public readonly static Color TertiaryColor = Color.FromArgb(0, 51, 21);
         public readonly static Color DisabledColor_Dark = Color.FromArgb(89, 89, 89);
         public readonly static Color DisabledColor_Light = Color.FromArgb(150, 150, 150);
-        public readonly static Color BackColorDark = Color.FromArgb(15, 15, 15);
+        public readonly static Color BackColorDark = Color.FromArgb(17, 17, 17);
         public readonly static Color BackColorLight = Color.FromArgb(230, 230, 230);
         public readonly static Color DisabledBackColor_Dark = Color.FromArgb(60, 60, 60);
         public readonly static Color DisabledBackColor_Light = Color.FromArgb(130, 130, 130);

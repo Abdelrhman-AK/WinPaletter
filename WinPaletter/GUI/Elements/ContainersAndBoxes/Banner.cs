@@ -37,6 +37,11 @@ namespace WinPaletter.UI.WP
         }
         private Color ImageColor;
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            Noise?.Dispose();
+        }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {

@@ -24,8 +24,6 @@ namespace WinPaletter
 
             thread = new(() =>
             {
-                Wallpaper_Unscaled = GetWallpaperFromRegistry();
-
                 Bitmap wall = FetchSuitableWallpaper(TM, WindowStyle);
                 Invoke(() =>
                 {

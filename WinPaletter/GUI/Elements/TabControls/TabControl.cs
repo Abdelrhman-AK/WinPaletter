@@ -27,6 +27,7 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events/Overrides
+
         protected override void OnDragOver(DragEventArgs e)
         {
             if (e.Data.GetData(typeof(Controllers.ColorItem).FullName) is Controllers.ColorItem)
@@ -76,6 +77,14 @@ namespace WinPaletter.UI.WP
 
             base.CreateHandle();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise?.Dispose();
+        }
+    
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)

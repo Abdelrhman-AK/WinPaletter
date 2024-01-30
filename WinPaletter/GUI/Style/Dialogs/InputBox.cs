@@ -12,26 +12,24 @@ namespace WinPaletter.UI.Style
             {
                 if (!OS.WXP)
                 {
-                    InputDialog ib = new()
+                    using (InputDialog ib = new()
                     {
                         MainInstruction = Instruction,
                         Input = Value,
                         Content = Notice,
                         WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName
-                    };
-
-                    if (ib.ShowDialog() == DialogResult.OK)
+                    })
                     {
-                        string response = ib.Input;
-                        if (string.IsNullOrWhiteSpace(response))
-                            response = Value;
-                        ib.Dispose();
-                        return response;
-                    }
-                    else
-                    {
-                        ib.Dispose();
-                        return Value;
+                        if (ib.ShowDialog() == DialogResult.OK)
+                        {
+                            string response = ib.Input;
+                            if (string.IsNullOrWhiteSpace(response)) response = Value;
+                            return response;
+                        }
+                        else
+                        {
+                            return Value;
+                        }
                     }
                 }
                 else

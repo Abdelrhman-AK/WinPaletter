@@ -368,6 +368,15 @@ namespace WinPaletter.UI.Retro
             base.OnMouseWheel(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            btnUp?.Dispose();
+            btnDown?.Dispose();
+            btnScroll?.Dispose();
+        }
+
         #endregion
 
         #region Controls

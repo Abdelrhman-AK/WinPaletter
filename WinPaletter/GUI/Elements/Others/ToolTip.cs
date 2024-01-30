@@ -184,6 +184,15 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _font?.Dispose();
+            _font_Title?.Dispose();
+            _image?.Dispose();
+        }
+
         private void Tooltip_Popup(object sender, PopupEventArgs e)
         {
             e.ToolTipSize = Size;

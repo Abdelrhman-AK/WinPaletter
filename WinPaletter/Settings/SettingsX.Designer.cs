@@ -442,6 +442,7 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
+            this.button27 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -648,6 +649,7 @@ namespace WinPaletter
             this.flowLayoutPanel1.Controls.Add(this.Button4);
             this.flowLayoutPanel1.Controls.Add(this.Button3);
             this.flowLayoutPanel1.Controls.Add(this.Button6);
+            this.flowLayoutPanel1.Controls.Add(this.button27);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1023, 40);
@@ -5251,7 +5253,7 @@ namespace WinPaletter
             this.PictureBox53.TabIndex = 49;
             this.PictureBox53.TabStop = false;
             // 
-            // restartExplorer_btn
+            // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.Empty;
@@ -5898,6 +5900,25 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // button27
+            // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button27.CustomColor = System.Drawing.Color.Empty;
+            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button27.ForeColor = System.Drawing.Color.White;
+            this.button27.Image = ((System.Drawing.Image)(resources.GetObject("button27.Image")));
+            this.button27.ImageAsVector = false;
+            this.button27.ImageVector = null;
+            this.button27.Location = new System.Drawing.Point(657, 3);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(200, 34);
+            this.button27.TabIndex = 126;
+            this.button27.Text = "Reset settings to defaults";
+            this.button27.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button27.UseVisualStyleBackColor = false;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
+            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -6491,5 +6512,6 @@ namespace WinPaletter
         internal Label label6;
         internal PictureBox pictureBox9;
         internal Label label7;
+        internal UI.WP.Button button27;
     }
 }

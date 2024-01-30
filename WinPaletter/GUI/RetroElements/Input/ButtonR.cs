@@ -332,6 +332,13 @@ namespace WinPaletter.UI.Retro
             base.OnSizeChanged(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Image?.Dispose();   
+        }
+
         #endregion
 
         #region Methods

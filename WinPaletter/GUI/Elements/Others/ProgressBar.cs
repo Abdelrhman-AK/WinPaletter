@@ -115,6 +115,14 @@ namespace WinPaletter.UI.WP
             UpdateTaskbar();
             Refresh();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise?.Dispose();
+        }
+
         #endregion
 
         #region Properties

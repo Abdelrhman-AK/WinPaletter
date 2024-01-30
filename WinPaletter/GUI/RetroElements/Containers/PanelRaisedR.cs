@@ -137,39 +137,43 @@ namespace WinPaletter.UI.Retro
                 {
                     if (!Style2)
                     {
-                        G.DrawLine(new Pen(ButtonHilight), new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
-                        G.DrawLine(new Pen(ButtonHilight), new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
-                        G.DrawLine(new Pen(ButtonShadow), new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
-                        G.DrawLine(new Pen(ButtonShadow), new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
+                        using (Pen P0 = new(ButtonHilight))
+                        using (Pen P1 = new(ButtonShadow))
+                        {
+                            G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
+                            G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
+                            G.DrawLine(P1, new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
+                            G.DrawLine(P1, new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
+                        }
                     }
                     else
                     {
-                        G.DrawLine(new Pen(ButtonDkShadow), new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
-                        G.DrawLine(new Pen(ButtonDkShadow), new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
-
-                        G.DrawLine(new Pen(ButtonShadow), new Point(Rect.Width - 1, Rect.X - 1), new Point(Rect.Width - 1, Rect.Height - 1));
-                        G.DrawLine(new Pen(ButtonShadow), new Point(Rect.X - 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1));
-
-                        G.DrawLine(new Pen(ButtonLight), new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
-                        G.DrawLine(new Pen(ButtonLight), new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
-
-                        G.DrawLine(new Pen(ButtonHilight), new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1));
-                        G.DrawLine(new Pen(ButtonHilight), new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2));
+                        using (Pen P0 = new(ButtonDkShadow))
+                        using (Pen P1 = new(ButtonShadow))
+                        using (Pen P2 = new(ButtonLight))
+                        using (Pen P3 = new(ButtonHilight))
+                        {
+                            G.DrawLine(P0, new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
+                            G.DrawLine(P0, new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
+                            G.DrawLine(P1, new Point(Rect.Width - 1, Rect.X - 1), new Point(Rect.Width - 1, Rect.Height - 1));
+                            G.DrawLine(P1, new Point(Rect.X - 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1));
+                            G.DrawLine(P2, new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
+                            G.DrawLine(P2, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
+                            G.DrawLine(P3, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1));
+                            G.DrawLine(P3, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2));
+                        }
                     }
                 }
 
                 else
                 {
-                    G.DrawRectangle(new Pen(ButtonShadow), Rect);
+                    using (Pen P = new(ButtonShadow)) G.DrawRectangle(P, Rect);
                 }
             }
             else
             {
-                G.DrawLine(new Pen(ButtonHilight), new Point(Rect.X, Rect.Y + 1), new Point(Rect.X + Rect.Width, Rect.Y + 1));
+                using (Pen P = new(ButtonHilight)) G.DrawLine(P, new Point(Rect.X, Rect.Y + 1), new Point(Rect.X + Rect.Width, Rect.Y + 1));
             }
-
         }
-
     }
-
 }

@@ -227,6 +227,13 @@ namespace WinPaletter.UI.Simulation
             base.OnMouseClick(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Icon?.Dispose();
+        }
+
         #endregion
 
         #region Methods

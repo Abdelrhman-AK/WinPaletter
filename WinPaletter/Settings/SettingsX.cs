@@ -45,7 +45,7 @@ namespace WinPaletter
         public void Read(Settings Sets)
         {
             toggle6.Checked = Sets.FileTypeManagement.AutoAddExt;
-
+            
             RadioButton1.Checked = Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
             RadioButton2.Checked = !Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
 
@@ -1124,6 +1124,11 @@ namespace WinPaletter
                     if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
                 }
             }
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            Read(new Settings(Settings.Mode.Empty));
         }
     }
 }

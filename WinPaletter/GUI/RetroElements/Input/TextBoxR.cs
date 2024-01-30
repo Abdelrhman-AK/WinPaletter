@@ -420,6 +420,14 @@ namespace WinPaletter.UI.Retro
             Invalidate();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _TB?.Dispose();
+            Font?.Dispose();
+        }
+
         #endregion
 
         protected override void OnPaint(PaintEventArgs e)

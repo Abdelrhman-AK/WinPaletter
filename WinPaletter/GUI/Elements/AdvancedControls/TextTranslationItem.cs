@@ -147,6 +147,13 @@ namespace WinPaletter.UI.Controllers
             base.OnGotFocus(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _image?.Dispose();
+        }
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)

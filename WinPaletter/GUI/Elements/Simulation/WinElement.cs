@@ -682,6 +682,17 @@ namespace WinPaletter.UI.Simulation
             base.OnLocationChanged(e);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Noise7?.Dispose();
+            Noise7Start?.Dispose();
+            Noise?.Dispose();
+            back?.Dispose();
+            back_blurred?.Dispose();
+        }
+
         #endregion
 
         #region Editors

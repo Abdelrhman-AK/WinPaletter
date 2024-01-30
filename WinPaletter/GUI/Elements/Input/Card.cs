@@ -265,6 +265,13 @@ namespace WinPaletter.UI
         }
         #endregion
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _image?.Dispose();
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;

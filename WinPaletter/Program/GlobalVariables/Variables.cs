@@ -75,7 +75,7 @@ namespace WinPaletter
         /// <summary>
         /// Current applied wallpaper
         /// </summary>
-        public static Bitmap Wallpaper, Wallpaper_Unscaled;
+        public static Bitmap Wallpaper;
 
         /// <summary>
         /// Variable responsible for the preview type on forms

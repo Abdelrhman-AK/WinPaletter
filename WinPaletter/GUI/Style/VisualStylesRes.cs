@@ -1,9 +1,10 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using System;
 using System.Drawing;
 
 namespace WinPaletter
 {
-    public class VisualStylesRes
+    public class VisualStylesRes : IDisposable
     {
         public VisualStylesRes(string themeFile)
         {
@@ -23,7 +24,6 @@ namespace WinPaletter
             catch
             {
             }
-
         }
 
         private VisualStyleFile _VisualStyleFile;
@@ -154,5 +154,9 @@ namespace WinPaletter
 
         }
 
+        public void Dispose()
+        {
+            _VisualStyleFile?.Dispose();
+        }
     }
 }

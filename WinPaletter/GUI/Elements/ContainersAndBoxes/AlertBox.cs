@@ -74,6 +74,13 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Image?.Dispose();
+        }
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent

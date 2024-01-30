@@ -343,6 +343,7 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Events/Overrides
+
         protected override void OnSizeChanged(EventArgs e)
         {
             Rect = new(0, 0, Width - 1, Height - 1);
@@ -402,6 +403,13 @@ namespace WinPaletter.UI.Controllers
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            Timer2?.Dispose();
         }
 
         #endregion
