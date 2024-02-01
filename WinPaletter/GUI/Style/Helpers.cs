@@ -178,10 +178,10 @@ namespace WinPaletter.UI.Style
                 RoundedCorners = Program.Style.RoundedCorners;
                 Animations = Program.Style.Animations;
 
-                BackColor = DarkMode ? DefaultColors.BackColorDark : DefaultColors.BackColorLight;
-                AccentColor = DefaultColors.PrimaryColor;
-                Secondary = DefaultColors.SecondaryColor;
-                Tertiary = DefaultColors.TertiaryColor;
+                BackColor = DarkMode ? DefaultColors.BackColor_Dark : DefaultColors.BackColor_Light;
+                AccentColor = DarkMode ? DefaultColors.PrimaryColor_Dark : DefaultColors.PrimaryColor_Light;
+                Secondary = DarkMode ? DefaultColors.SecondaryColor_Dark : DefaultColors.SecondaryColor_Light;
+                Tertiary = DarkMode ? DefaultColors.TertiaryColor_Dark : DefaultColors.TertiaryColor_Light;
                 Disabled = DarkMode ? DefaultColors.DisabledColor_Dark : DefaultColors.DisabledColor_Light;
                 Disabled_Background = DarkMode ? DefaultColors.DisabledBackColor_Dark : DefaultColors.DisabledBackColor_Light;
 
@@ -419,7 +419,7 @@ namespace WinPaletter.UI.Style
                 if (!titlebarExtender.DropDWMEffect)
                 {
                     Config.Scheme scheme = titlebarExtender.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-                    titlebarExtender.BackColor = scheme.Colors.Back_Hover;
+                    titlebarExtender.BackColor = scheme.Colors.Back_Hover(titlebarExtender.Level());
                 }
 
                 Forms.MainForm.tabsContainer1.Refresh();
@@ -434,15 +434,15 @@ namespace WinPaletter.UI.Style
                 {
                     case true:
                         {
-                            ColumnBack = Program.Style.Schemes.Main.Colors.Back.Light(0.05f);
-                            CellBack = Program.Style.Schemes.Main.Colors.Back;
+                            ColumnBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level()).Light(0.05f);
+                            CellBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
                             break;
                         }
 
                     case false:
                         {
-                            ColumnBack = Program.Style.Schemes.Main.Colors.Back.Dark(0.05f);
-                            CellBack = Program.Style.Schemes.Main.Colors.Back;
+                            ColumnBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level()).Dark(0.05f);
+                            CellBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
                             break;
                         }
 
@@ -465,7 +465,7 @@ namespace WinPaletter.UI.Style
             }
 
             if (ctrl.FindForm().Visible)
-                ctrl.Refresh();
+                ctrl.Invalidate();
         }
 
         /// <summary>

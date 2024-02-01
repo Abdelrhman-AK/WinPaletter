@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -28,6 +29,16 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
+
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
@@ -53,8 +64,12 @@ namespace WinPaletter.UI.WP
             }
             else
             {
-                G.FillRectangle(Program.Style.Schemes.Main.Brushes.Back, Rect);
-                G.DrawRectangle(Program.Style.Schemes.Main.Pens.Line, Rect);
+                using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
+                using (Pen P = new(Program.Style.Schemes.Main.Colors.Line(parentLevel)))
+                {
+                    G.FillRectangle(br, Rect);
+                    G.DrawRectangle(P, Rect);
+                }
             }
 
             base.OnPaint(e);

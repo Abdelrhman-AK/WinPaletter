@@ -215,6 +215,25 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Get level of a control in the control tree
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
+        public static int Level(this Control control)
+        {
+            int level = 0;
+            Control currentControl = control;
+
+            while (currentControl.Parent != null)
+            {
+                currentControl = currentControl.Parent;
+                level++;
+            }
+
+            return level;
+        }
+
         public static void SetText(this Control Ctrl, string text)
         {
             try

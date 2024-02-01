@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -20,12 +21,9 @@ namespace WinPaletter.UI.WP
         public enum States
         {
             None,
-            NoneLevel2,
             Hover,
-            HoverLevel2,
             CheckedHover,
             Checked,
-            Max,
             ButtonNone,
             ButtonOver,
             ButtonDown
@@ -79,6 +77,16 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
+
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
@@ -95,28 +103,13 @@ namespace WinPaletter.UI.WP
             switch (State)
             {
                 case States.None:
-                    bkC = Scheme.Colors.Back;
-                    lC = Scheme.Colors.Line;
-                    break;
-
-                case States.NoneLevel2:
-                    bkC = Scheme.Colors.Back_Level2;
-                    lC = Scheme.Colors.Line_Level2;
+                    bkC = Scheme.Colors.Back(parentLevel);
+                    lC = Scheme.Colors.Line(parentLevel);
                     break;
 
                 case States.Hover:
-                    bkC = Scheme.Colors.Back_Hover;
-                    lC = Scheme.Colors.Line_Hover;
-                    break;
-
-                case States.HoverLevel2:
-                    bkC = Scheme.Colors.Back_Hover_Level2;
-                    lC = Scheme.Colors.Line_Hover_Level2;
-                    break;
-
-                case States.Max:
-                    bkC = Scheme.Colors.Back_Max;
-                    lC = Scheme.Colors.Line_Hover;
+                    bkC = Scheme.Colors.Back_Hover(parentLevel);
+                    lC = Scheme.Colors.Line_Hover(parentLevel);
                     break;
 
                 case States.Checked:

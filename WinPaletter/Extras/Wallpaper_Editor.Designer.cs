@@ -157,6 +157,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1169, 52);
             // 
             // TabControl1
@@ -880,7 +881,7 @@ namespace WinPaletter
             this.Button16.UseVisualStyleBackColor = false;
             this.Button16.Click += new System.EventHandler(this.Button16_Click);
             // 
-            // restartExplorer_btn
+            // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
@@ -1431,7 +1432,7 @@ namespace WinPaletter
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox4.ForeColor = System.Drawing.Color.White;
-            this.textBox4.Location = new System.Drawing.Point(185, 7);
+            this.textBox4.Location = new System.Drawing.Point(198, 7);
             this.textBox4.MaxLength = 32767;
             this.textBox4.Multiline = false;
             this.textBox4.Name = "textBox4";
@@ -1440,7 +1441,7 @@ namespace WinPaletter
             this.textBox4.SelectedText = "";
             this.textBox4.SelectionLength = 0;
             this.textBox4.SelectionStart = 0;
-            this.textBox4.Size = new System.Drawing.Size(361, 24);
+            this.textBox4.Size = new System.Drawing.Size(348, 24);
             this.textBox4.TabIndex = 143;
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox4.UseSystemPasswordChar = false;
@@ -1454,7 +1455,7 @@ namespace WinPaletter
             this.label28.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.Location = new System.Drawing.Point(40, 4);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(132, 30);
+            this.label28.Size = new System.Drawing.Size(152, 30);
             this.label28.TabIndex = 0;
             this.label28.Text = "Choose a wallpaper";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

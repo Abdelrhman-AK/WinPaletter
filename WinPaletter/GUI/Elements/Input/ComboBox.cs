@@ -49,7 +49,7 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.4f));
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.3f));
         private readonly TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
 
         private MouseState State = MouseState.None;
@@ -160,6 +160,14 @@ namespace WinPaletter.UI.WP
             Noise2?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
         #endregion
 
         #region Animator
@@ -191,8 +199,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -202,14 +208,17 @@ namespace WinPaletter.UI.WP
             Rectangle Rect_Fix1 = new(e.Bounds.X - 1, e.Bounds.Y - 1, e.Bounds.Width + 2, e.Bounds.Height + 2);
             Rectangle Rect_Fix2 = new(e.Bounds.X - 3, e.Bounds.Y - 3, e.Bounds.Width + 6, e.Bounds.Height + 6);
 
-            if (((e.State & DrawItemState.Focus) == DrawItemState.Focus) || ((e.State & DrawItemState.Selected) == DrawItemState.Selected) || ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight))
+            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
             {
-                e.DrawBackground();
-                if (Parent is not WP.GroupBox) G.FillRectangle(scheme.Brushes.Back, Rect_Fix1); else G.FillRectangle(scheme.Brushes.Back_Level2, Rect_Fix1);
-            }
-            else
-            {
-                if (Parent is not WP.GroupBox) G.FillRectangle(scheme.Brushes.Back, Rect_Fix2); else G.FillRectangle(scheme.Brushes.Back_Level2, Rect_Fix2);
+                if (((e.State & DrawItemState.Focus) == DrawItemState.Focus) || ((e.State & DrawItemState.Selected) == DrawItemState.Selected) || ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight))
+                {
+                    e.DrawBackground();
+                    G.FillRectangle(br, Rect_Fix1);
+                }
+                else
+                {
+                    G.FillRectangle(br, Rect_Fix2);
+                }
             }
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
@@ -237,8 +246,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -253,11 +260,19 @@ namespace WinPaletter.UI.WP
             Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
             Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_Checked);
-            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Level2);
+            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel));
 
-            G.FillRoundedRect(scheme.Brushes.Back_Level2, InnerRect);
+            Color BackColor0 = Program.Style.DarkMode ? scheme.Colors.Back(parentLevel) : scheme.Colors.Back_Hover(parentLevel);
+            Color BackColor1 = Program.Style.DarkMode ? scheme.Colors.Back_Hover(parentLevel) : scheme.Colors.Back(parentLevel);
+            Color HoverColor0 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover) : Color.FromArgb(alpha, scheme.Colors.Back_Checked);
+            Color HoverColor1 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked) : Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
 
-            using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
+            using (LinearGradientBrush lgb0 = new(InnerRect, BackColor0, BackColor1, LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb1 = new(OuterRect, HoverColor0, HoverColor1, LinearGradientMode.Horizontal))
+            {
+                G.FillRoundedRect(lgb0, InnerRect);
+                G.FillRoundedRect(lgb1, OuterRect);
+            }
 
             G.FillRoundedRect(Noise, InnerRect);
 

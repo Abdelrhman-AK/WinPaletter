@@ -123,6 +123,15 @@ namespace WinPaletter.UI.WP
             Noise?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Properties
@@ -178,13 +187,13 @@ namespace WinPaletter.UI.WP
 
                         case ProgressBarState.Error:
                             {
-                                color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                                color = Program.Style.Schemes.Secondary.Colors.AccentAlt;
                                 break;
                             }
 
                         case ProgressBarState.Pause:
                             {
-                                color = Program.Style.Schemes.Main.Colors.Back_Hover;
+                                color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
                                 break;
                             }
 
@@ -467,8 +476,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -490,13 +497,24 @@ namespace WinPaletter.UI.WP
 
                 if (Program.Style.RoundedCorners) G.SetClip(rect.Round(radius));
 
-                G.FillRoundedRect(scheme.Brushes.Back, rect, radius);
-                using (SolidBrush br = new(StateColor)) { G.FillRoundedRect(br, rectValue, radius); }
+                using (LinearGradientBrush br = new(rect, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.ForwardDiagonal))
+                {
+                    G.FillRoundedRect(br, rect, radius);
+                }
+
+                using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.3f) : StateColor.Light(), StateColor, LinearGradientMode.Horizontal)) 
+                { 
+                    G.FillRoundedRect(br, rectValue, radius);
+                }
+
                 G.FillRoundedRect(Noise, rectValue, radius);
 
                 G.ResetClip();
 
-                G.DrawRoundedRect_LikeW11(scheme.Pens.Line, rect, radius);
+                using (Pen P = new(scheme.Colors.Line(parentLevel)))
+                {
+                    G.DrawRoundedRect_LikeW11(P, rect, radius);
+                }
             }
 
             else if (Appearance == ProgressBarAppearance.Circle)
@@ -521,7 +539,7 @@ namespace WinPaletter.UI.WP
                             pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
                             pen.EndCap = pen.StartCap;
 
-                            using (LinearGradientBrush brush2 = new(rect, scheme.Colors.Back, scheme.Colors.Back_Hover, LinearGradientMode.BackwardDiagonal))
+                            using (LinearGradientBrush brush2 = new(rect, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.BackwardDiagonal))
                             {
                                 using (Pen pen2 = new(brush2, PenWidth))
                                 {

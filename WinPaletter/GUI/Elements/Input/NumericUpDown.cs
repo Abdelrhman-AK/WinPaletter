@@ -197,6 +197,15 @@ namespace WinPaletter.UI.WP
             base.OnMouseDown(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Animator
@@ -242,13 +251,16 @@ namespace WinPaletter.UI.WP
             }
             // #################################################################################
 
-            G.FillRoundedRect(scheme.Brushes.Back_Level2, InnerRect);
+            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
+            {
+                G.FillRoundedRect(br, InnerRect);
+            }
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, OuterRect); }
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.FillRoundedRect(br, SideRect); }
 
-            using (Pen P = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Level2))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+            using (Pen P = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel)))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
             using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 

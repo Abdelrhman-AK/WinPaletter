@@ -21,12 +21,9 @@ namespace WinPaletter.UI.Style
         private WP.TestControl buttonOverControl;
         private WP.TestControl buttonDownControl;
         private WP.TestControl noneControl;
-        private WP.TestControl noneLevel2Control;
         private WP.TestControl hoverControl;
-        private WP.TestControl hoverLevel2Control;
         private WP.TestControl checkedHoverControl;
         private WP.TestControl checkedControl;
-        private WP.TestControl maxControl;
 
         public SchemeEditor()
         {
@@ -82,14 +79,10 @@ namespace WinPaletter.UI.Style
 
             // Create TestControl instances for different states
             noneControl = CreateTestControl(WP.TestControl.States.None, offsetY);
-            noneLevel2Control = CreateTestControl(WP.TestControl.States.NoneLevel2, offsetY + 50);
 
             hoverControl = CreateTestControl(WP.TestControl.States.Hover, offsetY + 100);
-            hoverLevel2Control = CreateTestControl(WP.TestControl.States.HoverLevel2, offsetY + 150);
-
             checkedControl = CreateTestControl(WP.TestControl.States.Checked, offsetY + 200);
             checkedHoverControl = CreateTestControl(WP.TestControl.States.CheckedHover, offsetY + 250);
-            maxControl = CreateTestControl(WP.TestControl.States.Max, offsetY + 300);
 
             buttonNoneControl = CreateTestControl(WP.TestControl.States.ButtonNone, offsetY + 400);
             buttonOverControl = CreateTestControl(WP.TestControl.States.ButtonOver, offsetY + 450);
@@ -97,12 +90,9 @@ namespace WinPaletter.UI.Style
 
             // Add TestControls to the form
             Controls.Add(noneControl);
-            Controls.Add(noneLevel2Control);
             Controls.Add(hoverControl);
-            Controls.Add(hoverLevel2Control);
             Controls.Add(checkedHoverControl);
             Controls.Add(checkedControl);
-            Controls.Add(maxControl);
             Controls.Add(buttonNoneControl);
             Controls.Add(buttonOverControl);
             Controls.Add(buttonDownControl);
@@ -146,8 +136,8 @@ namespace WinPaletter.UI.Style
             }
 
             // Create two panels for accent and back colors
-            accentPanel = CreateColorPanel("Accent Color", DefaultColors.PrimaryColor, new Point(10, offsetY + 50));
-            backPanel = CreateColorPanel("Back Color", Program.Style.DarkMode ? DefaultColors.BackColorDark : DefaultColors.BackColorLight, new Point(10, offsetY + 100));
+            accentPanel = CreateColorPanel("Accent Color", DefaultColors.PrimaryColor_Dark, new Point(10, offsetY + 50));
+            backPanel = CreateColorPanel("Back Color", Program.Style.DarkMode ? DefaultColors.BackColor_Dark : DefaultColors.BackColor_Light, new Point(10, offsetY + 100));
 
             // Hook up event handlers
             backPanel.Click += BackPanel_Click;
@@ -381,12 +371,9 @@ namespace WinPaletter.UI.Style
             };
 
             noneControl.Scheme = scheme;
-            noneLevel2Control.Scheme = scheme;
             hoverControl.Scheme = scheme;
-            hoverLevel2Control.Scheme = scheme;
             checkedHoverControl.Scheme = scheme;
             checkedControl.Scheme = scheme;
-            maxControl.Scheme = scheme;
             buttonNoneControl.Scheme = scheme;
             buttonOverControl.Scheme = scheme;
             buttonDownControl.Scheme = scheme;

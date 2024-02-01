@@ -188,7 +188,6 @@ namespace WinPaletter.UI.WP
         {
             base.Dispose(disposing);
 
-            _font?.Dispose();
             _font_Title?.Dispose();
             _image?.Dispose();
         }
@@ -210,9 +209,9 @@ namespace WinPaletter.UI.WP
             if (_image == null)
             {
                 scheme = Program.Style.Schemes.Main;
-                BackColor = scheme.Colors.Back_Hover;
+                BackColor = scheme.Colors.Back_Hover();
                 ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
-                bordersPen = scheme.Colors.Line_Hover;
+                bordersPen = scheme.Colors.Line_Hover();
             }
             else
             {

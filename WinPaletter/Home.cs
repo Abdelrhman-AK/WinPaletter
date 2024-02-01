@@ -188,7 +188,7 @@ namespace WinPaletter
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Forms.RescueTools.Show();
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.RescueTools);
         }
 
         private void Button31_Click(object sender, EventArgs e)

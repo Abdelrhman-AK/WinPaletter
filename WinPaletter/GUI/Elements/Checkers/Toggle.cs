@@ -186,6 +186,15 @@ namespace WinPaletter.UI.WP
             base.OnMouseDown(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -196,15 +205,12 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            // ################################################################################# Customizer
             Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
@@ -221,7 +227,6 @@ namespace WinPaletter.UI.WP
             if (CheckC.X >= max) val = 1m;
 
             int alpha = (int)Math.Round(255m * val);
-            // #################################################################################
 
             if (!DarkLight_Toggler)
             {
@@ -233,9 +238,9 @@ namespace WinPaletter.UI.WP
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt.IsDark() ? Color.Black : Color.White))) { G.FillEllipse(br, CheckC); }
 
                 // Non checked part
-                using (SolidBrush br = new(Color.FromArgb(255 - alpha, scheme.Colors.Back_Max))) { G.FillEllipse(br, CheckC); }
+                using (SolidBrush br = new(Color.FromArgb(255 - alpha, scheme.Colors.ForeColor))) { G.FillEllipse(br, CheckC); }
 
-                using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_Max))) { G.DrawRoundedRect(P, MainRect, 9, true); }
+                using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.ForeColor))) { G.DrawRoundedRect(P, MainRect, 9, true); }
             }
 
             else
@@ -267,8 +272,8 @@ namespace WinPaletter.UI.WP
 
                 if (Checked)
                 {
-                    using (Bitmap b0 = (scheme.Colors.Line_Max.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.Line_Max.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((float)(1m - val)))
+                    using (Bitmap b0 = (scheme.Colors.Line(parentLevel).IsDark() ? Properties.Resources.darkmode_light : Properties.Resources.darkmode_dark).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Properties.Resources.lightmode_light : Properties.Resources.lightmode_dark).Fade((float)(1m - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);
@@ -276,8 +281,8 @@ namespace WinPaletter.UI.WP
                 }
                 else
                 {
-                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((float)(1m - val)))
+                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.darkmode_light : Properties.Resources.darkmode_dark).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.lightmode_light : Properties.Resources.lightmode_dark).Fade((float)(1m - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);

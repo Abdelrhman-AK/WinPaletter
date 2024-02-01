@@ -195,6 +195,15 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Methods
@@ -245,8 +254,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -258,10 +265,18 @@ namespace WinPaletter.UI.WP
             bool RTL = (int)RightToLeft == 1;
             StringFormat format = ContentAlignment.MiddleLeft.ToStringFormat(RTL);
 
-            Rectangle OuterCircle = new(3, 4, Height - 8, Height - 8);
-            Rectangle InnerCircle = new(4, 5, Height - 10, Height - 10);
-            Rectangle CheckCircle = new(7, 8, Height - 16, Height - 16);
-            Rectangle TextRect = new(Height - 1, 1, Width - OuterCircle.Width, Height - 1);
+            int maxHeight = Math.Min(25, Height);
+            int OuterCircleSize = maxHeight - 8;    
+            int InnerCircleSize = maxHeight - 10;
+            int CheckCircleSize = maxHeight - 16;
+
+            Rectangle OuterCircle = new(3, (Height - OuterCircleSize) / 2, OuterCircleSize, OuterCircleSize);
+            Rectangle InnerCircle = new(OuterCircle.X + (OuterCircle.Width - InnerCircleSize) / 2, OuterCircle.Y + (OuterCircle.Height - InnerCircleSize) / 2, InnerCircleSize, InnerCircleSize);
+            Rectangle CheckCircle = new(OuterCircle.X + (OuterCircle.Width - CheckCircleSize) / 2, OuterCircle.Y + (OuterCircle.Height - CheckCircleSize) / 2, CheckCircleSize, CheckCircleSize);
+            Rectangle TextRect = new(maxHeight - 1, 1, Width - OuterCircle.Width, Height - 1);
+
+            Rectangle OuterCircle_GradienceFix = new(OuterCircle.X, OuterCircle.Y, OuterCircle.Width + 1, OuterCircle.Height + 1);
+            Rectangle InnerCircle_GradienceFix = new(InnerCircle.X, InnerCircle.Y, InnerCircle.Width + 1, InnerCircle.Height + 1);
 
             if (RTL)
             {
@@ -272,44 +287,37 @@ namespace WinPaletter.UI.WP
                 TextRect.Width -= OuterCircle.Width + 13;
             }
 
-            #region Colors System
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Color BackCircle_Color = scheme.Colors.Back_Level2;
-            Color BackCircle_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover_Level2);
-
-            Color BackCircle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover_Level2);
-            Color BackCircle_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover_Level2);
-
-            Color Checked_Circle_Color = Color.FromArgb(alpha2, scheme.Colors.Back_Checked);
-            Color Checked_Circle_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
-
-            Color Checked_Dot_Color = Color.FromArgb(alpha2, scheme.Colors.AccentAlt);
-            #endregion
             // #################################################################################
 
-            using (SolidBrush br = new(BackCircle_Color)) { G.FillEllipse(br, InnerCircle); }
-
-            using (SolidBrush br = new(Checked_Circle_Color)) { G.FillEllipse(br, OuterCircle); }
-
-            if (_Checked)
+            using (LinearGradientBrush lgb0 = new(InnerCircle_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb2 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (Pen P0 = new(lgb1))
+            using (Pen P1 = new(lgb2))
             {
-                using (SolidBrush br = new(Checked_Circle_Color_Hover)) { G.FillEllipse(br, OuterCircle); }
-                using (Pen P = new(Color.FromArgb(FocusAlpha, Checked_Circle_Color_Hover))) { G.DrawEllipse(P, OuterCircle); }
-            }
-            else
-            {
-                using (Pen P = new(BackCircle_LineColor)) { G.DrawEllipse(P, InnerCircle); }
-                using (SolidBrush br = new(BackCircle_Color_Hover)) { G.FillEllipse(br, OuterCircle); }
-                using (Pen P = new(BackCircle_LineColor_Hover)) { G.DrawEllipse(P, OuterCircle); }
+                G.FillEllipse(lgb0, InnerCircle);
+                G.DrawEllipse(P0, InnerCircle);
+                G.DrawEllipse(P1, OuterCircle);
             }
 
-            using (SolidBrush br = new(Checked_Dot_Color)) { G.FillEllipse(br, CheckCircle); }
+            using (LinearGradientBrush lgb0 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (SolidBrush br = new(Color.FromArgb(alpha2, Color.White)))
+            using (SolidBrush lgb3 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt)))
+            using (Pen P = new(lgb1))
+            {
+                G.FillEllipse(lgb0, OuterCircle);
+                G.DrawEllipse(P, OuterCircle);
+                if (_Checked) G.FillEllipse(lgb3, OuterCircle);
+                G.FillEllipse(br, CheckCircle);
+            }
 
             #region Strings
             using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
 
-            using (SolidBrush br = new(Checked_Dot_Color)) { G.DrawString(Text, Font, br, TextRect, format); }
+            using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
             #endregion
 
             format.Dispose();

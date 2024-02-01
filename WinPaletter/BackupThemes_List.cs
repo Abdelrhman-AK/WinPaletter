@@ -238,7 +238,10 @@ namespace WinPaletter
         {
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            e.Graphics.FillRectangle(scheme.Brushes.Back, e.Bounds);
+            using (SolidBrush br = new(scheme.Colors.Back((sender as ListView).Level())))
+            {
+                e.Graphics.FillRectangle(br, e.Bounds);
+            }
 
             TextRenderer.DrawText(e.Graphics, e.Header.Text, listView1.Font, e.Bounds, listView1.ForeColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
         }
@@ -254,7 +257,7 @@ namespace WinPaletter
             {
                 if (MsgBox(Program.Lang.Backup_RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
+                    Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, false, true);
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;
                     Forms.ThemeLog.Apply_Theme();
 

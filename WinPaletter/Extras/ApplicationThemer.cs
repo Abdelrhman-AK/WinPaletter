@@ -88,6 +88,13 @@ namespace WinPaletter
                 OnImportFromCurrentApplied = LoadFromCurrent,
             };
 
+            BackColorPick.DefaultBackColor = DefaultColors.BackColor_Dark;
+            AccentColor.DefaultBackColor = DefaultColors.PrimaryColor_Dark;
+            SecColor.DefaultBackColor = DefaultColors.SecondaryColor_Dark;
+            TerColor.DefaultBackColor = DefaultColors.TertiaryColor_Dark;
+            DisabledColor.DefaultBackColor = DefaultColors.DisabledColor_Dark;
+            DisabledBackColor.DefaultBackColor = DefaultColors.DisabledBackColor_Dark;
+
             LoadData(data);
 
             LoadFromTM(Program.TM);
@@ -107,10 +114,10 @@ namespace WinPaletter
             BackColorPick.BackColor = TM.AppTheme.BackColor;
             AccentColor.BackColor = TM.AppTheme.AccentColor;
             checkBox1.Checked = TM.AppTheme.Animations;
-            colorItem1.BackColor = TM.AppTheme.SecondaryColor;
-            colorItem2.BackColor = TM.AppTheme.TertiaryColor;
-            colorItem3.BackColor = TM.AppTheme.DisabledColor;
-            colorItem4.BackColor = TM.AppTheme.DisabledBackColor;
+            SecColor.BackColor = TM.AppTheme.SecondaryColor;
+            TerColor.BackColor = TM.AppTheme.TertiaryColor;
+            DisabledColor.BackColor = TM.AppTheme.DisabledColor;
+            DisabledBackColor.BackColor = TM.AppTheme.DisabledBackColor;
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -121,10 +128,10 @@ namespace WinPaletter
             TM.AppTheme.BackColor = BackColorPick.BackColor;
             TM.AppTheme.AccentColor = AccentColor.BackColor;
             TM.AppTheme.Animations = checkBox1.Checked;
-            TM.AppTheme.SecondaryColor = colorItem1.BackColor;
-            TM.AppTheme.TertiaryColor = colorItem2.BackColor;
-            TM.AppTheme.DisabledColor = colorItem3.BackColor;
-            TM.AppTheme.DisabledBackColor = colorItem4.BackColor;
+            TM.AppTheme.SecondaryColor = SecColor.BackColor;
+            TM.AppTheme.TertiaryColor = TerColor.BackColor;
+            TM.AppTheme.DisabledColor = DisabledColor.BackColor;
+            TM.AppTheme.DisabledBackColor = DisabledBackColor.BackColor;
         }
 
         public void AdjustPreview()
@@ -139,15 +146,15 @@ namespace WinPaletter
             testControl2.Scheme = scheme;
             testControl3.Scheme = scheme;
 
-            Config.Scheme scheme_sec = new(colorItem1.BackColor, BackColorPick.BackColor, appearance_dark.Checked);
+            Config.Scheme scheme_sec = new(SecColor.BackColor, BackColorPick.BackColor, appearance_dark.Checked);
             testControl7.Scheme = scheme_sec;
             testControl6.Scheme = scheme_sec;
 
-            Config.Scheme scheme_ter = new(colorItem2.BackColor, BackColorPick.BackColor, appearance_dark.Checked);
+            Config.Scheme scheme_ter = new(TerColor.BackColor, BackColorPick.BackColor, appearance_dark.Checked);
             testControl9.Scheme = scheme_ter;
             testControl8.Scheme = scheme_ter;
 
-            Config.Scheme scheme_dis = new(colorItem3.BackColor, colorItem4.BackColor, appearance_dark.Checked);
+            Config.Scheme scheme_dis = new(DisabledColor.BackColor, DisabledBackColor.BackColor, appearance_dark.Checked);
             testControl14.Scheme = scheme_dis;
             testControl11.Scheme = scheme_dis;
             testControl10.Scheme = scheme_dis;
@@ -167,10 +174,6 @@ namespace WinPaletter
             AdjustPreview();
         }
 
-        private void CheckedChanged(object sender, EventArgs e)
-        {
-            AdjustPreview();
-        }
 
         private void Appearance_list_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -181,36 +184,53 @@ namespace WinPaletter
                     case var @case when @case == ("Default Dark".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.PrimaryColor;
-                            BackColorPick.BackColor = DefaultColors.BackColorDark;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7 || OS.WVista;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor_Dark;
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Dark;
+                            BackColorPick.BackColor = DefaultColors.BackColor_Dark;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Dark;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Dark;
                             break;
                         }
 
                     case var case1 when case1 == ("Default Light".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.PrimaryColor;
-                            BackColorPick.BackColor = DefaultColors.BackColorLight;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7 || OS.WVista;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor_Light;
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Light;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Light;
+                            BackColorPick.BackColor = DefaultColors.BackColor_Light;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Light;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Light;
                             break;
                         }
 
                     case var case2 when case2 == ("AMOLED".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = true;
-                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = Color.FromArgb(0, 77, 193);
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7 || OS.WVista;
+                            AccentColor.BackColor = Color.FromArgb(0, 32, 81);
                             BackColorPick.BackColor = Color.Black;
+                            DisabledBackColor.BackColor = Color.FromArgb(10, 10, 10);
+                            DisabledColor.BackColor = Color.FromArgb(26, 26, 26);
+                            SecColor.BackColor = Color.FromArgb(81, 0, 13);
+                            TerColor.BackColor = Color.FromArgb(0, 61, 23);
+
                             break;
                         }
 
                     case var case3 when case3 == ("Extreme White".ToLower() ?? string.Empty):
                         {
                             appearance_dark.Checked = false;
-                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7;
-                            AccentColor.BackColor = DefaultColors.PrimaryColor;
-                            BackColorPick.BackColor = Color.White;
+                            RoundedCorners.Checked = OS.W12 || OS.W11 || OS.W7 || OS.WVista;
+                            AccentColor.BackColor = DefaultColors.PrimaryColor_Light;
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Light;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Light;
+                            BackColorPick.BackColor = Color.FromArgb(247, 247, 247);
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Light;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Light;
                             break;
                         }
 
@@ -218,8 +238,13 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(19, 35, 58);
+                            AccentColor.BackColor = Color.FromArgb(193, 51, 0);
                             BackColorPick.BackColor = Color.FromArgb(13, 17, 23);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Dark;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Dark;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Dark;
                             break;
                         }
 
@@ -227,8 +252,13 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(31, 111, 235);
+                            AccentColor.BackColor = Color.FromArgb(195, 41, 2);
                             BackColorPick.BackColor = Color.FromArgb(246, 248, 250);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Light;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Light;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Light;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Light;
                             break;
                         }
 
@@ -238,6 +268,12 @@ namespace WinPaletter
                             RoundedCorners.Checked = true;
                             AccentColor.BackColor = Color.FromArgb(255, 70, 0);
                             BackColorPick.BackColor = Color.FromArgb(9, 9, 9);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Dark;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Dark;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Dark;
+
                             break;
                         }
 
@@ -247,6 +283,12 @@ namespace WinPaletter
                             RoundedCorners.Checked = true;
                             AccentColor.BackColor = Color.FromArgb(216, 49, 3);
                             BackColorPick.BackColor = Color.FromArgb(242, 242, 242);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Light;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Light;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Light;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Light;
+
                             break;
                         }
 
@@ -256,6 +298,12 @@ namespace WinPaletter
                             RoundedCorners.Checked = false;
                             AccentColor.BackColor = Color.FromArgb(35, 69, 117);
                             BackColorPick.BackColor = Color.FromArgb(32, 34, 38);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Dark;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Dark;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Dark;
+
                             break;
                         }
 
@@ -263,8 +311,14 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = false;
-                            AccentColor.BackColor = Color.FromArgb(130, 132, 135);
-                            BackColorPick.BackColor = Color.FromArgb(255, 255, 255);
+                            AccentColor.BackColor = Color.FromArgb(89, 91, 93);
+                            BackColorPick.BackColor = Color.FromArgb(240, 240, 240);
+
+                            SecColor.BackColor = DefaultColors.SecondaryColor_Light;
+                            TerColor.BackColor = DefaultColors.TertiaryColor_Light;
+                            DisabledBackColor.BackColor = DefaultColors.DisabledBackColor_Light;
+                            DisabledColor.BackColor = DefaultColors.DisabledColor_Light;
+
                             break;
                         }
 
@@ -336,14 +390,14 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                colorItem1.BackColor = Forms.SubMenu.ShowMenu(colorItem1);
+                SecColor.BackColor = Forms.SubMenu.ShowMenu(SecColor);
                 AdjustPreview();
                 return;
             }
 
             Dictionary<Control, string[]> CList = new()
             {
-                { colorItem1, new string[] { nameof(colorItem1.BackColor) } }
+                { SecColor, new string[] { nameof(SecColor.BackColor) } }
             };
 
             Forms.ColorPickerDlg.Pick(CList);
@@ -362,14 +416,14 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                colorItem2.BackColor = Forms.SubMenu.ShowMenu(colorItem2);
+                TerColor.BackColor = Forms.SubMenu.ShowMenu(TerColor);
                 AdjustPreview();
                 return;
             }
 
             Dictionary<Control, string[]> CList = new()
             {
-                { colorItem2, new string[] { nameof(colorItem2.BackColor) } }
+                { TerColor, new string[] { nameof(TerColor.BackColor) } }
             };
 
             Forms.ColorPickerDlg.Pick(CList);
@@ -388,14 +442,14 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                colorItem3.BackColor = Forms.SubMenu.ShowMenu(colorItem3);
+                DisabledColor.BackColor = Forms.SubMenu.ShowMenu(DisabledColor);
                 AdjustPreview();
                 return;
             }
 
             Dictionary<Control, string[]> CList = new()
             {
-                { colorItem3, new string[] { nameof(colorItem3.BackColor) } }
+                { DisabledColor, new string[] { nameof(DisabledColor.BackColor) } }
             };
 
             Forms.ColorPickerDlg.Pick(CList);
@@ -414,19 +468,48 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                colorItem4.BackColor = Forms.SubMenu.ShowMenu(colorItem4);
+                DisabledBackColor.BackColor = Forms.SubMenu.ShowMenu(DisabledBackColor);
                 AdjustPreview();
                 return;
             }
 
             Dictionary<Control, string[]> CList = new()
             {
-                { colorItem4, new string[] { nameof(colorItem4.BackColor) } }
+                { DisabledBackColor, new string[] { nameof(DisabledBackColor.BackColor) } }
             };
 
             Forms.ColorPickerDlg.Pick(CList);
             CList.Clear();
 
+            AdjustPreview();
+        }
+
+        private void appearance_dark_CheckedChanged(object sender, EventArgs e)
+        {
+            AdjustPreview();
+
+            if ((sender as UI.WP.CheckBox).Checked)
+            {
+                BackColorPick.DefaultBackColor = DefaultColors.BackColor_Dark;
+                AccentColor.DefaultBackColor = DefaultColors.PrimaryColor_Dark;
+                SecColor.DefaultBackColor = DefaultColors.SecondaryColor_Dark;
+                TerColor.DefaultBackColor = DefaultColors.TertiaryColor_Dark;
+                DisabledColor.DefaultBackColor = DefaultColors.DisabledColor_Dark;
+                DisabledBackColor.DefaultBackColor = DefaultColors.DisabledBackColor_Dark;
+            }
+            else
+            {
+                BackColorPick.DefaultBackColor = DefaultColors.BackColor_Light;
+                AccentColor.DefaultBackColor = DefaultColors.PrimaryColor_Light;
+                SecColor.DefaultBackColor = DefaultColors.SecondaryColor_Light;
+                TerColor.DefaultBackColor = DefaultColors.TertiaryColor_Light;
+                DisabledColor.DefaultBackColor = DefaultColors.DisabledColor_Light;
+                DisabledBackColor.DefaultBackColor = DefaultColors.DisabledBackColor_Light;
+            }
+        }
+
+        private void RoundedCorners_CheckedChanged(object sender, EventArgs e)
+        {
             AdjustPreview();
         }
     }

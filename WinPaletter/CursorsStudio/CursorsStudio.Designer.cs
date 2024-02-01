@@ -231,6 +231,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(952, 52);
             // 
             // Timer1
@@ -1330,13 +1331,13 @@ namespace WinPaletter
             // button20
             // 
             this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button20.CustomColor = System.Drawing.Color.Empty;
-            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button20.ForeColor = System.Drawing.Color.White;
-            this.button20.Image = ((System.Drawing.Image)(resources.GetObject("button20.Image")));
-            this.button20.ImageAsVector = false;
-            this.button20.ImageVector = null;
+            this.button20.Image = null;
+            this.button20.ImageAsVector = true;
+            this.button20.ImageVector = ((System.Drawing.Image)(resources.GetObject("button20.ImageVector")));
             this.button20.Location = new System.Drawing.Point(412, 42);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(34, 24);

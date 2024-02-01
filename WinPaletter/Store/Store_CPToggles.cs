@@ -23,13 +23,13 @@ namespace WinPaletter
 
             CheckedListBox1.Items.Clear();
 
-            if (OS.W12 && TM.Windows12.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if (OS.W11 && TM.Windows11.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if (OS.W10 && TM.Windows10.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if ((OS.W8x) && TM.Windows81.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if (OS.W7 && TM.Windows7.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if (OS.WVista && TM.WindowsVista.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
-            if (OS.WXP && TM.WindowsXP.Enabled) CheckedListBox1.Items.Add(Program.Lang.WindowsColors, true);
+            if (OS.W12 && TM.Windows12.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win12), true);
+            if (OS.W11 && TM.Windows11.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win11), true);
+            if (OS.W10 && TM.Windows10.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win10), true);
+            if ((OS.W8x) && TM.Windows81.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win81), true);
+            if (OS.W7 && TM.Windows7.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win7), true);
+            if (OS.WVista && TM.WindowsVista.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinVista), true);
+            if (OS.WXP && TM.WindowsXP.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinXP), true);
 
             if (TM.AppTheme.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_AppTheme, true);
@@ -75,16 +75,26 @@ namespace WinPaletter
         {
             for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++)
             {
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.WindowsColors)
-                {
-                    if (OS.W12) TM.Windows12.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.W11) TM.Windows11.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.W10) TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.W81) TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.W7) TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.WVista) TM.WindowsVista.Enabled = CheckedListBox1.GetItemChecked(i);
-                    if (OS.WXP) TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
-                }
+                if (OS.W12 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win12).ToLower())
+                    TM.Windows12.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.W11 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win11).ToLower())
+                    TM.Windows11.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.W10 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win10).ToLower())
+                    TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.W81 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win81).ToLower())
+                    TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.W7 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win7).ToLower())
+                    TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.WVista && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinVista).ToLower())
+                    TM.WindowsVista.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.WXP && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinXP).ToLower())
+                    TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_AppTheme)
                     TM.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i);

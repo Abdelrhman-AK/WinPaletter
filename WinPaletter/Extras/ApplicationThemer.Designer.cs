@@ -69,22 +69,22 @@ namespace WinPaletter
             this.label7 = new System.Windows.Forms.Label();
             this.testControl11 = new WinPaletter.UI.WP.TestControl();
             this.testControl12 = new WinPaletter.UI.WP.TestControl();
-            this.colorItem4 = new WinPaletter.UI.Controllers.ColorItem();
+            this.DisabledBackColor = new WinPaletter.UI.Controllers.ColorItem();
             this.testControl13 = new WinPaletter.UI.WP.TestControl();
             this.testControl8 = new WinPaletter.UI.WP.TestControl();
             this.testControl14 = new WinPaletter.UI.WP.TestControl();
             this.testControl9 = new WinPaletter.UI.WP.TestControl();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.colorItem3 = new WinPaletter.UI.Controllers.ColorItem();
+            this.DisabledColor = new WinPaletter.UI.Controllers.ColorItem();
             this.testControl6 = new WinPaletter.UI.WP.TestControl();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.testControl7 = new WinPaletter.UI.WP.TestControl();
-            this.colorItem2 = new WinPaletter.UI.Controllers.ColorItem();
+            this.TerColor = new WinPaletter.UI.Controllers.ColorItem();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.colorItem1 = new WinPaletter.UI.Controllers.ColorItem();
+            this.SecColor = new WinPaletter.UI.Controllers.ColorItem();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox46)).BeginInit();
@@ -106,6 +106,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1022, 52);
             // 
             // Label29
@@ -214,7 +215,7 @@ namespace WinPaletter
             this.RoundedCorners.Size = new System.Drawing.Size(959, 24);
             this.RoundedCorners.TabIndex = 221;
             this.RoundedCorners.Text = "Rounded corners";
-            this.RoundedCorners.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckedChanged);
+            this.RoundedCorners.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.RoundedCorners_CheckedChanged);
             // 
             // appearance_dark
             // 
@@ -228,7 +229,7 @@ namespace WinPaletter
             this.appearance_dark.Size = new System.Drawing.Size(959, 24);
             this.appearance_dark.TabIndex = 219;
             this.appearance_dark.Text = "Dark mode";
-            this.appearance_dark.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckedChanged);
+            this.appearance_dark.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.appearance_dark_CheckedChanged);
             // 
             // appearance_list
             // 
@@ -282,7 +283,7 @@ namespace WinPaletter
             this.testControl5.Location = new System.Drawing.Point(945, 39);
             this.testControl5.Name = "testControl5";
             this.testControl5.Size = new System.Drawing.Size(51, 24);
-            this.testControl5.State = WinPaletter.UI.WP.TestControl.States.Max;
+            this.testControl5.State = WinPaletter.UI.WP.TestControl.States.None;
             this.testControl5.TabIndex = 235;
             // 
             // testControl4
@@ -442,22 +443,22 @@ namespace WinPaletter
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.testControl11);
             this.groupBox3.Controls.Add(this.testControl12);
-            this.groupBox3.Controls.Add(this.colorItem4);
+            this.groupBox3.Controls.Add(this.DisabledBackColor);
             this.groupBox3.Controls.Add(this.testControl13);
             this.groupBox3.Controls.Add(this.testControl8);
             this.groupBox3.Controls.Add(this.testControl14);
             this.groupBox3.Controls.Add(this.testControl9);
             this.groupBox3.Controls.Add(this.pictureBox6);
             this.groupBox3.Controls.Add(this.pictureBox7);
-            this.groupBox3.Controls.Add(this.colorItem3);
+            this.groupBox3.Controls.Add(this.DisabledColor);
             this.groupBox3.Controls.Add(this.testControl6);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.testControl7);
-            this.groupBox3.Controls.Add(this.colorItem2);
+            this.groupBox3.Controls.Add(this.TerColor);
             this.groupBox3.Controls.Add(this.pictureBox4);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.colorItem1);
+            this.groupBox3.Controls.Add(this.SecColor);
             this.groupBox3.Controls.Add(this.pictureBox5);
             this.groupBox3.Controls.Add(this.testControl5);
             this.groupBox3.Controls.Add(this.label1);
@@ -509,7 +510,7 @@ namespace WinPaletter
             this.testControl10.Location = new System.Drawing.Point(945, 69);
             this.testControl10.Name = "testControl10";
             this.testControl10.Size = new System.Drawing.Size(51, 24);
-            this.testControl10.State = WinPaletter.UI.WP.TestControl.States.Max;
+            this.testControl10.State = WinPaletter.UI.WP.TestControl.States.None;
             this.testControl10.TabIndex = 249;
             // 
             // pictureBox8
@@ -556,19 +557,19 @@ namespace WinPaletter
             this.testControl12.State = WinPaletter.UI.WP.TestControl.States.CheckedHover;
             this.testControl12.TabIndex = 246;
             // 
-            // colorItem4
+            // DisabledBackColor
             // 
-            this.colorItem4.AllowDrop = true;
-            this.colorItem4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.colorItem4.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.colorItem4.DontShowInfo = false;
-            this.colorItem4.Location = new System.Drawing.Point(705, 69);
-            this.colorItem4.Name = "colorItem4";
-            this.colorItem4.Size = new System.Drawing.Size(112, 24);
-            this.colorItem4.TabIndex = 239;
-            this.colorItem4.Click += new System.EventHandler(this.colorItem4_Click);
-            this.colorItem4.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
+            this.DisabledBackColor.AllowDrop = true;
+            this.DisabledBackColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DisabledBackColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.DisabledBackColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.DisabledBackColor.DontShowInfo = false;
+            this.DisabledBackColor.Location = new System.Drawing.Point(705, 69);
+            this.DisabledBackColor.Name = "DisabledBackColor";
+            this.DisabledBackColor.Size = new System.Drawing.Size(112, 24);
+            this.DisabledBackColor.TabIndex = 239;
+            this.DisabledBackColor.Click += new System.EventHandler(this.colorItem4_Click);
+            this.DisabledBackColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
             // 
             // testControl13
             // 
@@ -636,19 +637,19 @@ namespace WinPaletter
             this.pictureBox7.TabIndex = 234;
             this.pictureBox7.TabStop = false;
             // 
-            // colorItem3
+            // DisabledColor
             // 
-            this.colorItem3.AllowDrop = true;
-            this.colorItem3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
-            this.colorItem3.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
-            this.colorItem3.DontShowInfo = false;
-            this.colorItem3.Location = new System.Drawing.Point(705, 189);
-            this.colorItem3.Name = "colorItem3";
-            this.colorItem3.Size = new System.Drawing.Size(112, 24);
-            this.colorItem3.TabIndex = 236;
-            this.colorItem3.Click += new System.EventHandler(this.colorItem3_Click);
-            this.colorItem3.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
+            this.DisabledColor.AllowDrop = true;
+            this.DisabledColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DisabledColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
+            this.DisabledColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(89)))), ((int)(((byte)(89)))), ((int)(((byte)(89)))));
+            this.DisabledColor.DontShowInfo = false;
+            this.DisabledColor.Location = new System.Drawing.Point(705, 189);
+            this.DisabledColor.Name = "DisabledColor";
+            this.DisabledColor.Size = new System.Drawing.Size(112, 24);
+            this.DisabledColor.TabIndex = 236;
+            this.DisabledColor.Click += new System.EventHandler(this.colorItem3_Click);
+            this.DisabledColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
             // 
             // testControl6
             // 
@@ -694,19 +695,19 @@ namespace WinPaletter
             this.testControl7.State = WinPaletter.UI.WP.TestControl.States.Checked;
             this.testControl7.TabIndex = 239;
             // 
-            // colorItem2
+            // TerColor
             // 
-            this.colorItem2.AllowDrop = true;
-            this.colorItem2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
-            this.colorItem2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
-            this.colorItem2.DontShowInfo = false;
-            this.colorItem2.Location = new System.Drawing.Point(705, 159);
-            this.colorItem2.Name = "colorItem2";
-            this.colorItem2.Size = new System.Drawing.Size(112, 24);
-            this.colorItem2.TabIndex = 233;
-            this.colorItem2.Click += new System.EventHandler(this.colorItem2_Click);
-            this.colorItem2.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
+            this.TerColor.AllowDrop = true;
+            this.TerColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TerColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
+            this.TerColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(21)))));
+            this.TerColor.DontShowInfo = false;
+            this.TerColor.Location = new System.Drawing.Point(705, 159);
+            this.TerColor.Name = "TerColor";
+            this.TerColor.Size = new System.Drawing.Size(112, 24);
+            this.TerColor.TabIndex = 233;
+            this.TerColor.Click += new System.EventHandler(this.colorItem2_Click);
+            this.TerColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
             // 
             // pictureBox4
             // 
@@ -730,19 +731,19 @@ namespace WinPaletter
             this.label3.Text = "Secondary color (for errors):";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // colorItem1
+            // SecColor
             // 
-            this.colorItem1.AllowDrop = true;
-            this.colorItem1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
-            this.colorItem1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
-            this.colorItem1.DontShowInfo = false;
-            this.colorItem1.Location = new System.Drawing.Point(705, 129);
-            this.colorItem1.Name = "colorItem1";
-            this.colorItem1.Size = new System.Drawing.Size(112, 24);
-            this.colorItem1.TabIndex = 230;
-            this.colorItem1.Click += new System.EventHandler(this.colorItem1_Click);
-            this.colorItem1.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
+            this.SecColor.AllowDrop = true;
+            this.SecColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SecColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
+            this.SecColor.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(0)))), ((int)(((byte)(31)))));
+            this.SecColor.DontShowInfo = false;
+            this.SecColor.Location = new System.Drawing.Point(705, 129);
+            this.SecColor.Name = "SecColor";
+            this.SecColor.Size = new System.Drawing.Size(112, 24);
+            this.SecColor.TabIndex = 230;
+            this.SecColor.Click += new System.EventHandler(this.colorItem1_Click);
+            this.SecColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.AccentColor_BackColorPick_DragDrop);
             // 
             // pictureBox5
             // 
@@ -778,6 +779,7 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.AlertBox2);
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -840,10 +842,10 @@ namespace WinPaletter
         internal UI.WP.GroupBox groupBox3;
         internal PictureBox pictureBox6;
         internal Label label4;
-        internal UI.Controllers.ColorItem colorItem2;
+        internal UI.Controllers.ColorItem TerColor;
         internal PictureBox pictureBox4;
         internal Label label3;
-        internal UI.Controllers.ColorItem colorItem1;
+        internal UI.Controllers.ColorItem SecColor;
         internal PictureBox pictureBox5;
         internal Label label1;
         public UI.WP.TestControl testControl6;
@@ -852,10 +854,10 @@ namespace WinPaletter
         public UI.WP.TestControl testControl9;
         internal PictureBox pictureBox7;
         internal Label label6;
-        internal UI.Controllers.ColorItem colorItem3;
+        internal UI.Controllers.ColorItem DisabledColor;
         internal PictureBox pictureBox8;
         internal Label label7;
-        internal UI.Controllers.ColorItem colorItem4;
+        internal UI.Controllers.ColorItem DisabledBackColor;
         public UI.WP.TestControl testControl12;
         public UI.WP.TestControl testControl13;
         public UI.WP.TestControl testControl10;

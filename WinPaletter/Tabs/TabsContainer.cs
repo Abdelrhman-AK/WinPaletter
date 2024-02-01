@@ -1013,6 +1013,15 @@ namespace WinPaletter.Tabs
             base.OnDragOver(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Graphics
@@ -1160,8 +1169,12 @@ namespace WinPaletter.Tabs
                     }
                     else if (tabData.Selected)
                     {
-                        G.FillPath(scheme.Brushes.Back_Hover, path);
-                        G.DrawPath(scheme.Pens.Line_Hover, path);
+                        using (SolidBrush br = new(scheme.Colors.Back_Hover(parentLevel)))
+                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
+                        {
+                            G.FillPath(br, path);
+                            G.DrawPath(P, path);
+                        }
                     }
                     else
                     {
@@ -1174,8 +1187,12 @@ namespace WinPaletter.Tabs
                         }
                         else
                         {
-                            G.FillPath(scheme.Brushes.Back, path);
-                            G.DrawPath(scheme.Pens.Line, path);
+                            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
+                            using (Pen P = new(scheme.Colors.Line(parentLevel)))
+                            {
+                                G.FillPath(br, path);
+                                G.DrawPath(P, path);
+                            }
                         }
                     }
                 }

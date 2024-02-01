@@ -619,7 +619,7 @@ namespace WinPaletter
                 float left = e.CellBounds.Left + (keyPos <= 0 ? 0f : textMetricSize.Width); // + 2
                 RectangleF keyRect = new(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height);
 
-                SolidBrush fillBrush = new(Program.Style.Schemes.Tertiary.Colors.Line_Hover);
+                SolidBrush fillBrush = new(Program.Style.Schemes.Tertiary.Colors.Line_Hover((sender as DataGridView).Level()));
                 e.Graphics.FillRectangle(fillBrush, keyRect);
                 fillBrush.Dispose();
 

@@ -120,6 +120,15 @@ namespace WinPaletter.Tabs
             base.OnMouseMove(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         private void update_DWM()
         {
             if (_dropDWMEffect)
@@ -185,7 +194,7 @@ namespace WinPaletter.Tabs
             }
             else
             {
-                BackColor = scheme.Colors.Back_Hover;
+                BackColor = scheme.Colors.Back_Hover(parentLevel);
             }
         }
 
@@ -198,7 +207,7 @@ namespace WinPaletter.Tabs
                     Rectangle rect = new(-1, 0, Width + 1, Height - 1);
                     Rectangle rectExclude = new(TabLocation.X, 0, TabLocation.Width, 1);
                     e.Graphics.ExcludeClip(rectExclude);
-                    using (Pen P = new(scheme.Colors.Line_Hover)) { e.Graphics.DrawRectangle(P, rect); }
+                    using (Pen P = new(scheme.Colors.Line_Hover(parentLevel))) { e.Graphics.DrawRectangle(P, rect); }
                     e.Graphics.ResetClip();
                 }
             }

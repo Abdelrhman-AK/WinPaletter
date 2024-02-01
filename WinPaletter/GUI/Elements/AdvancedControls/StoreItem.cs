@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -124,7 +125,15 @@ namespace WinPaletter.UI.Controllers
             pattern?.Dispose();
             Noise?.Dispose();
 
-            base.Dispose(disposing);    
+            base.Dispose(disposing);
+        }
+
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
         }
 
         #endregion
@@ -229,7 +238,7 @@ namespace WinPaletter.UI.Controllers
                 {
                     imgF.Load(bmp);
                     imgF.Contrast(50);
-                    bmp = (imgF.Image as Bitmap).Invert();
+                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.8f);
                 }
             }
             pattern = new(bmp);
@@ -272,12 +281,15 @@ namespace WinPaletter.UI.Controllers
             Rectangle rect_outer = new(0, 0, Width - 1, Height - 1);
             Rectangle rect_inner = new(1, 1, Width - 3, Height - 3);
 
-            Color bkC = Color.FromArgb(255 - alpha, scheme.Colors.Back);
+            Color bkC = Color.FromArgb(255 - alpha, scheme.Colors.Back(parentLevel));
             Color bkCC = bkC;
 
             if (TM is not null)
             {
-                bkCC = Color.FromArgb(alpha, Program.Style.DarkMode ? TM.Info.Color1.Dark() : TM.Info.Color1.Light());
+                using (Colors_Collection colorsCollection = new(TM.Info.Color1, TM.Info.Color1, Program.Style.DarkMode))
+                {
+                    bkCC = Color.FromArgb(alpha, colorsCollection.Back_Checked_Hover);
+                }
             }
 
             using (SolidBrush br = new(bkC)) { G.FillRoundedRect(br, rect_inner); }
@@ -296,21 +308,17 @@ namespace WinPaletter.UI.Controllers
             if (TM is not null)
             {
                 using (SolidBrush br = new(Color.FromArgb(125, TM.Info.Color2)))
+                using (Pen P = new(TM.Info.Color2.CB(0.3f * (Program.Style.DarkMode ? +1f : +2f)), 1.75f))
                 {
-                    using (Pen P = new(TM.Info.Color2.CB(0.3f), 1.75f))
-                    {
-                        G.FillEllipse(br, Circle2);
-                        G.DrawEllipse(P, Circle2);
-                    }
+                    G.FillEllipse(br, Circle2);
+                    G.DrawEllipse(P, Circle2);
                 }
 
                 using (SolidBrush br = new(Color.FromArgb(125, TM.Info.Color1)))
+                using (Pen P = new(TM.Info.Color1.CB(0.3f * (Program.Style.DarkMode ? +1f : +2f)), 1.75f))
                 {
-                    using (Pen P = new(TM.Info.Color1.CB(0.3f), 1.75f))
-                    {
-                        G.FillEllipse(br, Circle1);
-                        G.DrawEllipse(P, Circle1);
-                    }
+                    G.FillEllipse(br, Circle1);
+                    G.DrawEllipse(P, Circle1);
                 }
             }
 
@@ -318,8 +326,22 @@ namespace WinPaletter.UI.Controllers
 
             if (State != MouseState.None) G.FillRoundedRect(Noise, rect_inner);
 
-            Color lC = Color.FromArgb(255 - alpha, State != MouseState.None ? scheme.Colors.Line_Checked : scheme.Colors.Line);
-            Color lCC = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
+            Color lC, lCC;
+            if (TM is not null)
+            {
+                using (Colors_Collection colorsCollection = new(TM.Info.Color1, TM.Info.Color1, Program.Style.DarkMode))
+                {
+                    bkCC = Color.FromArgb(alpha, colorsCollection.Back_Checked_Hover);
+
+                    lC = Color.FromArgb(255 - alpha, State != MouseState.None ? colorsCollection.Line_Checked : scheme.Colors.Line(parentLevel));
+                    lCC = Color.FromArgb(alpha, colorsCollection.Line_Checked_Hover);
+                }
+            }
+            else
+            {
+                lC = Color.FromArgb(255 - alpha, State != MouseState.None ? scheme.Colors.Line_Checked : scheme.Colors.Line(parentLevel));
+                lCC = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
+            }
 
             using (Pen P = new(lC)) { G.DrawRoundedRect_LikeW11(P, rect_inner); }
             using (Pen P = new(lCC)) { G.DrawRoundedRect_LikeW11(P, rect_outer); }
@@ -331,14 +353,12 @@ namespace WinPaletter.UI.Controllers
 
             if (TM is not null)
             {
-                Color FC = Color.FromArgb(Math.Max(100, alpha), bkC.IsDark() ? Color.White : Color.Black);
+                Color FC = Color.FromArgb(Math.Max(125, alpha), bkC.IsDark() ? Color.White : Color.Black);
 
                 using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
+                using (SolidBrush br = new(FC))
                 {
-                    using (SolidBrush br = new(FC))
-                    {
-                        G.DrawString(TM.Info.ThemeName, new Font(TM.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold), br, ThemeName_Rect, sf);
-                    }
+                    G.DrawString(TM.Info.ThemeName, new Font(TM.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold), br, ThemeName_Rect, sf);
                 }
 
                 Rectangle BadgeRect = new(Author_Rect.Right + 2, Author_Rect.Y, 16, 16);

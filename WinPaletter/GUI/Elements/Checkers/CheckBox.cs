@@ -196,6 +196,15 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Animator
@@ -241,24 +250,18 @@ namespace WinPaletter.UI.WP
             bool RTL = (int)RightToLeft == 1;
             StringFormat format = ContentAlignment.MiddleLeft.ToStringFormat(RTL);
 
-            Rectangle OuterRect = new(3, 4, Height - 8, Height - 8);
-            Rectangle InnerRect = new(4, 5, Height - 10, Height - 10);
-            Rectangle TextRect = new(Height - 1, 1, Width - InnerRect.Width, Height - 1);
+            int maxHeight = Math.Min(25, Height);
+            int OuterRectSize = maxHeight - 8;
+            int InnerRectSize = maxHeight - 10;
 
-            #region Colors System
+            Rectangle OuterRect = new(3, (Height - OuterRectSize) / 2, OuterRectSize, OuterRectSize);
+            Rectangle InnerRect = new(OuterRect.X + (OuterRect.Width - InnerRectSize) / 2, OuterRect.Y + (OuterRect.Height - InnerRectSize) / 2, InnerRectSize, InnerRectSize);
+            Rectangle TextRect = new(maxHeight - 1, 1, Width - OuterRect.Width, Height - 1);
+
+            Rectangle OuterRect_GradienceFix = new(OuterRect.X, OuterRect.Y, OuterRect.Width + 1, OuterRect.Height + 1);
+            Rectangle InnerRect_GradienceFix = new(InnerRect.X, InnerRect.Y, InnerRect.Width + 1, InnerRect.Height + 1);
+
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-
-            Color BackRect_Color = scheme.Colors.Back_Level2;
-            Color BackRect_LineColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Back_Hover_Level2);
-
-            Color BackRect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Back_Hover_Level2);
-            Color BackRect_LineColor_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Hover_Level2);
-
-            Color Checked_Rect_Color = Color.FromArgb(alpha2, scheme.Colors.Back_Checked);
-            Color Checked_Rect_Color_Hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
-
-            Color Checked_Dot_Color = Color.FromArgb(alpha2, scheme.Colors.AccentAlt);
-            #endregion
 
             if (RTL)
             {
@@ -270,7 +273,7 @@ namespace WinPaletter.UI.WP
             }
 
             #region Check sign x, y coordinates
-            int x1_Left = InnerRect.X + 3;
+            int x1_Left = InnerRect.X + 4;
             int y1_Left = (int)Math.Round(0.8d * InnerRect.Height);
             int x2_Left = x1_Left;
             int y2_Left = InnerRect.Y + InnerRect.Height - 3;
@@ -281,33 +284,45 @@ namespace WinPaletter.UI.WP
             int y2_Right = y1_Left - 3;
             #endregion
 
+
             // #################################################################################
 
-            using (SolidBrush br = new(BackRect_Color)) { G.FillRoundedRect(br, InnerRect); }
-            using (SolidBrush br = new(Checked_Rect_Color)) { G.FillRoundedRect(br, OuterRect); }
-
-            if (_Checked)
+            using (LinearGradientBrush lgb0 = new(InnerRect_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb2 = new(OuterRect_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.Accent), LinearGradientMode.Horizontal))
+            using (Pen P0 = new(lgb1))
+            using (Pen P1 = new(lgb2))
             {
-                using (SolidBrush br = new(Checked_Rect_Color_Hover)) { G.FillRoundedRect(br, OuterRect); }
-                using (Pen P = new(Color.FromArgb(FocusAlpha, Checked_Rect_Color_Hover))) { G.DrawRoundedRect(P, OuterRect); }
-            }
-            else
-            {
-                using (Pen P = new(BackRect_LineColor)) { G.DrawRoundedRect(P, InnerRect); }
-                using (SolidBrush br = new(BackRect_Color_Hover)) { G.FillRoundedRect(br, OuterRect); }
-                using (Pen P = new(BackRect_LineColor_Hover)) { G.DrawRoundedRect(P, OuterRect); }
+                G.FillRoundedRect(lgb0, InnerRect);
+                G.DrawRoundedRect(P0, InnerRect);
+                G.DrawRoundedRect(P1, OuterRect);
             }
 
-            using (Pen CheckSignPen = new(Checked_Dot_Color, 1.8f))
+            using (LinearGradientBrush lgb0 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (SolidBrush lgb3 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt)))
+            using (Pen P = new(lgb1))
             {
-                G.DrawLine(CheckSignPen, x1_Left, y1_Left, x2_Left, y2_Left);
-                G.DrawLine(CheckSignPen, x1_Right, y1_Right, x2_Right, y2_Right);
+                G.FillRoundedRect(lgb0, OuterRect);
+                G.DrawRoundedRect(P, OuterRect);
+                if (_Checked) G.FillRoundedRect(lgb3, OuterRect);
+
+                using (Pen CheckSignPen = new(Color.FromArgb(alpha2, Color.White), 1.9f))
+                {
+                    Point[] leftCheckPoints = new Point[] { new(x1_Left, y1_Left), new(x2_Left, y2_Left) };
+                    Point[] rightCheckPoints = new Point[] { new(x1_Right, y1_Right), new(x2_Right, y2_Right) };
+
+                    G.DrawCurve(CheckSignPen, leftCheckPoints);
+                    G.DrawCurve(CheckSignPen, rightCheckPoints);
+                }
             }
 
             #region Strings
+
             using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
 
-            using (SolidBrush br = new(Checked_Dot_Color)) { G.DrawString(Text, Font, br, TextRect, format); }
+            using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
+           
             #endregion
 
             format.Dispose();

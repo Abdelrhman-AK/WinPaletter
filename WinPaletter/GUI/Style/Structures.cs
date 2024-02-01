@@ -23,11 +23,11 @@ namespace WinPaletter.UI.Style
         {
             public Schemes_Collection()
             {
-                Scheme Main = new(DefaultColors.PrimaryColor, DefaultColors.BackColorDark, true);
+                Scheme Main = new(DefaultColors.PrimaryColor_Dark, DefaultColors.BackColor_Dark, true);
 
-                Scheme Secondary = new(DefaultColors.SecondaryColor, DefaultColors.BackColorDark, true);
+                Scheme Secondary = new(DefaultColors.SecondaryColor_Dark, DefaultColors.BackColor_Dark, true);
 
-                Scheme Tertiary = new(DefaultColors.TertiaryColor, DefaultColors.BackColorDark, true);
+                Scheme Tertiary = new(DefaultColors.TertiaryColor_Dark, DefaultColors.BackColor_Dark, true);
 
                 Scheme Disabled = new(DefaultColors.DisabledColor_Dark, DefaultColors.DisabledBackColor_Dark, true);
             }
@@ -43,75 +43,69 @@ namespace WinPaletter.UI.Style
 
         public class Colors_Collection : IDisposable, ICloneable
         {
+            private float incrementFactor = 0.005f;
+
             public bool DarkMode { get; set; } = true;
 
-            public Color Accent { get; set; } = DefaultColors.PrimaryColor;
+            public Color Accent { get; set; } = DefaultColors.PrimaryColor_Dark;
             private Method Accent_Method;
             private float Accent_Factor;
 
-            public Color AccentAlt { get; set; } = DefaultColors.PrimaryColor.Light(0.5f);
+            public Color AccentAlt { get; set; } = DefaultColors.PrimaryColor_Dark.Light(0.5f);
             private Method AccentAlt_Method;
             private float AccentAlt_Factor;
 
-            public Color BackColor { get; set; } = DefaultColors.BackColorDark;
+            public Color BackColor { get; set; } = DefaultColors.BackColor_Dark;
             private Method BackColor_Method;
             private float BackColor_Factor;
 
-            public Color Button { get; set; } = DefaultColors.BackColorDark.CB(0.07f);
+            public Color Button { get; set; } = DefaultColors.BackColor_Dark.CB(0.07f);
             private Method Button_Method; // Use Color.CB() instead of Color.Light() or Color.Dark()
             private float Button_Factor; // Factor for colors changing voids
 
-            public Color Button_Over { get; set; } = DefaultColors.BackColorDark.CB(0.1f);
+            public Color Button_Over { get; set; } = DefaultColors.BackColor_Dark.CB(0.1f);
             private Method Button_Over_Method; // Use Color.CB() instead of Color.Light() or Color.Dark()
             private float Button_Over_Factor; // Factor for colors changing voids
 
-            public Color Button_Down { get; set; } = DefaultColors.BackColorDark.CB(0.07f);
+            public Color Button_Down { get; set; } = DefaultColors.BackColor_Dark.CB(0.07f);
             private Method Button_Down_Method; // Use Color.CB() instead of Color.Light() or Color.Dark()
             private float Button_Down_Factor; // Factor for colors changing voids
 
-            public Color Back { get; set; }
-            public Color Back_Level2 { get; set; }
+            public Color Back(int level = 0)
+            {
+                float factor = incrementFactor * (float)level * (DarkMode ? -1 : +1);
+                return ApplyMethod(BackColor, Back_Method, Back_Factor + factor);
+            }
 
             private Method Back_Method;
             private float Back_Factor;
 
-            public Color Line { get; set; }
-            public Color Line_Level2 { get; set; }
+            public Color Line (int level = 0)
+            {
+                float factor = incrementFactor * (float)level * (DarkMode ? -1 : +1);
+                return ApplyMethod(BackColor, Line_Method, Line_Factor + factor);
+            }
 
             private Method Line_Method;
             private float Line_Factor;
 
-            public Color Back_Hover { get; set; }
-            public Color Back_Hover_Level2 { get; set; }
+            public Color Back_Hover(int level = 0)
+            {
+                float factor = incrementFactor * (float)level * (DarkMode ? -1 : +1);
+                return ApplyMethod(BackColor, Back_Hover_Method, Back_Hover_Factor + factor);
+            }
 
             private Method Back_Hover_Method;
             private float Back_Hover_Factor;
 
-            public Color Line_Hover { get; set; }
-            public Color Line_Hover_Level2 { get; set; }
+            public Color Line_Hover(int level = 0)
+            {
+                float factor = incrementFactor * (float)level * (DarkMode ? -1 : +1);
+                return ApplyMethod(BackColor, Line_Hover_Method, Line_Hover_Factor + factor);
+            }
 
             private Method Line_Hover_Method;
             private float Line_Hover_Factor;
-
-            private Method Back_Level2_Method;
-            private float Back_Level2_Factor;
-
-            private Method Line_Level2_Method;
-            private float Line_Level2_Factor;
-
-            private Method Back_Hover_Level2_Method;
-            private float Back_Hover_Level2_Factor;
-
-            private Method Line_Hover_Level2_Method;
-            private float Line_Hover_Level2_Factor;
-
-            public Color Back_Max { get; set; }
-            private Method Back_Max_Method;
-            private float Back_Max_Factor;
-
-            public Color Line_Max { get; set; }
-            private Method Line_Max_Method;
-            private float Line_Max_Factor;
 
             public Color Back_Checked { get; set; }
             private Method Back_Checked_Method;
@@ -158,24 +152,12 @@ namespace WinPaletter.UI.Style
                     Button_Down_Factor = 0.18f;
                     Back_Method = Method.Light;
                     Back_Factor = 0.15f;
-                    Back_Level2_Method = Method.Light;
-                    Back_Level2_Factor = 0.15f;
                     Line_Method = Method.Light;
                     Line_Factor = 0.15f;
-                    Line_Level2_Method = Method.Light;
-                    Line_Level2_Factor = 0.15f;
                     Back_Hover_Method = Method.Light;
                     Back_Hover_Factor = 0.22f;
-                    Back_Hover_Level2_Method = Method.Light;
-                    Back_Hover_Level2_Factor = 0.28f;
                     Line_Hover_Method = Method.Light;
                     Line_Hover_Factor = 0.35f;
-                    Line_Hover_Level2_Method = Method.Light;
-                    Line_Hover_Level2_Factor = 0.3f;
-                    Back_Max_Method = Method.Light;
-                    Back_Max_Factor = 1f;
-                    Line_Max_Method = Method.Light;
-                    Line_Max_Factor = 1f;
                     Back_Checked_Method = Method.Dark;
                     Back_Checked_Factor = 0.25f;
                     Line_Checked_Method = Method.Dark;
@@ -204,25 +186,13 @@ namespace WinPaletter.UI.Style
                     Button_Down_Method = Method.Light;
                     Button_Down_Factor = -0.37f;
                     Back_Method = Method.Dark;
-                    Back_Factor = -0.45f;
-                    Back_Level2_Method = Method.Dark;
-                    Back_Level2_Factor = -0.54f;
+                    Back_Factor = -0.47f;
                     Line_Method = Method.Dark;
-                    Line_Factor = -0.45f;
-                    Line_Level2_Method = Method.Dark;
-                    Line_Level2_Factor = -0.45f;
+                    Line_Factor = -0.36f;
                     Back_Hover_Method = Method.CB;
                     Back_Hover_Factor = -0.05f;
-                    Back_Hover_Level2_Method = Method.Dark;
-                    Back_Hover_Level2_Factor = -0.42f;
                     Line_Hover_Method = Method.CB;
                     Line_Hover_Factor = -0.04f;
-                    Line_Hover_Level2_Method = Method.Dark;
-                    Line_Hover_Level2_Factor = -0.36f;
-                    Back_Max_Method = Method.Dark;
-                    Back_Max_Factor = 0.3f;
-                    Line_Max_Method = Method.Dark;
-                    Line_Max_Factor = 0.25f;
                     Back_Checked_Method = Method.CB;
                     Back_Checked_Factor = 0.76f;
                     Line_Checked_Method = Method.CB;
@@ -242,21 +212,6 @@ namespace WinPaletter.UI.Style
                 Button = ApplyMethod(backcolor, Button_Method, Button_Factor);
                 Button_Over = ApplyMethod(backcolor, Button_Over_Method, Button_Over_Factor);
                 Button_Down = ApplyMethod(backcolor, Button_Down_Method, Button_Down_Factor);
-
-                Back = ApplyMethod(backcolor, Back_Method, Back_Factor);
-                Back_Level2 = ApplyMethod(backcolor, Back_Level2_Method, Back_Level2_Factor);
-
-                Line = ApplyMethod(backcolor, Line_Method, Line_Factor);
-                Line_Level2 = ApplyMethod(backcolor, Line_Level2_Method, Line_Level2_Factor);
-
-                Back_Hover = ApplyMethod(backcolor, Back_Hover_Method, Back_Hover_Factor);
-                Back_Hover_Level2 = ApplyMethod(backcolor, Back_Hover_Level2_Method, Back_Hover_Level2_Factor);
-
-                Line_Hover = ApplyMethod(backcolor, Line_Hover_Method, Line_Hover_Factor);
-                Line_Hover_Level2 = ApplyMethod(backcolor, Line_Hover_Level2_Method, Line_Hover_Level2_Factor);
-
-                Back_Max = ApplyMethod(backcolor, Back_Max_Method, Back_Max_Factor);
-                Line_Max = ApplyMethod(backcolor, Line_Max_Method, Line_Max_Factor);
                 Back_Checked = ApplyMethod(accent, Back_Checked_Method, Back_Checked_Factor);
                 Line_Checked = ApplyMethod(accent, Line_Checked_Method, Line_Checked_Factor);
                 Back_Checked_Hover = ApplyMethod(accent, Back_Checked_Hover_Method, Back_Checked_Hover_Factor);
@@ -332,21 +287,6 @@ namespace WinPaletter.UI.Style
             public Pen Button_Over;
             public Pen Button_Down;
 
-            public Pen Back;
-            public Pen Line;
-
-            public Pen Back_Level2;
-            public Pen Line_Level2;
-
-            public Pen Back_Hover;
-            public Pen Line_Hover;
-
-            public Pen Back_Hover_Level2;
-            public Pen Line_Hover_Level2;
-
-            public Pen Back_Max;
-            public Pen Line_Max;
-
             public Pen Back_Checked;
             public Pen Line_Checked;
 
@@ -365,21 +305,6 @@ namespace WinPaletter.UI.Style
                 Button = new(scheme.Colors.Button);
                 Button_Over = new(scheme.Colors.Button_Over);
                 Button_Down = new(scheme.Colors.Button_Down);
-
-                Back = new(scheme.Colors.Back);
-                Line = new(scheme.Colors.Line);
-
-                Back_Level2 = new(scheme.Colors.Back_Level2);
-                Line_Level2 = new(scheme.Colors.Line_Level2);
-
-                Back_Hover = new(scheme.Colors.Back_Hover);
-                Line_Hover = new(scheme.Colors.Line_Hover);
-
-                Back_Hover_Level2 = new(scheme.Colors.Back_Hover_Level2);
-                Line_Hover_Level2 = new(scheme.Colors.Line_Hover_Level2);
-
-                Back_Max = new(scheme.Colors.Back_Max);
-                Line_Max = new(scheme.Colors.Line_Max);
 
                 Back_Checked = new(scheme.Colors.Back_Checked);
                 Line_Checked = new(scheme.Colors.Line_Checked);
@@ -402,21 +327,6 @@ namespace WinPaletter.UI.Style
             public SolidBrush Button_Over;
             public SolidBrush Button_Down;
 
-            public SolidBrush Back;
-            public SolidBrush Line;
-
-            public SolidBrush Back_Level2;
-            public SolidBrush Line_Level2;
-
-            public SolidBrush Back_Hover;
-            public SolidBrush Line_Hover;
-
-            public SolidBrush Back_Hover_Level2;
-            public SolidBrush Line_Hover_Level2;
-
-            public SolidBrush Back_Max;
-            public SolidBrush Line_Max;
-
             public SolidBrush Back_Checked;
             public SolidBrush Line_Checked;
 
@@ -435,21 +345,6 @@ namespace WinPaletter.UI.Style
                 Button = new(scheme.Colors.Button);
                 Button_Over = new(scheme.Colors.Button_Over);
                 Button_Down = new(scheme.Colors.Button_Down);
-
-                Back = new(scheme.Colors.Back);
-                Line = new(scheme.Colors.Line);
-
-                Back_Level2 = new(scheme.Colors.Back_Level2);
-                Line_Level2 = new(scheme.Colors.Line_Level2);
-
-                Back_Hover = new(scheme.Colors.Back_Hover);
-                Line_Hover = new(scheme.Colors.Line_Hover);
-
-                Back_Hover_Level2 = new(scheme.Colors.Back_Hover_Level2);
-                Line_Hover_Level2 = new(scheme.Colors.Line_Hover_Level2);
-
-                Back_Max = new(scheme.Colors.Back_Max);
-                Line_Max = new(scheme.Colors.Line_Max);
 
                 Back_Checked = new(scheme.Colors.Back_Checked);
                 Line_Checked = new(scheme.Colors.Line_Checked);

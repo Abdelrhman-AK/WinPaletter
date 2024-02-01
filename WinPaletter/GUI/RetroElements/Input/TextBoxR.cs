@@ -425,7 +425,6 @@ namespace WinPaletter.UI.Retro
             base.Dispose(disposing);
 
             _TB?.Dispose();
-            Font?.Dispose();
         }
 
         #endregion

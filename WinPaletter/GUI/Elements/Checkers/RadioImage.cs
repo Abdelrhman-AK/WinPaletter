@@ -225,6 +225,14 @@ namespace WinPaletter.UI.WP
             _image?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
         #endregion
 
         #region Methods
@@ -272,8 +280,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
@@ -289,12 +295,15 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
-            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line : scheme.Colors.Line_Checked_Hover);
+            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line(parentLevel) : scheme.Colors.Line_Checked_Hover);
             Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
-            using (SolidBrush br = new(Color.FromArgb(_alpha2, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, MainRect); }
+            using (LinearGradientBrush br = new(MainRect, Color.FromArgb(_alpha2, scheme.Colors.Back_Checked), Color.FromArgb(_alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal)) 
+            {
+                G.FillRoundedRect(br, MainRect);
+            }
 
-            using (SolidBrush br = new(Color.FromArgb(Math.Max(0, FocusAlpha - _alpha2), scheme.Colors.Back))) { G.FillRoundedRect(br, MainRectInner); }
+            using (SolidBrush br = new(Color.FromArgb(Math.Max(0, FocusAlpha - _alpha2), scheme.Colors.Back(parentLevel)))) { G.FillRoundedRect(br, MainRectInner); }
 
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 

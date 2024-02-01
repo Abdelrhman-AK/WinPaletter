@@ -69,6 +69,7 @@
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
             // 
             // windowsDesktop1
@@ -293,13 +294,13 @@
             // WXP_VS_Browse
             // 
             this.WXP_VS_Browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.WXP_VS_Browse.CustomColor = System.Drawing.Color.Empty;
-            this.WXP_VS_Browse.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.WXP_VS_Browse.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.WXP_VS_Browse.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.WXP_VS_Browse.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_VS_Browse.ForeColor = System.Drawing.Color.White;
-            this.WXP_VS_Browse.Image = ((System.Drawing.Image)(resources.GetObject("WXP_VS_Browse.Image")));
-            this.WXP_VS_Browse.ImageAsVector = false;
-            this.WXP_VS_Browse.ImageVector = null;
+            this.WXP_VS_Browse.Image = null;
+            this.WXP_VS_Browse.ImageAsVector = true;
+            this.WXP_VS_Browse.ImageVector = ((System.Drawing.Image)(resources.GetObject("WXP_VS_Browse.ImageVector")));
             this.WXP_VS_Browse.Location = new System.Drawing.Point(483, 43);
             this.WXP_VS_Browse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WXP_VS_Browse.Name = "WXP_VS_Browse";

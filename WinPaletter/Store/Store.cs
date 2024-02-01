@@ -36,7 +36,7 @@ namespace WinPaletter
         private DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
-        private Settings.Structures.Appearance oldAppearance = Program.Settings.Appearance;
+        private Settings.Structures.Appearance oldAppearance;
 
         public Store()
         {
@@ -227,7 +227,17 @@ namespace WinPaletter
             RemoveAllStoreItems(store_container);
 
             Tabs.SelectedIndex = 0;
-            oldAppearance = Program.Settings.Appearance;
+
+            oldAppearance.RoundedCorners = Program.Settings.Appearance.RoundedCorners;
+            oldAppearance.BackColor = Program.Settings.Appearance.BackColor;
+            oldAppearance.AccentColor = Program.Settings.Appearance.AccentColor;
+            oldAppearance.SecondaryColor = Program.Settings.Appearance.SecondaryColor;
+            oldAppearance.TertiaryColor = Program.Settings.Appearance.TertiaryColor;
+            oldAppearance.DisabledBackColor = Program.Settings.Appearance.DisabledBackColor;
+            oldAppearance.DisabledColor = Program.Settings.Appearance.DisabledColor;
+            oldAppearance.Animations = Program.Settings.Appearance.Animations;
+            oldAppearance.CustomColors = Program.Settings.Appearance.CustomColors;
+            oldAppearance.CustomTheme_DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
 
             CenterToScreen();
 
@@ -266,12 +276,14 @@ namespace WinPaletter
 
             // To prevent effect of a store theme on the other forms
             Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            Program.Settings.Appearance.CustomColors = true;
-            Program.Settings.Appearance.CustomTheme_DarkMode = oldAppearance.CustomTheme_DarkMode;
-            Program.Settings.Appearance.RoundedCorners = oldAppearance.RoundedCorners;
-            Program.Settings.Appearance.BackColor = oldAppearance.BackColor;
-            Program.Settings.Appearance.AccentColor = oldAppearance.AccentColor;
-            ApplyStyle(this);
+
+            Program.Settings.Appearance = new();
+            Program.Settings.Appearance.Load();
+
+            GetRoundedCorners();
+            GetDarkMode();
+            ApplyStyle(this, true);
+
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
 
             Status_pnl.Visible = true;
@@ -691,7 +703,7 @@ namespace WinPaletter
                             search_panel.Visible = false;
 
                             Titlebar_lbl.Text = $"{StoreItem.TM.Info.ThemeName} - {Program.Lang.By} {StoreItem.TM.Info.Author}";
-                            if (Theme.Manager.IsFontInstalled(StoreItem.TM.MetricsFonts.CaptionFont.Name))
+                            if (Manager.IsFontInstalled(StoreItem.TM.MetricsFonts.CaptionFont.Name))
                             {
                                 Titlebar_lbl.Font = new(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }
@@ -707,6 +719,12 @@ namespace WinPaletter
                                 Program.Settings.Appearance.RoundedCorners = StoreItem.TM.AppTheme.RoundCorners;
                                 Program.Settings.Appearance.BackColor = StoreItem.TM.AppTheme.BackColor;
                                 Program.Settings.Appearance.AccentColor = StoreItem.TM.AppTheme.AccentColor;
+                                Program.Settings.Appearance.SecondaryColor = StoreItem.TM.AppTheme.SecondaryColor;
+                                Program.Settings.Appearance.TertiaryColor = StoreItem.TM.AppTheme.TertiaryColor;
+                                Program.Settings.Appearance.DisabledBackColor = StoreItem.TM.AppTheme.DisabledBackColor;
+                                Program.Settings.Appearance.DisabledColor = StoreItem.TM.AppTheme.DisabledColor;
+                                Program.Settings.Appearance.Animations = StoreItem.TM.AppTheme.Animations;
+
                                 ApplyStyle(this, true);
                             }
 
@@ -876,7 +894,7 @@ namespace WinPaletter
             oldAppearance = Appearance;
             ApplyStyle(null, true);
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName))
+            using (Theme.Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName, false, true))
             {
                 if (selectedItem.DoneByWinPaletter)
                     TMx.Info.Author = Application.CompanyName;
@@ -1096,13 +1114,14 @@ namespace WinPaletter
         #region Buttons Events
         private void Back_btn_Click(object sender, EventArgs e)
         {
-
             Program.Animator.HideSync(Tabs);
             Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
-                Program.Settings = new(Settings.Mode.Registry);
+                Program.Settings.Appearance = new();
+                Program.Settings.Appearance.Load();
+
                 GetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle(this, true);

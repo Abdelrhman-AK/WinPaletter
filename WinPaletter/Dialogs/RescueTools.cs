@@ -197,7 +197,7 @@ namespace WinPaletter.Dialogs
         {
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
             {
-                Process.Start($"{PathsExt.Explorer} ms-settings:windowsupdate");
+                Process.Start($"{PathsExt.Explorer}", "ms-settings:windowsupdate");
             }
             else if (OS.WXP)
             {

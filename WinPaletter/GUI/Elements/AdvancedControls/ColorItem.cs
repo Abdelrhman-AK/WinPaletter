@@ -412,6 +412,15 @@ namespace WinPaletter.UI.Controllers
             Timer2?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Animator
@@ -610,7 +619,10 @@ namespace WinPaletter.UI.Controllers
 
             else
             {
-                G.FillRoundedRect(Program.Style.Schemes.Disabled.Brushes.Back, RectInner);
+                using (SolidBrush br = new(Program.Style.Schemes.Disabled.Colors.Back(parentLevel)))
+                {
+                    G.FillRoundedRect(br, RectInner);
+                }
             }
 
             if (!DesignMode)
@@ -619,7 +631,7 @@ namespace WinPaletter.UI.Controllers
                 {
                     G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
 
-                    Color TargetColor = Enabled ? (!HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultBackColor) : Program.Style.Schemes.Disabled.Colors.Line;
+                    Color TargetColor = Enabled ? (!HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultBackColor) : Program.Style.Schemes.Disabled.Colors.Line(parentLevel);
                     Color FC0 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
                     Color FC1 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
 

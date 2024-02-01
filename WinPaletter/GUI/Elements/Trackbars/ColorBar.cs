@@ -361,6 +361,15 @@ namespace WinPaletter.UI.WP
             base.OnMouseWheel(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Animator
@@ -433,7 +442,7 @@ namespace WinPaletter.UI.WP
 
                 default:
                     {
-                        color = scheme.Colors.Back_Max;
+                        color = scheme.Colors.Back(parentLevel);
                         back = new(middleRect, color, color, (float)Paths.GradientMode.Horizontal);
                         break;
                     }
@@ -450,7 +459,10 @@ namespace WinPaletter.UI.WP
 
             Circle = new((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
 
-            G.FillEllipse(Program.Style.Schemes.Main.Brushes.Line, Circle);
+            using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Line(parentLevel)))
+            {
+                G.FillEllipse(br, Circle);
+            }
 
             Rectangle smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             Rectangle smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);

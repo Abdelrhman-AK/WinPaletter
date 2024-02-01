@@ -20,8 +20,12 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = e.ToolStrip.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
             Rectangle rect = new(0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
 
-            G.FillRectangle(scheme.Brushes.Back, rect);
-            G.DrawRectangle(scheme.Pens.Line_Hover, rect);
+            using (SolidBrush br = new(scheme.Colors.Back(e.ToolStrip.Level())))
+            using (Pen P = new(scheme.Colors.Line(e.ToolStrip.Level())))
+            {
+                G.FillRectangle(br, rect);
+                G.DrawRectangle(P, rect);
+            }
 
             base.OnRenderToolStripBackground(e);
         }
@@ -103,7 +107,10 @@ namespace WinPaletter.UI.WP
             Rectangle itemRectangle = e.Item.ContentRectangle;
             itemRectangle.Y += 1;
 
-            G.DrawLine(Program.Style.Schemes.Main.Pens.Line_Hover, itemRectangle.Location, itemRectangle.Location + new Size(e.Vertical ? 0 : itemRectangle.Width, e.Vertical ? itemRectangle.Height : 0));
+            using (Pen P = new(Program.Style.Schemes.Main.Colors.Line_Hover(e.ToolStrip.Level())))
+            {
+                G.DrawLine(P, itemRectangle.Location, itemRectangle.Location + new Size(e.Vertical ? 0 : itemRectangle.Width, e.Vertical ? itemRectangle.Height : 0));
+            }
 
             base.OnRenderSeparator(e);
         }
@@ -128,6 +135,15 @@ namespace WinPaletter.UI.WP
         [Browsable(false)]
         public int ItemHeight { get; set; } = 25;
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             Graphics G = e.Graphics;
@@ -137,8 +153,12 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
-            G.FillRectangle(scheme.Brushes.Back, rect);
-            G.DrawRectangle(scheme.Pens.Line_Hover_Level2, rect);
+            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
+            using (Pen P = new(scheme.Colors.Line(parentLevel)))
+            {
+                G.FillRectangle(br, rect);
+                G.DrawRectangle(P, rect);
+            }
 
             base.OnPaint(e);
         }

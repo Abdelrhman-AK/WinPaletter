@@ -63,6 +63,7 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox5.BackColor = System.Drawing.Color.Transparent;
             this.groupBox5.Controls.Add(this.banner5);
             this.groupBox5.Controls.Add(this.button13);
@@ -146,6 +147,7 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.banner4);
             this.groupBox4.Controls.Add(this.button8);
@@ -185,7 +187,7 @@ namespace WinPaletter.Dialogs
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(329, 32);
             this.button8.TabIndex = 1;
-            this.button8.Text = "Return first theme (launched in current session)";
+            this.button8.Text = "Apply first theme (launched in current session)";
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
@@ -204,7 +206,7 @@ namespace WinPaletter.Dialogs
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(329, 32);
             this.button9.TabIndex = 0;
-            this.button9.Text = "Restore native Windows theme";
+            this.button9.Text = "Apply native Windows theme";
             this.button9.UseVisualStyleBackColor = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
@@ -229,6 +231,7 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
             this.groupBox3.Controls.Add(this.banner3);
             this.groupBox3.Controls.Add(this.button6);
@@ -312,6 +315,7 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.banner2);
             this.groupBox2.Controls.Add(this.button12);
@@ -395,6 +399,7 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.banner1);
             this.groupBox1.Controls.Add(this.button1);

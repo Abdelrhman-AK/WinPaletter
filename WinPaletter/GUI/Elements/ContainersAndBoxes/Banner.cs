@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -37,6 +38,14 @@ namespace WinPaletter.UI.WP
         }
         private Color ImageColor;
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -69,14 +78,14 @@ namespace WinPaletter.UI.WP
 
             using (Style.Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
             {
-                _color_line = colors.Line_Hover;
+                _color_line = colors.Line_Hover(parentLevel);
             }
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            using (LinearGradientBrush lgb0 = new(Rect, _color, scheme.Colors.Back, LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(Rect, _color_line, scheme.Colors.Line_Hover, LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb0 = new(Rect, _color, scheme.Colors.Back(parentLevel), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(Rect, _color_line, scheme.Colors.Line_Hover(parentLevel), LinearGradientMode.Horizontal))
             using (Pen P = new(lgb1))
             {
                 G.FillRoundedRect(lgb0, Rect);

@@ -106,7 +106,7 @@
             this.groupBox2.Controls.Add(this.win81);
             this.groupBox2.Controls.Add(this.win7);
             this.groupBox2.Controls.Add(this.win10);
-            this.groupBox2.Location = new System.Drawing.Point(12, 546);
+            this.groupBox2.Location = new System.Drawing.Point(12, 515);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3);
             this.groupBox2.Size = new System.Drawing.Size(1129, 115);
@@ -135,6 +135,7 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(3, 3);
             this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.label3.Size = new System.Drawing.Size(1123, 34);
             this.label3.TabIndex = 153;
             this.label3.Text = "Target Windows edition";
@@ -231,9 +232,8 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 71);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.groupBox1.Size = new System.Drawing.Size(1129, 466);
+            this.groupBox1.Size = new System.Drawing.Size(1129, 438);
             this.groupBox1.TabIndex = 157;
-            this.groupBox1.Text = "groupBox1";
             // 
             // flowLayoutPanel1
             // 
@@ -254,7 +254,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 37);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1123, 426);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1123, 398);
             this.flowLayoutPanel1.TabIndex = 153;
             // 
             // card1
@@ -263,7 +263,7 @@
             this.card1.Image = null;
             this.card1.Location = new System.Drawing.Point(3, 3);
             this.card1.Name = "card1";
-            this.card1.Size = new System.Drawing.Size(270, 130);
+            this.card1.Size = new System.Drawing.Size(270, 125);
             this.card1.TabIndex = 121;
             this.card1.Tag = "Personalize your Windows color scheme for a visually pleasing, tailored environme" +
     "nt";
@@ -276,7 +276,7 @@
             this.card2.Image = ((System.Drawing.Image)(resources.GetObject("card2.Image")));
             this.card2.Location = new System.Drawing.Point(279, 3);
             this.card2.Name = "card2";
-            this.card2.Size = new System.Drawing.Size(270, 130);
+            this.card2.Size = new System.Drawing.Size(270, 125);
             this.card2.TabIndex = 120;
             this.card2.Tag = "Revamp the look of classic Windows elements, including 3D objects and more, to re" +
     "fresh your system\'s visual aesthetics";
@@ -289,7 +289,7 @@
             this.card3.Image = ((System.Drawing.Image)(resources.GetObject("card3.Image")));
             this.card3.Location = new System.Drawing.Point(555, 3);
             this.card3.Name = "card3";
-            this.card3.Size = new System.Drawing.Size(270, 130);
+            this.card3.Size = new System.Drawing.Size(270, 125);
             this.card3.TabIndex = 122;
             this.card3.Tag = "Modify your LogonUI appearance and preferences";
             this.card3.Text = "Logon UI Screen";
@@ -301,11 +301,10 @@
             this.card6.Image = ((System.Drawing.Image)(resources.GetObject("card6.Image")));
             this.card6.Location = new System.Drawing.Point(831, 3);
             this.card6.Name = "card6";
-            this.card6.Size = new System.Drawing.Size(270, 130);
+            this.card6.Size = new System.Drawing.Size(270, 125);
             this.card6.TabIndex = 123;
-            this.card6.Tag = "Transform your Windows cursors with this studio. It enables you to change cursor " +
-    "colors, including background colors, border colors, and loading circle colors, a" +
-    "s well as styles";
+            this.card6.Tag = "Customize your Windows cursors with this studio, allowing you to change colors an" +
+    "d styles for cursors, including backgrounds, borders, and loading circles";
             this.card6.Text = "Cursors Studio";
             this.card6.Click += new System.EventHandler(this.card6_Click);
             // 
@@ -313,9 +312,9 @@
             // 
             this.card5.Color = System.Drawing.Color.DarkOliveGreen;
             this.card5.Image = ((System.Drawing.Image)(resources.GetObject("card5.Image")));
-            this.card5.Location = new System.Drawing.Point(3, 139);
+            this.card5.Location = new System.Drawing.Point(3, 134);
             this.card5.Name = "card5";
-            this.card5.Size = new System.Drawing.Size(270, 130);
+            this.card5.Size = new System.Drawing.Size(270, 125);
             this.card5.TabIndex = 124;
             this.card5.Tag = "Adjust font styles, sizes, and layout metrics for optimal readability and aesthet" +
     "ics";
@@ -326,9 +325,9 @@
             // 
             this.card4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.card4.Image = ((System.Drawing.Image)(resources.GetObject("card4.Image")));
-            this.card4.Location = new System.Drawing.Point(279, 139);
+            this.card4.Location = new System.Drawing.Point(279, 134);
             this.card4.Name = "card4";
-            this.card4.Size = new System.Drawing.Size(270, 130);
+            this.card4.Size = new System.Drawing.Size(270, 125);
             this.card4.TabIndex = 125;
             this.card4.Tag = "Personalize your terminal\'s colors and appearance, including Command Prompt, Powe" +
     "rShell and Windows Terminal";
@@ -339,9 +338,9 @@
             // 
             this.card8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(175)))), ((int)(((byte)(234)))));
             this.card8.Image = ((System.Drawing.Image)(resources.GetObject("card8.Image")));
-            this.card8.Location = new System.Drawing.Point(555, 139);
+            this.card8.Location = new System.Drawing.Point(555, 134);
             this.card8.Name = "card8";
-            this.card8.Size = new System.Drawing.Size(270, 130);
+            this.card8.Size = new System.Drawing.Size(270, 125);
             this.card8.TabIndex = 127;
             this.card8.Tag = "Revitalize your screen with an image or personalize your wallpaper by WinPaletter" +
     " wallpaper tint";
@@ -352,11 +351,11 @@
             // 
             this.card9.Color = System.Drawing.Color.DodgerBlue;
             this.card9.Image = ((System.Drawing.Image)(resources.GetObject("card9.Image")));
-            this.card9.Location = new System.Drawing.Point(831, 139);
+            this.card9.Location = new System.Drawing.Point(831, 134);
             this.card9.Name = "card9";
-            this.card9.Size = new System.Drawing.Size(270, 130);
+            this.card9.Size = new System.Drawing.Size(270, 125);
             this.card9.TabIndex = 126;
-            this.card9.Tag = "Change effects of your Windows";
+            this.card9.Tag = "Change effects of your Windows, including animations and shadows";
             this.card9.Text = "Windows Effects";
             this.card9.Click += new System.EventHandler(this.card9_Click);
             // 
@@ -364,9 +363,9 @@
             // 
             this.card7.Color = System.Drawing.Color.OrangeRed;
             this.card7.Image = ((System.Drawing.Image)(resources.GetObject("card7.Image")));
-            this.card7.Location = new System.Drawing.Point(3, 275);
+            this.card7.Location = new System.Drawing.Point(3, 265);
             this.card7.Name = "card7";
-            this.card7.Size = new System.Drawing.Size(270, 130);
+            this.card7.Size = new System.Drawing.Size(270, 125);
             this.card7.TabIndex = 128;
             this.card7.Tag = "Immerse yourself in a customized auditory experience with personalized sounds";
             this.card7.Text = "Sounds";
@@ -376,9 +375,9 @@
             // 
             this.card11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(63)))), ((int)(((byte)(91)))));
             this.card11.Image = ((System.Drawing.Image)(resources.GetObject("card11.Image")));
-            this.card11.Location = new System.Drawing.Point(279, 275);
+            this.card11.Location = new System.Drawing.Point(279, 265);
             this.card11.Name = "card11";
-            this.card11.Size = new System.Drawing.Size(270, 130);
+            this.card11.Size = new System.Drawing.Size(270, 125);
             this.card11.TabIndex = 130;
             this.card11.Tag = "Use a personalized screensaver for the best CRT monitor experience";
             this.card11.Text = "Screen Saver";
@@ -388,9 +387,9 @@
             // 
             this.card12.Color = System.Drawing.Color.DarkGreen;
             this.card12.Image = ((System.Drawing.Image)(resources.GetObject("card12.Image")));
-            this.card12.Location = new System.Drawing.Point(555, 275);
+            this.card12.Location = new System.Drawing.Point(555, 265);
             this.card12.Name = "card12";
-            this.card12.Size = new System.Drawing.Size(270, 130);
+            this.card12.Size = new System.Drawing.Size(270, 125);
             this.card12.TabIndex = 129;
             this.card12.Tag = "Modify preferences of Windows Switcher (Alt+Tab)";
             this.card12.Text = "Windows Switcher";
@@ -400,9 +399,9 @@
             // 
             this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
-            this.card10.Location = new System.Drawing.Point(831, 275);
+            this.card10.Location = new System.Drawing.Point(831, 265);
             this.card10.Name = "card10";
-            this.card10.Size = new System.Drawing.Size(270, 130);
+            this.card10.Size = new System.Drawing.Size(270, 125);
             this.card10.TabIndex = 131;
             this.card10.Tag = "Modify the look of WinPaletter to make it suits your theme";
             this.card10.Text = "WinPaletter Themes";
@@ -414,9 +413,10 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 3);
             this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.label2.Size = new System.Drawing.Size(1123, 34);
             this.label2.TabIndex = 153;
-            this.label2.Text = "Windows aspects";
+            this.label2.Text = "Editable Windows aspects";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // bottom_buttons
@@ -428,7 +428,7 @@
             this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
             this.bottom_buttons.Controls.Add(this.Button28);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 670);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 639);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(1153, 47);
             this.bottom_buttons.TabIndex = 152;
@@ -501,11 +501,11 @@
             this.restartExplorer_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.restartExplorer_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.restartExplorer_btn.ForeColor = System.Drawing.Color.White;
-            this.restartExplorer_btn.Image = ((System.Drawing.Image)(resources.GetObject("Button19.Image")));
+            this.restartExplorer_btn.Image = ((System.Drawing.Image)(resources.GetObject("restartExplorer_btn.Image")));
             this.restartExplorer_btn.ImageAsVector = false;
             this.restartExplorer_btn.ImageVector = null;
             this.restartExplorer_btn.Location = new System.Drawing.Point(783, 5);
-            this.restartExplorer_btn.Name = "Button19";
+            this.restartExplorer_btn.Name = "restartExplorer_btn";
             this.restartExplorer_btn.Size = new System.Drawing.Size(180, 37);
             this.restartExplorer_btn.TabIndex = 29;
             this.restartExplorer_btn.Text = "Restart Explorer";
@@ -919,7 +919,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1153, 717);
+            this.ClientSize = new System.Drawing.Size(1153, 686);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bottom_buttons);

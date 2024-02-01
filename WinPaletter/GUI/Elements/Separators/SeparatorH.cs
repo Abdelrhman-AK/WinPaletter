@@ -40,6 +40,15 @@ namespace WinPaletter.UI.WP
             base.OnResize(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -50,8 +59,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -60,12 +67,12 @@ namespace WinPaletter.UI.WP
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Color Line = AlternativeLook ? Color.DarkRed : Color.FromArgb(128, scheme.Colors.Back_Hover_Level2);
+            Color Line = AlternativeLook ? Color.DarkRed : Color.FromArgb(50, scheme.Colors.ForeColor);
 
-            using (Pen C = new(Line, !AlternativeLook ? 1 : 2))
+            using (Pen P = new(Line, !AlternativeLook ? 1 : 2))
             {
-                G.DrawLine(C, new Point(0, 0), new Point(Width, 0));
-                G.DrawLine(C, new Point(0, 1), new Point(Width, 1));
+                G.DrawLine(P, new Point(0, 0), new Point(Width, 0));
+                G.DrawLine(P, new Point(0, 1), new Point(Width, 1));
             }
 
             base.OnPaint(e);

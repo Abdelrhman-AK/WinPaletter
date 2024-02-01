@@ -272,6 +272,15 @@ namespace WinPaletter.UI
             _image?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
@@ -350,7 +359,10 @@ namespace WinPaletter.UI
                 ////Disabled for better performance
                 //G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
-                G.FillRoundedRect(scheme.Brushes.Back, rect_margin, radius);
+                using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
+                {
+                    G.FillRoundedRect(br, rect_margin, radius);
+                }
 
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked)))
                 {
@@ -378,7 +390,10 @@ namespace WinPaletter.UI
                     }
                 }
 
-                G.DrawRoundedRect(scheme.Pens.Line, rect_margin, radius);
+                using (Pen P = new(scheme.Colors.Line(parentLevel)))
+                {
+                    G.DrawRoundedRect(P, rect_margin, radius);
+                }
 
                 using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked)))
                 {

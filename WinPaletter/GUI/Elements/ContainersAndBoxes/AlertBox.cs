@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -81,6 +82,15 @@ namespace WinPaletter.UI.WP
             Image?.Dispose();
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
@@ -107,18 +117,9 @@ namespace WinPaletter.UI.WP
             {
                 case Style.Simple:
                     {
-                        if (Parent is not WP.GroupBox)
-                        {
-                            borderColor = scheme1.Colors.Line;
-                            innerColor = scheme1.Colors.Back;
-                            textColor = scheme1.Colors.ForeColor;
-                        }
-                        else
-                        {
-                            borderColor = scheme1.Colors.Line_Level2;
-                            innerColor = scheme1.Colors.Back_Level2;
-                            textColor = scheme1.Colors.ForeColor;
-                        }
+                        borderColor = scheme1.Colors.Line(parentLevel);
+                        innerColor = scheme1.Colors.Back(parentLevel);
+                        textColor = scheme1.Colors.ForeColor;
 
                         break;
                     }

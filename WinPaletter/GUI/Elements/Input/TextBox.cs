@@ -404,7 +404,14 @@ namespace WinPaletter.UI.WP
             base.Dispose(disposing);
 
             tb?.Dispose();
-            Font?.Dispose();
+        }
+
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
         }
 
         #endregion
@@ -443,7 +450,7 @@ namespace WinPaletter.UI.WP
             Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);
 
             Color Line = scheme.Colors.Line_Checked;
-            Color LineHover = Parent != null && Parent is not WP.GroupBox ? scheme.Colors.Back_Hover : scheme.Colors.Back_Hover_Level2;
+            Color LineHover = scheme.Colors.Back_Hover(parentLevel);
             Color FadeInColor = Color.FromArgb(alpha, Line);
             Color FadeOutColor = Color.FromArgb(255 - alpha, LineHover);
 
@@ -458,15 +465,15 @@ namespace WinPaletter.UI.WP
 
             else
             {
-                G.FillRoundedRect(Parent is not WP.GroupBox ? scheme.Brushes.Back : scheme.Brushes.Back_Level2, InnerRect);
+                using (SolidBrush br = new(scheme.Colors.Back(parentLevel))) { G.FillRoundedRect(br, InnerRect); }
 
-                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Level2))) { G.FillRoundedRect(br, OuterRect); }
+                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back(parentLevel)))) { G.FillRoundedRect(br, OuterRect); }
 
                 using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
                 using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
-                tb.BackColor = scheme.Colors.Back_Level2;
+                tb.BackColor = scheme.Colors.Back(parentLevel);
             }
         }
     }

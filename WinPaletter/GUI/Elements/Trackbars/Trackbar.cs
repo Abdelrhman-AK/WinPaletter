@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageProcessor.Processors;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -290,6 +291,15 @@ namespace WinPaletter.UI.WP
             base.OnMouseWheel(e);
         }
 
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
+
         #endregion
 
         #region Methods
@@ -329,8 +339,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -345,22 +353,34 @@ namespace WinPaletter.UI.WP
             G.ExcludeClip(new Rectangle(-1, 0, 3, Height));
             G.ExcludeClip(new Rectangle(Width - 2, 0, 3, Height));
 
-            G.FillRoundedRect(scheme.Brushes.Back_Level2, bar);
-            G.FillRoundedRect(scheme.Brushes.AccentAlt, new Rectangle(Thumb.X + 1, bar.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), bar.Height));
+            using (SolidBrush br0 = new(scheme.Colors.Back(parentLevel)))
+            {
+                G.FillRoundedRect(br0, bar);
+            }
+
+            using (LinearGradientBrush lgb0 = new(bar, scheme.Colors.Back_Checked_Hover, scheme.Colors.AccentAlt, LinearGradientMode.Horizontal))
+            {
+                G.FillRoundedRect(lgb0, new Rectangle(Thumb.X + 1, bar.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), bar.Height));
+            }
 
             G.ResetClip();
 
             Circle = new((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
 
-            G.FillEllipse(scheme.Brushes.Line_Hover_Level2, Circle);
+            using (SolidBrush br1 = new(scheme.Colors.Line_Hover(parentLevel)))
+            {
+                G.FillEllipse(br1, Circle);
+            }
 
             Rectangle smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
             Rectangle smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
             G.FillEllipse(scheme.Brushes.AccentAlt, smallC1);
 
-            using SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt));
-            G.FillEllipse(br, smallC2);
+            using SolidBrush br2 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt));
+            {
+                G.FillEllipse(br2, smallC2);
+            }
 
             base.OnPaint(e);
         }

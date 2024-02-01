@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
 {
@@ -179,11 +180,8 @@ namespace WinPaletter.UI.WP
 
         private Color Colorize()
         {
-
-
-
             Color AccentColor = scheme1.Colors.Accent;
-            Color resultColor = scheme1.Colors.Back;
+            Color resultColor = scheme1.Colors.Back(parentLevel);
 
             switch (Flag)
             {
@@ -703,13 +701,22 @@ namespace WinPaletter.UI.WP
         {
             base.Dispose(disposing);
 
-            Noise?.Dispose();
-            Menu?.Dispose();
-            _image?.Dispose();   
-            _imageVector?.Dispose();
-            _imageVectorOver?.Dispose();
-            _imageVectorDown?.Dispose();
+            //Noise?.Dispose();
+            //Menu?.Dispose();
+            //_image?.Dispose();   
+            //_imageVector?.Dispose();
+            //_imageVectorOver?.Dispose();
+            //_imageVectorDown?.Dispose();
         }
+
+        int parentLevel = 0;
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            parentLevel = this.Level();
+        }
+
 
         #endregion
 
@@ -773,8 +780,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -800,7 +805,18 @@ namespace WinPaletter.UI.WP
 
             if (!_imageAsVector || DesignMode)
             {
-                using (SolidBrush br = new(Color.FromArgb(FocusAlpha, Color))) { G.FillRoundedRect(br, RectInner); }
+                if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
+                {
+                    using (SolidBrush br = new(Color.FromArgb(FocusAlpha, Color))) { G.FillRoundedRect(br, RectInner); }
+                }
+                else
+                {
+                    using (Colors_Collection colors = new(Color, Color, Program.Style.DarkMode))
+                    using (LinearGradientBrush br = new(Rect, Color.FromArgb(FocusAlpha, Color), colors.Back_Checked, LinearGradientMode.ForwardDiagonal))
+                    {
+                        G.FillRoundedRect(br, RectInner);
+                    }
+                }
 
                 using (Pen P = new(Color.FromArgb(FocusAlpha, _lineColor)))
                 {

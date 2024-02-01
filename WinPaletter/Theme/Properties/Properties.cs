@@ -32,8 +32,13 @@ namespace WinPaletter.Theme
         public AppTheme AppTheme = new()
         {
             Enabled = false,
-            BackColor = Color.FromArgb(25, 25, 25),
-            AccentColor = Color.FromArgb(0, 81, 210),
+            BackColor = DefaultColors.BackColor_Dark,
+            AccentColor = DefaultColors.PrimaryColor_Dark,
+            SecondaryColor = DefaultColors.SecondaryColor_Dark,
+            TertiaryColor = DefaultColors.TertiaryColor_Dark,
+            DisabledBackColor = DefaultColors.DisabledBackColor_Dark,
+            DisabledColor = DefaultColors.DisabledColor_Dark,
+            Animations = true,
             DarkMode = true,
             RoundCorners = OS.WXP || OS.WVista || OS.W7 || OS.W11 || OS.W12
         };

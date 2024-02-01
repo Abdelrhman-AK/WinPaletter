@@ -104,7 +104,7 @@ namespace WinPaletter
                     }
                 }
 
-                OnDownloadCompleted(new(null, false, new object()));
+                OnDownloadCompleted(new(null, false, null));
             }
             catch (Exception ex)
             {
@@ -211,6 +211,7 @@ namespace WinPaletter
                     }
                 }
 
+                IsBusy = false;
                 OnDownloadCompleted(new(null, false, new object()));
             }
             catch (Exception ex)
@@ -265,7 +266,7 @@ namespace WinPaletter
             lock (lockObject)
             {
                 cancellationTokenSource?.Cancel();
-                OnDownloadCompleted(new(null, true, new object()));
+                if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed
             }
         }

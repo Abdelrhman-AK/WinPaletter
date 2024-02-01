@@ -17,7 +17,7 @@ namespace WinPaletter
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.PrimaryColor, DefaultColors.SecondaryColor, DefaultColors.TertiaryColor, DefaultColors.DisabledColor_Dark, DefaultColors.BackColorDark, DefaultColors.DisabledBackColor_Dark, true, true, true);
+        public static Config Style = new(DefaultColors.PrimaryColor_Dark, DefaultColors.SecondaryColor_Dark, DefaultColors.TertiaryColor_Dark, DefaultColors.DisabledColor_Dark, DefaultColors.BackColor_Dark, DefaultColors.DisabledBackColor_Dark, true, true, true);
 
         /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
