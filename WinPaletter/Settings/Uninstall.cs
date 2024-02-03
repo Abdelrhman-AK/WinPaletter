@@ -312,14 +312,6 @@ namespace WinPaletter
             }
         }
 
-        private void button16_Click(object sender, EventArgs e)
-        {
-            Program.Settings.ThemeApplyingBehavior.DelayMetrics = true;
-            Program.Settings.Save(Settings.Mode.Registry);
-
-            MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
             tablessControl1.SelectedIndex = 2;

@@ -52,15 +52,6 @@ namespace WinPaletter.UI.WP
         private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.3f));
         private readonly TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
 
-        private MouseState State = MouseState.None;
-
-        public enum MouseState
-        {
-            None,
-            Over,
-            Down
-        }
-
         #endregion
 
         #region Methods
@@ -85,8 +76,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            State = MouseState.Over;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
@@ -95,8 +84,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            State = MouseState.Down;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
@@ -105,8 +92,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            State = MouseState.None;
-
             if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
@@ -223,7 +208,8 @@ namespace WinPaletter.UI.WP
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                G.FillRectangle(scheme.Brushes.Line_Checked, e.Bounds);
+                using (LinearGradientBrush br = new(e.Bounds, scheme.Colors.Line_Checked, scheme.Colors.Line_Checked_Hover, LinearGradientMode.ForwardDiagonal))
+                    G.FillRectangle(br, e.Bounds);
                 G.FillRectangle(Noise2, e.Bounds);
             }
 
@@ -232,12 +218,10 @@ namespace WinPaletter.UI.WP
                 Rectangle Rect = e.Bounds; Rect.X += 2; Rect.Y += 1; Rect.Width -= 2;
 
                 using (StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
+                using (SolidBrush br = new(ForeColor))
                 {
-                    using (SolidBrush br = new(ForeColor))
-                    {
-                        G.DrawString(GetItemText(Items[e.Index]), e.Font, br, Rect, sf);
-                        Invalidate();
-                    }
+                    G.DrawString(GetItemText(Items[e.Index]), e.Font, br, Rect, sf);
+                    Invalidate();
                 }
             }
 

@@ -7,7 +7,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Clone WinPaletter theme
         /// </summary>
-        /// <returns>WinPaletter.Theme.Manager</returns>
+        /// <returns><see cref="WinPaletter.Theme.Manager"/></returns>
         public object Clone()
         {
             return MemberwiseClone();

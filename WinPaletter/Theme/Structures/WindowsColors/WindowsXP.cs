@@ -198,7 +198,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WindowsXP structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

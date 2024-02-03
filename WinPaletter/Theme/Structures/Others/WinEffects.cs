@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
 
@@ -289,7 +290,7 @@ namespace WinPaletter.Theme.Structures
 
             WindowAnimation = SystemParametersInfo(SPI.SPI_GETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_NONE) ? anim.IMinAnimate == 1 : @default.WindowAnimation;
 
-            bool x = default(bool);
+            bool x = default;
 
             if (SystemParametersInfo(SPI.SPI_GETMENUFADE, 0, ref x, SPIF.SPIF_NONE))
             {
@@ -422,40 +423,44 @@ namespace WinPaletter.Theme.Structures
         /// Saves WinEffects data into registry
         /// </summary>
         /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        public async void Apply(TreeView TreeView = null)
         {
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, Enabled);
 
             if (Enabled)
             {
-                ANIMATIONINFO anim = new();
-                anim.cbSize = (uint)Marshal.SizeOf(anim);
-                anim.IMinAnimate = WindowAnimation ? 1 : 0;
+                WinEffects WE = (WinEffects)Clone();
 
-                SystemParametersInfo(TreeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETDROPSHADOW, 0, WindowShadow, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETUIEFFECTS, 0, WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
+                await Task.Run(() => 
+                {
+                    ANIMATIONINFO anim = new();
+                    anim.cbSize = (uint)Marshal.SizeOf(anim);
+                    anim.IMinAnimate = WE.WindowAnimation ? 1 : 0;
 
-                if (!OS.WXP)
-                    SystemParametersInfo(TreeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETUIEFFECTS, 0, WE.WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
 
-                SystemParametersInfo(TreeView, SPI.SPI_SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
-                SystemParametersInfo(TreeView, SPI.SPI_SETMENUANIMATION, 0, MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETMENUFADE, 0, MenuFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.SPIF_UPDATEINIFILE);               // use uiParam not pvParam
-                SystemParametersInfo(TreeView, SPI.SPI_SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETCOMBOBOXANIMATION, 0, ComboBoxAnimation, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPFADE, 0, TooltipFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETCARETWIDTH, 0, Caret, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.SPIF_UPDATEINIFILE);     // use uiParam not pvParam
+                    if (!OS.WXP) SystemParametersInfo(TreeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+
+                    SystemParametersInfo(TreeView, SPI.SPI_SETDRAGFULLWINDOWS, WE.ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
+                    SystemParametersInfo(TreeView, SPI.SPI_SETMENUANIMATION, 0, WE.MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETMENUFADE, 0, WE.MenuFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETMENUSHOWDELAY, WE.MenuShowDelay, 0, SPIF.SPIF_UPDATEINIFILE);               // use uiParam not pvParam
+                    SystemParametersInfo(TreeView, SPI.SPI_SETSELECTIONFADE, 0, WE.MenuSelectionFade, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETCOMBOBOXANIMATION, 0, WE.ComboBoxAnimation, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETLISTBOXSMOOTHSCROLLING, 0, WE.ListBoxSmoothScrolling, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPANIMATION, 0, WE.TooltipAnimation, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPFADE, 0, WE.TooltipFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETMENUUNDERLINES, 0, WE.KeyboardUnderline, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERWIDTH, 0, WE.FocusRectWidth, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERHEIGHT, 0, WE.FocusRectHeight, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETCARETWIDTH, 0, WE.Caret, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWINDOWTRACKING, 0, WE.AWT_Enabled, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKZORDER, 0, WE.AWT_BringActivatedWindowToTop, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKTIMEOUT, 0, WE.AWT_Delay, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(TreeView, SPI.SPI_SETSNAPTODEFBUTTON, WE.SnapCursorToDefButton, 0, SPIF.SPIF_UPDATEINIFILE);     // use uiParam not pvParam
+                });
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow ? 1 : 0);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel ? 1 : 0);
@@ -489,7 +494,6 @@ namespace WinPaletter.Theme.Structures
                 }
                 catch
                 {
-                    // Do nothing
                     Microsoft.Win32.Registry.CurrentUser.Close();
                 }
                 finally
@@ -506,7 +510,6 @@ namespace WinPaletter.Theme.Structures
                 }
                 catch
                 {
-                    // Do nothing
                     Microsoft.Win32.Registry.CurrentUser.Close();
                 }
                 finally
@@ -534,7 +537,6 @@ namespace WinPaletter.Theme.Structures
                                     Move_File($@"{PathsExt.System32}\UIRibbon.dll", $@"{PathsExt.System32}\UIRibbon.dll_bak");
 
                                     // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
-
                                 }
 
                                 break;
@@ -679,7 +681,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WinEffects structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

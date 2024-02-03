@@ -43,7 +43,7 @@ namespace WinPaletter.UI.Style
 
         public class Colors_Collection : IDisposable, ICloneable
         {
-            private float incrementFactor = 0.005f;
+            private float incrementFactor = 0.01f;
 
             public bool DarkMode { get; set; } = true;
 

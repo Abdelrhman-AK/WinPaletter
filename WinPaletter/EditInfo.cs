@@ -151,7 +151,7 @@ namespace WinPaletter
 
             color1.BackColor = TM.Info.Color1;
             color2.BackColor = TM.Info.Color2;
-            Trackbar1.Value = TM.Info.Pattern;
+            trackBarX1.Value = TM.Info.Pattern;
 
             CheckBox1.Checked = TM.Info.DesignedFor_Win11;
             CheckBox2.Checked = TM.Info.DesignedFor_Win10;
@@ -173,7 +173,7 @@ namespace WinPaletter
 
             TM.Info.Color1 = color1.BackColor;
             TM.Info.Color2 = color2.BackColor;
-            TM.Info.Pattern = Trackbar1.Value;
+            TM.Info.Pattern = trackBarX1.Value;
 
             TM.Info.DesignedFor_Win11 = CheckBox1.Checked;
             TM.Info.DesignedFor_Win10 = CheckBox2.Checked;
@@ -333,11 +333,6 @@ namespace WinPaletter
             return CheckBox1.Checked | CheckBox2.Checked | CheckBox3.Checked | CheckBox4.Checked | CheckBox5.Checked | CheckBox6.Checked;
         }
 
-        private void Trackbar1_Scroll(object sender)
-        {
-            StoreItem1.UpdatePattern(Trackbar1.Value);
-        }
-
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
             StoreItem1.TM.Info.ThemeName = ((UI.WP.TextBox)sender).Text;
@@ -373,6 +368,11 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private void trackBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            StoreItem1.UpdatePattern(trackBarX1.Value);
         }
     }
 }

@@ -288,7 +288,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Windows10x structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

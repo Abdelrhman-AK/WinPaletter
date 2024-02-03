@@ -41,8 +41,8 @@
 
 			<!-- Windows 10/11 -->
 			<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
-
 		</application>
+		
 	</compatibility>
 
 	<!-- Indicates that the application is DPI-aware and will not be automatically scaled by Windows at higher

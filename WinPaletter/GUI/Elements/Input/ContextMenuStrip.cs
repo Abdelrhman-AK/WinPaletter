@@ -11,8 +11,6 @@ namespace WinPaletter.UI.WP
     {
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -21,7 +19,7 @@ namespace WinPaletter.UI.WP
             Rectangle rect = new(0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
 
             using (SolidBrush br = new(scheme.Colors.Back(e.ToolStrip.Level())))
-            using (Pen P = new(scheme.Colors.Line(e.ToolStrip.Level())))
+            using (Pen P = new(scheme.Colors.Line_Hover(e.ToolStrip.Level())))
             {
                 G.FillRectangle(br, rect);
                 G.DrawRectangle(P, rect);
@@ -154,7 +152,7 @@ namespace WinPaletter.UI.WP
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
             using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
-            using (Pen P = new(scheme.Colors.Line(parentLevel)))
+            using (Pen P = new(scheme.Colors.Line_Hover(parentLevel + 1)))
             {
                 G.FillRectangle(br, rect);
                 G.DrawRectangle(P, rect);

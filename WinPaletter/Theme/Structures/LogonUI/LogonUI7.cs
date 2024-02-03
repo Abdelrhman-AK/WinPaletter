@@ -122,7 +122,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones LogonUI7 structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

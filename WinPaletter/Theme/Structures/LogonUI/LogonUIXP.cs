@@ -111,7 +111,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones LogonUIXP structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

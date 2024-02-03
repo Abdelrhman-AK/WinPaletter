@@ -59,7 +59,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones ScreenSaver structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

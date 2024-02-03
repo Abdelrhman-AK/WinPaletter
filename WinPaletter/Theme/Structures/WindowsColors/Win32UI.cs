@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
@@ -486,18 +489,19 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves Win32UI data into registry
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        /// <param name="treeView">treeView used as theme log</param>
+        public void Apply(TreeView treeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
 
             if (Enabled)
             {
                 bool isClassic = string.IsNullOrEmpty(NativeMethods.UxTheme.GetCurrentVS().Item1);
 
-                // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
                 List<Form> fl = new();
                 fl.Clear();
+
+                // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
                 if (isClassic)
                 {
                     foreach (Form f in Application.OpenForms)
@@ -511,175 +515,180 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                List<int> C1 = new();
-                List<uint> C2 = new();
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    List<int> C1 = new();
+                    List<uint> C2 = new();
 
-                C1.Clear();
-                C2.Clear();
+                    C1.Clear();
+                    C2.Clear();
 
-                C1.Add((int)ColorsNumbers.Hilight);
-                C2.Add((uint)ColorTranslator.ToWin32(Hilight));
+                    C1.Add((int)ColorsNumbers.Hilight);
+                    C2.Add((uint)ColorTranslator.ToWin32(Hilight));
 
-                C1.Add((int)ColorsNumbers.HilightText);
-                C2.Add((uint)ColorTranslator.ToWin32(HilightText));
+                    C1.Add((int)ColorsNumbers.HilightText);
+                    C2.Add((uint)ColorTranslator.ToWin32(HilightText));
 
-                C1.Add((int)ColorsNumbers.TitleText);
-                C2.Add((uint)ColorTranslator.ToWin32(TitleText));
+                    C1.Add((int)ColorsNumbers.TitleText);
+                    C2.Add((uint)ColorTranslator.ToWin32(TitleText));
 
-                C1.Add((int)ColorsNumbers.GrayText);
-                C2.Add((uint)ColorTranslator.ToWin32(GrayText));
+                    C1.Add((int)ColorsNumbers.GrayText);
+                    C2.Add((uint)ColorTranslator.ToWin32(GrayText));
 
-                C1.Add((int)ColorsNumbers.InactiveBorder);
-                C2.Add((uint)ColorTranslator.ToWin32(InactiveBorder));
+                    C1.Add((int)ColorsNumbers.InactiveBorder);
+                    C2.Add((uint)ColorTranslator.ToWin32(InactiveBorder));
 
-                C1.Add((int)ColorsNumbers.InactiveTitle);
-                C2.Add((uint)ColorTranslator.ToWin32(InactiveTitle));
+                    C1.Add((int)ColorsNumbers.InactiveTitle);
+                    C2.Add((uint)ColorTranslator.ToWin32(InactiveTitle));
 
-                C1.Add((int)ColorsNumbers.ActiveTitle);
-                C2.Add((uint)ColorTranslator.ToWin32(ActiveTitle));
+                    C1.Add((int)ColorsNumbers.ActiveTitle);
+                    C2.Add((uint)ColorTranslator.ToWin32(ActiveTitle));
 
-                C1.Add((int)ColorsNumbers.ActiveBorder);
-                C2.Add((uint)ColorTranslator.ToWin32(ActiveBorder));
+                    C1.Add((int)ColorsNumbers.ActiveBorder);
+                    C2.Add((uint)ColorTranslator.ToWin32(ActiveBorder));
 
-                C1.Add((int)ColorsNumbers.AppWorkspace);
-                C2.Add((uint)ColorTranslator.ToWin32(AppWorkspace));
+                    C1.Add((int)ColorsNumbers.AppWorkspace);
+                    C2.Add((uint)ColorTranslator.ToWin32(AppWorkspace));
 
-                C1.Add((int)ColorsNumbers.Background);
-                C2.Add((uint)ColorTranslator.ToWin32(Background));
+                    C1.Add((int)ColorsNumbers.Background);
+                    C2.Add((uint)ColorTranslator.ToWin32(Background));
 
-                C1.Add((int)ColorsNumbers.GradientActiveTitle);
-                C2.Add((uint)ColorTranslator.ToWin32(GradientActiveTitle));
+                    C1.Add((int)ColorsNumbers.GradientActiveTitle);
+                    C2.Add((uint)ColorTranslator.ToWin32(GradientActiveTitle));
 
-                C1.Add((int)ColorsNumbers.GradientInactiveTitle);
-                C2.Add((uint)ColorTranslator.ToWin32(GradientInactiveTitle));
+                    C1.Add((int)ColorsNumbers.GradientInactiveTitle);
+                    C2.Add((uint)ColorTranslator.ToWin32(GradientInactiveTitle));
 
-                C1.Add((int)ColorsNumbers.InactiveTitleText);
-                C2.Add((uint)ColorTranslator.ToWin32(InactiveTitleText));
+                    C1.Add((int)ColorsNumbers.InactiveTitleText);
+                    C2.Add((uint)ColorTranslator.ToWin32(InactiveTitleText));
 
-                C1.Add((int)ColorsNumbers.InfoWindow);
-                C2.Add((uint)ColorTranslator.ToWin32(InfoWindow));
+                    C1.Add((int)ColorsNumbers.InfoWindow);
+                    C2.Add((uint)ColorTranslator.ToWin32(InfoWindow));
 
-                C1.Add((int)ColorsNumbers.InfoText);
-                C2.Add((uint)ColorTranslator.ToWin32(InfoText));
+                    C1.Add((int)ColorsNumbers.InfoText);
+                    C2.Add((uint)ColorTranslator.ToWin32(InfoText));
 
-                C1.Add((int)ColorsNumbers.Menu);
-                C2.Add((uint)ColorTranslator.ToWin32(Menu));
+                    C1.Add((int)ColorsNumbers.Menu);
+                    C2.Add((uint)ColorTranslator.ToWin32(Menu));
 
-                C1.Add((int)ColorsNumbers.MenuText);
-                C2.Add((uint)ColorTranslator.ToWin32(MenuText));
+                    C1.Add((int)ColorsNumbers.MenuText);
+                    C2.Add((uint)ColorTranslator.ToWin32(MenuText));
 
-                C1.Add((int)ColorsNumbers.Scrollbar);
-                C2.Add((uint)ColorTranslator.ToWin32(Scrollbar));
+                    C1.Add((int)ColorsNumbers.Scrollbar);
+                    C2.Add((uint)ColorTranslator.ToWin32(Scrollbar));
 
-                C1.Add((int)ColorsNumbers.Window);
-                C2.Add((uint)ColorTranslator.ToWin32(Window));
+                    C1.Add((int)ColorsNumbers.Window);
+                    C2.Add((uint)ColorTranslator.ToWin32(Window));
 
-                C1.Add((int)ColorsNumbers.WindowFrame);
-                C2.Add((uint)ColorTranslator.ToWin32(WindowFrame));
+                    C1.Add((int)ColorsNumbers.WindowFrame);
+                    C2.Add((uint)ColorTranslator.ToWin32(WindowFrame));
 
-                C1.Add((int)ColorsNumbers.WindowText);
-                C2.Add((uint)ColorTranslator.ToWin32(WindowText));
+                    C1.Add((int)ColorsNumbers.WindowText);
+                    C2.Add((uint)ColorTranslator.ToWin32(WindowText));
 
-                C1.Add((int)ColorsNumbers.HotTrackingColor);
-                C2.Add((uint)ColorTranslator.ToWin32(HotTrackingColor));
+                    C1.Add((int)ColorsNumbers.HotTrackingColor);
+                    C2.Add((uint)ColorTranslator.ToWin32(HotTrackingColor));
 
-                C1.Add((int)ColorsNumbers.MenuHilight);
-                C2.Add((uint)ColorTranslator.ToWin32(MenuHilight));
+                    C1.Add((int)ColorsNumbers.MenuHilight);
+                    C2.Add((uint)ColorTranslator.ToWin32(MenuHilight));
 
-                C1.Add((int)ColorsNumbers.MenuBar);
-                C2.Add((uint)ColorTranslator.ToWin32(MenuBar));
+                    C1.Add((int)ColorsNumbers.MenuBar);
+                    C2.Add((uint)ColorTranslator.ToWin32(MenuBar));
 
-                C1.Add((int)ColorsNumbers.ButtonFace);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonFace));
+                    C1.Add((int)ColorsNumbers.ButtonFace);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonFace));
 
-                C1.Add((int)ColorsNumbers.ButtonHilight);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonHilight));
+                    C1.Add((int)ColorsNumbers.ButtonHilight);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonHilight));
 
-                C1.Add((int)ColorsNumbers.ButtonShadow);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonShadow));
+                    C1.Add((int)ColorsNumbers.ButtonShadow);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonShadow));
 
-                C1.Add((int)ColorsNumbers.ButtonText);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonText));
+                    C1.Add((int)ColorsNumbers.ButtonText);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonText));
 
-                C1.Add((int)ColorsNumbers.ButtonDkShadow);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonDkShadow));
+                    C1.Add((int)ColorsNumbers.ButtonDkShadow);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonDkShadow));
 
-                C1.Add((int)ColorsNumbers.ButtonAlternateFace);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonAlternateFace));
+                    C1.Add((int)ColorsNumbers.ButtonAlternateFace);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonAlternateFace));
 
-                C1.Add((int)ColorsNumbers.ButtonLight);
-                C2.Add((uint)ColorTranslator.ToWin32(ButtonLight));
+                    C1.Add((int)ColorsNumbers.ButtonLight);
+                    C2.Add((uint)ColorTranslator.ToWin32(ButtonLight));
 
-                SetSysColors(C1.Count, C1.ToArray(), C2.ToArray());
+                    SetSysColors(C1.Count, C1.ToArray(), C2.ToArray());
 
-                SystemParametersInfo(TreeView, SPI.SPI_SETFLATMENU, 0, EnableTheming, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(TreeView, SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(treeView, SPI.SPI_SETFLATMENU, 0, EnableTheming, SPIF.SPIF_UPDATEINIFILE);
+                    SystemParametersInfo(treeView, SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.SPIF_UPDATEINIFILE);
 
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
+                    wic.Undo();
+                }
 
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
+
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
 
                 if (isClassic)
                 {
@@ -697,55 +706,55 @@ namespace WinPaletter.Theme.Structures
 
                 if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg(), RegistryValueKind.String);
                 }
 
                 if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
                 }
 
                 else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
@@ -784,19 +793,19 @@ namespace WinPaletter.Theme.Structures
                         @default = Theme.Default.Windows12().Win32;
                     }
 
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, @default.ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, @default.ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, @default.GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, @default.Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, @default.HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, @default.HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, @default.InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, @default.InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, @default.MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, @default.TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, @default.Window).Reverse(true).ToArgb(), RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, @default.WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, @default.ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, @default.ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, @default.GrayText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, @default.Hilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, @default.HilightText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, @default.HotTrackingColor).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, @default.InactiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, @default.InactiveTitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, @default.MenuHilight).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, @default.TitleText).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, @default.Window).Reverse(true).ToArgb(), RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, @default.WindowText).Reverse(true).ToArgb(), RegistryValueKind.String);
                 }
 
                 else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
@@ -809,7 +818,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Broadcast user preference mask from current user to all users (and LogonUI screen)
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
+        /// <param name="TreeView">treeView used as theme log</param>
         public void Broadcast_UPM_ToDefUsers(TreeView TreeView = null)
         {
             if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
@@ -833,7 +842,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Win32UI structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

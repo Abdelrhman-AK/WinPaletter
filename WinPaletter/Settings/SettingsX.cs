@@ -140,8 +140,6 @@ namespace WinPaletter
             EP_ORB_10.Checked = Sets.ExplorerPatcher.TaskbarButton10;
             EP_ORB_11.Checked = !Sets.ExplorerPatcher.TaskbarButton10;
 
-            toggle11.Checked = Sets.ThemeApplyingBehavior.DelayMetrics;
-
             RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
             RadioButton8.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
@@ -421,7 +419,6 @@ namespace WinPaletter
             Sets.ExplorerPatcher.StartStyle = (ExplorerPatcher.StartStyles)EP_Start_10_Type.SelectedIndex;
             Sets.ExplorerPatcher.UseTaskbar10 = EP_Taskbar_10.Checked;
             Sets.ExplorerPatcher.TaskbarButton10 = EP_ORB_10.Checked;
-            Sets.ThemeApplyingBehavior.DelayMetrics = toggle11.Checked;
 
             Sets.BackupTheme.Enabled = toggle31.Checked;
             Sets.BackupTheme.AutoBackupOnAppOpen = toggle33.Checked;
@@ -594,9 +591,6 @@ namespace WinPaletter
                 if (Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
                     Changed = true;
                 if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
-                    Changed = true;
-
-                if (Settings.ThemeApplyingBehavior.DelayMetrics != toggle11.Checked)
                     Changed = true;
 
                 if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
@@ -1067,18 +1061,6 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
-        private void SettingsX_PaddingChanged(object sender, EventArgs e)
-        {
-            if (this.Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         private void button24_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
@@ -1129,6 +1111,18 @@ namespace WinPaletter
         private void button27_Click(object sender, EventArgs e)
         {
             Read(new Settings(Settings.Mode.Empty));
+        }
+
+        private void SettingsX_ParentChanged(object sender, EventArgs e)
+        {
+            if (this.Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
         }
     }
 }

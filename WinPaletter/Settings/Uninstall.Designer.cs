@@ -76,10 +76,6 @@ namespace WinPaletter
             this.button9 = new WinPaletter.UI.WP.Button();
             this.button11 = new WinPaletter.UI.WP.Button();
             this.button10 = new WinPaletter.UI.WP.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button16 = new WinPaletter.UI.WP.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.button18 = new WinPaletter.UI.WP.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -104,6 +100,7 @@ namespace WinPaletter
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.separatorH5 = new WinPaletter.UI.WP.SeparatorH();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
@@ -116,7 +113,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -621,7 +617,6 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
@@ -721,66 +716,10 @@ namespace WinPaletter
             this.button10.UseVisualStyleBackColor = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
-            // tabPage5
-            // 
-            this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage5.Controls.Add(this.label17);
-            this.tabPage5.Controls.Add(this.label8);
-            this.tabPage5.Controls.Add(this.button16);
-            this.tabPage5.Location = new System.Drawing.Point(144, 4);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(674, 282);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Crashes";
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(3, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(668, 26);
-            this.label17.TabIndex = 26;
-            this.label17.Text = "Is there is any crash on applying theme, especially at \"Metrics and Fonts\"?";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 26);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(665, 22);
-            this.label8.TabIndex = 39;
-            this.label8.Text = "Click on this button to make applying Metrics && Fonts delayed after logoff and l" +
-    "ogon to address potential crashing issues.";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button16
-            // 
-            this.button16.CustomColor = System.Drawing.Color.Empty;
-            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button16.ForeColor = System.Drawing.Color.White;
-            this.button16.Image = ((System.Drawing.Image)(resources.GetObject("button16.Image")));
-            this.button16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button16.ImageAsVector = false;
-            this.button16.ImageVector = null;
-            this.button16.Location = new System.Drawing.Point(6, 55);
-            this.button16.Name = "button16";
-            this.button16.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.button16.Size = new System.Drawing.Size(270, 34);
-            this.button16.TabIndex = 40;
-            this.button16.Text = "Do actions";
-            this.button16.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button16.UseVisualStyleBackColor = false;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.label8);
             this.tabPage6.Controls.Add(this.button18);
             this.tabPage6.Controls.Add(this.label7);
             this.tabPage6.Controls.Add(this.label18);
@@ -1142,6 +1081,19 @@ namespace WinPaletter
             this.separatorH5.TabIndex = 29;
             this.separatorH5.TabStop = false;
             // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 255);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(655, 22);
+            this.label8.TabIndex = 46;
+            this.label8.Text = "The issue is fixed in WinPalette 1.0.8.5. If it persists, follow instructions abo" +
+    "ve.";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Uninstall
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1172,7 +1124,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
@@ -1234,22 +1185,19 @@ namespace WinPaletter
         internal UI.WP.AlertBox alertBox2;
         private UI.WP.AlertBox alertBox3;
         private UI.WP.AlertBox alertBox4;
-        internal Label label8;
         internal UI.WP.Button button17;
-        internal UI.WP.Button button16;
         internal UI.WP.Button button18;
         internal UI.WP.Button button19;
         internal Label label7;
         internal Label label18;
-        internal Label label17;
         internal Label label14;
         internal Label label10;
         private UI.WP.TabControl tabControl1;
         private TabPage tabPage4;
-        private TabPage tabPage5;
         private TabPage tabPage6;
         private TabPage tabPage7;
         private TabPage tabPage8;
         internal Label label9;
+        internal Label label8;
     }
 }

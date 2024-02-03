@@ -32,7 +32,7 @@ namespace WinPaletter
         {
             if (!System.IO.File.Exists(path)) { return DefaultValue; }
             StringBuilder SB = new StringBuilder(65535);
-            int i = GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
+            GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
             return SB.ToString();
         }
 
@@ -47,7 +47,7 @@ namespace WinPaletter
         }
 
         #region Clone support
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

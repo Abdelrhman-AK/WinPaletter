@@ -115,7 +115,6 @@ namespace WinPaletter
             {
                 public bool AutoRestartExplorer;
                 public bool ShowSaveConfirmation;
-                public bool DelayMetrics;
                 public OverwriteOptions ClassicColors_HKU_DEFAULT_Prefs;
                 public OverwriteOptions ClassicColors_HKLM_Prefs;
                 public bool UPM_HKU_DEFAULT;
@@ -156,7 +155,6 @@ namespace WinPaletter
                     CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
                     AutoApplyCursors = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", true));
                     ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
-                    DelayMetrics = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "DelayMetrics", false));
                     SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
                     Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
                     PE_ModifyByDefault = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", true));
@@ -178,7 +176,6 @@ namespace WinPaletter
                     EditReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "DelayMetrics", DelayMetrics, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord);
@@ -543,7 +540,6 @@ namespace WinPaletter
         {
             AutoRestartExplorer = true,
             ShowSaveConfirmation = true,
-            DelayMetrics = false,
             ClassicColors_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite,
             ClassicColors_HKLM_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.Erase,
             UPM_HKU_DEFAULT = true,

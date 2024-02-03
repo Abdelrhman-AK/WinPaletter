@@ -45,6 +45,7 @@ namespace WinPaletter
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
+            this.button27 = new WinPaletter.UI.WP.Button();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.banner1 = new WinPaletter.UI.WP.Banner();
@@ -171,10 +172,6 @@ namespace WinPaletter
             this.RadioButton6 = new WinPaletter.UI.WP.RadioButton();
             this.RadioButton5 = new WinPaletter.UI.WP.RadioButton();
             this.TabPage13 = new System.Windows.Forms.TabPage();
-            this.groupBox20 = new WinPaletter.UI.WP.GroupBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.toggle11 = new WinPaletter.UI.WP.Toggle();
-            this.PictureBox50 = new System.Windows.Forms.PictureBox();
             this.groupBox19 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox16 = new WinPaletter.UI.WP.AlertBox();
             this.label36 = new System.Windows.Forms.Label();
@@ -442,7 +439,6 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.button27 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -498,8 +494,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).BeginInit();
             this.Panel4.SuspendLayout();
             this.TabPage13.SuspendLayout();
-            this.groupBox20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox50)).BeginInit();
             this.groupBox19.SuspendLayout();
             this.Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox55)).BeginInit();
@@ -747,6 +741,25 @@ namespace WinPaletter
             this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
+            // 
+            // button27
+            // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button27.CustomColor = System.Drawing.Color.Empty;
+            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button27.ForeColor = System.Drawing.Color.White;
+            this.button27.Image = ((System.Drawing.Image)(resources.GetObject("button27.Image")));
+            this.button27.ImageAsVector = false;
+            this.button27.ImageVector = null;
+            this.button27.Location = new System.Drawing.Point(657, 3);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(200, 34);
+            this.button27.TabIndex = 126;
+            this.button27.Text = "Reset settings to defaults";
+            this.button27.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button27.UseVisualStyleBackColor = false;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
             // TabControl1
             // 
@@ -2384,60 +2397,12 @@ namespace WinPaletter
             // TabPage13
             // 
             this.TabPage13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage13.Controls.Add(this.groupBox20);
             this.TabPage13.Controls.Add(this.groupBox19);
             this.TabPage13.Location = new System.Drawing.Point(4, 34);
             this.TabPage13.Name = "TabPage13";
             this.TabPage13.Size = new System.Drawing.Size(809, 443);
             this.TabPage13.TabIndex = 2;
             this.TabPage13.Text = "Metrics and Fonts";
-            // 
-            // groupBox20
-            // 
-            this.groupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox20.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox20.Controls.Add(this.label40);
-            this.groupBox20.Controls.Add(this.toggle11);
-            this.groupBox20.Controls.Add(this.PictureBox50);
-            this.groupBox20.Location = new System.Drawing.Point(3, 3);
-            this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(803, 48);
-            this.groupBox20.TabIndex = 55;
-            // 
-            // label40
-            // 
-            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label40.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label40.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.Location = new System.Drawing.Point(41, 7);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(705, 34);
-            this.label40.TabIndex = 18;
-            this.label40.Text = "Make applying Apply Metrics && Fonts changes after logoff and logon to address po" +
-    "tential crashing issues";
-            this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toggle11
-            // 
-            this.toggle11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.toggle11.Checked = false;
-            this.toggle11.DarkLight_Toggler = false;
-            this.toggle11.Location = new System.Drawing.Point(752, 14);
-            this.toggle11.Name = "toggle11";
-            this.toggle11.Size = new System.Drawing.Size(40, 20);
-            this.toggle11.TabIndex = 0;
-            // 
-            // PictureBox50
-            // 
-            this.PictureBox50.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.PictureBox50.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox50.Image")));
-            this.PictureBox50.Location = new System.Drawing.Point(11, 12);
-            this.PictureBox50.Name = "PictureBox50";
-            this.PictureBox50.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox50.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox50.TabIndex = 25;
-            this.PictureBox50.TabStop = false;
             // 
             // groupBox19
             // 
@@ -2449,7 +2414,7 @@ namespace WinPaletter
             this.groupBox19.Controls.Add(this.Panel6);
             this.groupBox19.Controls.Add(this.PictureBox55);
             this.groupBox19.Controls.Add(this.Label39);
-            this.groupBox19.Location = new System.Drawing.Point(3, 55);
+            this.groupBox19.Location = new System.Drawing.Point(3, 3);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(803, 113);
             this.groupBox19.TabIndex = 54;
@@ -5900,25 +5865,6 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // button27
-            // 
-            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button27.CustomColor = System.Drawing.Color.Empty;
-            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button27.ForeColor = System.Drawing.Color.White;
-            this.button27.Image = ((System.Drawing.Image)(resources.GetObject("button27.Image")));
-            this.button27.ImageAsVector = false;
-            this.button27.ImageVector = null;
-            this.button27.Location = new System.Drawing.Point(657, 3);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(200, 34);
-            this.button27.TabIndex = 126;
-            this.button27.Text = "Reset settings to defaults";
-            this.button27.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button27.UseVisualStyleBackColor = false;
-            this.button27.Click += new System.EventHandler(this.button27_Click);
-            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -5940,7 +5886,7 @@ namespace WinPaletter
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsX_Load);
-            this.PaddingChanged += new System.EventHandler(this.SettingsX_PaddingChanged);
+            this.ParentChanged += new System.EventHandler(this.SettingsX_ParentChanged);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.TabControl1.ResumeLayout(false);
@@ -5996,8 +5942,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).EndInit();
             this.Panel4.ResumeLayout(false);
             this.TabPage13.ResumeLayout(false);
-            this.groupBox20.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox50)).EndInit();
             this.groupBox19.ResumeLayout(false);
             this.Panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox55)).EndInit();
@@ -6199,7 +6143,6 @@ namespace WinPaletter
         internal Panel Panel3;
         internal Panel Panel2;
         internal Panel Panel1;
-        internal PictureBox PictureBox50;
         internal PictureBox PictureBox51;
         internal Panel Panel5;
         internal UI.WP.RadioButton RadioButton7;
@@ -6367,9 +6310,6 @@ namespace WinPaletter
         internal Label label71;
         private UI.WP.GroupBox groupBox18;
         internal Label label51;
-        private UI.WP.GroupBox groupBox20;
-        internal Label label40;
-        private UI.WP.Toggle toggle11;
         private UI.WP.GroupBox groupBox19;
         internal Label label36;
         private UI.WP.GroupBox groupBox21;

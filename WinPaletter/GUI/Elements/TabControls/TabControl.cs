@@ -95,8 +95,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.RenderingHint;
@@ -109,6 +107,7 @@ namespace WinPaletter.UI.WP
             G.Clear(this.GetParentColor());
 
             Color SelectedColor = scheme.Colors.Back_Checked;
+            Color SelectedColor2 = scheme.Colors.Back_Checked_Hover;
             Color SideTabeColor = scheme.Colors.ForeColor_Accent;
             bool RTL = (int)RightToLeft == 1;
             Image img = null;
@@ -141,6 +140,7 @@ namespace WinPaletter.UI.WP
                         using (Config.Colors_Collection colors = new(img.AverageColor(), default, Program.Style.DarkMode))
                         {
                             SelectedColor = colors.Back_Checked;
+                            SelectedColor2 = colors.Back_Checked_Hover;
                             SideTabeColor = colors.AccentAlt;
                         }
                     }
@@ -149,7 +149,10 @@ namespace WinPaletter.UI.WP
 
                 if (i == SelectedIndex)
                 {
-                    using (SolidBrush br = new(SelectedColor)) { G.FillRoundedRect(br, TabRect); }
+                    using (LinearGradientBrush br = new(TabRect, SelectedColor, SelectedColor2, LinearGradientMode.ForwardDiagonal)) 
+                    { 
+                        G.FillRoundedRect(br, TabRect);
+                    }
 
                     G.FillRoundedRect(Noise, TabRect);
 

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -302,9 +303,9 @@ namespace WinPaletter.UI.WP
                 G.DrawEllipse(P1, OuterCircle);
             }
 
-            using (LinearGradientBrush lgb0 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
-            using (SolidBrush br = new(Color.FromArgb(alpha2, Color.White)))
+            using (LinearGradientBrush lgb0 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.AccentAlt), Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal))
+            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.AccentAlt), Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), LinearGradientMode.ForwardDiagonal))
+            using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.Back(parentLevel))))
             using (SolidBrush lgb3 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt)))
             using (Pen P = new(lgb1))
             {

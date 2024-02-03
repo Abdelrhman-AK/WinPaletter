@@ -53,7 +53,7 @@ namespace WinPaletter
         private JObject J_Information;
         private JObject J_GlobalStrings;
         private JObject J_Forms;
-        private List<Tuple<string, string, string, string>> Deserialized_FormsJSONTree = new List<Tuple<string, string, string, string>>();
+        private List<Tuple<string, string, string, string>> Deserialized_FormsJSONTree = new();
         #endregion
 
         public Localizer() { }

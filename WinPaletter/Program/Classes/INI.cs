@@ -41,12 +41,10 @@ namespace WinPaletter
             Kernel32.WritePrivateProfileString(Section, Key, null, path);
         }
 
-        #region Clone support
         public object Clone()
         {
             return MemberwiseClone();
         }
-        #endregion
 
         #region IDisposable Support
         protected virtual void Dispose(bool disposing)

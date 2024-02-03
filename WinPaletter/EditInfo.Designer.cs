@@ -65,8 +65,8 @@ namespace WinPaletter
             this.PictureBox18 = new System.Windows.Forms.PictureBox();
             this.TextBox6 = new WinPaletter.UI.WP.TextBox();
             this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.trackBarX1 = new WinPaletter.UI.Controllers.TrackBarX();
             this.Label13 = new System.Windows.Forms.Label();
-            this.Trackbar1 = new WinPaletter.UI.WP.TrackBar();
             this.Label12 = new System.Windows.Forms.Label();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.Label11 = new System.Windows.Forms.Label();
@@ -125,6 +125,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(864, 52);
             // 
             // TabControl1
@@ -556,8 +557,8 @@ namespace WinPaletter
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage2.Controls.Add(this.trackBarX1);
             this.TabPage2.Controls.Add(this.Label13);
-            this.TabPage2.Controls.Add(this.Trackbar1);
             this.TabPage2.Controls.Add(this.Label12);
             this.TabPage2.Controls.Add(this.PictureBox16);
             this.TabPage2.Controls.Add(this.Label11);
@@ -595,6 +596,24 @@ namespace WinPaletter
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Store item info";
             // 
+            // trackBarX1
+            // 
+            this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = true;
+            this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarX1.DefaultValue = 1;
+            this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackBarX1.Location = new System.Drawing.Point(167, 66);
+            this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarX1.Maximum = 10;
+            this.trackBarX1.Minimum = 0;
+            this.trackBarX1.Name = "trackBarX1";
+            this.trackBarX1.Size = new System.Drawing.Size(508, 24);
+            this.trackBarX1.TabIndex = 47;
+            this.trackBarX1.Value = 0;
+            this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
+            // 
             // Label13
             // 
             this.Label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -607,23 +626,6 @@ namespace WinPaletter
             this.Label13.Text = "Descriptive colors should give the user an idea about the most used or main color" +
     "s in the theme";
             this.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Trackbar1
-            // 
-            this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar1.LargeChange = 2;
-            this.Trackbar1.Location = new System.Drawing.Point(166, 69);
-            this.Trackbar1.Maximum = 10;
-            this.Trackbar1.Minimum = 0;
-            this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(509, 19);
-            this.Trackbar1.SmallChange = 1;
-            this.Trackbar1.TabIndex = 44;
-            this.Trackbar1.Text = "Trackbar1";
-            this.Trackbar1.Value = 1;
-            this.Trackbar1.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.Trackbar1_Scroll);
             // 
             // Label12
             // 
@@ -1107,7 +1109,6 @@ namespace WinPaletter
         internal PictureBox PictureBox16;
         internal Label Label10;
         internal PictureBox PictureBox15;
-        internal UI.WP.TrackBar Trackbar1;
         internal Label Label12;
         internal PictureBox PictureBox17;
         internal UI.WP.AlertBox AlertBox2;
@@ -1122,5 +1123,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox7;
         internal PictureBox PictureBox42;
         internal UI.WP.Button pin_button;
+        private UI.Controllers.TrackBarX trackBarX1;
     }
 }

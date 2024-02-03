@@ -324,7 +324,7 @@ namespace WinPaletter
         /// <param name="Value">Value</param>
         /// <param name="RegType">Kind of value to be edited to avoid errors</param>
         /// <param name="TreeView">TreeView used as a theme log</param>
-        public static void EditReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView TreeView = null)
+        public static async void EditReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView TreeView = null)
         {
             string regTemplate;
 

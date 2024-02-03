@@ -391,7 +391,6 @@ namespace WinPaletter.Theme.Structures
             Snd_SpeechRec_HubSleepSound = GetReg(string.Format(Scope_SpeechRec, "HubSleepSound"), string.Empty, @default.Snd_SpeechRec_HubSleepSound).ToString();
             Snd_SpeechRec_MisrecoSound = GetReg(string.Format(Scope_SpeechRec, "MisrecoSound"), string.Empty, @default.Snd_SpeechRec_MisrecoSound).ToString();
             Snd_SpeechRec_PanelSound = GetReg(string.Format(Scope_SpeechRec, "PanelSound"), string.Empty, @default.Snd_SpeechRec_PanelSound).ToString();
-
         }
 
         /// <summary>
@@ -621,7 +620,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Sounds structure</summary>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

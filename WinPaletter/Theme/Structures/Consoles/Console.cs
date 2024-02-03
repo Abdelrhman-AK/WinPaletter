@@ -313,7 +313,7 @@ namespace WinPaletter.Theme.Structures
         /// Clone console structure
         /// </summary>
         /// <returns></returns>
-        public object Clone()
+        public readonly object Clone()
         {
             return MemberwiseClone();
         }

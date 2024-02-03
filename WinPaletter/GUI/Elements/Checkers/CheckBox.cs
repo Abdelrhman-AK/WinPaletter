@@ -284,7 +284,6 @@ namespace WinPaletter.UI.WP
             int y2_Right = y1_Left - 3;
             #endregion
 
-
             // #################################################################################
 
             using (LinearGradientBrush lgb0 = new(InnerRect_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
@@ -298,8 +297,8 @@ namespace WinPaletter.UI.WP
                 G.DrawRoundedRect(P1, OuterRect);
             }
 
-            using (LinearGradientBrush lgb0 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha2, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb0 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.AccentAlt), Color.FromArgb(alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal))
+            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(alpha2, scheme.Colors.AccentAlt), Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover), LinearGradientMode.ForwardDiagonal))
             using (SolidBrush lgb3 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt)))
             using (Pen P = new(lgb1))
             {
@@ -307,7 +306,7 @@ namespace WinPaletter.UI.WP
                 G.DrawRoundedRect(P, OuterRect);
                 if (_Checked) G.FillRoundedRect(lgb3, OuterRect);
 
-                using (Pen CheckSignPen = new(Color.FromArgb(alpha2, Color.White), 1.9f))
+                using (Pen CheckSignPen = new(Color.FromArgb(alpha2, scheme.Colors.Back(parentLevel)), 1.9f))
                 {
                     Point[] leftCheckPoints = new Point[] { new(x1_Left, y1_Left), new(x2_Left, y2_Left) };
                     Point[] rightCheckPoints = new Point[] { new(x1_Right, y1_Right), new(x2_Right, y2_Right) };

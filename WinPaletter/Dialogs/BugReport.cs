@@ -268,7 +268,7 @@ namespace WinPaletter
             SB.AppendLine($"   Report.Date = \"{$"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}"}\";");
             SB.AppendLine($"   OS = \"{Label2.Text}\";");
             SB.AppendLine($"   WinPaletter.Version = \"{Label3.Text}\";");
-            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Name}\";");
+            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Lang}\";");
             SB.AppendLine($"   WinPaletter.Debugging = {(Debugger.IsAttached ? "true" : "false")};");
             SB.AppendLine();
 
