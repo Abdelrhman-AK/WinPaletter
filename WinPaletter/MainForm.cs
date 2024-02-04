@@ -19,6 +19,7 @@ namespace WinPaletter
             WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
 
             tabsContainer1.AddFormIntoTab(Forms.Home);
+            if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
         }
 
         public bool ExitWithChangedFileResponse(SaveFileDialog SaveFileDialog, MethodInvoker Apply_Theme_Sub, MethodInvoker Apply_FirstTheme_Sub, MethodInvoker Apply_DefaultWin_Sub)

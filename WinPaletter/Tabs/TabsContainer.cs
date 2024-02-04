@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
@@ -79,7 +80,7 @@ namespace WinPaletter.Tabs
             ToolStripMenuItem detachAll = new("Detach all") { Image = Assets.Tabs.ContextBox_DetachAll };
             ToolStripMenuItem detachAllButThis = new("Detach all but this") { Image = Assets.Tabs.ContextBox_DetachAllButThis };
 
-            closeButton.Click += (s, e) => RemoveTab(contextItemDropped);
+            closeButton.Click += (s, e) => contextItemDropped.Form.Close();
             closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
             closeAllToTheRight.Click += (s, e) => CloseAllTabsToTheRight();
             closeAllToTheLeft.Click += (s, e) => CloseAllTabsToTheLeft();
@@ -171,13 +172,13 @@ namespace WinPaletter.Tabs
             return Rectangle.FromLTRB(iconRect.Right + 5, iconRect.Top, closeRect.Left - 5, iconRect.Bottom);
         }
 
-        private int IndexFromRectangle(Rectangle rectangle)
+        private int GetIndex(TabData tabData)
         {
             if (collection != null && collection.Count > 0)
             {
                 for (int i = 0; i < collection.Count; i++)
                 {
-                    if (collection[i]?.Rectangle == rectangle)
+                    if (collection[i]?.Rectangle == tabData.Rectangle)
                     {
                         return i;
                     }
@@ -204,28 +205,15 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private async void RemoveTab(TabData tabData, bool animate = true, bool detach = false)
+        private async void RemoveTab(TabData tabData, bool animate = true)
         {
-            bool canAnimate = IndexFromRectangle(tabData.Rectangle) == SelectedIndex && animate;
+            if (tabData == null) return;
+
+            bool canAnimate = GetIndex(tabData) == SelectedIndex && animate;
 
             tabData.IsRemoving = true;
 
-            if (!DesignMode && canAnimate) Program.Animator.HideSync(TabControl);
-
             int SI = SelectedIndex;
-
-            if (!detach && tabData.Form != null)
-            {
-                tabData.Form.Close();
-
-                // Check if the form is successfully closed
-                if (tabData.Form != null && !tabData.Form.IsDisposed)
-                {
-                    // Form is not closed, return without continuing
-                    if (!DesignMode && canAnimate) Program.Animator.ShowSync(TabControl);
-                    return;
-                }
-            }
 
             if (!canAnimate) AfterRemovingTab(tabData, canAnimate, SI);
             else
@@ -350,19 +338,19 @@ namespace WinPaletter.Tabs
             isMovingTab = false;
         }
 
-        private Rectangle GetTabRectangleAtMousePosition(MouseEventArgs e)
+        private TabData GetTabAtMousePosition(MouseEventArgs e)
         {
             List<TabData> tabDatas = new(collection);
             foreach (TabData tabData in tabDatas)
             {
                 if (tabData.Rectangle.Contains(e.Location))
                 {
-                    return tabData.Rectangle;
+                    return tabData;
                 }
             }
 
             // Return an empty rectangle if no tabData is found at the current mouse position
-            return Rectangle.Empty;
+            return null;
         }
 
         private TabData CreateTabData(TabPage page, int index)
@@ -462,7 +450,7 @@ namespace WinPaletter.Tabs
 
         private void HandleCloseButtonClick(TabData tabData)
         {
-            RemoveTab(tabData);
+            tabData.Form.Close();
         }
 
         private void HandleTabControlLeftButtonClick(MouseEventArgs e)
@@ -476,7 +464,7 @@ namespace WinPaletter.Tabs
                     {
                         if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
                         {
-                            moveFrom = IndexFromRectangle(tabData.Rectangle);
+                            moveFrom = GetIndex(tabData);
                             tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
 
                             break;
@@ -494,7 +482,7 @@ namespace WinPaletter.Tabs
         {
             if (tabData.TabPage != _tabControl.SelectedTab)
             {
-                SelectedIndex = IndexFromRectangle(tabData.Rectangle);
+                SelectedIndex = GetIndex(tabData);
             }
         }
 
@@ -527,12 +515,12 @@ namespace WinPaletter.Tabs
 
         private void HandleTabMove(MouseEventArgs e)
         {
-            Rectangle tabRectangle = GetTabRectangleAtMousePosition(e);
+            TabData tabData = GetTabAtMousePosition(e);
 
-            if (!tabRectangle.IsEmpty)
+            if (tabData != null)
             {
                 // Set properties for tabData movement with index information
-                SetTabMoveProperties(IndexFromRectangle(tabRectangle), true, false, false);
+                SetTabMoveProperties(GetIndex(tabData), true, false, false);
             }
             else
             {
@@ -611,7 +599,7 @@ namespace WinPaletter.Tabs
                 {
                     if (tabData.TabPage != contextItemDropped.TabPage)
                     {
-                        RemoveTab(tabData, false);
+                        tabData.Form.Close();
                     }
                 }
             }
@@ -623,7 +611,7 @@ namespace WinPaletter.Tabs
 
             for (int i = index + 1; i < collection.Count; i += 0)
             {
-                RemoveTab(collection[i], false);
+                collection[i].Form.Close();
             }
         }
 
@@ -633,7 +621,7 @@ namespace WinPaletter.Tabs
 
             for (int i = 0; i < index; i++)
             {
-                RemoveTab(collection[0], false);
+                collection[0].Form.Close();
             }
         }
 
@@ -642,7 +630,7 @@ namespace WinPaletter.Tabs
             int count = collection.Count;
             for (int i = 0; i < count; i++)
             {
-                RemoveTab(collection[0], false);
+                collection[0].Form.Close();
             }
         }
 
@@ -650,7 +638,7 @@ namespace WinPaletter.Tabs
         {
             if (tabData.Form != null) DetachForm(tabData.Form);
 
-            RemoveTab(tabData, false, true);
+            RemoveTab(tabData, false);
 
             if (collection.Count == 0) TabControl.FindForm().Visible = false;
 
@@ -791,6 +779,18 @@ namespace WinPaletter.Tabs
         public event FormClosedDelegate FormClosed;
 
         /// <summary>
+        /// Delegate to FormClosing event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void FormClosingDelegate(object sender, TabDataEventArgs e);
+
+        /// <summary>
+        /// Associated form in tab is being closed
+        /// </summary>
+        public event FormClosingDelegate FormClosing;
+
+        /// <summary>
         /// Delegate to FormTextChanged event
         /// </summary>
         /// <param name="sender"></param>
@@ -823,15 +823,27 @@ namespace WinPaletter.Tabs
         }
 
         /// <summary>
+        /// Associated form in tab is being closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void OnFormClosing(object sender, TabDataEventArgs e)
+        {
+            Program.Animator.HideSync(TabControl);
+            FormClosed?.Invoke(sender, e);
+        }
+
+        /// <summary>
         /// Associated form in tab is closed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public virtual void OnFormClosed(object sender, TabDataEventArgs e)
         {
+            RemoveTab(e.TabData);
             FormClosed?.Invoke(sender, e);
-
         }
+
 
         private async void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
@@ -872,7 +884,7 @@ namespace WinPaletter.Tabs
 
         private void _tabControl_ControlRemoved(object sender, ControlEventArgs e)
         {
-            if (_tabControl != null && e.Control is TabPage && collection.Any(key => key.TabPage == e.Control))
+            if (_tabControl != null && e.Control is TabPage && collection.Any(t => t.TabPage == e.Control))
             {
                 TabPage page = e.Control as TabPage;
 
@@ -1004,7 +1016,7 @@ namespace WinPaletter.Tabs
                 {
                     if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
                     {
-                        SelectedIndex = IndexFromRectangle(tabData.Rectangle);
+                        SelectedIndex = GetIndex(tabData);
                         break;
                     }
                 }
@@ -1155,7 +1167,6 @@ namespace WinPaletter.Tabs
 
                         if (overCloseButton)
                         {
-
                             using (LinearGradientBrush lgb0 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked_Hover, scheme_secondary.Colors.Back_Checked_Hover, LinearGradientMode.Vertical))
                             using (LinearGradientBrush lgb1 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked, scheme_secondary.Colors.Line_Checked_Hover, LinearGradientMode.Vertical))
                             using (Pen P = new(lgb1))
@@ -1163,8 +1174,6 @@ namespace WinPaletter.Tabs
                                 G.FillEllipse(lgb0, closeRectangle(rect));
                                 G.DrawEllipse(P, closeRectangle(rect));
                             }
-
-
                         }
                     }
                     else if (tabData.Selected)

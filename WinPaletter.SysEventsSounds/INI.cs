@@ -47,7 +47,7 @@ namespace WinPaletter
         }
 
         #region Clone support
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

@@ -180,7 +180,6 @@ namespace WinPaletter
             this.AlertBox8 = new WinPaletter.UI.WP.AlertBox();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.button7 = new WinPaletter.UI.WP.Button();
-            this.AlertBox10 = new WinPaletter.UI.WP.AlertBox();
             this.tabs_preview_1 = new WinPaletter.UI.WP.TablessControl();
             this.TabPage6 = new System.Windows.Forms.TabPage();
             this.windowMetrics1 = new WinPaletter.Templates.WindowMetrics();
@@ -266,6 +265,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1100, 52);
             // 
             // checker_img
@@ -1940,7 +1940,7 @@ namespace WinPaletter
             this.PictureBox37.TabIndex = 84;
             this.PictureBox37.TabStop = false;
             // 
-            // restartExplorer_btn
+            // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
@@ -2274,13 +2274,12 @@ namespace WinPaletter
             this.previewContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.previewContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.previewContainer.Controls.Add(this.button7);
-            this.previewContainer.Controls.Add(this.AlertBox10);
             this.previewContainer.Controls.Add(this.tabs_preview_1);
             this.previewContainer.Location = new System.Drawing.Point(552, 61);
             this.previewContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.previewContainer.Name = "previewContainer";
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
-            this.previewContainer.Size = new System.Drawing.Size(536, 375);
+            this.previewContainer.Size = new System.Drawing.Size(536, 345);
             this.previewContainer.TabIndex = 130;
             // 
             // button7
@@ -2292,7 +2291,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageAsVector = false;
             this.button7.ImageVector = null;
-            this.button7.Location = new System.Drawing.Point(310, 339);
+            this.button7.Location = new System.Drawing.Point(310, 307);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(222, 32);
             this.button7.TabIndex = 204;
@@ -2300,27 +2299,9 @@ namespace WinPaletter
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click_1);
             // 
-            // AlertBox10
-            // 
-            this.AlertBox10.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
-            this.AlertBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox10.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox10.CenterText = false;
-            this.AlertBox10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox10.Image = ((System.Drawing.Image)(resources.GetObject("AlertBox10.Image")));
-            this.AlertBox10.Location = new System.Drawing.Point(4, 306);
-            this.AlertBox10.Name = "AlertBox10";
-            this.AlertBox10.Size = new System.Drawing.Size(528, 30);
-            this.AlertBox10.TabIndex = 203;
-            this.AlertBox10.TabStop = false;
-            this.AlertBox10.Text = null;
-            // 
             // tabs_preview_1
             // 
-            this.tabs_preview_1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabs_preview_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs_preview_1.Controls.Add(this.TabPage6);
             this.tabs_preview_1.Controls.Add(this.tabPage12);
@@ -2353,7 +2334,7 @@ namespace WinPaletter
             this.windowMetrics1.Location = new System.Drawing.Point(0, 0);
             this.windowMetrics1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.windowMetrics1.MenuFont = new System.Drawing.Font("Segoe UI", 9F);
-            this.windowMetrics1.MenuHeight = 25;
+            this.windowMetrics1.MenuHeight = 29;
             this.windowMetrics1.MenuWidth = 19;
             this.windowMetrics1.MessageFont = new System.Drawing.Font("Segoe UI", 9F);
             this.windowMetrics1.Name = "windowMetrics1";
@@ -2727,7 +2708,6 @@ namespace WinPaletter
         internal UI.WP.Button Button16;
         internal UI.WP.AlertBox AlertBox9;
         internal UI.WP.AlertBox AlertBox7;
-        internal UI.WP.AlertBox AlertBox10;
         internal PictureBox PictureBox30;
         internal Label Label20;
         internal UI.WP.GroupBox GroupBox11;

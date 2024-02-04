@@ -145,6 +145,28 @@ namespace WinPaletter.Theme
             TM.Cursor_IBeam.UseFromFile = false;
             TM.Cursor_Cross.UseFromFile = false;
 
+            TM.Cursor_AppLoading.LoadingCircleBack1 = Color.FromArgb(5, 109, 109);
+            TM.Cursor_AppLoading.LoadingCircleBack2 = Color.FromArgb(66, 109, 122);
+            TM.Cursor_AppLoading.LoadingCircleHot1 = Color.FromArgb(41, 174, 178);
+            TM.Cursor_AppLoading.LoadingCircleHot2 = Color.FromArgb(121, 245, 239);
+            TM.Cursor_AppLoading.LoadingCircleBackGradient = true;
+            TM.Cursor_AppLoading.LoadingCircleHotGradient = true;
+            TM.Cursor_AppLoading.LoadingCircleBackGradientMode = Paths.GradientMode.Circle;
+            TM.Cursor_AppLoading.LoadingCircleHotGradientMode = Paths.GradientMode.Circle;
+            TM.Cursor_AppLoading.LoadingCircleHotNoise = true;
+            TM.Cursor_AppLoading.LoadingCircleBackNoiseOpacity = 0.5F;
+
+            TM.Cursor_Busy.LoadingCircleBack1 = Color.FromArgb(5, 109, 109);
+            TM.Cursor_Busy.LoadingCircleBack2 = Color.FromArgb(66, 109, 122);
+            TM.Cursor_Busy.LoadingCircleHot1 = Color.FromArgb(41, 174, 178);
+            TM.Cursor_Busy.LoadingCircleHot2 = Color.FromArgb(121, 245, 239);
+            TM.Cursor_Busy.LoadingCircleBackGradient = true;
+            TM.Cursor_Busy.LoadingCircleHotGradient = true;
+            TM.Cursor_Busy.LoadingCircleBackGradientMode = Paths.GradientMode.Circle;
+            TM.Cursor_Busy.LoadingCircleHotGradientMode = Paths.GradientMode.Circle;
+            TM.Cursor_Busy.LoadingCircleHotNoise = true;
+            TM.Cursor_Busy.LoadingCircleBackNoiseOpacity = 0.5F;
+
             {
                 ref Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = "Default";

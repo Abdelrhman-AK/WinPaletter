@@ -267,6 +267,7 @@ namespace WinPaletter
 
         private void Store_Shown(object sender, EventArgs e)
         {
+            _Shown = true;
             if (Program.Settings.Store.ShowTips) Forms.Store_Intro.ShowDialog();
         }
 
@@ -1313,7 +1314,6 @@ namespace WinPaletter
 
         private void Author_url_button_Click(object sender, EventArgs e)
         {
-
             if (MsgBox(Program.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
             {
                 try
@@ -1325,7 +1325,6 @@ namespace WinPaletter
                 {
                 }
             }
-
         }
 
         private void Button1_Click(object sender, EventArgs e)

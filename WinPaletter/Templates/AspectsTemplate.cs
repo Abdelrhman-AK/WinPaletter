@@ -370,7 +370,15 @@ namespace WinPaletter
             }
         }
 
-        public bool AdvancedMode => checker_mode_advanced.Checked;
+        public bool AdvancedMode
+        {
+            get => checker_mode_advanced.Checked;
+            set
+            {
+                checker_mode_advanced.Checked = value;
+                checker_mode_simple.Checked = !value;
+            }
+        }
 
         public bool SimpleMode => checker_mode_simple.Checked;
 

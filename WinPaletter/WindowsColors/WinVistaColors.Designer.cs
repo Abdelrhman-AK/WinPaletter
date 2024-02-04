@@ -112,6 +112,7 @@
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
             // 
             // windowsDesktop1
@@ -1001,6 +1002,7 @@
             this.IsShown = true;
             this.Name = "WinVistaColors";
             this.Text = "Windows Vista colors";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WinVistaColors_FormClosed);
             this.Load += new System.EventHandler(this.WinVistaColors_Load);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);

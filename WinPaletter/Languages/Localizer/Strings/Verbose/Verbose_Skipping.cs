@@ -2,6 +2,9 @@
 {
     public partial class Localizer
     {
+        public string TM_Skip_WinColors { get; set; } = "Skipping applying Windows colors as it is disabled";
+        public string TM_Skip_ClassicColors { get; set; } = "Skipping applying Classic Colors as it is disabled";
+        public string TM_Skip_LogonUI { get; set; } = "Skipping applying LogonUI as it is disabled";
         public string TM_Skip_TerminalPreview { get; set; } = "Skipping Windows Terminal Preview as it is disabled";
         public string TM_Skip_TerminalStable { get; set; } = "Skipping Windows Terminal Stable as it is disabled";
         public string TM_Skip_Terminals { get; set; } = "Skipping Windows Terminal Stable & Preview as they are disabled";
@@ -15,8 +18,12 @@
         public string TM_Skip_PS32 { get; set; } = "Skipping PowerShell x86 as it is disabled";
         public string TM_Skip_Metrics { get; set; } = "Skipping Windows Metrics and Fonts as they are disabled";
         public string TM_Skip_AltTab { get; set; } = "Skipping Windows Switcher (Alt+Tab) Appearance as it is disabled";
+        public string TM_Skip_WinEffects { get; set; } = "Skipping Windows Effects as it is disabled";
         public string TM_Skip_Wallpaper { get; set; } = "Skipping Wallpaper as it is disabled";
+        public string TM_Skip_WallpaperTone { get; set; } = "Skipping WinPaletter Wallpaper Tone as it is disabled";
         public string TM_Skip_AppTheme { get; set; } = "Skipping WinPaletter application theme as it is disabled";
         public string TM_Skip_Sounds { get; set; } = "Skipping Sounds as its toggle is disabled";
+        public string TM_Skip_ScreenSaver { get; set; } = "Skipping Screen Saver as its toggle is disabled";
+        public string TM_Skip_Cursors { get; set; } = "Skipping Windows Cursors as it is disabled";
     }
 }

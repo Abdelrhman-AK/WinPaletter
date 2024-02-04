@@ -110,6 +110,8 @@ namespace WinPaletter.WindowsColors
 
             LoadData(data);
 
+            AdvancedMode = Program.Settings.AspectsControl.WinColors_Advanced;
+
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
         }
@@ -597,6 +599,9 @@ namespace WinPaletter.WindowsColors
         private void Win7Colors_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.RefreshDWM(Program.TM);
+
+            Program.Settings.AspectsControl.WinColors_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
         }
 
         private void RefreshDWM()

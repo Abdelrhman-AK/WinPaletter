@@ -94,7 +94,7 @@
             this.checker_mode_simple.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checker_mode_simple.Location = new System.Drawing.Point(157, 5);
             this.checker_mode_simple.Name = "checker_mode_simple";
-            this.checker_mode_simple.Size = new System.Drawing.Size(127, 36);
+            this.checker_mode_simple.Size = new System.Drawing.Size(145, 36);
             this.checker_mode_simple.TabIndex = 117;
             this.checker_mode_simple.Text = "0";
             this.checker_mode_simple.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

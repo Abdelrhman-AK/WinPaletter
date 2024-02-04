@@ -190,13 +190,13 @@ namespace WinPaletter
 
             LoadData(data);
 
+            AdvancedMode = Program.Settings.AspectsControl.MetricsFonts_Advanced;
+
             windowMetrics1.BackgroundImage = Program.Wallpaper;
             Desktop_icons.BackgroundImage = Program.Wallpaper;
 
             LoadFromTM(Program.TM);
             LoadDefaultValues();
-
-            AlertBox10.Text = Program.Lang.TM_MetricsHighDPIAlert;
         }
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -465,6 +465,9 @@ namespace WinPaletter
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+
+            Program.Settings.AspectsControl.MetricsFonts_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
         }
 
         private void Button14_Click_1(object sender, EventArgs e)

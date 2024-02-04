@@ -111,6 +111,12 @@ namespace WinPaletter
             tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
         }
 
+        private void Wallpaper_Editor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.Settings.AspectsControl.Wallpaper_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
+        }
+
         private void Wallpaper_Editor_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -132,7 +138,10 @@ namespace WinPaletter
                 OnModeAdvanced = ModeSwitched,
                 OnModeSimple = ModeSwitched,
             };
+
             LoadData(data);
+
+            AdvancedMode = Program.Settings.AspectsControl.Wallpaper_Advanced;
 
             LoadFromTM(Program.TM);
             index = 0;

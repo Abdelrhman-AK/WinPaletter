@@ -246,6 +246,12 @@ namespace WinPaletter
 
         }
 
+        private void CursorsStudio_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.Settings.AspectsControl.Cursors_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -275,6 +281,8 @@ namespace WinPaletter
             };
 
             LoadData(data);
+
+            AdvancedMode = Program.Settings.AspectsControl.Cursors_Advanced;
 
             cursorsConatiner.DoubleBuffer();
 

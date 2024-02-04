@@ -41,9 +41,11 @@ namespace WinPaletter.Dialogs
             this.PictureBox36 = new System.Windows.Forms.PictureBox();
             this.log_lbl = new System.Windows.Forms.Label();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.animatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
             this.bottom_buttons.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TreeView1
@@ -96,7 +98,7 @@ namespace WinPaletter.Dialogs
             this.Button25.Image = null;
             this.Button25.ImageAsVector = true;
             this.Button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button25.ImageVector")));
-            this.Button25.Location = new System.Drawing.Point(356, 7);
+            this.Button25.Location = new System.Drawing.Point(148, 3);
             this.Button25.Name = "Button25";
             this.Button25.Size = new System.Drawing.Size(120, 34);
             this.Button25.TabIndex = 30;
@@ -116,7 +118,7 @@ namespace WinPaletter.Dialogs
             this.Button22.Image = null;
             this.Button22.ImageAsVector = true;
             this.Button22.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button22.ImageVector")));
-            this.Button22.Location = new System.Drawing.Point(482, 7);
+            this.Button22.Location = new System.Drawing.Point(274, 3);
             this.Button22.Name = "Button22";
             this.Button22.Size = new System.Drawing.Size(120, 34);
             this.Button22.TabIndex = 29;
@@ -136,7 +138,7 @@ namespace WinPaletter.Dialogs
             this.Button14.Image = null;
             this.Button14.ImageAsVector = true;
             this.Button14.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button14.ImageVector")));
-            this.Button14.Location = new System.Drawing.Point(230, 7);
+            this.Button14.Location = new System.Drawing.Point(22, 3);
             this.Button14.Name = "Button14";
             this.Button14.Size = new System.Drawing.Size(120, 34);
             this.Button14.TabIndex = 27;
@@ -156,7 +158,7 @@ namespace WinPaletter.Dialogs
             this.Button8.Image = null;
             this.Button8.ImageAsVector = true;
             this.Button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button8.ImageVector")));
-            this.Button8.Location = new System.Drawing.Point(608, 7);
+            this.Button8.Location = new System.Drawing.Point(400, 3);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(120, 34);
             this.Button8.TabIndex = 26;
@@ -206,16 +208,27 @@ namespace WinPaletter.Dialogs
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.flowLayoutPanel1);
             this.bottom_buttons.Controls.Add(this.button1);
-            this.bottom_buttons.Controls.Add(this.Button8);
-            this.bottom_buttons.Controls.Add(this.Button25);
-            this.bottom_buttons.Controls.Add(this.Button14);
-            this.bottom_buttons.Controls.Add(this.Button22);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottom_buttons.Location = new System.Drawing.Point(0, 563);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(734, 48);
             this.bottom_buttons.TabIndex = 119;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.Button8);
+            this.flowLayoutPanel1.Controls.Add(this.Button22);
+            this.flowLayoutPanel1.Controls.Add(this.Button25);
+            this.flowLayoutPanel1.Controls.Add(this.Button14);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(208, 4);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(523, 40);
+            this.flowLayoutPanel1.TabIndex = 120;
             // 
             // ThemeLog
             // 
@@ -236,6 +249,7 @@ namespace WinPaletter.Dialogs
             this.animatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -252,5 +266,6 @@ namespace WinPaletter.Dialogs
         private System.Windows.Forms.Timer timer1;
         internal UI.WP.Button button1;
         private UI.WP.GroupBox bottom_buttons;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

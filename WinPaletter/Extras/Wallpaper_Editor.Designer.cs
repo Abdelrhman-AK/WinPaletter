@@ -1479,6 +1479,7 @@ namespace WinPaletter
             this.Name = "Wallpaper_Editor";
             this.Text = "Wallpaper";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Wallpaper_Editor_FormClosed);
             this.Load += new System.EventHandler(this.Wallpaper_Editor_Load);
             this.Controls.SetChildIndex(this.previewContainer, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);

@@ -202,6 +202,7 @@
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1104, 52);
             // 
             // GroupBox13
@@ -2098,6 +2099,7 @@
             this.IsShown = true;
             this.Name = "Win10Colors";
             this.Text = "Windows 10 colors";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Win10Colors_FormClosed);
             this.Load += new System.EventHandler(this.Win10Colors_Load);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);

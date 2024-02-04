@@ -74,6 +74,14 @@ namespace WinPaletter.WindowsColors
             Forms.PaletteGenerateFromColor.ShowDialog();
         }
 
+        private void WinXPColors_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            backup_TM.Dispose();
+
+            Program.Settings.AspectsControl.WinColors_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
+        }
+
         private void WinXPColors_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -99,6 +107,8 @@ namespace WinPaletter.WindowsColors
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
             LoadData(data);
+
+            AdvancedMode = Program.Settings.AspectsControl.WinColors_Advanced;
 
             LoadFromTM(Program.TM);
         }
@@ -533,11 +543,6 @@ namespace WinPaletter.WindowsColors
         private void WXP_VS_ReplaceMetrics_CheckedChanged(object sender, EventArgs e)
         {
             ReplaceMetrics();
-        }
-
-        private void WinXPColors_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            backup_TM.Dispose();
         }
     }
 }

@@ -2995,6 +2995,7 @@ namespace WinPaletter
             this.Name = "CursorsStudio";
             this.Text = "Cursors Studio";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.CursorsStudio_HelpButtonClicked);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CursorsStudio_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Controls.SetChildIndex(this.GroupBox1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);

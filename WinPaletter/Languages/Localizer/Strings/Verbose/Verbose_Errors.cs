@@ -8,6 +8,7 @@
         public string TM_WIN32UI_Error { get; set; } = "Error occurred during applying Classic Colors";
         public string TM_WinEffects_Error { get; set; } = "Error occurred during applying Windows Effects";
         public string TM_WallpaperTone_Error { get; set; } = "Error occurred during applying Wallpaper Tone";
+        public string TM_LogonUI12_Error { get; set; } = "Error occurred during applying Windows 12 LogonUI";
         public string TM_LogonUI11_Error { get; set; } = "Error occurred during applying Windows 11 LogonUI";
         public string TM_LogonUI10_Error { get; set; } = "Error occurred during applying Windows 10 LogonUI";
         public string TM_LogonUI8_Error { get; set; } = "Error occurred during applying Windows 8.1 Lock Screen";
@@ -16,6 +17,7 @@
         public string TM_W10_Error { get; set; } = "Error occurred during applying Windows 10 scheme";
         public string TM_SavingInfo_Error { get; set; } = "Error occurred during saving theme info into registry";
         public string TM_ThemeReset_Error { get; set; } = "Error occurred during resetting theme to default Windows";
+        public string TM_W12_Error { get; set; } = "Error occurred during applying Windows 12 scheme";
         public string TM_W11_Error { get; set; } = "Error occurred during applying Windows 11 scheme";
         public string TM_W7_Error { get; set; } = "Error occurred during applying Windows 7 theme";
         public string TM_WVista_Error { get; set; } = "Error occurred during applying Windows Vista theme";

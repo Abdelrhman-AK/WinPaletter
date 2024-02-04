@@ -78,6 +78,12 @@ namespace WinPaletter.WindowsColors
             Forms.PaletteGenerateFromColor.ShowDialog();
         }
 
+        private void WinVistaColors_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.Settings.AspectsControl.WinColors_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
+        }
+
         private void WinVistaColors_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -103,6 +109,8 @@ namespace WinPaletter.WindowsColors
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
             LoadData(data);
+
+            AdvancedMode = Program.Settings.AspectsControl.WinColors_Advanced;
 
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();

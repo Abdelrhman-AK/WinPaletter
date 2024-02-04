@@ -50,7 +50,6 @@ namespace WinPaletter
             RadioButton2.Checked = !Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
 
             toggle8.Checked = Sets.ThemeApplyingBehavior.AutoRestartExplorer;
-            toggle12.Checked = Sets.ThemeApplyingBehavior.AutoApplyCursors;
             toggle13.Checked = Sets.ThemeApplyingBehavior.ResetCursorsToAero;
 
             toggle1.Checked = Sets.Updates.AutoCheck;
@@ -198,6 +197,30 @@ namespace WinPaletter
             toggle32.Checked = Sets.BackupTheme.AutoBackupOnApply;
             toggle34.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
             textBox4.Text = Sets.BackupTheme.BackupPath;
+
+            toggle11.Checked = Sets.AspectsControl.Enabled;
+            checkBox1.Checked = Sets.AspectsControl.WinColors;
+            checkBox2.Checked = Sets.AspectsControl.ClassicColors;
+            checkBox13.Checked = Sets.AspectsControl.LogonUI;
+            checkBox4.Checked = Sets.AspectsControl.Cursors;
+            checkBox3.Checked = Sets.AspectsControl.MetricsFonts;
+            checkBox5.Checked = Sets.AspectsControl.Wallpaper;
+            checkBox6.Checked = Sets.AspectsControl.Consoles;
+            checkBox7.Checked = Sets.AspectsControl.WinTerminals;
+            checkBox8.Checked = Sets.AspectsControl.Effects;
+            checkBox9.Checked = Sets.AspectsControl.Sounds;
+            checkBox10.Checked = Sets.AspectsControl.ScreenSaver;
+            checkBox12.Checked = Sets.AspectsControl.AltTab;
+            checker_mode_advanced.Checked = Sets.AspectsControl.WinColors_Advanced;
+            checker_mode_simple.Checked = !Sets.AspectsControl.WinColors_Advanced;
+            radioImage4.Checked = Sets.AspectsControl.ClassicColors_Advanced;
+            radioImage3.Checked = !Sets.AspectsControl.ClassicColors_Advanced;
+            radioImage6.Checked = Sets.AspectsControl.Cursors_Advanced;
+            radioImage5.Checked = !Sets.AspectsControl.Cursors_Advanced;
+            radioImage8.Checked = Sets.AspectsControl.MetricsFonts_Advanced;
+            radioImage7.Checked = !Sets.AspectsControl.MetricsFonts_Advanced;
+            radioImage10.Checked = Sets.AspectsControl.Wallpaper_Advanced;
+            radioImage9.Checked = !Sets.AspectsControl.Wallpaper_Advanced;
         }
 
         public void SaveSettings()
@@ -368,7 +391,6 @@ namespace WinPaletter
             Sets.FileTypeManagement.AutoAddExt = toggle6.Checked;
             Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked;
             Sets.ThemeApplyingBehavior.AutoRestartExplorer = toggle8.Checked;
-            Sets.ThemeApplyingBehavior.AutoApplyCursors = toggle12.Checked;
             Sets.ThemeApplyingBehavior.ResetCursorsToAero = toggle13.Checked;
 
             Sets.Updates.AutoCheck = toggle1.Checked;
@@ -492,6 +514,26 @@ namespace WinPaletter
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
             Sets.Store.ShowTips = toggle17.Checked;
 
+            Sets.AspectsControl.Enabled = toggle11.Checked;
+            Sets.AspectsControl.WinColors = checkBox1.Checked;
+            Sets.AspectsControl.ClassicColors = checkBox2.Checked;
+            Sets.AspectsControl.LogonUI = checkBox13.Checked;
+            Sets.AspectsControl.Cursors = checkBox4.Checked;
+            Sets.AspectsControl.MetricsFonts = checkBox3.Checked;
+            Sets.AspectsControl.Wallpaper = checkBox5.Checked;
+            Sets.AspectsControl.Consoles = checkBox6.Checked;
+            Sets.AspectsControl.WinTerminals = checkBox7.Checked;
+            Sets.AspectsControl.Effects = checkBox8.Checked;
+            Sets.AspectsControl.Sounds = checkBox9.Checked;
+            Sets.AspectsControl.ScreenSaver = checkBox10.Checked;
+            Sets.AspectsControl.AltTab = checkBox12.Checked;
+            Sets.AspectsControl.WinColors_Advanced = checker_mode_advanced.Checked;
+            Sets.AspectsControl.ClassicColors_Advanced = radioImage4.Checked;
+            Sets.AspectsControl.Cursors_Advanced = radioImage6.Checked;
+            Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
+            Sets.AspectsControl.Wallpaper_Advanced = radioImage10.Checked;
+
+
             Sets.Save(Mode, File);
         }
 
@@ -511,8 +553,6 @@ namespace WinPaletter
                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.AutoRestartExplorer != toggle8.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.AutoApplyCursors != toggle12.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != toggle13.Checked)
                     Changed = true;
@@ -667,6 +707,44 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.BackupTheme.BackupPath != textBox4.Text)
                     Changed = true;
+
+                if (Settings.AspectsControl.Enabled != toggle11.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.WinColors != checkBox1.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.ClassicColors != checkBox2.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.LogonUI != checkBox13.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Cursors != checkBox4.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.MetricsFonts != checkBox3.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Wallpaper != checkBox5.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Consoles != checkBox6.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.WinTerminals != checkBox7.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Effects != checkBox8.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Sounds != checkBox9.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.ScreenSaver != checkBox10.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.AltTab != checkBox12.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.WinColors_Advanced != checker_mode_advanced.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.ClassicColors_Advanced != radioImage4.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Cursors_Advanced != radioImage6.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.MetricsFonts_Advanced != radioImage8.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Wallpaper_Advanced != radioImage10.Checked)
+                    Changed = true;
+
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)

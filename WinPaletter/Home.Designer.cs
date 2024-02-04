@@ -303,8 +303,8 @@
             this.card6.Name = "card6";
             this.card6.Size = new System.Drawing.Size(270, 125);
             this.card6.TabIndex = 123;
-            this.card6.Tag = "Customize your Windows cursors with this studio, allowing you to change colors an" +
-    "d styles for cursors, including backgrounds, borders, and loading circles";
+            this.card6.Tag = "Personalize your Windows cursors using this studio to customize colors, styles, b" +
+    "ackgrounds, borders, and loading circles";
             this.card6.Text = "Cursors Studio";
             this.card6.Click += new System.EventHandler(this.card6_Click);
             // 

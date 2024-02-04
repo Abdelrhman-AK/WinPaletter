@@ -73,11 +73,13 @@ namespace WinPaletter.Tabs
             private set
             {
                 UnsubscribeEvents();
+                if (_form != null) _form.ParentChanged -= _form_ParentChanged;
 
                 if (_form != value)
                 {
                     _form = value;
                     SubscribeEvents();
+                    _form.ParentChanged += _form_ParentChanged;
                 }
             }
         }
@@ -202,8 +204,8 @@ namespace WinPaletter.Tabs
             {
                 _form.Shown += _form_Shown;
                 _form.TextChanged += _form_TextChanged;
+                _form.FormClosing += _form_FormClosing;
                 _form.FormClosed += _form_FormClosed;
-
                 iconChangeDetector = new(_form.Handle, this);
             }
         }
@@ -217,6 +219,7 @@ namespace WinPaletter.Tabs
             {
                 _form.Shown -= _form_Shown;
                 _form.TextChanged -= _form_TextChanged;
+                _form.FormClosing -= _form_FormClosing;
                 _form.FormClosed -= _form_FormClosed;
 
                 iconChangeDetector?.Dispose();
@@ -252,6 +255,18 @@ namespace WinPaletter.Tabs
         }
 
         /// <summary>
+        /// Event handler for form closing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void _form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Shown = false;
+            tabsContainer.OnFormClosing(_form, new TabDataEventArgs(this));
+        }
+
+        /// <summary>
         /// Event handler for form closed.
         /// </summary>
         /// <param name="sender">Event sender.</param>
@@ -259,8 +274,19 @@ namespace WinPaletter.Tabs
         private void _form_FormClosed(object sender, FormClosedEventArgs e)
         {
             Shown = false;
-            ((Form)sender).Parent?.Dispose();
             tabsContainer.OnFormClosed(_form, new TabDataEventArgs(this));
+        }
+
+        private void _form_ParentChanged(object sender, EventArgs e)
+        {
+            if (_form.Parent == null)
+            {
+                UnsubscribeEvents();
+            }
+            else if (_form.Parent is TabPage)
+            {
+                SubscribeEvents();
+            }
         }
 
         #endregion
@@ -282,7 +308,7 @@ namespace WinPaletter.Tabs
     }
 
     /// <summary>
-    /// Event arguments for tab data events.
+    /// Event arguments for tab events.
     /// </summary>
     public class TabDataEventArgs : EventArgs
     {

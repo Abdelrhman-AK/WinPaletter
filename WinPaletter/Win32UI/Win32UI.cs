@@ -226,6 +226,12 @@ namespace WinPaletter
             }
         }
 
+        private void Win32UI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.Settings.AspectsControl.ClassicColors_Advanced = AdvancedMode;
+            Program.Settings.AspectsControl.Save();
+        }
+
         private void Win32UI_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -252,6 +258,8 @@ namespace WinPaletter
             };
 
             LoadData(data);
+
+            AdvancedMode = Program.Settings.AspectsControl.ClassicColors_Advanced;
 
             splitContainer1.Panel2Collapsed = !checkBox1.Checked;
 

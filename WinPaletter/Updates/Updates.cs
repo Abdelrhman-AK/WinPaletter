@@ -190,6 +190,7 @@ namespace WinPaletter
             Panel1.Enabled = true;
             Button1.Text = Program.Lang.CheckForUpdates;
             Label2.Text = Program.Version;
+            Label2.Font = Fonts.ConsoleMedium;
 
             if (ls.Count > 0)
             {
@@ -252,10 +253,7 @@ namespace WinPaletter
 
         private void Label3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Updates f = new();
-            Close();
-            Forms.SettingsX.ShowDialog();
-            f.ShowDialog();
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
         }
 
         private void Updates_Shown(object sender, EventArgs e)

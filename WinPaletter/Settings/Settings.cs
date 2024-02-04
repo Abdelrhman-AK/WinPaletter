@@ -16,7 +16,6 @@ namespace WinPaletter
 
         public class Structures
         {
-
             #region paths
             public static readonly string REG = @"HKEY_CURRENT_USER\Software\WinPaletter\Settings";
             public static readonly string REG_General = REG + @"\General";
@@ -34,6 +33,7 @@ namespace WinPaletter
             public static readonly string REG_UsersServices = REG + @"\UsersServices";
             public static readonly string REG_Miscellaneous = REG + @"\Miscellaneous";
             public static readonly string REG_Backup = REG + @"\Backup";
+            public static readonly string REG_AspectsControl = REG + @"\AspectsControl";
             #endregion
 
             public struct General
@@ -119,7 +119,6 @@ namespace WinPaletter
                 public OverwriteOptions ClassicColors_HKLM_Prefs;
                 public bool UPM_HKU_DEFAULT;
                 public OverwriteOptions Metrics_HKU_DEFAULT_Prefs;
-                public bool AutoApplyCursors;
                 public bool ResetCursorsToAero;
                 public OverwriteOptions Cursors_HKU_DEFAULT_Prefs;
                 public OverwriteOptions CMD_HKU_DEFAULT_Prefs;
@@ -153,7 +152,6 @@ namespace WinPaletter
                     PS64_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
                     Desktop_HKU_DEFAULT = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
                     CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
-                    AutoApplyCursors = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", true));
                     ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
                     SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
                     Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
@@ -173,7 +171,6 @@ namespace WinPaletter
                     EditReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", PS86_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", Desktop_HKU_DEFAULT, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
@@ -512,6 +509,72 @@ namespace WinPaletter
                     EditReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
                 }
             }
+
+            public struct AspectsControl
+            {
+                public bool Enabled;
+                public bool WinColors;
+                public bool WinColors_Advanced;
+                public bool LogonUI;
+                public bool ClassicColors;
+                public bool ClassicColors_Advanced;
+                public bool MetricsFonts;
+                public bool MetricsFonts_Advanced;
+                public bool Cursors;
+                public bool Cursors_Advanced;
+                public bool Consoles;
+                public bool WinTerminals;
+                public bool Wallpaper;
+                public bool Wallpaper_Advanced;
+                public bool Effects;
+                public bool Sounds; 
+                public bool ScreenSaver;
+                public bool AltTab;
+
+                public void Load()
+                {
+                    Enabled = Conversions.ToBoolean(GetReg(REG_AspectsControl, string.Empty, false));
+                    WinColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinColors", true));
+                    WinColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinColors_Advanced", true));
+                    LogonUI = Conversions.ToBoolean(GetReg(REG_AspectsControl, "LogonUI", true));
+                    ClassicColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors", true));
+                    ClassicColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors_Advanced", true));
+                    MetricsFonts = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts", true));
+                    MetricsFonts_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts_Advanced", true));
+                    Cursors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors", true));
+                    Cursors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors_Advanced", true));
+                    Consoles = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Consoles", true));
+                    WinTerminals = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinTerminals", true));
+                    Wallpaper = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Wallpaper", true));
+                    Wallpaper_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Wallpaper_Advanced", true));
+                    Effects = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Effects", true));
+                    Sounds = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Sounds", true));
+                    ScreenSaver = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ScreenSaver", true));
+                    AltTab = Conversions.ToBoolean(GetReg(REG_AspectsControl, "AltTab", true));
+                }
+
+                public void Save()
+                {
+                    EditReg(REG_AspectsControl, string.Empty, Enabled, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "WinColors", WinColors, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "WinColors_Advanced", WinColors_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "LogonUI", LogonUI, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "ClassicColors", ClassicColors, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "ClassicColors_Advanced", ClassicColors_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "MetricsFonts", MetricsFonts, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "MetricsFonts_Advanced", MetricsFonts_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Cursors", Cursors, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Cursors_Advanced", Cursors_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Consoles", Consoles, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "WinTerminals", WinTerminals, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Wallpaper", Wallpaper, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Wallpaper_Advanced", Wallpaper_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Effects", Effects, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Sounds", Sounds, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "ScreenSaver", ScreenSaver, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "AltTab", AltTab, RegistryValueKind.DWord);
+                }
+            }
         }
 
         public Structures.General General = new()
@@ -544,7 +607,6 @@ namespace WinPaletter
             ClassicColors_HKLM_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.Erase,
             UPM_HKU_DEFAULT = true,
             Metrics_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
-            AutoApplyCursors = true,
             ResetCursorsToAero = OS.WXP,
             Cursors_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             CMD_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
@@ -650,6 +712,28 @@ namespace WinPaletter
             BackupPath = $"{PathsExt.appData}\\Backup\\Themes"
         };
 
+        public Structures.AspectsControl AspectsControl = new()
+        {
+            Enabled = false,
+            WinColors = true,
+            WinColors_Advanced = true,
+            LogonUI = true,
+            ClassicColors = true,
+            ClassicColors_Advanced = true,
+            MetricsFonts = true,
+            MetricsFonts_Advanced = true,
+            Cursors = true,
+            Cursors_Advanced = true,
+            Consoles = true,
+            WinTerminals = true,
+            Wallpaper = true,
+            Wallpaper_Advanced = true,
+            Effects = true,
+            Sounds = true,
+            ScreenSaver = true,
+            AltTab = true
+        };
+
         public enum Mode
         {
             Registry,
@@ -678,6 +762,7 @@ namespace WinPaletter
                         UsersServices.Load();
                         Miscellaneous.Load();
                         BackupTheme.Load();
+                        AspectsControl.Load();
                         break;
                     }
 
@@ -761,6 +846,7 @@ namespace WinPaletter
                         UsersServices.Save();
                         Miscellaneous.Save();
                         BackupTheme.Save();
+                        AspectsControl.Save();
                         break;
                     }
 

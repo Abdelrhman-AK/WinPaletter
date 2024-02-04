@@ -258,6 +258,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(909, 52);
             // 
             // ImageList1
@@ -2234,6 +2235,7 @@ namespace WinPaletter
             this.Text = "Classic Colors";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Win32UI_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Win32UI_FormClosed);
             this.Load += new System.EventHandler(this.Win32UI_Load);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.TabControl1, 0);

@@ -51,6 +51,7 @@ namespace WinPaletter
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.SeparatorVertical1 = new WinPaletter.UI.WP.SeparatorV();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button7 = new WinPaletter.UI.WP.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -242,6 +243,7 @@ namespace WinPaletter
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.Label49);
             this.panel1.Controls.Add(this.SeparatorVertical1);
             this.panel1.Controls.Add(this.Label2);
@@ -260,6 +262,25 @@ namespace WinPaletter
             this.panel1.Size = new System.Drawing.Size(331, 163);
             this.panel1.TabIndex = 103;
             this.panel1.Visible = false;
+            // 
+            // button7
+            // 
+            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(18)))), ((int)(((byte)(31)))));
+            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.Image = null;
+            this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button7.ImageAsVector = true;
+            this.button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
+            this.button7.Location = new System.Drawing.Point(291, 129);
+            this.button7.Name = "button7";
+            this.button7.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button7.Size = new System.Drawing.Size(32, 27);
+            this.button7.TabIndex = 103;
+            this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // TerminalsDashboard
             // 
@@ -302,5 +323,6 @@ namespace WinPaletter
         internal ToolTip ToolTip1;
         internal UI.WP.SeparatorV SeparatorVertical1;
         private Panel panel1;
+        internal UI.WP.Button button7;
     }
 }

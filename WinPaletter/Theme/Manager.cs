@@ -411,7 +411,7 @@ namespace WinPaletter.Theme
                                         def.LogonUI7.Enabled = false;
                                         def.Windows81.NoLockScreen = false;
                                         def.LogonUIXP.Enabled = true;
-                                        if (!OS.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP();
+                                        if (OS.WXP) ResetCursorsToNone_XP(); else ResetCursorsToAero();
                                         def.CommandPrompt.Enabled = true;
                                         def.PowerShellx86.Enabled = true;
                                         def.PowerShellx64.Enabled = true;
@@ -431,51 +431,119 @@ namespace WinPaletter.Theme
                             Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
 
                             // WinPaletter application theme
-                            Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_Applying_AppTheme, Program.Lang.TM_Error_AppTheme, Program.Lang.TM_Time, sw_all, !AppTheme.Enabled, Program.Lang.TM_Skip_AppTheme, true);
+                            Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, 
+                                Program.Lang.TM_Applying_AppTheme, 
+                                Program.Lang.TM_Error_AppTheme, 
+                                Program.Lang.TM_Time, 
+                                sw_all, 
+                                !AppTheme.Enabled, 
+                                Program.Lang.TM_Skip_AppTheme, 
+                                true);
 
                             // Wallpaper
                             // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
-                            Execute(new(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Wallpaper, Program.Lang.TM_Error_Wallpaper, Program.Lang.TM_Time, sw_all, !Wallpaper.Enabled, Program.Lang.TM_Skip_Wallpaper);
+                            Execute(new(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)),
+                                TreeView,
+                                Program.Lang.TM_Applying_Wallpaper,
+                                Program.Lang.TM_Error_Wallpaper,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !Wallpaper.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper),
+                                Program.Lang.TM_Skip_Wallpaper);
 
                             if (OS.W12)
                             {
-                                Execute(new(() => Windows12.Apply("12", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win12, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows12.Apply("12", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_Win12,
+                                    Program.Lang.TM_W12_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI12, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_LogonUI12,
+                                    Program.Lang.TM_LogonUI12_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !LogonUI10x.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.W11)
                             {
-                                Execute(new(() => Windows11.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win11, Program.Lang.TM_W11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows12.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_Win11,
+                                    Program.Lang.TM_W11_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI11, Program.Lang.TM_LogonUI11_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_LogonUI11,
+                                    Program.Lang.TM_LogonUI11_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !LogonUI10x.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.W10)
                             {
-                                Execute(new(() => Windows10.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win10, Program.Lang.TM_W10_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows12.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_Win10,
+                                    Program.Lang.TM_W10_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUI10, Program.Lang.TM_LogonUI10_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_LogonUI10,
+                                    Program.Lang.TM_LogonUI10_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !LogonUI10x.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.W8x)
                             {
-                                Execute(new(() =>
-                                {
-                                    Windows81.Apply(this, "8.1", ReportProgress_Detailed ? TreeView : null);
-                                }), TreeView, Program.Lang.TM_Applying_Win81, Program.Lang.TM_W81_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows81.Apply(this, "8.1", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_Win81,
+                                    Program.Lang.TM_W81_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !Windows81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => Apply_LogonUI_8(TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI8, Program.Lang.TM_LogonUI8_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Apply_LogonUI_8(TreeView)), TreeView,
+                                    Program.Lang.TM_Applying_LogonUI8,
+                                    Program.Lang.TM_LogonUI8_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !LogonUI7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.W7)
                             {
-                                Execute(new(() =>
-                                {
-                                    Windows7.Apply(this, ReportProgress_Detailed ? TreeView : null);
-                                }), TreeView, Program.Lang.TM_Applying_Win7, Program.Lang.TM_W7_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Windows7.Apply(this, ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                    Program.Lang.TM_Applying_Win7,
+                                    Program.Lang.TM_W7_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !Windows7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, Program.Lang.TM_Applying_LogonUI7, Program.Lang.TM_LogonUI7_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView,
+                                    Program.Lang.TM_Applying_LogonUI7,
+                                    Program.Lang.TM_LogonUI7_Error,
+                                    Program.Lang.TM_Time,
+                                    sw_all,
+                                    !LogonUI7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.WVista)
@@ -484,27 +552,70 @@ namespace WinPaletter.Theme
                                 {
                                     WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
                                     Program.RefreshDWM(this);
-                                }), TreeView, Program.Lang.TM_Applying_WinVista, Program.Lang.TM_WVista_Error, Program.Lang.TM_Time, sw_all);
+                                }), TreeView,
+                                Program.Lang.TM_Applying_WinVista,
+                                Program.Lang.TM_WVista_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !WindowsVista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                Program.Lang.TM_Skip_WinColors);
                             }
 
                             if (OS.WXP)
                             {
-                                Execute(new(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinXP, Program.Lang.TM_WXP_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                    Program.Lang.TM_Applying_WinXP, 
+                                    Program.Lang.TM_WXP_Error, 
+                                    Program.Lang.TM_Time, 
+                                    sw_all,
+                                    !WindowsXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
+                                    Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_LogonUIXP, Program.Lang.TM_LogonUIXP_Error, Program.Lang.TM_Time, sw_all);
+                                Execute(new(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                    Program.Lang.TM_Applying_LogonUIXP, 
+                                    Program.Lang.TM_LogonUIXP_Error, 
+                                    Program.Lang.TM_Time, 
+                                    sw_all,
+                                    !LogonUIXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    Program.Lang.TM_Skip_LogonUI);
                             }
 
                             // Win32UI
-                            Execute(new(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Win32UI, Program.Lang.TM_WIN32UI_Error, Program.Lang.TM_Time, sw_all);
+                            Execute(new(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_Win32UI, 
+                                Program.Lang.TM_WIN32UI_Error, 
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !Win32.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ClassicColors),
+                                Program.Lang.TM_Skip_ClassicColors);
 
                             // WindowsEffects
-                            Execute(new(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_WinEffects, Program.Lang.TM_WinEffects_Error, Program.Lang.TM_Time, sw_all);
+                            Execute(new(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_WinEffects,
+                                Program.Lang.TM_WinEffects_Error, 
+                                Program.Lang.TM_Time, 
+                                sw_all,
+                                !WindowsEffects.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Effects),
+                                Program.Lang.TM_Skip_WinEffects);
 
                             // Metrics\Fonts
-                            Execute(new(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Metrics, Program.Lang.TM_Error_Metrics, Program.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, Program.Lang.TM_Skip_Metrics);
+                            Execute(new(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_Metrics, 
+                                Program.Lang.TM_Error_Metrics,
+                                Program.Lang.TM_Time_They, 
+                                sw_all, 
+                                !MetricsFonts.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.MetricsFonts),
+                                Program.Lang.TM_Skip_Metrics);
 
                             // AltTab
-                            Execute(new(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_AltTab, Program.Lang.TM_Error_AltTab, Program.Lang.TM_Time, sw_all, !AltTab.Enabled, Program.Lang.TM_Skip_AltTab, true);
+                            Execute(new(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_AltTab, 
+                                Program.Lang.TM_Error_AltTab, 
+                                Program.Lang.TM_Time,
+                                sw_all, 
+                                !AltTab.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.AltTab),
+                                Program.Lang.TM_Skip_AltTab, 
+                                true);
 
                             // WallpaperTone
                             Execute(new(() =>
@@ -541,7 +652,13 @@ namespace WinPaletter.Theme
                                         WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
                                 }
 
-                            }), TreeView, Program.Lang.TM_Applying_WallpaperTone, Program.Lang.TM_WallpaperTone_Error, Program.Lang.TM_Time, sw_all);
+                            }), TreeView,
+                            Program.Lang.TM_Applying_WallpaperTone,
+                            Program.Lang.TM_WallpaperTone_Error,
+                            Program.Lang.TM_Time,
+                            sw_all,
+                            !Wallpaper.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper),
+                            Program.Lang.TM_Skip_WallpaperTone);
 
                             #region Consoles
                             EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
@@ -550,11 +667,29 @@ namespace WinPaletter.Theme
                             EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
                             EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
-                            Execute(new(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_CMD, Program.Lang.TM_CMD_Error, Program.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, Program.Lang.TM_Skip_CMD);
+                            Execute(new(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_CMD, 
+                                Program.Lang.TM_CMD_Error, 
+                                Program.Lang.TM_Time, 
+                                sw_all, 
+                                !CommandPrompt.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
+                                Program.Lang.TM_Skip_CMD);
 
-                            Execute(new(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS32, Program.Lang.TM_PS32_Error, Program.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, Program.Lang.TM_Skip_PS32);
+                            Execute(new(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_PS32, 
+                                Program.Lang.TM_PS32_Error, 
+                                Program.Lang.TM_Time, 
+                                sw_all, 
+                                !PowerShellx86.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
+                                Program.Lang.TM_Skip_PS32);
 
-                            Execute(new(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_PS64, Program.Lang.TM_PS64_Error, Program.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, Program.Lang.TM_Skip_PS64);
+                            Execute(new(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_PS64, 
+                                Program.Lang.TM_PS64_Error, 
+                                Program.Lang.TM_Time, 
+                                sw_all, 
+                                !PowerShellx64.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
+                                Program.Lang.TM_Skip_PS64);
                             #endregion
 
                             #region Windows Terminal
@@ -565,7 +700,12 @@ namespace WinPaletter.Theme
                             {
                                 if (ReportProgress)
                                 {
-                                    if (Terminal.Enabled & TerminalPreview.Enabled)
+                                    if (Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)
+                                    {
+                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
+                                    }
+
+                                    else if (Terminal.Enabled & TerminalPreview.Enabled)
                                     {
                                         AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_Terminals}", "info");
                                     }
@@ -585,7 +725,6 @@ namespace WinPaletter.Theme
                                     else
                                     {
                                         AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
-
                                     }
 
                                 }
@@ -619,11 +758,10 @@ namespace WinPaletter.Theme
                                     }
                                 }
 
-                                if (Terminal.Enabled)
+                                if (Terminal.Enabled && (!Program.Settings.AspectsControl.Enabled && !(Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)))
                                 {
                                     if (System.IO.File.Exists(TerDir))
                                     {
-
                                         try
                                         {
                                             AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalStable}", "info");
@@ -659,11 +797,10 @@ namespace WinPaletter.Theme
                                     else
                                     {
                                         AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound}", "skip");
-
                                     }
                                 }
 
-                                if (TerminalPreview.Enabled)
+                                if (TerminalPreview.Enabled && (!Program.Settings.AspectsControl.Enabled && !(Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)))
                                 {
                                     if (System.IO.File.Exists(TerPreDir))
                                     {
@@ -714,13 +851,29 @@ namespace WinPaletter.Theme
                             #endregion
 
                             // ScreenSaver
-                            Execute(new(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_ScreenSaver, Program.Lang.TM_Error_ScreenSaver, Program.Lang.TM_Time, sw_all);
+                            Execute(new(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_ScreenSaver, 
+                                Program.Lang.TM_Error_ScreenSaver, 
+                                Program.Lang.TM_Time, 
+                                sw_all,
+                                !ScreenSaver.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ScreenSaver),
+                                Program.Lang.TM_Skip_ScreenSaver);
 
                             // Sounds
-                            Execute(new(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, Program.Lang.TM_Applying_Sounds, Program.Lang.TM_Error_Sounds, Program.Lang.TM_Time, sw_all, !Sounds.Enabled, Program.Lang.TM_Skip_Sounds);
+                            Execute(new(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, 
+                                Program.Lang.TM_Applying_Sounds, 
+                                Program.Lang.TM_Error_Sounds, 
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !Sounds.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Sounds),
+                                Program.Lang.TM_Skip_Sounds);
 
                             // Cursors
-                            Execute(new(() => Apply_Cursors(TreeView)), TreeView, string.Empty, Program.Lang.TM_Error_Cursors, Program.Lang.TM_Time_Cursors, sw_all);
+                            Execute(new(() => Apply_Cursors(TreeView)), TreeView, 
+                                string.Empty, 
+                                Program.Lang.TM_Error_Cursors, 
+                                Program.Lang.TM_Time_Cursors,
+                                sw_all);
 
                             // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                             if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

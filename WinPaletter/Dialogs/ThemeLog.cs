@@ -9,7 +9,6 @@ namespace WinPaletter.Dialogs
     public partial class ThemeLog : Form
     {
         private int elapsedSecs = 0;
-        private List<Form> OpenForms = new();
         private Thread Apply_Thread;
 
         public ThemeLog()
@@ -25,7 +24,6 @@ namespace WinPaletter.Dialogs
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
             TreeView1.ImageList = ImageLists.ThemeLog;
-            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void ThemeLog_Closing(object sender, FormClosingEventArgs e)
@@ -42,11 +40,6 @@ namespace WinPaletter.Dialogs
                     Apply_Thread.Abort();
                 }
             }
-
-            foreach (Form f in OpenForms)
-            {
-                f.Visible = true;
-            }
         }
 
         /// <summary>
@@ -57,20 +50,12 @@ namespace WinPaletter.Dialogs
         {
             TM ??= Program.TM;
 
-            OpenForms.Clear();
-
             if (Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None)
             {
-                foreach (Form f in Application.OpenForms)
-                {
-                    if (f != this)
-                    {
-                        OpenForms.Add(f);
-                        f.Visible = false;
-                    }
-                }
-
                 Show();
+
+                //Hiding forms or adding this log into tabs causing a bug; resizing window is not working properly
+                //Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
             }
 
             Apply_Thread = new(() =>
@@ -89,7 +74,7 @@ namespace WinPaletter.Dialogs
                 if (!dontInvoke)
                 {
                     //Invoking is important to access controls from different thread
-                    Program.Invoke(() =>
+                    BeginInvoke(() =>
                     {
                         Button8.Visible = false;
                         Button14.Visible = false;
@@ -123,9 +108,6 @@ namespace WinPaletter.Dialogs
                     if (LogEnabled)
                         Theme.Manager.AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_AllDone}", "info");
 
-                    if (TM.MetricsFonts.Enabled & Program.GetWindowsScreenScalingFactor() > 100d)
-                        Theme.Manager.AddNode(TreeView1, $"{Program.Lang.TM_MetricsHighDPIAlert}", "info");
-
                     if (AdditionalStoreTips)
                         Theme.Manager.AddNode(TreeView1, Program.Lang.Store_LogoffRecommended, "info");
                 }
@@ -135,15 +117,15 @@ namespace WinPaletter.Dialogs
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
-                Program.TM = (Theme.Manager)TM.Clone();
-                Program.TM_Original = (Theme.Manager)TM.Clone();
+                Program.TM = TM.Clone() as Theme.Manager;
+                Program.TM_Original = TM.Clone() as Theme.Manager;
 
                 Cursor = Cursors.Default;
 
                 //Invoking is important to access controls from different thread
                 if (!dontInvoke)
                 {
-                    Program.Invoke(() =>
+                    BeginInvoke(() =>
                     {
                         log_lbl.Visible = true;
                         Button8.Visible = true;
@@ -166,7 +148,7 @@ namespace WinPaletter.Dialogs
                     if (!dontInvoke)
                     {
                         //Invoking is important to access controls from different thread
-                        Program.Invoke(() =>
+                        BeginInvoke(() =>
                     {
                         Button14.Visible = true;
                     });
@@ -184,7 +166,7 @@ namespace WinPaletter.Dialogs
                     if (!dontInvoke)
                     {
                         //Invoking is important to access timer from different thread
-                        Program.Invoke(() =>
+                        BeginInvoke(() =>
                     {
                         timer1.Enabled = true;
                         timer1.Start();
@@ -262,7 +244,7 @@ namespace WinPaletter.Dialogs
             log_lbl.Text = string.Empty;
             timer1.Enabled = false;
             timer1.Stop();
-            this.Close();
+            Close();
         }
 
         private void Button14_Click(object sender, EventArgs e)
@@ -279,6 +261,7 @@ namespace WinPaletter.Dialogs
             log_lbl.Text = Program.Lang.TM_LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
+            (sender as UI.WP.Button).Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -423,11 +423,11 @@ namespace WinPaletter.Theme
 
                 if (Cursor_Enabled)
                 {
-                    this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, Program.Lang.TM_RenderingCursors, Program.Lang.TM_RenderingCursors_Error, Program.Lang.TM_Time);
-
-                    if (Program.Settings.ThemeApplyingBehavior.AutoApplyCursors)
+                    if (!Program.Settings.AspectsControl.Enabled || (Program.Settings.AspectsControl.Enabled && Program.Settings.AspectsControl.Cursors))
                     {
-                        this.Execute(new MethodInvoker(() =>
+                        Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, Program.Lang.TM_RenderingCursors, Program.Lang.TM_RenderingCursors_Error, Program.Lang.TM_Time);
+
+                        Execute(new MethodInvoker(() =>
                         {
                             SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.SPIF_UPDATEINIFILE);
                             SystemParametersInfo(ReportProgress_Detailed ? TreeView : null, SPI.SPI_SETMOUSESONAR, 0, Cursor_Sonar, SPIF.SPIF_UPDATEINIFILE);
@@ -444,7 +444,7 @@ namespace WinPaletter.Theme
                         }), TreeView, Program.Lang.TM_ApplyingCursors, Program.Lang.TM_CursorsApplying_Error, Program.Lang.TM_Time);
                     }
                     else if (ReportProgress)
-                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Restricted_Cursors}", "error");
+                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Cursors}", "skip");
                 }
 
                 else if (Program.Settings.ThemeApplyingBehavior.ResetCursorsToAero)

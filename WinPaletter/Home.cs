@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -87,8 +88,8 @@ namespace WinPaletter
 
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => tip_label.Text = (s as UI.WP.Button).Tag as string;
-                button.MouseLeave += (s, e) => tip_label.Text = string.Empty;
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag as string).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
         }
 
@@ -557,7 +558,6 @@ namespace WinPaletter
             _shown = true;
 
             if (Program.Settings.Updates.AutoCheck) Task.Run(AutoUpdatesCheck);
-            if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
         }
 
         private void NotifyUpdates_BalloonTipClicked(object sender, EventArgs e)
@@ -570,11 +570,6 @@ namespace WinPaletter
         {
             Forms.MainForm.tabsContainer1.TabControl.Visible = false;
             Forms.MainForm.Close();
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         //private void button1_Click(object sender, EventArgs e)
