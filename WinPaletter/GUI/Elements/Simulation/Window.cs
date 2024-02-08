@@ -804,7 +804,7 @@ namespace WinPaletter.UI.Simulation
         bool CursorOverWindowAccent = false;
 
         private bool CursorOnMetricsGrip;
-        private bool _MetricsEdit_Grip => EnableEditingMetrics && CursorOnMetricsGrip;
+        private bool _MetricsEdit_Grip => EnableEditingMetrics && CursorOnMetricsGrip && !CursorOverTitlebar;
         private bool _MetricsEdit_CaptionFont => EnableEditingMetrics && CursorOverTitlebar;
 
 
@@ -1476,7 +1476,8 @@ namespace WinPaletter.UI.Simulation
                         //Window borders
                         if (!ToolWindow)
                         {
-                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
+                            if (Noise7 != null)
+                                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
 
                             using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRoundedRect(P, Rect, Radius, true); }
 
@@ -1507,7 +1508,8 @@ namespace WinPaletter.UI.Simulation
 
                         else
                         {
-                            G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
+                            if (Noise7 != null)
+                                G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
 
                             using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect); }
 

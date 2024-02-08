@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -7,27 +6,26 @@ namespace WinPaletter.Tabs
 {
     public partial class TabsForm : Form
     {
+        //protected override void WndProc(ref Message m)
+        //{
+        //    base.WndProc(ref m);
 
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
+        //    // Handle the WM_NCCALCSIZE message to adjust the client area
+        //    if (m.Msg == 0x83 /*WM_NCCALCSIZE*/)
+        //    {
+        //        if (m.WParam.ToInt32() == 1 /*TRUE*/)
+        //        {
+        //            // Get the current non-client area rectangle
+        //            DWMAPI.RECT rect = (DWMAPI.RECT)m.GetLParam(typeof(DWMAPI.RECT));
 
-            // Handle the WM_NCCALCSIZE message to adjust the client area
-            if (m.Msg == 0x83 /*WM_NCCALCSIZE*/)
-            {
-                if (m.WParam.ToInt32() == 1 /*TRUE*/)
-                {
-                    // Get the current non-client area rectangle
-                    DWMAPI.RECT rect = (DWMAPI.RECT)m.GetLParam(typeof(DWMAPI.RECT));
+        //            // Adjust the rectangle to make room for the custom control in the title bar
+        //            rect.top -= tabsContainer1.Height - 5;
 
-                    // Adjust the rectangle to make room for the custom control in the title bar
-                    rect.top -= tabsContainer1.Height - 5;
-
-                    // Update the non-client area rectangle
-                    Marshal.StructureToPtr(rect, m.LParam, true);
-                }
-            }
-        }
+        //            // Update the non-client area rectangle
+        //            Marshal.StructureToPtr(rect, m.LParam, true);
+        //        }
+        //    }
+        //}
 
         public TabsForm()
         {

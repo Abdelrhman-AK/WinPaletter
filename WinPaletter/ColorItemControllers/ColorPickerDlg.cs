@@ -493,7 +493,7 @@ namespace WinPaletter
                 {
                     TextBox1.Text = dlg.FileName;
                 }
-            
+
             }
         }
 
@@ -516,7 +516,7 @@ namespace WinPaletter
                 {
                     TextBox2.Text = dlg.FileName;
                 }
-            
+
             }
         }
 

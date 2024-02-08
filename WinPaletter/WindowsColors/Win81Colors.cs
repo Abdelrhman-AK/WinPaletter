@@ -11,7 +11,7 @@ using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.ColorsExtensions;
 
-namespace WinPaletter.WindowsColors
+namespace WinPaletter
 {
     public partial class Win81Colors : AspectsTemplate
     {

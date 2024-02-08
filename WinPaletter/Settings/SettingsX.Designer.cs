@@ -1619,6 +1619,7 @@ namespace WinPaletter
             this.toggle4.Size = new System.Drawing.Size(40, 20);
             this.toggle4.TabIndex = 0;
             this.toggle4.Text = "toggle4";
+            this.toggle4.CheckedChanged += new System.EventHandler(this.toggle4_CheckedChanged);
             // 
             // PictureBox36
             // 
@@ -3196,7 +3197,6 @@ namespace WinPaletter
             this.tabPage17.Controls.Add(this.banner15);
             this.tabPage17.Location = new System.Drawing.Point(199, 4);
             this.tabPage17.Name = "tabPage17";
-            this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage17.Size = new System.Drawing.Size(823, 591);
             this.tabPage17.TabIndex = 16;
             this.tabPage17.Text = "Aspects control";
@@ -3210,7 +3210,7 @@ namespace WinPaletter
             this.groupBox59.Controls.Add(this.radioImage10);
             this.groupBox59.Controls.Add(this.label28);
             this.groupBox59.Controls.Add(this.pictureBox38);
-            this.groupBox59.Location = new System.Drawing.Point(3, 532);
+            this.groupBox59.Location = new System.Drawing.Point(3, 534);
             this.groupBox59.Name = "groupBox59";
             this.groupBox59.Size = new System.Drawing.Size(817, 45);
             this.groupBox59.TabIndex = 227;
@@ -3228,7 +3228,7 @@ namespace WinPaletter
             this.radioImage9.Name = "radioImage9";
             this.radioImage9.Size = new System.Drawing.Size(145, 33);
             this.radioImage9.TabIndex = 119;
-            this.radioImage9.Text = "Easy";
+            this.radioImage9.Text = "Simple";
             this.radioImage9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -3282,7 +3282,7 @@ namespace WinPaletter
             this.groupBox58.Controls.Add(this.radioImage8);
             this.groupBox58.Controls.Add(this.label26);
             this.groupBox58.Controls.Add(this.pictureBox28);
-            this.groupBox58.Location = new System.Drawing.Point(3, 483);
+            this.groupBox58.Location = new System.Drawing.Point(3, 485);
             this.groupBox58.Name = "groupBox58";
             this.groupBox58.Size = new System.Drawing.Size(817, 45);
             this.groupBox58.TabIndex = 226;
@@ -3300,7 +3300,7 @@ namespace WinPaletter
             this.radioImage7.Name = "radioImage7";
             this.radioImage7.Size = new System.Drawing.Size(145, 33);
             this.radioImage7.TabIndex = 119;
-            this.radioImage7.Text = "Easy";
+            this.radioImage7.Text = "Simple";
             this.radioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -3354,7 +3354,7 @@ namespace WinPaletter
             this.groupBox57.Controls.Add(this.radioImage6);
             this.groupBox57.Controls.Add(this.label21);
             this.groupBox57.Controls.Add(this.pictureBox17);
-            this.groupBox57.Location = new System.Drawing.Point(3, 434);
+            this.groupBox57.Location = new System.Drawing.Point(3, 436);
             this.groupBox57.Name = "groupBox57";
             this.groupBox57.Size = new System.Drawing.Size(817, 45);
             this.groupBox57.TabIndex = 225;
@@ -3372,7 +3372,7 @@ namespace WinPaletter
             this.radioImage5.Name = "radioImage5";
             this.radioImage5.Size = new System.Drawing.Size(145, 33);
             this.radioImage5.TabIndex = 119;
-            this.radioImage5.Text = "Easy";
+            this.radioImage5.Text = "Simple";
             this.radioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -3426,7 +3426,7 @@ namespace WinPaletter
             this.groupBox56.Controls.Add(this.radioImage4);
             this.groupBox56.Controls.Add(this.label17);
             this.groupBox56.Controls.Add(this.pictureBox16);
-            this.groupBox56.Location = new System.Drawing.Point(3, 385);
+            this.groupBox56.Location = new System.Drawing.Point(3, 387);
             this.groupBox56.Name = "groupBox56";
             this.groupBox56.Size = new System.Drawing.Size(817, 45);
             this.groupBox56.TabIndex = 224;
@@ -3444,7 +3444,7 @@ namespace WinPaletter
             this.radioImage3.Name = "radioImage3";
             this.radioImage3.Size = new System.Drawing.Size(145, 33);
             this.radioImage3.TabIndex = 119;
-            this.radioImage3.Text = "Easy";
+            this.radioImage3.Text = "Simple";
             this.radioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -3498,7 +3498,7 @@ namespace WinPaletter
             this.groupBox20.Controls.Add(this.checker_mode_advanced);
             this.groupBox20.Controls.Add(this.label8);
             this.groupBox20.Controls.Add(this.pictureBox13);
-            this.groupBox20.Location = new System.Drawing.Point(3, 336);
+            this.groupBox20.Location = new System.Drawing.Point(3, 338);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(817, 45);
             this.groupBox20.TabIndex = 223;
@@ -3516,7 +3516,7 @@ namespace WinPaletter
             this.checker_mode_simple.Name = "checker_mode_simple";
             this.checker_mode_simple.Size = new System.Drawing.Size(145, 33);
             this.checker_mode_simple.TabIndex = 119;
-            this.checker_mode_simple.Text = "Easy";
+            this.checker_mode_simple.Text = "Simple";
             this.checker_mode_simple.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checker_mode_simple.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -3591,6 +3591,7 @@ namespace WinPaletter
             // checkBox13
             // 
             this.checkBox13.Checked = true;
+            this.checkBox13.Enabled = false;
             this.checkBox13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox13.ForeColor = System.Drawing.Color.White;
             this.checkBox13.Location = new System.Drawing.Point(44, 81);
@@ -3620,6 +3621,7 @@ namespace WinPaletter
             // checkBox12
             // 
             this.checkBox12.Checked = true;
+            this.checkBox12.Enabled = false;
             this.checkBox12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox12.ForeColor = System.Drawing.Color.White;
             this.checkBox12.Location = new System.Drawing.Point(395, 197);
@@ -3631,6 +3633,7 @@ namespace WinPaletter
             // checkBox10
             // 
             this.checkBox10.Checked = true;
+            this.checkBox10.Enabled = false;
             this.checkBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox10.ForeColor = System.Drawing.Color.White;
             this.checkBox10.Location = new System.Drawing.Point(44, 197);
@@ -3642,6 +3645,7 @@ namespace WinPaletter
             // checkBox9
             // 
             this.checkBox9.Checked = true;
+            this.checkBox9.Enabled = false;
             this.checkBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox9.ForeColor = System.Drawing.Color.White;
             this.checkBox9.Location = new System.Drawing.Point(395, 168);
@@ -3653,6 +3657,7 @@ namespace WinPaletter
             // checkBox8
             // 
             this.checkBox8.Checked = true;
+            this.checkBox8.Enabled = false;
             this.checkBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox8.ForeColor = System.Drawing.Color.White;
             this.checkBox8.Location = new System.Drawing.Point(44, 168);
@@ -3664,6 +3669,7 @@ namespace WinPaletter
             // checkBox7
             // 
             this.checkBox7.Checked = true;
+            this.checkBox7.Enabled = false;
             this.checkBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox7.ForeColor = System.Drawing.Color.White;
             this.checkBox7.Location = new System.Drawing.Point(395, 139);
@@ -3675,6 +3681,7 @@ namespace WinPaletter
             // checkBox6
             // 
             this.checkBox6.Checked = true;
+            this.checkBox6.Enabled = false;
             this.checkBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox6.ForeColor = System.Drawing.Color.White;
             this.checkBox6.Location = new System.Drawing.Point(44, 139);
@@ -3686,6 +3693,7 @@ namespace WinPaletter
             // checkBox5
             // 
             this.checkBox5.Checked = true;
+            this.checkBox5.Enabled = false;
             this.checkBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox5.ForeColor = System.Drawing.Color.White;
             this.checkBox5.Location = new System.Drawing.Point(395, 110);
@@ -3697,6 +3705,7 @@ namespace WinPaletter
             // checkBox4
             // 
             this.checkBox4.Checked = true;
+            this.checkBox4.Enabled = false;
             this.checkBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox4.ForeColor = System.Drawing.Color.White;
             this.checkBox4.Location = new System.Drawing.Point(395, 81);
@@ -3708,6 +3717,7 @@ namespace WinPaletter
             // checkBox3
             // 
             this.checkBox3.Checked = true;
+            this.checkBox3.Enabled = false;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox3.ForeColor = System.Drawing.Color.White;
             this.checkBox3.Location = new System.Drawing.Point(44, 110);
@@ -3719,6 +3729,7 @@ namespace WinPaletter
             // checkBox2
             // 
             this.checkBox2.Checked = true;
+            this.checkBox2.Enabled = false;
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox2.ForeColor = System.Drawing.Color.White;
             this.checkBox2.Location = new System.Drawing.Point(395, 52);
@@ -3730,6 +3741,7 @@ namespace WinPaletter
             // checkBox1
             // 
             this.checkBox1.Checked = true;
+            this.checkBox1.Enabled = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
             this.checkBox1.Location = new System.Drawing.Point(44, 52);
@@ -3773,6 +3785,7 @@ namespace WinPaletter
             this.toggle11.Size = new System.Drawing.Size(40, 20);
             this.toggle11.TabIndex = 0;
             this.toggle11.Text = "toggle47";
+            this.toggle11.CheckedChanged += new System.EventHandler(this.toggle11_CheckedChanged);
             // 
             // pictureBox10
             // 
@@ -4248,6 +4261,7 @@ namespace WinPaletter
             this.groupBox36.Controls.Add(this.trackBarX1);
             this.groupBox36.Controls.Add(this.Label27);
             this.groupBox36.Controls.Add(this.PictureBox40);
+            this.groupBox36.Enabled = false;
             this.groupBox36.Location = new System.Drawing.Point(3, 266);
             this.groupBox36.Name = "groupBox36";
             this.groupBox36.Size = new System.Drawing.Size(817, 120);
@@ -4387,6 +4401,7 @@ namespace WinPaletter
             this.VL0.Text = "None";
             this.VL0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.VL0.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.VL0.CheckedChanged += new System.EventHandler(this.VL2_CheckedChanged);
             // 
             // VL2
             // 
@@ -4406,6 +4421,7 @@ namespace WinPaletter
     "ke a longer time)";
             this.VL2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.VL2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.VL2.CheckedChanged += new System.EventHandler(this.VL2_CheckedChanged);
             // 
             // VL1
             // 
@@ -4425,6 +4441,7 @@ namespace WinPaletter
     "ors occur";
             this.VL1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.VL1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.VL1.CheckedChanged += new System.EventHandler(this.VL2_CheckedChanged);
             // 
             // groupBox33
             // 
@@ -4434,6 +4451,7 @@ namespace WinPaletter
             this.groupBox33.Controls.Add(this.label45);
             this.groupBox33.Controls.Add(this.toggle18);
             this.groupBox33.Controls.Add(this.PictureBox71);
+            this.groupBox33.Enabled = false;
             this.groupBox33.Location = new System.Drawing.Point(3, 214);
             this.groupBox33.Name = "groupBox33";
             this.groupBox33.Size = new System.Drawing.Size(817, 48);
@@ -4544,6 +4562,7 @@ namespace WinPaletter
             this.toggle22.Size = new System.Drawing.Size(40, 20);
             this.toggle22.TabIndex = 0;
             this.toggle22.Text = "toggle22";
+            this.toggle22.CheckedChanged += new System.EventHandler(this.toggle22_CheckedChanged);
             // 
             // alertBox8
             // 
@@ -4567,6 +4586,7 @@ namespace WinPaletter
             // 
             this.Button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button9.Enabled = false;
             this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
@@ -4594,6 +4614,7 @@ namespace WinPaletter
             // 
             this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button16.Enabled = false;
             this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
@@ -4621,6 +4642,7 @@ namespace WinPaletter
             // 
             this.TextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBox2.Enabled = false;
             this.TextBox2.ForeColor = System.Drawing.Color.White;
             this.TextBox2.Location = new System.Drawing.Point(146, 76);
             this.TextBox2.MaxLength = 32767;
@@ -4651,6 +4673,7 @@ namespace WinPaletter
             // 
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBox1.Enabled = false;
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(146, 46);
             this.TextBox1.MaxLength = 32767;
@@ -4885,6 +4908,7 @@ namespace WinPaletter
             this.Panel3.BackColor = System.Drawing.Color.Transparent;
             this.Panel3.Controls.Add(this.EP_ORB_11);
             this.Panel3.Controls.Add(this.EP_ORB_10);
+            this.Panel3.Enabled = false;
             this.Panel3.Location = new System.Drawing.Point(160, 160);
             this.Panel3.Name = "Panel3";
             this.Panel3.Size = new System.Drawing.Size(72, 35);
@@ -4941,6 +4965,7 @@ namespace WinPaletter
             this.toggle24.Size = new System.Drawing.Size(40, 20);
             this.toggle24.TabIndex = 0;
             this.toggle24.Text = "toggle24";
+            this.toggle24.CheckedChanged += new System.EventHandler(this.toggle24_CheckedChanged);
             // 
             // PictureBox49
             // 
@@ -4957,6 +4982,7 @@ namespace WinPaletter
             this.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.Panel2.Controls.Add(this.EP_Taskbar_11);
             this.Panel2.Controls.Add(this.EP_Taskbar_10);
+            this.Panel2.Enabled = false;
             this.Panel2.Location = new System.Drawing.Point(160, 121);
             this.Panel2.Name = "Panel2";
             this.Panel2.Size = new System.Drawing.Size(72, 35);
@@ -5040,6 +5066,7 @@ namespace WinPaletter
             // 
             this.EP_Start_10_Type.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.EP_Start_10_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.EP_Start_10_Type.Enabled = false;
             this.EP_Start_10_Type.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Start_10_Type.ForeColor = System.Drawing.Color.White;
             this.EP_Start_10_Type.FormattingEnabled = true;
@@ -5058,6 +5085,7 @@ namespace WinPaletter
             this.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.Panel1.Controls.Add(this.EP_Start_11);
             this.Panel1.Controls.Add(this.EP_Start_10);
+            this.Panel1.Enabled = false;
             this.Panel1.Location = new System.Drawing.Point(160, 82);
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(72, 35);
@@ -5516,7 +5544,7 @@ namespace WinPaletter
             this.tabPage23.Name = "tabPage23";
             this.tabPage23.Size = new System.Drawing.Size(823, 591);
             this.tabPage23.TabIndex = 15;
-            this.tabPage23.Text = "Storage";
+            this.tabPage23.Text = "Storage details";
             // 
             // groupBox55
             // 
@@ -5576,7 +5604,7 @@ namespace WinPaletter
             this.groupBox54.Controls.Add(this.pictureBox8);
             this.groupBox54.Controls.Add(this.button25);
             this.groupBox54.Controls.Add(this.label5);
-            this.groupBox54.Location = new System.Drawing.Point(3, 453);
+            this.groupBox54.Location = new System.Drawing.Point(3, 437);
             this.groupBox54.Name = "groupBox54";
             this.groupBox54.Size = new System.Drawing.Size(817, 80);
             this.groupBox54.TabIndex = 73;
@@ -5661,7 +5689,7 @@ namespace WinPaletter
             this.groupBox53.Controls.Add(this.pictureBox4);
             this.groupBox53.Controls.Add(this.button24);
             this.groupBox53.Controls.Add(this.label2);
-            this.groupBox53.Location = new System.Drawing.Point(3, 369);
+            this.groupBox53.Location = new System.Drawing.Point(3, 353);
             this.groupBox53.Name = "groupBox53";
             this.groupBox53.Size = new System.Drawing.Size(817, 80);
             this.groupBox53.TabIndex = 72;
@@ -5676,7 +5704,7 @@ namespace WinPaletter
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(765, 34);
             this.label1.TabIndex = 18;
-            this.label1.Text = "WinPaletter themes backups";
+            this.label1.Text = "Themes backups";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox4
@@ -5728,7 +5756,7 @@ namespace WinPaletter
             this.groupBox32.Controls.Add(this.PictureBox57);
             this.groupBox32.Controls.Add(this.Button20);
             this.groupBox32.Controls.Add(this.Label43);
-            this.groupBox32.Location = new System.Drawing.Point(3, 285);
+            this.groupBox32.Location = new System.Drawing.Point(3, 269);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Size = new System.Drawing.Size(817, 80);
             this.groupBox32.TabIndex = 71;
@@ -5798,7 +5826,7 @@ namespace WinPaletter
             this.banner14.Size = new System.Drawing.Size(817, 48);
             this.banner14.TabIndex = 71;
             this.banner14.TabStop = false;
-            this.banner14.Text = "Storage";
+            this.banner14.Text = "Storage details";
             // 
             // groupBox31
             // 
@@ -5812,7 +5840,7 @@ namespace WinPaletter
             this.groupBox31.Controls.Add(this.AlertBox20);
             this.groupBox31.Location = new System.Drawing.Point(3, 141);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(817, 140);
+            this.groupBox31.Size = new System.Drawing.Size(817, 125);
             this.groupBox31.TabIndex = 70;
             // 
             // label76
@@ -5880,7 +5908,7 @@ namespace WinPaletter
             this.AlertBox20.Image = null;
             this.AlertBox20.Location = new System.Drawing.Point(11, 80);
             this.AlertBox20.Name = "AlertBox20";
-            this.AlertBox20.Size = new System.Drawing.Size(795, 48);
+            this.AlertBox20.Size = new System.Drawing.Size(795, 32);
             this.AlertBox20.TabIndex = 53;
             this.AlertBox20.TabStop = false;
             this.AlertBox20.Text = "Cleaning the cache will prompt WinPaletter Store to redownload the themes (exclud" +
@@ -6333,6 +6361,7 @@ namespace WinPaletter
             this.toggle31.Size = new System.Drawing.Size(40, 20);
             this.toggle31.TabIndex = 0;
             this.toggle31.Text = "toggle31";
+            this.toggle31.CheckedChanged += new System.EventHandler(this.toggle31_CheckedChanged);
             // 
             // pictureBox1
             // 

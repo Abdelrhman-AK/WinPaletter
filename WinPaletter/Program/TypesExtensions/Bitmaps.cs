@@ -55,6 +55,7 @@ namespace WinPaletter.TypesExtensions
         public static Bitmap Blur(this Bitmap bitmap, int BlurForce = 2)
         {
             if (bitmap is null) return null;
+            if (bitmap.Size.Width == 0 || bitmap.Size.Height == 0) return null;
 
             Bitmap img = new(bitmap);
             int imgWidth = img.Width;

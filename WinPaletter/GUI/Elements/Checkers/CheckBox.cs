@@ -321,7 +321,7 @@ namespace WinPaletter.UI.WP
             using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
 
             using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
-           
+
             #endregion
 
             format.Dispose();

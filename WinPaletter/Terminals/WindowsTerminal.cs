@@ -1740,15 +1740,18 @@ namespace WinPaletter
             temp.Items.Clear();
             CCat = null;
 
-            foreach (object x in TerSchemes.Items) { if (x != temp.Items[0]) temp.Items.Add(x); }
+            if (temp != null)
+            {
+                foreach (object x in TerSchemes.Items) { if (x != TerSchemes.SelectedItem && x != TerSchemes.Items[0]) temp.Items.Add(x); }
+            }
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
-                for (int x = 0, loopTo = TerSchemes.Items.Count - 2; x <= loopTo; x++)
+                for (int x = 0, loopTo = TerSchemes.Items.Count - 1; x <= loopTo; x++)
                 {
                     if ((TerSchemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
                     {
-                        WinTerminal.Types.Scheme CCatFrom = _Terminal.Schemes[x];
+                        WinTerminal.Types.Scheme CCatFrom = _Terminal.Schemes[x - 1];
                         WinTerminal.Types.Scheme temp1 = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
 
                         temp1.Background = CCatFrom.Background;

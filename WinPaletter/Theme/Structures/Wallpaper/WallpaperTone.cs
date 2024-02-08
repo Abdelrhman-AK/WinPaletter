@@ -39,25 +39,15 @@ namespace WinPaletter.Theme.Structures
         /// </param>
         public void Load(string SubKey)
         {
-            string wallpaper;
+            string wallpaper = SubKey.ToLower() != "winxp" ? $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
 
-            if (SubKey.ToLower() == "winxp")
-            {
-                wallpaper = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
-            }
-            else
-            {
-                wallpaper = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
-            }
-
-            if (!File.Exists(wallpaper))
-                wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
+            if (!File.Exists(wallpaper)) wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", false));
             Image = GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", wallpaper).ToString();
             H = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", 0));
-            S = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 100));
-            L = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 100));
+            S = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 50));
+            L = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 50));
         }
 
         /// <summary>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
@@ -21,7 +20,7 @@ namespace WinPaletter.Tabs
         /// </summary>
         public TabsContainer()
         {
-            SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             BackColor = Color.Transparent;
             DoubleBuffered = true;
             AllowDrop = true;
@@ -70,15 +69,15 @@ namespace WinPaletter.Tabs
         {
             contextMenu.ItemHeight = 20;
 
-            ToolStripMenuItem closeButton = new("Close") { Image = Assets.Tabs.ContextBox_Close };
-            ToolStripMenuItem closeAllButThis = new("Close all but this") { Image = Assets.Tabs.ContextBox_CloseAllButThis };
-            ToolStripMenuItem closeAllToTheRight = new("Close all to the right") { Image = Assets.Tabs.ContextBox_CloseRight };
-            ToolStripMenuItem closeAllToTheLeft = new("Close all to the left") { Image = Assets.Tabs.ContextBox_CloseLeft };
-            ToolStripMenuItem closeAll = new("Close all") { Image = Assets.Tabs.ContextBox_CloseAll };
+            ToolStripMenuItem closeButton = new(Program.Lang.Close) { Image = Assets.Tabs.ContextBox_Close };
+            ToolStripMenuItem closeAllButThis = new(Program.Lang.Tab_Context_CloseOthers) { Image = Assets.Tabs.ContextBox_CloseAllButThis };
+            ToolStripMenuItem closeAllToTheRight = new(Program.Lang.Tab_Context_CloseToTheRight) { Image = Assets.Tabs.ContextBox_CloseRight };
+            ToolStripMenuItem closeAllToTheLeft = new(Program.Lang.Tab_Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
+            ToolStripMenuItem closeAll = new(Program.Lang.Tab_Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
             ToolStripSeparator toolStripSeparator = new();
-            ToolStripMenuItem detach = new("Detach") { Image = Assets.Tabs.ContextBox_Detach };
-            ToolStripMenuItem detachAll = new("Detach all") { Image = Assets.Tabs.ContextBox_DetachAll };
-            ToolStripMenuItem detachAllButThis = new("Detach all but this") { Image = Assets.Tabs.ContextBox_DetachAllButThis };
+            ToolStripMenuItem detach = new(Program.Lang.Tab_Context_Detach) { Image = Assets.Tabs.ContextBox_Detach };
+            ToolStripMenuItem detachAll = new(Program.Lang.Tab_Context_DetachAll) { Image = Assets.Tabs.ContextBox_DetachAll };
+            ToolStripMenuItem detachAllButThis = new(Program.Lang.Tab_Context_DetachOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
 
             closeButton.Click += (s, e) => contextItemDropped.Form.Close();
             closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
@@ -374,13 +373,6 @@ namespace WinPaletter.Tabs
                 List<TabData> tabDatas = new(collection);
                 collection.Clear();
 
-                //for (int i = 0; i < collectionCount; i++)
-                //{
-                //    TabData tabData = CreateTabData(_tabControl.TabPages[i], i);
-                //    tabData.Selected = i == _selectedIndex;
-                //    collection.Add(tabData);
-                //}
-
                 int i = 0;
                 foreach (TabData tabData in tabDatas)
                 {
@@ -503,7 +495,7 @@ namespace WinPaletter.Tabs
             {
                 HandleTabMove(e);
             }
-            else if (e.Button == MouseButtons.Left && FindForm() != null)
+            else if (e.Button == MouseButtons.Left && FindForm() != null && !overCloseButton)
             {
                 HandleFormMove();
             }
@@ -987,7 +979,7 @@ namespace WinPaletter.Tabs
             {
                 e.Effect = DragDropEffects.Move;
             }
-            else if (e.Data.GetDataPresent(typeof(UI.Controllers.ColorItem)))
+            else if (e.Data.GetDataPresent(typeof(ColorItem)))
             {
                 e.Effect = DragDropEffects.Copy;
             }

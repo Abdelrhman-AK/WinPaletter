@@ -65,6 +65,8 @@ namespace WinPaletter.UI.WP
             G.TextRenderingHint = TextRenderingHint.SystemDefault;
 
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle Rect_Fix = new(-2, -2, Width + 4, Height + 4);
+
             Rectangle ImageRect = Rect;
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
@@ -84,8 +86,8 @@ namespace WinPaletter.UI.WP
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            using (LinearGradientBrush lgb0 = new(Rect, _color, scheme.Colors.Back(parentLevel), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(Rect, _color_line, scheme.Colors.Line_Hover(parentLevel), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb0 = new(Rect_Fix, _color, scheme.Colors.Back(parentLevel), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(Rect_Fix, _color_line, scheme.Colors.Line_Hover(parentLevel), LinearGradientMode.Horizontal))
             using (Pen P = new(lgb1))
             {
                 G.FillRoundedRect(lgb0, Rect);

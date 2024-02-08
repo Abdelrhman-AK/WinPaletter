@@ -791,7 +791,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
-                        if (Transparency)
+                        if (Transparency && Noise != null)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
                         Rectangle SearchRect = new(8, 10, Width - 8 * 2, 15);
 
@@ -868,7 +868,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
-                        if (Transparency)
+                        if (Transparency && Noise != null)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
                         Button1 = new(8, 8, 49, 20);
                         Button2 = new(62, 8, 49, 20);
@@ -982,7 +982,7 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(br, Rect);
                         }
 
-                        if (Transparency)
+                        if (Transparency && Noise != null)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
 
                         #region Editor
@@ -1100,7 +1100,8 @@ namespace WinPaletter.UI.Simulation
                                 }
                             }
 
-                            G.FillRoundedRect(Noise, RRect, Radius, true);
+                            if (Noise != null)
+                                G.FillRoundedRect(Noise, RRect, Radius, true);
                         }
                         else if (DarkMode)
                         {
@@ -1191,7 +1192,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (!DesignMode && Transparency && back_blurred is not null)
                                 G.DrawImage(back_blurred, Rect);
-                            if (Transparency)
+                            if (Transparency && Noise != null)
                                 G.FillRectangle(Noise, Rect);
                             using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
@@ -1221,7 +1222,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (!DesignMode && Transparency && back_blurred is not null)
                                 G.DrawImage(back_blurred, Rect);
-                            if (Transparency)
+                            if (Transparency && Noise != null)
                                 G.FillRectangle(Noise, Rect);
                             using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
@@ -1251,7 +1252,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (!DesignMode && Transparency && back_blurred is not null)
                                 G.DrawImage(back_blurred, Rect);
-                            if (Transparency)
+                            if (Transparency && Noise != null)
                                 G.FillRoundedRect(Noise, Rect, Radius, true);
                             using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                             {
@@ -1288,7 +1289,7 @@ namespace WinPaletter.UI.Simulation
                         if (!DesignMode && Transparency && back_blurred is not null)
                             G.DrawImage(back_blurred, Rect);
 
-                        if (Transparency)
+                        if (Transparency && Noise != null)
                             G.FillRectangle(Noise, Rect);
                         using (SolidBrush br = new(Color.FromArgb(Transparency ? BackColorAlpha : 255, Background)))
                         {
@@ -1869,7 +1870,8 @@ namespace WinPaletter.UI.Simulation
                             G.DrawAeroEffect(RestRect, back_blurred, Color1, ColBal, Color2, GlowBal, alphaX, 5, true);
                         }
 
-                        G.DrawRoundImage(Noise7Start, Rect, 5, true);
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7Start, Rect, 5, true);
 
                         #region Editor
 
@@ -1904,7 +1906,9 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRoundedRect(br, RestRect, 5, true);
                         }
-                        G.DrawRoundImage(Noise7Start, Rect, 5, true);
+
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7Start, Rect, 5, true);
 
                         #region Editor
 
@@ -1958,7 +1962,8 @@ namespace WinPaletter.UI.Simulation
 
                         G.DrawImage(Assets.Win7Preview.TaskbarSides, Rect);
 
-                        G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
 
                         #region Editor
 
@@ -2029,7 +2034,8 @@ namespace WinPaletter.UI.Simulation
                         }
                         G.DrawImage(Assets.Win7Preview.TaskbarSides, Rect);
 
-                        G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
 
                         #region Editor
 
@@ -2141,7 +2147,9 @@ namespace WinPaletter.UI.Simulation
                             G.DrawAeroEffect(RRect, back_blurred, Color1, ColBal, Color2, GlowBal, alpha, Radius, true);
                         }
 
-                        G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
+
                         using (Pen P = new(Color.FromArgb(200, 25, 25, 25)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);
@@ -2242,7 +2250,9 @@ namespace WinPaletter.UI.Simulation
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
 
-                        G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
+                        if (Noise7Start != null)
+                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
+
                         using (Pen P = new(Color.FromArgb(200, 25, 25, 25)))
                         {
                             G.DrawRoundedRect(P, RRect, Radius, true);

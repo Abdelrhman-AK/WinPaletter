@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -45,7 +46,7 @@ namespace WinPaletter
         public void Read(Settings Sets)
         {
             toggle6.Checked = Sets.FileTypeManagement.AutoAddExt;
-            
+
             RadioButton1.Checked = Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
             RadioButton2.Checked = !Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
 
@@ -1201,6 +1202,47 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private void toggle4_CheckedChanged(object sender, EventArgs e)
+        {
+            toggle3.Enabled = !toggle4.Checked;
+        }
+
+        private void toggle11_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (UI.WP.CheckBox checkBox in (sender as Toggle).Parent.Controls.OfType<UI.WP.CheckBox>())
+            {
+                checkBox.Enabled = (sender as Toggle).Checked;
+            }
+        }
+
+        private void VL2_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox33.Enabled = VL2.Checked;
+            groupBox36.Enabled = VL2.Checked || VL1.Checked;
+        }
+
+        private void toggle22_CheckedChanged(object sender, EventArgs e)
+        {
+            TextBox1.Enabled = toggle22.Checked;
+            TextBox2.Enabled = toggle22.Checked;
+            Button16.Enabled = toggle22.Checked;
+            Button9.Enabled = toggle22.Checked;
+        }
+
+        private void toggle24_CheckedChanged(object sender, EventArgs e)
+        {
+            Panel1.Enabled = toggle24.Checked;
+            Panel2.Enabled = toggle24.Checked;
+            Panel3.Enabled = toggle24.Checked;
+            EP_Start_10_Type.Enabled = toggle24.Checked;
+        }
+
+        private void toggle31_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox50.Enabled = toggle31.Checked;
+            groupBox51.Enabled = toggle31.Checked;
         }
     }
 }

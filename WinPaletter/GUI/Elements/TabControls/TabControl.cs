@@ -84,7 +84,7 @@ namespace WinPaletter.UI.WP
 
             Noise?.Dispose();
         }
-    
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -149,8 +149,8 @@ namespace WinPaletter.UI.WP
 
                 if (i == SelectedIndex)
                 {
-                    using (LinearGradientBrush br = new(TabRect, SelectedColor, SelectedColor2, LinearGradientMode.ForwardDiagonal)) 
-                    { 
+                    using (LinearGradientBrush br = new(TabRect, SelectedColor, SelectedColor2, LinearGradientMode.ForwardDiagonal))
+                    {
                         G.FillRoundedRect(br, TabRect);
                     }
 

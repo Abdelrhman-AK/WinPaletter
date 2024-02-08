@@ -1527,7 +1527,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            GetFromExtTerminal(ComboBox1.SelectedItem.ToString());
+            if (ComboBox1.SelectedItem != null) GetFromExtTerminal(ComboBox1.SelectedItem?.ToString());
         }
 
         private void Button10_Click(object sender, EventArgs e)
@@ -1780,6 +1780,16 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private void ColorTable00_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void ExtTerminal_CursorColor_Click(object sender, DragEventArgs e)
+        {
+
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
-using WinPaletter.WindowsColors;
 
 namespace WinPaletter
 {

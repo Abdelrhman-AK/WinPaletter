@@ -24,8 +24,8 @@ namespace WinPaletter
             EditReg(RegPath, "Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
             EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
             EditReg(RegPath, "Comments", Lang.Uninstall_Comment, RegistryValueKind.String);
-            EditReg(RegPath, "UninstallString", $"{AppFile} /uninstall", RegistryValueKind.String);
-            EditReg(RegPath, "QuietUninstallString", $"{AppFile} /uninstall", RegistryValueKind.String);
+            EditReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);
+            EditReg(RegPath, "QuietUninstallString", $"{AppFile} -q", RegistryValueKind.String);
             EditReg(RegPath, "InstallLocation", new System.IO.FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
             EditReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
             EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);

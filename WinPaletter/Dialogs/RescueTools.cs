@@ -93,7 +93,10 @@ namespace WinPaletter.Dialogs
 
         private void button12_Click(object sender, EventArgs e)
         {
-            Task.Run(new Action(() => { SFC(PathsExt.imageres, false, false); }));
+            if (!OS.WXP)
+            {
+                Task.Run(new Action(() => { SFC(PathsExt.imageres, false, false); }));
+            }
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -103,74 +106,78 @@ namespace WinPaletter.Dialogs
 
         private void button10_Click(object sender, EventArgs e)
         {
-            Task.Run(new Action(() =>
+            if (!OS.WXP)
             {
-                IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-
-                using (Process process = new()
+                Task.Run(new Action(() =>
                 {
-                    StartInfo = new()
+                    IntPtr intPtr = IntPtr.Zero;
+                    Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+
+                    using (Process process = new()
                     {
-                        FileName = $"{PathsExt.System32}\\cmd.exe",
-                        Verb = "runas",
-                        UseShellExecute = true
-                    }
-                })
-                {
-                    process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /CheckHealth && pause";
-                    process.Start();
-                    process.WaitForExit();
-
-                    process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /ScanHealth && pause";
-                    process.Start();
-                    process.WaitForExit();
-
-                    switch (MsgBox(Program.Lang.RT_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.RT_UseInstallWIM))
+                        StartInfo = new()
+                        {
+                            FileName = $"{PathsExt.System32}\\cmd.exe",
+                            Verb = "runas",
+                            UseShellExecute = true
+                        }
+                    })
                     {
-                        case DialogResult.Yes:
-                            {
-                                process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /RestoreHealth && pause";
-                                process.Start();
-                                process.WaitForExit();
-                                break;
-                            }
+                        process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /CheckHealth && pause";
+                        process.Start();
+                        process.WaitForExit();
 
-                        case DialogResult.No:
-                            {
-                                string file = string.Empty;
-                                DialogResult result = DialogResult.None;
+                        process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /ScanHealth && pause";
+                        process.Start();
+                        process.WaitForExit();
 
-                                //Cross thread issue
-                                Invoke(() =>
+                        switch (MsgBox(Program.Lang.RT_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.RT_UseInstallWIM))
+                        {
+                            case DialogResult.Yes:
                                 {
-                                    using (OpenFileDialog o = new() { Filter = "install.wim|install.wim|install.esd|install.esd|*.wim|*.wim|*.esd|*.esd" })
-                                    {
-                                        result = o.ShowDialog();
-                                        file = o.FileName;
-                                    }
-                                });
-
-                                if (result == DialogResult.OK)
-                                {
-                                    process.StartInfo.Arguments = $"/c dism.exe /Online /Cleanup-Image /RestoreHealth /Source:{file} && pause";
+                                    process.StartInfo.Arguments = "/c dism.exe /Online /Cleanup-Image /RestoreHealth && pause";
                                     process.Start();
                                     process.WaitForExit();
+                                    break;
                                 }
 
-                                break;
-                            }
+                            case DialogResult.No:
+                                {
+                                    string file = string.Empty;
+                                    DialogResult result = DialogResult.None;
 
-                        case DialogResult.Cancel:
-                            {
-                                break;
-                            }
+                                    //Cross thread issue
+                                    Invoke(() =>
+                                    {
+                                        using (OpenFileDialog o = new() { Filter = Program.Filters.WinImages, Title = Program.Lang.Filter_OpenWinImage })
+                                        {
+                                            result = o.ShowDialog();
+                                            file = o.FileName;
+                                        }
+                                    });
+
+                                    if (result == DialogResult.OK)
+                                    {
+                                        process.StartInfo.Arguments = $"/c dism.exe /Online /Cleanup-Image /RestoreHealth /Source:{file} && pause";
+                                        process.Start();
+                                        process.WaitForExit();
+                                    }
+
+                                    break;
+                                }
+
+                            case DialogResult.Cancel:
+                                {
+                                    break;
+                                }
+                        }
                     }
-                }
 
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                    Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
-            }));
+                }));
+            }
+
         }
 
         private void button8_Click(object sender, EventArgs e)

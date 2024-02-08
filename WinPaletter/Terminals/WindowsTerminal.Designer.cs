@@ -203,6 +203,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1009, 52);
             // 
             // Button11
@@ -277,7 +278,7 @@ namespace WinPaletter
             this.Button21.UseVisualStyleBackColor = false;
             this.Button21.Click += new System.EventHandler(this.Button21_Click);
             // 
-            // restartExplorer_btn
+            // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
@@ -677,12 +678,12 @@ namespace WinPaletter
             // Button5
             // 
             this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
-            this.Button5.ImageAsVector = false;
+            this.Button5.ImageAsVector = true;
             this.Button5.ImageVector = null;
             this.Button5.Location = new System.Drawing.Point(141, 63);
             this.Button5.Name = "Button5";

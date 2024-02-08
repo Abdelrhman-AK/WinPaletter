@@ -290,7 +290,7 @@ namespace WinPaletter
                     }
                 }
             }
-       
+
         }
         #endregion
 

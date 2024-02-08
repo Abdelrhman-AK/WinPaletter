@@ -200,7 +200,7 @@ namespace WinPaletter
                     TextBox1.Font = dlg.Font;
                     TextBox3.Font = dlg.Font;
                 }
-            
+
             }
         }
 

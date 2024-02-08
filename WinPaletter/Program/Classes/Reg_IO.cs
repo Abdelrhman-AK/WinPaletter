@@ -664,44 +664,44 @@ namespace WinPaletter
         /// <param name="Hide">Hide console output</param>
         public static void SFC(string File = "", bool IfNotExist_DoScannow = false, bool Hide = true)
         {
-            if (OS.WXP)
-                return;
-
-            IntPtr intPtr = IntPtr.Zero;
-            Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-
-            using (Process process = new()
+            if (System.IO.File.Exists($"{PathsExt.System32}\\cmd.exe"))
             {
-                StartInfo = new()
-                {
-                    FileName = $"{PathsExt.System32}\\cmd.exe",
-                    Verb = "runas",
-                    WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
-                    CreateNoWindow = Hide,
-                    UseShellExecute = true
-                }
-            })
-            {
+                IntPtr intPtr = IntPtr.Zero;
+                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
-                if (System.IO.File.Exists(File))
+                using (Process process = new()
                 {
-                    process.StartInfo.Arguments = $"/c sfc.exe /SCANFILE=\"{File}\"{(!Hide ? " && pause" : string.Empty)}";
-                }
-                else if (IfNotExist_DoScannow)
+                    StartInfo = new()
+                    {
+                        FileName = $"{PathsExt.System32}\\cmd.exe",
+                        Verb = "runas",
+                        WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+                        CreateNoWindow = Hide,
+                        UseShellExecute = true
+                    }
+                })
                 {
-                    process.StartInfo.Arguments = $"/c sfc.exe /scannow{(!Hide ? " && pause" : string.Empty)}";
-                }
-                else
-                {
-                    Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
-                    return;
+
+                    if (System.IO.File.Exists(File))
+                    {
+                        process.StartInfo.Arguments = $"/c sfc.exe /SCANFILE=\"{File}\"{(!Hide ? " && pause" : string.Empty)}";
+                    }
+                    else if (IfNotExist_DoScannow)
+                    {
+                        process.StartInfo.Arguments = $"/c sfc.exe /scannow{(!Hide ? " && pause" : string.Empty)}";
+                    }
+                    else
+                    {
+                        Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                        return;
+                    }
+
+                    process.Start();
+                    process.WaitForExit();
                 }
 
-                process.Start();
-                process.WaitForExit();
+                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
-
-            Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
         }
 
         /// <summary>

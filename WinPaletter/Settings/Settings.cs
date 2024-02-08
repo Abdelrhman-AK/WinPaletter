@@ -494,7 +494,7 @@ namespace WinPaletter
                 public void Load()
                 {
                     Enabled = Conversions.ToBoolean(GetReg(REG_Backup, "Enabled", true));
-                    AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", true));
+                    AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", false));
                     AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
                     AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
                     BackupPath = GetReg(REG_Backup, "BackupPath", $"{PathsExt.appData}\\Backup\\Themes").ToString();
@@ -527,7 +527,7 @@ namespace WinPaletter
                 public bool Wallpaper;
                 public bool Wallpaper_Advanced;
                 public bool Effects;
-                public bool Sounds; 
+                public bool Sounds;
                 public bool ScreenSaver;
                 public bool AltTab;
 
@@ -706,7 +706,7 @@ namespace WinPaletter
         public Structures.BackupTheme BackupTheme = new()
         {
             Enabled = true,
-            AutoBackupOnAppOpen = true,
+            AutoBackupOnAppOpen = false,
             AutoBackupOnApply = true,
             AutoBackupOnThemeLoad = false,
             BackupPath = $"{PathsExt.appData}\\Backup\\Themes"

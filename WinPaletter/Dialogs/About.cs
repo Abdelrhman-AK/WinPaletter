@@ -36,6 +36,8 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             Label2.Text = Program.Version;
+            Label1.Text = $"{Program.Lang.By} {Application.CompanyName}";
+            Label17.Text = Application.ProductName;
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -119,6 +121,16 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private void linkLabel16_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://en.wikipedia.org/wiki/Desktop_Architect");
+        }
+
+        private void linkLabel17_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/commandlineparser/commandline");
         }
     }
 }

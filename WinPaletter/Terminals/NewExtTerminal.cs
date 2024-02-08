@@ -23,7 +23,6 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-
             try
             {
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
@@ -46,14 +45,11 @@ namespace WinPaletter
                 {
                     MsgBox(Program.Lang.Terminal_External_Exists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 else
                 {
-                    Registry.CurrentUser.CreateSubKey($@"Console\%SystemDrive%_{(TextBox1.Text.Replace(@"\", "_").Trim(':')[1])}", true).Close();
-
-                    MsgBox(Program.Lang.ExtTer_NewSuccess, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Registry.CurrentUser.CreateSubKey($"Console\\%SystemDrive%{(TextBox1.Text.Replace(@"\", "_").Split(':')[1])}", true).Close();
                     Forms.ExternalTerminal.FillTerminals(Forms.ExternalTerminal.ComboBox1);
-
+                    MsgBox(Program.Lang.ExtTer_NewSuccess, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 

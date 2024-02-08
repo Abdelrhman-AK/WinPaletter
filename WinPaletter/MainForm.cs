@@ -15,7 +15,7 @@ namespace WinPaletter
         private void MainFrm_Load(object sender, EventArgs e)
         {
             Size = new(Convert.ToInt32(Program.Settings.General.MainFormWidth), Convert.ToInt32(Program.Settings.General.MainFormHeight));
-            Location = new(Screen.PrimaryScreen.Bounds.Width / 2 - Size.Width / 2, Screen.PrimaryScreen.Bounds.Height / 2 - Size.Height / 2);
+            CenterToScreen();
             WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
 
             tabsContainer1.AddFormIntoTab(Forms.Home);

@@ -38,6 +38,10 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Updates));
             this.Label2 = new System.Windows.Forms.Label();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.LinkLabel3 = new WinPaletter.UI.WP.LinkLabel();
+            this.RadioButton2 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton3 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton1 = new WinPaletter.UI.WP.RadioButton();
             this.Label1 = new System.Windows.Forms.Label();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
@@ -52,10 +56,6 @@ namespace WinPaletter
             this.Label17 = new System.Windows.Forms.Label();
             this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
-            this.LinkLabel3 = new WinPaletter.UI.WP.LinkLabel();
-            this.RadioButton2 = new WinPaletter.UI.WP.RadioButton();
-            this.RadioButton3 = new WinPaletter.UI.WP.RadioButton();
-            this.RadioButton1 = new WinPaletter.UI.WP.RadioButton();
             this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
@@ -95,6 +95,63 @@ namespace WinPaletter
             this.Panel1.Size = new System.Drawing.Size(395, 117);
             this.Panel1.TabIndex = 18;
             this.Panel1.Visible = false;
+            // 
+            // LinkLabel3
+            // 
+            this.LinkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LinkLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LinkLabel3.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue;
+            this.LinkLabel3.Location = new System.Drawing.Point(16, 90);
+            this.LinkLabel3.Name = "LinkLabel3";
+            this.LinkLabel3.Size = new System.Drawing.Size(376, 24);
+            this.LinkLabel3.TabIndex = 33;
+            this.LinkLabel3.TabStop = true;
+            this.LinkLabel3.Text = "• What\'s new?";
+            this.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LinkLabel3.Visible = false;
+            this.LinkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3_LinkClicked);
+            // 
+            // RadioButton2
+            // 
+            this.RadioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton2.Checked = false;
+            this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton2.ForeColor = System.Drawing.Color.White;
+            this.RadioButton2.Location = new System.Drawing.Point(3, 32);
+            this.RadioButton2.Name = "RadioButton2";
+            this.RadioButton2.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton2.TabIndex = 2;
+            this.RadioButton2.Text = "Save download as...";
+            // 
+            // RadioButton3
+            // 
+            this.RadioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton3.Checked = false;
+            this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton3.ForeColor = System.Drawing.Color.White;
+            this.RadioButton3.Location = new System.Drawing.Point(3, 61);
+            this.RadioButton3.Name = "RadioButton3";
+            this.RadioButton3.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton3.TabIndex = 1;
+            this.RadioButton3.Text = "Just download from the browser";
+            // 
+            // RadioButton1
+            // 
+            this.RadioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButton1.Checked = true;
+            this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton1.ForeColor = System.Drawing.Color.White;
+            this.RadioButton1.Location = new System.Drawing.Point(3, 3);
+            this.RadioButton1.Name = "RadioButton1";
+            this.RadioButton1.Size = new System.Drawing.Size(389, 23);
+            this.RadioButton1.TabIndex = 0;
+            this.RadioButton1.Text = "Download then close WinPaletter and replace it by the new update";
             // 
             // Label1
             // 
@@ -139,7 +196,7 @@ namespace WinPaletter
             this.Label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label7.Location = new System.Drawing.Point(174, 108);
+            this.Label7.Location = new System.Drawing.Point(174, 109);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(233, 24);
             this.Label7.TabIndex = 25;
@@ -169,7 +226,7 @@ namespace WinPaletter
             this.Label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label9.Location = new System.Drawing.Point(174, 138);
+            this.Label9.Location = new System.Drawing.Point(174, 139);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(233, 24);
             this.Label9.TabIndex = 28;
@@ -256,63 +313,6 @@ namespace WinPaletter
             this.ProgressBar1.TabIndex = 3;
             this.ProgressBar1.TaskbarBroadcast = true;
             this.ProgressBar1.Visible = false;
-            // 
-            // LinkLabel3
-            // 
-            this.LinkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LinkLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LinkLabel3.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue;
-            this.LinkLabel3.Location = new System.Drawing.Point(16, 90);
-            this.LinkLabel3.Name = "LinkLabel3";
-            this.LinkLabel3.Size = new System.Drawing.Size(376, 24);
-            this.LinkLabel3.TabIndex = 33;
-            this.LinkLabel3.TabStop = true;
-            this.LinkLabel3.Text = "• What\'s new?";
-            this.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.LinkLabel3.Visible = false;
-            this.LinkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3_LinkClicked);
-            // 
-            // RadioButton2
-            // 
-            this.RadioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RadioButton2.Checked = false;
-            this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton2.ForeColor = System.Drawing.Color.White;
-            this.RadioButton2.Location = new System.Drawing.Point(3, 32);
-            this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.Size = new System.Drawing.Size(389, 23);
-            this.RadioButton2.TabIndex = 2;
-            this.RadioButton2.Text = "Save download as...";
-            // 
-            // RadioButton3
-            // 
-            this.RadioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RadioButton3.Checked = false;
-            this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton3.ForeColor = System.Drawing.Color.White;
-            this.RadioButton3.Location = new System.Drawing.Point(3, 61);
-            this.RadioButton3.Name = "RadioButton3";
-            this.RadioButton3.Size = new System.Drawing.Size(389, 23);
-            this.RadioButton3.TabIndex = 1;
-            this.RadioButton3.Text = "Just download from the browser";
-            // 
-            // RadioButton1
-            // 
-            this.RadioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RadioButton1.Checked = true;
-            this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton1.ForeColor = System.Drawing.Color.White;
-            this.RadioButton1.Location = new System.Drawing.Point(3, 3);
-            this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(389, 23);
-            this.RadioButton1.TabIndex = 0;
-            this.RadioButton1.Text = "Download then close WinPaletter and replace it by the new update";
             // 
             // AlertBox2
             // 

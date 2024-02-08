@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -96,7 +95,7 @@ namespace WinPaletter
         public void LoadData()
         {
             userButton.Tag = User.UserName;
-            userButton.Image = User.ProfilePicture.Resize(38, 38);
+            userButton.Image = User.ProfilePicture.Resize(32, 32);
         }
 
         public void LoadFromTM(Theme.Manager TM)

@@ -1,4 +1,4 @@
-﻿namespace WinPaletter.WindowsColors
+﻿namespace WinPaletter
 {
     partial class Win81Colors
     {
@@ -122,6 +122,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
+            this.tips_box = new WinPaletter.UI.WP.AlertBox();
             this.tablessControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.GroupBox13.SuspendLayout();
@@ -160,6 +161,7 @@
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1084, 52);
             // 
             // windowsDesktop1
@@ -1495,10 +1497,27 @@
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // tips_box
+            // 
+            this.tips_box.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.tips_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tips_box.BackColor = System.Drawing.Color.Transparent;
+            this.tips_box.CenterText = false;
+            this.tips_box.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.tips_box.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tips_box.Image = null;
+            this.tips_box.Location = new System.Drawing.Point(544, 401);
+            this.tips_box.Name = "tips_box";
+            this.tips_box.Size = new System.Drawing.Size(534, 32);
+            this.tips_box.TabIndex = 225;
+            this.tips_box.TabStop = false;
+            this.tips_box.Text = "Click on an element inside the preview to change its color";
+            // 
             // Win81Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1084, 596);
+            this.Controls.Add(this.tips_box);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tablessControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1510,6 +1529,7 @@
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
+            this.Controls.SetChildIndex(this.tips_box, 0);
             this.tablessControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.GroupBox13.ResumeLayout(false);
@@ -1642,5 +1662,6 @@
         internal UI.WP.GroupBox groupBox6;
         internal System.Windows.Forms.PictureBox pictureBox16;
         internal System.Windows.Forms.Label label5;
+        internal UI.WP.AlertBox tips_box;
     }
 }

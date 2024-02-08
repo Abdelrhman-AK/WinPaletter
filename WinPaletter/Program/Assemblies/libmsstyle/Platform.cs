@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace libmsstyle
+﻿namespace libmsstyle
 {
     public enum Platform
     {

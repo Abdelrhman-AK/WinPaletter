@@ -336,7 +336,7 @@ namespace WinPaletter.UI.Retro
         {
             base.Dispose(disposing);
 
-            Image?.Dispose();   
+            Image?.Dispose();
         }
 
         #endregion

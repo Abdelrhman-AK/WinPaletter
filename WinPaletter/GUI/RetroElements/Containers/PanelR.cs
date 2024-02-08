@@ -151,7 +151,7 @@ namespace WinPaletter.UI.Retro
 
             else
             {
-                using (Pen P = new(ButtonShadow))  G.DrawRectangle(P, Rect);
+                using (Pen P = new(ButtonShadow)) G.DrawRectangle(P, Rect);
             }
         }
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.Tabs;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -25,9 +26,12 @@ namespace WinPaletter
         private Localizer Lang = new();
 
         private bool EditingTag = true;
+        private bool AdditionalTag = false;
         private bool AllowEditing = false;
         private Form _Form;
-        private IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t));
+
+        private static IEnumerable<Type> IExclude = new List<Type> { typeof(SchemeEditor), typeof(BK), typeof(AspectsTemplate), typeof(TabsForm) };
+        private IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t) && !IExclude.Contains(t));
 
         private Thread Th;
 
@@ -145,8 +149,7 @@ namespace WinPaletter
             FormsList.Clear();
             ComboBox1.Items.Clear();
 
-            if (Th is not null && Th.IsAlive)
-                Th.Abort();
+            if (Th is not null && Th.IsAlive) Th.Abort();
 
             Th = new(LoadAllMiniFormsIntoList_Thread) { Priority = ThreadPriority.Highest, IsBackground = true };
             Th.Start();
@@ -157,33 +160,39 @@ namespace WinPaletter
             int i = 0;
             foreach (Type f in ITypes)
             {
-
-                using (Form ins = (Form)Activator.CreateInstance(f))
-                using (Form ins_nonmodified = (Form)Activator.CreateInstance(f))
+                try
                 {
-                    if (ins.Controls.Count > 0)
+                    using (Form ins = (Form)Activator.CreateInstance(f))
+                    using (Form ins_nonmodified = (Form)Activator.CreateInstance(f))
                     {
-                        ins.LoadLanguage(Lang);
+                        if (ins.Controls.Count > 0)
+                        {
+                            ins.LoadLanguage(Lang);
 
-                        ProgressBar1.PerformStepMethod2();
-                        ProgressBar2.PerformStepMethod2();
+                            ProgressBar1.PerformStepMethod2();
+                            ProgressBar2.PerformStepMethod2();
 
-                        FormsList.Add(CreateMiniForm(ins, ins_nonmodified));
+                            FormsList.Add(CreateMiniForm(ins, ins_nonmodified));
 
-                        ProgressBar1.PerformStepMethod2();
-                        ProgressBar2.PerformStepMethod2();
+                            ProgressBar1.PerformStepMethod2();
+                            ProgressBar2.PerformStepMethod2();
+                        }
+
+                        else
+                        {
+                            ProgressBar1.PerformStepMethod2();
+                            ProgressBar2.PerformStepMethod2();
+                            ProgressBar1.PerformStepMethod2();
+                            ProgressBar2.PerformStepMethod2();
+                        }
+
+                        i += 1;
+                        Label5.SetText(string.Format(Program.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)ITypes.Count() * 100d)));
                     }
-
-                    else
-                    {
-                        ProgressBar1.PerformStepMethod2();
-                        ProgressBar2.PerformStepMethod2();
-                        ProgressBar1.PerformStepMethod2();
-                        ProgressBar2.PerformStepMethod2();
-                    }
-
-                    i += 1;
-                    Label5.SetText(string.Format(Program.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)ITypes.Count() * 100d)));
+                }
+                catch (Exception ex)
+                {
+                    Forms.BugReport.ThrowError(ex);
                 }
             }
 
@@ -243,13 +252,10 @@ namespace WinPaletter
 
         public void PopulateSubControls(Control From, Control To, Form OriginalForm)
         {
-
             foreach (Control ctrl in From.Controls)
             {
-
                 if (ctrl.HasChildren)
                 {
-
                     if (ctrl is TabControl)
                     {
                         TabControl tabs = new()
@@ -353,7 +359,7 @@ namespace WinPaletter
                     bool Condition2 = ctrl is not TextBox && ctrl is not UI.WP.TextBox && ctrl is not UI.WP.SeparatorH && ctrl is not UI.WP.SeparatorV && ctrl is not UI.WP.NumericUpDown && ctrl is not UI.WP.TrackBar;
                     bool Condition3 = ctrl is PictureBox && ((PictureBox)ctrl).Image is not null;
 
-                    if (Condition0 | Condition1 && Condition2)
+                    if ((Condition0 | Condition1) && Condition2)
                     {
                         UI.Controllers.TextTranslationItem c = new()
                         {
@@ -383,7 +389,7 @@ namespace WinPaletter
                         {
                             c.TextAlign = button.TextAlign;
                             c.ImageAlign = button.ImageAlign;
-                            c.Image = button.Image;
+                            c.Image = !button.ImageAsVector ? button.Image : button.ImageVector;
                             c.TextImageRelation = button.TextImageRelation;
                         }
 
@@ -395,12 +401,13 @@ namespace WinPaletter
                             c.TextImageRelation = wf_button.TextImageRelation;
                         }
 
-                        else if (ctrl is UI.WP.RadioImage radioImage)
-                        {
-                            c.Text = !string.IsNullOrWhiteSpace(radioImage.Text) ? radioImage.Text : string.Empty;
-                            c.Image = radioImage.Image;
-                            c.TextImageRelation = radioImage.TextImageRelation;
-                        }
+                        //else if (ctrl is UI.WP.RadioImage radioImage)
+                        //{
+                        //    c.TextAlign = radioImage.TextAlign;
+                        //    c.ImageAlign = radioImage.ImageAlign;
+                        //    c.Image = radioImage.Image;
+                        //    c.TextImageRelation = radioImage.TextImageRelation;
+                        //}
 
                         else if (ctrl is UI.WP.CheckBox || ctrl is UI.WP.RadioButton)
                         {
@@ -412,7 +419,6 @@ namespace WinPaletter
                             c.Image = null;
                             c.TextAlign = ContentAlignment.MiddleLeft;
                         }
-
 
                         c.GotFocus += TextControlSelected;
 
@@ -533,27 +539,40 @@ namespace WinPaletter
 
             Label4.Text = ((Control)sender).Name;
 
-            if (!string.IsNullOrWhiteSpace(((Control)sender).Text))
+            if (!string.IsNullOrWhiteSpace(((Control)sender).Text) && ((Control)sender).Tag is not null && !string.IsNullOrWhiteSpace(((Control)sender).Tag.ToString()))
             {
                 TextBox1.Text = ((Control)sender).Text;
+                textBox10.Text = ((Control)sender).Tag.ToString();
+                AdditionalTag = true;
                 EditingTag = false;
+            }
+
+            else if (!string.IsNullOrWhiteSpace(((Control)sender).Text))
+            {
+                TextBox1.Text = ((Control)sender).Text;
+                textBox10.Text = string.Empty;
+                EditingTag = false;
+                AdditionalTag = false;
             }
 
             else if (((Control)sender).Tag is not null && !string.IsNullOrWhiteSpace(((Control)sender).Tag.ToString()))
             {
                 TextBox1.Text = ((Control)sender).Tag.ToString();
+                textBox10.Text = string.Empty;
                 EditingTag = true;
+                AdditionalTag = false;
             }
 
             else
             {
                 TextBox1.Text = string.Empty;
+                textBox10.Text = string.Empty;
                 EditingTag = false;
+                AdditionalTag = false;
             }
 
             if (sender is UI.Controllers.TextTranslationItem)
             {
-
                 {
                     TextTranslationItem temp = (UI.Controllers.TextTranslationItem)sender;
 
@@ -575,9 +594,7 @@ namespace WinPaletter
                         EditingTag = false;
 
                     }
-
                 }
-
             }
 
             AllowEditing = true;
@@ -749,12 +766,19 @@ namespace WinPaletter
                     _SelectedItem.Tag = TextBox1.Text;
                 }
             }
+        }
 
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+            if (AdditionalTag && AllowEditing && _SelectedItem is not null)
+            {
+                _SelectedItem.Tag = textBox10.Text;
+            }
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            using (FontDialog dlg =new() { Font = TextBox1.Font })
+            using (FontDialog dlg = new() { Font = TextBox1.Font })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -945,5 +969,6 @@ namespace WinPaletter
                 pin_button.Visible = true;
             }
         }
+
     }
 }

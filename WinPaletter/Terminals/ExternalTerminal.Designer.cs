@@ -298,11 +298,11 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(35, 100);
-            this.TabControl1.Location = new System.Drawing.Point(9, 149);
+            this.TabControl1.Location = new System.Drawing.Point(9, 148);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(561, 538);
+            this.TabControl1.Size = new System.Drawing.Size(561, 539);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 201;
             this.TabControl1.Visible = false;
@@ -362,7 +362,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(104, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(453, 530);
+            this.TabPage1.Size = new System.Drawing.Size(453, 531);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Colors";
             // 
@@ -1013,7 +1013,7 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(104, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(453, 530);
+            this.TabPage2.Size = new System.Drawing.Size(453, 531);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Fonts";
             // 
@@ -1306,7 +1306,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(104, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(453, 530);
+            this.TabPage3.Size = new System.Drawing.Size(453, 531);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Cursor";
             // 
@@ -1494,7 +1494,7 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(104, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(453, 530);
+            this.TabPage4.Size = new System.Drawing.Size(453, 531);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Tweaks";
             // 
@@ -1626,7 +1626,7 @@ namespace WinPaletter
             this.GroupBox73.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox73.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox73.Controls.Add(this.CMD4);
-            this.GroupBox73.Location = new System.Drawing.Point(572, 153);
+            this.GroupBox73.Location = new System.Drawing.Point(572, 148);
             this.GroupBox73.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox73.Name = "GroupBox73";
             this.GroupBox73.Padding = new System.Windows.Forms.Padding(1);
@@ -1683,7 +1683,7 @@ namespace WinPaletter
             this.GroupBox51.Controls.Add(this.Button6);
             this.GroupBox51.Location = new System.Drawing.Point(9, 63);
             this.GroupBox51.Name = "GroupBox51";
-            this.GroupBox51.Size = new System.Drawing.Size(1038, 80);
+            this.GroupBox51.Size = new System.Drawing.Size(1038, 79);
             this.GroupBox51.TabIndex = 115;
             // 
             // alertBox1

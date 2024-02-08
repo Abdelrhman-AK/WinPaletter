@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using WinPaletter.Theme;
 using static WinPaletter.TypesExtensions.ColorsExtensions;
 
-namespace WinPaletter.WindowsColors
+namespace WinPaletter
 {
     public partial class WinXPColors : AspectsTemplate
     {
@@ -404,7 +404,7 @@ namespace WinPaletter.WindowsColors
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
             {
-                if (dlg.ShowDialog() == DialogResult.OK) WXP_VS_textbox.Text = dlg.FileName;          
+                if (dlg.ShowDialog() == DialogResult.OK) WXP_VS_textbox.Text = dlg.FileName;
             }
         }
 

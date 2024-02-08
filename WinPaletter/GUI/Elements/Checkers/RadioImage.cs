@@ -298,7 +298,7 @@ namespace WinPaletter.UI.WP
             Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line(parentLevel) : scheme.Colors.Line_Checked_Hover);
             Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
-            using (LinearGradientBrush br = new(MainRect, Color.FromArgb(_alpha2, scheme.Colors.Back_Checked), Color.FromArgb(_alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal)) 
+            using (LinearGradientBrush br = new(MainRect, Color.FromArgb(_alpha2, scheme.Colors.Back_Checked), Color.FromArgb(_alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal))
             {
                 G.FillRoundedRect(br, MainRect);
             }

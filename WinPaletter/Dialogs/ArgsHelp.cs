@@ -29,7 +29,7 @@ namespace WinPaletter.Dialogs
                 {
                     System.IO.File.WriteAllText(dlg.FileName, TextBox1.Text);
                 }
-            
+
             }
         }
 

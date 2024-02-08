@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using WinPaletter.UI;
 
 namespace WinPaletter
 {
@@ -63,7 +64,7 @@ namespace WinPaletter
             if (System.IO.File.Exists(File))
             {
 
-                using (StreamReader St = new StreamReader(File))
+                using (StreamReader St = new(File))
                 {
                     JObj = JObject.Parse(St.ReadToEnd());
                     St.Close();
@@ -75,12 +76,7 @@ namespace WinPaletter
 
                 bool Valid = JObj.ContainsKey("Information") & JObj.ContainsKey("Global Strings") & JObj.ContainsKey("Forms Strings");
 
-                if (!Valid)
-                {
-                    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-                    return;
-                }
+                if (!Valid) return;
 
                 J_Information = (JObject)JObj["Information"];
                 J_GlobalStrings = (JObject)JObj["Global Strings"];
@@ -113,8 +109,8 @@ namespace WinPaletter
         public void DeserializeFormsJSONIntoTreeList(JObject JSON_Forms)
         {
 
-            // Tuple of four values; form name, control name, property, property value
-            // If there is no control and you want to change form property, make control name: String.Empty
+            // Tuple of four values; sub_form name, control name, property, property value
+            // If there is no control and you want to change sub_form property, make control name: String.Empty
             Deserialized_FormsJSONTree.Clear();
 
             string FormName, ControlName, Prop, Value;
@@ -129,7 +125,7 @@ namespace WinPaletter
                 try
                 {
 
-                    // Get one form node
+                    // Get one sub_form node
                     // There is only one specific property "Text"
                     JObject J_Specific_Form = new();
                     J_Specific_Form = (JObject)JSON_Forms[F.Key];
@@ -148,7 +144,7 @@ namespace WinPaletter
                         Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
                     }
 
-                    // If this form has a control/controls then get them
+                    // If this sub_form has a control/controls then get them
                     if (J_Specific_Form.ContainsKey("Controls") | J_Specific_Form.ContainsKey("controls") | J_Specific_Form.ContainsKey("CONTROLS"))
                     {
 
@@ -183,9 +179,7 @@ namespace WinPaletter
                                     Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
                                 }
                             }
-                            catch
-                            {
-                            }
+                            catch { }
                         }
                     }
                 }
@@ -202,15 +196,11 @@ namespace WinPaletter
             {
                 bool WasVisible = _Form.Visible;
 
-                if (WasVisible)
-                {
-                    _Form.Visible = false;
-                }
+                if (WasVisible) _Form.Visible = false;
 
                 Populate(Deserialized_FormsJSONTree, _Form);
 
-                if (WasVisible)
-                    _Form.Visible = true;
+                if (WasVisible) _Form.Visible = true;
             }
         }
 
@@ -227,35 +217,26 @@ namespace WinPaletter
                 {
                     if ((Form.Name.ToLower() ?? string.Empty) == (member.Item1.ToLower() ?? string.Empty))
                     {
-
                         if (string.IsNullOrEmpty(member.Item2))
                         {
                             // # Form
                             try
                             {
-                                if (member.Item3.ToLower() == "text")
-                                    Form.SetText(member.Item4);
+                                if (member.Item3.ToLower() == "text") Form.SetText(member.Item4);
                             }
-                            catch
-                            {
-                            }
+                            catch { }
 
                             try
                             {
-                                if (member.Item3.ToLower() == "tag")
-                                    Form.SetTag(member.Item4.ToString());
+                                if (member.Item3.ToLower() == "tag") Form.SetTag(member.Item4.ToString());
                             }
-                            catch
-                            {
-                            }
+                            catch { }
                         }
                         // # Control
                         else if (!string.IsNullOrEmpty(member.Item2))
                         {
-
                             foreach (Control ctrl in Form.Controls.Find(member.Item2, true))
                             {
-
                                 try
                                 {
                                     if (member.Item3.ToLower() == "text")
@@ -270,32 +251,22 @@ namespace WinPaletter
                                         }
                                     }
                                 }
-                                catch
-                                {
-                                }
+                                catch { }
 
                                 try
                                 {
-                                    if (member.Item3.ToLower() == "tag")
-                                        ctrl.SetTag(member.Item4.ToString());
+                                    if (member.Item3.ToLower() == "tag") ctrl.SetTag(member.Item4.ToString());
                                 }
-                                catch
-                                {
-                                }
-
+                                catch { }
                             }
-
-
                         }
                     }
                 }
-
                 catch (Exception ex)
                 {
                     throw ex;
                 }
             }
-
         }
 
         public void ExportJSON(string File, Form[] Forms = null)
@@ -344,10 +315,8 @@ namespace WinPaletter
 
                         foreach (Control ctrl in ins.GetAllControls())
                         {
-
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
-
                                 if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                 {
                                     j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
@@ -367,14 +336,22 @@ namespace WinPaletter
                                         if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                     }
                                 }
-
                             }
 
-                            if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                            if (ctrl is Card card)
                             {
-                                j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                                if (card.Tag is not null && !string.IsNullOrWhiteSpace(card.Tag) && !card.Tag.All(char.IsDigit) && !j_child.ContainsKey($"{card.Name}.Tag"))
+                                {
+                                    j_child.Add($"{card.Name}.Tag", card.Tag);
+                                }
                             }
-
+                            else
+                            {
+                                if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                                {
+                                    j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                                }
+                            }
                         }
 
                         if (j_ctrl.Count != 0)

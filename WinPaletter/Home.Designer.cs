@@ -106,7 +106,7 @@
             this.groupBox2.Controls.Add(this.win81);
             this.groupBox2.Controls.Add(this.win7);
             this.groupBox2.Controls.Add(this.win10);
-            this.groupBox2.Location = new System.Drawing.Point(12, 515);
+            this.groupBox2.Location = new System.Drawing.Point(12, 502);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3);
             this.groupBox2.Size = new System.Drawing.Size(1129, 115);
@@ -229,10 +229,10 @@
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.flowLayoutPanel1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 71);
+            this.groupBox1.Location = new System.Drawing.Point(12, 60);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.groupBox1.Size = new System.Drawing.Size(1129, 438);
+            this.groupBox1.Size = new System.Drawing.Size(1129, 436);
             this.groupBox1.TabIndex = 157;
             // 
             // flowLayoutPanel1
@@ -254,7 +254,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 37);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1123, 398);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1123, 396);
             this.flowLayoutPanel1.TabIndex = 153;
             // 
             // card1
@@ -428,7 +428,7 @@
             this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
             this.bottom_buttons.Controls.Add(this.Button28);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 639);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 626);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(1153, 47);
             this.bottom_buttons.TabIndex = 152;
@@ -542,7 +542,7 @@
             this.titlebarExtender2.DropDWMEffect = false;
             this.titlebarExtender2.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender2.Name = "titlebarExtender2";
-            this.titlebarExtender2.Size = new System.Drawing.Size(1153, 61);
+            this.titlebarExtender2.Size = new System.Drawing.Size(1153, 52);
             this.titlebarExtender2.TabIndex = 154;
             this.titlebarExtender2.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.titlebarExtender2.Text = "titlebarExtender2";
@@ -570,9 +570,9 @@
             this.flowLayoutPanel2.Controls.Add(this.Button12);
             this.flowLayoutPanel2.Controls.Add(this.separatorV2);
             this.flowLayoutPanel2.Controls.Add(this.tip_label);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 11);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(4, 6);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1079, 40);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1093, 40);
             this.flowLayoutPanel2.TabIndex = 154;
             // 
             // pin_button
@@ -607,7 +607,7 @@
             this.Button3.Location = new System.Drawing.Point(44, 3);
             this.Button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(33, 35);
+            this.Button3.Size = new System.Drawing.Size(32, 35);
             this.Button3.TabIndex = 139;
             this.Button3.Tag = "Create new WinPaletter theme file";
             this.Button3.UseVisualStyleBackColor = false;
@@ -623,10 +623,10 @@
             this.Button20.Image = null;
             this.Button20.ImageAsVector = true;
             this.Button20.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button20.ImageVector")));
-            this.Button20.Location = new System.Drawing.Point(85, 3);
+            this.Button20.Location = new System.Drawing.Point(84, 3);
             this.Button20.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button20.Name = "Button20";
-            this.Button20.Size = new System.Drawing.Size(33, 35);
+            this.Button20.Size = new System.Drawing.Size(32, 35);
             this.Button20.TabIndex = 145;
             this.Button20.Tag = "Restore Windows defaults";
             this.Button20.UseVisualStyleBackColor = false;
@@ -642,10 +642,10 @@
             this.Button2.Image = null;
             this.Button2.ImageAsVector = true;
             this.Button2.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button2.ImageVector")));
-            this.Button2.Location = new System.Drawing.Point(126, 3);
+            this.Button2.Location = new System.Drawing.Point(124, 3);
             this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(33, 35);
+            this.Button2.Size = new System.Drawing.Size(32, 35);
             this.Button2.TabIndex = 140;
             this.Button2.Tag = "Open a WinPaletter theme file";
             this.Button2.UseVisualStyleBackColor = false;
@@ -661,10 +661,10 @@
             this.Button7.Image = null;
             this.Button7.ImageAsVector = true;
             this.Button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button7.ImageVector")));
-            this.Button7.Location = new System.Drawing.Point(167, 3);
+            this.Button7.Location = new System.Drawing.Point(164, 3);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";
-            this.Button7.Size = new System.Drawing.Size(33, 35);
+            this.Button7.Size = new System.Drawing.Size(32, 35);
             this.Button7.TabIndex = 141;
             this.Button7.Tag = "Save WinPaletter theme file";
             this.Button7.UseVisualStyleBackColor = false;
@@ -680,10 +680,10 @@
             this.Button9.Image = null;
             this.Button9.ImageAsVector = true;
             this.Button9.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button9.ImageVector")));
-            this.Button9.Location = new System.Drawing.Point(208, 3);
+            this.Button9.Location = new System.Drawing.Point(204, 3);
             this.Button9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button9.Name = "Button9";
-            this.Button9.Size = new System.Drawing.Size(33, 35);
+            this.Button9.Size = new System.Drawing.Size(32, 35);
             this.Button9.TabIndex = 142;
             this.Button9.Tag = "Save WinPaletter theme file as ...";
             this.Button9.UseVisualStyleBackColor = false;
@@ -699,10 +699,10 @@
             this.Button10.Image = null;
             this.Button10.ImageAsVector = true;
             this.Button10.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button10.ImageVector")));
-            this.Button10.Location = new System.Drawing.Point(249, 3);
+            this.Button10.Location = new System.Drawing.Point(244, 3);
             this.Button10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button10.Name = "Button10";
-            this.Button10.Size = new System.Drawing.Size(33, 35);
+            this.Button10.Size = new System.Drawing.Size(32, 35);
             this.Button10.TabIndex = 143;
             this.Button10.Tag = "Edit theme information";
             this.Button10.UseVisualStyleBackColor = false;
@@ -718,10 +718,10 @@
             this.btn_history.Image = null;
             this.btn_history.ImageAsVector = true;
             this.btn_history.ImageVector = ((System.Drawing.Image)(resources.GetObject("btn_history.ImageVector")));
-            this.btn_history.Location = new System.Drawing.Point(290, 3);
+            this.btn_history.Location = new System.Drawing.Point(284, 3);
             this.btn_history.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_history.Name = "btn_history";
-            this.btn_history.Size = new System.Drawing.Size(33, 35);
+            this.btn_history.Size = new System.Drawing.Size(32, 35);
             this.btn_history.TabIndex = 144;
             this.btn_history.Tag = "Themes backups";
             this.btn_history.UseVisualStyleBackColor = false;
@@ -732,7 +732,7 @@
             this.separatorV1.AlternativeLook = false;
             this.separatorV1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(330, 3);
+            this.separatorV1.Location = new System.Drawing.Point(323, 3);
             this.separatorV1.Name = "separatorV1";
             this.separatorV1.Size = new System.Drawing.Size(1, 35);
             this.separatorV1.TabIndex = 146;
@@ -749,10 +749,10 @@
             this.Button11.Image = null;
             this.Button11.ImageAsVector = true;
             this.Button11.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button11.ImageVector")));
-            this.Button11.Location = new System.Drawing.Point(338, 3);
+            this.Button11.Location = new System.Drawing.Point(331, 3);
             this.Button11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button11.Name = "Button11";
-            this.Button11.Size = new System.Drawing.Size(33, 35);
+            this.Button11.Size = new System.Drawing.Size(32, 35);
             this.Button11.TabIndex = 9;
             this.Button11.Tag = "Settings";
             this.Button11.UseVisualStyleBackColor = false;
@@ -768,10 +768,10 @@
             this.Button5.Image = null;
             this.Button5.ImageAsVector = true;
             this.Button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
-            this.Button5.Location = new System.Drawing.Point(379, 3);
+            this.Button5.Location = new System.Drawing.Point(371, 3);
             this.Button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(33, 35);
+            this.Button5.Size = new System.Drawing.Size(32, 35);
             this.Button5.TabIndex = 10;
             this.Button5.Tag = "Updates";
             this.Button5.UseVisualStyleBackColor = false;
@@ -780,17 +780,17 @@
             // Button31
             // 
             this.Button31.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(84)))), ((int)(((byte)(166)))));
+            this.Button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
             this.Button31.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.Button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button31.ForeColor = System.Drawing.Color.White;
             this.Button31.Image = null;
             this.Button31.ImageAsVector = true;
             this.Button31.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button31.ImageVector")));
-            this.Button31.Location = new System.Drawing.Point(420, 3);
+            this.Button31.Location = new System.Drawing.Point(411, 3);
             this.Button31.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button31.Name = "Button31";
-            this.Button31.Size = new System.Drawing.Size(33, 35);
+            this.Button31.Size = new System.Drawing.Size(32, 35);
             this.Button31.TabIndex = 23;
             this.Button31.Tag = "WinPaletter Store";
             this.Button31.UseVisualStyleBackColor = false;
@@ -806,9 +806,9 @@
             this.button8.Image = null;
             this.button8.ImageAsVector = true;
             this.button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("button8.ImageVector")));
-            this.button8.Location = new System.Drawing.Point(460, 3);
+            this.button8.Location = new System.Drawing.Point(450, 3);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(33, 35);
+            this.button8.Size = new System.Drawing.Size(32, 35);
             this.button8.TabIndex = 36;
             this.button8.Tag = "Rescue tools";
             this.button8.UseVisualStyleBackColor = false;
@@ -824,10 +824,10 @@
             this.Button39.Image = null;
             this.Button39.ImageAsVector = true;
             this.Button39.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button39.ImageVector")));
-            this.Button39.Location = new System.Drawing.Point(500, 3);
+            this.Button39.Location = new System.Drawing.Point(489, 3);
             this.Button39.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button39.Name = "Button39";
-            this.Button39.Size = new System.Drawing.Size(33, 35);
+            this.Button39.Size = new System.Drawing.Size(32, 35);
             this.Button39.TabIndex = 57;
             this.Button39.Tag = "Help (Wiki)";
             this.Button39.UseVisualStyleBackColor = false;
@@ -843,10 +843,10 @@
             this.Button6.Image = null;
             this.Button6.ImageAsVector = true;
             this.Button6.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button6.ImageVector")));
-            this.Button6.Location = new System.Drawing.Point(541, 3);
+            this.Button6.Location = new System.Drawing.Point(529, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(33, 35);
+            this.Button6.Size = new System.Drawing.Size(32, 35);
             this.Button6.TabIndex = 11;
             this.Button6.Tag = "What\'s new";
             this.Button6.UseVisualStyleBackColor = false;
@@ -862,10 +862,10 @@
             this.Button12.Image = null;
             this.Button12.ImageAsVector = true;
             this.Button12.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button12.ImageVector")));
-            this.Button12.Location = new System.Drawing.Point(582, 3);
+            this.Button12.Location = new System.Drawing.Point(569, 3);
             this.Button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button12.Name = "Button12";
-            this.Button12.Size = new System.Drawing.Size(33, 35);
+            this.Button12.Size = new System.Drawing.Size(32, 35);
             this.Button12.TabIndex = 12;
             this.Button12.Tag = "About";
             this.Button12.UseVisualStyleBackColor = false;
@@ -876,7 +876,7 @@
             this.separatorV2.AlternativeLook = false;
             this.separatorV2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV2.Location = new System.Drawing.Point(622, 3);
+            this.separatorV2.Location = new System.Drawing.Point(608, 3);
             this.separatorV2.Name = "separatorV2";
             this.separatorV2.Size = new System.Drawing.Size(1, 35);
             this.separatorV2.TabIndex = 156;
@@ -889,7 +889,7 @@
             this.tip_label.AutoSize = true;
             this.tip_label.BackColor = System.Drawing.Color.Transparent;
             this.tip_label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tip_label.Location = new System.Drawing.Point(629, 13);
+            this.tip_label.Location = new System.Drawing.Point(615, 13);
             this.tip_label.Name = "tip_label";
             this.tip_label.Size = new System.Drawing.Size(0, 15);
             this.tip_label.TabIndex = 154;
@@ -905,10 +905,10 @@
             this.userButton.Image = null;
             this.userButton.ImageAsVector = false;
             this.userButton.ImageVector = null;
-            this.userButton.Location = new System.Drawing.Point(1095, 4);
+            this.userButton.Location = new System.Drawing.Point(1103, 1);
             this.userButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.userButton.Name = "userButton";
-            this.userButton.Size = new System.Drawing.Size(54, 54);
+            this.userButton.Size = new System.Drawing.Size(50, 50);
             this.userButton.TabIndex = 36;
             this.userButton.Tag = "";
             this.userButton.UseVisualStyleBackColor = false;
@@ -919,7 +919,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1153, 686);
+            this.ClientSize = new System.Drawing.Size(1153, 673);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bottom_buttons);

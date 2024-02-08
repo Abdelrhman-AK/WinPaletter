@@ -1,4 +1,4 @@
-﻿namespace WinPaletter.WindowsColors
+﻿namespace WinPaletter
 {
     partial class Win10Colors
     {
@@ -156,6 +156,7 @@
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.tips_box = new WinPaletter.UI.WP.AlertBox();
             this.GroupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -2088,10 +2089,27 @@
             this.label15.Text = "Helpers";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tips_box
+            // 
+            this.tips_box.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.tips_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tips_box.BackColor = System.Drawing.Color.Transparent;
+            this.tips_box.CenterText = false;
+            this.tips_box.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.tips_box.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tips_box.Image = null;
+            this.tips_box.Location = new System.Drawing.Point(564, 490);
+            this.tips_box.Name = "tips_box";
+            this.tips_box.Size = new System.Drawing.Size(534, 72);
+            this.tips_box.TabIndex = 226;
+            this.tips_box.TabStop = false;
+            this.tips_box.Text = resources.GetString("tips_box.Text");
+            // 
             // Win10Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1104, 756);
+            this.Controls.Add(this.tips_box);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tablessControl1);
@@ -2105,6 +2123,7 @@
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.groupBox3, 0);
+            this.Controls.SetChildIndex(this.tips_box, 0);
             this.GroupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).EndInit();
@@ -2279,5 +2298,6 @@
         internal UI.WP.Toggle TBBlur;
         internal System.Windows.Forms.PictureBox pictureBox7;
         internal System.Windows.Forms.Label label14;
+        internal UI.WP.AlertBox tips_box;
     }
 }

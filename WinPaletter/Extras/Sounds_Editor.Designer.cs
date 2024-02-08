@@ -955,6 +955,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(874, 52);
             // 
             // BackgroundWorker1
@@ -1438,7 +1439,7 @@ namespace WinPaletter
             this.TextBox2.UseSystemPasswordChar = false;
             this.TextBox2.WordWrap = true;
             // 
-            // restartExplorer_btn
+            // Button19
             // 
             this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1514,7 +1515,7 @@ namespace WinPaletter
             this.Label85.Name = "Label85";
             this.Label85.Size = new System.Drawing.Size(512, 20);
             this.Label85.TabIndex = 113;
-            this.Label85.Text = "*This item is shared bewteen WinPaletter settings (not a theme option)";
+            this.Label85.Text = "* This item is shared with WinPaletter settings (not a theme option)";
             this.Label85.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox84

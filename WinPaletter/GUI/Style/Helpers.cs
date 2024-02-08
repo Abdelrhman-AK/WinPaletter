@@ -157,7 +157,7 @@ namespace WinPaletter.UI.Style
             bool CustomR = false;
 
             // Check if appearance is managed by theme and custom colors are enabled
-            if (Form == Forms.ApplicationThemer || (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors))
+            if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
             {
                 DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
                 RoundedCorners = Program.Settings.Appearance.RoundedCorners;
@@ -211,7 +211,7 @@ namespace WinPaletter.UI.Style
                         if (FormWasVisible)
                             form.Visible = false;
 
-                        form.SuspendLayout();
+                        //form.SuspendLayout();
                         form.BackColor = BackColor;
 
                         if (!IgnoreTitleBar)
@@ -233,7 +233,7 @@ namespace WinPaletter.UI.Style
 
                         if (FormWasVisible)
                         {
-                            form.ResumeLayout();
+                            //form.ResumeLayout();
                             form.Refresh();
                             form.Visible = true;
                         }

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -267,7 +266,7 @@ namespace WinPaletter.UI.WP
             StringFormat format = ContentAlignment.MiddleLeft.ToStringFormat(RTL);
 
             int maxHeight = Math.Min(25, Height);
-            int OuterCircleSize = maxHeight - 8;    
+            int OuterCircleSize = maxHeight - 8;
             int InnerCircleSize = maxHeight - 10;
             int CheckCircleSize = maxHeight - 16;
 

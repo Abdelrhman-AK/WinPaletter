@@ -431,7 +431,7 @@ namespace WinPaletter.Theme.Structures
             {
                 WinEffects WE = (WinEffects)Clone();
 
-                await Task.Run(() => 
+                await Task.Run(() =>
                 {
                     ANIMATIONINFO anim = new();
                     anim.cbSize = (uint)Marshal.SizeOf(anim);

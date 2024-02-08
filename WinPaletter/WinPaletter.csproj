@@ -365,6 +365,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Filters.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />

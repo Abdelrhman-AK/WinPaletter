@@ -1,4 +1,4 @@
-﻿namespace WinPaletter.WindowsColors
+﻿namespace WinPaletter
 {
     partial class WinXPColors
     {

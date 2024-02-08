@@ -384,6 +384,7 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(59, 19);
             this.toolStripMenuItem1.Text = "Normal";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -391,6 +392,7 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(64, 19);
             this.toolStripMenuItem2.Text = "Disabled";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // StatusStrip1
             // 

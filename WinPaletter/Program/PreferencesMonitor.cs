@@ -27,10 +27,47 @@ namespace WinPaletter
                 Bitmap wall = FetchSuitableWallpaper(TM, WindowStyle);
                 Invoke(() =>
                 {
-                    Forms.Metrics_Fonts.windowMetrics1.BackgroundImage = wall;
-                    Forms.Metrics_Fonts.Desktop_icons.BackgroundImage = wall;
-                    Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
-                    Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
+                    if (Application.OpenForms.OfType<Win11Colors>().Count() > 0)
+                    {
+                        Forms.Win11Colors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<Win10Colors>().Count() > 0)
+                    {
+                        Forms.Win10Colors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
+                    {
+                        Forms.Win81Colors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
+                    {
+                        Forms.Win7Colors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<WinVistaColors>().Count() > 0)
+                    {
+                        Forms.WinVistaColors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<WinXPColors>().Count() > 0)
+                    {
+                        Forms.WinXPColors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<Metrics_Fonts>().Count() > 0)
+                    {
+                        Forms.Metrics_Fonts.windowMetrics1.BackgroundImage = wall;
+                        Forms.Metrics_Fonts.Desktop_icons.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<AltTabEditor>().Count() > 0)
+                    {
+                        Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
+                        Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
+                    }
                 });
             });
 
@@ -41,7 +78,7 @@ namespace WinPaletter
 
         private static Bitmap ThumbnailWallpaper
         {
-            get => GetWallpaperFromRegistry().GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, null, IntPtr.Zero) as Bitmap;
+            get => GetWallpaperFromRegistry();
         }
 
         public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)

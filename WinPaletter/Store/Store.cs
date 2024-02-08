@@ -944,7 +944,7 @@ namespace WinPaletter
         public void RemoveAllStoreItems(FlowLayoutPanel Container)
         {
             int count = Container.Controls.Count - 1;
-            for (int x = 0;  x <= count; x++)
+            for (int x = 0; x <= count; x++)
             {
                 if (Container.Controls[0] is StoreItem storeItem && storeItem != null)
                 {

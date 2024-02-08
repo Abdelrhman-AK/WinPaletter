@@ -46,5 +46,6 @@
         public string Filter_OpenEXE { get; set; } = $"Open a Windows executable file";
         public string Filter_SaveUpdateEXE { get; set; } = $"Save this WinPaletter update as a Windows executable file";
         public string Filter_OpenPalette { get; set; } = $"Open a palette file";
+        public string Filter_OpenWinImage { get; set; } = $"Open a Windows image file";
     }
 }

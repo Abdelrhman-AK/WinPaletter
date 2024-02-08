@@ -161,7 +161,6 @@ namespace WinPaletter
             testControl13.Scheme = scheme_dis;
             testControl12.Scheme = scheme_dis;
 
-
             foreach (Control ctrl in Controls)
                 ctrl.Invalidate();
 

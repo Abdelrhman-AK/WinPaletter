@@ -26,7 +26,7 @@ namespace WinPaletter.UI.Retro
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public bool EnableEditingColors { get; set; } = true;
+        public bool EnableEditingColors { get; set; } = false;
 
         #endregion
 

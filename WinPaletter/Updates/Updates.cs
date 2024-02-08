@@ -191,6 +191,8 @@ namespace WinPaletter
             Button1.Text = Program.Lang.CheckForUpdates;
             Label2.Text = Program.Version;
             Label2.Font = Fonts.ConsoleMedium;
+            Label7.Font = Fonts.ConsoleMedium;
+            Label9.Font = Fonts.ConsoleMedium;
 
             if (ls.Count > 0)
             {

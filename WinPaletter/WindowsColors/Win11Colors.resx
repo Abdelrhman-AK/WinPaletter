@@ -631,6 +631,10 @@
         Dz9WEhzfGHPWeIMzieI39V9IIPgNSpV5w+UUwBEAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="tips_box.Text" xml:space="preserve">
+    <value>- Click on an element inside the preview to change its color.
+- There are multiple elements that share the same color, so you will notice that other elements may change when another element is changed.</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>45</value>
   </metadata>

@@ -502,8 +502,8 @@ namespace WinPaletter.UI.WP
                     G.FillRoundedRect(br, rect, radius);
                 }
 
-                using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.3f) : StateColor.Light(), StateColor, LinearGradientMode.Horizontal)) 
-                { 
+                using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.3f) : StateColor.Light(), StateColor, LinearGradientMode.Horizontal))
+                {
                     G.FillRoundedRect(br, rectValue, radius);
                 }
 

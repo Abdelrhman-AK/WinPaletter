@@ -13,6 +13,7 @@ namespace WinPaletter.Tabs
         public TitlebarExtender()
         {
             BackColor = Color.Black;
+            DoubleBuffered = true;
         }
 
         Config.Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
@@ -26,7 +27,7 @@ namespace WinPaletter.Tabs
                 if (_dropDWMEffect != value)
                 {
                     _dropDWMEffect = value;
-                    update_DWM();
+                    updateBackDrop();
                     Refresh();
                 }
             }
@@ -56,7 +57,7 @@ namespace WinPaletter.Tabs
                     FindForm().Deactivate += Form_Deactivate; ;
                 }
 
-                update_DWM();
+                updateBackDrop();
             }
 
             base.OnHandleCreated(e);
@@ -75,14 +76,14 @@ namespace WinPaletter.Tabs
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            if (!DesignMode) update_DWM();
+            if (!DesignMode) updateBackDrop();
 
             base.OnSizeChanged(e);
         }
 
         protected override void OnDockChanged(EventArgs e)
         {
-            if (!DesignMode) update_DWM();
+            if (!DesignMode) updateBackDrop();
 
             base.OnDockChanged(e);
         }
@@ -90,13 +91,13 @@ namespace WinPaletter.Tabs
         private void Form_Activated(object sender, EventArgs e)
         {
             _formFocused = true;
-            update_DWM();
+            updateBackDrop();
         }
 
         private void Form_Deactivate(object sender, EventArgs e)
         {
             _formFocused = false;
-            update_DWM();
+            updateBackDrop();
         }
 
         private Point newPoint = new();
@@ -111,7 +112,7 @@ namespace WinPaletter.Tabs
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (FindForm() != null && e.Button == MouseButtons.Left)
+            if (_dropDWMEffect && FindForm() != null && e.Button == MouseButtons.Left)
             {
                 newPoint = MousePosition - (Size)oldPoint;
                 FindForm().Location = newPoint;
@@ -129,7 +130,7 @@ namespace WinPaletter.Tabs
         }
 
 
-        private void update_DWM()
+        private void updateBackDrop()
         {
             if (_dropDWMEffect)
             {
@@ -205,7 +206,7 @@ namespace WinPaletter.Tabs
                 if (!TabLocation.IsEmpty)
                 {
                     Rectangle rect = new(-1, 0, Width + 1, Height - 1);
-                    Rectangle rectExclude = new(TabLocation.X, 0, TabLocation.Width, 1);
+                    Rectangle rectExclude = new(TabLocation.X + 1, 0, TabLocation.Width - 1, 1);
                     e.Graphics.ExcludeClip(rectExclude);
                     using (Pen P = new(scheme.Colors.Line_Hover(parentLevel))) { e.Graphics.DrawRectangle(P, rect); }
                     e.Graphics.ResetClip();

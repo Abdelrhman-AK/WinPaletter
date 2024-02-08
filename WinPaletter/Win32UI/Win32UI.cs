@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 using WinPaletter.Theme;
@@ -1009,66 +1010,69 @@ namespace WinPaletter
             }
         }
 
-        private void Change3DStyle()
+        private async Task<Task> Change3DStyle()
         {
-            if (trackBarX1.Value == 100)
+            return Task.Run(() =>
             {
-                retroDesktopColors1.ButtonDkShadow = _btn_dkshadow;
-                retroDesktopColors1.ButtonHilight = _btn_hilight;
-                retroDesktopColors1.ButtonLight = _btn_light;
-                retroDesktopColors1.ButtonShadow = _btn_shadow;
-            }
-            else
-            {
-                if (radioButton2.Checked)
+                if (trackBarX1.Value == 100)
                 {
-                    if (trackBarX1.Value > 100)
-                    {
-                        float amount = (trackBarX1.Value - 100f) / 100f;
-                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_dkshadow.DarkDark(), amount);
-                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_shadow.DarkDark(), amount);
-                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_hilight.Dark(), amount);
-                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_light.Dark(), amount);
-                    }
-                    else if (trackBarX1.Value < 100)
-                    {
-                        float amount = 1f - (trackBarX1.Value) / 100f;
-                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_hilight, amount);
-                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_light, amount);
-                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_dkshadow, amount);
-                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_shadow, amount);
-                    }
+                    retroDesktopColors1.ButtonDkShadow = _btn_dkshadow;
+                    retroDesktopColors1.ButtonHilight = _btn_hilight;
+                    retroDesktopColors1.ButtonLight = _btn_light;
+                    retroDesktopColors1.ButtonShadow = _btn_shadow;
                 }
                 else
                 {
-                    if (trackBarX1.Value > 100)
+                    if (radioButton2.Checked)
                     {
-                        float amount = (trackBarX1.Value - 100f) / 100f;
-                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_shadow, amount);
-                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
-                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_shadow, amount);
-                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                        if (trackBarX1.Value > 100)
+                        {
+                            float amount = (trackBarX1.Value - 100f) / 100f;
+                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_dkshadow.DarkDark(), amount);
+                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_shadow.DarkDark(), amount);
+                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_hilight.Dark(), amount);
+                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_light.Dark(), amount);
+                        }
+                        else if (trackBarX1.Value < 100)
+                        {
+                            float amount = 1f - (trackBarX1.Value) / 100f;
+                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_hilight, amount);
+                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_light, amount);
+                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_dkshadow, amount);
+                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_shadow, amount);
+                        }
                     }
-                    else if (trackBarX1.Value < 100)
+                    else
                     {
-                        float amount = 1f - (trackBarX1.Value) / 100f;
-                        retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, retroDesktopColors1.ButtonFace, amount);
-                        retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
-                        retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, retroDesktopColors1.ButtonFace, amount);
-                        retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                        if (trackBarX1.Value > 100)
+                        {
+                            float amount = (trackBarX1.Value - 100f) / 100f;
+                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_shadow, amount);
+                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_shadow, amount);
+                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                        }
+                        else if (trackBarX1.Value < 100)
+                        {
+                            float amount = 1f - (trackBarX1.Value) / 100f;
+                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                        }
                     }
                 }
-            }
 
-            btnshadow_pick.BackColor = retroDesktopColors1.ButtonShadow;
-            btndkshadow_pick.BackColor = retroDesktopColors1.ButtonDkShadow;
-            btnhilight_pick.BackColor = retroDesktopColors1.ButtonHilight;
-            btnlight_pick.BackColor = retroDesktopColors1.ButtonLight;
+                btnshadow_pick.BackColor = retroDesktopColors1.ButtonShadow;
+                btndkshadow_pick.BackColor = retroDesktopColors1.ButtonDkShadow;
+                btnhilight_pick.BackColor = retroDesktopColors1.ButtonHilight;
+                btnlight_pick.BackColor = retroDesktopColors1.ButtonLight;
 
-            Retro3DPreview1.ButtonDkShadow = retroDesktopColors1.ButtonDkShadow;
-            Retro3DPreview1.ButtonHilight = retroDesktopColors1.ButtonHilight;
-            Retro3DPreview1.ButtonLight = retroDesktopColors1.ButtonLight;
-            Retro3DPreview1.ButtonShadow = retroDesktopColors1.ButtonShadow;
+                Retro3DPreview1.ButtonDkShadow = retroDesktopColors1.ButtonDkShadow;
+                Retro3DPreview1.ButtonHilight = retroDesktopColors1.ButtonHilight;
+                Retro3DPreview1.ButtonLight = retroDesktopColors1.ButtonLight;
+                Retro3DPreview1.ButtonShadow = retroDesktopColors1.ButtonShadow;
+            });
         }
 
         static Color BlendColors(Color color1, Color color2, float amount)
@@ -1082,19 +1086,19 @@ namespace WinPaletter
             return Color.FromArgb(r, g, b);
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private async void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            Change3DStyle();
+            await Change3DStyle();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private async void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            Change3DStyle();
+            await Change3DStyle();
         }
 
-        private void trackBarX1_Scroll(object sender, EventArgs e)
+        private async void trackBarX1_Scroll(object sender, EventArgs e)
         {
-            Change3DStyle();
+            await Change3DStyle();
         }
     }
 }

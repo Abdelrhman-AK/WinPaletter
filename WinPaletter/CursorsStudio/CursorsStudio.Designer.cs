@@ -1183,9 +1183,7 @@ namespace WinPaletter
             this.AlertBox1.Size = new System.Drawing.Size(440, 77);
             this.AlertBox1.TabIndex = 137;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "- Shadow in \"Miscellaneous\" part is rendered by Windows, while custom shadow is r" +
-    "endered by WinPaletter itself.\r\n- The more you enable custom shadow, the more Wi" +
-    "nPaletter will take to render.";
+            this.AlertBox1.Text = resources.GetString("AlertBox1.Text");
             // 
             // PictureBox16
             // 

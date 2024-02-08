@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -52,10 +51,8 @@ namespace WinPaletter.Dialogs
 
             if (Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None)
             {
-                Show();
-
-                //Hiding forms or adding this log into tabs causing a bug; resizing window is not working properly
-                //Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+                //Show();
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
             }
 
             Apply_Thread = new(() =>

@@ -80,7 +80,7 @@ namespace WinPaletter.UI.Style
             private Method Back_Method;
             private float Back_Factor;
 
-            public Color Line (int level = 0)
+            public Color Line(int level = 0)
             {
                 float factor = incrementFactor * (float)level * (DarkMode ? -1 : +1);
                 return ApplyMethod(BackColor, Line_Method, Line_Factor + factor);

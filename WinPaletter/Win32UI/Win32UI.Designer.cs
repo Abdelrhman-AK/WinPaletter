@@ -178,6 +178,7 @@ namespace WinPaletter
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.retroDesktopColors1 = new WinPaletter.Templates.RetroDesktopColors();
             this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
+            this.tips_box = new WinPaletter.UI.WP.AlertBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -1930,7 +1931,7 @@ namespace WinPaletter
             this.Label28.Name = "Label28";
             this.Label28.Size = new System.Drawing.Size(215, 16);
             this.Label28.TabIndex = 3;
-            this.Label28.Text = "Scrollbar (used in Win98)";
+            this.Label28.Text = "Scrollbar (used in Windows 98)";
             this.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox17
@@ -2049,7 +2050,7 @@ namespace WinPaletter
             this.retroDesktopColors1.MenuText = System.Drawing.Color.Empty;
             this.retroDesktopColors1.Name = "retroDesktopColors1";
             this.retroDesktopColors1.Scrollbar = System.Drawing.Color.Empty;
-            this.retroDesktopColors1.Size = new System.Drawing.Size(351, 280);
+            this.retroDesktopColors1.Size = new System.Drawing.Size(351, 248);
             this.retroDesktopColors1.TabIndex = 2;
             this.retroDesktopColors1.TitleText = System.Drawing.Color.Empty;
             this.retroDesktopColors1.Window = System.Drawing.Color.Empty;
@@ -2060,6 +2061,7 @@ namespace WinPaletter
             // groupBox7
             // 
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox7.Controls.Add(this.tips_box);
             this.groupBox7.Controls.Add(this.pictureBox6);
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Controls.Add(this.pictureBox5);
@@ -2067,10 +2069,27 @@ namespace WinPaletter
             this.groupBox7.Controls.Add(this.pictureBox4);
             this.groupBox7.Controls.Add(this.label33);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox7.Location = new System.Drawing.Point(0, 280);
+            this.groupBox7.Location = new System.Drawing.Point(0, 248);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(351, 90);
+            this.groupBox7.Size = new System.Drawing.Size(351, 122);
             this.groupBox7.TabIndex = 121;
+            // 
+            // tips_box
+            // 
+            this.tips_box.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.tips_box.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tips_box.BackColor = System.Drawing.Color.Transparent;
+            this.tips_box.CenterText = false;
+            this.tips_box.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.tips_box.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tips_box.Image = null;
+            this.tips_box.Location = new System.Drawing.Point(3, 90);
+            this.tips_box.Name = "tips_box";
+            this.tips_box.Size = new System.Drawing.Size(345, 28);
+            this.tips_box.TabIndex = 226;
+            this.tips_box.TabStop = false;
+            this.tips_box.Text = "Right click on an element in the preview to change its color";
             // 
             // pictureBox6
             // 
@@ -2463,5 +2482,6 @@ namespace WinPaletter
         internal UI.WP.GroupBox groupBox8;
         internal Label label35;
         internal PictureBox pictureBox33;
+        internal UI.WP.AlertBox tips_box;
     }
 }

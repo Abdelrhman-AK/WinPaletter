@@ -96,6 +96,9 @@ namespace WinPaletter
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.GroupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox10 = new WinPaletter.UI.WP.TextBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.GroupBox7 = new WinPaletter.UI.WP.GroupBox();
             this.TextBox9 = new WinPaletter.UI.WP.TextBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
@@ -139,6 +142,7 @@ namespace WinPaletter
             this.SplitContainer1.SuspendLayout();
             this.GroupBox4.SuspendLayout();
             this.GroupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.GroupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
@@ -992,6 +996,9 @@ namespace WinPaletter
             // GroupBox2
             // 
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.GroupBox2.Controls.Add(this.label7);
+            this.GroupBox2.Controls.Add(this.textBox10);
+            this.GroupBox2.Controls.Add(this.pictureBox5);
             this.GroupBox2.Controls.Add(this.GroupBox7);
             this.GroupBox2.Controls.Add(this.PictureBox3);
             this.GroupBox2.Controls.Add(this.PictureBox1);
@@ -1008,6 +1015,51 @@ namespace WinPaletter
             this.GroupBox2.Size = new System.Drawing.Size(326, 523);
             this.GroupBox2.TabIndex = 0;
             this.GroupBox2.Text = "GroupBox2";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(36, 370);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(285, 24);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "Additional value:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox10
+            // 
+            this.textBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox10.ForeColor = System.Drawing.Color.White;
+            this.textBox10.Location = new System.Drawing.Point(40, 397);
+            this.textBox10.MaxLength = 32767;
+            this.textBox10.Multiline = true;
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = false;
+            this.textBox10.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox10.SelectedText = "";
+            this.textBox10.SelectionLength = 0;
+            this.textBox10.SelectionStart = 0;
+            this.textBox10.Size = new System.Drawing.Size(282, 123);
+            this.textBox10.TabIndex = 27;
+            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox10.UseSystemPasswordChar = false;
+            this.textBox10.WordWrap = true;
+            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(6, 370);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox5.TabIndex = 28;
+            this.pictureBox5.TabStop = false;
             // 
             // GroupBox7
             // 
@@ -1069,7 +1121,7 @@ namespace WinPaletter
             // 
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(36, 299);
+            this.Label2.Location = new System.Drawing.Point(36, 233);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(285, 24);
             this.Label2.TabIndex = 17;
@@ -1093,7 +1145,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
-            this.TextBox1.Location = new System.Drawing.Point(39, 327);
+            this.TextBox1.Location = new System.Drawing.Point(39, 260);
             this.TextBox1.MaxLength = 32767;
             this.TextBox1.Multiline = true;
             this.TextBox1.Name = "TextBox1";
@@ -1102,7 +1154,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(282, 193);
+            this.TextBox1.Size = new System.Drawing.Size(282, 107);
             this.TextBox1.TabIndex = 19;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -1136,7 +1188,7 @@ namespace WinPaletter
             // 
             this.PictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
-            this.PictureBox2.Location = new System.Drawing.Point(5, 299);
+            this.PictureBox2.Location = new System.Drawing.Point(6, 233);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(24, 24);
             this.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1157,7 +1209,7 @@ namespace WinPaletter
             this.TextBox2.SelectedText = "";
             this.TextBox2.SelectionLength = 0;
             this.TextBox2.SelectionStart = 0;
-            this.TextBox2.Size = new System.Drawing.Size(282, 200);
+            this.TextBox2.Size = new System.Drawing.Size(282, 133);
             this.TextBox2.TabIndex = 23;
             this.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox2.UseSystemPasswordChar = false;
@@ -1345,6 +1397,7 @@ namespace WinPaletter
             this.SplitContainer1.ResumeLayout(false);
             this.GroupBox4.ResumeLayout(false);
             this.GroupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.GroupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
@@ -1433,5 +1486,8 @@ namespace WinPaletter
         private FlowLayoutPanel flowLayoutPanel1;
         internal UI.WP.Button pin_button;
         private UI.WP.GroupBox bottom_buttons;
+        internal Label label7;
+        internal UI.WP.TextBox textBox10;
+        internal PictureBox pictureBox5;
     }
 }

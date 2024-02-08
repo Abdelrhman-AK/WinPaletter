@@ -1809,5 +1809,17 @@ namespace WinPaletter.Templates
             MenuHeight = MenuStrip1.Height;
             EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(MenuHeight)));
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            using (FontDialog fd = new() { Font = (sender as UI.WP.ToolStripMenuItem).Font })
+            {
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    MenuFont = fd.Font;
+                    EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(MenuFont)));
+                }
+            }
+        }
     }
 }
