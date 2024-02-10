@@ -238,9 +238,9 @@
             this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
             this.button6.ImageAsVector = false;
             this.button6.ImageVector = null;
-            this.button6.Location = new System.Drawing.Point(981, 7);
+            this.button6.Location = new System.Drawing.Point(976, 7);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(145, 34);
+            this.button6.Size = new System.Drawing.Size(150, 34);
             this.button6.TabIndex = 213;
             this.button6.Text = "Restore and apply";
             this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -258,7 +258,7 @@
             this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
             this.button5.ImageAsVector = false;
             this.button5.ImageVector = null;
-            this.button5.Location = new System.Drawing.Point(553, 7);
+            this.button5.Location = new System.Drawing.Point(548, 7);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(160, 34);
             this.button5.TabIndex = 206;
@@ -297,7 +297,7 @@
             this.Button2.Image = null;
             this.Button2.ImageAsVector = false;
             this.Button2.ImageVector = null;
-            this.Button2.Location = new System.Drawing.Point(440, 7);
+            this.Button2.Location = new System.Drawing.Point(435, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(107, 34);
             this.Button2.TabIndex = 203;
@@ -317,7 +317,7 @@
             this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
             this.button4.ImageAsVector = false;
             this.button4.ImageVector = null;
-            this.button4.Location = new System.Drawing.Point(850, 7);
+            this.button4.Location = new System.Drawing.Point(845, 7);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(125, 34);
             this.button4.TabIndex = 205;
@@ -337,7 +337,7 @@
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
             this.button3.ImageAsVector = false;
             this.button3.ImageVector = null;
-            this.button3.Location = new System.Drawing.Point(719, 7);
+            this.button3.Location = new System.Drawing.Point(714, 7);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(125, 34);
             this.button3.TabIndex = 204;

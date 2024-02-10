@@ -39,8 +39,6 @@ namespace WinPaletter.Tabs
             ApplyStyle(this);
 
             CheckForIllegalCrossThreadCalls = false;
-
-            panel1.Visible = Program.IsBeta;
         }
 
         private void tabsContainer1_DoubleClick(object sender, EventArgs e)

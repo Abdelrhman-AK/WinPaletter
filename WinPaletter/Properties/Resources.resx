@@ -6566,6 +6566,19 @@
         Xj4Tjg8vhi5sLrZb7Ev+1k9crq/wuive/iy93YPYt6f/A24YfBu1GnJpAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="Reg" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAGOSURBVEhLYxgFVAUO+6/yQJlwYH7sYr75sQv/kfA7qBRpwPTIBW2g5hdmRy9MYvj/nxEqzGBx
+        9HwDmgX/oVLEA4vjF82BGt/DDLA4dnGpw/79LGA5Si2wPXRO1PzY+TfohoAMBsmTZAFQEu5KCL6YD3Kp
+        2bELm1DFL3y1OH7eAaTH7PA5fYujF8ph2Pzo+SywYdgAmiFwV4auWsVsfvzCcqj4J8tj563AGkgFyIaD
+        MMwCEPDcdpsdFMGmxy46Q4XAwPjMGRHzoxdigb5cCcTngAmACSqFCfBZgA0AI98PqO4Psh7LYxfMoNKY
+        QHnlht3IWH/H/ilmxy90wLDF8QtFUKVgYHbyghqy4WB8/EIzVBoTSM1e+B8Z627ffwDdAKhSOACK3UaW
+        tzh24RRUChOQZ8HFfqjcZyBeC/RlGFQKE5BjATDMpUERD0oEUCHcgBwLSALohqms3HgA3VJ0NaDMCNVO
+        GKBrJsYCQkkZBaBrHooWnM9GLrg01m7JBRragIyR5UEYVNhBtY8CcgADAwAGDy3NQc6mcwAAAABJRU5E
+        rkJggg==
+</value>
+  </data>
   <data name="RetroThemesDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RetroThemesDB.wpdb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1256</value>
   </data>
@@ -12501,7 +12514,7 @@
   <data name="Update_Dot" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAcJJREFUSEvt1b0rRXEcx/Fz85AMnsJgMZguC0YPGwPZ3YtVKIvtDh7KgsFkEYNS
+        vQAADr0BR/uQrQAAAcJJREFUSEvt1b0rRXEcx/Fz85AMnsJgMZguC0YPGwPZ3YtVKIvtDh7KgsFkEYNS
         BqXEHyBsBglxbyKFPJWFCLl+3t/je3N1HlwxGHzq1anf7/P7nntOOaz//CjGmGy0YQlR3OAS2xhFhVa/
         Hw434Rh+iWMWOXostXCgF6+QbKETZchHCRoxhUdIdlGix/1DsQUyXAwiXbccYU9uugPJBrJ0yzuUmnGF
         Hl3yDb0CHEIyoMu/GwbXv883t8jVZWfYrEYfPF+LVzizCkmbLn0OG3V4sivGLCOlm9ArxwLGIZnECIa0
@@ -12515,10 +12528,26 @@
   <data name="WinPaletter_SysEventsSounds" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WinPaletter.SysEventsSounds.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="WPTH" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wgAADsIBFShKgAAAAktJREFUOE+9lE9Ik2Ecx1fd6uTFqFNBl251iPSQ1UGSMggJgkgILyMKbIaEKC1Z
+        y8MITCZIZeTYm2y4EuZ0axslouWW21xO9zfdjKi11Yu6tZ7nnd+e8pWKTX136Quf2+/74Xn48Tyyv6PT
+        aXZxHFe2GUqlcicb3bbW2CI220hzLBYxxWKxZxtht9s6tVrtATa+tdTtdg/kcrk8IQQbEQoF6bTPaxel
+        m0eKML4wD57n8+Fg0K9RqfaL1eKRKsxkMmBzq7OBwLhard4t1gsjRbiYSCAaCf9mNjCTGxmxNIn1wqwL
+        s6k0Fg2DiOuMcEeSWDANwZuicHyksH2geMHgvxMsLy8Rr3fqplgvzLrw85sp9F+4joFj53Hb4IPlyGlo
+        AhQXx/OoeyXgrFPA5KcShPOeOajUBnRVy3GNC+DujR7cmhZQw0QnrAIqzAIciRKEc98IrryluHNKgYb+
+        KC6NEbR4/sgOPWdXj5ci5CmuelchH1tB/TjF5QkB7RNLqDV9RbUhjSp9Gs73WenCCE/Q6s+jmZ2q0SWg
+        yUWhe/oaHYpH0Mi70FurQHjUI13oS1OcG82jxrF2zWpG43AKFZ0RHG+bwIPySkRNVulCzxfyzwKqhiga
+        XlLs4yj29mbRc/AMYmZnCcIkwUlRdpgt4Cij3kmx5wlB2UOC8ntJDIZy0oXpLIE+QtE9Q3HfT9D9jsAQ
+        JlC7Cdonf6DDRZBeKWHLxZ5cMf6/UN/3uM5qHW5lH22bFCwWcwvH9VWK9cKw73270WjcUQq/OmKdRSb7
+        CdgKXFSySYeTAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="WP_Admin" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAABQNJREFUSEvd1V1MU2cYB/COAqV8qGTIZIljqVo7MajBOA1TVBwymKgoML4cMFEQ
+        wQAADsEBuJFr7QAABQNJREFUSEvd1V1MU2cYB/COAqV8qGTIZIljqVo7MajBOA1TVBwymKgoML4cMFEQ
         59B44bwYMdGZZZrFrbswc9OlVoeUD7FS+gH0W0CLzmy6uA8Tq+swU6wwwZ7znv/e056uKnixm13sn7xX
         bX7P2+d5zqno/5MGkShMG508TRf36uzO2GQFf9RpWYq6Pq98s/WuXCNfomiPl71S5uASi/o4eZGVk68T
         zlvGwMk0QvZ2O6IF8unoY2SJnTHJWm2C/GF7UsoILTRyakH28BbHA29Vz12vZlb6sC4uWV9sHz1U5GC9

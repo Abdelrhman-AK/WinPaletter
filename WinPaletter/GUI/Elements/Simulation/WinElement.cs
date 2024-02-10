@@ -1168,7 +1168,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 G.FillRoundedRect(br, r, Radius * 2, true);
                             }
-                            G.DrawImage(Properties.Resources.SampleApp_Active, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
 
                             using (SolidBrush br = new(Color.FromArgb(150, back2)))
                             {
@@ -1537,7 +1537,7 @@ namespace WinPaletter.UI.Simulation
                                 }
                             }
 
-                            G.DrawImage(Properties.Resources.SampleApp_Active, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
 
                             G.FillRectangle(Brushes.White, new Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4));
 
@@ -1765,13 +1765,13 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(Brushes.White, r);
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
-                            G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString("______", Font, Brushes.White, TextRect, sf);
+                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, TextRect, sf);
                         }
                         break;
                     }
@@ -1828,7 +1828,7 @@ namespace WinPaletter.UI.Simulation
                             G.FillRectangle(Brushes.White, r);
                             int icon_w = Properties.Resources.SampleApp_Active.Width;
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
-                            G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
@@ -1836,7 +1836,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             using (SolidBrush br = new(ForeColor))
                             {
-                                G.DrawString("______", Font, br, TextRect, sf);
+                                G.DrawString(Program.Lang.AppPreview, Font, br, TextRect, sf);
                             }
                         }
                         break;
@@ -2132,8 +2132,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.AltTab7Aero:
                     #region Alt+Tab 7 Aero
                     {
-                        if (Shadow & !DesignMode)
-                            G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15);
+                        if (Shadow & !DesignMode) G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15);
 
                         Rectangle inner = new(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2);
                         Color Color1 = Background;
@@ -2142,23 +2141,16 @@ namespace WinPaletter.UI.Simulation
                         if (!DesignMode && back_blurred is not null)
                         {
                             decimal alpha = 1 - (decimal)BackColorAlpha / 100;   // ColorBlurBalance
-                            decimal ColBal = (decimal)Win7ColorBal / 100;       // ColorBalance
-                            decimal GlowBal = (decimal)Win7GlowBal / 100;       // AfterGlowBalance
+                            decimal ColBal = (decimal)Win7ColorBal / 100;        // ColorBalance
+                            decimal GlowBal = (decimal)Win7GlowBal / 100;        // AfterGlowBalance
                             G.DrawAeroEffect(RRect, back_blurred, Color1, ColBal, Color2, GlowBal, alpha, Radius, true);
                         }
 
-                        if (Noise7Start != null)
-                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
+                        if (Noise7Start != null) G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, true);
 
-                        using (Pen P = new(Color.FromArgb(200, 25, 25, 25)))
-                        {
-                            G.DrawRoundedRect(P, RRect, Radius, true);
-                        }
-                        using (Pen P = new(Color.FromArgb(70, 200, 200, 200)))
-                        {
-                            G.DrawRoundedRect(P, inner, Radius, true);
-                        }
+                        using (Pen P = new(Color.FromArgb(200, 25, 25, 25))) { G.DrawRoundedRect(P, RRect, Radius, true); }
 
+                        using (Pen P = new(Color.FromArgb(70, 200, 200, 200))) { G.DrawRoundedRect(P, inner, Radius, true); }
 
                         int AppHeight = (int)(0.75 * RRect.Height);
                         int _padding = (RRect.Height - AppHeight) / 2;
@@ -2219,13 +2211,13 @@ namespace WinPaletter.UI.Simulation
 
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
-                            G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Lang.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2321,13 +2313,13 @@ namespace WinPaletter.UI.Simulation
 
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
-                            G.DrawImage(Properties.Resources.SampleApp_Active, icon_rect);
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Lang.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2419,13 +2411,13 @@ namespace WinPaletter.UI.Simulation
 
                             Rectangle imgrect = new(r.X + (r.Width - Properties.Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
 
-                            G.DrawImage(Properties.Resources.SampleApp_Active, imgrect);
+                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, imgrect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString("______", Font, Brushes.Black, TextRect, sf);
+                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.Black, TextRect, sf);
                         }
                         break;
                     }

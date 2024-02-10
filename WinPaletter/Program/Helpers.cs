@@ -115,11 +115,15 @@ namespace WinPaletter
             if (!ExternalLink)
             {
                 if (TM is null) TM = new(Theme.Manager.Source.Registry);
+                Forms.Home.label1.Text = Program.Lang.OpenedFromReg;
+                Forms.Home.pictureBox1.Image = Properties.Resources.Reg;
             }
             else
             {
                 TM = new(Theme.Manager.Source.File, ExternalLink_File);
                 Forms.Home.file = ExternalLink_File;
+                Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(ExternalLink_File));
+                Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
             }

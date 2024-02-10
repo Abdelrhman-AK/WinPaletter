@@ -44,7 +44,7 @@ namespace WinPaletter
             // 
             // tabsContainer1
             // 
-            this.tabsContainer1.Size = new System.Drawing.Size(1099, 34);
+            this.tabsContainer1.Size = new System.Drawing.Size(1152, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
             // 
             // imageList1
@@ -60,7 +60,7 @@ namespace WinPaletter
             this.tabControl1.Location = new System.Drawing.Point(0, 34);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1154, 692);
+            this.tabControl1.Size = new System.Drawing.Size(1152, 692);
             this.tabControl1.TabIndex = 121;
             // 
             // MainForm
@@ -69,11 +69,11 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1154, 726);
+            this.ClientSize = new System.Drawing.Size(1152, 726);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1170, 765);
+            this.MinimumSize = new System.Drawing.Size(1168, 765);
             this.Name = "MainForm";
             this.Text = "WinPaletter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrm_FormClosing);

@@ -501,7 +501,7 @@ namespace WinPaletter
                     RasterList.SelectedItem = "8x12";
 
                 y_cmd = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", "Consolas");
-                if (Theme.Manager.IsFontInstalled(y_cmd.ToString()))
+                if (Fonts.Exists(y_cmd.ToString()))
                 {
                     if (!ExtTerminal_RasterToggle.Checked)
                     {

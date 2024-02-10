@@ -10,7 +10,7 @@
             public static string JSON => $"{Lang.Filter_JSON} (*.json)|*.json";
             public static string Images => $"{Lang.Filter_Images} (*.bmp, *.jpg, *.png)|*.bmp;*.jpg;*.png";
             public static string PNG => $"{Lang.Filter_PNG} (*.png)|*.png";
-            public static string Themes => $"T{Lang.Filter_Themes} (*.theme)|*.theme";
+            public static string Themes => $"{Lang.Filter_Themes} (*.theme)|*.theme";
             public static string VisualStyles => $"{Lang.Filter_VisualStyles} (*.msstyles)|*.msstyles";
             public static string VisualStyles_And_Themes => $"{Lang.Filter_SupportedThemes} (*.msstyles, *.theme)|*.msstyles;*.theme" + "|" + VisualStyles + "|" + Themes;
             public static string Text => $"{Lang.Filter_Text} (*.txt)|*.txt";

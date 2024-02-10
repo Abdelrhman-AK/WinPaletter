@@ -386,6 +386,8 @@ namespace WinPaletter
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
             file = null;
+            label1.Text = Program.Lang.OpenedFromReg;
+            pictureBox1.Image = Properties.Resources.Reg;
         }
 
         private void Button20_Click(object sender, EventArgs e)
@@ -397,6 +399,8 @@ namespace WinPaletter
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
             file = null;
+            label1.Text = Program.Lang.OpenedFromDef;
+            pictureBox1.Image = Properties.Resources.Reg;
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -417,6 +421,8 @@ namespace WinPaletter
                     file = dlg.FileName;
                     Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                    pictureBox1.Image = Properties.Resources.WPTH;
                 }
             }
         }
@@ -427,7 +433,10 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                    file = dlg.FileNames[0];
+                    Program.TM.Save(Theme.Manager.Source.File, file);
+                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                    pictureBox1.Image = Properties.Resources.WPTH;
                 }
             }
         }
@@ -440,12 +449,18 @@ namespace WinPaletter
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                        file = dlg.FileNames[0];
+                        Program.TM.Save(Theme.Manager.Source.File, file);
+                        label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                        pictureBox1.Image = Properties.Resources.WPTH;
                     }
                 }
                 else
                 {
-                    Program.TM.Save(Theme.Manager.Source.File, dlg.FileNames[0]);
+                    file = dlg.FileNames[0];
+                    Program.TM.Save(Theme.Manager.Source.File, file);
+                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                    pictureBox1.Image = Properties.Resources.WPTH;
                 }
             }
         }

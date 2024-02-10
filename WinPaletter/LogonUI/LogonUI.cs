@@ -109,7 +109,7 @@ namespace WinPaletter
             label3.Text = DateTime.Now.ToString("h:mm");
             label4.Text = DateTime.Now.ToString("dddd, MMMM d");
 
-            if (!Theme.Manager.IsFontInstalled("Segoe UI Variable"))
+            if (!Fonts.Exists("Segoe UI Variable"))
             {
                 label1.Font = new("Segoe UI", label1.Font.Size, label1.Font.Style);
                 label2.Font = new("Segoe UI", label2.Font.Size, label2.Font.Style);

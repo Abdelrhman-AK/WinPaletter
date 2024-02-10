@@ -86,6 +86,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(893, 52);
             // 
             // AlertBox2
@@ -410,7 +411,7 @@ namespace WinPaletter
             // PictureBox3
             // 
             this.PictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox3.Image = global::WinPaletter.Properties.Resources.SampleApp_Active;
+            this.PictureBox3.Image = global::WinPaletter.Properties.Resources.SampleApp_Inactive;
             this.PictureBox3.Location = new System.Drawing.Point(190, 20);
             this.PictureBox3.Name = "PictureBox3";
             this.PictureBox3.Size = new System.Drawing.Size(35, 35);
@@ -450,7 +451,7 @@ namespace WinPaletter
             // PictureBox2
             // 
             this.PictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox2.Image = global::WinPaletter.Properties.Resources.SampleApp_Active;
+            this.PictureBox2.Image = global::WinPaletter.Properties.Resources.SampleApp_Inactive;
             this.PictureBox2.Location = new System.Drawing.Point(149, 20);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(35, 35);
@@ -471,6 +472,7 @@ namespace WinPaletter
             this.PanelR1.ForeColor = System.Drawing.Color.Black;
             this.PanelR1.Location = new System.Drawing.Point(14, 72);
             this.PanelR1.Name = "PanelR1";
+            this.PanelR1.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
             this.PanelR1.Size = new System.Drawing.Size(302, 29);
             this.PanelR1.Style2 = true;
             this.PanelR1.TabIndex = 0;
@@ -482,9 +484,9 @@ namespace WinPaletter
             this.LabelR1.DrawOnGlass = false;
             this.LabelR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.LabelR1.ForeColor = System.Drawing.Color.Black;
-            this.LabelR1.Location = new System.Drawing.Point(0, 0);
+            this.LabelR1.Location = new System.Drawing.Point(2, 0);
             this.LabelR1.Name = "LabelR1";
-            this.LabelR1.Size = new System.Drawing.Size(302, 29);
+            this.LabelR1.Size = new System.Drawing.Size(300, 29);
             this.LabelR1.TabIndex = 0;
             this.LabelR1.Text = "Application";
             this.LabelR1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

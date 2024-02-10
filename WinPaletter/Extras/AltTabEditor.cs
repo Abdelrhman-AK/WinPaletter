@@ -18,14 +18,6 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            pnl_preview1.BackgroundImage?.Dispose();
-            Classic_Preview1.BackgroundImage?.Dispose();
-        }
-
         private void LoadFromWPTH(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
@@ -189,7 +181,7 @@ namespace WinPaletter
                             case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero;
-                                    WinElement1.BackColor = Program.TM.Windows81.PersonalColors_Background;
+                                    WinElement1.Background = Program.TM.Windows81.PersonalColors_Background;
                                     WinElement1.Background2 = Program.TM.Windows81.PersonalColors_Background;
                                     break;
                                 }
@@ -197,7 +189,7 @@ namespace WinPaletter
                             case Theme.Structures.Windows7.Themes.AeroLite:
                                 {
                                     WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite;
-                                    WinElement1.BackColor = Program.TM.Win32.Window;
+                                    WinElement1.Background = Program.TM.Win32.Window;
                                     WinElement1.Background2 = Program.TM.Win32.Hilight;
                                     WinElement1.LinkColor = Program.TM.Win32.ButtonText;
                                     WinElement1.ForeColor = Program.TM.Win32.WindowText;
@@ -233,7 +225,7 @@ namespace WinPaletter
 
                         }
 
-                        WinElement1.BackColor = Program.TM.Windows7.ColorizationColor;
+                        WinElement1.Background = Program.TM.Windows7.ColorizationColor;
                         WinElement1.Background2 = Program.TM.Windows7.ColorizationAfterglow;
                         WinElement1.BackColorAlpha = Program.TM.Windows7.ColorizationBlurBalance;
                         WinElement1.Win7ColorBal = Program.TM.Windows7.ColorizationColorBalance;

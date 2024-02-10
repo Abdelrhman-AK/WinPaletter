@@ -704,7 +704,7 @@ namespace WinPaletter
                             search_panel.Visible = false;
 
                             Titlebar_lbl.Text = $"{StoreItem.TM.Info.ThemeName} - {Program.Lang.By} {StoreItem.TM.Info.Author}";
-                            if (Manager.IsFontInstalled(StoreItem.TM.MetricsFonts.CaptionFont.Name))
+                            if (Fonts.Exists(StoreItem.TM.MetricsFonts.CaptionFont.Name))
                             {
                                 Titlebar_lbl.Font = new(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }

@@ -151,6 +151,8 @@ namespace WinPaletter.Tabs
         private int tabWidth => Math.Min(MaxWidth, Width / _tabControl.TabPages.Count);
         private int tabHeight => Height - upperTabPadding;
 
+        public int TabsCount => collection != null ? collection.Count : 0;
+
         private Rectangle closeRectangle(Rectangle rectangle)
         {
             int size = 15;
@@ -1107,6 +1109,19 @@ namespace WinPaletter.Tabs
 
             // Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
+
+            if (Program.IsBeta)
+            {
+                Rectangle rect = new(0, 0, Width - 1, Height - 1);
+                SizeF betaSize = Program.Lang.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
+                Rectangle betaRect = new(rect.X + rect.Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
+                G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
+                G.DrawRoundedRect_LikeW11(scheme_secondary.Pens.Line_Checked, betaRect);
+                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                {
+                    G.DrawString(Program.Lang.Beta.ToUpper(), Font, scheme_secondary.Brushes.ForeColor_Accent, new Rectangle(betaRect.X, betaRect.Y + 1, betaRect.Width, betaRect.Height), sf);
+                }
+            }
 
             if (_tabControl != null)
             {

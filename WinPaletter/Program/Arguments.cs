@@ -83,7 +83,7 @@ namespace WinPaletter
             bool shouldExit = false;
             bool displayHelp = false;
 
-            Parser parser = new Parser(config => config.HelpWriter = null);
+            Parser parser = new(config => config.HelpWriter = null);
 
             ParserResult<Options> result = parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()).WithParsed<Options>(o =>
             {
@@ -122,8 +122,15 @@ namespace WinPaletter
                 {
                     using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply))
                     {
+                        Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(o.Apply));
+                        Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+
                         TMx.Save(Theme.Manager.Source.Registry);
                         if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+
+                        ExternalLink = true;
+                        ExternalLink_File = o.Apply;
+
                         shouldExit = true;
                     }
                 }
@@ -134,6 +141,12 @@ namespace WinPaletter
                     TM_Original = (Theme.Manager)TM.Clone();
                     Forms.Home.file = o.Edit;
                     Forms.Home.LoadFromTM(TM);
+
+                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(o.Edit));
+                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+
+                    ExternalLink = true;
+                    ExternalLink_File = o.Edit;
                     shouldExit = false;
                 }
 
@@ -147,8 +160,17 @@ namespace WinPaletter
                         {
                             if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                             {
+                                Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                                Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+
+                                TM = new(Theme.Manager.Source.File, file);
+                                TM_Original = (Theme.Manager)TM.Clone();
+                                Forms.Home.file = file;
+                                Forms.Home.LoadFromTM(TM);
+
                                 ExternalLink = true;
                                 ExternalLink_File = file;
+
                                 shouldExit = false;
                             }
                             else
@@ -157,6 +179,10 @@ namespace WinPaletter
                                 {
                                     TMx.Save(Theme.Manager.Source.Registry);
                                     if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+
+                                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
+                                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+
                                     shouldExit = true;
                                 }
                             }

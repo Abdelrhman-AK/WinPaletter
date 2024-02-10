@@ -72,6 +72,11 @@ namespace WinPaletter
                 e.Cancel = !result;
             }
 
+            if (Forms.Home.Parent is TabPage && tabsContainer1.TabsCount > 1)
+            {
+                if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+            }
+
             base.OnFormClosing(e);
         }
 

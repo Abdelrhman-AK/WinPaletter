@@ -55,5 +55,8 @@
         public string Dark { get; set; } = "Dark";
         public string Light { get; set; } = "Light";
         public string System_ { get; set; } = "System";
+        public string OpenedFromReg { get; set; } = "Theme is opened from current Windows data";
+        public string OpenedFromDef { get; set; } = "Theme is opened from default Windows data";
+        public string OpenedFromFile { get; set; } = "Theme is opened from \'{0}\'";
     }
 }

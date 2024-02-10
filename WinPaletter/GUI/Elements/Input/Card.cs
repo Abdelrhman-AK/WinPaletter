@@ -250,7 +250,6 @@ namespace WinPaletter.UI
             set { _alpha = value; Refresh(); }
         }
 
-
         private int _hoverSize;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
@@ -401,7 +400,7 @@ namespace WinPaletter.UI
                 }
             }
 
-            using (Font titleFont = new(Font.Name, Font.Size + 1, FontStyle.Bold))
+            using (Font titleFont = new(Fonts.Title, Font.Size + 1.9f, FontStyle.Bold))
             {
                 SizeF textSize = Text.Measure(titleFont, rect.Width);
                 SizeF descriptionSize = SizeF.Empty;
@@ -419,7 +418,7 @@ namespace WinPaletter.UI
                     textRect = new Rectangle(rect.X + 5, centerY, rect.Width - 10, (int)textSize.Height);
 
                     // Center description below the title
-                    descriptionRect = new Rectangle(rect.X + 5, textRect.Bottom + 5, rect.Width - 10, (int)descriptionSize.Height);
+                    descriptionRect = new Rectangle(rect.X + 8, textRect.Bottom + 4, rect.Width - 12, (int)descriptionSize.Height);
                 }
                 else
                 {

@@ -1313,7 +1313,7 @@ namespace WinPaletter
             this.Separator3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator3.BackColor = System.Drawing.Color.Transparent;
-            this.Separator3.Location = new System.Drawing.Point(4, 130);
+            this.Separator3.Location = new System.Drawing.Point(4, 166);
             this.Separator3.Name = "Separator3";
             this.Separator3.Size = new System.Drawing.Size(702, 1);
             this.Separator3.TabIndex = 11;
@@ -1821,7 +1821,7 @@ namespace WinPaletter
             this.panel4.Controls.Add(this.Button3);
             this.panel4.Controls.Add(this.TextBox3);
             this.panel4.Controls.Add(this.Button4);
-            this.panel4.Location = new System.Drawing.Point(4, 137);
+            this.panel4.Location = new System.Drawing.Point(4, 130);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(702, 30);
             this.panel4.TabIndex = 219;

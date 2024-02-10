@@ -183,7 +183,7 @@ namespace WinPaletter.Theme.Structures
             CursorSize = Convert.ToInt32(GetReg(RegAddress, "CursorSize", 25));
 
             temp = GetReg(RegAddress, "FaceName", @default.FaceName);
-            if (Manager.IsFontInstalled(temp.ToString()))
+            if (Fonts.Exists(temp.ToString()))
             {
                 FaceName = temp.ToString();
             }
@@ -240,9 +240,7 @@ namespace WinPaletter.Theme.Structures
                         Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
                 }
             }
-            catch
-            {
-            }
+            catch { }
 
             EditReg(TreeView, RegAddress, "EnableColorSelection", 1);
             EditReg(TreeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());

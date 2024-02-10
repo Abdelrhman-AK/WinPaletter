@@ -523,7 +523,7 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Fonts.Exists(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
@@ -535,7 +535,7 @@ namespace WinPaletter
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
-            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Fonts.Exists(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
@@ -547,7 +547,7 @@ namespace WinPaletter
 
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Fonts.Exists(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }

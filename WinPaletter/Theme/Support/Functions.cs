@@ -344,49 +344,6 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Checks if a font is installed or not (from its name)
-        /// </summary>
-        public static bool IsFontInstalled(string fontName)
-        {
-            bool installed = IsFontInstalled(fontName, FontStyle.Regular);
-
-            if (!installed)
-            {
-                installed = IsFontInstalled(fontName, FontStyle.Bold);
-            }
-
-            if (!installed)
-            {
-                installed = IsFontInstalled(fontName, FontStyle.Italic);
-            }
-
-            return installed;
-        }
-
-        /// <summary>
-        /// Checks if a font is installed or not (from its name and style)
-        /// </summary>
-        public static bool IsFontInstalled(string fontName, FontStyle style)
-        {
-            bool installed = false;
-            const float emSize = 8.0f;
-
-            try
-            {
-
-                using (Font testFont = new(fontName, emSize, style))
-                {
-                    installed = 0 == string.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase);
-                }
-            }
-            catch
-            {
-            }
-
-            return installed;
-        }
-
-        /// <summary>
         /// Decompress a WinPaletter theme file
         /// </summary>
         public static IEnumerable<string> Decompress(string File)

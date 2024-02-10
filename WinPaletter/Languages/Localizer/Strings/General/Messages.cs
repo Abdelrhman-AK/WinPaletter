@@ -2,6 +2,7 @@
 {
     public partial class Localizer
     {
+        public string OpenTabs_Close { get; set; } = "There are open forms in tabs. Do you want to exit WinPaletter anyway?";
         public string Bug_NoReport { get; set; } = "There are no saved reports located in '{0}'";
         public string InvalidTheme { get; set; } = "Error: Invalid theme file.";
         public string ThemeNotExist { get; set; } = "Theme file doesn't exist.";

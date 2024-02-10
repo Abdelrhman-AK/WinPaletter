@@ -217,6 +217,12 @@ namespace WinPaletter.UI.Style
                         if (!IgnoreTitleBar)
                             DLLFunc.DarkTitlebar(form.Handle, DarkMode);
 
+                        if (!Fonts.Exists("Segoe UI"))
+                        {
+                            form.AutoScaleMode = AutoScaleMode.Dpi;
+                            form.Font = new("Tahoma", form.Font.Size, form.Font.Style);
+                        }
+
                         ApplyStyleToSubControls(form, DarkMode);
 
                         if (OS.W12 || OS.W11)
@@ -248,6 +254,12 @@ namespace WinPaletter.UI.Style
 
                 if (!IgnoreTitleBar)
                     DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
+
+                if (!Fonts.Exists("Segoe UI"))
+                {
+                    Form.AutoScaleMode = AutoScaleMode.Dpi;
+                    Form.Font = new("Tahoma", Form.Font.Size, Form.Font.Style);
+                }
 
                 ApplyStyleToSubControls(Form, DarkMode);
 
@@ -335,7 +347,7 @@ namespace WinPaletter.UI.Style
             {
                 // This will make all control have a consistent dark\light mode.
                 if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
-                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                     SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
                 switch (DarkMode)
                 {
@@ -350,6 +362,8 @@ namespace WinPaletter.UI.Style
                             break;
                         }
                 }
+
+                if (!Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", 8.25f, ctrl.Font.Style);
             }
 
             if (ctrl is UI.WP.GroupBox)
