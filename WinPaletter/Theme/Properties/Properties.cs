@@ -9,7 +9,7 @@ namespace WinPaletter.Theme
         public Info Info = new()
         {
             AppVersion = Program.Version,
-            ThemeName = Program.Lang.CurrentMode,
+            ThemeName = Program.Lang.MyTheme,
             Description = string.Empty,
             ExportResThemePack = false,
             License = string.Empty,

@@ -379,16 +379,6 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Reg {
-            get {
-                object obj = ResourceManager.GetObject("Reg", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Aero Fallback (Windows Vista-11)|ActiveBorder=180 180 180|ActiveTitle=153 180 209|AppWorkspace=171 171 171|Background=0 0 0|ButtonAlternateFace=0 0 0|ButtonDkShadow=105 105 105|ButtonFace=240 240 240|ButtonHilight=255 255 255|ButtonLight=227 227 227|ButtonShadow=160 160 160|ButtonText=0 0 0|GradientActiveTitle=185 209 234|GradientInactiveTitle=215 228 242|GrayText=109 109 109|HilightText=255 255 255|HotTrackingColor=0 102 204|InactiveBorder=244 247 252|InactiveTitle=191 205 219|InactiveTitleText=0 0 0|InfoT [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RetroThemesDB {
@@ -478,6 +468,216 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Add {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Back {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Back", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Browse {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Browse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Cancel {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Cancel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Check {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Copy {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Copycat {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Copycat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Down {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Edit {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Forward {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Forward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Help {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Menu {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Menu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Play {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Refresh {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Remove {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Reset {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Reset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Save {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Search {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Stop {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Undo {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Undo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Vector_Up {
+            get {
+                object obj = ResourceManager.GetObject("Vector_Up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] WinPaletter_SysEventsSounds {
@@ -493,16 +693,6 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap WP_Admin {
             get {
                 object obj = ResourceManager.GetObject("WP_Admin", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WPTH {
-            get {
-                object obj = ResourceManager.GetObject("WPTH", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

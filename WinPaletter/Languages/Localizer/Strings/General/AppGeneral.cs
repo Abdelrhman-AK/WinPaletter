@@ -24,7 +24,7 @@
         public string InputThemeRepos_Notice { get; set; } = "This database must follow the guidelines demonstrated in WinPaletter Store documentation";
         public string ItMustBeNumerical { get; set; } = "It must be a numerical value";
         public string BugReport_Title { get; set; } = "There is a {0} error. Please try again or report this in GitHub issues";
-        public string CurrentMode { get; set; } = "Current Mode";
+        public string MyTheme { get; set; } = "My theme";
         public string SaveMsg { get; set; } = "Do you want to save settings?";
         public string SettingsSaved { get; set; } = "Settings are saved";
         public string TBSizeUnit { get; set; } = "TB";
@@ -55,8 +55,9 @@
         public string Dark { get; set; } = "Dark";
         public string Light { get; set; } = "Light";
         public string System_ { get; set; } = "System";
-        public string OpenedFromReg { get; set; } = "Theme is opened from current Windows data";
-        public string OpenedFromDef { get; set; } = "Theme is opened from default Windows data";
-        public string OpenedFromFile { get; set; } = "Theme is opened from \'{0}\'";
+        public string ClickToReset { get; set; } = "Reset to default Windows value";
+        public string ClickToEdit { get; set; } = "Click to edit current value";
+        public string PressEnterToUseValue { get; set; } = "Press 'Enter' to use this value.";
+        public string PressEscToDismissEditing { get; set; } = "Press 'Esc' to dismiss editing value.";
     }
 }

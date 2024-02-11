@@ -1244,5 +1244,10 @@ namespace WinPaletter
             groupBox50.Enabled = toggle31.Checked;
             groupBox51.Enabled = toggle31.Checked;
         }
+
+        private void toggle16_CheckedChanged(object sender, EventArgs e)
+        {
+            Panel12.Enabled = toggle16.Checked;
+        }
     }
 }

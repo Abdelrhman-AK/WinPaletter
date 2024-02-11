@@ -353,7 +353,7 @@ namespace WinPaletter
             this.Button5.Image = null;
             this.Button5.ImageAsVector = false;
             this.Button5.ImageVector = null;
-            this.Button5.Location = new System.Drawing.Point(23, 145);
+            this.Button5.Location = new System.Drawing.Point(23, 126);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(157, 33);
             this.Button5.TabIndex = 10;

@@ -400,7 +400,7 @@ namespace WinPaletter.UI
                 }
             }
 
-            using (Font titleFont = new(Fonts.Title, Font.Size + 1.9f, FontStyle.Bold))
+            using (Font titleFont = new(Fonts.Title, Font.Size + 1.85f, FontStyle.Bold))
             {
                 SizeF textSize = Text.Measure(titleFont, rect.Width);
                 SizeF descriptionSize = SizeF.Empty;

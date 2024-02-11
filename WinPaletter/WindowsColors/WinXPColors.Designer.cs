@@ -300,7 +300,7 @@
             this.WXP_VS_Browse.ForeColor = System.Drawing.Color.White;
             this.WXP_VS_Browse.Image = null;
             this.WXP_VS_Browse.ImageAsVector = true;
-            this.WXP_VS_Browse.ImageVector = ((System.Drawing.Image)(resources.GetObject("WXP_VS_Browse.ImageVector")));
+            this.WXP_VS_Browse.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.WXP_VS_Browse.Location = new System.Drawing.Point(483, 43);
             this.WXP_VS_Browse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WXP_VS_Browse.Name = "WXP_VS_Browse";

@@ -168,6 +168,8 @@ namespace WinPaletter.Theme
                     {
                         using (Manager TMx = Default.Get())
                         {
+                            Exceptions.ThemeLoad.Clear();
+
                             BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
                             try

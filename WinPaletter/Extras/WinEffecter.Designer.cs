@@ -272,6 +272,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(784, 52);
             // 
             // Timer1
@@ -1901,7 +1902,7 @@ namespace WinPaletter
             this.button25.ForeColor = System.Drawing.Color.White;
             this.button25.Image = null;
             this.button25.ImageAsVector = true;
-            this.button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("button25.ImageVector")));
+            this.button25.ImageVector = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button25.Location = new System.Drawing.Point(441, 7);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(34, 25);
@@ -2601,7 +2602,7 @@ namespace WinPaletter
             // 
             this.AlertBox5.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.AlertBox5.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox5.CenterText = false;
+            this.AlertBox5.CenterText = true;
             this.AlertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox5.Image = null;

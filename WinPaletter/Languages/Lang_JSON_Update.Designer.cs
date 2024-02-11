@@ -180,7 +180,7 @@ namespace WinPaletter
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
             this.Button5.ImageAsVector = true;
-            this.Button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
+            this.Button5.ImageVector = global::WinPaletter.Properties.Resources.Vector_Add;
             this.Button5.Location = new System.Drawing.Point(501, 42);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(168, 24);

@@ -624,6 +624,12 @@
     <Compile Include="Templates\WindowsDesktop.Designer.cs">
       <DependentUpon>WindowsDesktop.cs</DependentUpon>
     </Compile>
+    <Compile Include="OS_Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OS_Dashboard.Designer.cs">
+      <DependentUpon>OS_Dashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
@@ -1412,6 +1418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\WindowsDesktop.resx">
       <DependentUpon>WindowsDesktop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OS_Dashboard.resx">
+      <DependentUpon>OS_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\CMD.resx">
       <DependentUpon>CMD.cs</DependentUpon>

@@ -58,6 +58,16 @@ namespace WinPaletter.UI.WP
             base.OnPaintBackground(pevent);
         }
 
+        public new string Text
+        {
+            get => base.Text;
+            set
+            {
+                base.Text = value;
+                Refresh();
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;

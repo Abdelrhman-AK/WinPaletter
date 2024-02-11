@@ -41,51 +41,17 @@ namespace WinPaletter
 
             if (!Program.Elevated) apply_btn.Image = Properties.Resources.WP_Admin;
 
-            win11.Checked = Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11;
-            win10.Checked = Program.WindowStyle == WindowStyle.W10;
-            win81.Checked = Program.WindowStyle == WindowStyle.W81;
-            win7.Checked = Program.WindowStyle == WindowStyle.W7;
-            winVista.Checked = Program.WindowStyle == WindowStyle.WVista;
-            winXP.Checked = Program.WindowStyle == WindowStyle.WXP;
-
-            switch (Program.WindowStyle)
-            {
-                case WindowStyle.W12:
-                    card1.Image = Assets.Banners.Win12;
-                    break;
-
-                case WindowStyle.W11:
-                    card1.Image = Assets.Banners.Win11;
-                    break;
-
-                case WindowStyle.W10:
-                    card1.Image = Assets.Banners.Win10;
-                    break;
-
-                case WindowStyle.W81:
-                    card1.Image = Assets.Banners.Win81;
-                    break;
-
-                case WindowStyle.W7:
-                    card1.Image = Assets.Banners.WinOld;
-                    break;
-
-                case WindowStyle.WVista:
-                    card1.Image = Assets.Banners.WinOld;
-                    break;
-
-                case WindowStyle.WXP:
-                    card1.Image = Assets.Banners.WinOld;
-                    break;
-
-                default:
-                    card1.Image = Assets.Banners.Win12;
-                    break;
-            }
-
+            LoadOSData();
             LoadData();
+            LoadFromTM(Program.TM);
 
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
+            {
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag as string).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+
+            foreach (UI.WP.Button button in banner1.GetAllControls().OfType<UI.WP.Button>())
             {
                 button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag as string).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
@@ -98,9 +64,64 @@ namespace WinPaletter
             userButton.Image = User.ProfilePicture.Resize(32, 32);
         }
 
+        private void LoadOSData()
+        {
+            switch (Program.WindowStyle)
+            {
+                case WindowStyle.W12:
+                    card1.Image = Assets.Banners.Win12;
+                    winEdition.Image = Assets.WinLogos.Win12;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win12);
+                    break;
+
+                case WindowStyle.W11:
+                    card1.Image = Assets.Banners.Win11;
+                    winEdition.Image = Assets.WinLogos.Win11;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win11);
+                    break;
+
+                case WindowStyle.W10:
+                    card1.Image = Assets.Banners.Win10;
+                    winEdition.Image = Assets.WinLogos.Win10;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win10);
+                    break;
+
+                case WindowStyle.W81:
+                    card1.Image = Assets.Banners.Win81;
+                    winEdition.Image = Assets.WinLogos.Win81;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win8);
+                    break;
+
+                case WindowStyle.W7:
+                    card1.Image = Assets.Banners.WinOld;
+                    winEdition.Image = Assets.WinLogos.Win7;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win7);
+                    break;
+
+                case WindowStyle.WVista:
+                    card1.Image = Assets.Banners.WinOld;
+                    winEdition.Image = Assets.WinLogos.WinVista;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_WinVista);
+                    break;
+
+                case WindowStyle.WXP:
+                    card1.Image = Assets.Banners.WinOld;
+                    winEdition.Image = Assets.WinLogos.WinXP;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_WinXP);
+                    break;
+
+                default:
+                    card1.Image = Assets.Banners.Win12;
+                    winEdition.Image = Assets.WinLogos.Win12;
+                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win12);
+                    break;
+            }
+
+        }
+
         public void LoadFromTM(Theme.Manager TM)
         {
-
+            banner1.Text = $"{TM.Info.ThemeName} - {Program.Lang.By} {TM.Info.Author}";
         }
 
         public async void AutoUpdatesCheck()
@@ -386,8 +407,8 @@ namespace WinPaletter
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
             file = null;
-            label1.Text = Program.Lang.OpenedFromReg;
-            pictureBox1.Image = Properties.Resources.Reg;
+            Text = Application.ProductName;
+            LoadFromTM(Program.TM);
         }
 
         private void Button20_Click(object sender, EventArgs e)
@@ -399,8 +420,8 @@ namespace WinPaletter
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
             file = null;
-            label1.Text = Program.Lang.OpenedFromDef;
-            pictureBox1.Image = Properties.Resources.Reg;
+            Text = Application.ProductName;
+            LoadFromTM(Program.TM);
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -421,8 +442,8 @@ namespace WinPaletter
                     file = dlg.FileName;
                     Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                    pictureBox1.Image = Properties.Resources.WPTH;
+                    Text = System.IO.Path.GetFileName(file);
+                    LoadFromTM(Program.TM);
                 }
             }
         }
@@ -435,8 +456,8 @@ namespace WinPaletter
                 {
                     file = dlg.FileNames[0];
                     Program.TM.Save(Theme.Manager.Source.File, file);
-                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                    pictureBox1.Image = Properties.Resources.WPTH;
+                    Text = System.IO.Path.GetFileName(file);
+                    LoadFromTM(Program.TM);
                 }
             }
         }
@@ -451,16 +472,16 @@ namespace WinPaletter
                     {
                         file = dlg.FileNames[0];
                         Program.TM.Save(Theme.Manager.Source.File, file);
-                        label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                        pictureBox1.Image = Properties.Resources.WPTH;
+                        Text = System.IO.Path.GetFileName(file);
+                        LoadFromTM(Program.TM);
                     }
                 }
                 else
                 {
                     file = dlg.FileNames[0];
                     Program.TM.Save(Theme.Manager.Source.File, file);
-                    label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                    pictureBox1.Image = Properties.Resources.WPTH;
+                    Text = System.IO.Path.GetFileName(file);
+                    LoadFromTM(Program.TM);
                 }
             }
         }
@@ -473,60 +494,6 @@ namespace WinPaletter
         private void btn_history_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
-        }
-
-        private void winXP_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && winXP.Checked)
-            {
-                Program.WindowStyle = WindowStyle.WXP;
-                card1.Image = Assets.Banners.WinOld;
-            }
-        }
-
-        private void winVista_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && winVista.Checked)
-            {
-                Program.WindowStyle = WindowStyle.WVista;
-                card1.Image = Assets.Banners.WinOld;
-            }
-        }
-
-        private void win7_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && win7.Checked)
-            {
-                Program.WindowStyle = WindowStyle.W7;
-                card1.Image = Assets.Banners.WinOld;
-            }
-        }
-
-        private void win81_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && win81.Checked)
-            {
-                Program.WindowStyle = WindowStyle.W81;
-                card1.Image = Assets.Banners.Win81;
-            }
-        }
-
-        private void win10_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && win10.Checked)
-            {
-                Program.WindowStyle = WindowStyle.W10;
-                card1.Image = Assets.Banners.Win10;
-            }
-        }
-
-        private void win11_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_shown && win11.Checked)
-            {
-                Program.WindowStyle = WindowStyle.W11;
-                card1.Image = Assets.Banners.Win11;
-            }
         }
 
         private void button41_Click(object sender, EventArgs e)
@@ -584,6 +551,11 @@ namespace WinPaletter
         {
             Forms.MainForm.tabsContainer1.TabControl.Visible = false;
             Forms.MainForm.Close();
+        }
+
+        private void winEdition_Click(object sender, EventArgs e)
+        {
+            if (Forms.OS_Dashboard.ShowDialog() == DialogResult.OK) LoadOSData();
         }
 
         //private void button1_Click(object sender, EventArgs e)

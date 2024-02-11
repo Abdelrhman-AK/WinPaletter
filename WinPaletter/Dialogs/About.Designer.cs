@@ -339,13 +339,14 @@ namespace WinPaletter
             this.LinkLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel6.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel6.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel6.Location = new System.Drawing.Point(42, 605);
+            this.LinkLabel6.Location = new System.Drawing.Point(42, 603);
             this.LinkLabel6.Name = "LinkLabel6";
-            this.LinkLabel6.Size = new System.Drawing.Size(610, 35);
+            this.LinkLabel6.Size = new System.Drawing.Size(616, 24);
             this.LinkLabel6.TabIndex = 25;
             this.LinkLabel6.TabStop = true;
             this.LinkLabel6.Text = "These items are provided by Microsoft: Classic color schemes, Luna theme preview " +
     "(Luna.msstyles) and Command Prompt and PowerShell raster fonts previews";
+            this.LinkLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LinkLabel6.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel6_LinkClicked);
             // 
             // LinkLabel8

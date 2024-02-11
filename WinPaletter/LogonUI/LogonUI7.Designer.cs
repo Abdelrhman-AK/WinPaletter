@@ -84,6 +84,7 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(964, 52);
             // 
             // GroupBox3
@@ -372,7 +373,6 @@ namespace WinPaletter
             // PictureBox4
             // 
             this.PictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
             this.PictureBox4.Location = new System.Drawing.Point(8, 39);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(25, 25);
@@ -383,13 +383,13 @@ namespace WinPaletter
             // Button7
             // 
             this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button7.CustomColor = System.Drawing.Color.Empty;
-            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
-            this.Button7.Image = ((System.Drawing.Image)(resources.GetObject("Button7.Image")));
-            this.Button7.ImageAsVector = false;
-            this.Button7.ImageVector = null;
+            this.Button7.Image = null;
+            this.Button7.ImageAsVector = true;
+            this.Button7.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.Button7.Location = new System.Drawing.Point(356, 163);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";

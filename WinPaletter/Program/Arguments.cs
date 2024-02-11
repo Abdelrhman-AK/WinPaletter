@@ -122,9 +122,7 @@ namespace WinPaletter
                 {
                     using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply))
                     {
-                        Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(o.Apply));
-                        Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
-
+                        Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
                         TMx.Save(Theme.Manager.Source.Registry);
                         if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
@@ -141,9 +139,7 @@ namespace WinPaletter
                     TM_Original = (Theme.Manager)TM.Clone();
                     Forms.Home.file = o.Edit;
                     Forms.Home.LoadFromTM(TM);
-
-                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(o.Edit));
-                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+                    Forms.Home.Text = System.IO.Path.GetFileName(o.Edit);
 
                     ExternalLink = true;
                     ExternalLink_File = o.Edit;
@@ -160,9 +156,7 @@ namespace WinPaletter
                         {
                             if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                             {
-                                Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                                Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
-
+                                Forms.Home.Text = System.IO.Path.GetFileName(file);
                                 TM = new(Theme.Manager.Source.File, file);
                                 TM_Original = (Theme.Manager)TM.Clone();
                                 Forms.Home.file = file;
@@ -179,10 +173,7 @@ namespace WinPaletter
                                 {
                                     TMx.Save(Theme.Manager.Source.Registry);
                                     if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
-
-                                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(file));
-                                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
-
+                                    Forms.Home.Text = System.IO.Path.GetFileName(file);
                                     shouldExit = true;
                                 }
                             }

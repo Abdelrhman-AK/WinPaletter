@@ -285,14 +285,6 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="tip.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAHpJREFUKFO1
-        jDEOQEAUBVcr4TAaZ5AI5eo4kSvoNBxEpZUoXMIB1pDXYRsxyWT3/f92zWeccwWO2GOm8TMUGlzRYo3b
-        eWp9R+VE8cwpLop3WDa6XpAj3BX9UAywxUGjd1TucMJY43co5ThjqJEfPSgVf4DfK7SKXzDmAEn0alJs
-        NRr7AAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAkhJREFUSEvl
@@ -687,7 +679,7 @@
   </data>
   <data name="tips_box.Text" xml:space="preserve">
     <value>- Click on an element inside the preview to change its color.
-- There are multiple elements that share the same color, so you will notice that other elements may change when another element is changed.</value>
+- There are multiple elements that share in the same color, so you will notice that other elements may change when another element is changed.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>45</value>

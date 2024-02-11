@@ -142,18 +142,18 @@
 </value>
   </data>
   <data name="alertBox1.Text" xml:space="preserve">
-    <value>If an item is tagged with this icon, it is playable by the installed service - WinPaletter System Events Sounds - and can be used in Windows 8 and later (except for charger sounds; these can be played on all supported versions of Windows).
+    <value>- If an item is tagged with this icon, it is playable by WinPaletter System Events Sounds service (if it is installed and running)
 
-There may be expected glitches if fast startup is enabled, especially for the shutdown sound.</value>
+- This service is a service that monitors Windows events and plays sounds based on the received events. It serves as a deflection method for charger connection/disconnection sounds (compatible with any version of Windows) and logoff, logon, lock, unlock, and shutdown sounds (in Windows 8 and higher). If fast startup is enabled along with the shutdown sound, incorrectly played sounds may be expected.</value>
   </data>
   <data name="button7.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button199.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -201,12 +201,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button8.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox92.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -284,12 +284,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="Button22.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button19.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -334,12 +334,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button9.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox91.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -403,12 +403,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button259.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button18.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -450,12 +450,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button12.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox88.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -523,12 +523,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button10.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox90.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -587,12 +587,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button11.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox89.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -658,12 +658,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button269.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button211.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -709,12 +709,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button275.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button37.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -759,12 +759,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button270.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button40.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -810,12 +810,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button274.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button28.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -861,12 +861,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button271.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button205.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -908,12 +908,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button273.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button31.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -958,12 +958,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button272.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button34.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1009,12 +1009,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button276.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button169.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1054,12 +1054,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button277.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button166.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1101,12 +1101,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button278.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button58.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1153,12 +1153,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button283.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button55.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1205,12 +1205,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button281.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button49.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1256,12 +1256,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button279.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button43.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1304,12 +1304,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button282.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button52.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1351,12 +1351,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button280.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button46.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1400,12 +1400,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button284.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button163.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1448,12 +1448,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button292.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button142.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1495,12 +1495,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button285.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button157.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1540,12 +1540,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button291.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button145.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1587,12 +1587,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button286.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button154.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1632,12 +1632,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button290.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button148.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1681,12 +1681,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button287.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button151.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1724,12 +1724,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button289.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button260.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1790,12 +1790,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button288.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox94.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1860,12 +1860,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button293.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button241.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1917,12 +1917,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button297.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button244.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1970,12 +1970,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button294.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button238.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2026,12 +2026,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button296.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button160.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2081,12 +2081,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button295.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button235.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2137,12 +2137,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button298.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button232.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2184,12 +2184,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button306.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button193.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2243,12 +2243,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button299.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button178.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2295,12 +2295,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button305.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button190.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2349,12 +2349,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button300.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button181.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2401,12 +2401,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button304.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button175.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2447,12 +2447,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button301.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button184.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2496,12 +2496,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button303.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button187.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2539,12 +2539,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button302.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button196.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2586,12 +2586,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button309.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button64.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2634,12 +2634,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button315.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button172.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2681,12 +2681,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button308.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button61.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2729,12 +2729,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button313.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button73.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2789,12 +2789,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button307.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button79.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2839,12 +2839,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button314.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button76.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2893,12 +2893,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button312.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button70.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2942,12 +2942,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button310.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button202.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2997,12 +2997,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button311.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button67.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3052,12 +3052,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button325.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button100.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3100,12 +3100,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button324.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button97.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3148,12 +3148,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button323.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button94.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3196,12 +3196,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button322.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button91.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3244,12 +3244,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button321.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button88.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3292,12 +3292,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button320.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button85.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3340,12 +3340,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button319.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button82.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3388,12 +3388,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button318.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button109.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3436,12 +3436,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button317.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button106.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3484,12 +3484,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button316.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button103.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3532,12 +3532,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button326.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button112.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3583,12 +3583,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button335.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button139.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3634,12 +3634,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button327.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button115.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3685,12 +3685,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button334.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button136.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3736,12 +3736,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button328.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button118.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3787,12 +3787,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button333.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button133.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3838,12 +3838,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button329.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button121.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3889,12 +3889,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button332.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button130.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3940,12 +3940,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button330.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button124.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -3991,12 +3991,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button331.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button127.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4042,12 +4042,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button336.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button220.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4089,12 +4089,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button341.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button217.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4142,12 +4142,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button337.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button223.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4188,12 +4188,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button340.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button229.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4240,12 +4240,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button338.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button226.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4286,12 +4286,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button339.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button214.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4340,12 +4340,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button342.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button250.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4394,12 +4394,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button343.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button247.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4442,12 +4442,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button345.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button256.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4498,12 +4498,12 @@ There may be expected glitches if fast startup is enabled, especially for the sh
   </data>
   <data name="button344.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAPNJREFUOE/N
+        kr1qwmAUhrMY21tQkQ7SSxA378HN0SK2QifBexH1csRBERFsoWPHLg61/tDB+Bx5k49gArrlgWc47zn5
+        8ne87BEEQR77uMQN/uAEX7GOXxq9hmYR7cI/HKJd1MERHvAbA43HIX/AFa6xpPgCdQ3/0TgpjkOjh3bn
+        sqIIMju8gS+m4jg05jhQmQozj1hV6SDcYktlKsw0bVal444D2vir0kE4xVteYWyzKh2E75j4EUPoPeEO
+        u4ochLZA9hs/sKI4guwZP9H2xFcch0a4SHsMF8m0x7ZFWmBB48kw4OMb2m89yhnaQTmNZQbPOwPrEyM7
+        e6GM3AAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Button253.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -4551,23 +4551,6 @@ There may be expected glitches if fast startup is enabled, especially for the sh
         hGofUMDAAABYvzQGissmBwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button346.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
-</value>
-  </data>
-  <data name="Button208.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGJJREFUOE/N
-        0jEKgDAQRNGcU2wE749irNchfJhOByz0wTYTfpf2H1W16nbdk023kJnGczxnOpnxECMz9hiZscfIjD1G
-        ZuwxMmOPkRl7jMzYY2Sm7fVHmnXHeL7XdRPZ51q7APJ7OwCF7yLUAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="PictureBox67.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAglJREFUSEvt
@@ -4580,23 +4563,6 @@ There may be expected glitches if fast startup is enabled, especially for the sh
         FlwxRltCuI9ScE2RTJamQrFPZ7E2DpHmXJMCOF+UwREXvpgq13HGy7uOeAmuTJA8L03g2DyIdO7y+AFc
         ipGMHWRx/J/f2J/xN+xPix/s0aJMMuuMlM9hZQ62aPGjLcpD6ygP1kgBWiP5W1iZgzXC71hHCtDypACW
         x3mwPCqY93HTsYzkB4h07+LD/I8LD/bTVNjAr/Ivg6J+AQimLbt5rfsmAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="Button209.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAMNJREFUOE+t
-        kzEKAjEQRSM2tnsB8QoWHsXOM1gJVjbWFraewkrwDoKnsLRUEVmMb8gMuEuM2dUHr0n+fMhu4v6G977A
-        NU6xp8v5MLTBB97wjBPs6PZ3CO/xnSuecKyRNATrBYYUHXCo0TgEPhUIT5Sj7XCgI1XYSBUYJUrRErs6
-        GmAhp8CQkrmOBlhoWjDT0QALOQV3vOACGx3Bzi4XrdCRKmzECuzrb7Gv0TgE6gXy/4840kgagj9fZXlM
-        K2z3mNrh3Atm/d5DG0pXvwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="Button210.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAIdJREFUOE9j
-        GBzg////jEBsD8ShUOwFxFxQacIAqLgUiNHBTSDWhCrBD4AKV4G1oIK/QJwNxJpAvAWIdyPh2UAsBtWO
-        1YD3QBwAxG5QNjYwFaodEwAl2YC4CIh/g1TiAKugynF6gRAYNQDNAGwJiRAohmoHGwBKyjZA7EIkBqll
-        hGofUMDAAABYvzQGissmBwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

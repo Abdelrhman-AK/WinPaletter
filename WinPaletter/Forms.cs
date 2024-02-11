@@ -1311,6 +1311,24 @@ namespace WinPaletter
             }
         }
 
+        private static OS_Dashboard _OS_Dashboard;
+        public static OS_Dashboard OS_Dashboard
+        {
+            get
+            {
+                _OS_Dashboard = CreateInstance(_OS_Dashboard);
+                return _OS_Dashboard;
+            }
+            set
+            {
+                if (value == _OS_Dashboard)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _OS_Dashboard);
+            }
+        }
+
         private static Dictionary<Type, object> formBeingCreated;
 
         [DebuggerHidden()]

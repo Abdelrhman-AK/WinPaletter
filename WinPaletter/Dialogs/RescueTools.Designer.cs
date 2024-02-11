@@ -79,7 +79,7 @@ namespace WinPaletter.Dialogs
             // 
             this.banner5.BackColor = System.Drawing.Color.Transparent;
             this.banner5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.banner5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner5.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner5.Image")));
             this.banner5.Location = new System.Drawing.Point(0, 0);
             this.banner5.Name = "banner5";
@@ -163,7 +163,7 @@ namespace WinPaletter.Dialogs
             // 
             this.banner4.BackColor = System.Drawing.Color.Transparent;
             this.banner4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.banner4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner4.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner4.Image")));
             this.banner4.Location = new System.Drawing.Point(0, 0);
             this.banner4.Name = "banner4";
@@ -247,7 +247,7 @@ namespace WinPaletter.Dialogs
             // 
             this.banner3.BackColor = System.Drawing.Color.Transparent;
             this.banner3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.banner3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner3.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner3.Image")));
             this.banner3.Location = new System.Drawing.Point(0, 0);
             this.banner3.Name = "banner3";
@@ -331,7 +331,7 @@ namespace WinPaletter.Dialogs
             // 
             this.banner2.BackColor = System.Drawing.Color.Transparent;
             this.banner2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.banner2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner2.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner2.Image")));
             this.banner2.Location = new System.Drawing.Point(0, 0);
             this.banner2.Name = "banner2";
@@ -415,7 +415,7 @@ namespace WinPaletter.Dialogs
             // 
             this.banner1.BackColor = System.Drawing.Color.Transparent;
             this.banner1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.banner1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner1.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner1.Image")));
             this.banner1.Location = new System.Drawing.Point(0, 0);
             this.banner1.Name = "banner1";

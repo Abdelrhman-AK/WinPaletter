@@ -92,20 +92,25 @@ namespace WinPaletter.UI.WP
 
         private void value_btn_Click(object sender, EventArgs e)
         {
-            string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
-            ((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), colorBar1.Maximum), colorBar1.Minimum).ToString();
+            //string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            //((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), colorBar1.Maximum), colorBar1.Minimum).ToString();
 
-            if (_animateChanges)
-            {
-                FluentTransitions.Transition.With(this, nameof(Value), (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text))).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-            }
+            //if (_animateChanges)
+            //{
+            //    FluentTransitions.Transition.With(this, nameof(Value), (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text))).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            //}
+            //else
+            //{
+            //    Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
+            //}
+
+            textBox1.Text = Value.ToString();
+            textBox1.BringToFront();
+            Program.Animator.ShowSync(textBox1);
+            textBox1.Focus();
         }
 
-        private void undo_Click(object sender, EventArgs e)
+        private void reset_Click(object sender, EventArgs e)
         {
             switch (colorBar1.Mode)
             {
@@ -127,7 +132,69 @@ namespace WinPaletter.UI.WP
         {
             value_btn.Text = colorBar1.Value.ToString();
             Value = colorBar1.Value;
+            textBox1.Text = Value.ToString();
             Scroll?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void reset_LocationChanged(object sender, EventArgs e)
+        {
+            textBox1.Left = reset.Left;
+            textBox1.Width = value_btn.Right - textBox1.Left;
+        }
+
+        private void textBox1_KeyboardPress(object s, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter || e.KeyChar == (char)Keys.Escape)
+            {
+                if (float.TryParse(textBox1.Text, out float value))
+                {
+                    Program.Animator.HideSync(textBox1);
+
+                    if (e.KeyChar == (char)Keys.Enter)
+                    {
+                        value_btn.Text = value.ToString();
+
+                        if (_animateChanges)
+                        {
+                            FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        }
+                        else
+                        {
+                            Value = Convert.ToInt32(value);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void reset_MouseEnter(object sender, EventArgs e)
+        {
+            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToReset, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+        }
+
+        private void reset_MouseLeave(object sender, EventArgs e)
+        {
+            Program.ToolTip.Hide(sender as UI.WP.Button);
+        }
+
+        private void value_btn_MouseEnter(object sender, EventArgs e)
+        {
+            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToEdit, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+        }
+
+        private void value_btn_MouseLeave(object sender, EventArgs e)
+        {
+            Program.ToolTip.Hide(sender as UI.WP.Button);
+        }
+
+        private void textBox1_MouseEnter(object sender, EventArgs e)
+        {
+            Program.ToolTip.Show(sender as UI.WP.TextBox, string.Empty, $"• {Program.Lang.PressEnterToUseValue}\r\n• {Program.Lang.PressEscToDismissEditing}", null, new Point(0, (sender as UI.WP.TextBox).Height + 2));
+        }
+
+        private void textBox1_MouseLeave(object sender, EventArgs e)
+        {
+            Program.ToolTip.Hide(sender as UI.WP.TextBox);
         }
     }
 }

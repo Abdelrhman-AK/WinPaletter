@@ -176,7 +176,7 @@ namespace WinPaletter
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
             this.Button11.ImageAsVector = true;
-            this.Button11.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button11.ImageVector")));
+            this.Button11.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.Button11.Location = new System.Drawing.Point(449, 72);
             this.Button11.Name = "Button11";
             this.Button11.Size = new System.Drawing.Size(32, 24);

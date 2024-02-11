@@ -915,11 +915,11 @@ namespace WinPaletter
                 if (Forms.Store_CPToggles.ShowDialog() == DialogResult.OK)
                 {
                     Apply_Theme();
-                    if (selectedItem.DoneByWinPaletter)
-                        Program.TM.Info.Author = Application.CompanyName;
+                    if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Program.TM = selectedItem.TM;
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                     Forms.Home.LoadFromTM(Program.TM);
+                    Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
                     UpdateTitlebarColors();
                 }
             }
@@ -934,9 +934,9 @@ namespace WinPaletter
                 }
 
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName);
-                if (selectedItem.DoneByWinPaletter)
-                    Program.TM.Info.Author = Application.CompanyName;
+                Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
+                if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
+                Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
                 Forms.Home.LoadFromTM(Program.TM);
             }
         }
@@ -1199,9 +1199,7 @@ namespace WinPaletter
                         {
                             FileSystem.Kill($@"{Dir}\{FileName}");
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
 
                     DoActionsAfterPackDownload();

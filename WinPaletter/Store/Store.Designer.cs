@@ -92,7 +92,6 @@ namespace WinPaletter
             this.Person = new WinPaletter.UI.Controllers.CursorControl();
             this.IBeam = new WinPaletter.UI.Controllers.CursorControl();
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
-            this.cur_tip_btn = new WinPaletter.UI.WP.Button();
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
             this.CursorsSize_Bar = new WinPaletter.UI.WP.TrackBar();
             this.Label17 = new System.Windows.Forms.Label();
@@ -791,12 +790,11 @@ namespace WinPaletter
             // Panel1
             // 
             this.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Panel1.Controls.Add(this.cur_anim_btn);
             this.Panel1.Controls.Add(this.Cursors_Container);
-            this.Panel1.Controls.Add(this.cur_tip_btn);
             this.Panel1.Controls.Add(this.PictureBox12);
             this.Panel1.Controls.Add(this.CursorsSize_Bar);
             this.Panel1.Controls.Add(this.Label17);
+            this.Panel1.Controls.Add(this.cur_anim_btn);
             this.Panel1.Location = new System.Drawing.Point(2677, 3);
             this.Panel1.Name = "Panel1";
             this.Panel1.Padding = new System.Windows.Forms.Padding(3);
@@ -812,9 +810,9 @@ namespace WinPaletter
             this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
             this.cur_anim_btn.ImageAsVector = false;
             this.cur_anim_btn.ImageVector = null;
-            this.cur_anim_btn.Location = new System.Drawing.Point(356, 267);
+            this.cur_anim_btn.Location = new System.Drawing.Point(360, 265);
             this.cur_anim_btn.Name = "cur_anim_btn";
-            this.cur_anim_btn.Size = new System.Drawing.Size(141, 21);
+            this.cur_anim_btn.Size = new System.Drawing.Size(160, 24);
             this.cur_anim_btn.TabIndex = 72;
             this.cur_anim_btn.Text = "Animate (3 Cycles)";
             this.cur_anim_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -1579,22 +1577,6 @@ namespace WinPaletter
             this.Cross.Size = new System.Drawing.Size(64, 64);
             this.Cross.TabIndex = 20;
             // 
-            // cur_tip_btn
-            // 
-            this.cur_tip_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
-            this.cur_tip_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
-            this.cur_tip_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cur_tip_btn.ForeColor = System.Drawing.Color.White;
-            this.cur_tip_btn.Image = null;
-            this.cur_tip_btn.ImageAsVector = true;
-            this.cur_tip_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("cur_tip_btn.ImageVector")));
-            this.cur_tip_btn.Location = new System.Drawing.Point(500, 267);
-            this.cur_tip_btn.Name = "cur_tip_btn";
-            this.cur_tip_btn.Size = new System.Drawing.Size(20, 21);
-            this.cur_tip_btn.TabIndex = 71;
-            this.cur_tip_btn.UseVisualStyleBackColor = false;
-            this.cur_tip_btn.Click += new System.EventHandler(this.Cur_tip_btn_Click);
-            // 
             // PictureBox12
             // 
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
@@ -1612,7 +1594,7 @@ namespace WinPaletter
             this.CursorsSize_Bar.Maximum = 320;
             this.CursorsSize_Bar.Minimum = 100;
             this.CursorsSize_Bar.Name = "CursorsSize_Bar";
-            this.CursorsSize_Bar.Size = new System.Drawing.Size(209, 19);
+            this.CursorsSize_Bar.Size = new System.Drawing.Size(213, 19);
             this.CursorsSize_Bar.SmallChange = 20;
             this.CursorsSize_Bar.TabIndex = 68;
             this.CursorsSize_Bar.Value = 100;
@@ -1702,7 +1684,7 @@ namespace WinPaletter
             this.search_btn.ForeColor = System.Drawing.Color.White;
             this.search_btn.Image = null;
             this.search_btn.ImageAsVector = true;
-            this.search_btn.ImageVector = ((System.Drawing.Image)(resources.GetObject("search_btn.ImageVector")));
+            this.search_btn.ImageVector = global::WinPaletter.Properties.Resources.Vector_Search;
             this.search_btn.Location = new System.Drawing.Point(308, 3);
             this.search_btn.Name = "search_btn";
             this.search_btn.Size = new System.Drawing.Size(32, 24);
@@ -1848,7 +1830,6 @@ namespace WinPaletter
         internal UI.Simulation.WinCMD CMD2;
         internal UI.Simulation.WinCMD CMD3;
         internal UI.WP.Button cur_anim_btn;
-        internal UI.WP.Button cur_tip_btn;
         internal FlowLayoutPanel Cursors_Container;
         internal UI.Controllers.CursorControl Arrow;
         internal UI.Controllers.CursorControl Help;

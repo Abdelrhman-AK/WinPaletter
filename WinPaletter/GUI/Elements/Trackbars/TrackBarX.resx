@@ -117,15 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="undo.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOpJREFUOE/N
-        kT1qAmEURUcrsRCsbEUC2iiCta7A1tJuNuAq0iZNdAUGAi5A8KfSKoEUAYv0igSEdIrg5LzhhmEGhE9B
-        8MAB371exBnvfgiCoGjqtDuNPfzCA36ijyl9JQ7FKw71OYtj3OMTdnGAR3wJB0ko3qSNJ/iDddUh3G08
-        YVNRBKGNR/g/rqmKQf6BjzojCG28xbNjg26KfZ0RhHNM8q06hLuAv+griiAsYSdhS7X19mzsR1aYUeyG
-        xjO0v1dV7AaDHC5wjWXFbmi8xA1WFLvBII/vV40NRs+4w4aiy2Bob+VB563wvD/WYh0UzwbQcwAAAABJ
-        RU5ErkJggg==
-</value>
-  </data>
 </root>

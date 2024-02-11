@@ -1125,7 +1125,7 @@
             this.tip.ForeColor = System.Drawing.Color.White;
             this.tip.Image = null;
             this.tip.ImageAsVector = true;
-            this.tip.ImageVector = ((System.Drawing.Image)(resources.GetObject("tip.ImageVector")));
+            this.tip.ImageVector = global::WinPaletter.Properties.Resources.Vector_Help;
             this.tip.Location = new System.Drawing.Point(512, 8);
             this.tip.Name = "tip";
             this.tip.Size = new System.Drawing.Size(20, 20);

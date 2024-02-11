@@ -88,6 +88,28 @@ namespace WinPaletter.Tabs
             base.OnDockChanged(e);
         }
 
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+            base.OnControlAdded(e);
+
+            if (e.Control is Panel || e.Control is FlowLayoutPanel)
+            {
+                e.Control.MouseDown += (s, e) => { OnMouseDown(e); };
+                e.Control.MouseMove += (s, e) => { OnMouseMove(e); };
+            }
+        }
+
+        protected override void OnControlRemoved(ControlEventArgs e)
+        {
+            base.OnControlRemoved(e);
+
+            if (e.Control is Panel || e.Control is FlowLayoutPanel)
+            {
+                e.Control.MouseDown -= (s, e) => { OnMouseDown(e); };
+                e.Control.MouseMove -= (s, e) => { OnMouseMove(e); };
+            }
+        }
+
         private void Form_Activated(object sender, EventArgs e)
         {
             _formFocused = true;

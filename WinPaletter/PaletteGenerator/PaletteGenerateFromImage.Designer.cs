@@ -373,13 +373,13 @@ namespace WinPaletter
             // Button4
             // 
             this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button4.CustomColor = System.Drawing.Color.Empty;
-            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
-            this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.ImageAsVector = false;
-            this.Button4.ImageVector = null;
+            this.Button4.Image = null;
+            this.Button4.ImageAsVector = true;
+            this.Button4.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.Button4.Location = new System.Drawing.Point(482, 33);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
@@ -509,8 +509,8 @@ namespace WinPaletter
             this.AlertBox1.Size = new System.Drawing.Size(520, 29);
             this.AlertBox1.TabIndex = 159;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "After closing, you may need to readjust colors to improve the accessibility of yo" +
-    "ur theme";
+            this.AlertBox1.Text = "You may need to readjust colors after closing to improve your theme\'s accessibili" +
+    "ty";
             // 
             // Button3
             // 

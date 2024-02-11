@@ -194,7 +194,7 @@ namespace WinPaletter
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
             this.Button6.ImageAsVector = true;
-            this.Button6.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button6.ImageVector")));
+            this.Button6.ImageVector = global::WinPaletter.Properties.Resources.Vector_Play;
             this.Button6.Location = new System.Drawing.Point(202, 2);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
@@ -310,7 +310,7 @@ namespace WinPaletter
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
             this.Button4.ImageAsVector = true;
-            this.Button4.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button4.ImageVector")));
+            this.Button4.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.Button4.Location = new System.Drawing.Point(243, 33);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
@@ -702,7 +702,7 @@ namespace WinPaletter
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
             this.Button7.ImageAsVector = true;
-            this.Button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button7.ImageVector")));
+            this.Button7.ImageVector = global::WinPaletter.Properties.Resources.Vector_Browse;
             this.Button7.Location = new System.Drawing.Point(247, 36);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";

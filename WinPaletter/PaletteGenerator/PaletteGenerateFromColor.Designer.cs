@@ -370,13 +370,13 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(12, 562);
+            this.AlertBox1.Location = new System.Drawing.Point(12, 561);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(520, 29);
             this.AlertBox1.TabIndex = 159;
             this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "You may need to readjust colors after closing to make your theme colors better in" +
-    " accessibility";
+            this.AlertBox1.Text = "You may need to readjust colors after closing to improve your theme\'s accessibili" +
+    "ty";
             // 
             // Button3
             // 
@@ -420,7 +420,7 @@ namespace WinPaletter
             // 
             this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button1.CustomColor = System.Drawing.Color.Empty;
-            this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button1.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));

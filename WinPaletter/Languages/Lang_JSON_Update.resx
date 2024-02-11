@@ -164,15 +164,6 @@
         hGofUMDAAABYvzQGissmBwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Button5.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANRJREFUOE+1
-        kksOAUEURXsBhFWIhLABQzsyIEwwsgmNxEhiKT6LQFgE7dzq12n9QeJzkpNU3/deJdVV3l8IgqCJY1ya
-        I2xY+Tk0lXGNedxwhSVrT0KhiHt8xxYLNhZDuHDlJGe8hMsEUxsLIaji1ZWS6OwyjXorNu42GLg4y9DM
-        o2fjbgM/zBxH7GMXW6bWyk4YER+Dj1mYOQ44Mdtm9K3NI3wb/80RvvuJguDzaxSEekg7V37NBrMPSaiA
-        c9SzTaNMt5U//AhNdeygbkdqXbPyL/G8O7HQaNk7l/fIAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="AlertBox7.Text" xml:space="preserve">
     <value>The Mechanism: This will open the old file and the new file, reintroduce any missing entries from the old file, incorporate the absent entries from the new file, and update the already existing but outdated entries in the old file</value>
   </data>

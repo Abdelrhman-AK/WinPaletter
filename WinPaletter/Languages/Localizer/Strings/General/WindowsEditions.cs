@@ -13,5 +13,6 @@
         public string OS_WinUndefined { get; set; } = "Windows 12 or higher";
         public string OS_32Bit { get; set; } = "32-bit";
         public string OS_64Bit { get; set; } = "64-bit";
+        public string OS_PreviewingAs { get; set; } = "You're reviewing and editing the theme as if you are using {0}";
     }
 }

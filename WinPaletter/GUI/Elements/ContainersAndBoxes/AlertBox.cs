@@ -117,8 +117,8 @@ namespace WinPaletter.UI.WP
             {
                 case Style.Simple:
                     {
-                        borderColor = scheme1.Colors.Line(parentLevel);
-                        innerColor = scheme1.Colors.Back(parentLevel);
+                        borderColor = scheme1.Colors.Line_Hover(parentLevel);
+                        innerColor = scheme1.Colors.Back_Hover(parentLevel);
                         textColor = scheme1.Colors.ForeColor;
 
                         break;

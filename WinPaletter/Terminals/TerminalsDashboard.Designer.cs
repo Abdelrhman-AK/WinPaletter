@@ -80,7 +80,7 @@ namespace WinPaletter
             // 
             // PictureBox1
             // 
-            this.PictureBox1.Location = new System.Drawing.Point(305, 7);
+            this.PictureBox1.Location = new System.Drawing.Point(285, 7);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(18, 18);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -243,11 +243,10 @@ namespace WinPaletter
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.PictureBox1);
             this.panel1.Controls.Add(this.Label49);
             this.panel1.Controls.Add(this.SeparatorVertical1);
             this.panel1.Controls.Add(this.Label2);
-            this.panel1.Controls.Add(this.PictureBox1);
             this.panel1.Controls.Add(this.Separator1);
             this.panel1.Controls.Add(this.Button5);
             this.panel1.Controls.Add(this.Button1);
@@ -256,6 +255,7 @@ namespace WinPaletter
             this.panel1.Controls.Add(this.Separator3);
             this.panel1.Controls.Add(this.Button4);
             this.panel1.Controls.Add(this.Button3);
+            this.panel1.Controls.Add(this.button7);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -265,18 +265,17 @@ namespace WinPaletter
             // 
             // button7
             // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(18)))), ((int)(((byte)(31)))));
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
-            this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageAsVector = true;
             this.button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
-            this.button7.Location = new System.Drawing.Point(291, 129);
+            this.button7.Location = new System.Drawing.Point(306, 6);
             this.button7.Name = "button7";
-            this.button7.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.button7.Size = new System.Drawing.Size(32, 27);
+            this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
             this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button7.UseVisualStyleBackColor = false;

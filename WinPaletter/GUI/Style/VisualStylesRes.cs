@@ -13,17 +13,13 @@ namespace WinPaletter
             {
                 Colors = _VisualStyleFile.Metrics.Colors;
             }
-            catch
-            {
-            }
+            catch { }
 
             try
             {
                 Metrics = _VisualStyleFile.Metrics.Sizes;
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private VisualStyleFile _VisualStyleFile;
@@ -148,9 +144,7 @@ namespace WinPaletter
                 VisualStyleRenderer renderer = new(el);
                 renderer.DrawBackground(G, Rectangle);
             }
-            catch
-            {
-            }
+            catch { }
 
         }
 

@@ -1096,7 +1096,7 @@ namespace WinPaletter
             this.Button25.ForeColor = System.Drawing.Color.White;
             this.Button25.Image = null;
             this.Button25.ImageAsVector = true;
-            this.Button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button25.ImageVector")));
+            this.Button25.ImageVector = global::WinPaletter.Properties.Resources.Vector_Help;
             this.Button25.Location = new System.Drawing.Point(426, 92);
             this.Button25.Name = "Button25";
             this.Button25.Size = new System.Drawing.Size(21, 26);
@@ -1113,7 +1113,7 @@ namespace WinPaletter
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
             this.Button5.ImageAsVector = true;
-            this.Button5.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
+            this.Button5.ImageVector = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button5.Location = new System.Drawing.Point(426, 30);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(21, 28);

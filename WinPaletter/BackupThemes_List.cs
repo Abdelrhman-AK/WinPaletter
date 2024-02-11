@@ -126,9 +126,7 @@ namespace WinPaletter
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
-
-                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text));
-                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+                    Forms.Home.Text = Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
                 }
             }
         }
@@ -266,9 +264,7 @@ namespace WinPaletter
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
-
-                    Forms.Home.label1.Text = string.Format(Program.Lang.OpenedFromFile, System.IO.Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text));
-                    Forms.Home.pictureBox1.Image = Properties.Resources.WPTH;
+                    Forms.Home.Text = Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
                 }
             }
         }
