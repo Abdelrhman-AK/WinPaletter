@@ -36,9 +36,7 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new WinPaletter.UI.WP.TablessControl();
             this.SuspendLayout();
             // 
@@ -47,16 +45,9 @@ namespace WinPaletter
             this.tabsContainer1.Size = new System.Drawing.Size(1156, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "home_16px.png");
-            // 
             // tabControl1
             // 
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.ImageList = this.imageList1;
             this.tabControl1.Location = new System.Drawing.Point(0, 34);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -82,7 +73,6 @@ namespace WinPaletter
             this.ResumeLayout(false);
 
         }
-        private ImageList imageList1;
         private UI.WP.TablessControl tabControl1;
     }
 }

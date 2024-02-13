@@ -74,6 +74,7 @@ namespace WinPaletter
             }
 
             ApplyToTM(Program.TM);
+            Forms.Home.LoadFromTM(Program.TM);
 
             Close();
         }
@@ -86,9 +87,9 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                Forms.Home.LoadFromTM(TMx);
 
-                TMx.WindowsEffects.Apply();
-                TMx.Win32.Broadcast_UPM_ToDefUsers();
+                TMx.Info.Apply();
             }
 
             Cursor = Cursors.Default;

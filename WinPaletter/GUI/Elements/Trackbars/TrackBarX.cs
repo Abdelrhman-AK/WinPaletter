@@ -24,8 +24,7 @@ namespace WinPaletter.UI.Controllers
             set
             {
                 trackBar1.Value = value;
-                value_btn.Text = value.ToString();
-
+                value_btn.Text = Math.Max(Math.Min(value, Maximum), Minimum).ToString();
                 ValueChanged?.Invoke(this, new EventArgs());
             }
         }
@@ -83,7 +82,6 @@ namespace WinPaletter.UI.Controllers
 
         private void trackBar1_Scroll(object sender)
         {
-            value_btn.Text = trackBar1.Value.ToString();
             Value = trackBar1.Value;
             textBox1.Text = Value.ToString();
             Scroll?.Invoke(this, new EventArgs());
@@ -121,8 +119,6 @@ namespace WinPaletter.UI.Controllers
 
                     if (e.KeyChar == (char)Keys.Enter)
                     {
-                        value_btn.Text = value.ToString();
-
                         if (_animateChanges)
                         {
                             FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));

@@ -823,7 +823,7 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         public virtual void OnFormClosing(object sender, TabDataEventArgs e)
         {
-            Program.Animator.HideSync(TabControl);
+            if (e.TabData.Selected) Program.Animator.HideSync(TabControl);
             FormClosed?.Invoke(sender, e);
         }
 

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Simulation;
 
 namespace WinPaletter.UI.Style
 {
@@ -363,7 +364,7 @@ namespace WinPaletter.UI.Style
                         }
                 }
 
-                if (!Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", 8.25f, ctrl.Font.Style);
+                if (ctrl is not WinElement && ctrl is not Window && (ctrl.Font.Name == "Segoe UI" || ctrl.Font.Name == "Tahoma" || ctrl.Font.Name == "Microsoft Sans Serif") && !Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", ctrl.Font.Size == 9f ? 8.25f : ctrl.Font.Size, ctrl.Font.Style);
             }
 
             if (ctrl is UI.WP.GroupBox)

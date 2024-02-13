@@ -606,7 +606,7 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(167, 66);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 10;
+            this.trackBarX1.Maximum = 11;
             this.trackBarX1.Minimum = 0;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(508, 24);
@@ -915,8 +915,8 @@ namespace WinPaletter
             // color2
             // 
             this.color2.AllowDrop = true;
-            this.color2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
-            this.color2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(49)))), ((int)(((byte)(61)))));
+            this.color2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
+            this.color2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
             this.color2.DontShowInfo = false;
             this.color2.Location = new System.Drawing.Point(167, 36);
             this.color2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -929,8 +929,8 @@ namespace WinPaletter
             // color1
             // 
             this.color1.AllowDrop = true;
-            this.color1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.color1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.color1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.color1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.color1.DontShowInfo = false;
             this.color1.Location = new System.Drawing.Point(167, 6);
             this.color1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

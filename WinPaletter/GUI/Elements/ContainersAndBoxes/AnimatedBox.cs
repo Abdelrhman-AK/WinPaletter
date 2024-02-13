@@ -162,8 +162,8 @@ namespace WinPaletter.UI.WP
                 try { FindForm().Deactivate += Form_LostFocus; }
                 catch { }
 
-                Timer.Enabled = true;
-                Timer.Start();
+                Timer.Enabled = Enabled;
+                if (Enabled) Timer.Start(); else Timer.Stop();
             }
             else
             {
@@ -196,18 +196,18 @@ namespace WinPaletter.UI.WP
 
         public void Form_GotFocus(object sender, EventArgs e)
         {
-            _Focused = true;
-            Timer.Enabled = true;
-            Timer.Start();
+            _Focused = Enabled;
+            Timer.Enabled = Enabled;
+            if (Enabled) Timer.Start(); else Timer.Stop();
             Invalidate();
         }
 
         public void Form_Shown(object sender, EventArgs e)
         {
-            _Focused = true;
+            _Focused = Enabled;
             SetColors();
-            Timer.Enabled = true;
-            Timer.Start();
+            Timer.Enabled = Enabled;
+            if (Enabled) Timer.Start(); else Timer.Stop();
             Invalidate();
         }
 
@@ -232,6 +232,24 @@ namespace WinPaletter.UI.WP
 
             Timer?.Dispose();
             Noise?.Dispose();
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+
+            if (Enabled)
+            {
+                _Focused = true;
+                Timer.Enabled = true;
+                Timer.Start();
+            }
+            else
+            {
+                _Focused = false;
+                Timer.Enabled = false;
+                Timer.Stop();
+            }
         }
 
         #endregion

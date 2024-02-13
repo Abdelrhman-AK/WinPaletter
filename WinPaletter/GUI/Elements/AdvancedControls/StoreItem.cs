@@ -223,6 +223,11 @@ namespace WinPaletter.UI.Controllers
                         bmp = Assets.WinPaletter_Store.Pattern10;
                         break;
                     }
+                case 11:
+                    {
+                        bmp = Properties.Resources.Noise;
+                        break;
+                    }
 
                 default:
                     {

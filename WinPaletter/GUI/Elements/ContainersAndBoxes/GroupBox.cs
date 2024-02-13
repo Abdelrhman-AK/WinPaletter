@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ImageProcessor;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Windows.Forms.Layout;
 
 namespace WinPaletter.UI.WP
 {
@@ -14,13 +13,15 @@ namespace WinPaletter.UI.WP
     {
         public GroupBox()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
             Text = string.Empty;
         }
 
         #region Properties
+
+        private TextureBrush pattern;
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -40,6 +41,110 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
+
+        public void UpdatePattern(int val)
+        {
+            Bitmap bmp;
+
+            switch (val)
+            {
+                case 0:
+                    {
+                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        break;
+                    }
+
+                case 1:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern1;
+                        break;
+                    }
+                case 2:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern2;
+                        break;
+                    }
+                case 3:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern3;
+                        break;
+                    }
+                case 4:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern4;
+                        break;
+                    }
+                case 5:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern5;
+                        break;
+                    }
+                case 6:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern6;
+                        break;
+                    }
+                case 7:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern7;
+                        break;
+                    }
+                case 8:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern8;
+                        break;
+                    }
+                case 9:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern9;
+                        break;
+                    }
+                case 10:
+                    {
+                        bmp = Assets.WinPaletter_Store.Pattern10;
+                        break;
+                    }
+                case 11:
+                    {
+                        bmp = Properties.Resources.Noise;
+                        break;
+                    }
+
+                default:
+                    {
+                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        break;
+                    }
+
+            }
+
+            if (!Program.Style.DarkMode)
+            {
+                using (ImageFactory imgF = new())
+                {
+                    imgF.Load(bmp);
+                    imgF.Contrast(50);
+                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.8f);
+                }
+            }
+
+            pattern = new(bmp);
+
+            Refresh();
+        }
+
+
+        private bool useSharpStyle = false;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public bool UseSharpStyle
+        {
+            get => useSharpStyle;
+            set
+            {
+                useSharpStyle = value;
+                Invalidate();
+            }
+        }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
@@ -61,8 +166,23 @@ namespace WinPaletter.UI.WP
                 G.Clear(ParentColor);
                 BackColor = ParentColor.CB((float)(ParentColor.IsDark() ? 0.04d : -0.05d));
 
-                using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, Rect); }
-                using (Pen P = new(ParentColor.CB((float)(ParentColor.IsDark() ? 0.06d : -0.07d)))) { G.DrawRoundedRect(P, Rect); }
+                using (SolidBrush br = new(BackColor))
+                using (Pen P = new(ParentColor.CB((float)(ParentColor.IsDark() ? 0.06d : -0.07d))))
+                {
+                    if (!useSharpStyle)
+                    {
+                        G.FillRoundedRect(br, Rect);
+                        G.FillRoundedRect(pattern, Rect);
+                        G.DrawRoundedRect(P, Rect);
+                    }
+                    else
+                    {
+                        G.FillRectangle(br, Rect);
+                        G.FillRectangle(pattern, Rect);
+                        G.DrawRectangle(P, Rect);
+                    }
+                }
+
             }
             else
             {

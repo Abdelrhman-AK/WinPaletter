@@ -73,7 +73,6 @@ namespace WinPaletter
             this.CMD2 = new WinPaletter.UI.Simulation.WinCMD();
             this.CMD3 = new WinPaletter.UI.Simulation.WinCMD();
             this.Panel1 = new System.Windows.Forms.Panel();
-            this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.Cursors_Container = new System.Windows.Forms.FlowLayoutPanel();
             this.Arrow = new WinPaletter.UI.Controllers.CursorControl();
             this.Help = new WinPaletter.UI.Controllers.CursorControl();
@@ -95,6 +94,7 @@ namespace WinPaletter
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
             this.CursorsSize_Bar = new WinPaletter.UI.WP.TrackBar();
             this.Label17 = new System.Windows.Forms.Label();
+            this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
@@ -800,24 +800,6 @@ namespace WinPaletter
             this.Panel1.Padding = new System.Windows.Forms.Padding(3);
             this.Panel1.Size = new System.Drawing.Size(528, 297);
             this.Panel1.TabIndex = 140;
-            // 
-            // cur_anim_btn
-            // 
-            this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
-            this.cur_anim_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
-            this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
-            this.cur_anim_btn.ImageAsVector = false;
-            this.cur_anim_btn.ImageVector = null;
-            this.cur_anim_btn.Location = new System.Drawing.Point(360, 265);
-            this.cur_anim_btn.Name = "cur_anim_btn";
-            this.cur_anim_btn.Size = new System.Drawing.Size(160, 24);
-            this.cur_anim_btn.TabIndex = 72;
-            this.cur_anim_btn.Text = "Animate (3 Cycles)";
-            this.cur_anim_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.cur_anim_btn.UseVisualStyleBackColor = false;
-            this.cur_anim_btn.Click += new System.EventHandler(this.Cur_anim_btn_Click);
             // 
             // Cursors_Container
             // 
@@ -1610,6 +1592,24 @@ namespace WinPaletter
             this.Label17.Text = "Scaling (1x)";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // cur_anim_btn
+            // 
+            this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
+            this.cur_anim_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
+            this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
+            this.cur_anim_btn.ImageAsVector = false;
+            this.cur_anim_btn.ImageVector = null;
+            this.cur_anim_btn.Location = new System.Drawing.Point(360, 265);
+            this.cur_anim_btn.Name = "cur_anim_btn";
+            this.cur_anim_btn.Size = new System.Drawing.Size(160, 24);
+            this.cur_anim_btn.TabIndex = 72;
+            this.cur_anim_btn.Text = "Animate (3 Cycles)";
+            this.cur_anim_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.cur_anim_btn.UseVisualStyleBackColor = false;
+            this.cur_anim_btn.Click += new System.EventHandler(this.Cur_anim_btn_Click);
+            // 
             // TabPage5
             // 
             this.TabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -1655,7 +1655,7 @@ namespace WinPaletter
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
             this.pin_button.ImageAsVector = false;
             this.pin_button.ImageVector = null;
-            this.pin_button.Location = new System.Drawing.Point(934, 10);
+            this.pin_button.Location = new System.Drawing.Point(938, 10);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
             this.pin_button.TabIndex = 128;
@@ -1670,7 +1670,7 @@ namespace WinPaletter
             this.search_panel.Controls.Add(this.search_btn);
             this.search_panel.Controls.Add(this.search_box);
             this.search_panel.Controls.Add(this.search_filter_btn);
-            this.search_panel.Location = new System.Drawing.Point(974, 12);
+            this.search_panel.Location = new System.Drawing.Point(978, 12);
             this.search_panel.Name = "search_panel";
             this.search_panel.Size = new System.Drawing.Size(343, 30);
             this.search_panel.TabIndex = 42;

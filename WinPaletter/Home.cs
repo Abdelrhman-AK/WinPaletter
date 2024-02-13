@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -38,8 +41,13 @@ namespace WinPaletter
             LoggingOff = false;
 
             NotifyUpdates.Icon = Icon;
+            groupBox1.UseSharpStyle = true;
+            labelAlt1.Font = new(Fonts.Title, labelAlt1.Font.Size, labelAlt1.Font.Style);
+            labelAlt2.Font = new(Fonts.Title, labelAlt2.Font.Size, labelAlt2.Font.Style);
+            labelAlt3.Font = Fonts.Console;
 
             if (!Program.Elevated) apply_btn.Image = Properties.Resources.WP_Admin;
+            flowLayoutPanel3.DoubleBuffer();
 
             LoadOSData();
             LoadData();
@@ -47,14 +55,20 @@ namespace WinPaletter
 
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag as string).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? "").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
-            foreach (UI.WP.Button button in banner1.GetAllControls().OfType<UI.WP.Button>())
+            foreach (UI.WP.Button button in groupBox1.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag as string).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? "").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+
+            foreach (UI.WP.Card card in flowLayoutPanel1.Controls)
+            {
+                card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as UI.WP.Card).Color.Dark(0.7f) : (s as UI.WP.Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                card.MouseLeave += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
         }
 
@@ -121,7 +135,10 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            banner1.Text = $"{TM.Info.ThemeName} - {Program.Lang.By} {TM.Info.Author}";
+            labelAlt1.Text = TM.Info.ThemeName + " ";
+            labelAlt2.Text = $"{Program.Lang.By} {TM.Info.Author}";
+            labelAlt3.Text = TM.Info.ThemeVersion;
+            groupBox1.UpdatePattern(TM.Info.Pattern);
         }
 
         public async void AutoUpdatesCheck()
@@ -175,16 +192,20 @@ namespace WinPaletter
                 }
             }
 
-            Invoke(() =>
+            try
             {
-                if (RaiseUpdate)
+                Invoke(() =>
                 {
-                    Forms.Updates.ls = Updates_ls;
-                    NotifyUpdates.Visible = true;
-                    Button5.ImageVector = Properties.Resources.Update_Dot;
-                    NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
-                }
-            });
+                    if (RaiseUpdate)
+                    {
+                        Forms.Updates.ls = Updates_ls;
+                        NotifyUpdates.Visible = true;
+                        Button5.ImageVector = Properties.Resources.Update_Dot;
+                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
+                    }
+                });
+            }
+            catch { }
         }
 
         private void userButton_Click(object sender, EventArgs e)
@@ -556,6 +577,11 @@ namespace WinPaletter
         private void winEdition_Click(object sender, EventArgs e)
         {
             if (Forms.OS_Dashboard.ShowDialog() == DialogResult.OK) LoadOSData();
+        }
+
+        private void panel1_BackColorChanged(object sender, EventArgs e)
+        {
+            groupBox1.Refresh();
         }
 
         //private void button1_Click(object sender, EventArgs e)

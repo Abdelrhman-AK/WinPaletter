@@ -18,8 +18,10 @@ namespace WinPaletter
             CenterToScreen();
             WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
 
+            tabControl1.Visible = false;
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            Program.Animator.ShowSync(tabControl1);
         }
 
         public bool ExitWithChangedFileResponse(SaveFileDialog SaveFileDialog, MethodInvoker Apply_Theme_Sub, MethodInvoker Apply_FirstTheme_Sub, MethodInvoker Apply_DefaultWin_Sub)

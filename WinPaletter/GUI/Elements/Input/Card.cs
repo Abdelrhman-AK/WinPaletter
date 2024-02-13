@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinPaletter.UI
+namespace WinPaletter.UI.WP
 {
     [DefaultEvent("Click")]
     public class Card : ContainerControl
@@ -410,7 +410,7 @@ namespace WinPaletter.UI
 
                 if (Tag != null && !string.IsNullOrWhiteSpace(Tag))
                 {
-                    descriptionSize = (Tag).Measure(Font, rect.Width) + new SizeF(0, 10);
+                    descriptionSize = (Tag).Measure(Font, rect.Width) + new SizeF(0, 17);
 
                     int totalHeight = (int)(textSize.Height + descriptionSize.Height);
                     int centerY = rect.Y + ((rect.Height - totalHeight) / 2);

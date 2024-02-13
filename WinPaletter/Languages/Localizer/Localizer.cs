@@ -338,7 +338,7 @@ namespace WinPaletter
                                 }
                             }
 
-                            if (ctrl is Card card)
+                            if (ctrl is UI.WP.Card card)
                             {
                                 if (card.Tag is not null && !string.IsNullOrWhiteSpace(card.Tag) && !card.Tag.All(char.IsDigit) && !j_child.ContainsKey($"{card.Name}.Tag"))
                                 {
@@ -411,11 +411,20 @@ namespace WinPaletter
 
                             }
 
-                            if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                            if (ctrl is UI.WP.Card card)
                             {
-                                j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                                if (!string.IsNullOrWhiteSpace(card.Tag) && !j_child.ContainsKey($"{card.Name}.Tag"))
+                                {
+                                    j_child.Add($"{card.Name}.Tag", card.Tag.ToString());
+                                }
                             }
-
+                            else
+                            {
+                                if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                                {
+                                    j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                                }
+                            }
                         }
 
                         if (j_ctrl.Count != 0)
