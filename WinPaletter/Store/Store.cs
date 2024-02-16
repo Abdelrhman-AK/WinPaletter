@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 
@@ -671,22 +672,24 @@ namespace WinPaletter
             {
                 case MouseButtons.Right:
                     {
+                        using (WindowsDesktop windowsDesktop = new() { Size = windowsDesktop1.Size })
                         {
-                            StoreItem temp = (UI.Controllers.StoreItem)sender;
                             Forms.Store_Hover.Close();
-
-                            selectedItem = (UI.Controllers.StoreItem)sender;
-
+                            selectedItem = (StoreItem)sender;
+                            Theme.Manager TMx = selectedItem.TM;
                             Forms.Store_Hover.Show();
 
-                            Adjust_Preview(temp.TM);
-                            windowsDesktop1.Classic = false;
-                            Forms.Store_Hover.img0 = windowsDesktop1.ToBitmap();
-                            windowsDesktop1.Classic = true;
-                            Forms.Store_Hover.img1 = windowsDesktop1.ToBitmap();
+                            windowsDesktop.WindowStyle = Program.WindowStyle;
+                            windowsDesktop.BackgroundImage = Program.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                            windowsDesktop.LoadFromTM(TMx);
+                            windowsDesktop.LoadClassicColors(TMx.Win32);
+
+                            windowsDesktop.Classic = false;
+                            Forms.Store_Hover.img0 = windowsDesktop.ToBitmap();
+                            windowsDesktop.Classic = true;
+                            Forms.Store_Hover.img1 = windowsDesktop.ToBitmap();
                             Forms.Store_Hover.BackgroundImage = Forms.Store_Hover.img0;
                         }
-
                         break;
                     }
 
@@ -927,11 +930,7 @@ namespace WinPaletter
             {
                 // Edit button is pressed
                 Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-                {
-                    Forms.MainForm.ExitWithChangedFileResponse(dlg, null, null, null);
-                }
+                Forms.MainForm.ExitWithChangedFileResponse();
 
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                 Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
@@ -1238,17 +1237,6 @@ namespace WinPaletter
             Cycles = 0;
             Cursor_Timer.Enabled = true;
             Cursor_Timer.Start();
-        }
-
-        private void Cur_tip_btn_Click(object sender, EventArgs e)
-        {
-            Program.ToolTip.ToolTipText = Program.Lang.ScalingTip;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
-            Program.ToolTip.Image = Assets.Notifications.Info;
-
-            Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
-
-            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 7000);
         }
         #endregion
 

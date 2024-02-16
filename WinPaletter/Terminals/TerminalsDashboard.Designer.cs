@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class TerminalsDashboard : Form
+    public partial class TerminalsDashboard : BorderlessForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -289,19 +289,13 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(331, 163);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TerminalsDashboard";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Terminals Dashboard";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SubMenu_FormClosing);
             this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
-            this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

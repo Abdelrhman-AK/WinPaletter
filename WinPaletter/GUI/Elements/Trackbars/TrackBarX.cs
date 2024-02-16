@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -106,7 +105,7 @@ namespace WinPaletter.UI.Controllers
             textBox1.Text = Value.ToString();
             textBox1.BringToFront();
             Program.Animator.ShowSync(textBox1);
-            textBox1.Focus();   
+            textBox1.Focus();
         }
 
         private void textBox1_KeyboardPress(object s, KeyPressEventArgs e)
@@ -167,7 +166,7 @@ namespace WinPaletter.UI.Controllers
 
         private void reset_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.Button);   
+            Program.ToolTip.Hide(sender as UI.WP.Button);
         }
 
         private void value_btn_MouseEnter(object sender, EventArgs e)

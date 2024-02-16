@@ -231,7 +231,7 @@ namespace WinPaletter.UI.Controllers
 
                 default:
                     {
-                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        bmp = null;
                         break;
                     }
 
@@ -246,7 +246,8 @@ namespace WinPaletter.UI.Controllers
                     bmp = (imgF.Image as Bitmap).Invert().Fade(0.8f);
                 }
             }
-            pattern = new(bmp);
+
+            if (bmp != null) pattern = new(bmp); else pattern = null;
 
             Refresh();
         }

@@ -186,18 +186,6 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label26.Text" xml:space="preserve">
-    <value>Palette Generator: Improved performance and bug fixes, featuring a trials panel that records previous attempts to generate a palette, making it easier for users to revisit and select a preferred trial.</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Windows 11/10 Accent Colors Generator: Modify the titlebar color, then click 'Generate Accent Colors from Active Titlebar Color' to have WinPaletter generate nine accent colors based on this selected color.</value>
-  </data>
-  <data name="label21.Text" xml:space="preserve">
-    <value>Known issue: Due to these changes, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.</value>
-  </data>
-  <data name="label25.Text" xml:space="preserve">
-    <value>Sounds: WinPaletter will no longer install System Events Sounds by default at application startup. Users can manually install it in the Sounds form or Settings. However, if already installed, it will be updated automatically with a newer service version if available.</value>
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.</value>
   </data>
@@ -209,6 +197,18 @@
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Some aspects (Windows Colors, Classic Colors, Cursors, Metrics, Fonts, and Wallpaper) will have two modes: Advanced Mode and Simple Mode. This change aims to make modifying Windows easier for users who found WinPaletter complex to use.</value>
+  </data>
+  <data name="label26.Text" xml:space="preserve">
+    <value>Palette Generator: Improved performance and bug fixes, featuring a trials panel that records previous attempts to generate a palette, making it easier for users to revisit and select a preferred trial.</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Windows 11/10 Accent Colors Generator: Modify the titlebar color, then click 'Generate Accent Colors from Active Titlebar Color' to have WinPaletter generate nine accent colors based on this selected color.</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>Known issue: Due to these changes, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>Sounds: WinPaletter will no longer install System Events Sounds by default at application startup. Users can manually install it in the Sounds form or Settings. However, if already installed, it will be updated automatically with a newer service version if available.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

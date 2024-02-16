@@ -3,72 +3,20 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
-
     public partial class SubMenu
     {
-        private bool _shown;
         private Color _overrideColor;
         private bool _eventDone;
         private readonly float _dark = 0.7f;
         private Color PreviousClr;
 
-        #region Form Shadow
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                if (!DWMAPI.IsCompositionEnabled())
-                {
-                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle |= 33554432;
-                    return cp;
-                }
-                else
-                {
-                    return cp;
-                }
-            }
-        }
-
         public SubMenu()
         {
             InitializeComponent();
         }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == DWMAPI.WM_NCPAINT)
-            {
-                int val = 2;
-                if (DWMAPI.IsCompositionEnabled())
-                {
-                    DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
-                    DWMAPI.MARGINS bla = new();
-                    {
-                        bla.bottomHeight = 1;
-                        bla.leftWidth = 1;
-                        bla.rightWidth = 1;
-                        bla.topHeight = 1;
-                    }
-                    DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref bla);
-                }
-            }
-            else if (m.Msg == 0x86 && m.WParam == IntPtr.Zero)
-            {
-                if (Visible && !RectangleToScreen(DisplayRectangle).Contains(Cursor.Position))
-                {
-                    Deactivated();
-                }
-            }
-
-            base.WndProc(ref m);
-        }
-        #endregion
 
         public Color ShowMenu(UI.Controllers.ColorItem ColorItem, bool EnableDelete = false)
         {
@@ -150,24 +98,7 @@ namespace WinPaletter
 
         private void SubMenu_Shown(object sender, EventArgs e)
         {
-            _shown = true;
-
             PaletteContainer.Visible = false;
-        }
-
-        public void Deactivated()
-        {
-            if (_shown)
-            {
-                if (!_eventDone) DialogResult = DialogResult.None;
-
-                FluentTransitions.Transition
-                    .With(this, nameof(Opacity), (double)0)
-                    .HookOnCompletionInUiThread(this, Close)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-
-                _shown = false;
-            }
         }
 
         public void Collapse_Expand()
@@ -203,7 +134,6 @@ namespace WinPaletter
         private void SubMenu_Load(object sender, EventArgs e)
         {
             this.Icon = Forms.MainForm.Icon;
-            _shown = false;
 
             Point p = MousePosition;
 
@@ -227,7 +157,6 @@ namespace WinPaletter
                 p.X = 0;
             }
 
-
             Location = p;
 
             Width = PaletteContainer.Left + 3;
@@ -236,12 +165,8 @@ namespace WinPaletter
             Label2.Visible = false;
             Button4.Text = ">";
 
-            this.LoadLanguage();
-            ApplyStyle(this);
-
             if (ColorClipboard.CopiedColor == null)
             {
-
                 Button3.Enabled = false;
 
                 try
@@ -281,18 +206,12 @@ namespace WinPaletter
                     Button3.Enabled = false;
                 }
             }
-
             else
             {
                 Button3.Enabled = true;
             }
 
             BackColor = Program.Style.DarkMode ? MainColor.BackColor.Dark(_dark) : MainColor.BackColor.LightLight();
-
-            Opacity = (double)0;
-            FluentTransitions.Transition
-                .With(this, nameof(Opacity), (double)1)
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
         }
 
         public void MiniColorItem_Clicked(object sender, EventArgs e)

@@ -933,7 +933,7 @@ namespace WinPaletter
                 }
             }
 
-            // Remove properties after the loop to avoid modifying the collection during iteration
+            // Remove properties after the loop to avoid modifying the TabDataList during iteration
             foreach (string propertyName in propertiesToRemove)
             {
                 value.Property(propertyName)?.Remove();

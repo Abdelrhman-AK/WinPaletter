@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -166,9 +165,9 @@ namespace WinPaletter
             {
                 return Bitmap_Mgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
             }
-            else if (System.IO.File.Exists(PathsExt.Windows + "\\Web\\Screen\\img100.jpg"))
-            { 
-                return Bitmap_Mgr.Load(PathsExt.Windows + "\\Web\\Screen\\img100.jpg").Resize(tabs_preview_1.Size);
+            else if (System.IO.File.Exists($"{PathsExt.Windows}\\Web\\Screen\\img100.jpg"))
+            {
+                return Bitmap_Mgr.Load($"{PathsExt.Windows}\\Web\\Screen\\img100.jpg").Resize(tabs_preview_1.Size);
             }
             else
             {

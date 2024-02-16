@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class ColorPickerDlg : Form
+    public partial class ColorPickerDlg : BorderlessForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -907,20 +907,14 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(334, 328);
+            this.CloseOnLostFocus = false;
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ColorPickerDlg";
             this.Padding = new System.Windows.Forms.Padding(1);
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Color Picker";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ColorPicker_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ColorPickerDlg_FormClosed);
             this.Load += new System.EventHandler(this.ColorPicker_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseMove);

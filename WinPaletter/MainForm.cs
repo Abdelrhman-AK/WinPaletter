@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WinPaletter.Theme;
 
 namespace WinPaletter
 {
     public partial class MainForm
     {
+        /// <summary>
+        /// Flag to indicate if the user is logging off.
+        /// </summary>
+        public bool LoggingOff = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -24,11 +28,14 @@ namespace WinPaletter
             Program.Animator.ShowSync(tabControl1);
         }
 
-        public bool ExitWithChangedFileResponse(SaveFileDialog SaveFileDialog, MethodInvoker Apply_Theme_Sub, MethodInvoker Apply_FirstTheme_Sub, MethodInvoker Apply_DefaultWin_Sub)
+        /// <summary>
+        /// If the theme has been changed, this method will prompt the user to save the changes.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the form should close; otherwise, <c>false</c>.
+        /// </returns>
+        public bool ExitWithChangedFileResponse()
         {
-            /* return false; means that Windows should not close the form
-               return true; means that Windows should close the form */
-
             if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && Program.TM != Program.TM_Original)
             {
                 DialogResult result = MsgBox(Program.Lang.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -36,10 +43,13 @@ namespace WinPaletter
 
                 if (result == DialogResult.Yes)
                 {
-                    if (System.IO.File.Exists(SaveFileDialog.FileName) || SaveFileDialog.ShowDialog() == DialogResult.OK)
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                     {
-                        Program.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
-                        Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                        if (System.IO.File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            Program.TM.Save(Theme.Manager.Source.File, dlg.FileName);
+                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                        }
                     }
 
                     sucess = true;
@@ -63,20 +73,23 @@ namespace WinPaletter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            if (!LoggingOff)
             {
-                bool result = ExitWithChangedFileResponse(dlg,
-                            () => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                            () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                            () => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                            );
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                {
+                    bool result = ExitWithChangedFileResponse(); //dlg,
+                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                //);
 
-                e.Cancel = !result;
-            }
+                    e.Cancel = !result;
+                }
 
-            if (Forms.Home.Parent is TabPage && tabsContainer1.TabsCount > 1)
-            {
-                if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                if (Forms.Home.Parent is TabPage && tabsContainer1.TabsCount > 1)
+                {
+                    if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                }
             }
 
             base.OnFormClosing(e);

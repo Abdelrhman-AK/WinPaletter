@@ -18,22 +18,22 @@ namespace WinPaletter
         {
             #region paths
             public static readonly string REG = @"HKEY_CURRENT_USER\Software\WinPaletter\Settings";
-            public static readonly string REG_General = REG + @"\General";
-            public static readonly string REG_General_MainForm = REG_General + @"\MainForm";
-            public static readonly string REG_Updates = REG + @"\Updates";
-            public static readonly string REG_FileTypeManagement = REG + @"\FileTypeManagement";
-            public static readonly string REG_ThemeApplyingBehavior = REG + @"\ThemeApplyingBehavior";
-            public static readonly string REG_Appearance = REG + @"\Appearance\NewGen";
-            public static readonly string REG_Language = REG + @"\Language";
-            public static readonly string REG_EP = REG + @"\ExplorerPatcher";
-            public static readonly string REG_ThemeLog = REG + @"\ThemeLog";
-            public static readonly string REG_WindowsTerminals = REG + @"\WindowsTerminals";
-            public static readonly string REG_Store = REG + @"\Store";
-            public static readonly string REG_NerdStats = REG + @"\NerdStats";
-            public static readonly string REG_UsersServices = REG + @"\UsersServices";
-            public static readonly string REG_Miscellaneous = REG + @"\Miscellaneous";
-            public static readonly string REG_Backup = REG + @"\Backup";
-            public static readonly string REG_AspectsControl = REG + @"\AspectsControl";
+            public static readonly string REG_General = $@"{REG}\General";
+            public static readonly string REG_General_MainForm = $@"{REG_General}\MainForm";
+            public static readonly string REG_Updates = $@"{REG}\Updates";
+            public static readonly string REG_FileTypeManagement = $@"{REG}\FileTypeManagement";
+            public static readonly string REG_ThemeApplyingBehavior = $@"{REG}\ThemeApplyingBehavior";
+            public static readonly string REG_Appearance = $@"{REG}\Appearance\NewGen";
+            public static readonly string REG_Language = $@"{REG}\Language";
+            public static readonly string REG_EP = $@"{REG}\ExplorerPatcher";
+            public static readonly string REG_ThemeLog = $@"{REG}\ThemeLog";
+            public static readonly string REG_WindowsTerminals = $@"{REG}\WindowsTerminals";
+            public static readonly string REG_Store = $@"{REG}\Store";
+            public static readonly string REG_NerdStats = $@"{REG}\NerdStats";
+            public static readonly string REG_UsersServices = $@"{REG}\UsersServices";
+            public static readonly string REG_Miscellaneous = $@"{REG}\Miscellaneous";
+            public static readonly string REG_Backup = $@"{REG}\Backup";
+            public static readonly string REG_AspectsControl = $@"{REG}\AspectsControl";
             #endregion
 
             public struct General

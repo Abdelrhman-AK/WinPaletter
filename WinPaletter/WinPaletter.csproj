@@ -594,6 +594,12 @@
       <DependentUpon>BackupThemes_List.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Templates\BorderlessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Templates\BorderlessForm.Designer.cs">
+      <DependentUpon>BorderlessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Templates\DesktopIcons.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1403,6 +1409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
       <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BorderlessForm.resx">
+      <DependentUpon>BorderlessForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\DesktopIcons.resx">
       <DependentUpon>DesktopIcons.cs</DependentUpon>

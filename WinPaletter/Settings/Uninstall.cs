@@ -270,11 +270,13 @@ namespace WinPaletter
 
                 if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
                 {
-                    Forms.Home.LoggingOff = true;
+                    Forms.MainForm.LoggingOff = false;
+
                     IntPtr intPtr = IntPtr.Zero;
                     Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                     if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
                     {
+                        Forms.MainForm.LoggingOff = true;
                         Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
                     }
                     else

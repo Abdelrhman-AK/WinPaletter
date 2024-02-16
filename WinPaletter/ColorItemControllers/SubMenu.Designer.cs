@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class SubMenu : Form
+    public partial class SubMenu : BorderlessForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -364,6 +364,7 @@ namespace WinPaletter
             // 
             // trackBarX1
             // 
+            this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 100;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -379,6 +380,7 @@ namespace WinPaletter
             // 
             // trackBarX2
             // 
+            this.trackBarX2.AnimateChanges = true;
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 100;
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -394,6 +396,7 @@ namespace WinPaletter
             // 
             // trackBarX3
             // 
+            this.trackBarX3.AnimateChanges = true;
             this.trackBarX3.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX3.DefaultValue = 100;
             this.trackBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -409,6 +412,7 @@ namespace WinPaletter
             // 
             // trackBarX4
             // 
+            this.trackBarX4.AnimateChanges = true;
             this.trackBarX4.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX4.DefaultValue = 100;
             this.trackBarX4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -450,11 +454,7 @@ namespace WinPaletter
             this.Controls.Add(this.PictureBox3);
             this.Controls.Add(this.MainColor);
             this.Controls.Add(this.Panel1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SubMenu";

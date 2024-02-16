@@ -218,11 +218,11 @@ namespace WinPaletter.UI.Style
                         if (!IgnoreTitleBar)
                             DLLFunc.DarkTitlebar(form.Handle, DarkMode);
 
-                        if (!Fonts.Exists("Segoe UI"))
-                        {
-                            form.AutoScaleMode = AutoScaleMode.Dpi;
-                            form.Font = new("Tahoma", form.Font.Size, form.Font.Style);
-                        }
+                        //if (!Fonts.Exists("Segoe UI"))
+                        //{
+                        //    form.AutoScaleMode = AutoScaleMode.Dpi;
+                        //    form.Font = new("Tahoma", form.Font.Size, form.Font.Style);
+                        //}
 
                         ApplyStyleToSubControls(form, DarkMode);
 
@@ -256,11 +256,11 @@ namespace WinPaletter.UI.Style
                 if (!IgnoreTitleBar)
                     DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
 
-                if (!Fonts.Exists("Segoe UI"))
-                {
-                    Form.AutoScaleMode = AutoScaleMode.Dpi;
-                    Form.Font = new("Tahoma", Form.Font.Size, Form.Font.Style);
-                }
+                //if (!Fonts.Exists("Segoe UI"))
+                //{
+                //    Form.AutoScaleMode = AutoScaleMode.Dpi;
+                //    Form.Font = new("Tahoma", Form.Font.Size, Form.Font.Style);
+                //}
 
                 ApplyStyleToSubControls(Form, DarkMode);
 
@@ -348,7 +348,7 @@ namespace WinPaletter.UI.Style
             {
                 // This will make all control have a consistent dark\light mode.
                 if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
-                     SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
                 switch (DarkMode)
                 {
@@ -364,7 +364,7 @@ namespace WinPaletter.UI.Style
                         }
                 }
 
-                if (ctrl is not WinElement && ctrl is not Window && (ctrl.Font.Name == "Segoe UI" || ctrl.Font.Name == "Tahoma" || ctrl.Font.Name == "Microsoft Sans Serif") && !Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", ctrl.Font.Size == 9f ? 8.25f : ctrl.Font.Size, ctrl.Font.Style);
+                //if (ctrl is not WinElement && ctrl is not Window && (ctrl.Font.Name == "Segoe UI" || ctrl.Font.Name == "Tahoma" || ctrl.Font.Name == "Microsoft Sans Serif") && !Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", ctrl.Font.Size == 9f ? 8.25f : ctrl.Font.Size, ctrl.Font.Style);
             }
 
             if (ctrl is UI.WP.GroupBox)

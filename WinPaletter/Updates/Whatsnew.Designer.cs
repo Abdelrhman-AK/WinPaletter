@@ -153,6 +153,8 @@ namespace WinPaletter
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
+            this.label46 = new System.Windows.Forms.Label();
+            this.pictureBox45 = new System.Windows.Forms.PictureBox();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.TabControl1.SuspendLayout();
@@ -211,6 +213,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox39)).BeginInit();
             this.bottom_buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox45)).BeginInit();
             this.SuspendLayout();
             // 
             // AnimatedBox1
@@ -1367,6 +1370,8 @@ namespace WinPaletter
             // tabPage10
             // 
             this.tabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage10.Controls.Add(this.label46);
+            this.tabPage10.Controls.Add(this.pictureBox45);
             this.tabPage10.Controls.Add(this.label38);
             this.tabPage10.Controls.Add(this.pictureBox38);
             this.tabPage10.Controls.Add(this.label37);
@@ -1798,6 +1803,31 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
+            // label46
+            // 
+            this.label46.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label46.BackColor = System.Drawing.Color.Transparent;
+            this.label46.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.ForeColor = System.Drawing.Color.White;
+            this.label46.Location = new System.Drawing.Point(39, 287);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(770, 44);
+            this.label46.TabIndex = 97;
+            this.label46.Text = "Enable the \'Colors history\' feature within the \'Custom colors\' section if the Win" +
+    "dows Classic Colors picker is enabled in settings.";
+            // 
+            // pictureBox45
+            // 
+            this.pictureBox45.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox45.Image = global::WinPaletter.Properties.Resources.Circle;
+            this.pictureBox45.Location = new System.Drawing.Point(9, 287);
+            this.pictureBox45.Name = "pictureBox45";
+            this.pictureBox45.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox45.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox45.TabIndex = 96;
+            this.pictureBox45.TabStop = false;
+            // 
             // Whatsnew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1876,6 +1906,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox39)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox45)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1996,5 +2027,7 @@ namespace WinPaletter
         internal PictureBox pictureBox44;
         internal Label label45;
         private UI.WP.GroupBox bottom_buttons;
+        internal Label label46;
+        internal PictureBox pictureBox45;
     }
 }

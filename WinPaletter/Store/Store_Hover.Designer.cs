@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Store_Hover : Form
+    public partial class Store_Hover : BorderlessForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -35,34 +35,29 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // Store_Hover
             // 
-            AutoScaleDimensions = new SizeF(7.0f, 15.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 25);
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(528, 297);
-            Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
-            FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Store_Hover";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.Manual;
-            Text = "Store Hover";
-            TopMost = true;
-            Load += new EventHandler(Store_Hover_Load);
-            Shown += new EventHandler(Store_Hover_Shown);
-            MouseClick += new MouseEventHandler(Store_Hover_MouseClick);
-            KeyUp += new KeyEventHandler(Store_Hover_KeyUp);
-            MouseWheel += new MouseEventHandler(Store_Hover_MouseWheel);
-            FormClosed += new FormClosedEventHandler(Store_Hover_FormClosed);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(528, 297);
+            this.CloseOnClick = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Store_Hover";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
+            this.Text = "Store Hover";
+            this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_Hover_FormClosed);
+            this.Load += new System.EventHandler(this.Store_Hover_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Store_Hover_KeyUp);
+            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Store_Hover_MouseWheel);
+            this.ResumeLayout(false);
 
         }
     }

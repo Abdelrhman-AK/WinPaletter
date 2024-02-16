@@ -11,75 +11,64 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// A boolean that determines if OS is Windows XP
         /// </summary>
-        public static bool WXP => _wxp;
-        private readonly static bool _wxp = Environment.OSVersion.Version.Major == 5;
+        public static bool WXP { get; } = Environment.OSVersion.Version.Major == 5;
 
         /// <summary>
         /// A boolean that determines if OS is Windows Vista
         /// </summary>
-        public static bool WVista => _wvista;
-        private readonly static bool _wvista = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 0;
+        public static bool WVista { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 0;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 7 or not
         /// </summary>
-        public static bool W7 => _w7;
-        private readonly static bool _w7 = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1;
+        public static bool W7 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 8 or not
         /// </summary>
-        public static bool W8 => _w8;
-        private readonly static bool _w8 = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
+        public static bool W8 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 8.1 or not
         /// </summary>
-        public static bool W81 => _w81;
-        private readonly static bool _w81 = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 3;
+        public static bool W81 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 3;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 8 or Windows 8.1 or not
         /// </summary>
-        public static bool W8x => _w8 || _w81;
+        public static bool W8x => W8 || W81;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 10 or not
         /// </summary>
-        public static bool W10 => _w10;
-        private readonly static bool _w10 = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build < 22000;
+        public static bool W10 { get; } = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build < 22000;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 11 or not
         /// </summary>
-        public static bool W11 => _w11;
-        private readonly static bool _w11 = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build >= 22000;
+        public static bool W11 { get; } = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build >= 22000;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 12 or not (For near future! :))
         /// <br></br>
         /// <br>Value is got from OS name, or NT version. Nothing is known until Windows 12 releases are dropped</br>
         /// </summary>
-        public static bool W12 => _w12;
-        private readonly static bool _w12 = RuntimeInformation.OSDescription.Contains("12") || Environment.OSVersion.Version.Major > 10 || (Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor > 0);
+        public static bool W12 { get; } = RuntimeInformation.OSDescription.Contains("12") || Environment.OSVersion.Version.Major > 10 || (Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor > 0);
 
         /// <summary>
         /// A boolean that determines if OS is Windows 10 (19H2 = 1909) or higher or not
         /// </summary>
-        public static bool W10_1909 => _w10_1909;
-        private readonly static bool _w10_1909 = (!_wxp && !_wvista && !_w7 && !_w8 && !_w81 && !_w10) || _w10 && Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString()) >= 1909;
+        public static bool W10_1909 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 && Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString()) >= 1909;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 10 (20H2 = 2004 = 19041) or higher or not
         /// </summary>
-        public static bool W10_2004 => _w10_2004;
-        private readonly static bool _w10_2004 = (!_wxp && !_wvista && !_w7 && !_w8 && !_w81 && !_w10) || _w10 && Environment.OSVersion.Version.Build >= 19041;
+        public static bool W10_2004 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 && Environment.OSVersion.Version.Build >= 19041;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 11 build 22523 or higher or not
         /// </summary>
-        public static bool W11_22523 => _w11_22523;
-        private readonly static bool _w11_22523 = (!_wxp && !_wvista && !_w7 && !_w8 && !_w81 && !_w10 && !_w11) || _w11 && Environment.OSVersion.Version.Build >= 22523;
+        public static bool W11_22523 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10 && !W11) || W11 && Environment.OSVersion.Version.Build >= 22523;
 
         /// <summary>
         /// Get proper Windows name, returned as string differs according to current WinPaletter language.

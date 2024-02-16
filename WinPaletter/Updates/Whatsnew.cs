@@ -58,10 +58,5 @@ namespace WinPaletter
         {
             label45.Text = $"{TabControl1.SelectedIndex + 1}/{TabControl1.TabCount}";
         }
-
-        private void TabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

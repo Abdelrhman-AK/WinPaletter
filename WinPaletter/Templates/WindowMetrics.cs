@@ -408,16 +408,16 @@ namespace WinPaletter.Templates
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public Theme.Manager HockedTM
+        public Theme.Manager HookedTM
         {
-            get => !DesignMode ? _hockedTM ?? HockedTM : null;
+            get => !DesignMode ? _hookedTM ?? HookedTM : null;
             set
             {
-                _hockedTM = value;
-                LoadFromTM(_hockedTM);
+                _hookedTM = value;
+                LoadFromTM(_hookedTM);
             }
         }
-        private Theme.Manager _hockedTM = Program.TM;
+        private Theme.Manager _hookedTM = Program.TM;
 
 
         private VisualStylesRes resVS
@@ -1391,22 +1391,13 @@ namespace WinPaletter.Templates
                 {
                     if (System.IO.File.Exists(_windowsXPThemePath))
                     {
-                        if (WXP_VS_ReplaceColors)
+                        using (Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath))
                         {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
-                        }
+                            if (WXP_VS_ReplaceColors) HookedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
 
-                        if (WXP_VS_ReplaceMetrics)
-                        {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
-                        }
+                            if (WXP_VS_ReplaceMetrics) HookedTM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
 
-                        if (WXP_VS_ReplaceFonts)
-                        {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
+                            if (WXP_VS_ReplaceFonts) HookedTM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
                     }
 
@@ -1463,24 +1454,24 @@ namespace WinPaletter.Templates
         {
             ForceRefresh = true;
 
-            _hockedTM = TM;
+            _hookedTM = TM;
 
             if (WindowStyle == WindowStyle.W11)
             {
-                DarkMode_App = !HockedTM.Windows11.AppMode_Light;
-                DarkMode_Win = !HockedTM.Windows11.WinMode_Light;
-                TitlebarColor_Active = HockedTM.Windows11.Titlebar_Active;
-                TitlebarColor_Inactive = HockedTM.Windows11.Titlebar_Inactive;
-                TitlebarColor_Enabled = HockedTM.Windows11.ApplyAccentOnTitlebars;
+                DarkMode_App = !HookedTM.Windows11.AppMode_Light;
+                DarkMode_Win = !HookedTM.Windows11.WinMode_Light;
+                TitlebarColor_Active = HookedTM.Windows11.Titlebar_Active;
+                TitlebarColor_Inactive = HookedTM.Windows11.Titlebar_Inactive;
+                TitlebarColor_Enabled = HookedTM.Windows11.ApplyAccentOnTitlebars;
             }
 
             else if (WindowStyle == WindowStyle.W10)
             {
-                DarkMode_App = !HockedTM.Windows10.AppMode_Light;
-                DarkMode_Win = !HockedTM.Windows10.WinMode_Light;
-                TitlebarColor_Active = HockedTM.Windows10.Titlebar_Active;
-                TitlebarColor_Inactive = HockedTM.Windows10.Titlebar_Inactive;
-                TitlebarColor_Enabled = HockedTM.Windows10.ApplyAccentOnTitlebars;
+                DarkMode_App = !HookedTM.Windows10.AppMode_Light;
+                DarkMode_Win = !HookedTM.Windows10.WinMode_Light;
+                TitlebarColor_Active = HookedTM.Windows10.Titlebar_Active;
+                TitlebarColor_Inactive = HookedTM.Windows10.Titlebar_Inactive;
+                TitlebarColor_Enabled = HookedTM.Windows10.ApplyAccentOnTitlebars;
             }
 
             else if (WindowStyle == WindowStyle.W81)
@@ -1489,46 +1480,46 @@ namespace WinPaletter.Templates
                 Win7Noise = 100f;
                 Win7Alpha = 100;
 
-                TitlebarColor_Active = HockedTM.Windows81.ColorizationColor;
-                TitlebarColor_Inactive = HockedTM.Windows81.ColorizationColor;
-                Win7ColorBal = HockedTM.Windows81.ColorizationColorBalance;
+                TitlebarColor_Active = HookedTM.Windows81.ColorizationColor;
+                TitlebarColor_Inactive = HookedTM.Windows81.ColorizationColor;
+                Win7ColorBal = HookedTM.Windows81.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                WindowsTheme = HockedTM.Windows81.Theme;
+                WindowsTheme = HookedTM.Windows81.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W7)
             {
-                TitlebarColor_Active = HockedTM.Windows7.ColorizationColor;
-                TitlebarColor_Inactive = HockedTM.Windows7.ColorizationColor;
-                Win7ColorBal = HockedTM.Windows7.ColorizationColorBalance;
+                TitlebarColor_Active = HookedTM.Windows7.ColorizationColor;
+                TitlebarColor_Inactive = HookedTM.Windows7.ColorizationColor;
+                Win7ColorBal = HookedTM.Windows7.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                AfterGlowColor_Active = HockedTM.Windows7.ColorizationAfterglow;
-                AfterGlowColor_Inactive = HockedTM.Windows7.ColorizationAfterglow;
-                Win7GlowBal = HockedTM.Windows7.ColorizationAfterglowBalance;
-                Win7Noise = HockedTM.Windows7.ColorizationGlassReflectionIntensity;
-                Win7Alpha = HockedTM.Windows7.ColorizationBlurBalance;
-                WindowsTheme = HockedTM.Windows7.Theme;
+                AfterGlowColor_Active = HookedTM.Windows7.ColorizationAfterglow;
+                AfterGlowColor_Inactive = HookedTM.Windows7.ColorizationAfterglow;
+                Win7GlowBal = HookedTM.Windows7.ColorizationAfterglowBalance;
+                Win7Noise = HookedTM.Windows7.ColorizationGlassReflectionIntensity;
+                Win7Alpha = HookedTM.Windows7.ColorizationBlurBalance;
+                WindowsTheme = HookedTM.Windows7.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WVista)
             {
-                TitlebarColor_Active = HockedTM.WindowsVista.ColorizationColor;
-                TitlebarColor_Inactive = HockedTM.WindowsVista.ColorizationColor;
-                Win7ColorBal = (HockedTM.WindowsVista.Alpha / 255) * 100;
+                TitlebarColor_Active = HookedTM.WindowsVista.ColorizationColor;
+                TitlebarColor_Inactive = HookedTM.WindowsVista.ColorizationColor;
+                Win7ColorBal = (HookedTM.WindowsVista.Alpha / 255) * 100;
                 TitlebarColor_Enabled = true;
                 AfterGlowColor_Active = Color.Transparent;
                 AfterGlowColor_Inactive = Color.Transparent;
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
-                Win7Alpha = 100 - (HockedTM.WindowsVista.Alpha / 255) * 100;
-                WindowsTheme = HockedTM.WindowsVista.Theme;
+                Win7Alpha = 100 - (HookedTM.WindowsVista.Alpha / 255) * 100;
+                WindowsTheme = HookedTM.WindowsVista.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WXP)
             {
-                WindowsXPThemePath = HockedTM.WindowsXP.ThemeFile;
-                WindowsXPThemeColorScheme = HockedTM.WindowsXP.ColorScheme;
-                WindowsXPTheme = HockedTM.WindowsXP.Theme;
+                WindowsXPThemePath = HookedTM.WindowsXP.ThemeFile;
+                WindowsXPThemeColorScheme = HookedTM.WindowsXP.ColorScheme;
+                WindowsXPTheme = HookedTM.WindowsXP.Theme;
             }
 
             LoadMetrics(TM);
@@ -1584,9 +1575,9 @@ namespace WinPaletter.Templates
             WindowFrame = TM.Win32.WindowFrame;
             WindowText = TM.Win32.WindowText;
 
-            SetClassicWindowColors(HockedTM, windowR1);
-            SetClassicWindowColors(HockedTM, windowR2, false);
-            SetClassicWindowColors(HockedTM, windowR3);
+            SetClassicWindowColors(HookedTM, windowR1);
+            SetClassicWindowColors(HookedTM, windowR2, false);
+            SetClassicWindowColors(HookedTM, windowR3);
         }
 
         #endregion

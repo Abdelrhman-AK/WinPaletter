@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace WinPaletter.GlobalVariables
 {
@@ -24,7 +23,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Main font for application titles
         /// </summary>
-        public static FontFamily Title = Exists("Segoe UI Variable Display") ? new ("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
+        public static FontFamily Title = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
 
         /// <summary>
         /// Checks if a font is installed or not (from its name)

@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
-using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -24,7 +21,6 @@ namespace WinPaletter
         private int ChannelFixer;
         private List<string> Updates_ls = new();
         public string file = string.Empty;
-        public bool LoggingOff = false;
 
         public Home()
         {
@@ -38,7 +34,7 @@ namespace WinPaletter
             ApplyStyle(this);
 
             _shown = false;
-            LoggingOff = false;
+            Forms.MainForm.LoggingOff = false;
 
             NotifyUpdates.Icon = Icon;
             groupBox1.UseSharpStyle = true;
@@ -55,13 +51,13 @@ namespace WinPaletter
 
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? "").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
             foreach (UI.WP.Button button in groupBox1.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? "").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
@@ -135,7 +131,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            labelAlt1.Text = TM.Info.ThemeName + " ";
+            labelAlt1.Text = $"{TM.Info.ThemeName} ";
             labelAlt2.Text = $"{Program.Lang.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
@@ -420,10 +416,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-            {
-                Forms.MainForm.ExitWithChangedFileResponse(dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
-            }
+            Forms.MainForm.ExitWithChangedFileResponse();
 
             Program.TM = new(Theme.Manager.Source.Registry);
             Program.TM_Original = (Theme.Manager)Program.TM.Clone();
@@ -434,10 +427,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-            {
-                Forms.MainForm.ExitWithChangedFileResponse(dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
-            }
+            Forms.MainForm.ExitWithChangedFileResponse();
 
             Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
             file = null;
@@ -448,11 +438,10 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_OpenWinPaletterTheme })
-            using (SaveFileDialog save_dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Forms.MainForm.ExitWithChangedFileResponse(save_dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
+                    Forms.MainForm.ExitWithChangedFileResponse();
 
                     if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
                     {
@@ -529,13 +518,15 @@ namespace WinPaletter
 
         private void Button28_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.LoggingOff = false;
+
             if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
-                LoggingOff = true;
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
                 {
+                    Forms.MainForm.LoggingOff = true;
                     Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else

@@ -320,8 +320,7 @@ namespace WinPaletter.UI.Controllers
             {
                 if (ColorsHistory.Count > 0)
                 {
-                    if (ColorsHistory.Last() != BackColor)
-                        ColorsHistory.Add(BackColor);
+                    if (ColorsHistory.Last() != BackColor) ColorsHistory.Add(BackColor);
                 }
                 else
                 {

@@ -112,7 +112,7 @@ namespace WinPaletter.UI.WP
 
                 default:
                     {
-                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        bmp = null;
                         break;
                     }
 
@@ -128,7 +128,7 @@ namespace WinPaletter.UI.WP
                 }
             }
 
-            pattern = new(bmp);
+            if (bmp != null) pattern = new(bmp); else pattern = null;
 
             Refresh();
         }
@@ -172,13 +172,13 @@ namespace WinPaletter.UI.WP
                     if (!useSharpStyle)
                     {
                         G.FillRoundedRect(br, Rect);
-                        G.FillRoundedRect(pattern, Rect);
+                        if (pattern != null) G.FillRoundedRect(pattern, Rect);
                         G.DrawRoundedRect(P, Rect);
                     }
                     else
                     {
                         G.FillRectangle(br, Rect);
-                        G.FillRectangle(pattern, Rect);
+                        if (pattern != null) G.FillRectangle(pattern, Rect);
                         G.DrawRectangle(P, Rect);
                     }
                 }

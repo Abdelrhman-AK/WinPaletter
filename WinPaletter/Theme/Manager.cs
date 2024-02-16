@@ -253,7 +253,7 @@ namespace WinPaletter.Theme
                                         if (txt[x].Contains(":"))
                                         {
                                             string[] arr = txt[x].Split(':');
-                                            if (arr.Length == 2 && (arr[1] ?? "").ToLower().Contains("%WinPaletterAppData%".ToLower()))
+                                            if (arr.Length == 2 && (arr[1] ?? string.Empty).ToLower().Contains("%WinPaletterAppData%".ToLower()))
                                             {
                                                 txt[x] = $"{arr[0]}:{arr[1].Replace("%WinPaletterAppData%", PathsExt.appData.Replace("\\", "\\\\"))}";
                                             }
@@ -905,17 +905,17 @@ namespace WinPaletter.Theme
                             try { Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null); }
                             catch { }
 
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_THEMECHANGED, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, UIntPtr.Zero, IntPtr.Zero);
-                            PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_WININICHANGE, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_THEMECHANGED, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, UIntPtr.Zero, IntPtr.Zero);
+                            //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_WININICHANGE, UIntPtr.Zero, IntPtr.Zero);
 
                             if (ReportProgress)
                             {
-                                if (!_ErrorHappened)
+                                if (!_ErrorHappened && Exceptions.ThemeApply.Count == 0)
                                 {
                                     AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d))}", "success");
                                 }

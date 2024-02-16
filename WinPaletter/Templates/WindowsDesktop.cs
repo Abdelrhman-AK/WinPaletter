@@ -2161,25 +2161,15 @@ namespace WinPaletter.Templates
                 {
                     if (System.IO.File.Exists(_windowsXPThemePath))
                     {
-                        if (WXP_VS_ReplaceColors)
+                        using (Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath))
                         {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
-                        }
+                            if (WXP_VS_ReplaceColors) HockedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
 
-                        if (WXP_VS_ReplaceMetrics)
-                        {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
-                        }
+                            if (WXP_VS_ReplaceMetrics) HockedTM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
 
-                        if (WXP_VS_ReplaceFonts)
-                        {
-                            Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath);
-                            HockedTM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
+                            if (WXP_VS_ReplaceFonts) HockedTM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
                     }
-
                 }
 
                 Refresh();

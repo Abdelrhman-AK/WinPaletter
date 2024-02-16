@@ -521,7 +521,7 @@ namespace WinPaletter
             using (Process process = Process.GetCurrentProcess())
             {
                 Environment.ExitCode = 0;
-                Forms.Home.LoggingOff = true;
+                Forms.MainForm.LoggingOff = true;
                 Forms.MainForm.Close();
                 process.Kill();
                 wic.Undo();  // :)

@@ -116,10 +116,7 @@ namespace WinPaletter
                             {
                                 if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && (Program.TM != Program.TM_Original))
                                 {
-                                    using (System.Windows.Forms.SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-                                    {
-                                        Forms.MainForm.ExitWithChangedFileResponse(dlg, () => Forms.ThemeLog.Apply_Theme(), () => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime), () => Forms.ThemeLog.Apply_Theme(Theme.Default.Get()));
-                                    }
+                                    Forms.MainForm.ExitWithChangedFileResponse();
                                 }
                             }
 

@@ -32,7 +32,11 @@ namespace WinPaletter.Tabs
 
         private bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private List<TabData> collection = new();
+        /// <summary>
+        /// List of tab data included in current control
+        /// </summary>
+        public List<TabData> TabDataList = new();
+
         private Rectangle hoveredRectangle;
         private bool overCloseButton = false;
 
@@ -151,7 +155,7 @@ namespace WinPaletter.Tabs
         private int tabWidth => Math.Min(MaxWidth, Width / _tabControl.TabPages.Count);
         private int tabHeight => Height - upperTabPadding;
 
-        public int TabsCount => collection != null ? collection.Count : 0;
+        public int TabsCount => TabDataList != null ? TabDataList.Count : 0;
 
         private Rectangle closeRectangle(Rectangle rectangle)
         {
@@ -175,11 +179,11 @@ namespace WinPaletter.Tabs
 
         private int GetIndex(TabData tabData)
         {
-            if (collection != null && collection.Count > 0)
+            if (TabDataList != null && TabDataList.Count > 0)
             {
-                for (int i = 0; i < collection.Count; i++)
+                for (int i = 0; i < TabDataList.Count; i++)
                 {
-                    if (collection[i]?.Rectangle == tabData.Rectangle)
+                    if (TabDataList[i]?.Rectangle == tabData.Rectangle)
                     {
                         return i;
                     }
@@ -191,7 +195,7 @@ namespace WinPaletter.Tabs
 
         private void UpdateTabs()
         {
-            collection.Clear();
+            TabDataList.Clear();
 
             if (_tabControl != null)
             {
@@ -199,7 +203,7 @@ namespace WinPaletter.Tabs
 
                 foreach (TabPage page in _tabControl.TabPages)
                 {
-                    collection.Add(CreateTabData(page, i));
+                    TabDataList.Add(CreateTabData(page, i));
 
                     i++;
                 }
@@ -239,9 +243,9 @@ namespace WinPaletter.Tabs
 
         private void AfterRemovingTab(TabData tabData, bool animate, int SI)
         {
-            collection.Remove(tabData);
+            TabDataList.Remove(tabData);
 
-            UpdateTabPositions(collection);
+            UpdateTabPositions(TabDataList);
 
             forceChangeSelectedIndex = true;
             SelectedIndex = SI;
@@ -257,18 +261,18 @@ namespace WinPaletter.Tabs
 
         private void SwapTabs(int from, int to)
         {
-            if (collection != null)
+            if (TabDataList != null)
             {
-                TabData itemFrom = collection[from];
-                TabData itemTo = collection[to];
+                TabData itemFrom = TabDataList[from];
+                TabData itemTo = TabDataList[to];
 
                 if (itemFrom == null || itemFrom.IsRemoving) return;
                 if (itemTo == null || itemTo.IsRemoving) return;
 
-                collection[from] = itemTo;
-                collection[to] = itemFrom;
+                TabDataList[from] = itemTo;
+                TabDataList[to] = itemFrom;
 
-                UpdateTabPositions(collection);
+                UpdateTabPositions(TabDataList);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
@@ -284,20 +288,20 @@ namespace WinPaletter.Tabs
 
         private void MoveToLast(int from)
         {
-            if (collection != null)
+            if (TabDataList != null)
             {
-                TabData itemFrom = collection.ElementAt(from);
+                TabData itemFrom = TabDataList.ElementAt(from);
 
                 if (itemFrom == null || itemFrom.IsRemoving) return;
 
-                collection.RemoveAt(from);
-                collection.Add(itemFrom);
+                TabDataList.RemoveAt(from);
+                TabDataList.Add(itemFrom);
 
-                UpdateTabPositions(collection);
+                UpdateTabPositions(TabDataList);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
-                SelectedIndex = collection.Count - 1;
+                SelectedIndex = TabDataList.Count - 1;
 
                 isMovingTab = false;
 
@@ -309,16 +313,16 @@ namespace WinPaletter.Tabs
 
         private void MoveToFirst(int from)
         {
-            if (collection != null)
+            if (TabDataList != null)
             {
-                TabData itemFrom = collection[from];
+                TabData itemFrom = TabDataList[from];
 
                 if (itemFrom == null || itemFrom.IsRemoving) return;
 
-                collection.RemoveAt(from);
-                collection.Insert(0, itemFrom);
+                TabDataList.RemoveAt(from);
+                TabDataList.Insert(0, itemFrom);
 
-                UpdateTabPositions(collection);
+                UpdateTabPositions(TabDataList);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
@@ -341,7 +345,7 @@ namespace WinPaletter.Tabs
 
         private TabData GetTabAtMousePosition(MouseEventArgs e)
         {
-            List<TabData> tabDatas = new(collection);
+            List<TabData> tabDatas = new(TabDataList);
             foreach (TabData tabData in tabDatas)
             {
                 if (tabData.Rectangle.Contains(e.Location))
@@ -366,7 +370,7 @@ namespace WinPaletter.Tabs
 
             if (collectionCount == 0)
             {
-                // Handle the case where the collection is empty
+                // Handle the case where the TabDataList is empty
                 return;
             }
 
@@ -391,10 +395,10 @@ namespace WinPaletter.Tabs
 
         private int AdjustSelectedIndex(int value)
         {
-            if (collection != null && collection.Count > 0)
+            if (TabDataList != null && TabDataList.Count > 0)
             {
-                if (value > collection.Count - 1)
-                    return collection.Count - 1;
+                if (value > TabDataList.Count - 1)
+                    return TabDataList.Count - 1;
             }
 
             return value;
@@ -402,17 +406,18 @@ namespace WinPaletter.Tabs
 
         private void UpdateSelectedTab()
         {
-            if (collection != null && collection.Count > 0)
+            if (TabDataList != null && TabDataList.Count > 0)
             {
                 if (_selectedIndex > -1)
                 {
-                    SelectedTab = collection[_selectedIndex].TabPage;
+                    SelectedTab = TabDataList[_selectedIndex].TabPage;
 
-                    List<TabData> tabDatas = new(collection);
+                    List<TabData> tabDatas = new(TabDataList);
                     foreach (TabData t in tabDatas)
                     {
-                        t.Selected = collection[_selectedIndex] == t && !t.IsRemoving;
+                        t.Selected = TabDataList[_selectedIndex].Form == t.Form && !t.IsRemoving;
                     }
+                    TabDataList = tabDatas;
                 }
                 else
                 {
@@ -451,7 +456,7 @@ namespace WinPaletter.Tabs
         {
             if (e.Button == MouseButtons.Left)
             {
-                List<TabData> tabDatas = new(collection);
+                List<TabData> tabDatas = new(TabDataList);
                 foreach (TabData tabData in tabDatas)
                 {
                     if (!tabData.IsRemoving)
@@ -519,12 +524,12 @@ namespace WinPaletter.Tabs
             else
             {
                 // Check if the cursor is to the right of the last tabData
-                if (e.X > collection.Last().Rectangle.Right)
+                if (e.X > TabDataList.Last().Rectangle.Right)
                 {
                     SetTabMoveProperties(-1, true, false, true);
                 }
                 // Check if the cursor is to the left of the first tabData
-                else if (e.X < collection.First().Rectangle.Left)
+                else if (e.X < TabDataList.First().Rectangle.Left)
                 {
                     SetTabMoveProperties(-1, true, true, false);
                 }
@@ -547,7 +552,7 @@ namespace WinPaletter.Tabs
 
         private void HandleMouseHover(MouseEventArgs e)
         {
-            List<TabData> tabDatas = new(collection);
+            List<TabData> tabDatas = new(TabDataList);
             foreach (TabData tabData in tabDatas)
             {
                 if (tabData.Rectangle.Contains(e.Location))
@@ -586,9 +591,9 @@ namespace WinPaletter.Tabs
 
         private void CloseAllTabsButThis()
         {
-            if (collection.Count > 1)
+            if (TabDataList.Count > 1)
             {
-                List<TabData> tabDatas = new(collection);
+                List<TabData> tabDatas = new(TabDataList);
                 foreach (TabData tabData in tabDatas)
                 {
                     if (tabData.TabPage != contextItemDropped.TabPage)
@@ -601,30 +606,30 @@ namespace WinPaletter.Tabs
 
         private void CloseAllTabsToTheRight()
         {
-            int index = collection.IndexOf(contextItemDropped);
+            int index = TabDataList.IndexOf(contextItemDropped);
 
-            for (int i = index + 1; i < collection.Count; i += 0)
+            for (int i = index + 1; i < TabDataList.Count; i += 0)
             {
-                collection[i].Form.Close();
+                TabDataList[i].Form.Close();
             }
         }
 
         private void CloseAllTabsToTheLeft()
         {
-            int index = collection.IndexOf(contextItemDropped);
+            int index = TabDataList.IndexOf(contextItemDropped);
 
             for (int i = 0; i < index; i++)
             {
-                collection[0].Form.Close();
+                TabDataList[0].Form.Close();
             }
         }
 
         private void CloseAllTabs()
         {
-            int count = collection.Count;
+            int count = TabDataList.Count;
             for (int i = 0; i < count; i++)
             {
-                collection[0].Form.Close();
+                TabDataList[0].Form.Close();
             }
         }
 
@@ -634,23 +639,23 @@ namespace WinPaletter.Tabs
 
             RemoveTab(tabData, false);
 
-            if (collection.Count == 0) TabControl.FindForm().Visible = false;
+            if (TabDataList.Count == 0) TabControl.FindForm().Visible = false;
 
             tabData.Form.Visible = true;
         }
 
         private void DetachAllTabs()
         {
-            int count = collection.Count;
+            int count = TabDataList.Count;
             for (int i = 0; i <= count - 1; i++)
             {
-                if (collection[0].Form != null) DetachTab(collection[0]);
+                if (TabDataList[0].Form != null) DetachTab(TabDataList[0]);
             }
         }
 
         private void DetachAllTabsButThis()
         {
-            if (collection.Count > 1)
+            if (TabDataList.Count > 1)
             {
                 DetachAllTabs();
                 if (contextItemDropped.Form != null) AddFormIntoTab(contextItemDropped.Form);
@@ -730,15 +735,15 @@ namespace WinPaletter.Tabs
         /// </summary>
         public TabPage SelectedTab
         {
-            get => _selectedIndex >= 0 && _selectedIndex < collection?.Count
-                ? collection.ElementAt(_selectedIndex).TabPage
+            get => _selectedIndex >= 0 && _selectedIndex < TabDataList?.Count
+                ? TabDataList.ElementAt(_selectedIndex).TabPage
                 : null;
             set
             {
                 if (_tabControl != null)
                 {
                     _tabControl.SelectedTab = value;
-                    int index = collection.FindIndex(t => t.TabPage == value && !t.IsRemoving);
+                    int index = TabDataList.FindIndex(t => t.TabPage == value && !t.IsRemoving);
                     if (index > -1) SelectedIndex = index;
                 }
             }
@@ -823,7 +828,8 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         public virtual void OnFormClosing(object sender, TabDataEventArgs e)
         {
-            if (e.TabData.Selected) Program.Animator.HideSync(TabControl);
+            //Don't use e.TabData.Selected as it causes bug here (TabControl is hidden and not shown again after SelectedIndex change)
+            if (e.TabData.TabPage == SelectedTab) Program.Animator.HideSync(TabControl);
             FormClosed?.Invoke(sender, e);
         }
 
@@ -845,22 +851,22 @@ namespace WinPaletter.Tabs
             {
                 TabPage page = e.Control as TabPage;
 
-                collection.Add(CreateTabData(page, collection.Count));
+                TabDataList.Add(CreateTabData(page, TabDataList.Count));
 
-                collection[collection.Count - 1].TabTop = Height;
+                TabDataList[TabDataList.Count - 1].TabTop = Height;
 
-                SelectedIndex = collection.Count - 1;
+                SelectedIndex = TabDataList.Count - 1;
 
                 await Task.Run(() =>
                 {
                     if (CanAnimate_Global)
                     {
-                        FluentTransitions.Transition.With(collection[collection.Count - 1], nameof(TabData.TabTop), upperTabPadding)
+                        FluentTransitions.Transition.With(TabDataList[TabDataList.Count - 1], nameof(TabData.TabTop), upperTabPadding)
                             .HookOnCompletion(() =>
                             {
                                 Invoke(() =>
                                 {
-                                    UpdateTabPositions(collection);
+                                    UpdateTabPositions(TabDataList);
                                     Refresh();
                                 });
                             })
@@ -868,8 +874,8 @@ namespace WinPaletter.Tabs
                     }
                     else
                     {
-                        collection[collection.Count - 1].TabTop = upperTabPadding;
-                        UpdateTabPositions(collection);
+                        TabDataList[TabDataList.Count - 1].TabTop = upperTabPadding;
+                        UpdateTabPositions(TabDataList);
                         Refresh();
                     }
                 });
@@ -878,11 +884,11 @@ namespace WinPaletter.Tabs
 
         private void _tabControl_ControlRemoved(object sender, ControlEventArgs e)
         {
-            if (_tabControl != null && e.Control is TabPage && collection.Any(t => t.TabPage == e.Control))
+            if (_tabControl != null && e.Control is TabPage && TabDataList.Any(t => t.TabPage == e.Control))
             {
                 TabPage page = e.Control as TabPage;
 
-                RemoveTab(collection.Where(t => t.TabPage == page).FirstOrDefault());
+                RemoveTab(TabDataList.Where(t => t.TabPage == page).FirstOrDefault());
             }
         }
 
@@ -895,9 +901,9 @@ namespace WinPaletter.Tabs
         {
             base.OnResize(e);
 
-            if (collection != null && collection.Count > 0)
+            if (TabDataList != null && TabDataList.Count > 0)
             {
-                UpdateTabPositions(collection);
+                UpdateTabPositions(TabDataList);
 
                 Refresh();
             }
@@ -962,7 +968,7 @@ namespace WinPaletter.Tabs
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            List<TabData> tabDatas = new(collection);
+            List<TabData> tabDatas = new(TabDataList);
             foreach (TabData tabData in tabDatas)
             {
                 if (IsMouseOverTab(tabData))
@@ -1005,7 +1011,7 @@ namespace WinPaletter.Tabs
             {
                 Point MousePosition = new(e.X, e.Y);
 
-                List<TabData> tabDatas = new(collection);
+                List<TabData> tabDatas = new(TabDataList);
                 foreach (TabData tabData in tabDatas)
                 {
                     if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
@@ -1125,7 +1131,7 @@ namespace WinPaletter.Tabs
 
             if (_tabControl != null)
             {
-                List<TabData> tabsToDraw = new(collection);
+                List<TabData> tabsToDraw = new(TabDataList);
 
                 foreach (TabData tabData in tabsToDraw)
                 {
@@ -1178,8 +1184,8 @@ namespace WinPaletter.Tabs
                             using (LinearGradientBrush lgb1 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked, scheme_secondary.Colors.Line_Checked_Hover, LinearGradientMode.Vertical))
                             using (Pen P = new(lgb1))
                             {
-                                G.FillEllipse(lgb0, closeRectangle(rect));
-                                G.DrawEllipse(P, closeRectangle(rect));
+                                G.FillRoundedRect(lgb0, closeRectangle(rect));
+                                G.DrawRoundedRect_LikeW11(P, closeRectangle(rect));
                             }
                         }
                     }

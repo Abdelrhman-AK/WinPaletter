@@ -38,7 +38,7 @@ namespace WinPaletter.UI.Retro
         {
             if (!DesignMode && EnableEditingColors)
             {
-                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonText)));
+                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.WindowText)));
             }
 
             base.OnClick(e);
