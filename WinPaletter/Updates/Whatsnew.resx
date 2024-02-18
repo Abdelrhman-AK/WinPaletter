@@ -186,37 +186,6 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>● WinPaletter now introduces a new feature that allows you to increase your control over Windows aspects. This will be helpful for users who don't want to change a Windows aspect they like (acts like a secure lock).
-
-● For example, a user edited Windows Colors to an accent they like and doesn't want it to change again with any theme. This user can enable this feature and uncheck Windows Colors to disable editing it in the future.
-
-● Another example is a user who likes their own Metrics and Fonts; using WinPaletter's store may override their preferences. This user can enable this feature and uncheck Metrics and Fonts to disable editing them in the future.
-
-● You can find this feature in Settings &gt; Aspects control.</value>
-  </data>
-  <data name="banner13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAO1SURBVEhL7ZXZT1tHFMb5C9uoNGlDi8Bp7RAcmpI0tE1DAhhjB8xmFrMFvIE3vGDjfb/YODZk
-        UZKWTVEi5fGqpBFSXr+eGS6RK13XfqAvVY70SUczvt9vzsw5ctOn+P+Fsuv2nuqHHlFrML6jXJRTT+/g
-        n0xye0zsW+ZB+Z5kWzu+uPSN2KpQYrtUBuWympw2ccntMbFvv21XslyUbGtH29WuD4qOGzgPMS/Jtnbo
-        xk0nDybmoWcan4NuzMQ1NDoLrWGGNI3BEaYpaIaN0DwwYkA/iX79BPp041z3h8ZwXzuKXo3hRLKtHcLu
-        3rGwu4/8zh5y5d+RefQC6e3nSBafIbH1BDHhMaK5HYSzZWwkCni46seS3YsF2zoWrB7MWVwwmZ1YXvPB
-        EYgdS7a1Y+vxgchhFQZ7WQV7WgWrYDP9CFZPCDd6fpNV7+AIHP5Y/TckmJguPf9YBTMOprZ5Nf74FnzR
-        PLyRPILJItyhDKaX7JhatMG4YMXkvAWTcxZMmMyYXV7Dmq8BYK7yh+jKCuh47YTqjSSWV6nz0AV3MIUA
-        HcAfFegAOVYNZgji2kjSVcYZDHZvpD4wW34p2nI5KN46/lVr/gT8sVOYO5SGxmDEr/16mFacHLbqjcDm
-        CdcHZkovREs2IwupFjP10dU6qaI5ahIXVewMJOggMYzNLsO2HobVHaoPTBcJmEnLQqq16o3Cs5mh5hjG
-        8NQihzn8cb6uvN7N39PiCtYHUkeK5lRKFlItuyfMgfM0BiPG+VOYLwo7VXbrTh9WHAGYHYH6wEThqbiS
-        SspCqmV1b9Lb0TXSlZqdGzT4NPBaA0ZnlvgMsrWGgDRroieWw1DRD03RB03Bi4HCOvq3SIIHfXk3NGkX
-        vVHkHx05Or0EdfcvBKPKCNZwhbH8rhiRBjuYlOYvdjp/6+Esv0bWIAxmpTkczj+DPvcEU5ECVugQQ6kK
-        tKSxcL4xYCS3I4YzZYTSJQ4MxBlQ4B3JgTQCZx1pihehOHoPxeFf+LlyhNlACu0H77hu7rxqDEjD/GFT
-        gp1WR7Cz6qpgrP1ZR0rtzzqSX2O1Fm2e+v8W6p/unlzvuYfzEPOSbGvHZ81fH19RqnHxchs61D/i8+bL
-        XCxv/qoV31/t+rjGcrZ29rsLX7bw/FJLOxTKTjAvybZ2tLSpxGgiBd3IOPYPj6Akg9bvruHV6ze4N6CD
-        UNhGS7uKSyiU+Brba73SAZW6G/sHh9AZJhCJJ8G8JNvaca37zu3Om3f7zkPMS7L9FP9VNDX9DQu4fKUK
-        nqsJAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
 
@@ -368,7 +337,7 @@
   <data name="banner6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAl5JREFUSEu9lT2rGkEUhk1CiqRIEUIKY/D7CxFFkSuk0cYuQoqo2FxsxB9gkUqw
+        vQAADr0BR/uQrQAAAl5JREFUSEu9lT2rGkEUhk1CiqRIEUIKY/D7CxFFkSuk0cYuQoqo2FxsxB9gkUqw
         vdhZhKQQ0sktrcRKQS6mUCEQDDGiqVIHQj7W9Z6cIwjD8mr2FpviYd13z8yzM87M2ojovwJDK4GhlcDQ
         SmBoxOv1+lwuVwg9uykwVBERCzVm63Q6X6CamwBDFbfb/ZKhZrN57fF4dvwC56jOLDBUOQg3mw21223i
         kYr4Fao1AwxVVKHQ6XREuvP7/Rc2m+0WanMKGKoYhUK32yUW6oFA4C1Lb6N2x4ChChIKvV6PwuHwlqWX
@@ -410,8 +379,6 @@
     <value>● LogonUI now supports preview for Windows 10 and 11.
 
 ● Screen Saver: Lists installed screensavers on the system to assist users in selecting one.
-
-● Sounds: Added a 'Restore Defaults' button to facilitate the restoration of a sound entry.
 
 ● Sounds: Added a 'Restore Defaults' button to facilitate the restoration of a sound entry.
 
@@ -464,10 +431,41 @@
         RK5CYII=
 </value>
   </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>● WinPaletter now introduces a new feature that allows you to increase your control over Windows aspects. This will be helpful for users who don't want to change a Windows aspect they like (acts like a secure lock).
+
+● For example, a user edited Windows Colors to an accent they like and doesn't want it to change again with any theme. This user can enable this feature and uncheck Windows Colors to disable editing it in the future.
+
+● Another example is a user who likes their own Metrics and Fonts; using WinPaletter's store may override their preferences. This user can enable this feature and uncheck Metrics and Fonts to disable editing them in the future.
+
+● You can find this feature in Settings &gt; Aspects control.</value>
+  </data>
+  <data name="banner13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA7VJREFUSEvt
+        ldlPW0cUxvkL26g0aUOLwGntEByakjS0TUMCGGMHzGYWswW8gTe8YON9v9g4NmRRkpZNUSLl8aqkEVJe
+        v54ZLpErXdd+oC9VjvRJRzO+32/OzDly06f4/4Wy6/ae6oceUWswvqNclFNP7+CfTHJ7TOxb5kH5nmRb
+        O7649I3YqlBiu1QG5bKanDZxye0xsW+/bVeyXJRsa0fb1a4Pio4bOA8xL8m2dujGTScPJuahZxqfg27M
+        xDU0OgutYYY0jcERpiloho3QPDBiQD+Jfv0E+nTjXPeHxnBfO4pejeFEsq0dwu7esbC7j/zOHnLl35F5
+        9ALp7edIFp8hsfUEMeExorkdhLNlbCQKeLjqx5LdiwXbOhasHsxZXDCZnVhe88ERiB1LtrVj6/GByGEV
+        BntZBXtaBatgM/0IVk8IN3p+k1Xv4Agc/lj9NySYmC49/1gFMw6mtnk1/vgWfNE8vJE8gski3KEMppfs
+        mFq0wbhgxeS8BZNzFkyYzJhdXsOarwFgrvKH6MoK6HjthOqNJJZXqfPQBXcwhQAdwB8V6AA5Vg1mCOLa
+        SNJVxhkMdm+kPjBbfinacjko3jr+VWv+BPyxU5g7lIbGYMSv/XqYVpwctuqNwOYJ1wdmSi9ESzYjC6kW
+        M/XR1TqpojlqEhdV7Awk6CAxjM0uw7YehtUdqg9MFwmYSctCqrXqjcKzmaHmGMbw1CKHOfxxvq683s3f
+        0+IK1gdSR4rmVEoWUi27J8yB8zQGI8b5U5gvCjtVdutOH1YcAZgdgfrAROGpuJJKykKqZXVv0tvRNdKV
+        mp0bNPg08FoDRmeW+AyytYaANGuiJ5bDUNEPTdEHTcGLgcI6+rdIggd9eTc0aRe9UeQfHTk6vQR19y8E
+        o8oI1nCFsfyuGJEGO5iU5i92On/r4Sy/RtYgDGalORzOP4M+9wRTkQJW6BBDqQq0pLFwvjFgJLcjhjNl
+        hNIlDgzEGVDgHcmBNAJnHWmKF6E4eg/F4V/4uXKE2UAK7QfvuG7uvGoMSMP8YVOCnVZHsLPqqmCs/VlH
+        Su3POpJfY7UWbZ76/xbqn+6eXO+5h/MQ85Jsa8dnzV8fX1GqcfFyGzrUP+Lz5stcLG/+qhXfX+36uMZy
+        tnb2uwtftvD8Uks7FMpOMC/Jtna0tKnEaCIF3cg49g+PoCSD1u+u4dXrN7g3oINQ2EZLu4pLKJT4Gttr
+        vdIBlbob+weH0BkmEIknwbwk29pxrfvO7c6bd/vOQ8xLsv0U/1U0Nf0NC7h8pQqeqwkAAAAASUVORK5C
+        YII=
+</value>
+  </data>
   <data name="banner9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAABUxJREFUSEvVlntMU1ccx1tRx5yT2akUZXFCiZOIgigawEGEOpmvgeIUJ2KimLGx
+        vQAADr0BR/uQrQAABUxJREFUSEvVlntMU1ccx1tRx5yT2akUZXFCiZOIgigawEGEOpmvgeIUJ2KimLGx
         adEsDAeCM5maGIQ/+GNL9gjDRYd4KdjaYkFaxCItOInTFpCHCPIuTxHGd+dcuewWRDfnH9sv+aTt6T2/
         z3necwT/1RASJj0D+v9LCxvCawQRYRZh9hho2UyCLYHK/1XYSKXSOTk5OZ/pdDp5YWGhiqAeg6qoqOhC
         WlqaVCKRzCB1Xlgq9PT0tNNoNJGVlZV1RqNxyGAwDJeVlQ2Xl5ez0O+lpaXDFRUVg/X19RXJyckBpB4d
