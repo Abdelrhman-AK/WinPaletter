@@ -52,19 +52,19 @@
 
 3. **Launch:** Once downloaded, launch WinPaletter and start exploring its features to enhance your desktop aesthetics.
 
-## Wiki (Help)
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) Wiki (Help)
 
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki) to learn more about WinPaletter.
 
-## Support me
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/PayPal.png?raw=true) Support me
 
 [PayPal](https://www.paypal.me/AbdelrhmanAK)
 
-## Languages
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages
 
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages) to get languages for WinPaletter.
 
-## Do you have an antivirus or browser issue?
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
 
 [Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue).
 
@@ -72,7 +72,7 @@
 
 We welcome contributions to make WinPaletter even better! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
-## Credits
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
 
 WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Abdelrhman-AK) and the incredible open-source community:
 
@@ -114,6 +114,6 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues). Our community is here to assist you.
 
-## License
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License
 
 WinPaletter is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it in accordance with the terms of the license.
