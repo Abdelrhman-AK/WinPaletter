@@ -78,32 +78,37 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
 
-- [Icons by Pichon](https://icons8.com/app/windows)
+- [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect)
 
-- [Color Picking Controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
+- [Colors picking controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
 
-- [Image to Palette Mechanism by ColorThief; KSemenenko](https://github.com/KSemenenko/ColorThief)
+- [Image to palette conversion mechanism by ColorThief, developed by KSemenenko](https://github.com/KSemenenko/ColorThief)
+
+- [Bitmap effects powered by ImageProcessor]("https://imageprocessor.org)
+
+- [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
+
+- [Retrieving elements of Windows XP visual styles (*.msstyles) using the Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
+  
+- [Extracting elements from visual styles (*.msstyles) using nptr/msstyleEditor](https://github.com/nptr/msstyleEditor)
+
+- [Patching PE files by Ressy, developed by Tyrrrz](https://github.com/Tyrrrz/Ressy)
+
+- [Handling JSON files using Newtonsoft JSON by James Newton-King](https://github.com/JamesNK/Newtonsoft.Json)
+
+- [Processing and handling command lines arguments by CommandLineParser](https://github.com/commandlineparser/commandline)
+
+- [Icons designed by Pichon](https://icons8.com/app/windows)
+
+- [Animation and transition effects for controls by FluentTransitions, developed by Andreas Wäscher](https://github.com/awaescher/FluentTransitions)
 
 - [Animation for Controls by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
 
-- [Bitmaps to Cursors Conversion Mechanism by Evan Olds](https://github.com/evanolds/AnimCur)
+- [Modern dialogs design (messages boxes) by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
+  
+- [Using JetBrainsMono as a monospaced font for WinPaletter](https://github.com/JetBrains/JetBrainsMono)
 
-- [Animating colors change by Luke Berg]()
-
-- [JetBrainsMono Font for Nerd Color Info](https://github.com/JetBrains/JetBrainsMono)
-
-- [Handling JSON Files by Newtonsoft JSON; James Newton-King](https://github.com/JamesNK/Newtonsoft.Json)
-
-- [Modern Dialogs Design by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
-
-- [Getting elements of visual styles file (*.msstyles) by Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
-
-- [Bitmap effects by ImageProcessor](https://imageprocessor.org/)
-
-- [Patching PE files by Tyrrrz/Ressy](https://github.com/Tyrrrz/Ressy)
-
-- [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
-  Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
+- [These items are provided by Microsoft: Classic color schemes, Luna theme preview (Luna.msstyles) and Command Prompt and PowerShell raster fonts previews](https://www.microsoft.com)
 
 ## Support
 
