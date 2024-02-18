@@ -1,3 +1,5 @@
+# WinPaletter
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
 ![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge)
@@ -6,91 +8,73 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) [Wiki (Help)](https://github.com/Abdelrhman-AK/WinPaletter/wiki)
+#### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/PayPal.png?raw=true) [Support me (PayPal)](https://www.paypal.me/AbdelrhmanAK)
+#### With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, and Windows effects (tweaks) according to your preferences.
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) [Changelog](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
+## Key Features
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+- **Intuitive Interface:** WinPaletter boasts a user-friendly interface, making color palette management accessible to users of all levels of expertise.
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Download.png?raw=true) [Get WinPaletter](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter)
+- **Themes Import/Export:** Explore a world of creativity with the ability to import and export themes. Visit the WinPaletter Store to discover a diverse collection of themes shared by the community.
 
-   1. [GitHub releases](https://github.com/Abdelrhman-AK/WinPaletter/releases)
-      
-or 2. Microsoft WinGet: `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
-
-or 3. Chocolatey: `choco install WinPaletter` or `choco install WinPaletter --version x.x.xx`
-
-   - [Click here for more advanced instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter)
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
-[- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
-
-[- Contribute in Language Files Creation\Modification](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Language-creation)
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
-| Operation System                                       | WinPaletter version starting from ... and higher             | Frameworks                                      |                                                               
-| ------------------------------------------------------ | ---------------------------------|-------------------------------------------------------|
-| **Windows 11, 10**                                     |  `Any version`                   |  You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                 |                                                     |
-| **Windows 8.1, 7**                                     | `1.0.5.0`                        | [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`|
-| **Windows 8**                                          | `Not supported` :x:              | Not supported as .NET framework 4.7 or 4.8 can't be installed at all | 
-| **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista)|
-| **Windows XP**                                         | `1.0.7.1`                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)|
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
-[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
-
----
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
+- **Real-time Preview:** Witness your color choices come to life with the real-time preview feature, allowing you to fine-tune your color scheme effortlessly.
+  
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Banner.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Sample.png?raw=true)
 
-- **You can modify Windows 7\8.1 LogonUI screen\Lock Screen**, using Default Backgrounds, Wallpaper, Custom colors and external image, with effects can be applied like Blur, Acrylic Noise, Aero Glass,...
+## Getting Started
 
----
+1. **Requirements:**
+   
+   | Operation System   | WinPaletter version starting from ... and higher | Frameworks                                                                                                                                                                                                  |
+   | ------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | **Windows 11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
+   | **Windows 8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
+   | **Windows 8**      | `Not supported` :x:                              | Not supported as .NET framework 4.7.2 or 4.8 can't be installed at all                                                                                                                                      |
+   | **Windows Vista**  | `1.0.7.1`                                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista) |
+   | **Windows XP**     | `1.0.7.1`                                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)       |
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Metrics.png?raw=true) Windows Metrics and Fonts:
-- You can change Windows Metrics, including Titlebars' Height with padding and borders. You can also change other elements metrics like scrollbars and icons.
-- You can change Windows Fonts, including Titlebars, Icons, Messages and other fonts
+2. **Download:** 
+   
+   - You can download the latest release from the [releases page](https://github.com/Abdelrhman-AK/WinPaletter/releases).
+   
+   - Alternatively, you can use:
+     
+     - Microsoft WinGet: 
+       
+       `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
+     
+     - Chocolatey:
+       
+        `choco install WinPaletter` or `choco install WinPaletter --version x.x.xx`
+     
+     - [Visit this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter) for advanced instructions.
 
- ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Metrics.png?raw=true)
+3. **Launch:** Once downloaded, launch WinPaletter and start exploring its features to enhance your desktop aesthetics.
 
----
+## Wiki (Help)
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WallpaperTone.png?raw=true) Wallpaper Tone:
+[Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki) to learn more about WinPaletter.
 
- ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/WT.png?raw=true)
+## Support me
 
----
+[PayPal](https://www.paypal.me/AbdelrhmanAK)
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) Windows Terminals:
+## Languages
 
-- Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
+[Click here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages) to get languages for WinPaletter.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png?raw=true)
+## Do you have an antivirus or browser issue?
 
----
+[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue).
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Colors:
+## Contributing
 
-- You will see perfect results if you force classic theme for Windows 11\10\8.1 (i.e All Windows elements will be colorized).
-- Windows 7 has a classic theme, so it is can be modified without using external tools to enable classic theme 
+We welcome contributions to make WinPaletter even better! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Classic.png?raw=true)
+## Credits
 
-- If you don't use a classic theme (Windows 11\10\8.1), this will be applicable for some Windows Elements like Dialogs backcolor, labels forecolor and hilights only (i.e. not all Windows elements will be colored like buttons, progressbar and tabpages as they are handled/managed by Visual Styles, not Windows Registry Colors).
-
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Win32UINotice.png?raw=true)
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Cursor.png?raw=true) Colorize your cursors, even the animated loading circles!
-
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Cursors.png?raw=true)
-
----
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
+WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Abdelrhman-AK) and the incredible open-source community:
 
 - Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
 
@@ -119,4 +103,12 @@ or 3. Chocolatey: `choco install WinPaletter` or `choco install WinPaletter --ve
 - [Patching PE files by Tyrrrz/Ressy](https://github.com/Tyrrrz/Ressy)
 
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
-Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
+  Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
+
+## Support
+
+If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues). Our community is here to assist you.
+
+## License
+
+WinPaletter is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it in accordance with the terms of the license.
