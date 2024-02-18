@@ -944,15 +944,17 @@ namespace WinPaletter
             }
             else
             {
-                // Edit button is pressed
-                Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-                Forms.MainForm.ExitWithChangedFileResponse();
+                if (Forms.MainForm.ExitWithChangedFileResponse())
+                {
+                    // Edit button is pressed
+                    Forms.MainForm.tabsContainer1.SelectedIndex = 0;
 
-                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
-                if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
-                Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
-                Forms.Home.LoadFromTM(Program.TM);
+                    Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                    Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
+                    if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
+                    Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
+                    Forms.Home.LoadFromTM(Program.TM);
+                }
             }
         }
 

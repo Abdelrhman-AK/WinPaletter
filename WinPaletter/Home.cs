@@ -416,44 +416,48 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.ExitWithChangedFileResponse();
-
-            Program.TM = new(Theme.Manager.Source.Registry);
-            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-            file = null;
-            Text = Application.ProductName;
-            LoadFromTM(Program.TM);
+            if (Forms.MainForm.ExitWithChangedFileResponse())
+            {
+                Program.TM = new(Theme.Manager.Source.Registry);
+                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                file = null;
+                Text = Application.ProductName;
+                LoadFromTM(Program.TM);
+            }
         }
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.ExitWithChangedFileResponse();
-
-            Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
-            file = null;
-            Text = Application.ProductName;
-            LoadFromTM(Program.TM);
+            if (Forms.MainForm.ExitWithChangedFileResponse())
+            {
+                Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
+                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                file = null;
+                Text = Application.ProductName;
+                LoadFromTM(Program.TM);
+            }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                if (dlg.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_OpenWinPaletterTheme })
                 {
-                    Forms.MainForm.ExitWithChangedFileResponse();
-
-                    if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
+                    if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                        Program.TM.Save(Source.File, filename);
-                    }
+                        if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
+                        {
+                            string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                            Program.TM.Save(Source.File, filename);
+                        }
 
-                    file = dlg.FileName;
-                    Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
-                    Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                    Text = System.IO.Path.GetFileName(file);
-                    LoadFromTM(Program.TM);
+                        file = dlg.FileName;
+                        Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
+                        Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                        Text = System.IO.Path.GetFileName(file);
+                        LoadFromTM(Program.TM);
+                    }
                 }
             }
         }
