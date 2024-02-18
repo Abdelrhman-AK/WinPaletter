@@ -12,7 +12,7 @@
 
 #### With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, and Windows effects (tweaks) according to your preferences.
 
-## Key Features
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Features.png?raw=true) Key Features
 
 - **Intuitive Interface:** WinPaletter boasts a user-friendly interface, making color palette management accessible to users of all levels of expertise.
 
@@ -22,7 +22,7 @@
   
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Banner.png?raw=true)
 
-## Getting Started
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/GettingStarted.png?raw=true) Getting Started
 
 1. **Requirements:**
    
@@ -68,7 +68,7 @@
 
 [Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue).
 
-## Contributing
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Contributing.png?raw=true) Contributing
 
 We welcome contributions to make WinPaletter even better! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
@@ -110,7 +110,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [These items are provided by Microsoft: Classic color schemes, Luna theme preview (Luna.msstyles) and Command Prompt and PowerShell raster fonts previews](https://www.microsoft.com)
 
-## Support
+## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Support.png?raw=true) Support
 
 If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues). Our community is here to assist you.
 
