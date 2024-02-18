@@ -8,9 +8,9 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-    WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
+#### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
-    With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, and Windows effects (tweaks) according to your preferences.
+#### With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, and Windows effects (tweaks) according to your preferences.
 
 ## Key Features
 
