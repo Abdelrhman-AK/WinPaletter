@@ -8,8 +8,6 @@ namespace WinPaletter
         public Win32UI_Fullscreen()
         {
             InitializeComponent();
-            retroDesktopColors1.LoadMetrics(Program.TM);
-            retroDesktopColors1.LoadColors(Forms.Win32UI.retroDesktopColors1);
         }
 
         private void Win32UI_Fullscreen_Load(object sender, EventArgs e)

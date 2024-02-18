@@ -52,7 +52,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Return Blurred image
         /// </summary>
-        public static Bitmap Blur(this Bitmap bitmap, int BlurForce = 2)
+        public static Bitmap Blur(this Bitmap bitmap, float blurForce = 2.0f)
         {
             if (bitmap is null) return null;
             if (bitmap.Size.Width == 0 || bitmap.Size.Height == 0) return null;
@@ -69,11 +69,19 @@ namespace WinPaletter.TypesExtensions
                 ColorMatrix m = new() { Matrix33 = 0.4f };
                 att.SetColorMatrix(m);
 
-                for (double x = -BlurForce, loopTo = BlurForce; x <= loopTo; x += 0.5d)
-                    G.DrawImage(img, new Rectangle((int)Math.Round(x), 0, imgWidth - 1, imgHeight - 1), 0, 0, imgWidth - 1, imgHeight - 1, GraphicsUnit.Pixel, att);
+                for (float x = -blurForce; x <= blurForce; x += 0.5f)
+                {
+                    PointF[] destPointsX = { new PointF(x, 0), new PointF(x + imgWidth, 0), new PointF(x, imgHeight) };
+                    RectangleF srcRectX = new(0, 0, imgWidth, imgHeight);
+                    G.DrawImage(img, destPointsX, srcRectX, GraphicsUnit.Pixel, att);
+                }
 
-                for (double y = -BlurForce, loopTo = BlurForce; y <= loopTo; y += 0.5d)
-                    G.DrawImage(img, new Rectangle(0, (int)Math.Round(y), imgWidth - 1, imgHeight - 1), 0, 0, imgWidth - 1, imgHeight - 1, GraphicsUnit.Pixel, att);
+                for (float y = -blurForce; y <= blurForce; y += 0.5f)
+                {
+                    PointF[] destPointsY = { new PointF(0, y), new PointF(imgWidth, y), new PointF(0, y + imgHeight) };
+                    RectangleF srcRectY = new(0, 0, imgWidth, imgHeight);
+                    G.DrawImage(img, destPointsY, srcRectY, GraphicsUnit.Pixel, att);
+                }
 
                 G.Save();
 
@@ -221,22 +229,21 @@ namespace WinPaletter.TypesExtensions
         {
             if (bmSource is null) return null;
 
-            using (Bitmap B = new(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb))
+            Bitmap B = new(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb);
+            using (Graphics G = Graphics.FromImage(B))
             {
-                using (Graphics G = Graphics.FromImage(B))
-                {
-                    G.Clear(Color.Transparent);
-                    G.CompositingQuality = CompositingQuality.HighQuality;
-                    G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    G.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    G.SmoothingMode = SmoothingMode.AntiAlias;
-                    G.CompositingMode = CompositingMode.SourceOver;
-                    G.DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight);
-                }
-
-                B.SetResolution(TargetWidth, TargetHeight);
-                return B.Clone() as Bitmap;
+                G.Clear(Color.Transparent);
+                G.CompositingQuality = CompositingQuality.HighQuality;
+                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                G.SmoothingMode = SmoothingMode.AntiAlias;
+                G.CompositingMode = CompositingMode.SourceOver;
+                G.DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight);
             }
+
+            B.SetResolution(TargetWidth, TargetHeight);
+
+            return B;
         }
 
         /// <summary>

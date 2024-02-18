@@ -186,29 +186,377 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>● WinPaletter now introduces a new feature that allows you to increase your control over Windows aspects. This will be helpful for users who don't want to change a Windows aspect they like (acts like a secure lock).
+
+● For example, a user edited Windows Colors to an accent they like and doesn't want it to change again with any theme. This user can enable this feature and uncheck Windows Colors to disable editing it in the future.
+
+● Another example is a user who likes their own Metrics and Fonts; using WinPaletter's store may override their preferences. This user can enable this feature and uncheck Metrics and Fonts to disable editing them in the future.
+
+● You can find this feature in Settings &gt; Aspects control.</value>
+  </data>
+  <data name="banner13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAO1SURBVEhL7ZXZT1tHFMb5C9uoNGlDi8Bp7RAcmpI0tE1DAhhjB8xmFrMFvIE3vGDjfb/YODZk
+        UZKWTVEi5fGqpBFSXr+eGS6RK13XfqAvVY70SUczvt9vzsw5ctOn+P+Fsuv2nuqHHlFrML6jXJRTT+/g
+        n0xye0zsW+ZB+Z5kWzu+uPSN2KpQYrtUBuWympw2ccntMbFvv21XslyUbGtH29WuD4qOGzgPMS/Jtnbo
+        xk0nDybmoWcan4NuzMQ1NDoLrWGGNI3BEaYpaIaN0DwwYkA/iX79BPp041z3h8ZwXzuKXo3hRLKtHcLu
+        3rGwu4/8zh5y5d+RefQC6e3nSBafIbH1BDHhMaK5HYSzZWwkCni46seS3YsF2zoWrB7MWVwwmZ1YXvPB
+        EYgdS7a1Y+vxgchhFQZ7WQV7WgWrYDP9CFZPCDd6fpNV7+AIHP5Y/TckmJguPf9YBTMOprZ5Nf74FnzR
+        PLyRPILJItyhDKaX7JhatMG4YMXkvAWTcxZMmMyYXV7Dmq8BYK7yh+jKCuh47YTqjSSWV6nz0AV3MIUA
+        HcAfFegAOVYNZgji2kjSVcYZDHZvpD4wW34p2nI5KN46/lVr/gT8sVOYO5SGxmDEr/16mFacHLbqjcDm
+        CdcHZkovREs2IwupFjP10dU6qaI5ahIXVewMJOggMYzNLsO2HobVHaoPTBcJmEnLQqq16o3Cs5mh5hjG
+        8NQihzn8cb6uvN7N39PiCtYHUkeK5lRKFlItuyfMgfM0BiPG+VOYLwo7VXbrTh9WHAGYHYH6wEThqbiS
+        SspCqmV1b9Lb0TXSlZqdGzT4NPBaA0ZnlvgMsrWGgDRroieWw1DRD03RB03Bi4HCOvq3SIIHfXk3NGkX
+        vVHkHx05Or0EdfcvBKPKCNZwhbH8rhiRBjuYlOYvdjp/6+Esv0bWIAxmpTkczj+DPvcEU5ECVugQQ6kK
+        tKSxcL4xYCS3I4YzZYTSJQ4MxBlQ4B3JgTQCZx1pihehOHoPxeFf+LlyhNlACu0H77hu7rxqDEjD/GFT
+        gp1WR7Cz6qpgrP1ZR0rtzzqSX2O1Fm2e+v8W6p/unlzvuYfzEPOSbGvHZ81fH19RqnHxchs61D/i8+bL
+        XCxv/qoV31/t+rjGcrZ29rsLX7bw/FJLOxTKTjAvybZ2tLSpxGgiBd3IOPYPj6Akg9bvruHV6ze4N6CD
+        UNhGS7uKSyiU+Brba73SAZW6G/sHh9AZJhCJJ8G8JNvaca37zu3Om3f7zkPMS7L9FP9VNDX9DQu4fKUK
+        nqsJAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.</value>
+    <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
+
+● This is not the final look. In the new beta releases, UI changes will continue to be made, improved, and any discovered bugs will be fixed.</value>
   </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>All aspects will now include a toolbar featuring a simplified button layout (instead of the old and condensed buttons). Additionally, a split button is introduced to provide more functions, such as importing schemes from Windows defaults or current preferences.</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>All aspects will feature a toggle controller (including aspects that didn't have it before, such as Windows Colors and Classic Colors), allowing users to control all Windows aspects and disable aspects they do not wish to modify.</value>
+  <data name="banner1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAjBJREFUSEvt
+        lU1o02AYxysy8TovIoJfJ12dDBwo7OAm4oRRmYNaheKhgiB48OasOkR28yATZOhRmGI+sJq3c5Q1WWuX
+        sRq1RFqEIDKPce3ssqUyWB6fN7we5uysjfWy/eDH+5X+/6XtS33rD4Dg5krq7l498n2fF2kGzWKx1YGP
+        lyfs1KCRu7AIXqQZmKWw2OrgQ6Y9ccd4H14EL9IMKFw0WWx1IB827cQ14935BfCilYh+cfRzJUFS9nMc
+        V/2jhdxp0x67YrwNWeDFr6/6oaL1AU9k4IiceqhpTaxiJY7WZVokYmjBefAizXCyHeYIed2MpQtCXD7C
+        KlbiTLebVuys8aavDF60YiHDUVvd7xALTV5SOt2CX1lWW4bnuVAm21sGdImNVBP9VKvW8zPp5Un/A5q5
+        ZiElGyj6pwPfQO0ub8NxJhso3wMfbGLHf01NhVM9c0DnOObUwFyve1AnWDjLvZSPseVqMt1Fv3qq5BZm
+        TpR25YOwxT2oAXEsvUMclTsEooTx1zmAZc9Q+8mL8e3skdWox2d3Tp4szrDlbxHiSjtPklcx7D4vJSUc
+        82gFpVdhCTV4oiT4uDIsjipH2cvqA995Dw3nJHlKkOQRgSQHBSJHRDLeJcaTu9e86PXAS/IQFj5iy8bS
+        efvz1qGn6cfUPThn242jLVqIHYrm4eCND9ByS4+x7cbRdr2g/Cw8cFP/89+PVzYK/znroPB/X4vDl7Sm
+        1n69mUrnbHsDhs/3A0yv0sTFrzXoAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Some aspects (Windows Colors, Classic Colors, Cursors, Metrics, Fonts, and Wallpaper) will have two modes: Advanced Mode and Simple Mode. This change aims to make modifying Windows easier for users who found WinPaletter complex to use.</value>
+    <value>● Some aspects (Windows Colors, Classic Colors, Cursors, Metrics, Fonts, and Wallpaper) will have two modes: Advanced Mode and Simple Mode. This change aims to make modifying Windows easier for users who found WinPaletter complex to use.
+
+● All aspects will feature a toggle controller (including aspects that didn't have it before, such as Windows Colors and Classic Colors), allowing users to control all Windows aspects and disable aspects they do not wish to modify.
+
+● All aspects will now include a toolbar featuring a simplified button layout (instead of the old and condensed buttons). Additionally, a split button is introduced to provide more functions, such as importing schemes from Windows defaults or current preferences.</value>
   </data>
-  <data name="label26.Text" xml:space="preserve">
-    <value>Palette Generator: Improved performance and bug fixes, featuring a trials panel that records previous attempts to generate a palette, making it easier for users to revisit and select a preferred trial.</value>
+  <data name="banner2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAABGFJREFUSEvV
+        lltMHFUcxonxwRhTCTWpffCpiU++GF+axhib+NDEh2rirbERm9gtBMutwHbvs7szOzsLu7MzMLvcKxS6
+        mFpIW9ASpUTaEmi4yMVFXCKQSAvUy0Jhq9jyec7uWYKJGmB50C/Z7OTk/M8v55zv/82k/a/Fcdzjdl/F
+        UZ/Pl8GGdl9eVX2RPaYJcoWbL6uAs1QF51a+YcO7J9EfvCnKGly+wKzgpT8NFGj3UKB/hU3bHYn+QFCU
+        gxDlAAFqkPyV0Gob4a+sjwMtogyjIOew6alLUqoOJ2AB1J9vwcDgIMLhMCKRCAaGhuFRq2F0lkHv8MQK
+        ra5BVpaaCPCRQnY0PDyMxi9u4zV7O477OjHy3Q8YGw/D4ChFsc2NfLMAHcc9w8p2JtEbMNDdXWy7iqGR
+        cTyra8HTHzQi/f06fFjWgWg0Cqm8GoUWEblGHtkl3BusdPuSlGAThdG7u9zRiYHRCaRnJmAZ71XiTe4z
+        rK6uQqluQL5JwMdGJ09a5glWvn2JXq2Fwqgr65s+xczMDIpqu7H3WCUOZFaiayCC6NISvT/kGpxTrGzn
+        ktSagxQmeEnPkTboudWHxcVFTP+4gF+jy4g9eICGljbkmXjk6LlZVpaaeK92yCVpbzk86gppcjSEWtHd
+        04vO6z0o0+pQYHbhtMGJ7GIO2WcsL7Gyvxd37ly62x+8RvpszaNoR9gwPUob2dVvpLnrADxGx6yScsIq
+        +mEWfIk2sHuoUdbziFFy9HZkFVl64sX/JEGpfcEtB2LJphZ9wfVEklTM0yOkSeIoLYdDUuaJEZ4iwMMW
+        lwwT78VZO2kDzmWm6+SY+Feyiq2B+KL/JlVV95DIWk82ddIcm2F26a/RRWCHDM6yULHN08CGtieyw4cU
+        5tNq0Hq5Azdu9uJWbx8uXfkcLm8ANrcfFpd/kU1PTYIS5ClMCdahr/82xsbGMEJSY/L7qbj9aYIQw8Tv
+        zCrIr7Oy7UvwaQXk3maTx9jV/XUclhXoQsaJC9h/shlyaz8WFhZwnbjRSO5M7yxdL7FJkwUm91G2zNZF
+        YKNJWCkJXgoLfTmAPZnNLLLqse94NSIzd3Dn7jzOkpws4SScsYrIMwshtszW5ZKDU0mD+MlxTkxMQG3r
+        24BlHKvC3nc09I9PY2l5eQNGg/m00dHOltm6CKgn6Ub6Hw5PYOjbCA6catqAvVp4Hsv3VzA1PbsBI9FF
+        +01ly2xPbqXqZWL9n6j1L7a1Y25uDqOTM3A130B5K4mvn6NYW1tDVUMoATPy4ZOF3POsfGfyerXn7JJC
+        +wxXr32FxXv3sEyOMBaL4f7KKi5cuhKH5Rkcv9OPJlaWmmyi/AdND2p9nhip6pMQgvXN5JPBu+kYHXfZ
+        9NTESerBJIxaf7MbN90ZyUjbo7dJtLGy1GQSvDVG3rdOYXrOHSk2e46QV827uQb+Fwo7VcQ9/KjIlM+m
+        744EoWaf3uaW09ISbwUqnVHen11kdet0uifZ0H9daWl/Anl0KujaSxV4AAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Windows 11/10 Accent Colors Generator: Modify the titlebar color, then click 'Generate Accent Colors from Active Titlebar Color' to have WinPaletter generate nine accent colors based on this selected color.</value>
+  <data name="label7.Text" xml:space="preserve">
+    <value>● Fixes in previewer and performance improvements.
+
+● Per-element modifier; click on an elements on the preview to change its color.
+
+● Windows 11/10 Accent Colors Generator: Modify the titlebar color, then click 'Generate Accent Colors from Active Titlebar Color' to make WinPaletter generate nine accent colors based on this selected color.
+
+● Palette Generator: Improved performance and bug fixes, featuring a trials panel that records previous attempts to generate a palette, making it easier for users to revisit and select a preferred trial.</value>
   </data>
-  <data name="label21.Text" xml:space="preserve">
-    <value>Known issue: Due to these changes, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.</value>
+  <data name="banner3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAPdJREFUSEvt
+        lk0KwjAQhecMgoL4s/NIXsA/UFdCTaoFdaHo6cSSpNfRJFqqySSlWMFFHnzQdJL3IIRhIOi3WmcDoPwM
+        hF+cUHGC5NaBbdaGWBzRPTnKS3k6RcRebrqXQvgCCBujNRPl6VTMDughmyXEfIL8t1GeToXAghBY8F+B
+        VOzQQxZsLo1GeM1EejpFRV92j5kXyqewuTZhJRpyPSxFdSWnVCDlRF4XdUJZpAOjtKW/sT05yithvZc7
+        oipXqsFqJr4rrfJonmC1T2p7pSEwJwSih2xqCqw0Ykiwmol3xFADD9Yx3tHdQ7YrknbRuol3iAr6WgAP
+        W0D4JpGGjtQAAAAASUVORK5CYII=
+</value>
   </data>
-  <data name="label25.Text" xml:space="preserve">
-    <value>Sounds: WinPaletter will no longer install System Events Sounds by default at application startup. Users can manually install it in the Sounds form or Settings. However, if already installed, it will be updated automatically with a newer service version if available.</value>
+  <data name="label11.Text" xml:space="preserve">
+    <value>● Per-element modifier; right click on an elements on the preview to change its color.
+
+● 3D and flat degrees modification in 3D objects improved.
+
+● Magnifier: Use it to view small details in the preview, such as shadow borders and dark shadow lines. This feature makes it easier to utilize the per-element modifier.
+
+● Schemes Gallery: Preview all Classic Colors schemes in a single form, aiding users in visualizing and selecting their preferred scheme.
+
+● Fullscreen Preview: Expand the preview to fullscreen for a better examination.
+
+● Resolved exception error when importing from visual styles designed for Windows versions newer than XP.</value>
+  </data>
+  <data name="banner4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>● Per-element modifier: Click on an element in the preview to alter its font and drag-and-drop to adjust its sizes.
+
+● Resolved a visual bug related to applying fonts with high DPI settings, preventing issues such as small or large fonts and irregular icon sizes not aligned with the selected DPI (scaling) value.</value>
+  </data>
+  <data name="banner5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAABG9JREFUSEvl
+        Vl1MHGUUPcZYtT5ojL76YEz0uYnRGGO18aEPtjGpJiZNYx9ILKbUUqlFrLCwi9CALFoimNLwoyt2Zflb
+        BNoFgUKptNBCC7UpYiu0Sn8Q2J+Z2R96PbM7wMIulQcwJp7kZmZnds+5373nft/i/wVTWdlDxu3aw/J5
+        0V7G7LHKXUeDQ3htvAEb5SrWLoGsPKsjI7dQjtl2im8Q0lsAufsrZLgMgTsduDZxAueZRI/Sh/yR72EP
+        DWMrP2+bacczYsf9Bs3KkZGTU59myRdb+Q7x9kUEZy9BrjdAvL2QWy7IeD3veyLvguchg1/zeQu/U4vZ
+        kW/h83RicLgUo/5evCmC+wzq+Egzm+tTMnKl4sh28ZPsmgMS4kpDAxHyYD+DiXg7IWcoGGASf52AqN28
+        HofcZDIzTEpPxn8yHPZ7iu5Pz6z7IM0iR796Z548eJbEZyLkgZ8ZpxmnIFPNJOwyiJmAv4PRDnHz+Vkr
+        RGtlUDzQgg0GfSzeP5BZmPiRSWwlb3hIHAywdDq5nyuIR679xGgzyLlSjatUWV7vj7w2MXjVTiLZoI9F
+        UlLSgwl7D27Sr/pn6cHDJHtabcfL/ja8zThA4i8YdpJ3q80YZYTmyNVGiOJksOdKXSQZJl0QJl8tyHE8
+        4nfiObUGm1QHdngcODjpQBcr4dd7H+hYoeBULR77vQbv0vpvXa1G8XQnLH80o5IubfKcQtVwOcZpKNfl
+        CkxOujA2Xgv3le8Q9LDsYQfP9b9tBYKzF7Db0wOP/kPdpRePQO6wTzdYqtEqyDwpCf/kMx/762ZPdce6
+        2Vf93Vz/1VZ8ZtDGR6AfL9Khd6NJNd2ZUU710TjnihZIA7qpDGNpfHejesFc7OMWgzo+KPCJTuon2U0a
+        YBGp7tSlbl3q2DnXciRorglx4VGDOj6CvbAbQ7toBGLGYIE0PA5zI0HXRkaiCad9zXjeoF0eLF9HVJYB
+        xm8kHSBhp9ICJ0ltJCvWmpCrNHJMmpCoOrFdc2KLVofXef+q24knDLp/htZFQYr5ejD1yzcYmR3BvrFG
+        ZE91Y+vtNmwYseNJ46urA5ayhaOwaPO+WAqZZEnHOMxXbOFktIFiBGmuPrp26HYzqm414svrDpiZ8Obx
+        arwgfXigoKD08dzCkldEZPn9lCRWXUThXtpPJ4YusLQUD3Dz9tI80xTmiRCxPl17uZz7Kvs39gOTqeDm
+        zXv9HXuuVZQkK+a8w5KVX5Rg0MciNMRhp8j8CXGOEb2JR49F1B6r0lA+tmKahtEFdUMdLkyVT3Oskp5t
+        NRn0sWAp1nOV/fMiS06JeZEoB4fda7hW0VfLsututeanSGpWnqRmHlpeUIcMYx0FEhg2igxQZCJGJHre
+        okciahM/lJMsH6bnyL707HsLxgP/QqxTXXhKacNLfhe2UWSP1oJcilRSoJVxydeAGYWHsH5SKDUQS9Ye
+        SfrYLLtTzRkGzepDnFjvtuNZ1Y6NmaZdrYkpGcH39ps2G6/XHjtNpn/vb+d/BMDf8hvgEeA9r7kAAAAA
+        SUVORK5CYII=
+</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>● Enhanced rendering of classic styles, introducing pixelation for a more accurate and similar appearance to classic Windows cursors.
+
+● Fixed: the center point animation of the hourglass in classic style.
+
+● Known issue: Higher DPI scaling will render classic cursors wrongly.</value>
+  </data>
+  <data name="banner6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vgAADr4B6kKxwAAAAl5JREFUSEu9lT2rGkEUhk1CiqRIEUIKY/D7CxFFkSuk0cYuQoqo2FxsxB9gkUqw
+        vdhZhKQQ0sktrcRKQS6mUCEQDDGiqVIHQj7W9Z6cIwjD8mr2FpviYd13z8yzM87M2ojovwJDK4GhlcDQ
+        SmBoxOv1+lwuVwg9uykwVBERCzVm63Q6X6CamwBDFbfb/ZKhZrN57fF4dvwC56jOLDBUOQg3mw21223i
+        kYr4Fao1AwxVVKHQ6XREuvP7/Rc2m+0WanMKGKoYhUK32yUW6oFA4C1Lb6N2x4ChChIKvV6PwuHwlqWX
+        yWTyLmqLgKHKMaEwGAwoGo2KdOBwOO6h9kZgqHJKKIxGI0okElooFLry+XwPUB8qMFT5l1CYTCaUTqf/
+        8Eg/MI9QPwdgqGJGKMxmM8pkMhoLv/D0PkF9CTBUMSsU5vM5ZbNZjRfTFepLgKHKKWG/36dqtUrFYpFy
+        uZyeSqW2wWBQZ+FH1JcAQxWjcL1eU6vV2l8XiwVFIpEtnzyfmNd87DX4WuGD4THqS4ChiipcrVZUqVQ0
+        uZfNL1mj0SAe1drsAQBDlYNwuVxSuVz+ySP4zSP4ViqVdiKcTqfE20HnmueovREYqsgnSYT5fP4Xy37w
+        fZbvq/z7ejwe70dZq9XkmHuP2huBoQov8Yd8bn7mUX3l/+hMMrvdfp+z7/V6fS8cDockL8U1z4ztjcDQ
+        DCy44NWoy8IRaaFQ0HhqL1GtCgzNwEInT+uOP8zycaZYLKbz8fYG1arA0Cw8he9kKuPx+Jpl57xS76A6
+        FRiaRbYCS5+iZ8eAoZXA0DrI9hcDiHZPyKAfHAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>● The JSON read/write mechanism for the terminal has been upgraded to improve code readability for developers and enhance the structure of theme files to match terminal JSON precisely. 
+
+● Known issue: Due to these changes, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.
+
+● Fixed a bug in creating a new external terminal (incorrect registry key path).
+
+● Resolved issue where opening PowerShell for testing launches 'takeown' PowerShell executable instead of the intended PowerShell.</value>
+  </data>
+  <data name="banner7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAoZJREFUSEvt
+        lbtOYlEUhs/bjJUzIYjcBUSuQsJFI7VEFCgECkNIeAAKbhZAA1Q8AjR0FCQohILHsLUky732nIWbcw6Y
+        IdPMxJ18ETDsj/9n7Y30vf6fNZvNfr2+vl5pwf4X7XQ6V/tIp9PRu7u7Ky1SqdRPWfN7sU2PGGsGaPHy
+        8vLGNoV9sE3f2Oawg/XDw8MPWSdJbEOHloj4C0K4v793yDpJ6vf71/V6HURqtRqnWq1CpVJ5LxQKkM/n
+        N+RyuQ2Pj48Qj8ffGRCLxTjRaHSLRCJxLeskqVgs3gaDQUACgQD4/X7w+Xwcr9cLHo+Hc3FxAW63G87P
+        zzkulwucTifH4XDA2dkZ2O12js1mA6vVyrFYLLj3rayTpMvLS4coIyHKSEgyEqKMhCQjIcpIiDKz2YyP
+        PytFIcrEdJSKZLvSoWxXOpSR0Gg0qoWUjj2HwWAAbNS3ZGI6ZZViOrFKlO0VYoWtVguWyyWfUDbOe6sU
+        0ymrJKHJZFILqUokHA7DaDTi0vl8DtlslksOqRJlKiGTbIQ0JKFQCIbDIZcuFgt4enra1PgnVcoytZBk
+        JMQKb25uYDKZcOl0Oj20yv1Cmkw8rM1mE56fn2E8HkMymVSlU1YpphOqhNPTU7VQTBeJRKDdbkO324VG
+        o8GnVkynrFJMp1HlbiFVWSqVoNfr8TsSrylllfgaDhKRyWT4ESJwshF8H8oMBoNaSFXSmSuXy1syMR1W
+        vVqtvoRd2BuhXq9XC8UDjiJCWSVe6loCJfi9o+zk5EQtFG+Ur64vrSmkJIKA/9UUsnRHTLamdIdeX+JU
+        0gdAGWPNhJ8/wLiY5JjJthYTqWASFUyigkk26HS6Y1nzvf75JUkf6BLuh8nJ5pQAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label47.Text" xml:space="preserve">
+    <value>● LogonUI now supports preview for Windows 10 and 11.
+
+● Screen Saver: Lists installed screensavers on the system to assist users in selecting one.
+
+● Sounds: Added a 'Restore Defaults' button to facilitate the restoration of a sound entry.
+
+● Sounds: Added a 'Restore Defaults' button to facilitate the restoration of a sound entry.
+
+● Sounds: WinPaletter will no longer install System Events Sounds by default at application startup. Users can manually install it in the Sounds form or Settings. However, if already installed, it will be updated automatically with a newer service version if available.
+
+● Increased speed of Wallpaer Tone previewer.
+
+● WinPaletter Application Themer: Introducing new colors for errors (secondary color) and tips (tertiary color), along with an option for animations.</value>
+  </data>
+  <data name="banner8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAUtJREFUSEvt
+        kr1OwlAUgK9OEhkMDi4mlFAQremPg6FEeBlDfA0Xw2OYaPhrVKjRUAKEzZXwBAyU/mFbdIdjjRcsVnTX
+        +43nS+6Xe3IQgUAg/APEp2FI6Lg5RnE5PFrmHNaFti0KDVtEAGt4ugTfdXlWcbJUd7CBR9/DdK2w0Hb7
+        rGID8zCGVN26wOoDL3DUcmWuacPh4zPs18e1r1GhMyksvGz12KaxiVUQvjXJ+2KQvDGmVG2whTXiO3bG
+        9xgkbw2gK0YaayQqLxHPz+Z+784EWjJOsQ7CNZwzXwziFX26Kw0jWCOu5Zz4Y/GqDtHyKIM1Om6/bnt+
+        9hnTIVbW8lgHYSQr7MX6OAaxohpYaUo25XmMKo4CKz24twqLWEnr7Vz9sNJ3vB+FElUtF7tWVx4NLZli
+        tKSuPJqEpPLez7LU5S9HQyAQCH8BhN4AS5PNoMBFWtIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label48.Text" xml:space="preserve">
+    <value>● WinPaletter now introduces a new feature that allows you to automatically backup your themes.
+
+● Backing up before applying themes is enabled by default in WinPaletter.
+
+● You can also back up upon application startup or when opening a theme file (these options are not enabled by default).
+
+● You can open theme backups from the toolbar on the home page (main form).
+
+● You can control the backup folder location and other settings in Settings &gt; Themes Backup.</value>
+  </data>
+  <data name="banner12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA3xJREFUSEvl
+        ldlrE1EUxqtPgohL0VahzWSaNGmTSdoXsaKgoLg9qEifrIJQVPwjxAdXrCCCGypqlkkTuyRtOtmsfdcH
+        FwT1wRbqZJbMYoso2qa9nju5qYR20qbQJ3/wPeScm/nmnnvOnar/j5rH4+5tj8aOkp9zuJKTm7xJ9VRL
+        Sr/qTal+rJa0fsWb1js8qR9byLLKqX042l77cCy/9f7Xk/i3h9N2MJzCMZw6zSQ05MFKasiLlcLSERjP
+        tKa1Ye+wut14SCUYhve/ouqb7/84esVhd1xF7qGCwNSQYbqw8WxrWn+wZ2RsDXnc4tTeG22v7nqH7BH+
+        t2tQQa54QWCsgwKuIa2TSar7GE4/xCT0s1CBHk9K+1VqrL1Zcpm33P54mmbH880DOdQ8oKBmbDqgJBwx
+        ZR1ZMo9W7sdmJqndgh3nC6ag9PfXnpS0liwxp+7Rly5nNIeaYgUZxoPKVNOgepwsMQXvHEwnjFKDKez8
+        GUmZY2P5Nme/nHFGlUwTVqwg2G20CqFVZJkpYHYQzjePTUGz3oy+i6RWDjen3mYSpLmSWoKEVw4mPrER
+        uvmn0dUJddo1lKslqWVwCa1ufam1YZUrsZvTQsVRcifUDhKuEDCAN44Vm6Ilo/ebmbri6oW5GebUyyRc
+        Gc6ovLPQuTAqZEbxTUTSJTQN5g4X1zBxdfFuXQg6kttl75FQY6+EHH0ycvTLCL8ESZcAY3TMmGHDNHeX
+        hCsEymdlxRgdEhDdLaCGsGRa0uaocu7f5ZG7RsLLAJrG8pxvwyrXNFD6cPHycA3IJ0h4ZcBjAZfHhHFj
+        RXMzzj6+mqTmQ7GC08oKGZoVb5BQxcD5Xi+esaNfGiLh+dQHZZoKCFNUMIuooDBlDQm7SWrJ2Pvk/dBU
+        +cZeMANTZ5/cRlILQ/mzYUsADLGCWd0S5PeS1KLYeuQD9hfSpNHJIEevFCQpc6inYxssfv6zxZ9F2Bg0
+        TbHZizU+808NHdHX28PiTVtEnAYhMEW2F9IHT5n/lGANCpZ6H/8JjA3T4m7B+AkV4s/TIfEIVkO3cJbu
+        FkMwIpMNYRHGRETY0BaR3jpCyjbyuKWBd1rvywbqsWmpsSEriyUgOGc0N5fGbIrhch/rRaH83/bU+fgR
+        MJ4tY5ynWeHVcprMFFzmOn/2jMWXvQPGIUuA90ODXQezTisr15Bl/z1VVX8BgOyGwG1cF0AAAAAASUVO
+        RK5CYII=
+</value>
+  </data>
+  <data name="banner9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="label34.Text" xml:space="preserve">
+    <value>● Command lines changes; type 'WinPaletter.exe -?' in any terminal for help.
+
+● Replaced 'Save theme file and apply theme on exit' dialog with a straightforward Windows dialog.
+
+● Resolved an exception error that occurred when applying a theme in a separate thread, ensuring the program does not exit before the thread completes its task.
+
+● The mechanism for downloading data from the web has been improved, transitioning from WebClient to HTTPClient.
+
+● Addressed increased memory usage during cursor rendering and after closing Wallpaper and LogonUI forms.
+
+● Remove all registry residuals during uninstallation.
+
+● Enable the 'Colors history' feature within the 'Custom colors' section if the Windows Classic Colors picker is enabled in settings.</value>
+  </data>
+  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
+        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
+        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
+        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
+        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
+        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
+        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
+        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
+        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
+        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
+        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
+        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
+        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
+        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
+        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label39.Text" xml:space="preserve">
+    <value>● Resolved exception error with ITaskbar3 on Windows XP and Vista.
+
+● Fixed exception errors occurring when applying cursors.
+
+● Fixed error when applying Windows 8.1 lock screen background and Windows 7 LogonUI background.
+
+● Fixed bug applying dark mode after opening WinPaletter Application Themer with light mode.
+
+● Fixed sync issue between WinPaletter and Wallpaper change preview and automatic dark/light mode.</value>
+  </data>
+  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
+        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
+        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
+        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
+        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
+        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
+        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
+        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
+        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
+        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
+        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
+        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
+        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
+        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
+        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
+        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -290,10 +290,10 @@ namespace WinPaletter
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Variable Display", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 98);
+            this.label2.Font = new System.Drawing.Font("Segoe UI Variable Display", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(35, 96);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(445, 40);
+            this.label2.Size = new System.Drawing.Size(445, 42);
             this.label2.TabIndex = 1;
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -302,10 +302,10 @@ namespace WinPaletter
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Variable Display", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(184, 44);
+            this.label1.Font = new System.Drawing.Font("Segoe UI Variable Small Semibol", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(94, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 55);
+            this.label1.Size = new System.Drawing.Size(332, 84);
             this.label1.TabIndex = 0;
             this.label1.Text = "0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -326,10 +326,10 @@ namespace WinPaletter
             // 
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 146);
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 38F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 144);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(514, 60);
+            this.label3.Size = new System.Drawing.Size(514, 62);
             this.label3.TabIndex = 2;
             this.label3.Text = "0";
             // 
@@ -337,10 +337,10 @@ namespace WinPaletter
             // 
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(3, 206);
             this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(12, 3, 0, 0);
+            this.label4.Padding = new System.Windows.Forms.Padding(9, 3, 0, 0);
             this.label4.Size = new System.Drawing.Size(514, 60);
             this.label4.TabIndex = 3;
             this.label4.Text = "0";

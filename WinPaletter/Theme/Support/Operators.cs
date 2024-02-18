@@ -8,100 +8,109 @@
         /// <returns></returns>
         public override bool Equals(object obj)
         {
+            if (obj == null || GetType() != obj.GetType()) return false;
+
             bool _Equals = true;
 
-            if (Info != ((Manager)obj).Info)
-                _Equals = false;
-            if (Windows11 != ((Manager)obj).Windows11)
-                _Equals = false;
-            if (LogonUI10x != ((Manager)obj).LogonUI10x)
-                _Equals = false;
-            if (Windows81 != ((Manager)obj).Windows81)
-                _Equals = false;
-            if (Windows7 != ((Manager)obj).Windows7)
-                _Equals = false;
-            if (WindowsVista != ((Manager)obj).WindowsVista)
-                _Equals = false;
-            if (WindowsXP != ((Manager)obj).WindowsXP)
-                _Equals = false;
-            if (LogonUI7 != ((Manager)obj).LogonUI7)
-                _Equals = false;
-            if (LogonUIXP != ((Manager)obj).LogonUIXP)
-                _Equals = false;
-            if (Win32 != ((Manager)obj).Win32)
-                _Equals = false;
-            if (WindowsEffects != ((Manager)obj).WindowsEffects)
-                _Equals = false;
-            if (MetricsFonts != ((Manager)obj).MetricsFonts)
-                _Equals = false;
-            if (AltTab != ((Manager)obj).AltTab)
-                _Equals = false;
-            if (WallpaperTone_W11 != ((Manager)obj).WallpaperTone_W11)
-                _Equals = false;
-            if (WallpaperTone_W10 != ((Manager)obj).WallpaperTone_W10)
-                _Equals = false;
-            if (WallpaperTone_W81 != ((Manager)obj).WallpaperTone_W81)
-                _Equals = false;
-            if (WallpaperTone_W7 != ((Manager)obj).WallpaperTone_W7)
-                _Equals = false;
-            if (WallpaperTone_WVista != ((Manager)obj).WallpaperTone_WVista)
-                _Equals = false;
-            if (WallpaperTone_WXP != ((Manager)obj).WallpaperTone_WXP)
-                _Equals = false;
-            if (ScreenSaver != ((Manager)obj).ScreenSaver)
-                _Equals = false;
-            if (Sounds != ((Manager)obj).Sounds)
-                _Equals = false;
-            if (Wallpaper != ((Manager)obj).Wallpaper)
-                _Equals = false;
-            if (AppTheme != ((Manager)obj).AppTheme)
-                _Equals = false;
+            Manager TMx = obj as Manager;
 
-            if (Cursor_Enabled != ((Manager)obj).Cursor_Enabled)
-                _Equals = false;
-            if (Cursor_Arrow != ((Manager)obj).Cursor_Arrow)
-                _Equals = false;
-            if (Cursor_Help != ((Manager)obj).Cursor_Help)
-                _Equals = false;
-            if (Cursor_AppLoading != ((Manager)obj).Cursor_AppLoading)
-                _Equals = false;
-            if (Cursor_Busy != ((Manager)obj).Cursor_Busy)
-                _Equals = false;
-            if (Cursor_Move != ((Manager)obj).Cursor_Move)
-                _Equals = false;
-            if (Cursor_NS != ((Manager)obj).Cursor_NS)
-                _Equals = false;
-            if (Cursor_EW != ((Manager)obj).Cursor_EW)
-                _Equals = false;
-            if (Cursor_NESW != ((Manager)obj).Cursor_NESW)
-                _Equals = false;
-            if (Cursor_NWSE != ((Manager)obj).Cursor_NWSE)
-                _Equals = false;
-            if (Cursor_Up != ((Manager)obj).Cursor_Up)
-                _Equals = false;
-            if (Cursor_Pen != ((Manager)obj).Cursor_Pen)
-                _Equals = false;
-            if (Cursor_None != ((Manager)obj).Cursor_None)
-                _Equals = false;
-            if (Cursor_Link != ((Manager)obj).Cursor_Link)
-                _Equals = false;
-            if (Cursor_Pin != ((Manager)obj).Cursor_Pin)
-                _Equals = false;
-            if (Cursor_Person != ((Manager)obj).Cursor_Person)
-                _Equals = false;
-            if (Cursor_IBeam != ((Manager)obj).Cursor_IBeam)
-                _Equals = false;
-            if (Cursor_Cross != ((Manager)obj).Cursor_Cross)
-                _Equals = false;
+            if (Info != TMx.Info) _Equals = false;
 
-            if (CommandPrompt != ((Manager)obj).CommandPrompt)
-                _Equals = false;
-            if (PowerShellx86 != ((Manager)obj).PowerShellx86)
-                _Equals = false;
-            if (PowerShellx64 != ((Manager)obj).PowerShellx64)
-                _Equals = false;
-            // If Terminal <> DirectCast(obj, Manager).Terminal Then _Equals = False
-            // If TerminalPreview <> DirectCast(obj, Manager).TerminalPreview Then _Equals = False
+            if (Windows11 != TMx.Windows11) _Equals = false;
+
+            if (LogonUI10x != TMx.LogonUI10x) _Equals = false;
+
+            if (Windows81 != TMx.Windows81) _Equals = false;
+
+            if (Windows7 != TMx.Windows7) _Equals = false;
+
+            if (WindowsVista != TMx.WindowsVista) _Equals = false;
+
+            if (WindowsXP != TMx.WindowsXP) _Equals = false;
+
+            if (LogonUI7 != TMx.LogonUI7) _Equals = false;
+
+            if (LogonUIXP != TMx.LogonUIXP) _Equals = false;
+
+            if (Win32 != TMx.Win32) _Equals = false;
+
+            if (WindowsEffects != TMx.WindowsEffects) _Equals = false;
+
+            if (MetricsFonts != TMx.MetricsFonts) _Equals = false;
+
+            if (AltTab != TMx.AltTab) _Equals = false;
+
+            if (WallpaperTone_W11 != TMx.WallpaperTone_W11) _Equals = false;
+
+            if (WallpaperTone_W10 != TMx.WallpaperTone_W10) _Equals = false;
+
+            if (WallpaperTone_W81 != TMx.WallpaperTone_W81) _Equals = false;
+
+            if (WallpaperTone_W7 != TMx.WallpaperTone_W7) _Equals = false;
+
+            if (WallpaperTone_WVista != TMx.WallpaperTone_WVista) _Equals = false;
+
+            if (WallpaperTone_WXP != TMx.WallpaperTone_WXP) _Equals = false;
+
+            if (ScreenSaver != TMx.ScreenSaver) _Equals = false;
+
+            if (Sounds != TMx.Sounds) _Equals = false;
+
+            if (Wallpaper != TMx.Wallpaper) _Equals = false;
+
+            if (AppTheme != TMx.AppTheme) _Equals = false;
+
+
+            if (Cursor_Enabled != TMx.Cursor_Enabled) _Equals = false;
+
+            if (Cursor_Trails != TMx.Cursor_Trails) _Equals = false;
+
+            if (Cursor_Shadow != TMx.Cursor_Shadow) _Equals = false;
+
+            if (Cursor_Arrow != TMx.Cursor_Arrow) _Equals = false;
+
+            if (Cursor_Help != TMx.Cursor_Help) _Equals = false;
+
+            if (Cursor_AppLoading != TMx.Cursor_AppLoading) _Equals = false;
+
+            if (Cursor_Busy != TMx.Cursor_Busy) _Equals = false;
+
+            if (Cursor_Move != TMx.Cursor_Move) _Equals = false;
+
+            if (Cursor_NS != TMx.Cursor_NS) _Equals = false;
+
+            if (Cursor_EW != TMx.Cursor_EW) _Equals = false;
+
+            if (Cursor_NESW != TMx.Cursor_NESW) _Equals = false;
+
+            if (Cursor_NWSE != TMx.Cursor_NWSE) _Equals = false;
+
+            if (Cursor_Up != TMx.Cursor_Up) _Equals = false;
+
+            if (Cursor_Pen != TMx.Cursor_Pen) _Equals = false;
+
+            if (Cursor_None != TMx.Cursor_None) _Equals = false;
+
+            if (Cursor_Link != TMx.Cursor_Link) _Equals = false;
+
+            if (Cursor_Pin != TMx.Cursor_Pin) _Equals = false;
+
+            if (Cursor_Person != TMx.Cursor_Person) _Equals = false;
+
+            if (Cursor_IBeam != TMx.Cursor_IBeam) _Equals = false;
+
+            if (Cursor_Cross != TMx.Cursor_Cross) _Equals = false;
+
+
+            if (CommandPrompt != TMx.CommandPrompt) _Equals = false;
+
+            if (PowerShellx86 != TMx.PowerShellx86) _Equals = false;
+
+            if (PowerShellx64 != TMx.PowerShellx64) _Equals = false;
+
+            //if (Terminal != TMx.Terminal) _Equals = false;
+
+            //if (TerminalPreview != TMx.TerminalPreview) _Equals = false;
 
             return _Equals;
         }

@@ -30,9 +30,6 @@ namespace WinPaletter
         private bool AllowEditing = false;
         private Form _Form;
 
-        private static IEnumerable<Type> IExclude = new List<Type> { typeof(SchemeEditor), typeof(BK), typeof(AspectsTemplate), typeof(TabsForm) };
-        private IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t) && !IExclude.Contains(t));
-
         private Thread Th;
 
         private string SearchText;
@@ -136,11 +133,11 @@ namespace WinPaletter
         public void LoadAllMiniFormsIntoList()
         {
             ProgressBar2.Value = 0;
-            ProgressBar2.Maximum = ITypes.Count() * ProgressBar2.Step * 2;
+            ProgressBar2.Maximum = Localizer.ITypes.Count() * ProgressBar2.Step * 2;
             ProgressBar2.Visible = true;
 
             ProgressBar1.Value = 0;
-            ProgressBar1.Maximum = ITypes.Count() * ProgressBar2.Step * 2;
+            ProgressBar1.Maximum = Localizer.ITypes.Count() * ProgressBar2.Step * 2;
             ProgressBar1.Visible = true;
 
             ComboBox1.Visible = false;
@@ -158,7 +155,7 @@ namespace WinPaletter
         public void LoadAllMiniFormsIntoList_Thread()
         {
             int i = 0;
-            foreach (Type f in ITypes)
+            foreach (Type f in Localizer.ITypes)
             {
                 try
                 {
@@ -187,7 +184,7 @@ namespace WinPaletter
                         }
 
                         i += 1;
-                        Label5.SetText(string.Format(Program.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)ITypes.Count() * 100d)));
+                        Label5.SetText(string.Format(Program.Lang.Lang_LoadingChildrenForms, Math.Round(i / (double)Localizer.ITypes.Count() * 100d)));
                     }
                 }
                 catch (Exception ex)

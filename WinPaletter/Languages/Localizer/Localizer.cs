@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public partial class Localizer : IDisposable
     {
         #region IDisposable Support
@@ -54,6 +53,10 @@ namespace WinPaletter
         private JObject J_GlobalStrings;
         private JObject J_Forms;
         private List<Tuple<string, string, string, string>> Deserialized_FormsJSONTree = new();
+
+        public static IEnumerable<Type> IExclude = new List<Type> { typeof(SchemeEditor), typeof(BK), typeof(AspectsTemplate), typeof(Tabs.TabsForm), typeof(BorderlessForm), typeof(Store_Hover) };
+        public static IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(Form).IsAssignableFrom(t));
+
         #endregion
 
         public Localizer() { }
@@ -62,7 +65,6 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-
                 using (StreamReader St = new(File))
                 {
                     JObj = JObject.Parse(St.ReadToEnd());
@@ -73,9 +75,9 @@ namespace WinPaletter
                 J_GlobalStrings = new();
                 J_Forms = new();
 
-                bool Valid = JObj.ContainsKey("Information") & JObj.ContainsKey("Global Strings") & JObj.ContainsKey("Forms Strings");
+                bool isValid = JObj.ContainsKey("Information") && JObj.ContainsKey("Global Strings") && JObj.ContainsKey("Forms Strings");
 
-                if (!Valid) return;
+                if (!isValid) return;
 
                 J_Information = (JObject)JObj["Information"];
                 J_GlobalStrings = (JObject)JObj["Global Strings"];
@@ -84,7 +86,6 @@ namespace WinPaletter
                 LoadInnerStrings(J_Information, J_GlobalStrings);
                 DeserializeFormsJSONIntoTreeList(J_Forms);
                 LoadFromStrings(_Form);
-
             }
         }
 
@@ -123,7 +124,6 @@ namespace WinPaletter
             {
                 try
                 {
-
                     // Get one sub_form node
                     // There is only one specific property "Text"
                     JObject J_Specific_Form = new();
@@ -182,11 +182,8 @@ namespace WinPaletter
                         }
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
-
         }
 
         public void LoadFromStrings(Form _Form = null)
@@ -299,24 +296,20 @@ namespace WinPaletter
 
             if (Forms is null)
             {
-                foreach (Type f in Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(Form).IsAssignableFrom(t)))
+                foreach (Type t in ITypes)
                 {
-                    Form ins = new();
-                    ins = (Form)Activator.CreateInstance(f);
-
-                    if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
+                    using (Form form = Activator.CreateInstance(t) as Form)
                     {
                         JObject j_ctrl = new(), j_child = new();
                         j_ctrl.RemoveAll();
                         j_child.RemoveAll();
+                        j_ctrl.Add("Text", form.Text);
 
-                        j_ctrl.Add("Text", ins.Text);
-
-                        foreach (Control ctrl in ins.GetAllControls())
+                        foreach (Control ctrl in form.GetAllControls())
                         {
                             if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                             {
-                                if ((ins.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
+                                if ((form.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                 {
                                     j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
@@ -324,19 +317,15 @@ namespace WinPaletter
                                 {
                                     try
                                     {
-                                        if (!ins.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
+                                        if (!form.Controls.OfType<UI.WP.TablessControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
                                             && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                                         {
                                             j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                         }
                                     }
-                                    catch
-                                    {
-                                        if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
-                                    }
+                                    catch { if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text); }
                                 }
                             }
-
                             if (ctrl is UI.WP.Card card)
                             {
                                 if (card.Tag is not null && !string.IsNullOrWhiteSpace(card.Tag) && !card.Tag.All(char.IsDigit) && !j_child.ContainsKey($"{card.Name}.Tag"))
@@ -353,13 +342,10 @@ namespace WinPaletter
                             }
                         }
 
-                        if (j_ctrl.Count != 0)
-                            j_ctrl.Add("Controls", j_child);
+                        if (j_ctrl.Count != 0) j_ctrl.Add("Controls", j_child);
 
-                        j_Forms.Add(ins.Name, j_ctrl);
+                        j_Forms.Add(form.Name, j_ctrl);
                     }
-
-                    ins.Dispose();
                 }
             }
             else
@@ -374,70 +360,63 @@ namespace WinPaletter
 
                 foreach (Form f in Forms)
                 {
-                    if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.BK.Name.ToLower() ?? string.Empty))
+                    JObject j_ctrl = new(), j_child = new();
+                    j_ctrl.RemoveAll();
+                    j_child.RemoveAll();
+
+                    j_ctrl.Add("Text", f.Text);
+
+                    foreach (Control ctrl in f.GetAllControls())
                     {
-                        JObject j_ctrl = new(), j_child = new();
-                        j_ctrl.RemoveAll();
-                        j_child.RemoveAll();
-
-                        j_ctrl.Add("Text", f.Text);
-
-                        foreach (Control ctrl in f.GetAllControls())
+                        if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
                         {
-
-                            if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
+                            if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                             {
-
-                                if ((f.Name.ToLower() ?? string.Empty) != (WinPaletter.Forms.Whatsnew.Name.ToLower() ?? string.Empty) && !j_child.ContainsKey($"{ctrl.Name}.Text"))
-                                {
-                                    j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
-                                }
-                                else
-                                {
-                                    try
-                                    {
-                                        if (!f.Controls.OfType<UI.WP.TabControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
-                                            && !j_child.ContainsKey($"{ctrl.Name}.Text"))
-                                        {
-                                            j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
-                                        }
-                                    }
-                                    catch
-                                    {
-                                        if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
-                                    }
-                                }
-
-                            }
-
-                            if (ctrl is UI.WP.Card card)
-                            {
-                                if (!string.IsNullOrWhiteSpace(card.Tag) && !j_child.ContainsKey($"{card.Name}.Tag"))
-                                {
-                                    j_child.Add($"{card.Name}.Tag", card.Tag.ToString());
-                                }
+                                j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                             }
                             else
                             {
-                                if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                                try
                                 {
-                                    j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                                    if (!f.Controls.OfType<UI.WP.TablessControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage)
+                                        && !j_child.ContainsKey($"{ctrl.Name}.Text"))
+                                    {
+                                        j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
+                                    }
+                                }
+                                catch
+                                {
+                                    if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                                 }
                             }
                         }
 
-                        if (j_ctrl.Count != 0)
-                            j_ctrl.Add("Controls", j_child);
-
-                        if (Overwrite)
+                        if (ctrl is UI.WP.Card card)
                         {
-                            j_Forms[f.Name] = j_ctrl;
+                            if (!string.IsNullOrWhiteSpace(card.Tag) && !j_child.ContainsKey($"{card.Name}.Tag"))
+                            {
+                                j_child.Add($"{card.Name}.Tag", card.Tag.ToString());
+                            }
                         }
                         else
                         {
-                            j_Forms.Add(f.Name, j_ctrl);
+                            if (!string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
+                            {
+                                j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
+                            }
                         }
+                    }
 
+                    if (j_ctrl.Count != 0)
+                        j_ctrl.Add("Controls", j_child);
+
+                    if (Overwrite)
+                    {
+                        j_Forms[f.Name] = j_ctrl;
+                    }
+                    else
+                    {
+                        j_Forms.Add(f.Name, j_ctrl);
                     }
                 }
             }
@@ -452,7 +431,6 @@ namespace WinPaletter
 
     public static class FormLangHelper
     {
-
         public static void LoadLanguage(this Form Form, Localizer Localizer = null)
         {
             if (Localizer is null)
@@ -465,6 +443,5 @@ namespace WinPaletter
                 Localizer.LoadFromStrings(Form);
             }
         }
-
     }
 }

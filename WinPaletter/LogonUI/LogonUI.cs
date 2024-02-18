@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -101,22 +101,22 @@ namespace WinPaletter
 
             LoadData(data);
 
-            tabs_preview_1.SelectedIndex = OS.W11 ? 0 : 1;
-            pictureBox1.Image = OS.W11 ? Assets.Win11Preview.LockScreen : Assets.Win10Preview.LockScreen;
+            tabs_preview_1.SelectedIndex = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? 1 : 0;
+            pictureBox1.Image = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? Assets.Win10Preview.LockScreen : Assets.Win11Preview.LockScreen;
 
             label1.Text = DateTime.Now.ToString("h:mm");
             label2.Text = DateTime.Now.ToString("dddd, MMMM d");
             label3.Text = DateTime.Now.ToString("h:mm");
             label4.Text = DateTime.Now.ToString("dddd, MMMM d");
 
-            if (!Fonts.Exists("Segoe UI Variable"))
+            if (!Fonts.Exists("Segoe UI Variable Small Semibol"))
             {
                 label1.Font = new("Segoe UI", label1.Font.Size, label1.Font.Style);
                 label2.Font = new("Segoe UI", label2.Font.Size, label2.Font.Style);
             }
 
             back_unblurred = CaptureLockScreen();
-            back_blurred = back_unblurred.Blur(9).Noise(BitmapExtensions.NoiseMode.Acrylic, 0.7f);
+            back_blurred = back_unblurred.Blur(7).Noise(BitmapExtensions.NoiseMode.Acrylic, 0.7f);
 
             LoadFromTM(Program.TM);
 
@@ -152,22 +152,32 @@ namespace WinPaletter
 
         Bitmap CaptureLockScreen()
         {
+            string mostRecentFile = null;
+
+            string defaultLockScreen = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{PathsExt.Windows}\\Web\\Screen\\img100.jpg") as string;
+
             // Get the path to the current user's lock screen image
-            string lockScreenPath = Path.Combine(PathsExt.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
+            string lockScreenPath = System.IO.Path.Combine(PathsExt.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
 
-            // Get the list of files in the lock screen folder
-            string[] files = Directory.GetFiles(lockScreenPath);
+            if (System.IO.Directory.Exists(lockScreenPath))
+            {
+                // Get the list of files in the lock screen folder
+                string[] files = System.IO.Directory.GetFiles(lockScreenPath);
 
-            // Find the most recent file (assuming it's the lock screen image)
-            string mostRecentFile = GetMostRecentFile(files);
+                if (files.Count() > 0)
+                {
+                    // Find the most recently accessed file (assuming it's the lock screen image)
+                    mostRecentFile = files.OrderByDescending(System.IO.File.GetLastAccessTime).FirstOrDefault();
+                }
+            }
 
             if (mostRecentFile != null && System.IO.File.Exists(mostRecentFile))
             {
                 return Bitmap_Mgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
             }
-            else if (System.IO.File.Exists($"{PathsExt.Windows}\\Web\\Screen\\img100.jpg"))
+            else if (System.IO.File.Exists(defaultLockScreen))
             {
-                return Bitmap_Mgr.Load($"{PathsExt.Windows}\\Web\\Screen\\img100.jpg").Resize(tabs_preview_1.Size);
+                return Bitmap_Mgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
             }
             else
             {
@@ -175,30 +185,11 @@ namespace WinPaletter
             }
         }
 
-        static string GetMostRecentFile(string[] files)
-        {
-            DateTime lastWriteTime = DateTime.MinValue;
-            string mostRecentFile = null;
-
-            foreach (string file in files)
-            {
-                DateTime writeTime = File.GetLastWriteTime(file);
-
-                if (writeTime > lastWriteTime)
-                {
-                    lastWriteTime = writeTime;
-                    mostRecentFile = file;
-                }
-            }
-
-            return mostRecentFile;
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
             if (!LogonUI_Lockscreen_Toggle.Checked)
             {
-                tabs_preview_1.SelectedIndex = tabs_preview_1.SelectedIndex == 0 || tabs_preview_1.SelectedIndex == 1 ? tabs_preview_1.TabCount - 1 : OS.W11 ? 0 : 1;
+                tabs_preview_1.SelectedIndex = tabs_preview_1.SelectedIndex == 0 || tabs_preview_1.SelectedIndex == 1 ? tabs_preview_1.TabCount - 1 : Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? 1 : 0;
             }
             else
             {

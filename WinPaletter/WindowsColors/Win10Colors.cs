@@ -152,7 +152,7 @@ namespace WinPaletter
             C5.BackColor = TM.Windows10.Color_Index3;
             C9.BackColor = TM.Windows10.Color_Index7;
 
-            windowsDesktop1.HockedTM = TM;
+            windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
             UpdateLegends();
         }

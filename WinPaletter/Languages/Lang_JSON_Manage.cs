@@ -179,14 +179,11 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        Cursor = Cursors.WaitCursor;
-                        Localizer Lang = new();
-                        Lang.ExportJSON(dlg.FileName);
-                        Lang.Dispose();
-                        Cursor = Cursors.Default;
-                    }
+                    Cursor = Cursors.WaitCursor;
+                    Localizer Lang = new();
+                    Lang.ExportJSON(dlg.FileName);
+                    Lang.Dispose();
+                    Cursor = Cursors.Default;
                 }
             }
         }
@@ -200,7 +197,6 @@ namespace WinPaletter
                     TextBox1.Font = dlg.Font;
                     TextBox3.Font = dlg.Font;
                 }
-
             }
         }
 
@@ -211,12 +207,10 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-
             if (Forms.Lang_Add_Snippet.ShowDialog() == DialogResult.OK)
             {
                 TextBox1.Text = Forms.Lang_Add_Snippet._Result;
             }
-
         }
 
         private void Button10_Click_1(object sender, EventArgs e)

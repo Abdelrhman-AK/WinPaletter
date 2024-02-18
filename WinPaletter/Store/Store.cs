@@ -842,6 +842,22 @@ namespace WinPaletter
                                 desc_txt.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
                             }
 
+                            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                                windowsDesktop1.Visible = StoreItem.TM.Windows12.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                                windowsDesktop1.Visible = StoreItem.TM.Windows11.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                                windowsDesktop1.Visible = StoreItem.TM.Windows10.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
+                                windowsDesktop1.Visible = StoreItem.TM.Windows81.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
+                                windowsDesktop1.Visible = StoreItem.TM.Windows7.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
+                                windowsDesktop1.Visible = StoreItem.TM.WindowsVista.Enabled;
+                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
+                                windowsDesktop1.Visible = StoreItem.TM.WindowsXP.Enabled;
+
+                            retroDesktopColors1.Visible = StoreItem.TM.Win32.Enabled;
                             CMD1.Visible = StoreItem.TM.CommandPrompt.Enabled;
                             CMD2.Visible = StoreItem.TM.PowerShellx86.Enabled;
                             CMD3.Visible = StoreItem.TM.PowerShellx64.Enabled;

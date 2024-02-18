@@ -860,6 +860,8 @@ namespace WinPaletter.Templates
 
         public void LoadMetrics(Theme.Manager TM)
         {
+            if (TM is null) return;
+
             RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
 
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;

@@ -151,7 +151,7 @@ namespace WinPaletter
             ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, easy_start);
             easy_start.Image = easy_start.Image.Resize(32, 32);
 
-            windowsDesktop1.HockedTM = TM;
+            windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
 
             RefreshDWM();

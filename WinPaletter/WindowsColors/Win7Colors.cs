@@ -153,7 +153,7 @@ namespace WinPaletter
 
             checkBox1.Checked = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Aero;
 
-            windowsDesktop1.HockedTM = TM;
+            windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
 
             RefreshDWM();

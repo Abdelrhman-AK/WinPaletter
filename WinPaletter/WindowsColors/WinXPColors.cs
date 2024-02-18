@@ -155,7 +155,7 @@ namespace WinPaletter
             if (WXP_VS_ColorsList.Items.Contains(TM.WindowsXP.ColorScheme))
                 WXP_VS_ColorsList.SelectedItem = TM.WindowsXP.ColorScheme;
 
-            windowsDesktop1.HockedTM = TM;
+            windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
         }
 
