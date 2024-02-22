@@ -198,8 +198,6 @@ Due to massive changes in Windows Terminal structure in WinPaletter, an error ma
 
 You can drag a color into another color to make it easier and quicker to change colors. You can also swap between colors, you can learn it from wiki.
 
-https://github.com/Abdelrhman-AK/WinPaletter/assets/59510211/9d082727-720b-473c-8827-80c6f2f8c8d9
-
 ### 6. Palette extraction and distribution
 
 - If you are confused with colors for your Windows colors, WinPaletter now can generate a palette from one color or from an image.
@@ -331,8 +329,6 @@ Click on a color item and navigate to history tab, you will see all color used f
 ### 4. Drag and drop colors items - read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Color-picker-control#3-drag-and-drop) to learn more.
 
 You can drag a color into another color to make it easier and quicker to change colors. You can also swap between colors, you can learn it from wiki.
-
-https://github.com/Abdelrhman-AK/WinPaletter/assets/59510211/9d082727-720b-473c-8827-80c6f2f8c8d9
 
 ### 5. Palette extraction and distribution
 

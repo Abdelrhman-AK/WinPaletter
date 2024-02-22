@@ -26,7 +26,7 @@
 
 1. **Requirements:**
    
-   | Operation System   | WinPaletter version starting from ... and higher | Frameworks                                                                                                                                                                                                  |
+   | OS   | WinPaletter ... and higher | Frameworks                                                                                                                                                                                                  |
    | ------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
    | **Windows 11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
    | **Windows 8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
@@ -74,7 +74,7 @@
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Contributing.png?raw=true) Contributing
 
-We welcome contributions to make WinPaletter even better! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
+Contributions to make WinPaletter even better are welcomed! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
 
@@ -88,7 +88,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Image to palette conversion mechanism by ColorThief, developed by KSemenenko](https://github.com/KSemenenko/ColorThief)
 
-- [Bitmap effects powered by ImageProcessor]("https://imageprocessor.org)
+- [Bitmap effects powered by ImageProcessor](https://imageprocessor.org)
 
 - [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
 
@@ -116,7 +116,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Support.png?raw=true) Support
 
-If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues). Our community is here to assist you.
+If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues).
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License
 
