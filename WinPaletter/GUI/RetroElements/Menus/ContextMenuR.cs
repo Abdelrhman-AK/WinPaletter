@@ -249,7 +249,7 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnFontChanged(EventArgs e)
         {
-            try { RefreshItems(); } catch { }
+            RefreshItems();
 
             base.OnFontChanged(e);
         }

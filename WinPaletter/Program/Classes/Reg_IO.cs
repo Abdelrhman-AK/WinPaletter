@@ -63,15 +63,13 @@ namespace WinPaletter
         {
             RegistryKey R = null;
 
-            if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase))
-                Key = Key.Remove(0, @"Computer\".Count());
+            if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
 
             string Key_BeforeModification = Key;
 
-            if (RegType == RegistryValueKind.String & Value is null)
-                Value = string.Empty;
+            if (RegType == RegistryValueKind.String & Value is null) Value = string.Empty;
 
-            Reg_scope scope = default(Reg_scope);
+            Reg_scope scope = Reg_scope.HKEY_CURRENT_USER;
 
             if (Key.StartsWith("HKEY_CURRENT_USER", StringComparison.OrdinalIgnoreCase))
             {
@@ -150,7 +148,7 @@ namespace WinPaletter
                 if (R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree) is null)
                     R.CreateSubKey(Key, true);
             }
-            catch { }
+            catch { } // Couldn't create the key, but we will try to set the value anyway.
 
             // Skips setting to registry if the values are the same
             object ToCheck = GetReg(Key_BeforeModification, ValueName, null);
@@ -168,7 +166,7 @@ namespace WinPaletter
                                 {
                                     Skip = Enumerable.SequenceEqual((string[])ToCheck, (string[])CheckBy);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             }
                             break;
                         }
@@ -181,7 +179,7 @@ namespace WinPaletter
                                 {
                                     Skip = Enumerable.SequenceEqual((byte[])ToCheck, (byte[])CheckBy);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             }
                             break;
                         }
@@ -196,7 +194,7 @@ namespace WinPaletter
                                     int conversion_1 = Convert.ToInt32(CheckBy);
                                     Skip = conversion_0.Equals(conversion_1);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             }
                             else
                             {
@@ -206,7 +204,7 @@ namespace WinPaletter
                                     int conversion_1 = Convert.ToBoolean(CheckBy) ? 1 : 0;
                                     Skip = conversion_0.Equals(conversion_1);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
 
                             }
                             break;
@@ -222,7 +220,7 @@ namespace WinPaletter
                                     ulong conversion_1 = Convert.ToUInt64(CheckBy);
                                     Skip = conversion_0.Equals(conversion_1);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             }
                             else
                             {
@@ -232,7 +230,7 @@ namespace WinPaletter
                                     ulong conversion_1 = Convert.ToBoolean(CheckBy) ? 1u : 0u;
                                     Skip = conversion_0.Equals(conversion_1);
                                 }
-                                catch { }
+                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             }
                             break;
                         }
@@ -243,7 +241,7 @@ namespace WinPaletter
                             {
                                 Skip = ToCheck.ToString().Equals(CheckBy.ToString());
                             }
-                            catch { }
+                            catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             break;
                         }
 
@@ -253,7 +251,7 @@ namespace WinPaletter
                             {
                                 Skip = ToCheck.ToString().Equals(CheckBy.ToString());
                             }
-                            catch { }
+                            catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             break;
                         }
 
@@ -263,7 +261,7 @@ namespace WinPaletter
                             {
                                 Skip = ToCheck.Equals(CheckBy);
                             }
-                            catch { }
+                            catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
                             break;
                         }
                 }
@@ -304,16 +302,11 @@ namespace WinPaletter
 
             try
             {
-                if (R is not null)
-                {
-                    R.Flush();
-                    R.Close();
-                    R.Dispose();
-                }
+                R?.Flush();
+                R?.Close();
+                R?.Dispose();
             }
-            catch
-            {
-            }
+            catch { } // Couldn't close the key.
         }
 
         /// <summary>
@@ -590,14 +583,11 @@ namespace WinPaletter
                     Result = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey).GetValue(ValueName, DefaultValue);
                 try
                 {
-                    if (R is not null)
-                    {
-                        R.Flush();
-                        R.Close();
-                        R.Dispose();
-                    }
+                    R?.Flush();
+                    R?.Close();
+                    R?.Dispose();
                 }
-                catch { }
+                catch { } // Couldn't close the key.
 
                 if (Result != null && Result.ToString().StartsWith("#USR:", StringComparison.OrdinalIgnoreCase))
                 {
@@ -610,20 +600,14 @@ namespace WinPaletter
             catch (Exception ex)
             {
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
-                if (RaiseExceptions)
-                    Forms.BugReport.ThrowError(ex);
+                if (RaiseExceptions) Forms.BugReport.ThrowError(ex);
                 try
                 {
-                    if (R is not null)
-                    {
-                        R.Flush();
-                        R.Close();
-                        R.Dispose();
-                    }
+                    R?.Flush();
+                    R?.Close();
+                    R?.Dispose();
                 }
-                catch
-                {
-                }
+                catch { } // Couldn't close the key.
                 return DefaultValue;
             }
         }
@@ -721,7 +705,10 @@ namespace WinPaletter
                     fSecurity.AddAccessRule(new FileSystemAccessRule(System.Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
                     System.IO.File.SetAccessControl(File, fSecurity);
                 }
-                catch { }
+                catch (Exception ex) // Couldn't set the access control.
+                {
+                    Forms.BugReport.ThrowError(ex);
+                } 
             }
         }
 

@@ -673,7 +673,6 @@ namespace WinPaletter.Theme
 
             catch (Exception ex)
             {
-
                 if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }

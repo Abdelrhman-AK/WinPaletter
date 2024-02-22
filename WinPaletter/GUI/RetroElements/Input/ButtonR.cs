@@ -863,36 +863,18 @@ namespace WinPaletter.UI.Retro
             StringFormat ButtonString = new() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             int imgX = default, imgY = default;
 
-            try
+            if (Image is not null)
             {
-                if (Image is not null)
-                    imgX = (int)Math.Round((Width - Image.Width) / 2d);
-            }
-            catch
-            {
+                imgX = (int)Math.Round((Width - Image.Width) / 2d);
+                imgY = (int)Math.Round((Height - Image.Height) / 2d);
             }
 
-            try
-            {
-                if (Image is not null)
-                    imgY = (int)Math.Round((Height - Image.Height) / 2d);
-            }
-            catch
-            {
-            }
-
-            Color FColor;
-            if (Enabled)
-                FColor = ForeColor;
-            else
-                FColor = base.BackColor.CB((float)-0.2d);
+            Color FColor = Enabled ? ForeColor : base.BackColor.CB((float)-0.2d);
 
             if (Image is null)
             {
-
                 if (TextAlign == ContentAlignment.MiddleCenter)
                 {
-
                     Rectangle r = rect;
 
                     // Resetting positions to fix layout misadjust

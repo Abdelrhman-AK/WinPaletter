@@ -314,12 +314,7 @@ namespace WinPaletter.Templates
                 _statusFont = value;
                 status.Font = value;
                 StatusStrip1.Font = value;
-                try
-                {
-                    if (!DesignMode)
-                        PanelR1.Height = Math.Max(value.Height, 20);
-                }
-                catch { }
+                if (!DesignMode && PanelR1 is not null) PanelR1.Height = Math.Max(value.Height, 20);
             }
         }
         private Font _statusFont = new("Segoe UI", 9f);
@@ -333,6 +328,8 @@ namespace WinPaletter.Templates
             get => _showAsMenuOnly;
             set
             {
+                tabs_preview.Visible = false;
+
                 _showAsMenuOnly = value;
 
                 menuBarR1.Visible = value;
@@ -348,6 +345,8 @@ namespace WinPaletter.Templates
                 StatusStrip1.Visible = !value;
                 msgLbl.Visible = !value;
                 pic.Visible = !value;
+
+                tabs_preview.Visible = true;
             }
         }
         private bool _showAsMenuOnly = false;
@@ -363,8 +362,12 @@ namespace WinPaletter.Templates
                 {
                     _classic = value;
 
+                    tabs_preview.Visible = false;
+
                     if (value) tabs_preview.SelectedIndex = _showMenuSection ? 3 : 1;
                     else tabs_preview.SelectedIndex = _showMenuSection ? 2 : 0;
+
+                    tabs_preview.Visible = true;
 
                     WXP_Alert.Visible = _windowStyle == WindowStyle.WXP && Program.ClassicThemeRunning;
                 }
@@ -382,8 +385,12 @@ namespace WinPaletter.Templates
                 {
                     _showMenuSection = value;
 
+                    tabs_preview.Visible = false;
+
                     if (value) tabs_preview.SelectedIndex = _classic ? 3 : 2;
                     else tabs_preview.SelectedIndex = _classic ? 1 : 0;
+
+                    tabs_preview.Visible = true;
                 }
             }
         }
@@ -1290,11 +1297,12 @@ namespace WinPaletter.Templates
             toolStripMenuItem1.ForeColor = statusForeColor;
             toolStripMenuItem2.ForeColor = statusForeColor;
 
-            Win7 = WindowStyle == WindowStyle.W7;
             Win81 = WindowStyle == WindowStyle.W81;
+            Win7 = WindowStyle == WindowStyle.W7;
+            WinVista = WindowStyle == WindowStyle.WVista;
             WinXP = WindowStyle == WindowStyle.WXP;
 
-            if (!Win7 & !Win81 & !WinXP)
+            if (!WinXP && !WinVista && !Win7 && !Win81)
             {
                 msgLbl.ForeColor = Window1.DarkMode ? Color.White : Color.Black;
                 MenuStrip1.BackColor = Window1.DarkMode ? Color.FromArgb(35, 35, 35) : Color.FromArgb(255, 255, 255);
@@ -1389,9 +1397,9 @@ namespace WinPaletter.Templates
 
                 if (_windowsXPTheme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
-                    if (System.IO.File.Exists(_windowsXPThemePath))
+                    if (System.IO.File.Exists(msstyles))
                     {
-                        using (Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(_windowsXPThemePath))
+                        using (Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(msstyles))
                         {
                             if (WXP_VS_ReplaceColors) HookedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
 
@@ -1400,7 +1408,6 @@ namespace WinPaletter.Templates
                             if (WXP_VS_ReplaceFonts) HookedTM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
                     }
-
                 }
 
                 Refresh();
@@ -1549,6 +1556,7 @@ namespace WinPaletter.Templates
             ScrollWidth = TM.MetricsFonts.ScrollWidth;
 
             MessageFont = TM.MetricsFonts.MessageFont;
+            StatusFont = TM.MetricsFonts.StatusFont;
         }
 
         private void LoadColors(Theme.Manager TM)

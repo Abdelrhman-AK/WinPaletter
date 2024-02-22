@@ -297,7 +297,7 @@ namespace WinPaletter
             // Remove handler to avoid doubling/tripling events
             foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
             {
-                try { i.Click -= Clicked; } catch { }
+                i.Click -= Clicked;
             }
 
             foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
@@ -691,37 +691,33 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            try
+            foreach (CursorControl i in AnimateList)
             {
-                foreach (CursorControl i in AnimateList)
+                i.Angle = Angle;
+                i.Refresh();
+
+                if (Angle + Increment >= 360f)
                 {
-                    i.Angle = Angle;
+                    Angle = 0f;
+                }
+
+                Angle += Increment;
+
+                if (Cycles >= 3)
+                {
+                    i.Angle = 180f;
                     i.Refresh();
 
-                    if (Angle + Increment >= 360f)
-                    {
-                        Angle = 0f;
-                    }
+                    Timer1.Enabled = false;
+                    Timer1.Stop();
 
-                    Angle += Increment;
-
-                    if (Cycles >= 3)
-                    {
-                        i.Angle = 180f;
-                        i.Refresh();
-
-                        Timer1.Enabled = false;
-                        Timer1.Stop();
-
-                        Cycles = 0;
-                    }
-                    else
-                    {
-                        if (Angle == 180f) { Cycles += 1; }
-                    }
+                    Cycles = 0;
+                }
+                else
+                {
+                    if (Angle == 180f) { Cycles += 1; }
                 }
             }
-            catch { }
         }
 
         private void Button5_Click(object sender, EventArgs e)

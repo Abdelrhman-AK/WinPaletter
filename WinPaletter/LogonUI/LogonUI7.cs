@@ -401,41 +401,35 @@ namespace WinPaletter
 
         public object ApplyEffects(Bitmap bmp)
         {
-            Bitmap _bmp;
-            _bmp = bmp;
+            Bitmap _bmp = bmp;
 
-            try
+            if (CheckBox8.Checked) _bmp = _bmp.Grayscale();
+
+            if (CheckBox7.Checked)
             {
-                if (CheckBox8.Checked)
-                    _bmp = _bmp.Grayscale();
-
-                if (CheckBox7.Checked)
+                using (ImageFactory imgF = new())
                 {
-                    ImageFactory imgF = new ImageFactory();
                     imgF.Load((Bitmap)_bmp.Clone());
                     imgF.GaussianBlur(trackBarX1.Value);
-                    _bmp = (Bitmap)imgF.Image;
-                }
-
-                if (CheckBox6.Checked)
-                {
-                    switch (ComboBox1.SelectedIndex)
-                    {
-                        case 0:
-                            {
-                                _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, trackBarX2.Value / 100f);
-                                break;
-                            }
-                        case 1:
-                            {
-                                _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, trackBarX2.Value / 100f);
-                                break;
-                            }
-                    }
+                    _bmp = imgF.Image.Clone() as Bitmap;
                 }
             }
-            catch
+
+            if (CheckBox6.Checked)
             {
+                switch (ComboBox1.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, trackBarX2.Value / 100f);
+                            break;
+                        }
+                    case 1:
+                        {
+                            _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, trackBarX2.Value / 100f);
+                            break;
+                        }
+                }
             }
 
             return _bmp;

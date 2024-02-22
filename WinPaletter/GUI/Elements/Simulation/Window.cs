@@ -437,41 +437,41 @@ namespace WinPaletter.UI.Simulation
 
         public void ProcessBack()
         {
-            Bitmap Wallpaper = Parent.BackgroundImage is null ? Program.Wallpaper : (Bitmap)Parent.BackgroundImage;
+            Bitmap Wallpaper = Parent.BackgroundImage is null ? Program.Wallpaper : Parent.BackgroundImage as Bitmap;
 
-            try { if (Wallpaper is not null) { AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat); } } catch { }
-
-            try
+            if (Wallpaper is not null)
             {
-                if (Preview == Preview_Enum.W11)
-                {
-                    if (AdaptedBack is not null)
-                    {
-                        Bitmap b = new Bitmap(AdaptedBack).Blur(15);
+                Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
+                if (imageBounds.Contains_ButNotExceed(Bounds)) AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
+            }
 
-                        if (DarkMode)
+            if (Preview == Preview_Enum.W11)
+            {
+                if (AdaptedBack is not null)
+                {
+                    Bitmap b = new Bitmap(AdaptedBack).Blur(15);
+
+                    if (DarkMode)
+                    {
+                        if (b is not null)
                         {
-                            if (b is not null)
+                            using (ImageFactory ImgF = new())
                             {
-                                using (ImageFactory ImgF = new())
-                                {
-                                    ImgF.Load(b);
-                                    ImgF.Saturation(15);
-                                    ImgF.Brightness(-10);
-                                    AdaptedBackBlurred = (Bitmap)ImgF.Image.Clone();
-                                }
+                                ImgF.Load(b);
+                                ImgF.Saturation(5);
+                                ImgF.Brightness(-20);
+                                AdaptedBackBlurred = ImgF.Image.Clone() as Bitmap;
                             }
                         }
-
-                        else { AdaptedBackBlurred = b; }
                     }
+
+                    else { AdaptedBackBlurred = b; }
                 }
-
-                else if (AdaptedBack is not null) { AdaptedBackBlurred = new Bitmap(AdaptedBack).Blur(3); }
             }
-            catch { }
 
-            try { Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100); } catch { }
+            else if (AdaptedBack is not null) { AdaptedBackBlurred = new Bitmap(AdaptedBack).Blur(3); }
+
+            Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100);
         }
 
         protected override void Dispose(bool disposing)
@@ -545,52 +545,37 @@ namespace WinPaletter.UI.Simulation
             Grip_rightCenter = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
         }
 
-        public void FillSemiRect(Graphics Graphics, Brush Brush, Rectangle Rectangle, int Radius = -1)
+        public void FillSemiRect(Graphics G, Brush Brush, Rectangle Rectangle, int Radius = -1)
         {
-            try
+            if (Radius == -1) Radius = 6;
+
+            if (G is null) return;
+
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
             {
-                if (Radius == -1)
-                    Radius = 6;
-
-                if (Graphics is null)
-                    return;
-
-                Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-                using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
-                {
-                    Graphics.FillPath(Brush, path);
-                }
-            }
-            catch
-            {
+                G.FillPath(Brush, path);
             }
         }
 
         public GraphicsPath RoundedSemiRectangle(Rectangle r, int radius)
         {
-            try
-            {
-                GraphicsPath path = new();
-                int d = radius * 2;
+            GraphicsPath path = new();
+            int d = radius * 2;
 
-                path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
-                path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
+            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
 
-                path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
+            path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
 
-                path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
+            path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
 
-                path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
-                path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
+            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
 
-                path.CloseFigure();
-                return path;
-            }
-            catch
-            {
-                return null;
-            }
+            path.CloseFigure();
+            return path;
         }
 
         #endregion
@@ -628,6 +613,7 @@ namespace WinPaletter.UI.Simulation
         private Rectangle Rect => new(RectAll.X + FreeMargin, RectAll.Y + FreeMargin, RectAll.Width - (FreeMargin * 2), RectAll.Height - (FreeMargin * 2));
         private Rectangle RectBorder => new(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
         private Rectangle TitlebarRect => new(Rect.X, Rect.Y, Rect.Width, TitleHeight + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3);
+        private Rectangle TitlebarRect_XP => new(TitlebarRect.X, TitlebarRect.Y + 4, TitlebarRect.Width, TitlebarRect.Height - 4);
         private Rectangle IconRect
         {
             get
@@ -1727,36 +1713,32 @@ namespace WinPaletter.UI.Simulation
 
             else if (Preview == Preview_Enum.WXP)
             {
-                try
+                SmoothingMode sm = G.SmoothingMode;
+                G.SmoothingMode = SmoothingMode.HighSpeed;
+
+                using (SolidBrush br = new(WindowsXPColor)) { G.FillRectangle(br, ClientBorderRect); }
+
+                resVS?.Draw(G, TitlebarRect_XP, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
+
+                CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 3, Rect.Y + TitlebarRect_XP.Height + 1 - CloseBtn_W, CloseBtn_W, CloseBtn_W);
+
+                resVS?.Draw(G, LeftEdge_XP, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
+                resVS?.Draw(G, RightEdge_XP, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
+                resVS?.Draw(G, ButtomEdge_XP, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
+                resVS?.Draw(G, CloseButtonRect, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
+
+                G.SmoothingMode = sm;
+
+                //Window title
+                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                 {
-                    SmoothingMode sm = G.SmoothingMode;
-                    G.SmoothingMode = SmoothingMode.HighSpeed;
-
-                    using (SolidBrush br = new(WindowsXPColor)) { G.FillRectangle(br, ClientBorderRect); }
-
-                    resVS?.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
-
-                    CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 3, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W);
-
-                    resVS?.Draw(G, LeftEdge_XP, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
-                    resVS?.Draw(G, RightEdge_XP, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
-                    resVS?.Draw(G, ButtomEdge_XP, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
-                    resVS?.Draw(G, CloseButtonRect, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
-
-                    G.SmoothingMode = sm;
-
-                    //Window title
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                    using (SolidBrush br = new(Color.Black))
                     {
-                        using (SolidBrush br = new(Color.Black))
-                        {
-                            G.DrawString(Text, Font, br, new Rectangle(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
-                        }
-
-                        using (SolidBrush br = new(CaptionColor)) { G.DrawString(Text, Font, br, LabelRect, sf); }
+                        G.DrawString(Text, Font, br, new Rectangle(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
                     }
+
+                    using (SolidBrush br = new(CaptionColor)) { G.DrawString(Text, Font, br, LabelRect, sf); }
                 }
-                catch { }
             }
 
             //Draw window icon
@@ -1802,8 +1784,8 @@ namespace WinPaletter.UI.Simulation
                 using (Pen P = new(color0))
                 using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
                 {
-                    G.FillRoundedRect(hb, TitlebarRect, Radius, true);
-                    G.DrawRoundedRect(P, TitlebarRect, Radius, true);
+                    G.FillRoundedRect(hb, Preview != Preview_Enum.WXP ? TitlebarRect : TitlebarRect_XP, Radius, true);
+                    G.DrawRoundedRect(P, Preview != Preview_Enum.WXP ? TitlebarRect : TitlebarRect_XP, Radius, true);
                 }
             }
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
+using static WinPaletter.WinTerminal;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -671,9 +672,25 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
             {
-                byte[] source = (byte[])GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", null);
+                object source = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", null);
+
                 if (source is not null)
-                    EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary);
+                {
+                    byte[] bytes = new byte[] { };
+
+                    try
+                    {
+                        bytes = source as byte[];
+                    }
+                    catch
+                    {
+                        // Couldn't cast registry source into byte[], so it will be dismissed.
+                    }
+                    finally 
+                    {
+                        if (bytes is not null && bytes.Length > 0) EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", bytes, RegistryValueKind.Binary);
+                    }
+                }
             }
         }
 

@@ -265,29 +265,21 @@ namespace WinPaletter.Theme
                                     JObject json_original = JObject.Parse(TMx.ToString(true));
 
                                     // Merge with the original theme manager data to make a new WinPaletter with new features can load a WinPaletterTheme made by an old WinPaletter
-                                    try
+                                    foreach (KeyValuePair<string, JToken?> item in json_original)
                                     {
-                                        foreach (KeyValuePair<string, JToken?> item in json_original)
-                                        {
-                                            if (json[item.Key] is null && json_original[item.Key] is not null) json[item.Key] = json_original[item.Key];
+                                        if (json[item.Key] is null && json_original[item.Key] is not null) json[item.Key] = json_original[item.Key];
 
-                                            if (item.Value is not JValue)
+                                        if (item.Value is not JValue)
+                                        {
+                                            foreach (KeyValuePair<string, JToken> prop in item.Value as JObject)
                                             {
-                                                foreach (KeyValuePair<string, JToken> prop in item.Value as JObject)
+                                                if (json[item.Key][prop.Key] is null && json_original[item.Key] is not null && json_original[item.Key][prop.Key] is not null)
                                                 {
-                                                    try
-                                                    {
-                                                        if (json[item.Key][prop.Key] is null && json_original[item.Key] is not null && json_original[item.Key][prop.Key] is not null)
-                                                        {
-                                                            json[item.Key][prop.Key] = json_original[item.Key][prop.Key];
-                                                        }
-                                                    }
-                                                    catch { }
+                                                    json[item.Key][prop.Key] = json_original[item.Key][prop.Key];
                                                 }
                                             }
                                         }
                                     }
-                                    catch { }
 
                                     // Set values from JSON to the current instance's fields
                                     foreach (FieldInfo field in GetType().GetFields(bindingFlags))
@@ -902,8 +894,7 @@ namespace WinPaletter.Theme
 
                             // Update User Preference Mask for HKEY_USERS\.DEFAULT
                             // Always make it the last operation
-                            try { Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null); }
-                            catch { }
+                            Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null);
 
                             //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
                             //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
@@ -936,13 +927,7 @@ namespace WinPaletter.Theme
                     {
                         if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(File))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(File));
 
-                        if (System.IO.File.Exists(File))
-                        {
-                            try { FileSystem.Kill(File); }
-                            catch { }
-                        }
-
-                        if (Info.ExportResThemePack) { PackThemeResources((Manager)Clone(), File, $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp"); }
+                        if (Info.ExportResThemePack) { PackThemeResources(Clone() as Manager, File, $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp"); }
 
                         else { System.IO.File.WriteAllText(File, ToString()); }
 

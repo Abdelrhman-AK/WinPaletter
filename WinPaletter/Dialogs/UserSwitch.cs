@@ -26,10 +26,9 @@ namespace WinPaletter
 
         private void UserSwitch_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (User.SID == null)
-                User.SID = User.AdminSID_GrantedUAC;
+            if (User.SID == null) User.SID = User.AdminSID_GrantedUAC;
 
-            try { Forms.BK.Close(); } catch { }
+            Forms.BK.Close();
         }
 
         private void UserSwitch_Load(object sender, EventArgs e)
@@ -40,9 +39,7 @@ namespace WinPaletter
             checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
 
-            try { Forms.BK.Close(); } catch { }
-            try { Forms.BK.Show(); } catch { }
-
+            Forms.BK.Show();
             BringToFront();
         }
 

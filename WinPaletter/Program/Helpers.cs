@@ -143,7 +143,7 @@ namespace WinPaletter
                 if (System.IO.File.Exists("oldWinpaletter.trash")) System.IO.File.Delete("oldWinpaletter.trash");
                 if (System.IO.File.Exists("oldWinpaletter_2.trash")) System.IO.File.Delete("oldWinpaletter_2.trash");
             }
-            catch { }
+            catch { } // Ignore deleting old executable files if they are in use
         }
 
         private static void GetMemoryFonts()
@@ -235,23 +235,24 @@ namespace WinPaletter
 
         private static void AssociateFiles()
         {
-            try
+            if (Settings.FileTypeManagement.AutoAddExt)
             {
-                if (Settings.FileTypeManagement.AutoAddExt)
+                if (!System.IO.Directory.Exists(PathsExt.appData)) System.IO.Directory.CreateDirectory(PathsExt.appData);
+
+                WriteIfChangedOrNotExists($@"{PathsExt.appData}\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
+                WriteIfChangedOrNotExists($@"{PathsExt.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
+                WriteIfChangedOrNotExists($@"{PathsExt.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
+
+                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{PathsExt.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{PathsExt.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{PathsExt.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+
+                if (!assoc0 || !assoc1 || !assoc2)
                 {
-                    if (!System.IO.Directory.Exists(PathsExt.appData))
-                        System.IO.Directory.CreateDirectory(PathsExt.appData);
-
-                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
-                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
-                    WriteIfChangedOrNotExists($@"{PathsExt.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
-
-                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{PathsExt.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{PathsExt.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{PathsExt.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+                    // Notify Windows that file associations have changed
+                    Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
                 }
             }
-            catch { }
         }
 
         private static void WriteIfChangedOrNotExists(string file, byte[] data)
@@ -364,64 +365,49 @@ namespace WinPaletter
         {
             Task.Run(() =>
             {
-                try
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
-                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                    if (DWMAPI.IsCompositionEnabled())
                     {
-                        if (DWMAPI.IsCompositionEnabled())
+                        if (OS.W8x)
                         {
-                            if (OS.W8x)
+                            DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
                             {
-                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
-                                {
-                                    clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb(),
-                                    nIntensity = (uint)TM.Windows81.ColorizationColorBalance
-                                };
-                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
-                            }
-
-                            else if (OS.W7)
-                            {
-                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
-                                {
-                                    clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb(),
-                                    nIntensity = (uint)TM.Windows7.ColorizationColorBalance,
-
-                                    clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb(),
-                                    clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance,
-
-                                    clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance,
-                                    clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity,
-                                    fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque
-                                };
-                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
-                            }
-
-                            else if (OS.WVista)
-                            {
-                                const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
-                                uint color = (uint)Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
-                                IntPtr handle = IntPtr.Zero;
-                                while ((handle = User32.FindWindow(null, null)) != IntPtr.Zero)
-                                {
-                                    User32.SendMessage(handle, WM_DWMCOLORIZATIONCOLORCHANGED, IntPtr.Zero, (IntPtr)color);
-                                }
-                            }
+                                clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb(),
+                                nIntensity = (uint)TM.Windows81.ColorizationColorBalance
+                            };
+                            DWMAPI.DwmSetColorizationParameters(ref temp, false);
                         }
-                        wic.Undo();
+
+                        else if (OS.W7)
+                        {
+                            DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
+                            {
+                                clrColor = (uint)TM.Windows7.ColorizationColor.ToArgb(),
+                                nIntensity = (uint)TM.Windows7.ColorizationColorBalance,
+
+                                clrAfterGlow = (uint)TM.Windows7.ColorizationAfterglow.ToArgb(),
+                                clrAfterGlowBalance = (uint)TM.Windows7.ColorizationAfterglowBalance,
+
+                                clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance,
+                                clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity,
+                                fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque
+                            };
+                            DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                        }
                     }
+                    wic.Undo();
                 }
-                catch { }
             });
         }
 
-        public static void RestartExplorer(TreeView TreeView = null)
+        public static void RestartExplorer(TreeView treeView = null)
         {
             try
             {
                 if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                 {
-                    if (TreeView is not null) { Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
+                    if (treeView is not null) { Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
 
                     Stopwatch sw = new();
                     sw.Reset();
@@ -433,15 +419,15 @@ namespace WinPaletter
 
                     sw.Stop();
 
-                    if (TreeView is not null) { Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
+                    if (treeView is not null) { Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
 
                     sw.Reset();
                 }
                 else
                 {
-                    if (TreeView is not null)
+                    if (treeView is not null)
                     {
-                        Theme.Manager.AddNode(TreeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
+                        Theme.Manager.AddNode(treeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
                     }
                     else
                     {
@@ -451,10 +437,14 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                if (TreeView is not null)
+                if (treeView is not null)
                 {
-                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
+                    Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                }
+                else
+                {
+                    Forms.BugReport.ThrowError(ex);
                 }
             }
 

@@ -161,7 +161,8 @@ namespace WinPaletter.UI.Style
                     else if (Icon == MessageBoxIcon.Question)
                     {
                         try { SystemSounds.Exclamation.Play(); }
-                        catch { }
+                        catch { } // catch is used as an exception may be thrown if there is no sound driver installed
+
                         icon = TaskDialogIcon.Custom;
 
                         TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);

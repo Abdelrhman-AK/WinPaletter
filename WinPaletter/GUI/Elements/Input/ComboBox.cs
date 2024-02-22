@@ -100,23 +100,19 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            try
+            if (e.Delta < 0)
             {
-                if (e.Delta < 0)
+                if (SelectedIndex < Items.Count - 1)
                 {
-                    if (SelectedIndex < Items.Count - 1)
-                    {
-                        if (e.Delta <= -240)
-                            SelectedIndex += 1;
-                    }
-                }
-                else if (SelectedIndex > 0)
-                {
-                    if (e.Delta >= 240)
-                        SelectedIndex -= 1;
+                    if (e.Delta <= -240)
+                        SelectedIndex += 1;
                 }
             }
-            catch { }
+            else if (SelectedIndex > 0)
+            {
+                if (e.Delta >= 240)
+                    SelectedIndex -= 1;
+            }
 
             base.OnMouseWheel(e);
         }

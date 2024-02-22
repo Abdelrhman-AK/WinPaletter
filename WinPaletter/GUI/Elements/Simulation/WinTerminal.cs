@@ -364,8 +364,7 @@ namespace WinPaletter.UI.Simulation
             {
                 ProcessBack();
 
-                try { Timer.Tick += Timer_Tick; } catch { }
-
+                Timer.Tick += Timer_Tick;
                 Timer.Enabled = true; Timer.Start();
             }
             else { Timer.Enabled = false; Timer.Stop(); }
@@ -375,7 +374,7 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            if (!DesignMode) { try { Timer.Tick -= Timer_Tick; } catch { } }
+            if (!DesignMode) { Timer.Tick -= Timer_Tick; }
 
             Timer.Enabled = false; Timer.Stop();
 
@@ -417,139 +416,102 @@ namespace WinPaletter.UI.Simulation
 
         private GraphicsPath RR(Rectangle r, int radius)
         {
-            try
-            {
-                GraphicsPath path = new();
-                int d = radius * 2;
-                float f0 = 0.5f;
-                float f1 = 2f - f0;
+            GraphicsPath path = new();
+            int d = radius * 2;
+            float f0 = 0.5f;
+            float f1 = 2f - f0;
 
-                Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-                Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-                Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-                Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
+            Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
+            Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
 
-                path.AddArc(R4, 90f, 90f);
-                path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
-                path.AddArc(R2, 0f, -90);
-                path.AddArc(R1, -90, -90);
-                path.AddArc(R3, 0f, 90f);
-                path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
+            path.AddArc(R4, 90f, 90f);
+            path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
+            path.AddArc(R2, 0f, -90);
+            path.AddArc(R1, -90, -90);
+            path.AddArc(R3, 0f, 90f);
+            path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
 
-                path.CloseFigure();
+            path.CloseFigure();
 
-                return path;
-            }
-            catch
-            {
-                return null;
-            }
+            return path;
         }
 
         private GraphicsPath RRNoLine(Rectangle r, int radius)
         {
-            try
-            {
-                GraphicsPath path = new();
-                int d = radius * 2;
-                float f0 = 0.5f;
-                float f1 = 2f - f0;
+            GraphicsPath path = new();
+            int d = radius * 2;
+            float f0 = 0.5f;
+            float f1 = 2f - f0;
 
-                Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-                Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-                Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-                Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
+            Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
+            Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
 
-                path.AddArc(R4, 90f, 90f);
-                path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
-                path.AddArc(R2, 0f, -90);
-                path.AddArc(R1, -90, -90);
-                path.AddArc(R3, 0f, 90f);
-                path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
+            path.AddArc(R4, 90f, 90f);
+            path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
+            path.AddArc(R2, 0f, -90);
+            path.AddArc(R1, -90, -90);
+            path.AddArc(R3, 0f, 90f);
+            path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
 
-                path.CloseFigure();
+            path.CloseFigure();
 
-                return path;
-            }
-            catch
-            {
-                return null;
-            }
+            return path;
         }
 
         private void FillSemiRect(Graphics Graphics, Brush Brush, Rectangle Rectangle, int Radius = -1)
         {
-            try
-            {
-                if (Radius == -1)
-                    Radius = 6;
+            if (Radius == -1) Radius = 6;
 
-                if (Graphics is null)
-                    throw new ArgumentNullException("graphics");
+            if (Graphics is null) return;
 
-                using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
-                {
-                    Graphics.FillPath(Brush, path);
-                }
-            }
-            catch
+            using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
             {
+                Graphics.FillPath(Brush, path);
             }
         }
 
         private GraphicsPath RoundedSemiRectangle(Rectangle r, int radius)
         {
-            try
-            {
-                GraphicsPath path = new();
-                int d = radius * 2;
+            GraphicsPath path = new();
+            int d = radius * 2;
 
-                path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
-                path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
+            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
 
-                path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
+            path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
 
-                path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
+            path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
 
-                path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
-                path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
+            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
 
-                path.CloseFigure();
-                return path;
-            }
-            catch
-            {
-                return null;
-            }
+            path.CloseFigure();
+            return path;
         }
 
         private void FillSemiImg(Graphics Graphics, Image Image, Rectangle Rectangle, int Radius = -1, bool ForcedRoundCorner = false)
         {
-            try
+            if (Radius == -1) Radius = 6;
+
+            if (Graphics is null) return;
+               
+            if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
             {
-                if (Radius == -1)
-                    Radius = 6;
-
-                if (Graphics is null)
-                    throw new ArgumentNullException("graphics");
-
-                if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
+                using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
                 {
-                    using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
-                    {
-                        Region reg = new(path);
-                        Graphics.Clip = reg;
-                        Graphics.DrawImage(Image, Rectangle);
-                        Graphics.ResetClip();
-                    }
-                }
-                else
-                {
+                    Region reg = new(path);
+                    Graphics.Clip = reg;
                     Graphics.DrawImage(Image, Rectangle);
+                    Graphics.ResetClip();
                 }
             }
-            catch
+            else
             {
+                Graphics.DrawImage(Image, Rectangle);
             }
         }
 

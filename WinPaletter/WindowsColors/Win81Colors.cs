@@ -62,8 +62,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-
-                try { TMx.Windows81.Apply(TMx, "8.1"); } catch { }
+                TMx.Windows81.Apply(TMx, "8.1");
             }
 
             Cursor = Cursors.Default;

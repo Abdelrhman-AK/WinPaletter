@@ -2,16 +2,12 @@
 using Devcorp.Controls.VisualStyles;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Security.Principal;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -26,6 +22,7 @@ namespace WinPaletter
         private bool enableAlpha;
         private Point newPoint = new();
         private Point xPoint = new();
+        Thread thread;
 
         public ColorPickerDlg()
         {
@@ -51,6 +48,11 @@ namespace WinPaletter
             ComboBox1.PopulateThemes();
         }
 
+        private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (thread is not null && thread.IsAlive) thread.Abort();
+        }
+
         public void GetColorsHistory(ColorItem ColorItem)
         {
             FlowLayoutPanel1.SuspendLayout();
@@ -66,7 +68,6 @@ namespace WinPaletter
 
             foreach (Color c in ColorItem.ColorsHistory)
             {
-
                 ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
@@ -210,7 +211,7 @@ namespace WinPaletter
                         {
                             FluentTransitions.Transition
                                 .With(entry.Key, prop ?? "BackColor", c)
-                                .HookOnCompletion(() => 
+                                .HookOnCompletion(() =>
                                 {
                                     if (colorItem != null)
                                     {
@@ -252,7 +253,8 @@ namespace WinPaletter
                         {
                             foreach (string prop in entry.Value)
                             {
-                                try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); } catch { }
+                                try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); }
+                                catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
                             }
                         }
 
@@ -265,7 +267,8 @@ namespace WinPaletter
                         {
                             foreach (string prop in entry.Value)
                             {
-                                try { entry.Key.SetProperty(prop ?? "BackColor", c); } catch { }
+                                try { entry.Key.SetProperty(prop ?? "BackColor", c); }
+                                catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
                             }
                         }
 
@@ -315,62 +318,55 @@ namespace WinPaletter
                 ProgressBar1.Visible = true;
                 Colors_List.Clear();
 
-                try
+                if (thread is not null && thread.IsAlive) thread.Abort();
+
+                thread = new(() =>
                 {
-                    BackgroundWorker1.CancelAsync();
-                    BackgroundWorker1.RunWorkerAsync();
-                }
-                catch { }
+                    if (img is not null)
+                    {
+                        ColorThiefDotNet.ColorThief ColorThiefX = new();
+                        List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette(img as Bitmap, trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
+                        foreach (ColorThiefDotNet.QuantizedColor C in Colors) Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B));
+                        img?.Dispose();
+                    }
+
+                    Invoke(() =>
+                    {
+                        foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
+                        {
+                            ctrl.Click -= MiniColorItem_click;
+                            ctrl.Dispose();
+                        }
+
+                        ImgPaletteContainer.Controls.Clear();
+
+                        Colors_List = Colors_List.Distinct().ToList();
+                        Colors_List.Sort(new RGBColorComparer());
+
+                        foreach (Color C in Colors_List)
+                        {
+                            ColorItem MiniColorItem = new();
+                            MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                            MiniColorItem.AllowDrop = false;
+                            MiniColorItem.PauseColorsHistory = true;
+                            MiniColorItem.BackColor = Color.FromArgb(255, C);
+                            MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
+
+                            ImgPaletteContainer.Controls.Add(MiniColorItem);
+                            MiniColorItem.Click += MiniColorItem_click;
+                        }
+
+                        ProgressBar1.Visible = false;
+                        Colors_List.Clear();
+                        Program.Animator.ShowSync(ImgPaletteContainer, true);
+                        Program.Animator.ShowSync(Button6, true);
+                    });
+                });
+
+                thread.Start();
             }
         }
 
-        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (img is not null)
-            {
-                ColorThiefDotNet.ColorThief ColorThiefX = new();
-                List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette(img as Bitmap, trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
-
-                foreach (ColorThiefDotNet.QuantizedColor C in Colors) Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B));
-
-                GC.Collect();
-                GC.SuppressFinalize(Colors);
-                GC.SuppressFinalize(ColorThiefX);
-                img.Dispose();
-            }
-        }
-
-        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
-            {
-                ctrl.Click -= MiniColorItem_click;
-                ctrl.Dispose();
-            }
-
-            ImgPaletteContainer.Controls.Clear();
-
-            Colors_List = Colors_List.Distinct().ToList();
-            Colors_List.Sort(new RGBColorComparer());
-
-            foreach (Color C in Colors_List)
-            {
-                ColorItem MiniColorItem = new();
-                MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
-                MiniColorItem.AllowDrop = false;
-                MiniColorItem.PauseColorsHistory = true;
-                MiniColorItem.BackColor = Color.FromArgb(255, C);
-                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
-
-                ImgPaletteContainer.Controls.Add(MiniColorItem);
-                MiniColorItem.Click += MiniColorItem_click;
-            }
-
-            ProgressBar1.Visible = false;
-            Colors_List.Clear();
-            Program.Animator.ShowSync(ImgPaletteContainer, true);
-            Program.Animator.ShowSync(Button6, true);
-        }
 
         private void MiniColorItem_click(object sender, EventArgs e)
         {
@@ -478,17 +474,18 @@ namespace WinPaletter
 
             ThemePaletteContainer.Controls.Clear();
 
-            try
+            if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
             {
-                if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
+                List<Color> colors = Theme.Manager.GetPaletteFromString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+                if (colors is not null && colors.Count > 0)
                 {
-                    foreach (Color C in Theme.Manager.GetPaletteFromString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
+                    foreach (Color C in colors)
                     {
                         ColorItem MiniColorItem = new();
                         MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
                         MiniColorItem.AllowDrop = false;
                         MiniColorItem.PauseColorsHistory = true;
-                        MiniColorItem.BackColor = Color.FromArgb(255, C);
+                        MiniColorItem.BackColor = C;
                         MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                         ThemePaletteContainer.Controls.Add(MiniColorItem);
@@ -496,7 +493,6 @@ namespace WinPaletter
                     }
                 }
             }
-            catch { }
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -516,17 +512,21 @@ namespace WinPaletter
                 {
                     try
                     {
-                        foreach (Color C in Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text))
+                        List<Color> colors = Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text);
+                        if (colors is not null && colors.Count > 0)
                         {
-                            ColorItem MiniColorItem = new();
-                            MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
-                            MiniColorItem.AllowDrop = false;
-                            MiniColorItem.PauseColorsHistory = true;
-                            MiniColorItem.BackColor = Color.FromArgb(255, C);
-                            MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
+                            foreach (Color C in colors)
+                            {
+                                ColorItem MiniColorItem = new();
+                                MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                                MiniColorItem.AllowDrop = false;
+                                MiniColorItem.PauseColorsHistory = true;
+                                MiniColorItem.BackColor = C;
+                                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
-                            ThemePaletteContainer.Controls.Add(MiniColorItem);
-                            MiniColorItem.Click += MiniColorItem_click;
+                                ThemePaletteContainer.Controls.Add(MiniColorItem);
+                                MiniColorItem.Click += MiniColorItem_click;
+                            }
                         }
                     }
                     catch

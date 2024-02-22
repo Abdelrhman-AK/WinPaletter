@@ -372,43 +372,35 @@ namespace WinPaletter.UI.Simulation
 
         public void CopycatFrom(WinElement element)
         {
-            try
-            {
-                Style = element.Style;
-                _NoisePower = element.NoisePower;
-                _BlurPower = element.BlurPower;
-                _Transparency = element.Transparency;
-                _DarkMode = element.DarkMode;
-                _AppUnderline = element.AppUnderline;
-                _AppBackground = element.AppBackground;
-                _ActionCenterButton_Normal = element.ActionCenterButton_Normal;
-                _ActionCenterButton_Hover = element.ActionCenterButton_Hover;
-                _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed;
-                _StartColor = element.StartColor;
-                _LinkColor = element.LinkColor;
-                _BackColorAlpha = (byte)element.BackColorAlpha;
-                BackColor = element.BackColor;
-                _Background2 = element.Background2;
-                _Win7ColorBal = element.Win7ColorBal;
-                _Win7GlowBal = element.Win7GlowBal;
-                UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10;
-                UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1;
-                UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2;
-                Shadow = element.Shadow;
+            Style = element.Style;
+            _NoisePower = element.NoisePower;
+            _BlurPower = element.BlurPower;
+            _Transparency = element.Transparency;
+            _DarkMode = element.DarkMode;
+            _AppUnderline = element.AppUnderline;
+            _AppBackground = element.AppBackground;
+            _ActionCenterButton_Normal = element.ActionCenterButton_Normal;
+            _ActionCenterButton_Hover = element.ActionCenterButton_Hover;
+            _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed;
+            _StartColor = element.StartColor;
+            _LinkColor = element.LinkColor;
+            _BackColorAlpha = (byte)element.BackColorAlpha;
+            BackColor = element.BackColor;
+            _Background2 = element.Background2;
+            _Win7ColorBal = element.Win7ColorBal;
+            _Win7GlowBal = element.Win7GlowBal;
+            UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10;
+            UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1;
+            UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2;
+            Shadow = element.Shadow;
 
-                Dock = element.Dock;
-                Size = element.Size;
-                Location = element.Location;
-                Text = element.Text;
+            Dock = element.Dock;
+            Size = element.Size;
+            Location = element.Location;
+            Text = element.Text;
 
-                ProcessBack();
-                Refresh();
-            }
-            catch (Exception ex)
-            {
-                // Log or handle the exception appropriately
-                Console.WriteLine($"Error in CopycatFrom: {ex.Message}");
-            }
+            ProcessBack();
+            Refresh();
         }
 
         public void ProcessBack()
@@ -422,18 +414,12 @@ namespace WinPaletter.UI.Simulation
         {
             Bitmap Wallpaper = Parent?.BackgroundImage as Bitmap ?? Program.Wallpaper;
 
-            try
+            if (Wallpaper != null && Bounds.Width > 0 && Bounds.Height > 0)
             {
-                if (Wallpaper != null && Bounds.Width > 0 && Bounds.Height > 0 && Bounds.Width <= Wallpaper.Width && Bounds.Height <= Wallpaper.Height)
-                    back = Wallpaper?.Clone(Bounds, Wallpaper.PixelFormat);
-                else
-                    back = null;
+                Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
+                back = imageBounds.Contains_ButNotExceed(Bounds) ? Wallpaper?.Clone(Bounds, Wallpaper.PixelFormat) : null;
             }
-            catch (Exception ex)
-            {
-                // Log or handle the exception appropriately
-                Console.WriteLine($"Error in GetBack: {ex.Message}");
-            }
+            else back = null;
         }
 
         public void BlurBack()
@@ -2635,16 +2621,11 @@ namespace WinPaletter.UI.Simulation
                 case Styles.TaskbarXP:
                     #region Taskbar XP
                     {
-                        try
-                        {
-                            SmoothingMode sm = G.SmoothingMode;
-                            G.SmoothingMode = SmoothingMode.HighSpeed;
-                            resVS?.Draw(G, Rect, VisualStylesRes.Element.Taskbar, true, false);
-                            G.SmoothingMode = sm;
-                        }
-                        catch
-                        {
-                        }
+                        SmoothingMode sm = G.SmoothingMode;
+                        G.SmoothingMode = SmoothingMode.HighSpeed;
+                        resVS?.Draw(G, Rect, VisualStylesRes.Element.Taskbar, true, false);
+                        G.SmoothingMode = sm;
+
                         break;
                     }
                     #endregion

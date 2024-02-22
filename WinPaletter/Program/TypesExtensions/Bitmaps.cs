@@ -217,8 +217,8 @@ namespace WinPaletter.TypesExtensions
             }
             catch
             {
-                // Return null or the original bitmap in case of an exception
-                return null;
+                // Return original bitmap in case of an exception
+                return bitmap;
             }
         }
 

@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Tabs;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -14,7 +15,6 @@ namespace WinPaletter
 {
     public partial class Home : Form
     {
-        private bool _shown = false;
         private bool RaiseUpdate = false;
         private string ver = string.Empty;
         private int StableInt, BetaInt, UpdateChannel;
@@ -33,7 +33,6 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
 
-            _shown = false;
             Forms.MainForm.LoggingOff = false;
 
             NotifyUpdates.Icon = Icon;
@@ -65,6 +64,37 @@ namespace WinPaletter
             {
                 card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as UI.WP.Card).Color.Dark(0.7f) : (s as UI.WP.Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (!Forms.MainForm.LoggingOff)
+            {
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                {
+                    bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
+                                                                 //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                                                 //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                                                 //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                                                 //);
+
+                    e.Cancel = !result;
+                }
+
+                if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
+                {
+                    if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                }
+            }
+
+            if (!e.Cancel)
+            {
+                Forms.MainForm.closeSignalReceivedFromHomePage = true;
+                Forms.MainForm.Close();
+
+                //Reset to false to make sure that main form reshow confirmation dialog if a previous dialog returend 'No'.
+                Forms.MainForm.closeSignalReceivedFromHomePage = false;
             }
         }
 
@@ -176,16 +206,7 @@ namespace WinPaletter
                         RaiseUpdate = !string.IsNullOrEmpty(ver) && ver.CompareTo(Program.Version) == 1;
                     }
                 }
-                catch (WebException ex)
-                {
-                    // Handle the exception, e.g., log or display an error message
-                    Console.WriteLine($"WebException: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    // Handle other exceptions, e.g., log or display an error message
-                    Console.WriteLine($"Exception: {ex.Message}");
-                }
+                catch { } // Ignore any exception here (silent startup, only notify if there is already an update)
             }
 
             try
@@ -201,7 +222,7 @@ namespace WinPaletter
                     }
                 });
             }
-            catch { }
+            catch { } // An exception may be thrown if the form is closed before the Invoke is executed
         }
 
         private void userButton_Click(object sender, EventArgs e)
@@ -552,8 +573,6 @@ namespace WinPaletter
 
         private void Dashboard_Shown(object sender, EventArgs e)
         {
-            _shown = true;
-
             if (Program.Settings.Updates.AutoCheck) Task.Run(AutoUpdatesCheck);
         }
 

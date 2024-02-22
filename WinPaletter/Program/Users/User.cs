@@ -448,7 +448,7 @@ namespace WinPaletter
                     }
 
                 }
-                catch { }
+                catch { } // Don't list a user that couldn't be got from SID using the registry in Windows XP
             }
 
             return result;
@@ -490,7 +490,7 @@ namespace WinPaletter
                     result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
                 }
             }
-            catch { }
+            catch { } // Couldn't get active user, use current user
 
             return result;
         }
@@ -505,7 +505,7 @@ namespace WinPaletter
             {
                 string keyPath = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\{SID}";
 
-                RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(keyPath);
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(keyPath);
                 if (key == null)
                 {
                     //handle error
@@ -514,10 +514,9 @@ namespace WinPaletter
 
                 return Environment.ExpandEnvironmentVariables(key.GetValue("ProfileImagePath").ToString());
             }
-            catch
+            catch // Couldn't get user profile path, return generic path
             {
-                //handle exception
-                return null;
+                return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             }
         }
 
@@ -610,7 +609,7 @@ namespace WinPaletter
 
                 return IsAdmin;
             }
-            catch { return false; }
+            catch { return false; } // Couldn't get user groups, return false and we will assume that the user is not administrator
         }
         #endregion
 

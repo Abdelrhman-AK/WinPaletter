@@ -15,16 +15,15 @@ namespace WinPaletter
         /// <param name="className">ClassName is the name of the associated class (eg "WinPaletter.WindowsXPThemePath")</param>
         /// <param name="description">Textual description (eg "WinPaletter WindowsXPThemePath")</param>
         /// <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
-        public static void CreateFileAssociation(string extension, string className, string description, string iconPath, string exeProgram)
+        public static bool CreateFileAssociation(string extension, string className, string description, string iconPath, string exeProgram)
         {
+            if (extension.Substring(0, 1) != ".") extension = $".{extension}";
 
-            if (extension.Substring(0, 1) != ".")
-                extension = $".{extension}";
-
-            if (exeProgram.Contains("\""))
-                exeProgram = exeProgram.Replace("\"", string.Empty);
+            if (exeProgram.Contains("\"")) exeProgram = exeProgram.Replace("\"", string.Empty);
 
             exeProgram = $"\"{exeProgram}\"";
+
+            bool isInstalledBefore = GetReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, null) != null;
 
             EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);
@@ -42,9 +41,8 @@ namespace WinPaletter
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName", Application.ProductName, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", Application.CompanyName, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Version", Version, RegistryValueKind.String);
-
-            // Notify Windows that file associations have changed
-            NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
+        
+            return isInstalledBefore;
         }
 
         /// <summary>
@@ -71,16 +69,11 @@ namespace WinPaletter
                 descriptionKey.DeleteValue("Publisher", false);
                 descriptionKey.DeleteValue("Version", false);
             }
-
-            catch (Exception)
-            {
-            }
+            catch { } // Ignore errors, we are just cleaning up
             finally
             {
-                if (mainKey is not null)
-                    mainKey.Close();
-                if (descriptionKey is not null)
-                    descriptionKey.Close();
+                if (mainKey is not null) mainKey.Close();
+                if (descriptionKey is not null) descriptionKey.Close();
             }
 
             // Notify Windows that file associations have changed

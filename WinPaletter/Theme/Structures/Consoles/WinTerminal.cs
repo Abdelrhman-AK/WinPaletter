@@ -103,7 +103,7 @@ namespace WinPaletter
                 /// Gets or sets the default profile settings.
                 /// </summary>
                 [JsonProperty("defaults")]
-                public Profile Defaults { get; set; } = new() { ColorScheme = "Campbell" };
+                public Profile Defaults { get; set; } = new() { ColorScheme = new() { Dark = "Campbell", Light = "Campbell" } };
 
                 /// <summary>
                 /// Gets or sets the list of profiles.
@@ -166,7 +166,8 @@ namespace WinPaletter
                 /// Gets or sets the color scheme for the profile.
                 /// </summary>
                 [JsonProperty("colorScheme")]
-                public string ColorScheme { get; set; }
+                [JsonConverter(typeof(ColorSchemeConverter))]
+                public ColorScheme ColorScheme { get; set; }
 
                 /// <summary>
                 /// Gets or sets the cursor height for the profile.
@@ -401,6 +402,51 @@ namespace WinPaletter
             }
 
             /// <summary>
+            /// Represents a color scheme with specific colors for dark and light themes.
+            /// </summary>
+            public class ColorScheme
+            {
+                /// <summary>
+                /// Dark scheme name
+                /// </summary>
+                [JsonProperty("dark")]
+                public string Dark { get; set; }
+
+                /// <summary>
+                /// Light scheme name
+                /// </summary>
+                [JsonProperty("light")]
+                public string Light { get; set; }
+
+                /// <summary>
+                /// Create new color scheme pair from one color scheme
+                /// </summary>
+                /// <param name="color"></param>
+                public static implicit operator ColorScheme(string color)
+                {
+                    return new ColorScheme { Dark = color, Light = color };
+                }
+
+                /// <summary>
+                /// Returns string format of current color scheme
+                /// </summary>
+                /// <returns></returns>
+                public override string ToString()
+                {
+                    return Light ?? Dark;
+
+                    //// Check if dark and light are the same; if so, return a single value
+                    //if (Dark == Light)
+                    //{
+                    //    return Dark;
+                    //}
+
+                    //// Otherwise, return the ColorScheme object as JSON
+                    //return JsonConvert.SerializeObject(this);
+                }
+            }
+
+            /// <summary>
             /// Represents font settings.
             /// </summary>
             public class FontSettings : ICloneable
@@ -523,6 +569,34 @@ namespace WinPaletter
 
             #region Converters
 
+            public class ColorSchemeConverter : JsonConverter<ColorScheme>
+            {
+                public override void WriteJson(JsonWriter writer, ColorScheme value, JsonSerializer serializer)
+                {
+                    // Use the custom ToString method for serialization
+                    writer.WriteValue(value.ToString());
+                }
+
+                public override ColorScheme ReadJson(JsonReader reader, Type objectType, ColorScheme existingValue, bool hasExistingValue, JsonSerializer serializer)
+                {
+                    if (reader.TokenType == JsonToken.String)
+                    {
+                        // If it's a string, create a ColorScheme with both dark and light set to the string value
+                        return new() { Dark = reader.Value.ToString(), Light = reader.Value.ToString() };
+                    }
+                    else if (reader.TokenType == JsonToken.StartObject)
+                    {
+                        // If it's an object, use the default deserialization for ColorScheme
+                        return serializer.Deserialize<ColorScheme>(reader);
+                    }
+                    else
+                    {
+                        // If it's neither a string nor an object, create a ColorScheme with both dark and light set to null
+                        return new ColorScheme { Dark = null, Light = null };
+                    }
+                }
+            }
+
             /// <summary>
             /// Read values in .NET color format and convert them to hex color format
             /// </summary>
@@ -575,16 +649,73 @@ namespace WinPaletter
             /// </remarks>
             public class FontWeightConverter : JsonConverter<FontWeight>
             {
-                /// <inheritdoc/>
                 public override FontWeight ReadJson(JsonReader reader, Type objectType, FontWeight existingValue, bool hasExistingValue, JsonSerializer serializer)
                 {
-                    if (Enum.TryParse(reader.Value?.ToString(), true, out FontWeight result))
+                    if (reader.TokenType == JsonToken.Integer)
                     {
-                        return result;
+                        int intValue = Convert.ToInt32(reader.Value);
+
+                        // Check specific ranges and map them to suitable enum values
+                        if (intValue >= 100 && intValue <= 200)
+                        {
+                            return FontWeight.Thin;
+                        }
+                        else if (intValue > 200 && intValue <= 300)
+                        {
+                            return FontWeight.ExtraLight;
+                        }
+                        else if (intValue > 300 && intValue <= 400)
+                        {
+                            return FontWeight.Light;
+                        }
+                        else if (intValue > 400 && intValue <= 500)
+                        {
+                            return FontWeight.SemiLight;
+                        }
+                        else if (intValue > 500 && intValue <= 600)
+                        {
+                            return FontWeight.Normal;
+                        }
+                        else if (intValue > 600 && intValue <= 700)
+                        {
+                            return FontWeight.Medium;
+                        }
+                        else if (intValue > 700 && intValue <= 800)
+                        {
+                            return FontWeight.SemiBold;
+                        }
+                        else if (intValue > 800 && intValue <= 900)
+                        {
+                            return FontWeight.Bold;
+                        }
+                        else if (intValue > 900 && intValue <= 950)
+                        {
+                            return FontWeight.ExtraBold;
+                        }
+                        else if (intValue > 950)
+                        {
+                            return FontWeight.Black;
+                        }
+                        // Add more custom range checks as needed
+
+                        // If it's an integer and not within specific ranges, try to parse it to an enum
+                        if (Enum.IsDefined(typeof(FontWeight), intValue))
+                        {
+                            return (FontWeight)intValue;
+                        }
+                    }
+                    else if (reader.TokenType == JsonToken.String)
+                    {
+                        // If it's a string, parse it to an enum
+                        if (Enum.TryParse(reader.Value?.ToString(), true, out FontWeight result))
+                        {
+                            return result;
+                        }
                     }
 
                     return FontWeight.Normal; // Default value if parsing fails
                 }
+
 
                 /// <inheritdoc/>
                 public override void WriteJson(JsonWriter writer, FontWeight value, JsonSerializer serializer)

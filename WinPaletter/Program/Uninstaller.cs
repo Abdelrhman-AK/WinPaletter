@@ -55,7 +55,7 @@ namespace WinPaletter
                     }
                 }
             }
-            catch { }
+            catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
 
             if (System.IO.Directory.Exists(PathsExt.appData))
             {
@@ -73,13 +73,17 @@ namespace WinPaletter
                         Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
                 }
 
-                try { System.IO.Directory.Delete(PathsExt.appData, true); } catch { }
+                try { System.IO.Directory.Delete(PathsExt.appData, true); } 
+                catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
 
             }
 
+            Forms.SysEventsSndsInstaller.Uninstall(true);
+
             if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
             {
-                try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); } catch { }
+                try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); } 
+                catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
             }
 
             string guidText = Application.ProductName;

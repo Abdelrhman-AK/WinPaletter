@@ -54,11 +54,7 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            try { Forms.BK.Close(); }
-            catch { }
-
-            try { Forms.BK.Show(); }
-            catch { }
+            Forms.BK.Show();
 
             foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
@@ -70,72 +66,58 @@ namespace WinPaletter
             Center();
         }
 
-        public void AddData(string str, Exception Exception, TreeView Treeview)
+        public void AddData(string str, Exception ex, TreeView treeview)
         {
-            try
+            if (ex is not null && ex.Data is not null && ex.Data.Keys is not null && ex.Data.Keys.Count > 0)
             {
-                if (Exception.Data.Keys.Count > 0)
-                {
-                    TreeNodeCollection temp = Treeview.Nodes.Add($"{str} data").Nodes;
+                TreeNodeCollection temp = treeview?.Nodes?.Add($"{str} data").Nodes;
 
-                    foreach (DictionaryEntry x in Exception.Data)
-                        temp.Add($"{x.Key.ToString()} = {x.Value.ToString()}");
-                }
+                foreach (DictionaryEntry x in ex.Data) temp?.Add($"{x.Key} = {x.Value}");
             }
-            catch { }
         }
 
-        public void AddException(string str, Exception Exception, TreeView TreeView, int Win32Error = 0)
+        public void AddException(string str, Exception ex, TreeView treeView, int win32Error = 0)
         {
-            if (Exception is not null)
+            if (ex is not null)
             {
-                try
+                treeView?.Nodes?.Add($"{str} message").Nodes?.Add(ex?.Message ?? "No message is included");
+
+                treeView?.Nodes?.Add("Exception type").Nodes?.Add(ex?.GetType().ToString());
+
+                if (win32Error != 0) { treeView?.Nodes?.Add($"{str} Marshal.GetLastWin32Error").Nodes?.Add(win32Error.ToString()); }
+
+                if (!string.IsNullOrWhiteSpace(ex?.StackTrace))
                 {
-                    if (!string.IsNullOrWhiteSpace(Exception.Message))
-                    {
+                    TreeNode n = treeView?.Nodes?.Add($"{str} stack trace");
 
-                        TreeView.Nodes.Add($"{str} message").Nodes.Add(Exception.Message);
-
-                        TreeView.Nodes.Add("Exception type").Nodes.Add(Exception.GetType().ToString());
-
-                        if (Win32Error != 0) { TreeView.Nodes.Add($"{str} Marshal.GetLastWin32Error").Nodes.Add(Win32Error.ToString()); }
-
-                        if (!string.IsNullOrEmpty(Exception.StackTrace))
-                        {
-                            TreeNode n = TreeView.Nodes.Add($"{str} stack trace");
-
-                            foreach (string x in Exception.StackTrace.CList())
-                                n.Nodes.Add(x);
-                        }
-
-                        AddData(str, Exception, TreeView);
-
-                        if (Exception.TargetSite != null)
-                        {
-                            TreeView.Nodes.Add($@"{str} target void\function").Nodes.Add($"{Exception.Source}.{Exception.TargetSite.Name}()");
-                        }
-
-                        if (Exception.TargetSite.Module.Assembly != null)
-                        {
-                            TreeView.Nodes.Add($"{str} assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName);
-                            TreeView.Nodes.Add($"{str} assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location);
-                        }
-
-                        TreeView.Nodes.Add($"{str} HRESULT").Nodes.Add(Exception.HResult.ToString());
-
-                        if (!string.IsNullOrWhiteSpace(Exception.HelpLink))
-                            TreeView.Nodes.Add($"{str} Microsoft help link").Nodes.Add(Exception.HelpLink);
-                    }
+                    foreach (string x in ex?.StackTrace.Split('\r')) if (!string.IsNullOrWhiteSpace(x)) n?.Nodes?.Add(x.Trim());
                 }
-                catch
+
+                AddData(str, ex, treeView);
+
+                if (ex?.TargetSite is not null)
                 {
+                    treeView?.Nodes?.Add($@"{str} target void\function").Nodes?.Add($"{ex?.Source}.{ex?.TargetSite?.Name}()");
                 }
+
+                if (ex?.TargetSite?.Module?.Assembly != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(ex?.TargetSite?.Module?.Assembly?.FullName))
+                        treeView?.Nodes?.Add($"{str} assembly").Nodes?.Add(ex?.TargetSite?.Module?.Assembly?.FullName);
+
+                    if (!string.IsNullOrWhiteSpace(ex?.TargetSite?.Module?.Assembly?.Location))
+                        treeView?.Nodes?.Add($"{str} assembly's file").Nodes?.Add(ex?.TargetSite?.Module?.Assembly?.Location);
+                }
+
+                treeView?.Nodes?.Add($"{str} HRESULT").Nodes?.Add(ex?.HResult.ToString());
+
+                if (!string.IsNullOrWhiteSpace(ex?.HelpLink)) treeView?.Nodes?.Add($"{str} Microsoft help link").Nodes?.Add(ex?.HelpLink);
             }
         }
 
         public static IEnumerable<Exception> GetAllInnerExceptions(Exception exception)
         {
-            List<Exception> exceptions = new List<Exception>();
+            List<Exception> exceptions = new();
 
             while (exception != null)
             {
@@ -146,11 +128,11 @@ namespace WinPaletter
             return exceptions;
         }
 
-        public void ThrowError(Exception Exception, bool NoRecovery = false, int Win32Error = -1)
+        public void ThrowError(Exception ex, bool noRecovery = false, int win32Error = -1)
         {
-            if (Win32Error == -1) { Win32Error = Marshal.GetLastWin32Error(); }
+            if (win32Error == -1) { win32Error = Marshal.GetLastWin32Error(); }
 
-            Label7.Text = string.Format(Program.Lang.BugReport_Title, Exception.GetType().ToString());
+            Label7.Text = string.Format(Program.Lang.BugReport_Title, ex?.GetType().ToString());
 
             Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
 
@@ -164,45 +146,41 @@ namespace WinPaletter
 
             label9.Text = Debugger.IsAttached ? Program.Lang.Yes : Program.Lang.No;
 
-            AlertBox1.Visible = NoRecovery;
-            TreeView1.Nodes.Clear();
+            AlertBox1.Visible = noRecovery;
+            TreeView1.Nodes?.Clear();
 
-            if (Exception is not null)
+            if (ex is not null)
             {
-                AddException("Exception", Exception, TreeView1);
-                if (Exception.InnerException != null)
-                {
-                    AddException("Inner exception", Exception.InnerException, TreeView1, Win32Error);
+                AddException("Exception", ex, TreeView1);
 
-                    try
+                if (ex?.InnerException is not null)
+                {
+                    AddException("Inner exception", ex.InnerException, TreeView1, win32Error);
+
+                    IEnumerable<Exception> exceptions = GetAllInnerExceptions(ex.InnerException);
+                    if (exceptions.Count() > 0)
                     {
-                        IEnumerable<Exception> exceptions = GetAllInnerExceptions(Exception.InnerException);
-                        if (exceptions.Count() > 0)
+                        int i = 0;
+                        foreach (Exception sub_ex in exceptions)
                         {
-                            int i = 0;
-                            foreach (Exception ex in exceptions)
-                            {
-                                AddException($"Sub inner exception {i}", Exception.InnerException, TreeView1, Win32Error);
-                                i++;
-                            }
+                            AddException($"Sub inner exception {i}", sub_ex.InnerException, TreeView1, win32Error);
+                            i++;
                         }
                     }
-                    catch { }
                 }
             }
 
-            if (Win32Error != 0)
+            if (win32Error != 0)
             {
-                Win32Exception win32Exception = new();
-                if (win32Exception != null) { AddException("Win32 exception", win32Exception, TreeView1, Win32Error); }
+                Win32Exception win32Exception = new(win32Error);
+                if (win32Exception != null) { AddException("Win32 exception", win32Exception, TreeView1, win32Error); }
             }
 
             TreeView1.ExpandAll();
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
-            if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
-                System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
+            if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports")) System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
 
             System.IO.File.WriteAllText($@"{PathsExt.appData}\Reports\{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.txt", GetDetails());
 
@@ -210,12 +188,8 @@ namespace WinPaletter
 
             Forms.BK.Close();
 
-            if (DialogResult == DialogResult.Abort)
-                Program.ExitAfterException = true;
-            else
-                Program.ExitAfterException = false;
+            if (DialogResult == DialogResult.Abort) Program.ExitAfterException = true; else Program.ExitAfterException = false;
         }
-
 
         private void Button2_Click(object sender, EventArgs e)
         {
@@ -232,14 +206,8 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
+            Forms.BK.Close();
             Process.Start($"{Properties.Resources.Link_Repository}issues");
-            try
-            {
-                Forms.BK.Close();
-            }
-            catch
-            {
-            }
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -279,7 +247,7 @@ namespace WinPaletter
             {
                 string prop = x.Text.Replace(" ", ".").Replace("'s", string.Empty).Replace(@"\", "_");
 
-                if (x.Nodes.Count == 1)
+                if (x.Nodes?.Count == 1)
                 {
                     if (int.TryParse(x.Nodes[0].Text, out int Number))
                     {
@@ -311,14 +279,8 @@ namespace WinPaletter
         {
             if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
             {
+                Forms.BK.Close();
                 Process.Start($@"{PathsExt.appData}\Reports");
-                try
-                {
-                    Forms.BK.Close();
-                }
-                catch
-                {
-                }
             }
             else
             {
@@ -328,14 +290,7 @@ namespace WinPaletter
 
         private void TreeView1_DoubleClick(object sender, EventArgs e)
         {
-            try
-            {
-                if (TreeView1.SelectedNode is not null)
-                    Clipboard.SetText(TreeView1.SelectedNode.Text);
-            }
-            catch
-            {
-            }
+            if (TreeView1.SelectedNode is not null) Clipboard.SetText(TreeView1?.SelectedNode?.Text);
         }
 
         private void button7_Click(object sender, EventArgs e)

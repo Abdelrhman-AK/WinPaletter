@@ -55,10 +55,8 @@ namespace WinPaletter
 
             catch (Exception ex)
             {
-
                 MsgBox(Program.Lang.ExtTer_NewError, MessageBoxButtons.OK, MessageBoxIcon.Error, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, $"{Program.Lang.ErrorDetails}{ex.Message}");
             }
-
         }
 
         private void Button2_Click(object sender, EventArgs e)

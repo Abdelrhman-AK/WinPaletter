@@ -963,21 +963,19 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     TextBox3.Text = dlg.FileName;
+                    StreamReader _File = new(TextBox3.Text);
+                    JObject J = JObject.Parse(_File.ReadToEnd());
+                    _File.Close();
 
-                    try
+                    if (J["Information"] is not null)
                     {
-                        StreamReader _File = new(TextBox3.Text);
-                        JObject J = JObject.Parse(_File.ReadToEnd());
-                        _File.Close();
-
-                        Label11.Text = J["Information"]["name"].ToString();
-                        Label12.Text = J["Information"]["translationversion"].ToString();
-                        Label14.Text = $"{J["Information"]["appver"]} {Program.Lang.AndBelow}";
-                        Label19.Text = J["Information"]["lang"].ToString();
-                        Label16.Text = J["Information"]["langcode"].ToString();
-                        Label22.Text = !(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
+                        Label11.Text = J["Information"]["name"] is not null ? J["Information"]["name"].ToString() : string.Empty;
+                        Label12.Text = J["Information"]["translationversion"] is not null ? J["Information"]["translationversion"].ToString() : string.Empty;
+                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Lang.AndBelow}";
+                        Label19.Text = J["Information"]["lang"] is not null ? J["Information"]["lang"].ToString() : string.Empty;
+                        Label16.Text = J["Information"]["langcode"] is not null ? J["Information"]["langcode"].ToString() : string.Empty;
+                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft) : Program.Lang.Lang_HasLeftToRight;
                     }
-                    catch { }
                 }
             }
         }
@@ -1101,9 +1099,15 @@ namespace WinPaletter
             {
                 Directory.Delete(PathsExt.StoreCache, true);
             }
-            catch
+            catch (UnauthorizedAccessException ex0)
             {
+                Forms.BugReport.ThrowError(ex0);
             }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+
             Label38.Text = CalcStoreCache().SizeString();
         }
 
@@ -1113,9 +1117,15 @@ namespace WinPaletter
             {
                 Directory.Delete(PathsExt.ThemeResPackCache, true);
             }
-            catch
+            catch (UnauthorizedAccessException ex0)
             {
+                Forms.BugReport.ThrowError(ex0);
             }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+
             Label43.Text = CalcThemesResCache().SizeString();
         }
 
@@ -1163,9 +1173,15 @@ namespace WinPaletter
             {
                 Directory.Delete($"{PathsExt.appData}\\Reports", true);
             }
-            catch
+            catch (UnauthorizedAccessException ex0)
             {
+                Forms.BugReport.ThrowError(ex0);
             }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+
             label5.Text = CalcExErrors().SizeString();
         }
 

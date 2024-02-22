@@ -55,18 +55,14 @@ namespace WinPaletter.GlobalVariables
 
             try
             {
-
                 using (Font testFont = new(fontName, emSize, style))
                 {
                     installed = 0 == string.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase);
                 }
             }
-            catch
-            {
-            }
+            catch { } // Do nothing, just return the default value
 
             return installed;
         }
-
     }
 }

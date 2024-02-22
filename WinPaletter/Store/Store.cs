@@ -440,7 +440,7 @@ namespace WinPaletter
                             {
                                 DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
                             }
-                            catch { }
+                            catch { } // Ignore a theme couldn't be downloaded
                         }
                     }
                     else
@@ -450,7 +450,7 @@ namespace WinPaletter
                         {
                             DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
                         }
-                        catch { }
+                        catch { } // Ignore a theme couldn't be downloaded
                     }
 
                     i += 1;
@@ -488,7 +488,7 @@ namespace WinPaletter
                                 BeginInvoke(new Action(() => store_container.Controls.Add(ctrl)));
                             }
                         }
-                        catch (Exception) { }
+                        catch (Exception) { } // Ignore a theme couldn't be loaded as a store item
                     }
 
                     Status_lbl.SetText(string.Empty);
@@ -556,9 +556,7 @@ namespace WinPaletter
                                 }
                             }
                         }
-                        catch (Exception)
-                        {
-                        }
+                        catch { } // Ignore a theme couldn't be loaded as a store item (offline mode)
 
                         i += 1;
 
@@ -648,13 +646,7 @@ namespace WinPaletter
 
         private void FilesFetcher_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            try
-            {
-                ProgressBar1.Value = Math.Max(Math.Min(e.ProgressPercentage, ProgressBar1.Maximum), ProgressBar1.Minimum);
-            }
-            catch
-            {
-            }
+            ProgressBar1.Value = Math.Max(Math.Min(e.ProgressPercentage, ProgressBar1.Maximum), ProgressBar1.Minimum);
         }
 
         private void FilesFetcher_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -1078,7 +1070,7 @@ namespace WinPaletter
                     return 0L;
                 }
             }
-            catch
+            catch // Couldn't get file size online
             {
                 return 0L;
             }
@@ -1096,35 +1088,27 @@ namespace WinPaletter
         #region Timers
         private void Cursor_Timer_Tick(object sender, EventArgs e)
         {
-            if (!_Shown)
-                return;
+            if (!_Shown) return;
 
-            try
+            foreach (UI.Controllers.CursorControl i in AnimateList)
             {
-                foreach (UI.Controllers.CursorControl i in AnimateList)
+                i.Angle = Angle;
+                i.Refresh();
+
+                if (Angle + Increment >= 360f)
+                    Angle = 0f;
+                Angle += Increment;
+
+                if (Angle == 180f & Cycles >= 2)
                 {
-                    i.Angle = Angle;
-                    i.Refresh();
-
-                    if (Angle + Increment >= 360f)
-                        Angle = 0f;
-                    Angle += Increment;
-
-                    if (Angle == 180f & Cycles >= 2)
-                    {
-                        i.Angle = 180f;
-                        Cursor_Timer.Enabled = false;
-                        Cursor_Timer.Stop();
-                    }
-                    else if (Angle == 180f)
-                    {
-                        Cycles += 1;
-                    }
-
+                    i.Angle = 180f;
+                    Cursor_Timer.Enabled = false;
+                    Cursor_Timer.Stop();
                 }
-            }
-            catch
-            {
+                else if (Angle == 180f)
+                {
+                    Cycles += 1;
+                }
             }
         }
         #endregion
@@ -1189,18 +1173,11 @@ namespace WinPaletter
                 {
                     if (System.IO.File.Exists($@"{Dir}\{FileName}") && (CalculateMD5($@"{Dir}\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !System.IO.File.Exists($@"{Dir}\{FileName}"))
                     {
-                        try
-                        {
-                            Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                            Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
-                            Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                            Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                            if (Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK)
-                                DoActionsAfterPackDownload();
-                        }
-                        catch
-                        {
-                        }
+                        Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
+                        Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
+                        Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                        Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
+                        if (Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK) DoActionsAfterPackDownload();
                     }
                     else
                     {
@@ -1214,9 +1191,9 @@ namespace WinPaletter
                     {
                         try
                         {
-                            FileSystem.Kill($@"{Dir}\{FileName}");
+                            System.IO.File.Delete($@"{Dir}\{FileName}");
                         }
-                        catch { }
+                        catch { } // Couldn't delete the file
                     }
 
                     DoActionsAfterPackDownload();
@@ -1322,12 +1299,9 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink))
-                        Process.Start(selectedItem.TM.Info.AuthorSocialMediaLink);
+                    if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) Process.Start(selectedItem.TM.Info.AuthorSocialMediaLink);
                 }
-                catch
-                {
-                }
+                catch { } // If someone has entered a wrong URL, ignore it
             }
         }
 

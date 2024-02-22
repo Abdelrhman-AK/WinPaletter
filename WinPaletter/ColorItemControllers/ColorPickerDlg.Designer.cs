@@ -42,7 +42,6 @@ namespace WinPaletter
             this.ColorGrid1 = new Cyotek.Windows.Forms.ColorGrid();
             this.ColorWheel1 = new Cyotek.Windows.Forms.ColorWheel();
             this.ScreenColorPicker1 = new Cyotek.Windows.Forms.ScreenColorPicker();
-            this.BackgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Label7 = new System.Windows.Forms.Label();
             this.PictureBox9 = new System.Windows.Forms.PictureBox();
@@ -178,13 +177,6 @@ namespace WinPaletter
             this.ScreenColorPicker1.Text = "Drag and release for a screen pixel color pick";
             this.ScreenColorPicker1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ScreenColorPicker1_MouseDown);
             this.ScreenColorPicker1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ScreenColorPicker1_MouseUp);
-            // 
-            // BackgroundWorker1
-            // 
-            this.BackgroundWorker1.WorkerReportsProgress = true;
-            this.BackgroundWorker1.WorkerSupportsCancellation = true;
-            this.BackgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
-            this.BackgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
             // Button6
             // 
@@ -915,6 +907,7 @@ namespace WinPaletter
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Text = "Color Picker";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ColorPickerDlg_FormClosed);
             this.Load += new System.EventHandler(this.ColorPicker_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseMove);
@@ -957,7 +950,6 @@ namespace WinPaletter
         internal FlowLayoutPanel ImgPaletteContainer;
         internal PictureBox PictureBox5;
         internal Label Label3;
-        internal System.ComponentModel.BackgroundWorker BackgroundWorker1;
         internal UI.WP.ProgressBar ProgressBar1;
         internal Label Label4;
         internal UI.WP.CheckBox CheckBox1;

@@ -243,90 +243,54 @@ namespace WinPaletter
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_Win11 = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win11 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_Win10 = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win10 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         private void CheckBox3_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_Win81 = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win81 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_Win7 = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win7 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         private void CheckBox5_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_WinVista = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_WinVista = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         private void CheckBox6_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
                 ((UI.WP.CheckBox)sender).Checked = true;
-            try
-            {
-                if (StoreItem1.TM is not null)
-                    StoreItem1.TM.Info.DesignedFor_WinXP = ((UI.WP.CheckBox)sender).Checked;
-                StoreItem1.UpdateBadges();
-            }
-            catch
-            {
-            }
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_WinXP = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
         }
 
         public bool CheckAllOS()

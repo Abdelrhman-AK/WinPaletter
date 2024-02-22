@@ -26,8 +26,7 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            try { Forms.BK.Close(); } catch { }
-            try { Forms.BK.Show(); } catch { }
+            Forms.BK.Show();
 
             SystemSounds.Exclamation.Play();
 
@@ -83,21 +82,14 @@ namespace WinPaletter
 
         private void TreeView1_DoubleClick(object sender, EventArgs e)
         {
-            try
-            {
-                if (TreeView1.SelectedNode is not null)
-                    Clipboard.SetText(TreeView1.SelectedNode.Text);
-            }
-            catch
-            {
-            }
+            if (TreeView1.SelectedNode is not null) Clipboard.SetText(TreeView1.SelectedNode.Text);
         }
 
         private void PE_Warning_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Forms.BK.Close();
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Mode.Registry);
-            try { Forms.BK.Close(); } catch { }
         }
 
         private void Button3_Click(object sender, EventArgs e)

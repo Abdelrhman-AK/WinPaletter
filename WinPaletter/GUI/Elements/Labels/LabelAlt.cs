@@ -103,8 +103,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
@@ -112,39 +110,32 @@ namespace WinPaletter.UI.WP
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            using (SolidBrush br = new(BackColor)) { G.FillRectangle(br, new Rectangle(0, 0, Width, Height)); }
-
-            try
+            using (SolidBrush br_0 = new(BackColor))
+            using (StringFormat sf = TextAlign.ToStringFormat())
+            using (SolidBrush br = new(ForeColor))
             {
-                if (DesignMode || !DrawOnGlass)
-                {
-                    using (StringFormat sf = TextAlign.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(ForeColor))
-                        {
-                            G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
-                        }
-                    }
-                }
+                G.FillRectangle(br_0, new Rectangle(0, 0, Width, Height));
 
-                else if (!DesignMode & DrawOnGlass)
+                try
                 {
-                    Ookii.Dialogs.WinForms.Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
-                }
-            }
-            catch
-            {
-                using (StringFormat sf = TextAlign.ToStringFormat())
-                {
-                    using (SolidBrush br = new(ForeColor))
+                    if (DesignMode || !DrawOnGlass)
                     {
                         G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
                     }
-                }
-            }
 
-            // Don't use base.OnPaint(e) to avoid doubling graphics bug
-            //// base.OnPaint(e);
+                    else if (!DesignMode & DrawOnGlass)
+                    {
+                        Ookii.Dialogs.WinForms.Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
+                    }
+                }
+                catch
+                {
+                    G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                }
+
+                // Don't use base.OnPaint(e) to avoid doubling graphics bug
+                //// base.OnPaint(e);
+            }
         }
     }
 }

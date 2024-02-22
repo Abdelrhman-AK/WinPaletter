@@ -236,11 +236,10 @@ namespace WinPaletter.Theme.Structures
             {
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
-                    if (!string.IsNullOrEmpty(RegKey))
-                        Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
+                    if (!string.IsNullOrEmpty(RegKey)) Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
                 }
             }
-            catch { }
+            catch { } // Ignore creating a registry key
 
             EditReg(TreeView, RegAddress, "EnableColorSelection", 1);
             EditReg(TreeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());

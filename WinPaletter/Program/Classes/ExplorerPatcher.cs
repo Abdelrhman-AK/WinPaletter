@@ -33,7 +33,9 @@ namespace WinPaletter
                 }
             }
             catch
-            { }
+            {
+                IsInstalled = false;
+            }
             finally
             {
                 Microsoft.Win32.Registry.CurrentUser.Close();
@@ -41,18 +43,15 @@ namespace WinPaletter
 
             if (!Program.Settings.ExplorerPatcher.Enabled_Force)
             {
-
                 if (IsInstalled && (OS.W12 || OS.W11))
                 {
                     UseStart10 = Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
                     {
-                        {
-                            RegistryKey temp = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
-                            UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
-                            TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
-                            StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
-                        }
+                        RegistryKey temp = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
+                        UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
+                        TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
+                        StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
                     }
                     finally
                     {

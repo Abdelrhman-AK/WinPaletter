@@ -55,8 +55,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-
-                try { TMx.Windows10.Apply("10"); } catch { }
+                TMx.Windows10.Apply("10");
             }
 
             Cursor = Cursors.Default;

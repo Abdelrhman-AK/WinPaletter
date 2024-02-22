@@ -52,8 +52,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-
-                try { TMx.WindowsXP.Apply(); } catch { }
+                TMx.WindowsXP.Apply();
             }
 
             Cursor = Cursors.Default;
@@ -385,10 +384,9 @@ namespace WinPaletter
 
                         try
                         {
-                            foreach (VisualStyleScheme x in vs.ColorSchemes)
-                                WXP_VS_ColorsList.Items.Add(x.Name);
+                            foreach (VisualStyleScheme x in vs.ColorSchemes) WXP_VS_ColorsList.Items.Add(x.Name);
                         }
-                        catch { }
+                        catch { } // Couldn't load visual styles file, so no scheme will be added
 
                         if (WXP_VS_ColorsList.Items.Count > 0)
                             WXP_VS_ColorsList.SelectedIndex = 0;

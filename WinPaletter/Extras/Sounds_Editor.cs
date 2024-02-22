@@ -118,7 +118,7 @@ namespace WinPaletter
                             SP.Play();
                         }
                     }
-                    catch
+                    catch // Use method #2
                     {
                         string tmp = Path.GetTempFileName();
                         File.WriteAllBytes(tmp, SoundBytes);
@@ -135,7 +135,6 @@ namespace WinPaletter
             {
                 if (!OS.WXP)
                 {
-
                     try
                     {
                         using (FileStream FS = new($@"{PathsExt.appData}\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
@@ -145,7 +144,7 @@ namespace WinPaletter
                             SP.Play();
                         }
                     }
-                    catch (Exception)
+                    catch // Use method #2
                     {
                         AltPlayingMethod = true;
                         NativeMethods.DLLFunc.PlayAudio($@"{PathsExt.appData}\WindowsStartup_Backup.wav");
@@ -156,26 +155,23 @@ namespace WinPaletter
 
             else if ((snd ?? string.Empty) == (((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text ?? string.Empty))
             {
-
                 if (File.Exists(snd))
                 {
-
                     if (SP is not null)
                     {
-                        SP.Stop();
-                        SP.Dispose();
+                        SP?.Stop();
+                        SP?.Dispose();
                     }
-
                     try
                     {
                         using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                         {
                             SP = new(FS);
-                            SP.Load();
-                            SP.Play();
+                            SP?.Load();
+                            SP?.Play();
                         }
                     }
-                    catch (Exception)
+                    catch // Use method #2
                     {
                         AltPlayingMethod = true;
                         NativeMethods.DLLFunc.PlayAudio(snd);
@@ -184,13 +180,12 @@ namespace WinPaletter
 
                 else
                 {
-                    if (AltPlayingMethod)
-                        NativeMethods.DLLFunc.StopAudio();
+                    if (AltPlayingMethod) NativeMethods.DLLFunc.StopAudio();
 
                     if (SP is not null)
                     {
-                        SP.Stop();
-                        SP.Dispose();
+                        SP?.Stop();
+                        SP?.Dispose();
                     }
                 }
             }
@@ -208,11 +203,10 @@ namespace WinPaletter
 
             if (File.Exists(snd))
             {
-
                 if (SP is not null)
                 {
-                    SP.Stop();
-                    SP.Dispose();
+                    SP?.Stop();
+                    SP?.Dispose();
                 }
 
                 try
@@ -220,11 +214,11 @@ namespace WinPaletter
                     using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                     {
                         SP = new(FS);
-                        SP.Load();
-                        SP.Play();
+                        SP?.Load();
+                        SP?.Play();
                     }
                 }
-                catch
+                catch // Use method #2
                 {
                     AltPlayingMethod = true;
                     NativeMethods.DLLFunc.PlayAudio(snd);
@@ -238,21 +232,20 @@ namespace WinPaletter
 
                 if (SP is not null)
                 {
-                    SP.Stop();
-                    SP.Dispose();
+                    SP?.Stop();
+                    SP?.Dispose();
                 }
             }
         }
 
         public void StopPlayer(object sender, EventArgs e)
         {
-            if (AltPlayingMethod)
-                NativeMethods.DLLFunc.StopAudio();
+            if (AltPlayingMethod) NativeMethods.DLLFunc.StopAudio();
 
             if (SP is not null)
             {
-                SP.Stop();
-                SP.Dispose();
+                SP?.Stop();
+                SP?.Dispose();
             }
         }
 
@@ -260,13 +253,11 @@ namespace WinPaletter
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Lang.Filter_OpenScreensaver })
             {
+                UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
+                if (File.Exists(temp?.Text))
                 {
-                    UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
-                    if (File.Exists(temp.Text))
-                    {
-                        dlg.FileName = new FileInfo(temp.Text).Name;
-                        dlg.InitialDirectory = new FileInfo(temp.Text).DirectoryName;
-                    }
+                    dlg.FileName = new FileInfo(temp.Text).Name;
+                    dlg.InitialDirectory = new FileInfo(temp.Text).DirectoryName;
                 }
 
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -279,11 +270,11 @@ namespace WinPaletter
                         using (FileStream FS = new(snd, FileMode.Open, FileAccess.Read))
                         {
                             SP = new(FS);
-                            SP.Load();
-                            SP.Play();
+                            SP?.Load();
+                            SP?.Play();
                         }
                     }
-                    catch (Exception)
+                    catch // Use method #2
                     {
                         AltPlayingMethod = true;
                         NativeMethods.DLLFunc.PlayAudio(snd);
@@ -327,18 +318,9 @@ namespace WinPaletter
                 {
                     foreach (UI.WP.Button btn in pnl.Controls.OfType<UI.WP.Button>())
                     {
-                        try
-                        {
-                            if ((btn.Tag ?? string.Empty).ToString() == "1")
-                                btn.Click -= PressPlay;
-                            if ((btn.Tag ?? string.Empty).ToString() == "2")
-                                btn.Click -= StopPlayer;
-                            if ((btn.Tag ?? string.Empty).ToString() == "3")
-                                btn.Click -= BrowseForWAV;
-                        }
-                        catch
-                        {
-                        }
+                        if ((btn.Tag ?? string.Empty).ToString() == "1") btn.Click -= PressPlay;
+                        if ((btn.Tag ?? string.Empty).ToString() == "2") btn.Click -= StopPlayer;
+                        if ((btn.Tag ?? string.Empty).ToString() == "3") btn.Click -= BrowseForWAV;
                     }
                 }
             }

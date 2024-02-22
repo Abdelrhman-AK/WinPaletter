@@ -774,7 +774,6 @@ namespace WinPaletter
 
                             if (IsValidJson(string.Join("\r\n", txt)))
                             {
-
                                 try
                                 {
                                     JObject J = JObject.Parse(string.Join("\r\n", txt));
@@ -805,10 +804,8 @@ namespace WinPaletter
                                 catch (Exception ex)
                                 {
                                     Forms.BugReport.ThrowError(ex);
-
                                 }
                             }
-
                             else
                             {
                                 Forms.BugReport.ThrowError(new Exception(Program.Lang.SettingsFileNotJSON));

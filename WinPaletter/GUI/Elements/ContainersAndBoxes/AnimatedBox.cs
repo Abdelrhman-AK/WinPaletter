@@ -150,17 +150,13 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                try { Timer.Tick += Timer_Tick; }
-                catch { }
-
-                try { FindForm().Activated += Form_GotFocus; }
-                catch { }
-
-                try { FindForm().Shown += Form_Shown; }
-                catch { }
-
-                try { FindForm().Deactivate += Form_LostFocus; }
-                catch { }
+                Timer.Tick += Timer_Tick;
+                if (FindForm() is not null)
+                {
+                    FindForm().Activated += Form_GotFocus;
+                    FindForm().Shown += Form_Shown;
+                    FindForm().Deactivate += Form_LostFocus;
+                }
 
                 Timer.Enabled = Enabled;
                 if (Enabled) Timer.Start(); else Timer.Stop();
@@ -178,17 +174,13 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                try { Timer.Tick -= Timer_Tick; }
-                catch { }
-
-                try { FindForm().Activated -= Form_GotFocus; }
-                catch { }
-
-                try { FindForm().Shown -= Form_Shown; }
-                catch { }
-
-                try { FindForm().Deactivate -= Form_LostFocus; }
-                catch { }
+                Timer.Tick -= Timer_Tick;
+                if (FindForm() is not null)
+                {
+                    FindForm().Activated -= Form_GotFocus;
+                    FindForm().Shown -= Form_Shown;
+                    FindForm().Deactivate -= Form_LostFocus;
+                }
             }
 
             base.OnHandleDestroyed(e);

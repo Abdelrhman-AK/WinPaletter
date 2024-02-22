@@ -596,24 +596,20 @@ namespace WinPaletter.UI.Controllers
                     using (Pen P = new(Color.FromArgb((int)Math.Round(alpha / 255d * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
                 }
 
-                try
+                if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
                 {
-                    if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
+                    using (SolidBrush br = new(DefaultBackColor))
                     {
-                        using (SolidBrush br = new(DefaultBackColor))
-                        {
-                            int L = 7;
-                            int Y = (int)Math.Round(RectInner.Y + (RectInner.Height - L) / 2d);
-                            Rectangle DefDotRect;
+                        int L = 7;
+                        int Y = (int)Math.Round(RectInner.Y + (RectInner.Height - L) / 2d);
+                        Rectangle DefDotRect;
 
-                            if (!HoverOverDefColorDot) { DefDotRect = new(L, Y, L, L); }
-                            else { DefDotRect = new(L - 1, Y - 1, L + 2, L + 2); }
+                        if (!HoverOverDefColorDot) { DefDotRect = new(L, Y, L, L); }
+                        else { DefDotRect = new(L - 1, Y - 1, L + 2, L + 2); }
 
-                            G.FillEllipse(br, DefDotRect);
-                        }
+                        G.FillEllipse(br, DefDotRect);
                     }
                 }
-                catch { }
             }
 
             else

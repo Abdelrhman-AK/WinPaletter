@@ -7,57 +7,26 @@ namespace WinPaletter.Theme
     public partial class Manager
     {
         /// <summary>
-        /// Add node to TreeView (Theme log)
+        /// Add node to treeView (Theme log)
         /// </summary>
-        /// <param name="TreeView">TreeView used as a theme log</param>
+        /// <param name="treeView">treeView used as a theme log</param>
         /// <param name="Text">Log node text</param>
         /// <param name="ImageKey">ImageKey used for icon for log node</param>
-        public static void AddNode(TreeView TreeView, string Text, string ImageKey)
+        public static void AddNode(TreeView treeView, string Text, string ImageKey)
         {
-            if (TreeView is not null)
+            if (treeView is not null)
             {
-                if (TreeView.InvokeRequired)
+                treeView?.Invoke(() =>
                 {
-
-                    try
+                    TreeNode temp = treeView?.Nodes.Add(Text);
+                    if (temp is not null)
                     {
-                        TreeView.Invoke(new MethodInvoker(() =>
-                        {
-                            {
-                                TreeNode temp = TreeView.Nodes.Add(Text);
-                                temp.ImageKey = ImageKey;
-                                temp.SelectedImageKey = ImageKey;
-                            }
-                            TreeView.SelectedNode = TreeView.Nodes[TreeView.Nodes.Count - 1];
-                            //TreeView.Update();
-                        }));
+                        temp.ImageKey = ImageKey;
+                        temp.SelectedImageKey = ImageKey;
                     }
-                    catch
-                    {
-                    }
-                }
 
-                else
-                {
-
-                    try
-                    {
-                        TreeView.Invoke(new MethodInvoker(() =>
-                        {
-                            {
-                                TreeNode temp = TreeView.Nodes.Add(Text);
-                                temp.ImageKey = ImageKey;
-                                temp.SelectedImageKey = ImageKey;
-                            }
-                            TreeView.SelectedNode = TreeView.Nodes[TreeView.Nodes.Count - 1];
-                            //TreeView.Update();
-                        }));
-                    }
-                    catch
-                    {
-                    }
-                }
-
+                    treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
+                });
             }
         }
         private void AddException(string Label, Exception Exception)
@@ -69,7 +38,7 @@ namespace WinPaletter.Theme
         /// Helps in executing apply Methods for WinPaletter theme structures, and counts execution time
         /// </summary>
         /// <param name="Void">Void that executes apply for a WinPaletter theme structure (feature)</param>
-        /// <param name="TreeView">TreeView used as a theme log</param>
+        /// <param name="TreeView">treeView used as a theme log</param>
         /// <param name="StartStr">String used to inform user that applying feature has started</param>
         /// <param name="ErrorStr">String used to inform user that applying feature threw an error</param>
         /// <param name="TimeStr">String used to inform user about applying feature execution time</param>

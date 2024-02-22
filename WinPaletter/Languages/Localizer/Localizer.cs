@@ -108,7 +108,6 @@ namespace WinPaletter
 
         public void DeserializeFormsJSONIntoTreeList(JObject JSON_Forms)
         {
-
             // Tuple of four values; sub_form name, control name, property, property value
             // If there is no control and you want to change sub_form property, make control name: String.Empty
             Deserialized_FormsJSONTree.Clear();
@@ -122,67 +121,52 @@ namespace WinPaletter
             // Loop through all forms nodes in JObj
             foreach (KeyValuePair<string, JToken?> F in JSON_Forms)
             {
-                try
+                // Get one sub_form node
+                // There is only one specific property "Text"
+                JObject J_Specific_Form = new();
+                J_Specific_Form = (JObject)JSON_Forms[F.Key];
+                FormName = F.Key.ToString();
+                ControlName = string.Empty;
+                Prop = "Text";
+
+                if (J_Specific_Form.ContainsKey("Text") | J_Specific_Form.ContainsKey("text") | J_Specific_Form.ContainsKey("TEXT"))
                 {
-                    // Get one sub_form node
-                    // There is only one specific property "Text"
-                    JObject J_Specific_Form = new();
-                    J_Specific_Form = (JObject)JSON_Forms[F.Key];
-                    FormName = F.Key.ToString();
-                    ControlName = string.Empty;
-                    Prop = "Text";
+                    if (J_Specific_Form.ContainsKey("Text")) Value = J_Specific_Form["Text"].ToString();
+                    if (J_Specific_Form.ContainsKey("text")) Value = J_Specific_Form["text"].ToString();
+                    if (J_Specific_Form.ContainsKey("TEXT")) Value = J_Specific_Form["TEXT"].ToString();
+                    Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
+                }
 
-                    if (J_Specific_Form.ContainsKey("Text") | J_Specific_Form.ContainsKey("text") | J_Specific_Form.ContainsKey("TEXT"))
+                // If this sub_form has a control/controls then get them
+                if (J_Specific_Form.ContainsKey("Controls") | J_Specific_Form.ContainsKey("controls") | J_Specific_Form.ContainsKey("CONTROLS"))
+                {
+                    // JObj nodes of all child controls
+                    JObject J_Controls = new();
+                    if (J_Specific_Form.ContainsKey("Controls")) J_Controls = (JObject)J_Specific_Form["Controls"];
+                    if (J_Specific_Form.ContainsKey("controls")) J_Controls = (JObject)J_Specific_Form["controls"];
+                    if (J_Specific_Form.ContainsKey("CONTROLS")) J_Controls = (JObject)J_Specific_Form["CONTROLS"];
+
+                    // Loop through all child controls JObj nodes
+                    foreach (KeyValuePair<string, JToken?> ctrl in J_Controls)
                     {
-                        if (J_Specific_Form.ContainsKey("Text"))
-                            Value = J_Specific_Form["Text"].ToString();
-                        if (J_Specific_Form.ContainsKey("text"))
-                            Value = J_Specific_Form["text"].ToString();
-                        if (J_Specific_Form.ContainsKey("TEXT"))
-                            Value = J_Specific_Form["TEXT"].ToString();
-                        Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                    }
-
-                    // If this sub_form has a control/controls then get them
-                    if (J_Specific_Form.ContainsKey("Controls") | J_Specific_Form.ContainsKey("controls") | J_Specific_Form.ContainsKey("CONTROLS"))
-                    {
-
-                        // JObj nodes of all child controls
-                        JObject J_Controls = new();
-                        if (J_Specific_Form.ContainsKey("Controls"))
-                            J_Controls = (JObject)J_Specific_Form["Controls"];
-                        if (J_Specific_Form.ContainsKey("controls"))
-                            J_Controls = (JObject)J_Specific_Form["controls"];
-                        if (J_Specific_Form.ContainsKey("CONTROLS"))
-                            J_Controls = (JObject)J_Specific_Form["CONTROLS"];
-
-                        // Loop through all child controls JObj nodes
-                        foreach (KeyValuePair<string, JToken?> ctrl in J_Controls)
+                        // If there is a dot in JObj node value, then there is a specific mentioned property,
+                        // if not, then it is a "Text" property only.
+                        if (Conversions.ToBoolean(ctrl.Key.Contains(".")))
                         {
-                            try
-                            {
-                                // If there is a dot in JObj node value, then there is a specific mentioned property,
-                                // if not, then it is a "Text" property only.
-                                if (Conversions.ToBoolean(ctrl.Key.Contains(".")))
-                                {
-                                    ControlName = ctrl.Key.Split('.')[0];
-                                    Prop = ctrl.Key.Split('.')[1];
-                                    Value = ctrl.Value.ToString();
-                                    Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                                }
-                                else
-                                {
-                                    ControlName = ctrl.Key.ToString();
-                                    Prop = "Text";
-                                    Value = ctrl.Value.ToString();
-                                    Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                                }
-                            }
-                            catch { }
+                            ControlName = ctrl.Key.Split('.')[0];
+                            Prop = ctrl.Key.Split('.')[1] ?? "Text";
+                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
+                            Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
+                        }
+                        else
+                        {
+                            ControlName = ctrl.Key.ToString();
+                            Prop = "Text";
+                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
+                            Deserialized_FormsJSONTree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
                         }
                     }
                 }
-                catch { }
             }
         }
 
@@ -209,58 +193,38 @@ namespace WinPaletter
 
             foreach (Tuple<string, string, string, string> member in PopCtrlList)
             {
-                try
+                if ((Form.Name.ToLower() ?? string.Empty) == (member.Item1.ToLower() ?? string.Empty))
                 {
-                    if ((Form.Name.ToLower() ?? string.Empty) == (member.Item1.ToLower() ?? string.Empty))
+                    if (string.IsNullOrEmpty(member.Item2))
                     {
-                        if (string.IsNullOrEmpty(member.Item2))
+                        // # Form
+                        if (member.Item3 is not null && !string.IsNullOrWhiteSpace(member.Item3))
                         {
-                            // # Form
-                            try
-                            {
-                                if (member.Item3.ToLower() == "text") Form.SetText(member.Item4);
-                            }
-                            catch { }
-
-                            try
-                            {
-                                if (member.Item3.ToLower() == "tag") Form.SetTag(member.Item4.ToString());
-                            }
-                            catch { }
-                        }
-                        // # Control
-                        else if (!string.IsNullOrEmpty(member.Item2))
-                        {
-                            foreach (Control ctrl in Form.Controls.Find(member.Item2, true))
-                            {
-                                try
-                                {
-                                    if (member.Item3.ToLower() == "text")
-                                    {
-                                        if ((member.Item1.ToLower() ?? string.Empty) != (Forms.Whatsnew.Name.ToLower() ?? string.Empty))
-                                        {
-                                            ctrl.SetText(member.Item4.ToString());
-                                        }
-                                        else if (!Forms.Whatsnew.TabControl1.TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & !(ctrl is TabPage))
-                                        {
-                                            ctrl.SetText(member.Item4.ToString());
-                                        }
-                                    }
-                                }
-                                catch { }
-
-                                try
-                                {
-                                    if (member.Item3.ToLower() == "tag") ctrl.SetTag(member.Item4.ToString());
-                                }
-                                catch { }
-                            }
+                            if (member.Item3.ToLower() == "text") Form.SetText(member.Item4 ?? string.Empty);
+                            else if (member.Item3.ToLower() == "tag") Form.SetTag((member.Item4 ?? string.Empty).ToString());
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
+
+                    // # Control
+                    else if (!string.IsNullOrEmpty(member.Item2))
+                    {
+                        foreach (Control ctrl in Form.Controls.Find(member.Item2, true))
+                        {
+                            if (member.Item3.ToLower() == "text")
+                            {
+                                if ((member.Item1.ToLower() ?? string.Empty) != (Forms.Whatsnew.Name.ToLower() ?? string.Empty))
+                                {
+                                    ctrl.SetText(member.Item4.ToString());
+                                }
+                                else if (!Forms.Whatsnew.TabControl1.TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & ctrl is not TabPage)
+                                {
+                                    ctrl.SetText(member.Item4.ToString());
+                                }
+                            }
+
+                            if (member.Item3.ToLower() == "tag") ctrl.SetTag(member.Item4.ToString());
+                        }
+                    }
                 }
             }
         }

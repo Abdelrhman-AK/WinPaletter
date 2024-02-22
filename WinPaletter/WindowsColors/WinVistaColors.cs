@@ -56,8 +56,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-
-                try { TMx.WindowsVista.Apply(); } catch { }
+                TMx.WindowsVista.Apply();
             }
 
             Cursor = Cursors.Default;

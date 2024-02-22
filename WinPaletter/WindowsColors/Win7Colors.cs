@@ -59,8 +59,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-
-                try { TMx.Windows7.Apply(TMx); } catch { }
+                TMx.Windows7.Apply(TMx);
             }
 
             Cursor = Cursors.Default;
@@ -819,45 +818,41 @@ namespace WinPaletter
             {
                 Task.Run(() =>
                 {
-                    try
+                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                     {
-                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                        if (DWMAPI.IsCompositionEnabled())
                         {
-                            if (DWMAPI.IsCompositionEnabled())
+                            if (OS.W8x)
                             {
-                                if (OS.W8x)
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
                                 {
-                                    DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
-                                    {
-                                        clrColor = (uint)ColorizationColor_pick.BackColor.ToArgb(),
-                                        nIntensity = (uint)ColorizationColorBalance_bar.Value,
-                                    };
+                                    clrColor = (uint)ColorizationColor_pick.BackColor.ToArgb(),
+                                    nIntensity = (uint)ColorizationColorBalance_bar.Value,
+                                };
 
-                                    DWMAPI.DwmSetColorizationParameters(ref temp, false);
-                                }
-
-                                else if (OS.W7)
-                                {
-                                    DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
-                                    {
-                                        clrColor = (uint)ColorizationColor_pick.BackColor.ToArgb(),
-                                        nIntensity = (uint)ColorizationColorBalance_bar.Value,
-
-                                        clrAfterGlow = (uint)ColorizationAfterglow_pick.BackColor.ToArgb(),
-                                        clrAfterGlowBalance = (uint)ColorizationAfterglowBalance_bar.Value,
-
-                                        clrBlurBalance = (uint)ColorizationBlurBalance_bar.Value,
-                                        clrGlassReflectionIntensity = (uint)ColorizationGlassReflectionIntensity_bar.Value,
-                                        fOpaque = theme_aeroopaque.Checked,
-                                    };
-
-                                    DWMAPI.DwmSetColorizationParameters(ref temp, false);
-                                }
+                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
                             }
-                            wic.Undo();
+
+                            else if (OS.W7)
+                            {
+                                DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
+                                {
+                                    clrColor = (uint)ColorizationColor_pick.BackColor.ToArgb(),
+                                    nIntensity = (uint)ColorizationColorBalance_bar.Value,
+
+                                    clrAfterGlow = (uint)ColorizationAfterglow_pick.BackColor.ToArgb(),
+                                    clrAfterGlowBalance = (uint)ColorizationAfterglowBalance_bar.Value,
+
+                                    clrBlurBalance = (uint)ColorizationBlurBalance_bar.Value,
+                                    clrGlassReflectionIntensity = (uint)ColorizationGlassReflectionIntensity_bar.Value,
+                                    fOpaque = theme_aeroopaque.Checked,
+                                };
+
+                                DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                            }
                         }
+                        wic.Undo();
                     }
-                    catch { }
                 });
             }
         }

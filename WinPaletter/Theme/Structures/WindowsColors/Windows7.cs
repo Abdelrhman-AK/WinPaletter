@@ -107,7 +107,7 @@ namespace WinPaletter.Theme.Structures
                         string stringThemeName = UxTheme.GetCurrentVS().Item1;
                         Classic = string.IsNullOrWhiteSpace(stringThemeName.ToString()) | !System.IO.File.Exists(stringThemeName.ToString());
                     }
-                    catch
+                    catch // Couldn't get current visual styles, lets assume that it is not classic.
                     {
                         Classic = false;
                     }

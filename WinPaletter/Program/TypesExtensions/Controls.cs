@@ -116,6 +116,8 @@ namespace WinPaletter.TypesExtensions
 
         public static Color GetParentColor(this Control ctrl, bool Accept_Transparent = false)
         {
+            if (ctrl is null) return default;
+            if (ctrl.Parent is null) return default;
 
             if (Accept_Transparent)
             {
@@ -123,51 +125,31 @@ namespace WinPaletter.TypesExtensions
             }
             else
             {
-                try
+                if (ctrl.Parent.BackColor.A == 255)
                 {
-
-                    if (ctrl.Parent is null)
-                    {
-                        return default;
-                    }
-
-                    if (ctrl.Parent.BackColor.A == 255)
-                    {
-                        return Color.FromArgb(255, ctrl.Parent.BackColor);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Color c1 = ctrl.Parent.BackColor;
-                            Color c2;
-                            if (!(ctrl.Parent.Parent is Form))
-                            {
-                                c2 = ctrl.Parent.Parent.BackColor;
-                            }
-                            else
-                            {
-                                c2 = ctrl.Parent.FindForm().BackColor;
-                            }
-                            double amount = c1.A / 255d;
-                            byte r = (byte)Math.Round(c1.R * amount + c2.R * (1d - amount));
-                            byte g = (byte)Math.Round(c1.G * amount + c2.G * (1d - amount));
-                            byte b = (byte)Math.Round(c1.B * amount + c2.B * (1d - amount));
-                            return Color.FromArgb(r, g, b);
-                        }
-                        catch
-                        {
-                            return ctrl.Parent.BackColor;
-                        }
-                    }
+                    return Color.FromArgb(255, ctrl.Parent.BackColor);
                 }
-                catch
+                else
                 {
+                    Color c1 = ctrl.Parent.BackColor;
+                    Color c2 = ctrl.Parent.BackColor;
+
+                    if (ctrl.Parent.Parent is not null && ctrl.Parent.Parent is not Form)
+                    {
+                        c2 = ctrl.Parent.Parent.BackColor;
+                    }
+                    else if (ctrl.Parent.Parent is Form form && form is not null)
+                    {
+                        c2 = form.BackColor;
+                    }
+
+                    float amount = c1.A / 255f;
+                    byte r = (byte)Math.Round(c1.R * amount + c2.R * (1f - amount));
+                    byte g = (byte)Math.Round(c1.G * amount + c2.G * (1f - amount));
+                    byte b = (byte)Math.Round(c1.B * amount + c2.B * (1f - amount));
+                    return Color.FromArgb(r, g, b);
                 }
             }
-
-            return default;
-
         }
 
         public static void DoubleBuffer(this Control Parent)
@@ -201,7 +183,7 @@ namespace WinPaletter.TypesExtensions
                 }
 
             }
-            catch (Exception)
+            catch (Exception) // Use another method to get all controls
             {
                 if (parent != null && parent.Controls.Count > 0)
                 {
@@ -236,65 +218,53 @@ namespace WinPaletter.TypesExtensions
 
         public static void SetText(this Control Ctrl, string text)
         {
-            try
+            if (Ctrl is not null)
             {
                 if (Ctrl.InvokeRequired)
                 {
-                    Ctrl.Invoke(new setCtrlTxtInvoker(SetText), Ctrl, text);
+                    Ctrl?.Invoke(new setCtrlTxtInvoker(SetText), Ctrl, text);
                 }
                 else
                 {
                     Ctrl.Text = text;
-                    Ctrl.Refresh();
                 }
-            }
-            catch
-            {
-
             }
         }
         private delegate void setCtrlTxtInvoker(Control Ctrl, string text);
 
         public static void SetTag(this Control Ctrl, object Tag)
         {
-            try
+            if (Ctrl is not null)
             {
                 if (Ctrl.InvokeRequired)
                 {
-                    Ctrl.Invoke(new setCtrlTagInvoker(SetTag), Ctrl, Tag);
+                    Ctrl?.Invoke(new setCtrlTagInvoker(SetTag), Ctrl, Tag);
                 }
                 else
                 {
                     Ctrl.Tag = Tag;
                 }
             }
-            catch
-            {
-
-            }
         }
         private delegate void setCtrlTagInvoker(Control Ctrl, object Tag);
 
         public static void AddTreeNode(this TreeView Ctrl, string text, string imagekey)
         {
-            try
+            if (Ctrl is not null)
             {
                 if (Ctrl.InvokeRequired)
                 {
-                    Ctrl.Invoke(new AddTreeNodeInvoker(AddTreeNode), Ctrl, text, imagekey);
+                    Ctrl?.Invoke(new AddTreeNodeInvoker(AddTreeNode), Ctrl, text, imagekey);
                 }
                 else
                 {
+                    TreeNode temp = Ctrl?.Nodes?.Add(text);
+                    if (temp is not null)
                     {
-                        TreeNode temp = Ctrl.Nodes.Add(text);
                         temp.ImageKey = imagekey;
                         temp.SelectedImageKey = imagekey;
                     }
                 }
-            }
-            catch
-            {
-
             }
         }
         private delegate void AddTreeNodeInvoker(TreeView Ctrl, string text, string imagekey);

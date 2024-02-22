@@ -131,12 +131,12 @@ namespace WinPaletter.UI.WP
                     SideTape = new(TabRect.X + (TabRect.Width - SideTapeH) / 2, TabRect.Y + TabRect.Height - SideTapeW - 1, SideTapeH, SideTapeW);
                 }
 
-                try
+                if (ImageList is not null && i <= ImageList.Images.Count - 1)
                 {
-                    if (ImageList != null)
-                    {
-                        img = ImageList.Images[i];
+                    img = ImageList.Images[i];
 
+                    if (img is not null)
+                    {
                         using (Config.Colors_Collection colors = new(img.AverageColor(), default, Program.Style.DarkMode))
                         {
                             SelectedColor = colors.Back_Checked;
@@ -145,7 +145,6 @@ namespace WinPaletter.UI.WP
                         }
                     }
                 }
-                catch { }
 
                 if (i == SelectedIndex)
                 {

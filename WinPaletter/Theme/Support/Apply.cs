@@ -50,7 +50,7 @@ namespace WinPaletter.Theme
                 foreach (string fileX in System.IO.Directory.GetFiles(DirX))
                 {
                     try { System.IO.File.Delete(fileX); }
-                    catch { }
+                    catch { } // Couldn't delete a logonUI background file
                 }
 
                 List<Bitmap> bmpList = new();

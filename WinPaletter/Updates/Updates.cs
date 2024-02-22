@@ -127,12 +127,14 @@ namespace WinPaletter
                     Panel1.Enabled = false;
                     ProgressBar1.Visible = true;
                     OldName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
                     try
                     {
                         if (System.IO.File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
                         if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
                     }
-                    catch { }
+                    catch { } // Couldn't delete old executable files (may be in use)
+
                     System.IO.File.Move(OldName, "oldWinpaletter.trash");
                     await DM.DownloadFileAsync(url, OldName);
                 }
@@ -327,24 +329,19 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (System.IO.File.Exists("oldWinpaletter_2.trash"))
-                            FileSystem.Kill("oldWinpaletter_2.trash");
+                        if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
                     }
-                    catch
-                    {
-                    }
+                    catch { } // Couldn't delete old executable files (may be in use)
+
                     System.IO.File.Move(OldName, "oldWinpaletter_2.trash");
                     System.IO.File.Move("oldWinpaletter.trash", OldName.Split('\\').Last());
+
                     try
                     {
-                        if (System.IO.File.Exists("oldWinpaletter_2.trash"))
-                            FileSystem.Kill("oldWinpaletter_2.trash");
-                        if (System.IO.File.Exists("oldWinpaletter.trash"))
-                            FileSystem.Kill("oldWinpaletter.trash");
+                        if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
+                        if (System.IO.File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
                     }
-                    catch
-                    {
-                    }
+                    catch { } // Couldn't delete old executable files (may be in use)
                 }
             }
         }

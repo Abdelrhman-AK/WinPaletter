@@ -18,39 +18,23 @@ namespace WinPaletter.Theme
         {
             if (System.IO.File.Exists(Filename))
             {
-
                 List<Color> ls = new();
                 ls.Clear();
 
-                List<string> tx = System.IO.File.ReadAllText(Filename).CList();
-
-                foreach (string x in tx)
+                foreach (string x in System.IO.File.ReadAllText(Filename).Split('\r'))
                 {
-                    try
+                    if (x.Contains("=") && x.Split('=').Count() >= 2 && x.Split('=')[1].Contains(" ") && x.Split('=')[1].Split(' ').Count() == 3)
                     {
-                        if (x.Contains("="))
+                        string c = x.Split('=')[1];
+                        bool inx = true;
+                        foreach (string u in c.Split(' '))
                         {
-                            if (x.Split('=')[1].Contains(" "))
-                            {
-                                if (x.Split('=')[1].Split(' ').Count() == 3)
-                                {
-                                    string c = x.Split('=')[1];
-                                    bool inx = true;
-                                    foreach (string u in c.Split(' '))
-                                    {
-                                        if (!u.All(char.IsDigit))
-                                            inx = false;
-                                    }
-                                    if (inx)
-                                        ls.Add(c.FromWin32RegToColor());
-                                }
-                            }
+                            if (!u.All(char.IsDigit)) inx = false;
                         }
-                    }
-                    catch
-                    {
+                        if (inx) ls.Add(c.FromWin32RegToColor());
                     }
                 }
+
                 ls = ls.Distinct().ToList();
                 ls.Sort(new RGBColorComparer());
                 return ls;
@@ -95,29 +79,15 @@ namespace WinPaletter.Theme
 
             foreach (string x in SelectedThemeList)
             {
-                try
+                if (x.Contains("=") && x.Split('=').Count() >= 2 && x.Split('=')[1].Contains(" ") && x.Split('=')[1].Split(' ').Count() == 3)
                 {
-                    if (x.Contains("="))
+                    string c = x.Split('=')[1];
+                    bool inx = true;
+                    foreach (string u in c.Split(' '))
                     {
-                        if (x.Split('=')[1].Contains(" "))
-                        {
-                            if (x.Split('=')[1].Split(' ').Count() == 3)
-                            {
-                                string c = x.Split('=')[1];
-                                bool inx = true;
-                                foreach (string u in c.Split(' '))
-                                {
-                                    if (!u.All(char.IsDigit))
-                                        inx = false;
-                                }
-                                if (inx)
-                                    ls.Add(Color.FromArgb(255, Convert.ToInt32(c.Split(' ')[0]), Convert.ToInt32(c.Split(' ')[1]), Convert.ToInt32(c.Split(' ')[2])));
-                            }
-                        }
+                        if (!u.All(char.IsDigit)) inx = false;
                     }
-                }
-                catch
-                {
+                    if (inx) ls.Add(Color.FromArgb(255, Convert.ToInt32(c.Split(' ')[0]), Convert.ToInt32(c.Split(' ')[1]), Convert.ToInt32(c.Split(' ')[2])));
                 }
             }
 

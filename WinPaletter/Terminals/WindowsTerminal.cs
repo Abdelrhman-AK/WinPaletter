@@ -98,20 +98,19 @@ namespace WinPaletter
                         if (_Mode == WinTerminal.Version.Stable)
                         {
                             _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile);
-                            Load_FromTerminal();
                         }
-
                         else if (_Mode == WinTerminal.Version.Preview)
                         {
                             _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
-                            Load_FromTerminal();
                         }
                     }
-
                     catch (Exception ex)
                     {
-                        MsgBox(Program.Lang.Terminal_ErrorFile, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Forms.BugReport.ThrowError(ex);
+                    }
+                    finally
+                    {
+                        Load_FromTerminal();
                     }
                 }
             }
@@ -401,7 +400,7 @@ namespace WinPaletter
                     }
                     else if (TerProfiles.SelectedIndex > 0)
                     {
-                        temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
+                        temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
                         _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = null;
                     }
                 }
@@ -449,9 +448,8 @@ namespace WinPaletter
         private void TerProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            string schemeName = temp.ColorScheme;
-
-            if (schemeName == null)
+            string schemeName = (temp.ColorScheme ?? string.Empty).ToString();
+            if (string.IsNullOrWhiteSpace(schemeName))
             {
                 if (TerProfiles.SelectedIndex == 0 && TerSchemes.Items.Count > 1)
                     TerSchemes.SelectedIndex = 1;
@@ -837,12 +835,12 @@ namespace WinPaletter
             if (TerProfiles.SelectedIndex == 0)
             {
                 scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme ?? string.Empty).ToLower()).FirstOrDefault();
+                    .Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault();
             }
             else if (TerProfiles.SelectedIndex > 0)
             {
                 scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme.ToLower()).FirstOrDefault();
+                    .Where(s => s.Name.ToLower() == _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme.ToString().ToLower()).FirstOrDefault();
             }
 
             if (TerThemes.SelectedIndex > 3)
@@ -1047,8 +1045,6 @@ namespace WinPaletter
 
         public void ApplyPreview(WinTerminal Terminal)
         {
-            //try
-            //{
             Terminal1.UseAcrylicOnTitlebar = Terminal.UseAcrylicInTabRow;
 
             if (TerProfiles.SelectedIndex == 0)
@@ -1074,7 +1070,7 @@ namespace WinPaletter
                 }
                 else if (TerProfiles.SelectedIndex > 0)
                 {
-                    temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
+                    temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
                 }
             }
             else if (TerSchemes.SelectedIndex > 0)
@@ -1174,8 +1170,6 @@ namespace WinPaletter
             fx.lfWeight = (int)temp_p.Font.Weight * 100;
             f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
             Terminal1.Font = f_cmd;
-            //}
-            //catch { }
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1652,14 +1646,8 @@ namespace WinPaletter
                         temp1.TabTitle = CCatFrom.TabTitle;
                         temp1.UseAcrylic = CCatFrom.UseAcrylic;
 
-                        try
-                        {
-                            if (TerSchemes.Items.Contains(CCatFrom.ColorScheme))
-                                TerSchemes.SelectedItem = CCatFrom.ColorScheme;
-                            else
-                                TerSchemes.SelectedIndex = 0;
-                        }
-                        catch { }
+                        if (CCatFrom.ColorScheme is not null && TerSchemes.Items.Contains(CCatFrom.ColorScheme)) TerSchemes.SelectedItem = CCatFrom.ColorScheme;
+                        else TerSchemes.SelectedIndex = 0;
 
                         TerBackImage.Text = CCatFrom.BackgroundImage;
                         TerImageOpacity.Value = (int)Math.Round(CCatFrom.BackgroundImageOpacity * 100f);

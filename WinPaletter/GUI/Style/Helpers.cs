@@ -198,7 +198,7 @@ namespace WinPaletter.UI.Style
                 {
                     UxTheme.SetPreferredAppMode(DarkMode ? UxTheme.PreferredAppMode.Dark : UxTheme.PreferredAppMode.Light);
                 }
-                catch { }
+                catch { } // ignored
             }
 
             // Apply the style to all open forms

@@ -213,13 +213,12 @@ namespace WinPaletter.TypesExtensions
                 green = (255f - green) * correctionFactor + green;
                 blue = (255f - blue) * correctionFactor + blue;
             }
-            try
-            {
-                return Color.FromArgb(color.A, (int)Math.Round(red), (int)Math.Round(green), (int)Math.Round(blue));
-            }
-            catch { }
 
-            return default;
+            red = Math.Min(Math.Max(red, 0f), 255f);
+            green = Math.Min(Math.Max(green, 0f), 255f);
+            blue = Math.Min(Math.Max(blue, 0f), 255f);
+
+            return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
         }
 
         /// <summary>

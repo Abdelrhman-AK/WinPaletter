@@ -411,9 +411,9 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    windowMetrics1.MenuFont = Label3.Font;
-                    Label3.Font = Label3.Font;
-                    Label3.Text = Label3.Font.Name;
+                    windowMetrics1.MenuFont = dlg.Font;
+                    Label3.Font = dlg.Font;
+                    Label3.Text = dlg.Font.Name;
                 }
             }
         }

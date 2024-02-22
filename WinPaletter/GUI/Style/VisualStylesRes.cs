@@ -9,22 +9,9 @@ namespace WinPaletter
         public VisualStylesRes(string themeFile)
         {
             _VisualStyleFile = new(themeFile);
-            try
-            {
-                Colors = _VisualStyleFile.Metrics.Colors;
-            }
-            catch { }
-
-            try
-            {
-                Metrics = _VisualStyleFile.Metrics.Sizes;
-            }
-            catch { }
         }
 
         private VisualStyleFile _VisualStyleFile;
-        public VisualStyleMetricColors Colors { get; set; } = new();
-        public VisualStyleMetricSizes Metrics { get; set; } = new();
 
         public enum Element
         {
@@ -139,13 +126,15 @@ namespace WinPaletter
 
             }
 
-            try
+            if (!Program.ClassicThemeRunning)
             {
-                VisualStyleRenderer renderer = new(el);
-                renderer.DrawBackground(G, Rectangle);
+                try
+                {
+                    VisualStyleRenderer renderer = new(el);
+                    renderer.DrawBackground(G, Rectangle);
+                }
+                catch { } // Couldn't draw the visual style, may be a classic theme is enabled or the visual style is not supported.
             }
-            catch { }
-
         }
 
         public void Dispose()

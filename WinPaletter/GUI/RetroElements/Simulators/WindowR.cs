@@ -479,15 +479,11 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnFontChanged(EventArgs e)
         {
-            try
-            {
-                titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
-                AdjustControlBoxFontsSizes();
-                AdjustButtonSizes();
-                AdjustLocations();
-                AdjustPadding();
-            }
-            catch { }
+            titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
+            AdjustControlBoxFontsSizes();
+            AdjustButtonSizes();
+            AdjustLocations();
+            AdjustPadding();
 
             base.OnFontChanged(e);
         }
@@ -818,17 +814,13 @@ namespace WinPaletter.UI.Retro
 
         public void AdjustControlBoxFontsSizes()
         {
-            try
-            {
-                float i0, iFx;
-                i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
-                iFx = i0 / Math.Abs(Math.Min(17, 18));
-                Font f = new("Marlett", (float)(6.8d * (double)iFx));
-                if (_CloseBtn != null) _CloseBtn.Font = f;
-                if (_MinBtn != null) _MinBtn.Font = f;
-                if (_MaxBtn != null) _MaxBtn.Font = f;
-            }
-            catch { }
+            float i0, iFx;
+            i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
+            iFx = i0 / Math.Abs(Math.Min(17, 18));
+            Font f = new("Marlett", (float)(6.8d * (double)iFx));
+            if (_CloseBtn != null) _CloseBtn.Font = f;
+            if (_MinBtn != null) _MinBtn.Font = f;
+            if (_MaxBtn != null) _MaxBtn.Font = f;
         }
 
         public void AdjustPadding()

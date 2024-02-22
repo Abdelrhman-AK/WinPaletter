@@ -1,17 +1,14 @@
 ﻿using Ressy;
 using System;
 using System.Drawing;
-using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
     public static class PE
     {
-
         private readonly static SecurityIdentifier identifier = new(WellKnownSidType.BuiltinAdministratorsSid, null);
         private readonly static NTAccount AdminAccount = (NTAccount)identifier.Translate(typeof(NTAccount));
         private readonly static FileSystemAccessRule AccessRule = new(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
@@ -91,9 +88,8 @@ namespace WinPaletter
                 {
                     System.IO.File.Delete(backupFile);
                 }
-                catch
-                {
-                }
+                catch { } // Ignore deleting backup file if it fails
+
                 PreparePrivileges();
             }
             bool result = true;
@@ -118,7 +114,7 @@ namespace WinPaletter
             if (accessControl is null)
                 return false;
 
-            using (FileStream fileStream = System.IO.File.Create(BackupFile, 1, System.IO.FileOptions.None, accessControl))
+            using (System.IO.FileStream fileStream = System.IO.File.Create(BackupFile, 1, System.IO.FileOptions.None, accessControl))
             {
                 fileStream.Close();
             }

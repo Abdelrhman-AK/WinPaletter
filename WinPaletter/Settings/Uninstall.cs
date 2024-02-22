@@ -99,7 +99,7 @@ namespace WinPaletter
                         }
                     }
                 }
-                catch { }
+                catch { } // Ignore restoring the sound if it fails
             }
 
             if (checkBox5.Checked)
@@ -120,22 +120,22 @@ namespace WinPaletter
                 }
             }
 
+            Forms.SysEventsSndsInstaller.Uninstall();
+
             if (CheckBox2.Checked)
             {
                 if (System.IO.Directory.Exists(PathsExt.appData))
                 {
                     try { System.IO.Directory.Delete(PathsExt.appData, true); }
-                    catch { }
+                    catch { } // Ignore deleting the folder if it fails
                 }
 
                 if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
                 {
                     try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); }
-                    catch { }
+                    catch { } // Ignore deleting the folder if it fails
                 }
             }
-
-            Forms.SysEventsSndsInstaller.Uninstall();
 
             string guidText = Application.ProductName;
             string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";

@@ -119,12 +119,8 @@ namespace WinPaletter
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
 
-            try
-            {
-                TMx.Win32.Apply();
-                TMx.Win32.Broadcast_UPM_ToDefUsers();
-            }
-            catch { }
+            TMx.Win32.Apply();
+            TMx.Win32.Broadcast_UPM_ToDefUsers();
 
             TMx.Dispose();
             Cursor = Cursors.Default;
@@ -138,7 +134,7 @@ namespace WinPaletter
                 {
                     Theme.Structures.Win32UI win32UI = new();
                     ApplyToWin32UI(ref win32UI);
-                    
+
                     try
                     {
                         System.IO.File.WriteAllText(dlg.FileName, win32UI.ToString());
@@ -468,19 +464,15 @@ namespace WinPaletter
         {
             if (e is DragEventArgs) return;
 
-            try
+            if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                if (((MouseEventArgs)e).Button == MouseButtons.Right)
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    Forms.SubMenu.ShowMenu((ColorItem)sender);
-                    if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                    {
-                        ApplyRetroPreview();
-                    }
-                    return;
+                    ApplyRetroPreview();
                 }
+                return;
             }
-            catch { }
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()

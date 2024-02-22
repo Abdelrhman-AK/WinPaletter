@@ -451,6 +451,18 @@ namespace WinPaletter.TypesExtensions
             return false;
         }
 
+        /// <summary>
+        /// Check if a targetRect lies in a parent rectangle, not exceeding it. 
+        /// </summary>
+        /// <param name="parentRect"></param>
+        /// <param name="targetRect"></param>
+        /// <returns></returns>
+        public static bool Contains_ButNotExceed(this Rectangle parentRect, Rectangle targetRect)
+        {
+            // Check if the clone bounds are within the original bitmap size
+            return targetRect.X >= parentRect.X && targetRect.Y >= parentRect.Y && targetRect.Right <= parentRect.Width && targetRect.Bottom <= parentRect.Height;
+        }
+
         public static bool BordersContains(this Rectangle rectangle, Point pointToCheck)
         {
             bool isOnBorderX = pointToCheck.X == rectangle.Left || pointToCheck.X == rectangle.Right;

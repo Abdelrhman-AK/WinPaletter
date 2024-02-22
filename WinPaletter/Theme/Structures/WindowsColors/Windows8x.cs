@@ -155,45 +155,40 @@ namespace WinPaletter.Theme.Structures
             {
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
-                try
+                switch (Theme)
                 {
-                    switch (Theme)
-                    {
-                        case Windows7.Themes.Aero:
+                    case Windows7.Themes.Aero:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            break;
+                        }
+
+                    case Windows7.Themes.AeroLite:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
+                            try
                             {
-                                UxTheme.EnableTheming(1);
-                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-                                break;
+                                Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
+                                if (TreeView is not null)
+                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
+                            }
+                            catch
+                            {
+                                // Do nothing
+                                Microsoft.Win32.Registry.CurrentUser.Close();
+                            }
+                            finally
+                            {
+                                Microsoft.Win32.Registry.CurrentUser.Close();
                             }
 
-                        case Windows7.Themes.AeroLite:
-                            {
-                                UxTheme.EnableTheming(1);
-                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-                                try
-                                {
-                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
-                                }
-                                catch
-                                {
-                                    // Do nothing
-                                    Microsoft.Win32.Registry.CurrentUser.Close();
-                                }
-                                finally
-                                {
-                                    Microsoft.Win32.Registry.CurrentUser.Close();
-                                }
-
-                                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
-                                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
-                                break;
-                            }
-
-                    }
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                            break;
+                        }
                 }
-                catch { }
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);

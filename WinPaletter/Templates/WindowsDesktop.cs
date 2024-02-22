@@ -2162,9 +2162,9 @@ namespace WinPaletter.Templates
 
                 if (_windowsXPTheme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
-                    if (System.IO.File.Exists(_windowsXPThemePath))
+                    if (System.IO.File.Exists(msstyles))
                     {
-                        using (VisualStyleFile vs = new(_windowsXPThemePath))
+                        using (VisualStyleFile vs = new(msstyles))
                         {
                             if (WXP_VS_ReplaceColors) HookedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
 

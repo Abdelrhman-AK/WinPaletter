@@ -11,6 +11,8 @@ namespace WinPaletter
         /// </summary>
         public bool LoggingOff = false;
 
+        public bool closeSignalReceivedFromHomePage = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -18,6 +20,8 @@ namespace WinPaletter
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
+            closeSignalReceivedFromHomePage = false;
+
             Size = new(Convert.ToInt32(Program.Settings.General.MainFormWidth), Convert.ToInt32(Program.Settings.General.MainFormHeight));
             CenterToScreen();
             WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
@@ -73,24 +77,26 @@ namespace WinPaletter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (!LoggingOff)
+            if (!Forms.MainForm.LoggingOff && !closeSignalReceivedFromHomePage)
             {
                 using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                 {
-                    bool result = ExitWithChangedFileResponse(); //dlg,
-                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                                //);
+                    bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
+                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                                                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                                                                //);
 
                     e.Cancel = !result;
                 }
 
-                if (Forms.Home.Parent is TabPage && tabsContainer1.TabsCount > 1)
+                if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
                     if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
                 }
             }
+
+            closeSignalReceivedFromHomePage = false;
 
             base.OnFormClosing(e);
         }

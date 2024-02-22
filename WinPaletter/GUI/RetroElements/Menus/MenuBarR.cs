@@ -206,7 +206,7 @@ namespace WinPaletter.UI.Retro
                 if (_MenuHeight != value)
                 {
                     _MenuHeight = value;
-                    try { SetStyle(); } catch { }
+                    SetStyle();
                     Refresh();
 
                     if (!DesignMode && EnableEditingMetrics && isMoving_Grip) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(MenuHeight)));
@@ -283,15 +283,13 @@ namespace WinPaletter.UI.Retro
 
         protected override void OnFontChanged(EventArgs e)
         {
-            try { SetStyle(); } catch { }
-
+            SetStyle();
             base.OnFontChanged(e);
         }
 
         protected override void OnResize(EventArgs e)
         {
-            try { SetStyle(); } catch { }
-
+            SetStyle();
             base.OnResize(e);
         }
 

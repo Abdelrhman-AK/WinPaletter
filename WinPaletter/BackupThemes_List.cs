@@ -111,7 +111,7 @@ namespace WinPaletter
                         listView.Items[listView.Items.Count - 1].ImageIndex = imageList.Images.Count - 1;
                     }
                 }
-                catch { }
+                catch { } //Ignore an invalid theme
             }
         }
 
@@ -212,14 +212,17 @@ namespace WinPaletter
 
         private void listView1_SizeChanged(object sender, EventArgs e)
         {
-            try { listView1.Columns[1].Width = listView1.Width - listView1.Columns[0].Width - listView1.Columns[2].Width; } catch { }
+            if (listView1.Columns.Count >= 3)
+            {
+                listView1.Columns[1].Width = listView1.Width - listView1.Columns[0].Width - listView1.Columns[2].Width;
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{listView1.SelectedItems[0].SubItems[1].Text}\"");
+                System.Diagnostics.Process.Start(PathsExt.Explorer, $"/select, \"{listView1.SelectedItems[0].SubItems[1].Text}\"");
             }
         }
 

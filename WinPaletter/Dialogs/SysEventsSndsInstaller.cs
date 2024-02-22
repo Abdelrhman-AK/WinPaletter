@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
@@ -86,7 +87,8 @@ namespace WinPaletter
 
                 System.IO.File.WriteAllBytes(PathsExt.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds);
             }
-            catch { }
+            catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
+
             if (System.IO.File.Exists(PathsExt.SysEventsSounds))
             {
                 IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
@@ -160,7 +162,7 @@ namespace WinPaletter
                 if (System.IO.File.Exists(PathsExt.SysEventsSounds))
                     System.IO.File.Delete(PathsExt.SysEventsSounds);
             }
-            catch { }
+            catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
 
             DialogResult = DialogResult.OK;
         }
@@ -184,14 +186,16 @@ namespace WinPaletter
             this.ShowDialog();
         }
 
-        public void Uninstall()
+        public void Uninstall(bool quiet = false)
         {
             uninstall = true;
 
             title.Text = Program.Lang.SvcInstaller_Title_Uninstall;
             textBox2.Text = Program.Lang.SvcInstaller_Description;
 
+            this.Opacity = quiet ? 0 : 1;
             this.ShowDialog();
+            this.Opacity = 1;
         }
 
         private void Button2_Click(object sender, EventArgs e)
