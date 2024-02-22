@@ -20,7 +20,7 @@
 
 - **Real-time Preview:** Witness your color choices come to life with the real-time preview feature, allowing you to fine-tune your color scheme effortlessly.
   
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Banner.png?raw=true)
+![image](https://github.com/Abdelrhman-AK/WinPaletter/assets/59510211/54ae7d93-afd9-45c0-b9d7-00c3fa52ab1a)
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/GettingStarted.png?raw=true) Getting Started
 
