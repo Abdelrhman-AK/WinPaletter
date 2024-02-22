@@ -37,6 +37,7 @@
 2. **Download:** 
    
    - You can download the latest release from the [releases page](https://github.com/Abdelrhman-AK/WinPaletter/releases).
+     > **Note:** It is the first source to be updated.
    
    - Alternatively, you can use:
      
