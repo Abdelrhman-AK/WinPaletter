@@ -88,7 +88,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Image to palette conversion mechanism by ColorThief, developed by KSemenenko](https://github.com/KSemenenko/ColorThief)
 
-- [Bitmap effects powered by ImageProcessor]("https://imageprocessor.org)
+- [Bitmap effects powered by ImageProcessor](https://imageprocessor.org)
 
 - [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
 
