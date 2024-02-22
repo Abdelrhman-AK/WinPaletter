@@ -26,7 +26,7 @@
 
 1. **Requirements:**
    
-   | Operation System   | WinPaletter version starting from ... and higher | Frameworks                                                                                                                                                                                                  |
+   | OS   | WinPaletter ... and higher | Frameworks                                                                                                                                                                                                  |
    | ------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
    | **Windows 11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
    | **Windows 8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
