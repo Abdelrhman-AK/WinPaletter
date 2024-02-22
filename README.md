@@ -116,7 +116,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Support.png?raw=true) Support
 
-If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues). Our community is here to assist you.
+If you encounter issues or have questions, please open an issue on the [issue tracker](https://github.com/Abdelrhman-AK/WinPaletter/issues).
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License
 
