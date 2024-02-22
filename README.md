@@ -26,13 +26,13 @@
 
 1. **Requirements:**
    
-   | OS   | WinPaletter ... and higher | Frameworks                                                                                                                                                                                                  |
+   | Windows   | WinPaletter ... and higher | Frameworks                                                                                                                                                                                                  |
    | ------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | **Windows 11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
-   | **Windows 8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
-   | **Windows 8**      | `Not supported` :x:                              | Not supported as .NET framework 4.7.2 or 4.8 can't be installed at all                                                                                                                                      |
-   | **Windows Vista**  | `1.0.7.1`                                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista) |
-   | **Windows XP**     | `1.0.7.1`                                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)       |
+   | **11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
+   | **8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
+   | **8**      | `Not supported` :x:                              | Not supported as .NET framework 4.7.2 or 4.8 can't be installed at all                                                                                                                                      |
+   | **Vista**  | `1.0.7.1`                                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista) |
+   | **XP**     | `1.0.7.1`                                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)       |
 
 2. **Download:** 
    
