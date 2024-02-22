@@ -695,9 +695,9 @@ namespace WinPaletter
             this.Label3.ForeColor = System.Drawing.Color.Gray;
             this.Label3.Location = new System.Drawing.Point(12, 17);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(252, 15);
+            this.Label3.Size = new System.Drawing.Size(13, 15);
             this.Label3.TabIndex = 15;
-            this.Label3.Text = "Abdelrhman-AK, 2022-2024, All rights reserved";
+            this.Label3.Text = "0";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LinkLabel11

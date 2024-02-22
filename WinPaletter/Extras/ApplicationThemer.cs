@@ -237,7 +237,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(193, 51, 0);
+                            AccentColor.BackColor = Color.FromArgb(18, 106, 200);
                             BackColorPick.BackColor = Color.FromArgb(13, 17, 23);
 
                             SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
@@ -251,7 +251,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(195, 41, 2);
+                            AccentColor.BackColor = Color.FromArgb(13, 76, 139);
                             BackColorPick.BackColor = Color.FromArgb(246, 248, 250);
 
                             SecColor.BackColor = DefaultColors.SecondaryColor_Light;
@@ -265,7 +265,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = true;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(255, 70, 0);
+                            AccentColor.BackColor = Color.FromArgb(193, 51, 0);
                             BackColorPick.BackColor = Color.FromArgb(9, 9, 9);
 
                             SecColor.BackColor = DefaultColors.SecondaryColor_Dark;
@@ -280,7 +280,7 @@ namespace WinPaletter
                         {
                             appearance_dark.Checked = false;
                             RoundedCorners.Checked = true;
-                            AccentColor.BackColor = Color.FromArgb(216, 49, 3);
+                            AccentColor.BackColor = Color.FromArgb(195, 41, 2);
                             BackColorPick.BackColor = Color.FromArgb(242, 242, 242);
 
                             SecColor.BackColor = DefaultColors.SecondaryColor_Light;

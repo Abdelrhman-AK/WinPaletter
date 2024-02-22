@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -38,6 +39,14 @@ namespace WinPaletter
             Label2.Text = Program.Version;
             Label1.Text = $"{Program.Lang.By} {Application.CompanyName}";
             Label17.Text = Application.ProductName;
+
+            // Get the assembly of the current executing code
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            // Get the AssemblyCopyrightAttribute
+            AssemblyCopyrightAttribute copyrightAttribute = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCopyrightAttribute));
+
+            Label3.Text = copyrightAttribute.Copyright + ", " + Application.CompanyName;
         }
 
         private void Button3_Click(object sender, EventArgs e)
