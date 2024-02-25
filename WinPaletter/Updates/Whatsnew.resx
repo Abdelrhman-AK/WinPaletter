@@ -186,6 +186,38 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label34.Text" xml:space="preserve">
+    <value>● Modification of Windows Effects is controlled by a message. If you press 'Yes,' the application of these changes will continue, but please note that this may conflict with ExplorerPatcher settings.
+
+● Starting now, the inclusion of User Preference Mask (UPM) modification for all users from current theme will be disabled by default. Look at Settings &gt; Theme applying behavior.
+
+● Command lines changes; type 'WinPaletter.exe -?' in any terminal for help.
+● Replaced 'Save theme file and apply theme on exit' dialog with a straightforward Windows dialog.
+● Resolved an exception error that occurred when applying a theme in a separate thread, ensuring the program does not exit before the thread completes its task.
+● The mechanism for downloading data from the web has been improved, transitioning from WebClient to HTTPClient.
+● Addressed increased memory usage during cursor rendering and after closing Wallpaper and LogonUI forms.
+● Remove all registry residuals during uninstallation.
+● Enable the 'Colors history' feature within the 'Custom colors' section if the Windows Classic Colors picker is enabled in settings.</value>
+  </data>
+  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
+        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
+        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
+        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
+        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
+        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
+        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
+        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
+        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
+        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
+        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
+        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
+        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
+        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
+        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
 
@@ -337,7 +369,7 @@
   <data name="banner6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAl5JREFUSEu9lT2rGkEUhk1CiqRIEUIKY/D7CxFFkSuk0cYuQoqo2FxsxB9gkUqw
+        vAAADrwBlbxySQAAAl5JREFUSEu9lT2rGkEUhk1CiqRIEUIKY/D7CxFFkSuk0cYuQoqo2FxsxB9gkUqw
         vdhZhKQQ0sktrcRKQS6mUCEQDDGiqVIHQj7W9Z6cIwjD8mr2FpviYd13z8yzM87M2ojovwJDK4GhlcDQ
         SmBoxOv1+lwuVwg9uykwVBERCzVm63Q6X6CamwBDFbfb/ZKhZrN57fF4dvwC56jOLDBUOQg3mw21223i
         kYr4Fao1AwxVVKHQ6XREuvP7/Rc2m+0WanMKGKoYhUK32yUW6oFA4C1Lb6N2x4ChChIKvV6PwuHwlqWX
@@ -465,7 +497,7 @@
   <data name="banner9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAABUxJREFUSEvVlntMU1ccx1tRx5yT2akUZXFCiZOIgigawEGEOpmvgeIUJ2KimLGx
+        vAAADrwBlbxySQAABUxJREFUSEvVlntMU1ccx1tRx5yT2akUZXFCiZOIgigawEGEOpmvgeIUJ2KimLGx
         adEsDAeCM5maGIQ/+GNL9gjDRYd4KdjaYkFaxCItOInTFpCHCPIuTxHGd+dcuewWRDfnH9sv+aTt6T2/
         z3necwT/1RASJj0D+v9LCxvCawQRYRZh9hho2UyCLYHK/1XYSKXSOTk5OZ/pdDp5YWGhiqAeg6qoqOhC
         WlqaVCKRzCB1Xlgq9PT0tNNoNJGVlZV1RqNxyGAwDJeVlQ2Xl5ez0O+lpaXDFRUVg/X19RXJyckBpB4d
@@ -491,49 +523,19 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="label34.Text" xml:space="preserve">
-    <value>● Command lines changes; type 'WinPaletter.exe -?' in any terminal for help.
-
-● Replaced 'Save theme file and apply theme on exit' dialog with a straightforward Windows dialog.
-
-● Resolved an exception error that occurred when applying a theme in a separate thread, ensuring the program does not exit before the thread completes its task.
-
-● The mechanism for downloading data from the web has been improved, transitioning from WebClient to HTTPClient.
-
-● Addressed increased memory usage during cursor rendering and after closing Wallpaper and LogonUI forms.
-
-● Remove all registry residuals during uninstallation.
-
-● Enable the 'Colors history' feature within the 'Custom colors' section if the Windows Classic Colors picker is enabled in settings.</value>
-  </data>
-  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
-        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
-        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
-        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
-        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
-        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
-        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
-        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
-        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
-        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
-        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
-        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
-        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
-        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
-        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="label39.Text" xml:space="preserve">
-    <value>● Resolved exception error with ITaskbar3 on Windows XP and Vista.
+    <value>● Fix Windows Terminal exception error (incorrect character error in JSON file when using ColorSchemePair as a type for colorScheme or numeric font weight instead of a value from an enum).
+● Fix exception error when opening the Windows XP Colors editor and Metrics and Fonts editor with Windows XP selected.
+● Windows XP preview design fixes (increased titlebar height).
+● Fix inability to select the menu font in the metrics editor.
+● Fix preview: status font is not selected at the first Metrics and Fonts load.
+● Fix incorrect label colors and menu bar color in Windows Vista Metrics and Fonts preview.
+● Fix bug in WinPaletter application themes: selecting the GitHub scheme making the accent color the same as Reddit's scheme.
 
+● Resolved exception error with ITaskbar3 on Windows XP and Vista.
 ● Fixed exception errors occurring when applying cursors.
-
 ● Fixed error when applying Windows 8.1 lock screen background and Windows 7 LogonUI background.
-
 ● Fixed bug applying dark mode after opening WinPaletter Application Themer with light mode.
-
 ● Fixed sync issue between WinPaletter and Wallpaper change preview and automatic dark/light mode.</value>
   </data>
   <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

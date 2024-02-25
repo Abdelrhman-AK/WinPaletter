@@ -618,7 +618,7 @@ namespace WinPaletter
             this.label34.ForeColor = System.Drawing.Color.White;
             this.label34.Location = new System.Drawing.Point(8, 69);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(801, 319);
+            this.label34.Size = new System.Drawing.Size(801, 330);
             this.label34.TabIndex = 85;
             this.label34.Text = resources.GetString("label34.Text");
             // 
@@ -657,7 +657,7 @@ namespace WinPaletter
             this.label39.ForeColor = System.Drawing.Color.White;
             this.label39.Location = new System.Drawing.Point(8, 69);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(801, 316);
+            this.label39.Size = new System.Drawing.Size(801, 330);
             this.label39.TabIndex = 88;
             this.label39.Text = resources.GetString("label39.Text");
             // 

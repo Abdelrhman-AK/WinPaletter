@@ -2095,7 +2095,7 @@ namespace WinPaletter
             this.label70.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label70.Location = new System.Drawing.Point(41, 7);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(556, 34);
+            this.label70.Size = new System.Drawing.Size(705, 34);
             this.label70.TabIndex = 18;
             this.label70.Text = "Include User Preference Mask for all users (HKEY_USERS\\.DEFAULT\\Control Panel\\Des" +
     "ktop : UserPreferencesMask)";

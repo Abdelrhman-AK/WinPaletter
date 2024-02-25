@@ -1641,9 +1641,9 @@ namespace WinPaletter
             this.AlertBox2.Size = new System.Drawing.Size(510, 48);
             this.AlertBox2.TabIndex = 237;
             this.AlertBox2.TabStop = false;
-            this.AlertBox2.Text = "Due to limitations in Windows 11, styles cannot be changed through the registry. " +
-    "Therefore, you should utilize ExplorerPatcher or StartAllBack to forcibly apply " +
-    "the bar style.";
+            this.AlertBox2.Text = "Due to limitations in Windows 11, styles cannot be changed by renaming UIRibbon.d" +
+    "ll. Therefore, you should utilize ExplorerPatcher or StartAllBack to forcibly ap" +
+    "ply the bar style.";
             // 
             // AlertBox1
             // 

@@ -384,7 +384,7 @@ namespace WinPaletter.Theme
         /// <summary>Object derived of structure that has data about Windows effects and animations, and it can be customized.</summary>
         public WinEffects WindowsEffects = new()
         {
-            Enabled = true,
+            Enabled = false,
             WindowAnimation = true,
             WindowShadow = true,
             WindowUIEffects = true,

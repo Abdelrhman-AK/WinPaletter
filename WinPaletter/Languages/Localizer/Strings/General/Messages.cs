@@ -36,5 +36,7 @@
         public string SaveDialog_Question { get; set; } = "Do you want to save the current WinPaletter theme as a file?";
         public string ApplyingMode_ErrorDialog { get; set; } = "You can continue; the theme has been applied without these elements";
         public string LoadingMode_ErrorDialog { get; set; } = "You can continue; the theme has been loaded without these elements";
+        public string WindowsEffects_Alert { get; set; } = "Modifying Windows Effects is specific to advanced users. It may override preferences set in third-party tools like ExplorerPatcher.";
+        public string WindowsEffect_Continue { get; set; } = "Do you want to apply Windows Effects?";
     }
 }
