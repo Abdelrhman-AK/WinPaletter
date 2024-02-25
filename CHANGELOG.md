@@ -2,6 +2,50 @@
 
 ---
 
+### 1.0.8.6
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 25 Feb 2024  |
+
+⚠️ **Warning**
+If you are using command lines, type `WinPaletter -?` in any terminal to know new commands formats
+
+⚠️ **Known issue**
+Due to massive changes in Windows Terminal structure in WinPaletter, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.
+
+# The same as 1.0.8.5, except for some application improvements and bugs fixes:
+
+### Application improvements:
+- Modification of Windows Effects is controlled by a message. If you press 'Yes,' the application of these changes will continue, but please note that this may conflict with ExplorerPatcher settings. #217
+- Starting now, the inclusion of User Preference Mask (UPM) modification for all users from current theme will be disabled by default. Look at Settings > Theme applying behavior. #217
+
+### Bugs fixes:
+- Fix Windows Terminal exception error (incorrect character error in JSON file when using ColorSchemePair as a type for colorScheme or numeric font weight instead of a value from an enum). #215
+- Fix the bug where the application continues running in tabs when the home or main form is closed. #214
+- Fix exception error when opening the Windows XP Colors editor and Metrics and Fonts editor with Windows XP selected.
+- Windows XP preview design fixes (increased titlebar height).
+- Fix inability to select the menu font in the metrics editor.
+- Fix preview: status font is not selected at the first Metrics and Fonts load.
+- Fix incorrect label colors and menu bar color in Windows Vista Metrics and Fonts preview.
+- Fix bug in WinPaletter application themes: selecting the GitHub scheme making the accent color the same as Reddit's scheme.
+
+### This is not the final look. In the new beta releases, UI changes will continue to be made, improved, and any discovered bugs will be fixed.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.4...v1.0.8.6) |
+| Previous Beta   | `1.0.8.5`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.5...v1.0.8.6) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.6) |
+
+---
+
 ### 1.0.8.5
 
 > **Info:**
