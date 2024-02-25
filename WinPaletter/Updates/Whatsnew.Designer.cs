@@ -164,7 +164,7 @@ namespace WinPaletter
             this.TabControl1.Location = new System.Drawing.Point(0, 79);
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(825, 430);
+            this.TabControl1.Size = new System.Drawing.Size(825, 450);
             this.TabControl1.TabIndex = 27;
             this.TabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
             // 
@@ -487,7 +487,7 @@ namespace WinPaletter
             this.tabPage12.Location = new System.Drawing.Point(4, 24);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(817, 402);
+            this.tabPage12.Size = new System.Drawing.Size(817, 422);
             this.tabPage12.TabIndex = 11;
             this.tabPage12.Text = "8";
             // 
@@ -565,7 +565,7 @@ namespace WinPaletter
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(817, 402);
+            this.tabPage9.Size = new System.Drawing.Size(817, 422);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "10";
             // 
@@ -605,20 +605,21 @@ namespace WinPaletter
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(817, 402);
+            this.tabPage10.Size = new System.Drawing.Size(817, 422);
             this.tabPage10.TabIndex = 9;
             this.tabPage10.Text = "11";
             // 
             // label34
             // 
-            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label34.BackColor = System.Drawing.Color.Transparent;
             this.label34.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.ForeColor = System.Drawing.Color.White;
             this.label34.Location = new System.Drawing.Point(8, 69);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(801, 330);
+            this.label34.Size = new System.Drawing.Size(801, 350);
             this.label34.TabIndex = 85;
             this.label34.Text = resources.GetString("label34.Text");
             // 
@@ -644,20 +645,21 @@ namespace WinPaletter
             this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(817, 402);
+            this.tabPage11.Size = new System.Drawing.Size(817, 422);
             this.tabPage11.TabIndex = 10;
             this.tabPage11.Text = "12";
             // 
             // label39
             // 
-            this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label39.BackColor = System.Drawing.Color.Transparent;
             this.label39.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.ForeColor = System.Drawing.Color.White;
             this.label39.Location = new System.Drawing.Point(8, 69);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(801, 330);
+            this.label39.Size = new System.Drawing.Size(801, 350);
             this.label39.TabIndex = 88;
             this.label39.Text = resources.GetString("label39.Text");
             // 
@@ -683,7 +685,7 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button2);
             this.bottom_buttons.Controls.Add(this.Button3);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 513);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 533);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(825, 48);
             this.bottom_buttons.TabIndex = 213;
@@ -762,7 +764,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(825, 561);
+            this.ClientSize = new System.Drawing.Size(825, 581);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.bottom_buttons);
