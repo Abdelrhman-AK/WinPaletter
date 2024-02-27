@@ -1,8 +1,7 @@
 ---
-name: "📄 README.md improvement/fix"
+name: "README.md improvement/fix"
 about: "Report an issue in README.md, or modify README.md to a better one"
-title: "📄 [README.md] "
-labels: 📄 README.md
+labels: ["readme.md"]
 assignees: Abdelrhman-AK
 
 ---

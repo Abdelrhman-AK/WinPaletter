@@ -1,10 +1,9 @@
 ---
-name: "❓ Question or support request"
+name: "Question or support request"
 about: "Ask for help or support"
-title: "❓ [Question, Support request] "
 labels: Question
 assignees: Abdelrhman-AK
-
+labels: ["question", "support request"]
 ---
 
 # **❓ Question or spport request**
