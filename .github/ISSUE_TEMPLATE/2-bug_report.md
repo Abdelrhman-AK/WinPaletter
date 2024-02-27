@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: "Bug report"
 about: "Report a strange or unwanted behaviour that occurred during your WinPaletter usage, to help me improve WinPaletter."
 labels: ["bug report"]
 assignees: Abdelrhman-AK
