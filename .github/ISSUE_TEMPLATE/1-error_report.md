@@ -1,5 +1,5 @@
 ---
-name: Issue
+name: "Issue report"
 about: "Report an issue or error occurred during your WinPaletter usage, to help me improve WinPaletter"
 assignees: Abdelrhman-AK
 labels: ["issue"]
