@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -77,6 +81,52 @@ namespace libmsstyle
 
         public VisualStyle(string msstyles)
         {
+            if (System.IO.Path.GetExtension(msstyles).ToLower() == ".theme")
+            {
+                using (WinPaletter.INI ini = new(msstyles))
+                {
+                    string result = ini.Read("VisualStyles", "Path");
+
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        if (System.IO.File.Exists(result))
+                        {
+                            msstyles = result;
+                        }
+                        else
+                        {
+                            result = Environment.ExpandEnvironmentVariables(result);
+                            if (System.IO.File.Exists(result))
+                            {
+                                msstyles = result;
+                            }
+                            else
+                            {
+                                string fileName = System.IO.Path.GetFileName(result);
+
+                                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(msstyles));
+                                var matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
+                                    .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
+                                    .ToList();
+
+                                if (matchingStyles.Count > 0)
+                                {
+                                    msstyles = matchingStyles.First();
+                                }
+                                else
+                                {
+                                    throw new FileNotFoundException("The theme file does not contain a valid path to a visual style!");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid path specified in the theme file.");
+                    }
+                }
+            }
+
             m_stylePath = msstyles;
             m_classes = new Dictionary<int, StyleClass>();
             m_stringTable = new Dictionary<int, string>();
@@ -350,10 +400,6 @@ namespace libmsstyle
         }
         public void Load(string file)
         {
-            // Moved to first line, to determine if the file is a valid msstyle for Windows Vista and later;
-            // With the class map in place, we can reason about the platform.
-            m_platform = DeterminePlatform();
-
             m_moduleHandle = Win32Api.LoadLibraryEx(file, IntPtr.Zero, Win32Api.LoadLibraryFlags.LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
             if (m_moduleHandle == IntPtr.Zero)
             {
@@ -367,6 +413,9 @@ namespace libmsstyle
             }
 
             LoadClassmap(cmap);
+
+            // With the class map in place, we can reason about the platform.
+            m_platform = DeterminePlatform();
 
 
             // There is no AMAP before Win8

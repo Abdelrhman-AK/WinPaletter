@@ -703,7 +703,7 @@ namespace WinPaletter
             if (IsShown && theme_classic.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.Classic;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Classic;
             }
         }
 
@@ -712,7 +712,7 @@ namespace WinPaletter
             if (IsShown && theme_basic.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.Basic;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Basic;
             }
         }
 
@@ -721,7 +721,7 @@ namespace WinPaletter
             if (IsShown && theme_aeroopaque.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.AeroOpaque;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroOpaque;
             }
         }
 
@@ -730,7 +730,7 @@ namespace WinPaletter
             if (IsShown && theme_aero.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.Aero;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
             }
         }
 

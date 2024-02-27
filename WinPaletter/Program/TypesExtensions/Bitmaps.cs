@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -438,6 +439,24 @@ namespace WinPaletter.TypesExtensions
 
                 return dstImage;
             }
+        }
+
+        public static List<Bitmap> Split(this Bitmap bitmap, int parts)
+        {
+            if (bitmap is null) return null;
+            if (parts < 1) return null;
+
+            List<Bitmap> list = new();
+            int partHeight = bitmap.Height / parts;
+
+            for (int i = 0; i < parts; i++)
+            {
+                int y = i * partHeight;
+                int h = i == parts - 1 ? bitmap.Height - y : partHeight;
+                list.Add(bitmap.Clone(new Rectangle(0, y, bitmap.Width, h), bitmap.PixelFormat));
+            }
+
+            return list;
         }
     }
 }

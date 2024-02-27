@@ -172,8 +172,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageAsVector = false;
-            this.Button3.ImageVector = null;
+            this.Button3.ImageGlyphEnabled = false;
+            this.Button3.ImageGlyph = null;
             this.Button3.Location = new System.Drawing.Point(589, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(80, 34);

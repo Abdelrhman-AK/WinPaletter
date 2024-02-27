@@ -344,7 +344,7 @@ namespace WinPaletter
                 Key = $"HKCC{(Key.Remove(0, "HKEY_CURRENT_CONFIG".Count()))}";
 
             // /v = Value Name
-            // /t = Registry Value Type
+            // /t = Registry Value ButtonOverlay
             // /d = Value
             // /f = Disable prompt
             if (Value is not null)

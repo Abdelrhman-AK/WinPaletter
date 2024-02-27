@@ -47,6 +47,7 @@ namespace WinPaletter.Theme
         public Windows10x Windows12 = new()
         {
             Enabled = true,
+            Theme = Windows10x.Themes.Aero,
             Color_Index0 = Color.FromArgb(153, 235, 255),
             Color_Index1 = Color.FromArgb(76, 194, 255),
             Color_Index2 = Color.FromArgb(0, 145, 248),
@@ -71,6 +72,7 @@ namespace WinPaletter.Theme
         public Windows10x Windows11 = new()
         {
             Enabled = true,
+            Theme = Windows10x.Themes.Aero,
             Color_Index0 = Color.FromArgb(153, 235, 255),
             Color_Index1 = Color.FromArgb(76, 194, 255),
             Color_Index2 = Color.FromArgb(0, 145, 248),
@@ -95,6 +97,7 @@ namespace WinPaletter.Theme
         public Windows10x Windows10 = new()
         {
             Enabled = true,
+            Theme = Windows10x.Themes.Aero,
             Color_Index0 = Color.FromArgb(166, 216, 255),
             Color_Index1 = Color.FromArgb(118, 185, 237),
             Color_Index2 = Color.FromArgb(66, 156, 227),
@@ -441,7 +444,9 @@ namespace WinPaletter.Theme
             Snd_Imageres_SystemStart = (OS.W12 || OS.W11) ? "Default" : string.Empty,
             Snd_ChargerConnected = string.Empty,
             Snd_ChargerDisconnected = string.Empty,
-            Snd_Win_WindowsLock = string.Empty
+            Snd_Win_WindowsLock = string.Empty,
+            Snd_WiFiConnected = string.Empty,
+            Snd_WiFiDisconnected = string.Empty,
         };
 
         /// <summary>Object derived of structure that has data about Windows switcher (Alt+Tab) appearance, and it can be customized.</summary>

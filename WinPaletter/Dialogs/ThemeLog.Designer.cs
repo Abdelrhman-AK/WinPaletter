@@ -77,8 +77,8 @@ namespace WinPaletter.Dialogs
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
-            this.button1.ImageAsVector = true;
-            this.button1.ImageVector = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
+            this.button1.ImageGlyphEnabled = true;
+            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
             this.button1.Location = new System.Drawing.Point(9, 7);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(120, 34);
@@ -96,8 +96,8 @@ namespace WinPaletter.Dialogs
             this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button25.ForeColor = System.Drawing.Color.White;
             this.Button25.Image = null;
-            this.Button25.ImageAsVector = true;
-            this.Button25.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button25.ImageVector")));
+            this.Button25.ImageGlyphEnabled = true;
+            this.Button25.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button25.ImageVector")));
             this.Button25.Location = new System.Drawing.Point(148, 3);
             this.Button25.Name = "Button25";
             this.Button25.Size = new System.Drawing.Size(120, 34);
@@ -116,8 +116,8 @@ namespace WinPaletter.Dialogs
             this.Button22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button22.ForeColor = System.Drawing.Color.White;
             this.Button22.Image = null;
-            this.Button22.ImageAsVector = true;
-            this.Button22.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button22.ImageVector")));
+            this.Button22.ImageGlyphEnabled = true;
+            this.Button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button22.ImageVector")));
             this.Button22.Location = new System.Drawing.Point(274, 3);
             this.Button22.Name = "Button22";
             this.Button22.Size = new System.Drawing.Size(120, 34);
@@ -136,8 +136,8 @@ namespace WinPaletter.Dialogs
             this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button14.ForeColor = System.Drawing.Color.White;
             this.Button14.Image = null;
-            this.Button14.ImageAsVector = true;
-            this.Button14.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button14.ImageVector")));
+            this.Button14.ImageGlyphEnabled = true;
+            this.Button14.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button14.ImageVector")));
             this.Button14.Location = new System.Drawing.Point(22, 3);
             this.Button14.Name = "Button14";
             this.Button14.Size = new System.Drawing.Size(120, 34);
@@ -156,8 +156,8 @@ namespace WinPaletter.Dialogs
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = null;
-            this.Button8.ImageAsVector = true;
-            this.Button8.ImageVector = ((System.Drawing.Image)(resources.GetObject("Button8.ImageVector")));
+            this.Button8.ImageGlyphEnabled = true;
+            this.Button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button8.ImageVector")));
             this.Button8.Location = new System.Drawing.Point(400, 3);
             this.Button8.Name = "Button8";
             this.Button8.Size = new System.Drawing.Size(120, 34);
@@ -165,6 +165,7 @@ namespace WinPaletter.Dialogs
             this.Button8.Text = "OK";
             this.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button8.UseVisualStyleBackColor = false;
+            this.Button8.Visible = false;
             this.Button8.Click += new System.EventHandler(this.Button8_Click);
             // 
             // animatedBox1

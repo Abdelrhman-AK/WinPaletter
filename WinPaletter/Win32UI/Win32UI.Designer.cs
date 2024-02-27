@@ -2198,8 +2198,8 @@ namespace WinPaletter
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
-            this.button1.ImageAsVector = false;
-            this.button1.ImageVector = null;
+            this.button1.ImageGlyphEnabled = false;
+            this.button1.ImageGlyph = null;
             this.button1.Location = new System.Drawing.Point(753, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 30);

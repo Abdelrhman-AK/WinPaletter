@@ -308,7 +308,7 @@ namespace WinPaletter.UI.WP
                 Rectangle imageRect = new(rect.X + rect.Width - Image.Width - 5, rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
 
                 ////Disabled for better performance
-                //G.DrawGlow(rect_all, Color.FromArgb(alpha, _color.CB(-0.1f)), shadowSize, 30, true);
+                //G.DrawGlow(rect_all, Color.FromArgb(alpha_hover, _color.CB(-0.1f)), shadowSize, 30, true);
 
                 using (Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
                 using (SolidBrush br0 = new(colors.Back_Checked))
@@ -356,7 +356,7 @@ namespace WinPaletter.UI.WP
             else
             {
                 ////Disabled for better performance
-                //G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
+                //G.DrawGlow(rect_margin, Color.FromArgb(alpha_hover, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
                 using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
                 {
@@ -435,7 +435,7 @@ namespace WinPaletter.UI.WP
                     // Calculate the center of the title and description combined
                     int combinedCenterY = rect.Y + (rect.Height - (int)(textSize.Height + descriptionSize.Height)) / 2;
 
-                    // Interpolate between the two states based on the alpha value
+                    // Interpolate between the two states based on the alpha_hover value
                     int interpolatedY = Lerp(centerY, combinedCenterY, alpha / 255f);
 
                     // Update the positions

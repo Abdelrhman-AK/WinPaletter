@@ -68,7 +68,6 @@
             this.Label12 = new System.Windows.Forms.Label();
             this.pic5 = new System.Windows.Forms.PictureBox();
             this.lbl5 = new System.Windows.Forms.Label();
-            this.copycat = new WinPaletter.UI.WP.Button();
             this.GroupBox5 = new WinPaletter.UI.WP.GroupBox();
             this.TBBlur = new WinPaletter.UI.WP.Toggle();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -153,10 +152,13 @@
             this.easy_generator = new WinPaletter.UI.WP.Button();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.tips_box = new WinPaletter.UI.WP.AlertBox();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.theme_aerolite = new WinPaletter.UI.WP.RadioImage();
+            this.theme_aero = new WinPaletter.UI.WP.RadioImage();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.GroupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -197,8 +199,8 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -211,6 +213,7 @@
             this.GroupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.GroupBox13.Controls.Add(this.easy_generator);
             this.GroupBox13.Controls.Add(this.Label42);
             this.GroupBox13.Controls.Add(this.PictureBox10);
             this.GroupBox13.Controls.Add(this.Label37);
@@ -739,24 +742,6 @@
             this.lbl5.TabIndex = 3;
             this.lbl5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // copycat
-            // 
-            this.copycat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.copycat.CustomColor = System.Drawing.Color.Empty;
-            this.copycat.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.copycat.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copycat.ForeColor = System.Drawing.Color.White;
-            this.copycat.Image = null;
-            this.copycat.ImageAsVector = false;
-            this.copycat.ImageVector = null;
-            this.copycat.Location = new System.Drawing.Point(308, 44);
-            this.copycat.Name = "copycat";
-            this.copycat.Size = new System.Drawing.Size(220, 32);
-            this.copycat.TabIndex = 29;
-            this.copycat.Text = "Copycat from Windows 11 presets";
-            this.copycat.UseVisualStyleBackColor = false;
-            this.copycat.Click += new System.EventHandler(this.copycat_Click);
-            // 
             // GroupBox5
             // 
             this.GroupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1124,8 +1109,8 @@
             this.tip.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tip.ForeColor = System.Drawing.Color.White;
             this.tip.Image = null;
-            this.tip.ImageAsVector = true;
-            this.tip.ImageVector = global::WinPaletter.Properties.Resources.Vector_Help;
+            this.tip.ImageGlyphEnabled = true;
+            this.tip.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Help;
             this.tip.Location = new System.Drawing.Point(512, 8);
             this.tip.Name = "tip";
             this.tip.Size = new System.Drawing.Size(20, 20);
@@ -1318,7 +1303,8 @@
             this.windowsDesktop1.Win7Noise = 1F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.WindowsTheme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.Windows_10x_Theme = WinPaletter.Theme.Structures.Windows10x.Themes.Aero;
+            this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W10;
             this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
             this.windowsDesktop1.WindowsXPThemeColorScheme = null;
@@ -2009,11 +1995,11 @@
             this.easy_generator.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.easy_generator.ForeColor = System.Drawing.Color.White;
             this.easy_generator.Image = null;
-            this.easy_generator.ImageAsVector = false;
-            this.easy_generator.ImageVector = null;
-            this.easy_generator.Location = new System.Drawing.Point(7, 44);
+            this.easy_generator.ImageGlyphEnabled = false;
+            this.easy_generator.ImageGlyph = null;
+            this.easy_generator.Location = new System.Drawing.Point(223, 5);
             this.easy_generator.Name = "easy_generator";
-            this.easy_generator.Size = new System.Drawing.Size(295, 32);
+            this.easy_generator.Size = new System.Drawing.Size(310, 30);
             this.easy_generator.TabIndex = 30;
             this.easy_generator.Text = "Generate accent colors from active titlebar color";
             this.easy_generator.UseVisualStyleBackColor = false;
@@ -2039,8 +2025,8 @@
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAsVector = false;
-            this.Button1.ImageVector = null;
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.ImageGlyph = null;
             this.Button1.Location = new System.Drawing.Point(383, 304);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
@@ -2051,44 +2037,6 @@
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox3.Controls.Add(this.easy_generator);
-            this.groupBox3.Controls.Add(this.pictureBox8);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.copycat);
-            this.groupBox3.Location = new System.Drawing.Point(564, 401);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(534, 83);
-            this.groupBox3.TabIndex = 124;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(35, 35);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox8.TabIndex = 1;
-            this.pictureBox8.TabStop = false;
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label15.Location = new System.Drawing.Point(40, 3);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(488, 35);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Helpers";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // tips_box
             // 
             this.tips_box.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
@@ -2098,19 +2046,112 @@
             this.tips_box.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.tips_box.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tips_box.Image = null;
-            this.tips_box.Location = new System.Drawing.Point(564, 490);
+            this.tips_box.Location = new System.Drawing.Point(564, 401);
             this.tips_box.Name = "tips_box";
-            this.tips_box.Size = new System.Drawing.Size(534, 72);
+            this.tips_box.Size = new System.Drawing.Size(534, 64);
             this.tips_box.TabIndex = 226;
             this.tips_box.TabStop = false;
             this.tips_box.Text = resources.GetString("tips_box.Text");
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(564, 567);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(534, 48);
+            this.alertBox1.TabIndex = 229;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = "There will be accessibility issues with dark mode enabled and the Aero Lite theme" +
+    " selected. Please either choose light mode for apps or the default theme.";
+            this.alertBox1.Visible = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox4.Controls.Add(this.theme_aerolite);
+            this.groupBox4.Controls.Add(this.theme_aero);
+            this.groupBox4.Controls.Add(this.pictureBox9);
+            this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.Location = new System.Drawing.Point(564, 471);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(534, 90);
+            this.groupBox4.TabIndex = 228;
+            // 
+            // theme_aerolite
+            // 
+            this.theme_aerolite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.theme_aerolite.Checked = false;
+            this.theme_aerolite.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.theme_aerolite.ForeColor = System.Drawing.Color.White;
+            this.theme_aerolite.Image = ((System.Drawing.Image)(resources.GetObject("theme_aerolite.Image")));
+            this.theme_aerolite.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_aerolite.Location = new System.Drawing.Point(436, 3);
+            this.theme_aerolite.Name = "theme_aerolite";
+            this.theme_aerolite.Size = new System.Drawing.Size(95, 83);
+            this.theme_aerolite.TabIndex = 44;
+            this.theme_aerolite.Text = "Aero Lite";
+            this.theme_aerolite.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_aerolite.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.theme_aerolite.CheckedChanged += new System.EventHandler(this.theme_aerolite_CheckedChanged);
+            // 
+            // theme_aero
+            // 
+            this.theme_aero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.theme_aero.Checked = false;
+            this.theme_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.theme_aero.ForeColor = System.Drawing.Color.White;
+            this.theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("theme_aero.Image")));
+            this.theme_aero.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_aero.Location = new System.Drawing.Point(335, 3);
+            this.theme_aero.Name = "theme_aero";
+            this.theme_aero.Size = new System.Drawing.Size(95, 83);
+            this.theme_aero.TabIndex = 43;
+            this.theme_aero.Text = "Default";
+            this.theme_aero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_aero.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.theme_aero.CheckedChanged += new System.EventHandler(this.theme_aero_CheckedChanged);
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
+            this.pictureBox9.Location = new System.Drawing.Point(3, 28);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(35, 35);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox9.TabIndex = 1;
+            this.pictureBox9.TabStop = false;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.label20.Location = new System.Drawing.Point(44, 28);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(285, 35);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "Theme";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Win10Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1104, 756);
+            this.Controls.Add(this.alertBox1);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.tips_box);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tablessControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2122,8 +2163,9 @@
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
-            this.Controls.SetChildIndex(this.groupBox3, 0);
             this.Controls.SetChildIndex(this.tips_box, 0);
+            this.Controls.SetChildIndex(this.groupBox4, 0);
+            this.Controls.SetChildIndex(this.alertBox1, 0);
             this.GroupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).EndInit();
@@ -2164,15 +2206,14 @@
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         internal UI.WP.GroupBox GroupBox13;
-        internal UI.WP.Button copycat;
         internal System.Windows.Forms.Label Label42;
         internal System.Windows.Forms.PictureBox pic9;
         internal System.Windows.Forms.Label lbl9;
@@ -2246,9 +2287,6 @@
         internal System.Windows.Forms.PictureBox pictureBox3;
         internal System.Windows.Forms.Label label6;
         internal UI.WP.GroupBox groupBox2;
-        internal UI.WP.GroupBox groupBox3;
-        internal System.Windows.Forms.PictureBox pictureBox8;
-        internal System.Windows.Forms.Label label15;
         internal UI.WP.RadioImage easy_level_tb;
         internal UI.WP.RadioImage easy_level_all;
         internal UI.WP.RadioImage easy_level_none;
@@ -2299,5 +2337,11 @@
         internal System.Windows.Forms.PictureBox pictureBox7;
         internal System.Windows.Forms.Label label14;
         internal UI.WP.AlertBox tips_box;
+        internal UI.WP.AlertBox alertBox1;
+        internal UI.WP.GroupBox groupBox4;
+        internal UI.WP.RadioImage theme_aerolite;
+        internal UI.WP.RadioImage theme_aero;
+        internal System.Windows.Forms.PictureBox pictureBox9;
+        internal System.Windows.Forms.Label label20;
     }
 }

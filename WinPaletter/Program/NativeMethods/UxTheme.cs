@@ -24,7 +24,7 @@ namespace WinPaletter.NativeMethods
         /// Set The Window's Theme Attributes
         /// </summary>
         /// <param name="hWnd">The Handle to the Window</param>
-        /// <param name="wtype">What Type of Attributes</param>
+        /// <param name="wtype">What ButtonOverlay of Attributes</param>
         /// <param name="attributes">The Attributes to Add/Remove</param>
         /// <param name="size">The Size of the Attributes Struct</param>
         /// <returns>If The Call Was Successful or Not</returns>

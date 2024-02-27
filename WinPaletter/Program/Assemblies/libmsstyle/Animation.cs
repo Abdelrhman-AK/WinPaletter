@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -19,7 +23,8 @@ namespace libmsstyle
         public int BackgroundPartID { get; set; }
         public int TuningLevel { get; set; }
         public float Perspective { get; set; }
-        public List<Transform> Transforms { get; } = new List<Transform>();
+        private List<Transform> _transforms = new List<Transform>();
+        public List<Transform> Transforms { get { return _transforms; } }
         public PropertyHeader Header;
 
         public Animation(byte[] data, ref int start, PropertyHeader header)
@@ -45,7 +50,7 @@ namespace libmsstyle
 
             for (int i = 0; i < TransformCount; i++)
             {
-                Transform t = new Transform(data, ref start);
+                var t = new Transform(data, ref start);
                 Transforms.Add(t);
                 start += GetPaddingForSize(t.StructureSize);
             }
@@ -76,7 +81,7 @@ namespace libmsstyle
         {
             // Update the total size
             int total_size = 56;
-            foreach (Transform item in Transforms)
+            foreach (var item in Transforms)
             {
                 total_size += item.StructureSize + GetPaddingForSize(item.StructureSize);
             }
@@ -108,12 +113,12 @@ namespace libmsstyle
             bw.Write(Perspective);
             bw.Write(0); //Write padding
 
-            foreach (Transform item in Transforms)
+            foreach (var item in Transforms)
             {
                 item.Write(bw);
 
                 // Write padding
-                byte[] padding = new byte[GetPaddingForSize(item.StructureSize)];
+                var padding = new byte[GetPaddingForSize(item.StructureSize)];
                 bw.Write(padding);
             }
         }

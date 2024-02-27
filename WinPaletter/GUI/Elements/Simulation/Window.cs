@@ -34,7 +34,9 @@ namespace WinPaletter.UI.Simulation
         public enum Preview_Enum
         {
             W11,
+            W11Lite,
             W10,
+            W10Lite,
             W8,
             W8Lite,
             W7Aero,
@@ -445,7 +447,7 @@ namespace WinPaletter.UI.Simulation
                 if (imageBounds.Contains_ButNotExceed(Bounds)) AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
             }
 
-            if (Preview == Preview_Enum.W11)
+            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
             {
                 if (AdaptedBack is not null)
                 {
@@ -588,7 +590,7 @@ namespace WinPaletter.UI.Simulation
         {
             get
             {
-                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10)
+                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite) // there is no Preview == Preview_Enum.W10Lite as it looks like W8.1Lite
                 {
                     return 1;
                 }
@@ -618,7 +620,7 @@ namespace WinPaletter.UI.Simulation
         {
             get
             {
-                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10)
+                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite)
                 {
                     return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, (int)Math.Round(Rect.Y + (TitlebarRect.Height - IconSize) / 2d), IconSize, IconSize);
                 }
@@ -706,7 +708,7 @@ namespace WinPaletter.UI.Simulation
         {
             get
             {
-                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10)
+                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite)
                 {
                     if (AccentColor_Enabled)
                     {
@@ -726,7 +728,7 @@ namespace WinPaletter.UI.Simulation
                     }
                 }
 
-                else if (Preview == Preview_Enum.W8)
+                else if (Preview == Preview_Enum.W10Lite || Preview == Preview_Enum.W8)
                 {
                     return Color.Black;
                 }
@@ -756,22 +758,6 @@ namespace WinPaletter.UI.Simulation
                     else
                     {
                         return AccentColor_Inactive.IsDark() ? Assets.Win10Preview.Win10x_Close_Dark : Assets.Win10Preview.Win10x_Close_Light;
-                    }
-                }
-
-                else if (Active)
-                {
-                    if (Preview == Preview_Enum.W11)
-                    {
-                        return DarkMode ? Assets.Win10Preview.Win10x_Close_Dark : Assets.Win10Preview.Win10x_Close_Light;
-                    }
-                    else if (DarkMode)
-                    {
-                        return Assets.Win10Preview.Win10x_Close_Dark;
-                    }
-                    else
-                    {
-                        return Assets.Win10Preview.Win10x_Close_Light;
                     }
                 }
 
@@ -810,7 +796,9 @@ namespace WinPaletter.UI.Simulation
         {
             if (!DesignMode && EnableEditingColors)
             {
-                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10) && TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
+                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite) &&
+                    TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
+
                 CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
                   Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
 
@@ -1039,152 +1027,179 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = Program.Style.RenderingHint;
 
             //Draw window itself
-            if (Preview == Preview_Enum.W11)
+            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
             {
+                if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+
+                if (!AccentColor_Enabled && Active)
                 {
-                    if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
-
-                    if (!AccentColor_Enabled && Active)
-                    {
-                        G.SetClip(TitlebarRect);
-                        G.DrawRoundImage(AdaptedBackBlurred, Rect, Radius, true);
-                        G.ResetClip();
-                    }
-
-                    G.ExcludeClip(TitlebarRect);
-
-                    if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRoundedRect(br, Rect, Radius, true); } }
-
-                    else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRoundedRect(br, Rect, Radius, true); } }
-
+                    G.SetClip(TitlebarRect);
+                    G.DrawRoundImage(AdaptedBackBlurred, Rect, Radius, true);
                     G.ResetClip();
+                }
 
-                    if (AccentColor_Enabled)
+                G.ExcludeClip(TitlebarRect);
+
+                if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRoundedRect(br, Rect, Radius, true); } }
+
+                else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRoundedRect(br, Rect, Radius, true); } }
+
+                G.ResetClip();
+
+                if (AccentColor_Enabled)
+                {
+                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
+
+                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
+                }
+
+                else if (DarkMode) { using (Pen P = new(Color.FromArgb(200, 100, 100, 100))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
+
+                else { using (Pen P = new(Color.FromArgb(200, 220, 220, 220))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
+
+                if (AccentColor_Enabled)
+                {
+                    if (Active)
                     {
-                        if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
+                        using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Active))) { FillSemiRect(G, br, TitlebarRect, Radius); }
 
-                        else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-                    }
-
-                    else if (DarkMode) { using (Pen P = new(Color.FromArgb(200, 100, 100, 100))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-
-                    else { using (Pen P = new(Color.FromArgb(200, 220, 220, 220))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-
-                    if (AccentColor_Enabled)
-                    {
-                        if (Active)
+                        using (Pen P = new(Color.FromArgb(255, AccentColor_Active)))
                         {
-                            using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Active))) { FillSemiRect(G, br, TitlebarRect, Radius); }
-
-                            using (Pen P = new(Color.FromArgb(255, AccentColor_Active)))
-                            {
-                                G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
-                            }
-                        }
-                        else
-                        {
-                            using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Inactive))) { FillSemiRect(G, br, TitlebarRect, Radius); }
-
-                            using (Pen P = new(Color.FromArgb(255, AccentColor_Inactive)))
-                            {
-                                G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
-                            }
+                            G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
                     }
-
                     else
                     {
-                        int a = Active ? DarkMode ? 180 : 245 : 255;
+                        using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Inactive))) { FillSemiRect(G, br, TitlebarRect, Radius); }
 
-                        if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(a, 32, 32, 32))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
-
-                        else { using (SolidBrush br = new(Color.FromArgb(a, 245, 245, 245))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
-                    }
-
-                    #region Editor
-
-                    if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
-                    {
-                        Color color0 = Color.FromArgb(80, 255, 255, 255);
-                        Color color1 = Color.FromArgb(80, 0, 0, 0);
-                        using (Pen P = new(color0))
-                        using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                        using (Pen P = new(Color.FromArgb(255, AccentColor_Inactive)))
                         {
-                            G.FillRoundedRect(hb, TitlebarRect, Radius, true);
-                            G.DrawRoundedRect(P, TitlebarRect, Radius, true);
+                            G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
                     }
+                }
 
-                    #endregion
+                else
+                {
+                    int a = Active ? DarkMode ? 180 : 245 : 255;
 
-                    //Close button
-                    if (!ToolWindow)
+                    if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(a, 32, 32, 32))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
+
+                    else { using (SolidBrush br = new(Color.FromArgb(a, 245, 245, 245))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
+                }
+
+                #region Editor
+
+                if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
+                {
+                    Color color0 = Color.FromArgb(80, 255, 255, 255);
+                    Color color1 = Color.FromArgb(80, 0, 0, 0);
+                    using (Pen P = new(color0))
+                    using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                    {
+                        G.FillRoundedRect(hb, TitlebarRect, Radius, true);
+                        G.DrawRoundedRect(P, TitlebarRect, Radius, true);
+                    }
+                }
+
+                #endregion
+
+                //Close button
+                if (!ToolWindow)
+                {
+                    if (Preview == Preview_Enum.W11Lite)
+                    {
+                        G.SetClip(Rect.Round(Radius));
+
+                        using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
+                        {
+                            Rectangle close_Lite = new(TitlebarRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+                            if (Active) G.FillRectangle(br, close_Lite);
+
+                            using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
+                            {
+                                G.DrawLine(P, close_Lite.X, close_Lite.Y + 1, close_Lite.X, close_Lite.Y + close_Lite.Height);
+                                G.DrawLine(P, close_Lite.X, close_Lite.Y + close_Lite.Height, close_Lite.X + close_Lite.Width - 1, close_Lite.Y + close_Lite.Height);
+                            }
+
+                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                            {
+                                using (SolidBrush br_close = new(Color.Black))
+                                {
+                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new Rectangle(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
+                                }
+                            }
+                        }
+
+                        G.ResetClip();
+                    }
+                    else
                     {
                         using (Bitmap closeImg = new(CloseButtonImage))
                         {
                             CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height);
+
                             G.DrawImage(closeImg, CloseButtonRect);
                         }
                     }
+                }
 
-                    else
+                else
+                {
+                    CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
+
+                    using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
                     {
-                        CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
-
-                        using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
-                        {
-                            G.FillRectangle(br, CloseButtonRect);
-                        }
-
-                        if (CloseButtonRect.Width >= 12)
-                        {
-                            if (CloseButtonRect.Width % 2 == 0)
-                            {
-                                CloseButtonRect.X += 1;
-                                CloseButtonRect.Y += 1;
-                            }
-                        }
-                        else
-                        {
-                            CloseButtonRect.X += 1;
-                        }
-
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                        {
-                            using (SolidBrush br = new(Color.White))
-                            {
-                                G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
-                            }
-                        }
+                        G.FillRectangle(br, CloseButtonRect);
                     }
 
-                    //Window title
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                    if (CloseButtonRect.Width >= 12)
                     {
-                        using (SolidBrush br = new(CaptionColor))
+                        if (CloseButtonRect.Width % 2 == 0)
                         {
-                            G.DrawString(Text, Font, br, LabelRect, sf);
+                            CloseButtonRect.X += 1;
+                            CloseButtonRect.Y += 1;
                         }
+                    }
+                    else
+                    {
+                        CloseButtonRect.X += 1;
+                    }
+
+                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                    {
+                        using (SolidBrush br = new(Preview == Preview_Enum.W11Lite ? Color.Black : Color.White))
+                        {
+                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
+                        }
+                    }
+                }
+
+                //Window title
+                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                {
+                    using (SolidBrush br = new(CaptionColor))
+                    {
+                        G.DrawString(Text, Font, br, LabelRect, sf);
                     }
                 }
             }
 
-            else if (Preview == Preview_Enum.W10)
+            else if (Preview == Preview_Enum.W10 || Preview == Preview_Enum.W10Lite)
             {
+                if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+
+                if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRectangle(br, Rect); } }
+
+                else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRectangle(br, Rect); } }
+
+                if (Preview == Preview_Enum.W10)
                 {
-                    if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
-
-                    if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRectangle(br, Rect); } }
-
-                    else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRectangle(br, Rect); } }
-
                     if (AccentColor_Enabled)
                     {
                         if (Active) { using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Active))) { G.FillRectangle(br, TitlebarRect); } }
@@ -1202,82 +1217,114 @@ namespace WinPaletter.UI.Simulation
                     else if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(43, 43, 43))) { G.FillRectangle(br, TitlebarRect); } }
 
                     else { G.FillRectangle(Brushes.White, TitlebarRect); }
+                }
+                else
+                {
+                    G.ExcludeClip(ClientRect);
+                    using (SolidBrush br = new(AccentColor_Active)) { G.FillRectangle(br, Rect); }
+                    G.ResetClip();
+                }
+               
+                if (AccentColor_Enabled)
+                {
+                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect); } }
 
-                    if (AccentColor_Enabled)
+                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRectangle(P, Rect); } }
+                }
+
+                else if (DarkMode) { using (Pen P = new(Color.FromArgb(125, 100, 100, 100))) { G.DrawRectangle(P, Rect); } }
+
+                else { using (Pen P = new(Color.FromArgb(125, 220, 220, 220))) { G.DrawRectangle(P, Rect); } }
+
+                #region Editor
+
+                if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
+                {
+                    Color color0 = Color.FromArgb(80, 255, 255, 255);
+                    Color color1 = Color.FromArgb(80, 0, 0, 0);
+                    using (Pen P = new(color0))
+                    using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
                     {
-                        if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect); } }
-
-                        else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRectangle(P, Rect); } }
-
+                        G.FillRectangle(hb, TitlebarRect);
+                        G.DrawRectangle(P, TitlebarRect);
                     }
-                    else if (DarkMode) { using (Pen P = new(Color.FromArgb(125, 100, 100, 100))) { G.DrawRectangle(P, Rect); } }
+                }
 
-                    else { using (Pen P = new(Color.FromArgb(125, 220, 220, 220))) { G.DrawRectangle(P, Rect); } }
+                #endregion
 
-                    #region Editor
-
-                    if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
+                //Close button
+                if (!ToolWindow)
+                {
+                    if (Preview == Preview_Enum.W10Lite)
                     {
-                        Color color0 = Color.FromArgb(80, 255, 255, 255);
-                        Color color1 = Color.FromArgb(80, 0, 0, 0);
-                        using (Pen P = new(color0))
-                        using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                        using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
                         {
-                            G.FillRectangle(hb, TitlebarRect);
-                            G.DrawRectangle(P, TitlebarRect);
+                            Rectangle close_Lite = new(ClientRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+                            if (Active) G.FillRectangle(br, close_Lite);
+
+                            using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
+                            {
+                                G.DrawLine(P, close_Lite.X, close_Lite.Y + 1, close_Lite.X, close_Lite.Y + close_Lite.Height);
+                                G.DrawLine(P, close_Lite.X, close_Lite.Y + close_Lite.Height, close_Lite.X + close_Lite.Width - 1, close_Lite.Y + close_Lite.Height);
+                            }
+
+                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                            {
+                                using (SolidBrush br_close = new(Color.Black))
+                                {
+                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new Rectangle(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
+                                }
+                            }
                         }
                     }
-
-                    #endregion
-
-                    //Close button
-                    if (!ToolWindow)
+                    else
                     {
                         using (Bitmap closeImg = new(CloseButtonImage))
                         {
                             CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height);
+
                             G.DrawImage(closeImg, CloseButtonRect);
                         }
                     }
+                }
 
-                    else
+                else
+                {
+                    CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
+
+                    using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
                     {
-                        CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
-
-                        using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
-                        {
-                            G.FillRectangle(br, CloseButtonRect);
-                        }
-
-                        if (CloseButtonRect.Width >= 12)
-                        {
-                            if (CloseButtonRect.Width % 2 == 0)
-                            {
-                                CloseButtonRect.X += 1;
-                                CloseButtonRect.Y += 1;
-                            }
-                        }
-                        else
-                        {
-                            CloseButtonRect.X += 1;
-                        }
-
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                        {
-                            using (SolidBrush br = new(Color.White))
-                            {
-                                G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
-                            }
-                        }
+                        G.FillRectangle(br, CloseButtonRect);
                     }
 
-                    //Window title
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                    if (CloseButtonRect.Width >= 12)
                     {
-                        using (SolidBrush br = new(CaptionColor))
+                        if (CloseButtonRect.Width % 2 == 0)
                         {
-                            G.DrawString(Text, Font, br, LabelRect, sf);
+                            CloseButtonRect.X += 1;
+                            CloseButtonRect.Y += 1;
                         }
+                    }
+                    else
+                    {
+                        CloseButtonRect.X += 1;
+                    }
+
+                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                    {
+                        using (SolidBrush br = new(Preview == Preview_Enum.W10Lite ? Color.Black : Color.White))
+                        {
+                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
+                        }
+                    }
+                }
+
+                //Window title
+                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                {
+                    using (SolidBrush br = new(CaptionColor))
+                    {
+                        G.DrawString(Text, Font, br, LabelRect, sf);
                     }
                 }
             }

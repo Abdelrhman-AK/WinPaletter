@@ -65,8 +65,8 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.ImageAsVector = false;
-            this.Button4.ImageVector = null;
+            this.Button4.ImageGlyphEnabled = false;
+            this.Button4.ImageGlyph = null;
             this.Button4.Location = new System.Drawing.Point(495, 400);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(220, 31);
@@ -83,8 +83,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.ImageAsVector = false;
-            this.Button3.ImageVector = null;
+            this.Button3.ImageGlyphEnabled = false;
+            this.Button3.ImageGlyph = null;
             this.Button3.Location = new System.Drawing.Point(13, 400);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(340, 30);
@@ -174,8 +174,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageAsVector = false;
-            this.Button2.ImageVector = null;
+            this.Button2.ImageGlyphEnabled = false;
+            this.Button2.ImageGlyph = null;
             this.Button2.Location = new System.Drawing.Point(602, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(130, 34);
@@ -193,8 +193,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAsVector = false;
-            this.Button1.ImageVector = null;
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.ImageGlyph = null;
             this.Button1.Location = new System.Drawing.Point(738, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(130, 34);
@@ -261,8 +261,8 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageAsVector = false;
-            this.Button5.ImageVector = null;
+            this.Button5.ImageGlyphEnabled = false;
+            this.Button5.ImageGlyph = null;
             this.Button5.Location = new System.Drawing.Point(359, 400);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(130, 30);

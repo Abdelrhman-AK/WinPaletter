@@ -104,19 +104,33 @@ namespace WinPaletter.Templates
         }
         private VisualStylesRes _resVS = null;
 
-        public Theme.Structures.Windows7.Themes WindowsTheme
+        public Theme.Structures.Windows10x.Themes Windows_10x_Theme
         {
-            get => _windowsTheme;
+            get => _windows_10x_Theme;
             set
             {
-                if (value != _windowsTheme || ForceRefresh)
+                if (value != _windows_10x_Theme || ForceRefresh)
                 {
-                    _windowsTheme = value;
+                    _windows_10x_Theme = value;
                     SetTheme();
                 }
             }
         }
-        private Theme.Structures.Windows7.Themes _windowsTheme = Theme.Structures.Windows7.Themes.Aero;
+        private Theme.Structures.Windows10x.Themes _windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+
+        public Theme.Structures.Windows7.Themes Windows_7_8_Theme
+        {
+            get => _windows_7_8_Theme;
+            set
+            {
+                if (value != _windows_7_8_Theme || ForceRefresh)
+                {
+                    _windows_7_8_Theme = value;
+                    SetTheme();
+                }
+            }
+        }
+        private Theme.Structures.Windows7.Themes _windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
 
         public Theme.Structures.WindowsXP.Themes WindowsXPTheme
         {
@@ -193,145 +207,120 @@ namespace WinPaletter.Templates
                 {
                     _preview = value;
 
-                    switch (value)
+                    if (value == Preview_Enum.W11 || value == Preview_Enum.W11Lite)
                     {
-                        case Preview_Enum.W11:
-                            ActionCenter.Style = WinElement.Styles.ActionCenter11;
+                        ActionCenter.Style = WinElement.Styles.ActionCenter11;
 
-                            if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.IsAllowed())
+                        {
                             {
+                                ref ExplorerPatcher EP = ref Program.EP;
+                                if ((bool)!EP?.UseStart10)
                                 {
-                                    ref ExplorerPatcher EP = ref Program.EP;
-                                    if ((bool)!EP?.UseStart10)
-                                    {
-                                        start.Style = UI.Simulation.WinElement.Styles.Start11;
-                                    }
-                                    else
-                                    {
-                                        start.Style = UI.Simulation.WinElement.Styles.Start10;
-                                    }
-
-                                    if ((bool)!EP?.UseTaskbar10)
-                                    {
-                                        taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
-                                    }
-                                    else
-                                    {
-                                        taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar10;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                start.Style = UI.Simulation.WinElement.Styles.Start11;
-                                taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
-                            }
-
-                            ActionCenter.Visible = true;
-
-                            break;
-
-                        case Preview_Enum.W10:
-                            {
-                                start.Style = WinElement.Styles.Start10;
-                                ActionCenter.Style = WinElement.Styles.ActionCenter10;
-                                taskbar.Style = WinElement.Styles.Taskbar10;
-
-                                ActionCenter.Visible = true;
-
-                                break;
-                            }
-
-                        case Preview_Enum.W8:
-                            {
-                                start.Style = WinElement.Styles.Start8;
-                                taskbar.Style = WinElement.Styles.Taskbar8Aero;
-
-                                ActionCenter.Visible = false;
-
-                                taskbar.BackColorAlpha = 100;
-                                taskbar.Transparency = true;
-
-                                break;
-                            }
-
-                        case Preview_Enum.W8Lite:
-                            {
-                                start.Style = WinElement.Styles.Start8;
-                                taskbar.Style = WinElement.Styles.Taskbar8Lite;
-
-                                ActionCenter.Visible = false;
-
-                                taskbar.BackColorAlpha = 255;
-                                taskbar.Transparency = false;
-
-                                break;
-                            }
-
-                        case Preview_Enum.W7Aero:
-                            {
-                                if (!WinVista)
-                                {
-                                    start.Style = WinElement.Styles.Start7Aero;
-                                    taskbar.Style = WinElement.Styles.Taskbar7Aero;
+                                    start.Style = UI.Simulation.WinElement.Styles.Start11;
                                 }
                                 else
                                 {
-                                    start.Style = WinElement.Styles.StartVistaAero;
-                                    taskbar.Style = WinElement.Styles.TaskbarVistaAero;
+                                    start.Style = UI.Simulation.WinElement.Styles.Start10;
                                 }
 
-
-                                ActionCenter.Visible = false;
-
-                                break;
-                            }
-
-                        case Preview_Enum.W7Opaque:
-                            {
-                                if (!WinVista)
+                                if ((bool)!EP?.UseTaskbar10)
                                 {
-                                    start.Style = WinElement.Styles.Start7Opaque;
-                                    taskbar.Style = WinElement.Styles.Taskbar7Opaque;
+                                    taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
                                 }
                                 else
                                 {
-                                    start.Style = WinElement.Styles.StartVistaOpaque;
-                                    taskbar.Style = WinElement.Styles.TaskbarVistaOpaque;
+                                    taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar10;
                                 }
-
-                                ActionCenter.Visible = false;
-
-                                break;
                             }
+                        }
+                        else
+                        {
+                            start.Style = UI.Simulation.WinElement.Styles.Start11;
+                            taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
+                        }
 
-                        case Preview_Enum.W7Basic:
-                            {
-                                if (!WinVista)
-                                {
-                                    start.Style = WinElement.Styles.Start7Basic;
-                                    taskbar.Style = WinElement.Styles.Taskbar7Basic;
-                                }
-                                else
-                                {
-                                    start.Style = WinElement.Styles.StartVistaBasic;
-                                    taskbar.Style = WinElement.Styles.TaskbarVistaBasic;
-                                }
+                        ActionCenter.Visible = true;
+                    }
+                    else if (value == Preview_Enum.W10 || value == Preview_Enum.W10Lite)
+                    {
+                        start.Style = WinElement.Styles.Start10;
+                        ActionCenter.Style = WinElement.Styles.ActionCenter10;
+                        taskbar.Style = WinElement.Styles.Taskbar10;
 
-                                ActionCenter.Visible = false;
+                        ActionCenter.Visible = true;
+                    }
+                    else if (value == Preview_Enum.W8)
+                    {
+                        start.Style = WinElement.Styles.Start8;
+                        taskbar.Style = WinElement.Styles.Taskbar8Aero;
 
-                                break;
-                            }
+                        ActionCenter.Visible = false;
 
-                        case Preview_Enum.WXP:
-                            {
-                                start.Style = WinElement.Styles.StartXP;
-                                taskbar.Style = WinElement.Styles.TaskbarXP;
+                        taskbar.BackColorAlpha = 100;
+                        taskbar.Transparency = true;
+                    }
+                    else if (value == Preview_Enum.W8Lite)
+                    {
+                        start.Style = WinElement.Styles.Start8;
+                        taskbar.Style = WinElement.Styles.Taskbar8Lite;
 
-                                ActionCenter.Visible = false;
+                        ActionCenter.Visible = false;
 
-                                break;
-                            }
+                        taskbar.BackColorAlpha = 255;
+                        taskbar.Transparency = false;
+                    }
+                    else if (value == Preview_Enum.W7Aero)
+                    {
+                        if (!WinVista)
+                        {
+                            start.Style = WinElement.Styles.Start7Aero;
+                            taskbar.Style = WinElement.Styles.Taskbar7Aero;
+                        }
+                        else
+                        {
+                            start.Style = WinElement.Styles.StartVistaAero;
+                            taskbar.Style = WinElement.Styles.TaskbarVistaAero;
+                        }
+
+                        ActionCenter.Visible = false;
+                    }
+                    else if (value == Preview_Enum.W7Opaque)
+                    {
+                        if (!WinVista)
+                        {
+                            start.Style = WinElement.Styles.Start7Opaque;
+                            taskbar.Style = WinElement.Styles.Taskbar7Opaque;
+                        }
+                        else
+                        {
+                            start.Style = WinElement.Styles.StartVistaOpaque;
+                            taskbar.Style = WinElement.Styles.TaskbarVistaOpaque;
+                        }
+
+                        ActionCenter.Visible = false;
+                    }
+                    else if (value == Preview_Enum.W7Basic)
+                    {
+                        if (!WinVista)
+                        {
+                            start.Style = WinElement.Styles.Start7Basic;
+                            taskbar.Style = WinElement.Styles.Taskbar7Basic;
+                        }
+                        else
+                        {
+                            start.Style = WinElement.Styles.StartVistaBasic;
+                            taskbar.Style = WinElement.Styles.TaskbarVistaBasic;
+                        }
+
+                        ActionCenter.Visible = false;
+                    }
+                    else if (value == Preview_Enum.WXP)
+                    {
+                        start.Style = WinElement.Styles.StartXP;
+                        taskbar.Style = WinElement.Styles.TaskbarXP;
+
+                        ActionCenter.Visible = false;
                     }
 
                     foreach (Window window in this.GetAllControls().OfType<Window>()) window.Preview = value;
@@ -743,7 +732,7 @@ namespace WinPaletter.Templates
                 {
                     _increaseTBTransparency = value;
 
-                    if (Preview == Preview_Enum.W10)
+                    if (Preview == Preview_Enum.W10 || Preview == Preview_Enum.W10Lite)
                         taskbar.BlurPower = !value ? 12 : 6;
                 }
             }
@@ -760,7 +749,7 @@ namespace WinPaletter.Templates
                 {
                     _tb_Blur = value;
 
-                    if (Preview == Preview_Enum.W10)
+                    if (Preview == Preview_Enum.W10 || Preview == Preview_Enum.W10Lite)
                     {
                         byte TB_Blur_value;
 
@@ -1773,7 +1762,7 @@ namespace WinPaletter.Templates
             {
                 case WindowStyle.W11:
                     {
-                        Preview = Preview_Enum.W11;
+                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W11 : Preview_Enum.W11Lite;
 
                         if (OS.W12 || OS.W11) Program.EP = new();
 
@@ -1899,7 +1888,7 @@ namespace WinPaletter.Templates
 
                 case WindowStyle.W10:
                     {
-                        Preview = Preview_Enum.W10;
+                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W10 : Preview_Enum.W10Lite;
 
                         ActionCenter.Dock = DockStyle.Right;
                         ActionCenter.BlurPower = 7;
@@ -2182,7 +2171,7 @@ namespace WinPaletter.Templates
             {
                 WinVista = _windowStyle == WindowStyle.WVista;
 
-                switch (_windowsTheme)
+                switch (_windows_7_8_Theme)
                 {
                     case Theme.Structures.Windows7.Themes.AeroOpaque:
                         {
@@ -2220,6 +2209,31 @@ namespace WinPaletter.Templates
 
                 Refresh();
             }
+
+            else if (_windowStyle == WindowStyle.W10 || _windowStyle == WindowStyle.W11 || _windowStyle == WindowStyle.W12)
+            {
+                switch (_windows_10x_Theme)
+                {
+                    case Theme.Structures.Windows10x.Themes.Aero:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
+                            break;
+                        }
+
+                    case Theme.Structures.Windows10x.Themes.AeroLite:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10Lite : Preview_Enum.W11Lite;
+                            break;
+                        }
+
+                    default:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
+                            break;
+                        }
+                }
+            }
+
         }
 
         #endregion
@@ -2252,6 +2266,7 @@ namespace WinPaletter.Templates
                 Color7 = HookedTM.Windows11.StartMenu_Accent;
                 Color8 = HookedTM.Windows11.Color_Index6;
                 Color9 = HookedTM.Windows11.Color_Index7;
+                Windows_10x_Theme = HookedTM.Windows11.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W10)
@@ -2273,6 +2288,7 @@ namespace WinPaletter.Templates
                 Color7 = HookedTM.Windows10.StartMenu_Accent;
                 Color8 = HookedTM.Windows10.Color_Index6;
                 Color9 = HookedTM.Windows10.Color_Index7;
+                Windows_10x_Theme = HookedTM.Windows10.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W81)
@@ -2285,7 +2301,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Inactive = HookedTM.Windows81.ColorizationColor;
                 Win7ColorBal = HookedTM.Windows81.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                WindowsTheme = HookedTM.Windows81.Theme;
+                Windows_7_8_Theme = HookedTM.Windows81.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W7)
@@ -2299,7 +2315,7 @@ namespace WinPaletter.Templates
                 Win7GlowBal = HookedTM.Windows7.ColorizationAfterglowBalance;
                 Win7Noise = HookedTM.Windows7.ColorizationGlassReflectionIntensity;
                 Win7Alpha = HookedTM.Windows7.ColorizationBlurBalance;
-                WindowsTheme = HookedTM.Windows7.Theme;
+                Windows_7_8_Theme = HookedTM.Windows7.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WVista)
@@ -2313,7 +2329,7 @@ namespace WinPaletter.Templates
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
                 Win7Alpha = 100 - (HookedTM.WindowsVista.Alpha / 255) * 100;
-                WindowsTheme = HookedTM.WindowsVista.Theme;
+                Windows_7_8_Theme = HookedTM.WindowsVista.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WXP)

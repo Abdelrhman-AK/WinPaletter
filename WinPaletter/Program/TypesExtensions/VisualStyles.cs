@@ -1,7 +1,11 @@
 ﻿using libmsstyle;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Web.UI.WebControls;
+using WinPaletter.Theme;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -101,37 +105,76 @@ namespace WinPaletter.TypesExtensions
             return classicColors;
         }
 
+        private static Font ParseFontFromString(string inputString)
+        {
+            Font defaultFont = new("Segoe UI", 9f, FontStyle.Regular);
+
+            try
+            {
+                FontStyle fontStyle = FontStyle.Regular;
+
+                string[] parts = inputString.Split(',');
+
+                if (parts.Length < 2) return defaultFont;
+
+                string family = parts[0].Trim();
+                float size = float.Parse(parts[1].Trim());
+
+                if (parts.Length >= 3)
+                {
+                    string styleStr = parts[2].Trim().ToLower();
+                    if (styleStr == "bold") fontStyle |= FontStyle.Bold;
+                    else if (styleStr == "italic") fontStyle |= FontStyle.Italic;
+                    else if (styleStr == "strikeout") fontStyle |= FontStyle.Strikeout;
+                    else if (styleStr == "underline") fontStyle |= FontStyle.Underline;
+                }
+
+                return new Font(family, size, fontStyle);
+            }
+            catch // Couldn't parse the font string, return the default font
+            {
+                return defaultFont;
+            }
+        }
+
+
         public static Theme.Structures.MetricsFonts MetricsFonts(this VisualStyle visualStyle, int PartID = 0, int StateID = 0)
         {
-            List<StyleProperty> properties = visualStyle.Properties("sysmetrics", PartID, StateID);
-
-
-            MsgBox(properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.CAPTIONFONT).FirstOrDefault().GetValueAsString());
+            StylePart cp = visualStyle.Class("sysmetrics").Value.Parts.FirstOrDefault().Value;
+            StyleState state = cp.States.FirstOrDefault().Value;
+            Dictionary<int, string> fonts = StringTable.FilterFonts(visualStyle.PreferredStringTable);
 
             Theme.Structures.MetricsFonts metricsFonts = new()
             {
-                CaptionHeight = (int)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.CAPTIONBARHEIGHT).FirstOrDefault().GetValue(),
-                ScrollHeight = (int)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.SCROLLBARHEIGHT).FirstOrDefault().GetValue(),
-                ScrollWidth = (int)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.SCROLLBARWIDTH).FirstOrDefault().GetValue(),
-                SmCaptionHeight = (int)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.SMCAPTIONBARHEIGHT).FirstOrDefault().GetValue(),
-                SmCaptionWidth = (int)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.SMCAPTIONBARWIDTH).FirstOrDefault().GetValue()
-                //CaptionFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.CAPTIONFONT).FirstOrDefault().GetValue(),
-                //IconFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.ICONTITLEFONT).FirstOrDefault().GetValue(),
-                //MenuFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.MENUFONT).FirstOrDefault().GetValue(),
-                //SmCaptionFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.SMALLCAPTIONFONT).FirstOrDefault().GetValue(),
-                //MessageFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.MSGBOXFONT).FirstOrDefault().GetValue(),
-                //StatusFont = (Font)properties.Where(i => (IDENTIFIER)i.Header.nameID == IDENTIFIER.STATUSFONT).FirstOrDefault().GetValue()
+                CaptionHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONBARHEIGHT).FirstOrDefault().GetValue(),
+                CaptionWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONBARWIDTH).FirstOrDefault().GetValue(),
+                BorderWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SIZINGBORDERWIDTH).FirstOrDefault().GetValue(),
+                PaddedBorderWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.PADDEDBORDERWIDTH).FirstOrDefault().GetValue(),
+                ScrollHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SCROLLBARHEIGHT).FirstOrDefault().GetValue(),
+                ScrollWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SCROLLBARWIDTH).FirstOrDefault().GetValue(),
+                SmCaptionHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SMCAPTIONBARHEIGHT).FirstOrDefault().GetValue(),
+                SmCaptionWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SMCAPTIONBARWIDTH).FirstOrDefault().GetValue(),
+                MenuWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MENUBARWIDTH).FirstOrDefault().GetValue(),
+                MenuHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MENUBARHEIGHT).FirstOrDefault().GetValue(),
             };
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
-            {
-                metricsFonts.CaptionFont = TMx.MetricsFonts.CaptionFont;
-                metricsFonts.SmCaptionFont = TMx.MetricsFonts.SmCaptionFont;
-                metricsFonts.IconFont = TMx.MetricsFonts.IconFont;
-                metricsFonts.MenuFont = TMx.MetricsFonts.MenuFont;
-                metricsFonts.MessageFont = TMx.MetricsFonts.MessageFont;
-                metricsFonts.StatusFont = TMx.MetricsFonts.StatusFont;
-            }
+            StyleProperty p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONFONT).FirstOrDefault();
+            metricsFonts.CaptionFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
+
+            p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.ICONTITLEFONT).FirstOrDefault();
+            metricsFonts.IconFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
+
+            p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MENUFONT).FirstOrDefault();
+            metricsFonts.MenuFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
+
+            p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MSGBOXFONT).FirstOrDefault();
+            metricsFonts.MessageFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
+
+            p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SMALLCAPTIONFONT).FirstOrDefault();
+            metricsFonts.SmCaptionFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
+
+            p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.STATUSFONT).FirstOrDefault();
+            metricsFonts.StatusFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
 
             return metricsFonts;
         }

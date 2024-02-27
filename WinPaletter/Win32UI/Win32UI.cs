@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -747,7 +746,7 @@ namespace WinPaletter
             if (string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
                 return;
 
-            bool condition0 = ComboBox1.SelectedIndex <= 3;
+            bool condition0 = ComboBox1.SelectedIndex <= 7;
             bool condition1 = ComboBox1.SelectedItem.ToString().StartsWith("Windows Classic (3.1)");
             bool condition2 = ComboBox1.SelectedItem.ToString().StartsWith("Windows 3.1 - ");
 

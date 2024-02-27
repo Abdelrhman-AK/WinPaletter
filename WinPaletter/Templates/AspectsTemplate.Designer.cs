@@ -73,8 +73,8 @@
             this.btn_apply.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_apply.ForeColor = System.Drawing.Color.White;
             this.btn_apply.Image = ((System.Drawing.Image)(resources.GetObject("btn_apply.Image")));
-            this.btn_apply.ImageAsVector = false;
-            this.btn_apply.ImageVector = null;
+            this.btn_apply.ImageGlyphEnabled = false;
+            this.btn_apply.ImageGlyph = null;
             this.btn_apply.Location = new System.Drawing.Point(498, 6);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(115, 36);
@@ -109,8 +109,8 @@
             this.btn_cancel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_cancel.ForeColor = System.Drawing.Color.White;
             this.btn_cancel.Image = null;
-            this.btn_cancel.ImageAsVector = false;
-            this.btn_cancel.ImageVector = null;
+            this.btn_cancel.ImageGlyphEnabled = false;
+            this.btn_cancel.ImageGlyph = null;
             this.btn_cancel.Location = new System.Drawing.Point(412, 6);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(80, 36);
@@ -146,8 +146,8 @@
             this.btn_load_into_theme.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_load_into_theme.ForeColor = System.Drawing.Color.White;
             this.btn_load_into_theme.Image = ((System.Drawing.Image)(resources.GetObject("btn_load_into_theme.Image")));
-            this.btn_load_into_theme.ImageAsVector = false;
-            this.btn_load_into_theme.ImageVector = null;
+            this.btn_load_into_theme.ImageGlyphEnabled = false;
+            this.btn_load_into_theme.ImageGlyph = null;
             this.btn_load_into_theme.Location = new System.Drawing.Point(619, 6);
             this.btn_load_into_theme.Name = "btn_load_into_theme";
             this.btn_load_into_theme.Size = new System.Drawing.Size(260, 36);
@@ -193,8 +193,8 @@
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageAsVector = false;
-            this.pin_button.ImageVector = null;
+            this.pin_button.ImageGlyphEnabled = false;
+            this.pin_button.ImageGlyph = null;
             this.pin_button.Location = new System.Drawing.Point(3, 3);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
@@ -210,8 +210,8 @@
             this.btn_import.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_import.ForeColor = System.Drawing.Color.White;
             this.btn_import.Image = ((System.Drawing.Image)(resources.GetObject("btn_import.Image")));
-            this.btn_import.ImageAsVector = false;
-            this.btn_import.ImageVector = null;
+            this.btn_import.ImageGlyphEnabled = false;
+            this.btn_import.ImageGlyph = null;
             this.btn_import.Location = new System.Drawing.Point(43, 3);
             this.btn_import.Name = "btn_import";
             this.btn_import.Size = new System.Drawing.Size(235, 34);
@@ -227,8 +227,8 @@
             this.btn_palette_generate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_palette_generate.ForeColor = System.Drawing.Color.White;
             this.btn_palette_generate.Image = ((System.Drawing.Image)(resources.GetObject("btn_palette_generate.Image")));
-            this.btn_palette_generate.ImageAsVector = false;
-            this.btn_palette_generate.ImageVector = null;
+            this.btn_palette_generate.ImageGlyphEnabled = false;
+            this.btn_palette_generate.ImageGlyph = null;
             this.btn_palette_generate.Location = new System.Drawing.Point(284, 3);
             this.btn_palette_generate.Name = "btn_palette_generate";
             this.btn_palette_generate.Size = new System.Drawing.Size(235, 34);
@@ -244,8 +244,8 @@
             this.btn_saveas_MSTheme.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_saveas_MSTheme.ForeColor = System.Drawing.Color.White;
             this.btn_saveas_MSTheme.Image = ((System.Drawing.Image)(resources.GetObject("btn_saveas_MSTheme.Image")));
-            this.btn_saveas_MSTheme.ImageAsVector = false;
-            this.btn_saveas_MSTheme.ImageVector = null;
+            this.btn_saveas_MSTheme.ImageGlyphEnabled = false;
+            this.btn_saveas_MSTheme.ImageGlyph = null;
             this.btn_saveas_MSTheme.Location = new System.Drawing.Point(525, 3);
             this.btn_saveas_MSTheme.Name = "btn_saveas_MSTheme";
             this.btn_saveas_MSTheme.Size = new System.Drawing.Size(200, 34);

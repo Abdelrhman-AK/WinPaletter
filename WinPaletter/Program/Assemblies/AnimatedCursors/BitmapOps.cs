@@ -641,7 +641,7 @@ namespace EOFC
                 return false;
             }
 
-            // Go through the pixels, zeroing the alpha whenever a white pixel is
+            // Go through the pixels, zeroing the alpha_hover whenever a white pixel is
             // encountered in the mask.
             int PxlCount = w * h;
             for (int i = 0; i < PxlCount; i++)
@@ -659,7 +659,7 @@ namespace EOFC
         }
 
         /// <summary>
-        /// Resizes the bitmap, filling with zero-alpha pixels for expanded regions and
+        /// Resizes the bitmap, filling with zero-alpha_hover pixels for expanded regions and
         /// croping regions when contracting dimensions. The upper left corner of the 
         /// image is used as the anchor point. A new bitmap is created and returned.
         /// </summary>

@@ -13,6 +13,22 @@ namespace WinPaletter.NativeMethods
     public partial class User32
     {
         /// <summary>
+        /// Enable or disable the high contrast mode.
+        /// </summary>
+        /// <param name="enable"></param>
+        /// <returns></returns>
+        public static bool SetHighContrast(bool enable)
+        {
+            HIGHCONTRAST highContrast = new()
+            {
+                cbSize = Marshal.SizeOf(typeof(User32.HIGHCONTRAST)),
+                dwFlags = enable ? 0x1u : 0x0u // Set to HCF_HIGHCONTRASTON to enable, 0 to disable
+            };
+
+            return User32.SystemParametersInfo(User32.SPI.SPI_SETHIGHCONTRAST, highContrast.cbSize, ref highContrast, User32.SPIF.SPIF_WRITEANDNOTIFY);
+        }
+
+        /// <summary>
         /// Loads the specified cursor resource from the executable (.EXE) file associated with an application instance.
         /// </summary>
         [DllImport("user32.dll")]
@@ -281,7 +297,6 @@ namespace WinPaletter.NativeMethods
             // Add more image types as needed
         }
 
-
         /// <summary>
         /// The DrawIconEx function draws an icon or cursor into the specified device context.
         /// </summary>
@@ -301,7 +316,7 @@ namespace WinPaletter.NativeMethods
         /// </item>
         /// <item>
         /// <term>DI_IMAGE</term>
-        /// <description>Draws the icon or cursor using the image's size without any stretching. This flag is similar to DI_NORMAL, but preserves the 8-bit alpha channel of the icon's XOR mask. The default is to treat this image as an opaque image.</description>
+        /// <description>Draws the icon or cursor using the image's size without any stretching. This flag is similar to DI_NORMAL, but preserves the 8-bit alpha_hover channel of the icon's XOR mask. The default is to treat this image as an opaque image.</description>
         /// </item>
         /// </list>
         /// </param>
@@ -321,6 +336,15 @@ namespace WinPaletter.NativeMethods
         /// <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
         [DllImport("user32")]
         public static extern bool GetIconInfo(IntPtr hIcon, out ICONINFO pIconInfo);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HIGHCONTRAST
+        {
+            public int cbSize;
+            [MarshalAs(UnmanagedType.U4)]
+            public uint dwFlags;
+            public string lpszDefaultScheme;
+        }
 
         /// <summary>
         /// Contains information about an icon or a cursor.

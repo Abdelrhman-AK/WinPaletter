@@ -466,7 +466,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W11)
                             {
-                                Execute(new(() => Windows12.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(new(() => Windows11.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView,
                                     Program.Lang.TM_Applying_Win11,
                                     Program.Lang.TM_W11_Error,
                                     Program.Lang.TM_Time,
@@ -485,7 +485,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W10)
                             {
-                                Execute(new(() => Windows12.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(new(() => Windows10.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView,
                                     Program.Lang.TM_Applying_Win10,
                                     Program.Lang.TM_W10_Error,
                                     Program.Lang.TM_Time,

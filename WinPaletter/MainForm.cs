@@ -77,6 +77,8 @@ namespace WinPaletter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            e.Cancel = false;
+
             if (!Forms.MainForm.LoggingOff && !closeSignalReceivedFromHomePage)
             {
                 using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })

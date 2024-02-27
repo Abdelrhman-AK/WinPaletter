@@ -658,28 +658,49 @@
         gg==
 </value>
   </data>
-  <data name="pictureBox8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyhJREFUSEvt
-        lF1IU2EYx6duU8fMpaZnbl305U0JGXbTTURkqNhVQqESRIWphanRl9PpjLQgUMvpNq3rIiq88EJNcjZL
-        NOc0Z22u7Ry96KYgQc3Sp/c5e7eZUzRxEOEf/vCe9/k/v+fwng/Bpv4JMQZXJqN3naSXgZVSyynkenYB
-        vb2ZjafbAZQahDH1Dlt03bhN8ARC6G5gJcrteIiml4GTQj+hZAzO9CiVqRONazxiWt4gqSFYruOyyDPr
-        IZ4nhiWelxtYY7yePY1Z2rU+xTVxiQRkWWbI8taxZkbn2kvb/06MnksjkCk/6Kp2fSeDj1PM2iRvZpNJ
-        84w/bM2ejm9yHqC4VdTULyINo0sA6/EwfkKUurIYPZu/TPP6rGNzKXZlkZfE7mlgdCxE1TpAdt8OMQ8+
-        +wOpsYYZzGKPr8ZZKXYZXeuPlFbbT3nCsVoniFVDEK4eBlmNFYQ3zSC9bcW79gHJGveEN8x8JqzcAuJS
-        C9/ryUjvjGUim06hKu4/E1QyMC2pHPEGw1RmUDTa4AS3ABncPBwbnQVJ2SDI7o15M7iWqAb5GmbQCq2N
-        9A55M5KKEUC2oPh9jntY0buE4MK3c8Qg1bgHxjU6IaTwDaRYZ2Fnix1ERSY41PMN9j2fgPDSAS8s/NYA
-        JL6YJLWvfGbX43FIGZ3he5GBGalmGJCNMwRXTLsFIZeNOcJL3YDeUmVxDyRHIix4Dan2OVDWjfDrg+1f
-        YH/rJIRf7/MNJOskspdMaphR1n+AVNsPfh2ndT9zZHr4IQXd2QJhXscRUV4noCM1gz5YsRESHn2EDOcv
-        OGqegrTxOZCVmiCyyuzNRGrMsFXVC+mOn3wGs3taxvheX2aQZ6OFF18dJmcKQeILbc+IQVbR7w1uq/0E
-        ofntEFvZCzsaLBBR0gWSq0ZgmlzeDPmNgaTECBHFXXwGs6EF7XyvJ4NMZIvPtz3FWe7nqFYHh517mR1T
-        PWT0BHmg1gFRVeRFKe+D6Jphsucb5rMLou+SN5lkMMs0OP6oI1N8tjULZ7iHLRJj4MoWhzfCyKR4f+H/
-        Dz9WEhzfGHPWeIMzieI39V9IIPgNSpV5w+UUwBEAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="tips_box.Text" xml:space="preserve">
     <value>- Click on an element inside the preview to change its color.
 - There are multiple elements that share in the same color, so you will notice that other elements may change when another element is changed.</value>
+  </data>
+  <data name="theme_aerolite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wAAADsABataJCQAAAJNJREFUaEPt1rEJgDAURdE/UyaxdhLL7OYK7qOCKRISkCh5+OVeeO3PKSw0t8UY
+        dy9L5Atty6aZ2b7O06OB7hro7HAI4fXye8VAZ4dbiN7l94rxTbceGDHQrQdG7EQ/XYX2EGhVoFWBVgVa
+        VRe69Rd3txH9H/2VQKsCrQq0KtCqQKsCrQq0KtCqQKuq0F6WyN4yOwDPVGKS6WxPKQAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="theme_aero.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wAAADsABataJCQAAAHxJREFUaEPt1jEKgDAQBdGcKaezzCG9jxamCCiKGIdsmIHfLq/cFLZSyhZllXyg
+        07IOP9HU5kPnnD+vvddroq/W3uu1W/SoE01tDnSERFOJphJNJZrqFfrqi3vaH82PHiXRVKKpRFOJphJN
+        JZpKNJVoKtFUJ3SUVXK0UtoBVnlw8muuQfsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="pictureBox9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAABAVJREFUSEvt
+        1n1MG3Ucx/E6Y6KbDzHLYmaUFijlmdKyAZMxwIGwdCwm2MlijJkmJibGLc7RhPnQRZRpQERFqJgMw9yl
+        g9J2RUqBABUZVKDlsQPaYlnbawstMIiJfxg+XvECNGOwyxL9Z+/kmzS9/L6v3KXJlfWg/zSpFLt0ouU3
+        taIVsSaf3E1/HRReen0P/fH+0x1feUV7bBm/5C5Dk3P7T/WLS3Jl1lLBtUOOxwLXV44XfkLN6oro1SpI
+        pbvWDt1PzbmLqus5C1AdXYAiy4+GDB/k6T4QaXN/KQ+brIaMS7Bnn8JCbgFu5xXIkfT2I/TRnTvYsRSW
+        2L5YwdctyOJb/LJEpa+usMTx90npLMQfz6Lggh0vF8/ghMSG/PM2nDhrhTTbijqhC00HdOhJLYE1Q9yO
+        zMxH6ZXbJ+xYvExhoDDENvsQo55HVNMceI1ecOUehF0lwbniQshPTjx32YFnf7yF1AtW1CS4IIvzojrG
+        g5poG35LOjcylyl+nF579yiMYILtl81C+JEFVTFOVEV78G2kG19zSbQmlMKfltfjTzn2JL166+Ja/AQT
+        7JlqOxKLLaiMdKAywo2KcBLloU6MCQvgS8mBLzl7cDn56F56/Z3FNvsJJti+7/5AfNE0ysNn8VUYiTKO
+        C7XhXXAKMzCflIV5YSbmBBkmtyB9H00EF6ueJ5hgeytnEPvBFL5g29ewwGh4JfDyj8CbkE7NYXjj0+CN
+        SxveEqUwggn2dIUN0e/fXAfLOQ6MROXBE/sCPDGH4IlOhScqFe6oFLgjk7+nmY14ijmCCfZUmRVRZzfA
+        Wk4b7LzkwHK4eQfhjjgAkktNeNIqGSZ8jWY2ipB7CCbYE19awHvPvA5qOB/CFZ4EajlcoYJ/h5O46mIL
+        3qKJ4MKuugkm2J7SafDenVgDA4/TyM4KAEFDchLP0OvvjFPvIphguz+bWgdr2VrY2fwgzMkWnKNXbx27
+        zkkwwTaDmueL4dyEkWzBp/TauxdSa1UxwTbAGYyEHNl0d/xSeuX2qTr79d0GEzr7jGjv/R06vQEt3X1o
+        7uyFuqMHqjY9mnR6KFu7odB2o7G1C7J6JX7Iurj+OMlQfhm9budMI+OdNvstWGx2TFpmMDFlwZh5CsPj
+        N2EcncCAaQyGoRHcGDChxzCEX/sHodC04swb76xaudSvk8OvBov1EL1u5yiMmN4G69+E6fsG1qZRo4Wo
+        8DS+yT9lpDBmL2AKIyYttiBsKAgzrt/ZeWkpii5ewjVVC0QnTzeIxeKH6TX33tT0jOxesMDUN6hwpUGN
+        nxvVyxS29neDcWazef+oebJoeNwsMY6OSwaHRyV9xmFJr8Eo6ekbDBptW/fniuvamq4bQ1z6+IP+r1is
+        fwAeWSTXE5usMwAAAABJRU5ErkJggg==
+</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>45</value>

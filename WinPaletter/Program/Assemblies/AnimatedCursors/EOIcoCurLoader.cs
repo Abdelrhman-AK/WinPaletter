@@ -291,7 +291,7 @@ public class EOIcoCurLoader
         }
         if (bm != null && bpp != 32)
         {
-            // Generate an alpha channel from the mask
+            // Generate an alpha_hover channel from the mask
             int maskSize = (int)SizeComp(w, h, 1);
             byte[] maskBytes = new byte[maskSize];
             m_reader.Read(maskBytes, 0, maskBytes.Length);

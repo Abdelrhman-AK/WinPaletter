@@ -55,7 +55,7 @@ namespace WinPaletter
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 ApplyToTM(TMx);
-                TMx.Windows10.Apply("11");
+                TMx.Windows11.Apply("11");
             }
 
             Cursor = Cursors.Default;
@@ -112,11 +112,29 @@ namespace WinPaletter
 
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
+
+            ToolStripMenuItem item = new(string.Format(Program.Lang.CopycatFrom, Program.Lang.OS_Win10));
+            item.Click += Item_Click;
+            easy_generator.Menu.Items.Add(item);
+        }
+
+        private void Item_Click(object sender, EventArgs e)
+        {
+            // Copycat from Windows 10 colors
+            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            {
+                TMx.Windows11 = (Theme.Structures.Windows10x)Program.TM.Windows10.Clone();
+                LoadFromTM((Theme.Manager)TMx.Clone());
+
+                Program.ToolTip.Show(easy_generator, Program.Lang.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+            }
         }
 
         public void LoadFromTM(Theme.Manager TM)
         {
             AspectEnabled = TM.Windows11.Enabled;
+            theme_aero.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Aero;
+            theme_aerolite.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.AeroLite;
             WinMode_Toggle.Checked = !TM.Windows11.WinMode_Light;
             AppMode_Toggle.Checked = !TM.Windows11.AppMode_Light;
             Transparency_Toggle.Checked = TM.Windows11.Transparency;
@@ -157,7 +175,7 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             TM.Windows11.Enabled = AspectEnabled;
-
+            TM.Windows11.Theme = theme_aero.Checked ? Theme.Structures.Windows10x.Themes.Aero : Theme.Structures.Windows10x.Themes.AeroLite;
             TM.Windows11.WinMode_Light = !WinMode_Toggle.Checked;
             TM.Windows11.AppMode_Light = !AppMode_Toggle.Checked;
             TM.Windows11.Transparency = Transparency_Toggle.Checked;
@@ -317,6 +335,8 @@ namespace WinPaletter
 
             easy_appmode_dark.Checked = _checked;
             easy_appmode_light.Checked = !_checked;
+
+            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
         }
 
         private void Transparency_Toggle_CheckedChanged(object sender, EventArgs e)
@@ -764,19 +784,6 @@ namespace WinPaletter
             TInactive.BackColor = easy_inactivetitle.BackColor;
         }
 
-
-        private void copycat_Click(object sender, EventArgs e)
-        {
-            // Copycat from Windows 10 colors
-            using (Theme.Manager TMx = new(Manager.Source.Empty))
-            {
-                TMx.Windows11 = (Theme.Structures.Windows10x)Program.TM.Windows10.Clone();
-                LoadFromTM((Theme.Manager)TMx.Clone());
-
-                Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Done, string.Empty, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
-            }
-        }
-
         private void Button8_Click(object sender, EventArgs e)
         {
             Program.ToolTip.ToolTipText = Program.Lang.TitlebarColorNotice;
@@ -1085,6 +1092,18 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK) windowsDesktop1.ToBitmap().Save(dlg.FileName);
             }
+        }
+
+        private void theme_aero_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+        }
+
+        private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.AeroLite;
+
+            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
         }
     }
 }

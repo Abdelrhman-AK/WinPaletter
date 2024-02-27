@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -13,6 +15,8 @@ namespace WinPaletter.Theme.Structures
     {
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
         public bool Enabled;
+
+        public Themes Theme;
 
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
         public Color Color_Index0;
@@ -90,6 +94,21 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
+        /// Theme used for Windows 10/11
+        /// <code>
+        /// Aero
+        /// AeroLite
+        /// </code>
+        /// </summary>
+        public enum Themes
+        {
+            /// <summary>Default Windows theme with transparency</summary>
+            Aero,
+            /// <summary>Accessibility theme for Windows 8/8.1/10/11</summary>
+            AeroLite,
+        }
+
+        /// <summary>
         /// Loads Windows10x data from registry
         /// </summary>
         /// <param name="default">Default Windows10x data structure</param>
@@ -99,6 +118,9 @@ namespace WinPaletter.Theme.Structures
 
             if (OS.W12 || OS.W11 || OS.W10)
             {
+                string stringThemeName = NativeMethods.UxTheme.GetCurrentVS().Item1;
+                Theme = stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" || !System.IO.File.Exists(stringThemeName) ? Themes.AeroLite : Themes.Aero;
+
                 List<Color> Colors = new();
                 Colors.Clear();
 
@@ -183,6 +205,7 @@ namespace WinPaletter.Theme.Structures
 
             else
             {
+                Theme = @default.Theme;
                 Color_Index0 = @default.Color_Index0;
                 Color_Index1 = @default.Color_Index1;
                 Color_Index2 = @default.Color_Index2;
@@ -200,7 +223,6 @@ namespace WinPaletter.Theme.Structures
                 ApplyAccentOnTitlebars = @default.ApplyAccentOnTitlebars;
                 IncreaseTBTransparency = @default.IncreaseTBTransparency;
             }
-
         }
 
         /// <summary>
@@ -213,6 +235,44 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
+                switch (Theme)
+                {
+                    case Themes.Aero:
+                        {
+                            UxTheme.EnableTheming(1);
+                            //User32.SetHighContrast(false);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            break;
+                        }
+
+                    case Themes.AeroLite:
+                        {
+                            UxTheme.EnableTheming(1);
+                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
+                            try
+                            {
+                                Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
+                                if (TreeView is not null)
+                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
+                            }
+                            catch
+                            {
+                                // Do nothing
+                                Registry.CurrentUser.Close();
+                            }
+                            finally
+                            {
+                                Registry.CurrentUser.Close();
+                            }
+
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                            //User32.SetHighContrast(true);
+
+                            break;
+                        }
+                }
+
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
                 byte[] Colors = new[] { Color_Index0.R, Color_Index0.G, Color_Index0.B, Color_Index0.A,
@@ -250,9 +310,6 @@ namespace WinPaletter.Theme.Structures
                             break;
                         }
                 }
-
-                //EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Background.ToArgb());
-                //EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Background.ToArgb());
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
 

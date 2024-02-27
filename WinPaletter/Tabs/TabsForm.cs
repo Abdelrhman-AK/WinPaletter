@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -19,7 +20,7 @@ namespace WinPaletter.Tabs
         //            DWMAPI.RECT rect = (DWMAPI.RECT)m.GetLParam(typeof(DWMAPI.RECT));
 
         //            // Adjust the rectangle to make room for the custom control in the title bar
-        //            rect.top -= tabsContainer1.Height - 5;
+        //            rect.top -= tabsContainer1.Height - 6;
 
         //            // Update the non-client area rectangle
         //            Marshal.StructureToPtr(rect, m.LParam, true);
@@ -34,6 +35,7 @@ namespace WinPaletter.Tabs
 
         private void TabsForm_Load(object sender, EventArgs e)
         {
+            //ControlBox = false;
             DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
             this.LoadLanguage();
             ApplyStyle(this);

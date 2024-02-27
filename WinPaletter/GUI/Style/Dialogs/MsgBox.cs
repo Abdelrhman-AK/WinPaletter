@@ -85,7 +85,7 @@ namespace WinPaletter.UI.Style
         /// <param name="ExpandedDetails">Text appear when the dialog is extended (It can accept URLs)</param>
         /// <param name="DialogTitle">Text of Dialog's Titlebar</param>
         /// <param name="Footer">Footer is the lowermost text (under the buttons) (It can accept URLs)</param>
-        /// <param name="FooterIcon">Icon Type of the fotter</param>
+        /// <param name="FooterIcon">Icon ButtonOverlay of the fotter</param>
         /// <param name="FooterCustomIcon">Icon of the fotter when its type is set to TaskDialogIcon.Custom</param>
         /// <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means administrator\elevation is required</param>
         /// <returns></returns>

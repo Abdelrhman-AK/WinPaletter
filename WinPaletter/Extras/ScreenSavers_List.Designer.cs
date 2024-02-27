@@ -70,8 +70,8 @@
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageAsVector = false;
-            this.Button2.ImageVector = null;
+            this.Button2.ImageGlyphEnabled = false;
+            this.Button2.ImageGlyph = null;
             this.Button2.Location = new System.Drawing.Point(401, 335);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -90,8 +90,8 @@
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAsVector = false;
-            this.button1.ImageVector = null;
+            this.button1.ImageGlyphEnabled = false;
+            this.button1.ImageGlyph = null;
             this.button1.Location = new System.Drawing.Point(487, 335);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 34);

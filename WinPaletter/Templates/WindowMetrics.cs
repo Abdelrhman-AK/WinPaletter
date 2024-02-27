@@ -451,19 +451,33 @@ namespace WinPaletter.Templates
         }
         private VisualStylesRes _resVS = null;
 
-        private Theme.Structures.Windows7.Themes WindowsTheme
+        private Theme.Structures.Windows10x.Themes Windows_10x_Theme
         {
-            get => _windowsTheme;
+            get => _windows_10x_Theme;
             set
             {
-                if (value != _windowsTheme || ForceRefresh)
+                if (value != _windows_10x_Theme || ForceRefresh)
                 {
-                    _windowsTheme = value;
+                    _windows_10x_Theme = value;
                     SetTheme();
                 }
             }
         }
-        private Theme.Structures.Windows7.Themes _windowsTheme = Theme.Structures.Windows7.Themes.Aero;
+        private Theme.Structures.Windows10x.Themes _windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+
+        private Theme.Structures.Windows7.Themes Windows_7_8_Theme
+        {
+            get => _windows_7_8_Theme;
+            set
+            {
+                if (value != _windows_7_8_Theme || ForceRefresh)
+                {
+                    _windows_7_8_Theme = value;
+                    SetTheme();
+                }
+            }
+        }
+        private Theme.Structures.Windows7.Themes _windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
 
         private Theme.Structures.WindowsXP.Themes WindowsXPTheme
         {
@@ -1238,8 +1252,6 @@ namespace WinPaletter.Templates
             switch (_windowStyle)
             {
                 case WindowStyle.W12:
-                    Preview = Preview_Enum.W11;
-
                     if (!DarkMode_App)
                     {
                         theme = CtrlTheme.Default;
@@ -1256,8 +1268,6 @@ namespace WinPaletter.Templates
                     break;
 
                 case WindowStyle.W11:
-                    Preview = Preview_Enum.W11;
-
                     if (!DarkMode_App)
                     {
                         theme = CtrlTheme.Default;
@@ -1274,8 +1284,6 @@ namespace WinPaletter.Templates
                     break;
 
                 case WindowStyle.W10:
-                    Preview = Preview_Enum.W10;
-
                     if (!DarkMode_App)
                     {
                         theme = CtrlTheme.Default;
@@ -1417,7 +1425,7 @@ namespace WinPaletter.Templates
             {
                 WinVista = _windowStyle == WindowStyle.WVista;
 
-                switch (_windowsTheme)
+                switch (_windows_7_8_Theme)
                 {
                     case Theme.Structures.Windows7.Themes.AeroOpaque:
                         {
@@ -1455,6 +1463,32 @@ namespace WinPaletter.Templates
 
                 Refresh();
             }
+
+            else if (_windowStyle == WindowStyle.W10 || _windowStyle == WindowStyle.W11 || _windowStyle == WindowStyle.W12)
+            {
+                switch (_windows_10x_Theme)
+                {
+                    case Theme.Structures.Windows10x.Themes.Aero:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
+                            break;
+                        }
+
+                    case Theme.Structures.Windows10x.Themes.AeroLite:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10Lite : Preview_Enum.W11Lite;
+                            break;
+                        }
+
+                    default:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
+                            break;
+                        }
+                }
+
+                Refresh();
+            }
         }
 
         public void LoadFromTM(Theme.Manager TM)
@@ -1470,6 +1504,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Active = HookedTM.Windows11.Titlebar_Active;
                 TitlebarColor_Inactive = HookedTM.Windows11.Titlebar_Inactive;
                 TitlebarColor_Enabled = HookedTM.Windows11.ApplyAccentOnTitlebars;
+                Windows_10x_Theme = HookedTM.Windows11.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W10)
@@ -1479,6 +1514,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Active = HookedTM.Windows10.Titlebar_Active;
                 TitlebarColor_Inactive = HookedTM.Windows10.Titlebar_Inactive;
                 TitlebarColor_Enabled = HookedTM.Windows10.ApplyAccentOnTitlebars;
+                Windows_10x_Theme = HookedTM.Windows10.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W81)
@@ -1491,7 +1527,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Inactive = HookedTM.Windows81.ColorizationColor;
                 Win7ColorBal = HookedTM.Windows81.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                WindowsTheme = HookedTM.Windows81.Theme;
+                Windows_7_8_Theme = HookedTM.Windows81.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W7)
@@ -1505,7 +1541,7 @@ namespace WinPaletter.Templates
                 Win7GlowBal = HookedTM.Windows7.ColorizationAfterglowBalance;
                 Win7Noise = HookedTM.Windows7.ColorizationGlassReflectionIntensity;
                 Win7Alpha = HookedTM.Windows7.ColorizationBlurBalance;
-                WindowsTheme = HookedTM.Windows7.Theme;
+                Windows_7_8_Theme = HookedTM.Windows7.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WVista)
@@ -1519,7 +1555,7 @@ namespace WinPaletter.Templates
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
                 Win7Alpha = 100 - (HookedTM.WindowsVista.Alpha / 255) * 100;
-                WindowsTheme = HookedTM.WindowsVista.Theme;
+                Windows_7_8_Theme = HookedTM.WindowsVista.Theme;
             }
 
             else if (WindowStyle == WindowStyle.WXP)

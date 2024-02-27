@@ -59,5 +59,6 @@
         public string ClickToEdit { get; set; } = "Click to edit current value";
         public string PressEnterToUseValue { get; set; } = "Press 'Enter' to use this value.";
         public string PressEscToDismissEditing { get; set; } = "Press 'Esc' to dismiss editing value.";
+        public string CopycatFrom { get; set; } = "Copycat from loaded preferences of {0}";
     }
 }

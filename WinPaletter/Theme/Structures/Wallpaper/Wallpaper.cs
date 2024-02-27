@@ -38,7 +38,7 @@ namespace WinPaletter.Theme.Structures
         public WallpaperStyles WallpaperStyle;
 
         /// <summary>
-        /// Type of wallpaper
+        /// ButtonOverlay of wallpaper
         /// <code>
         /// Picture
         /// SolidColor

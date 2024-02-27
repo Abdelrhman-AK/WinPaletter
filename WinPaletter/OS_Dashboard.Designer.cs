@@ -85,8 +85,8 @@ namespace WinPaletter
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
-            this.button7.ImageAsVector = true;
-            this.button7.ImageVector = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
+            this.button7.ImageGlyphEnabled = true;
+            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
             this.button7.Location = new System.Drawing.Point(360, 10);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
@@ -160,7 +160,9 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.CancelButton = this.button7;
             this.ClientSize = new System.Drawing.Size(388, 115);
+            this.CloseOnLostFocus = false;
             this.ControlBox = false;
             this.Controls.Add(this.radioImage6);
             this.Controls.Add(this.radioImage5);

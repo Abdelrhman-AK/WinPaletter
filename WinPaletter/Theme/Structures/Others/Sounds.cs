@@ -291,6 +291,20 @@ namespace WinPaletter.Theme.Structures
         public string Snd_ChargerDisconnected;
 
         /// <summary>
+        /// Wi-Fi connected WAV sound file path
+        /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
+        /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// </summary>
+        public string Snd_WiFiConnected;
+
+        /// <summary>
+        /// Wi-Fi disconnected WAV sound file path
+        /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
+        /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
+        /// </summary>
+        public string Snd_WiFiDisconnected;
+
+        /// <summary>
         /// Loads Sounds data from registry
         /// </summary>
         /// <param name="default">Default Sounds data structure</param>
@@ -301,6 +315,8 @@ namespace WinPaletter.Theme.Structures
             Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", @default.Snd_ChargerConnected).ToString();
             Snd_ChargerDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", @default.Snd_ChargerDisconnected).ToString();
             Snd_Win_WindowsLock = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", @default.Snd_Win_WindowsLock).ToString();
+            Snd_WiFiConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiConnected", @default.Snd_WiFiConnected).ToString();
+            Snd_WiFiDisconnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiDisconnected", @default.Snd_WiFiDisconnected).ToString();
 
             string Scope_Win = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current";
             Snd_Win_Default = GetReg(string.Format(Scope_Win, ".Default"), string.Empty, @default.Snd_Win_Default).ToString();
@@ -404,6 +420,8 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", Snd_ChargerDisconnected, RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLock", Snd_Win_WindowsLock, RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiConnected", Snd_WiFiConnected, RegistryValueKind.String);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiDisconnected", Snd_WiFiDisconnected, RegistryValueKind.String);
 
             if (System.IO.File.Exists(PathsExt.SysEventsSounds_Local_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Local_INI); }
 
@@ -603,6 +621,8 @@ namespace WinPaletter.Theme.Structures
                     ini.Write("Windows", "Lock", Snd_Win_WindowsLock);
                     ini.Write("Windows", "Unlock", Snd_Win_WindowsUnlock);
                     ini.Write("Windows", "Exit", Snd_Win_SystemExit);
+                    ini.Write("Network", "Wi-Fi_Connected", Snd_WiFiConnected);
+                    ini.Write("Network", "Wi-Fi_Disconnected", Snd_WiFiDisconnected);
                 }
             }
         }

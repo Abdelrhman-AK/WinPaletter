@@ -223,7 +223,7 @@ public class EOIcoCurWriter
     /// <param name="img">Image to write to the output stream. This image's data is written 
     /// in its current format if both dimensions are less than 256. Otherwise it's written as an 
     /// embedded PNG.</param>
-    /// <param name="AlphaImgMask">A 32-bit image whose alpha channel is to be used to 
+    /// <param name="AlphaImgMask">A 32-bit image whose alpha_hover channel is to be used to 
     /// create the icon/cursor transparency mask. If this parameter is null, then "img" 
     /// will be used to create the mask data, but it must be 32-bpp in this case.</param>
     /// <param name="hotSpot">Cursor's hotspot. This will only be used if this instance of 
@@ -333,8 +333,8 @@ public class EOIcoCurWriter
             img.RotateFlip(RotateFlipType.RotateNoneFlipY);
 
             // 3) Write masking data
-            // The mask is built based on the alpha channel in the "AlphaImgMask" parameter.
-            // If "AlphaImgMask" is null, alpha information from "img" will be used.
+            // The mask is built based on the alpha_hover channel in the "AlphaImgMask" parameter.
+            // If "AlphaImgMask" is null, alpha_hover information from "img" will be used.
             Bitmap refbm = (AlphaImgMask == null) ? img : AlphaImgMask;
             byte[] maskdata = new byte[transsize];
             MakeMask(refbm, ref maskdata, MaskRowSize);

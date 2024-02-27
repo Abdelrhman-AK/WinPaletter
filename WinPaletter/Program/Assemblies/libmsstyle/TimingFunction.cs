@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -25,7 +30,7 @@ namespace libmsstyle
             }
             else
             {
-                throw new Exception($"Unknown timing function type: {Type}");
+                throw new Exception("Unknown timing function type: " + Type);
             }
         }
 

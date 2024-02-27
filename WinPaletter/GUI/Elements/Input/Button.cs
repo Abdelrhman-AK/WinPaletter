@@ -56,7 +56,7 @@ namespace WinPaletter.UI.WP
         }
 
         private bool _ripple = true;
-        private bool ForceUpdateImageVector = false;
+        private bool ForceUpdateImageGlyph = false;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace WinPaletter.UI.WP
 
                         if (Flag == Flags.None) { Flag = Flags.TintedOnHover; }
 
-                        if (!_imageAsVector) _color = Colorize();
+                        if (!_imageGlyphEnabled) _color = Colorize();
                     }
 
                     Refresh();
@@ -89,11 +89,11 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private Image _imageVectorUnmodified;
-        private Image _imageVector;
-        private Image _imageVectorOver;
-        private Image _imageVectorDown;
-        public Image ImageVector
+        private Image _imageGlyphUnmodified;
+        private Image _imageGlyph;
+        private Image _imageGlyphOver;
+        private Image _imageGlyphDown;
+        public Image ImageGlyph
         {
             get
             {
@@ -102,36 +102,36 @@ namespace WinPaletter.UI.WP
                     switch (State)
                     {
                         case MouseState.None:
-                            return Program.Style.DarkMode ? _imageVector : ((Bitmap)_imageVector)?.Invert();
+                            return Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert();
 
                         case MouseState.Over:
-                            return _imageVectorOver;
+                            return _imageGlyphOver;
 
                         case MouseState.Down:
-                            return _imageVectorDown;
+                            return _imageGlyphDown;
 
                         default:
-                            return Program.Style.DarkMode ? _imageVector : ((Bitmap)_imageVector)?.Invert();
+                            return Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert();
                     }
                 }
                 else
                 {
-                    return _imageVector;
+                    return _imageGlyph;
                 }
             }
             set
             {
-                if (_imageVectorUnmodified != value || ForceUpdateImageVector)
+                if (_imageGlyphUnmodified != value || ForceUpdateImageGlyph)
                 {
-                    _imageVectorUnmodified = value;
+                    _imageGlyphUnmodified = value;
 
-                    if (_imageAsVector) _color = Colorize();
+                    if (_imageGlyphEnabled) _color = Colorize();
 
                     using (Config.Colors_Collection colors = new(_customColor, _customColor, Program.Style.DarkMode))
                     {
-                        _imageVector = value;
-                        _imageVectorOver = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
-                        _imageVectorDown = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
+                        _imageGlyph = value;
+                        _imageGlyphOver = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
+                        _imageGlyphDown = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
                     }
 
                     Refresh();
@@ -240,7 +240,7 @@ namespace WinPaletter.UI.WP
                             }
                             else
                             {
-                                if (!_imageAsVector && _image != null)
+                                if (!_imageGlyphEnabled && _image != null)
                                 {
                                     resultColor = imageColors.Back_Checked;
                                 }
@@ -260,7 +260,7 @@ namespace WinPaletter.UI.WP
 
                             else
                             {
-                                if (!_imageAsVector && _image != null)
+                                if (!_imageGlyphEnabled && _image != null)
                                 {
                                     resultColor = imageColors.Back_Checked;
                                 }
@@ -280,7 +280,7 @@ namespace WinPaletter.UI.WP
 
                             else
                             {
-                                if (!_imageAsVector && _image != null)
+                                if (!_imageGlyphEnabled && _image != null)
                                 {
                                     resultColor = imageColors.Back_Checked_Hover;
                                 }
@@ -385,15 +385,15 @@ namespace WinPaletter.UI.WP
         private Config.Scheme scheme3 => Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
 
-        private bool _imageAsVector = false;
-        public bool ImageAsVector
+        private bool _imageGlyphEnabled = false;
+        public bool ImageGlyphEnabled
         {
-            get => _imageAsVector;
+            get => _imageGlyphEnabled;
             set
             {
-                if (_imageAsVector != value)
+                if (_imageGlyphEnabled != value)
                 {
-                    _imageAsVector = value;
+                    _imageGlyphEnabled = value;
                     _color = Colorize();
                     Refresh();
                 }
@@ -644,9 +644,9 @@ namespace WinPaletter.UI.WP
             _color = Colorize();
             _lineColor = LineColor(_color);
 
-            ForceUpdateImageVector = true;
-            ImageVector = _imageVectorUnmodified;
-            ForceUpdateImageVector = false;
+            ForceUpdateImageGlyph = true;
+            ImageGlyph = _imageGlyphUnmodified;
+            ForceUpdateImageGlyph = false;
 
             Animate();
         }
@@ -704,9 +704,9 @@ namespace WinPaletter.UI.WP
             //Noise?.Dispose();
             //Menu?.Dispose();
             //_image?.Dispose();   
-            //_imageVector?.Dispose();
-            //_imageVectorOver?.Dispose();
-            //_imageVectorDown?.Dispose();
+            //_imageGlyph?.Dispose();
+            //_imageGlyphOver?.Dispose();
+            //_imageGlyphDown?.Dispose();
         }
 
         int parentLevel = 0;
@@ -803,7 +803,7 @@ namespace WinPaletter.UI.WP
 
             #region Button render
 
-            if (!_imageAsVector || DesignMode)
+            if (!_imageGlyphEnabled || DesignMode)
             {
                 if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
                 {
@@ -890,7 +890,7 @@ namespace WinPaletter.UI.WP
             using (StringFormat sf = TextAlign.ToStringFormat((int)base.RightToLeft == 1))
             using (SolidBrush fc = new(ForeColor))
             {
-                Image img = !_imageAsVector ? Image : ImageVector;
+                Image img = !_imageGlyphEnabled ? Image : ImageGlyph;
 
                 if (img == null)
                 {

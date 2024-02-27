@@ -26,6 +26,10 @@ namespace WinPaletter.NativeMethods
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ANIMATIONINFO lpvParam, SPIF fuWinIni);
 
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni);
+
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref bool lpvParam, SPIF fuWinIni);
@@ -152,6 +156,69 @@ namespace WinPaletter.NativeMethods
         /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
         /// </remarks>
         public static bool SystemParametersInfo(TreeView TreeView, SPI uAction, int uParam, ref NONCLIENTMETRICS lpvParam, SPIF fuWinIni)
+        {
+            return SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni, TreeView);
+        }
+
+        /// <summary>
+        /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+        /// </summary>
+        /// <param name="uAction">The system parameter to query or set. This can be one of the SPI_* constants defined in the Windows API.</param>
+        /// <param name="uParam">Additional information about the system parameter. The meaning of this parameter depends on the uAction being performed.</param>
+        /// <param name="lpvParam">A reference to a NONCLIENTMETRICS structure, which contains information about the non-client area of a window. This parameter is used based on the uAction being performed.</param>
+        /// <param name="fuWinIni">Flags specifying whether the system should write the information to the user profile. This can be a combination of SPIF_UPDATEINIFILE and SPIF_SENDCHANGE.</param>
+        /// <param name="TreeView">An optional TreeView control for logging purposes. If provided, logs the function call details.</param>
+        /// <returns>
+        /// <c>true</c> if the system parameter is successfully retrieved or set; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
+        /// </remarks>
+        public static bool SystemParametersInfo(SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni, TreeView TreeView = null)
+        {
+            bool result = false;
+
+            if (User.SID == User.AdminSID_GrantedUAC)
+            {
+                result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
+            }
+
+            else
+            {
+                bool advapi_switched = false;
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+
+                    result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
+
+                    if (advapi_switched) { advapi.RevertToSelf(); }
+
+                    wic.Undo();
+                }
+            }
+
+            Verboser_SPI(TreeView, result, uAction, uParam, lpvParam, fuWinIni);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+        /// </summary>
+        /// <param name="uAction">The system parameter to query or set. This can be one of the SPI_* constants defined in the Windows API.</param>
+        /// <param name="uParam">Additional information about the system parameter. The meaning of this parameter depends on the uAction being performed.</param>
+        /// <param name="lpvParam">A reference to a HIGHCONTRAST structure. This parameter is used based on the uAction being performed.</param>
+        /// <param name="fuWinIni">Flags specifying whether the system should write the information to the user profile. This can be a combination of SPIF_UPDATEINIFILE and SPIF_SENDCHANGE.</param>
+        /// <param name="TreeView">An optional TreeView control for logging purposes. If provided, logs the function call details.</param>
+        /// <returns>
+        /// <c>true</c> if the system parameter is successfully retrieved or set; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
+        /// </remarks>
+        public static bool SystemParametersInfo(TreeView TreeView, SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni)
         {
             return SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni, TreeView);
         }

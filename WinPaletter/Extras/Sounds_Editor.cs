@@ -456,6 +456,8 @@ namespace WinPaletter
             TextBox84.Text = Sounds.Snd_ChargerConnected;
             textBox85.Text = Sounds.Snd_ChargerDisconnected;
             textBox86.Text = Sounds.Snd_Win_WindowsLock;
+            textBox87.Text = Sounds.Snd_WiFiConnected;
+            textBox88.Text = Sounds.Snd_WiFiDisconnected;
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -549,6 +551,8 @@ namespace WinPaletter
             Sounds.Snd_ChargerConnected = TextBox84.Text;
             Sounds.Snd_ChargerDisconnected = textBox85.Text;
             Sounds.Snd_Win_WindowsLock = textBox86.Text;
+            Sounds.Snd_WiFiConnected = textBox87.Text;
+            Sounds.Snd_WiFiDisconnected = textBox88.Text;
         }
 
         private void Button22_Click(object sender, EventArgs e)
@@ -1085,6 +1089,16 @@ namespace WinPaletter
         private void button346_Click(object sender, EventArgs e)
         {
             using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
+        }
+
+        private void button348_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox87.Text = TMx.Sounds.Snd_WiFiConnected; }
+        }
+
+        private void button352_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox88.Text = TMx.Sounds.Snd_WiFiDisconnected; }
         }
 
         #endregion

@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -41,7 +46,7 @@ namespace libmsstyle
                 }
                 else
                 {
-                    throw new NotImplementedException($"Unknown transform type: {Type}");
+                    throw new NotImplementedException("Unknown transform type: " + Type);
                 }
 
                 return header;
@@ -79,7 +84,7 @@ namespace libmsstyle
             }
             else
             {
-                throw new NotImplementedException($"Unknown transform type: {Type}");
+                throw new NotImplementedException("Unknown transform type: " + Type);
             }
         }
 
@@ -105,7 +110,7 @@ namespace libmsstyle
             }
             else
             {
-                throw new NotImplementedException($"Unknown transform type: {Type}");
+                throw new NotImplementedException("Unknown transform type: " + Type);
             }
         }
 

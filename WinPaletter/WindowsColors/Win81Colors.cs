@@ -659,7 +659,7 @@ namespace WinPaletter
             if (IsShown && theme_aero.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.Aero;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
             }
         }
 
@@ -668,7 +668,7 @@ namespace WinPaletter
             if (IsShown && theme_aerolite.Checked)
             {
                 RefreshDWM();
-                windowsDesktop1.WindowsTheme = Theme.Structures.Windows7.Themes.AeroLite;
+                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroLite;
             }
         }
 

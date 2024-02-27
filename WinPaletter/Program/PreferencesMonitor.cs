@@ -153,11 +153,28 @@ namespace WinPaletter
 
         private static Bitmap FetchSlideShowWallpaper(Theme.Manager TM)
         {
-            string[] imageFiles = TM.Wallpaper.SlideShow_Folder_or_ImagesList
-                ? System.IO.Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", System.IO.SearchOption.TopDirectoryOnly)
-                    .Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif"))
-                    .ToArray()
-                : TM.Wallpaper.Wallpaper_Slideshow_Images;
+            string[] imageFiles;
+
+            if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
+            {
+                string slideshowPath = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
+
+                if (System.IO.Directory.Exists(slideshowPath))
+                {
+                    imageFiles = System.IO.Directory.EnumerateFiles(slideshowPath, "*.*", System.IO.SearchOption.TopDirectoryOnly)
+                        .Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif"))
+                        .ToArray();
+                }
+                else
+                {
+                    imageFiles = new string[0];
+                }
+            }
+            else
+            {
+                // Use TM.Wallpaper.Wallpaper_Slideshow_Images directly if not using a folder for slideshow
+                imageFiles = TM.Wallpaper.Wallpaper_Slideshow_Images;
+            }
 
             if (imageFiles.Length > 0 && System.IO.File.Exists(imageFiles[0]))
             {

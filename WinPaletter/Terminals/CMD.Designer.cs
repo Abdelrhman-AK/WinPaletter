@@ -623,8 +623,8 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
-            this.Button5.ImageAsVector = true;
-            this.Button5.ImageVector = global::WinPaletter.Properties.Resources.Vector_Menu;
+            this.Button5.ImageGlyphEnabled = true;
+            this.Button5.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button5.Location = new System.Drawing.Point(289, 30);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(21, 24);
@@ -747,8 +747,8 @@ namespace WinPaletter
             this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button25.ForeColor = System.Drawing.Color.White;
             this.Button25.Image = null;
-            this.Button25.ImageAsVector = true;
-            this.Button25.ImageVector = global::WinPaletter.Properties.Resources.Vector_Help;
+            this.Button25.ImageGlyphEnabled = true;
+            this.Button25.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Help;
             this.Button25.Location = new System.Drawing.Point(289, 90);
             this.Button25.Name = "Button25";
             this.Button25.Size = new System.Drawing.Size(21, 26);
@@ -1253,8 +1253,8 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
-            this.Button4.ImageAsVector = false;
-            this.Button4.ImageVector = null;
+            this.Button4.ImageGlyphEnabled = false;
+            this.Button4.ImageGlyph = null;
             this.Button4.Location = new System.Drawing.Point(237, 280);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(230, 30);

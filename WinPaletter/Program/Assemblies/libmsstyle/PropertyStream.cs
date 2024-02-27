@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -19,13 +20,13 @@ namespace libmsstyle
         {
             int cursor = start;
             PropertyHeader header = new PropertyHeader(data, cursor);
-            while (!header.IsValid())
+            while(!header.IsValid())
             {
                 cursor++;
                 header = new PropertyHeader(data, cursor);
             }
 
-            if (cursor - start > 4)
+            if(cursor - start > 4)
             {
                 start = cursor;
                 throw new PropertyStreamUnknownBytesException();
@@ -43,14 +44,14 @@ namespace libmsstyle
                 case IDENTIFIER.INTLIST:
                     {
                         int numInts = 0;
-                        List<int> list = new List<Int32>();
+                        var list = new List<Int32>();
                         if (header.sizeInBytes != 0)
                         {
                             numInts = BitConverter.ToInt32(data, cursor);
                             cursor += sizeof(Int32);
                         }
 
-                        for (int i = 0; i < numInts; ++i)
+                        for(int i = 0; i < numInts; ++i)
                         {
                             list.Add(BitConverter.ToInt32(data, cursor));
                             cursor += sizeof(Int32);
@@ -62,7 +63,7 @@ namespace libmsstyle
                 case IDENTIFIER.COLORLIST:
                     {
                         int numColors = header.sizeInBytes / 4;
-                        List<Color> list = new List<Color>(numColors);
+                        var list = new List<Color>(numColors);
 
                         for (int i = 0; i < numColors; ++i)
                         {
@@ -77,7 +78,7 @@ namespace libmsstyle
                 case IDENTIFIER.STRING:
                     {
                         int numChars = header.sizeInBytes / 2;
-                        string text = string.Empty;
+                        string text = "";
 
                         for (int i = 0; i < numChars - 1; ++i) // dont need the NULL term.
                         {
@@ -109,7 +110,7 @@ namespace libmsstyle
                             prop.SetValue(BitConverter.ToInt32(data, cursor));
                             cursor += 8;
                         }
-                        else prop.SetValue(0);
+                        else prop.SetValue((Int32)0);
                         break;
                     }
                 // 40 byte property, (32 byte header + 4 byte bool + 4 byte padding)
@@ -132,7 +133,7 @@ namespace libmsstyle
                             int r = (colorref >> 0) & 0xFF;
                             int g = (colorref >> 8) & 0xFF;
                             int b = (colorref >> 16) & 0xFF;
-                            prop.SetValue(Color.FromArgb(r, g, b));
+                            prop.SetValue(Color.FromArgb(r,g,b));
                             cursor += 8;
                         }
                         else prop.SetValue(Color.FromArgb(0, 0, 0));
@@ -227,12 +228,12 @@ namespace libmsstyle
             {
                 case IDENTIFIER.INTLIST:
                     {
-                        if (prop.Header.sizeInBytes != 0)
+                        if(prop.Header.sizeInBytes != 0)
                         {
-                            List<int> list = prop.GetValue() as List<Int32>;
+                            var list = prop.GetValue() as List<Int32>;
                             writer.Write(list.Count);
-
-                            foreach (int num in list)
+                            
+                            foreach(var num in list)
                             {
                                 writer.Write(num);
                             }
@@ -245,9 +246,9 @@ namespace libmsstyle
                     {
                         if (prop.Header.sizeInBytes != 0)
                         {
-                            List<Color> list = prop.GetValue() as List<Color>;
+                            var list = prop.GetValue() as List<Color>;
 
-                            foreach (Color col in list)
+                            foreach (var col in list)
                             {
                                 writer.Write(col.B);
                                 writer.Write(col.G);
@@ -261,7 +262,7 @@ namespace libmsstyle
                     }
                 case IDENTIFIER.STRING:
                     {
-                        string str = prop.GetValue() as string;
+                        var str = prop.GetValue() as string;
                         writer.Write(Encoding.Unicode.GetBytes(str));
                         writer.Write((ushort)0); // null term.
 

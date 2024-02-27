@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -17,13 +20,13 @@ namespace libmsstyle
 
         public static Signature ReadSignature(FileStream fs)
         {
-            using (BinaryReader br = new BinaryReader(fs, Encoding.UTF8, true))
+            using(var br = new BinaryReader(fs, Encoding.UTF8, true))
             {
                 Signature sig = new Signature();
 
                 long size = fs.Length;
                 fs.Seek(size - HEADER_SIZE, SeekOrigin.Begin);
-
+                
                 sig.magic = (UInt32)br.ReadInt32();
                 sig.sigSize = (UInt32)br.ReadInt32();
                 sig.fileSize = (UInt32)br.ReadInt32();
@@ -45,8 +48,8 @@ namespace libmsstyle
 
         public static bool AppendSignature(string file, byte[] signature)
         {
-            using (FileStream fs = File.Open(file, FileMode.Open))
-            using (BinaryWriter bw = new BinaryWriter(fs))
+            using(var fs = File.Open(file, FileMode.Open))
+            using (var bw = new BinaryWriter(fs))
             {
                 Signature sig = ReadSignature(fs);
                 int offset = sig == null ? 0 : -(int)sig.sigSize;
@@ -54,7 +57,7 @@ namespace libmsstyle
                 long sizeNoSig = fs.Seek(offset, SeekOrigin.End);
 
                 bw.Write(signature);
-                bw.Write(SIGNATURE_MAGIC);
+                bw.Write((UInt32)(SIGNATURE_MAGIC));
                 bw.Write((UInt32)(signature.Length));
                 bw.Write((UInt32)(sizeNoSig + signature.Length + HEADER_SIZE));
                 bw.Write((UInt32)(0));

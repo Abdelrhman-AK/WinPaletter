@@ -1,4 +1,5 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.ComponentModel;
@@ -61,15 +62,13 @@ namespace WinPaletter
 
                     try
                     {
-                        // Newer versions of msstyles
+                        //Newer versions of msstyles
                         using (libmsstyle.VisualStyle visualStyle = new(theme))
                         {
-                            Theme.Manager TMx = new(Manager.Source.Empty)
+                            using (Theme.Manager TMx = new(Manager.Source.Empty) { MetricsFonts = visualStyle.MetricsFonts() })
                             {
-                                MetricsFonts = visualStyle.MetricsFonts()
-                            };
-                            LoadFromTM(TMx);
-                            TMx.Dispose();
+                                LoadFromTM(TMx);
+                            }
                         }
                     }
                     catch

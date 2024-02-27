@@ -1187,7 +1187,7 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="Resources\LICENSE.txt" />
-    <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
+    <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">

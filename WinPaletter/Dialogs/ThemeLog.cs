@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.Dialogs
@@ -16,9 +17,22 @@ namespace WinPaletter.Dialogs
             FormClosing += ThemeLog_Closing;
         }
 
-        private void ThemeLog_Load(object sender, EventArgs e)
+        private async void ThemeLog_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainForm.Icon;
+            // Task.Run is used as there is a bug of ex error: Icon is disposed while accessing it from different thread
+            await Task.Run(() =>
+            {
+                // Ensure you are on the UI thread if accessing UI elements
+                Invoke(() =>
+                {
+                    try
+                    {
+                        Icon = Forms.MainForm.Icon;
+                    }
+                    catch { } // Ignore this exception when form or icon is disposed
+                });
+            });
+
             this.LoadLanguage();
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
@@ -45,6 +59,8 @@ namespace WinPaletter.Dialogs
         /// This will apply WinPaletter theme with showing theme log
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
+        /// <param name="AdditionalStoreTips">If true, it will show additional tips for store apps</param>
+        /// <param name="dontInvoke">If true, it will not invoke the controls</param>
         public void Apply_Theme(Theme.Manager TM = null, bool AdditionalStoreTips = false, bool dontInvoke = false)
         {
             TM ??= Program.TM;

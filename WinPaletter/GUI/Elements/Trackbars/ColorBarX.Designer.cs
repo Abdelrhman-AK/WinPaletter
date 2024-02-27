@@ -43,8 +43,8 @@
             this.reset.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.reset.ForeColor = System.Drawing.Color.White;
             this.reset.Image = null;
-            this.reset.ImageAsVector = true;
-            this.reset.ImageVector = global::WinPaletter.Properties.Resources.Vector_Reset;
+            this.reset.ImageGlyphEnabled = true;
+            this.reset.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.reset.Location = new System.Drawing.Point(266, 0);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(34, 31);
@@ -64,8 +64,8 @@
             this.value_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.value_btn.ForeColor = System.Drawing.Color.White;
             this.value_btn.Image = null;
-            this.value_btn.ImageAsVector = true;
-            this.value_btn.ImageVector = null;
+            this.value_btn.ImageGlyphEnabled = true;
+            this.value_btn.ImageGlyph = null;
             this.value_btn.Location = new System.Drawing.Point(306, 0);
             this.value_btn.Name = "value_btn";
             this.value_btn.Size = new System.Drawing.Size(34, 31);

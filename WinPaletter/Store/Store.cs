@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -940,11 +939,11 @@ namespace WinPaletter
                 {
                     // Edit button is pressed
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-
                     Program.TM_Original = (Theme.Manager)Program.TM.Clone();
                     Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
+                    ApplyStyle(Forms.Home);
                     Forms.Home.LoadFromTM(Program.TM);
                 }
             }

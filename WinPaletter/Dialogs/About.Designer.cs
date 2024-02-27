@@ -524,8 +524,8 @@ namespace WinPaletter
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageAsVector = false;
-            this.pin_button.ImageVector = null;
+            this.pin_button.ImageGlyphEnabled = false;
+            this.pin_button.ImageGlyph = null;
             this.pin_button.Location = new System.Drawing.Point(12, 11);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
@@ -656,8 +656,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageAsVector = false;
-            this.Button3.ImageVector = null;
+            this.Button3.ImageGlyphEnabled = false;
+            this.Button3.ImageGlyph = null;
             this.Button3.Location = new System.Drawing.Point(533, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(125, 34);
@@ -675,8 +675,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAsVector = false;
-            this.Button1.ImageVector = null;
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.ImageGlyph = null;
             this.Button1.Location = new System.Drawing.Point(402, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(125, 34);

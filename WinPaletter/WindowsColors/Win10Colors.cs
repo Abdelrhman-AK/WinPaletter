@@ -112,11 +112,29 @@ namespace WinPaletter
 
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
+
+            ToolStripMenuItem item = new(string.Format(Program.Lang.CopycatFrom, Program.Lang.OS_Win11));
+            item.Click += Item_Click;
+            easy_generator.Menu.Items.Add(item);
+        }
+
+        private void Item_Click(object sender, EventArgs e)
+        {
+            // Copycat from Windows 11 colors
+            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            {
+                TMx.Windows10 = (Theme.Structures.Windows10x)Program.TM.Windows11.Clone();
+                LoadFromTM((Theme.Manager)TMx.Clone());
+
+                Program.ToolTip.Show(easy_generator, Program.Lang.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+            }
         }
 
         public void LoadFromTM(Theme.Manager TM)
         {
             AspectEnabled = TM.Windows10.Enabled;
+            theme_aero.Checked = TM.Windows10.Theme == Theme.Structures.Windows10x.Themes.Aero;
+            theme_aerolite.Checked = TM.Windows10.Theme == Theme.Structures.Windows10x.Themes.AeroLite;
             WinMode_Toggle.Checked = !TM.Windows10.WinMode_Light;
             AppMode_Toggle.Checked = !TM.Windows10.AppMode_Light;
             Transparency_Toggle.Checked = TM.Windows10.Transparency;
@@ -159,7 +177,7 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             TM.Windows10.Enabled = AspectEnabled;
-
+            TM.Windows10.Theme = theme_aero.Checked ? Theme.Structures.Windows10x.Themes.Aero : Theme.Structures.Windows10x.Themes.AeroLite;
             TM.Windows10.WinMode_Light = !WinMode_Toggle.Checked;
             TM.Windows10.AppMode_Light = !AppMode_Toggle.Checked;
             TM.Windows10.Transparency = Transparency_Toggle.Checked;
@@ -321,6 +339,8 @@ namespace WinPaletter
 
             easy_appmode_dark.Checked = _checked;
             easy_appmode_light.Checked = !_checked;
+
+            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
         }
 
         private void Transparency_Toggle_CheckedChanged(object sender, EventArgs e)
@@ -1207,6 +1227,18 @@ namespace WinPaletter
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             windowsDesktop1.IncreaseTBTransparency = IncreastTBTransparency.Checked;
+        }
+
+        private void theme_aero_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+        }
+
+        private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.AeroLite;
+
+            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
         }
     }
 }

@@ -144,6 +144,20 @@ namespace WinPaletter.Tabs
         }
         private bool _isRemoving = false;
 
+        private int _hoverAlpha;
+        public int HoverAlpha
+        {
+            get => _hoverAlpha;
+            set
+            {
+                if (value != _hoverAlpha)
+                {
+                    _hoverAlpha = value;
+                    tabsContainer.Invalidate(Rectangle);
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -187,7 +201,14 @@ namespace WinPaletter.Tabs
         public virtual void OnIconChanged(TabDataEventArgs e)
         {
             IconChanged?.Invoke(this, e);
-            Image = Form?.Icon.ToBitmap() ?? Forms.MainForm.Icon.ToBitmap();
+            try
+            {
+                Image = Form?.Icon?.ToBitmap() ?? Forms.MainForm.Icon.ToBitmap();
+            }
+            catch // If the form is disposed, the icon will throw an exception
+            {
+                Image = Forms.MainForm.Icon.ToBitmap();
+            }
             tabsContainer?.Refresh();
         }
 
@@ -391,7 +412,7 @@ namespace WinPaletter.Tabs
                 if (lastIconHandle == IntPtr.Zero || lastIconHandle != currentIconHandle)
                 {
                     lastIconHandle = currentIconHandle;
-                    TabData.OnIconChanged(new(TabData));
+                    TabData?.OnIconChanged(new(TabData));
                 }
             }
         }

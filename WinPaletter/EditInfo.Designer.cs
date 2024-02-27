@@ -1003,8 +1003,8 @@ namespace WinPaletter
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageAsVector = false;
-            this.pin_button.ImageVector = null;
+            this.pin_button.ImageGlyphEnabled = false;
+            this.pin_button.ImageGlyph = null;
             this.pin_button.Location = new System.Drawing.Point(89, 372);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);

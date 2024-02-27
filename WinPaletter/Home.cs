@@ -3,11 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.Tabs;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -69,15 +67,17 @@ namespace WinPaletter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            e.Cancel = false;
+
             if (!Forms.MainForm.LoggingOff)
             {
                 using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                 {
                     bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
-                                                                 //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                                                                 //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                                                                 //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                                                                 //);
+                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                                                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                                                                //);
 
                     e.Cancel = !result;
                 }
@@ -90,6 +90,8 @@ namespace WinPaletter
 
             if (!e.Cancel)
             {
+                Forms.MainForm.tabsContainer1.TabControl.Visible = false;
+
                 Forms.MainForm.closeSignalReceivedFromHomePage = true;
                 Forms.MainForm.Close();
 
@@ -101,7 +103,7 @@ namespace WinPaletter
         public void LoadData()
         {
             userButton.Tag = User.UserName;
-            userButton.Image = User.ProfilePicture.Resize(32, 32);
+            userButton.Image = User.ProfilePicture.Resize(26, 26);
         }
 
         private void LoadOSData()
@@ -161,7 +163,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            labelAlt1.Text = $"{TM.Info.ThemeName} ";
+            labelAlt1.Text = $"{TM.Info.ThemeName}";
             labelAlt2.Text = $"{Program.Lang.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
@@ -217,7 +219,7 @@ namespace WinPaletter
                     {
                         Forms.Updates.ls = Updates_ls;
                         NotifyUpdates.Visible = true;
-                        Button5.ImageVector = Properties.Resources.Update_Dot;
+                        Button5.ImageGlyph = Properties.Resources.Update_Dot;
                         NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
                     }
                 });
@@ -269,7 +271,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
-            Button5.ImageVector = Properties.Resources.Update;
+            Button5.ImageGlyph = Properties.Resources.Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -580,12 +582,6 @@ namespace WinPaletter
         {
             NotifyUpdates.Visible = false;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
-        }
-
-        private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Forms.MainForm.tabsContainer1.TabControl.Visible = false;
-            Forms.MainForm.Close();
         }
 
         private void winEdition_Click(object sender, EventArgs e)

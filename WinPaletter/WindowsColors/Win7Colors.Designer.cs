@@ -212,7 +212,7 @@
             this.windowsDesktop1.Win7Noise = 0F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.WindowsTheme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W7;
             this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
             this.windowsDesktop1.WindowsXPThemeColorScheme = null;
@@ -1301,8 +1301,8 @@
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAsVector = false;
-            this.Button1.ImageVector = null;
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.ImageGlyph = null;
             this.Button1.Location = new System.Drawing.Point(383, 304);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";

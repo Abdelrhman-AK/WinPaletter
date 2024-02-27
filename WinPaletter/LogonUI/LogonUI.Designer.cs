@@ -250,8 +250,8 @@ namespace WinPaletter
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.Image = null;
-            this.button7.ImageAsVector = false;
-            this.button7.ImageVector = null;
+            this.button7.ImageGlyphEnabled = false;
+            this.button7.ImageGlyph = null;
             this.button7.Location = new System.Drawing.Point(310, 308);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(222, 32);

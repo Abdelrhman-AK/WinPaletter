@@ -386,7 +386,7 @@ namespace WinPaletter
                         {
                             c.TextAlign = button.TextAlign;
                             c.ImageAlign = button.ImageAlign;
-                            c.Image = !button.ImageAsVector ? button.Image : button.ImageVector;
+                            c.Image = !button.ImageGlyphEnabled ? button.Image : button.ImageGlyph;
                             c.TextImageRelation = button.TextImageRelation;
                         }
 

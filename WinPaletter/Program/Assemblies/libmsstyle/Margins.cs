@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -16,7 +20,7 @@ namespace libmsstyle
         }
 
         [RefreshProperties(RefreshProperties.All)]
-        public int Left { get; set; }
+        public int Left { get;set; }
         [RefreshProperties(RefreshProperties.All)]
         public int Top { get; set; }
         [RefreshProperties(RefreshProperties.All)]
@@ -26,12 +30,12 @@ namespace libmsstyle
 
         public override string ToString()
         {
-            return $"{Left}; {Top}; {Right}; {Bottom}";
+            return String.Format("{0}; {1}; {2}; {3}", Left, Top, Right, Bottom);
         }
 
         public override bool Equals(object obj)
         {
-            Margins m = obj as Margins;
+            var m = obj as Margins;
             if (m != null)
             {
                 return this.Left == m.Left &&
@@ -66,7 +70,7 @@ namespace libmsstyle
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string[] c = (value as string).Split(new char[] { ';' });
-            if (c.Length != 4)
+            if(c.Length != 4)
             {
                 throw new FormatException("Missing component! Margins require 'left', 'top', 'right' and 'bottom'.");
             }
