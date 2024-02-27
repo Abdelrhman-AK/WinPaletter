@@ -1,7 +1,5 @@
 ---
-name: ❌ Issue report
 about: "Report an issue or error occurred during your WinPaletter usage, to help me improve WinPaletter"
-title: ":x: [Error] "
 assignees: Abdelrhman-AK
 labels: ["issue"]
 ---
