@@ -2,7 +2,7 @@
 name: "🚀 Feature request"
 about: "Suggest an idea or possible new feature for WinPaletter"
 title: "🚀 [Feature request] "
-labels: Feature
+labels: ["feature request"]
 assignees: Abdelrhman-AK
 ---
 
