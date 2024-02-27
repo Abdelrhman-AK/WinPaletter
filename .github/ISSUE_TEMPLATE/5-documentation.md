@@ -2,7 +2,7 @@
 name: "📚 Documentation"
 about: "Report an issue in documentation, or add a new documentation for undocumented WinPaletter feature"
 title: "📚 [Documentation] "
-labels: Documentation
+labels: ["documentation"]
 assignees: Abdelrhman-AK
 
 ---
