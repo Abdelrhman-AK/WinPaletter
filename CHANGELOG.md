@@ -2,6 +2,61 @@
 
 ---
 
+### 1.0.8.7
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 02 Mar 2024  |
+
+⚠️ **Warning**
+If you are using command lines, type `WinPaletter -?` in any terminal to know new commands formats
+
+⚠️ **Known issue**
+Due to massive changes in Windows Terminal structure in WinPaletter, an error may occur when opening a theme file as the structure has been completely revised. You can safely ignore this error and continue using the theme file; however, note that the old preferences from the older theme file for the terminal will be disregarded until you resave the theme.
+
+# The same as 1.0.8.5 and 1.0.8.6, except for some application improvements and bugs fixes:
+
+### Application improvements
+- Double-click on a tab to detach it, middle click to close it.
+- Aero Lite theme for Windows 10/11 #38.
+- New 4 Classic Colors schemes: Windows 11 Contrast themes: Aquatic, Desert, Dusk, and Night Sky.
+- New sounds (Wi-Fi connection\disconnection\connection failure) in Devices section as requested in #218.
+- Help button for the current active tab (won't be visible if a tab doesn't provide a help link).
+- Changed message box of Windows Effects alert to another dialog with important tips, with a choice for not showing this dialog again #219.
+- Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`).
+- Minor UI improvements.
+
+### Bug fixes
+- Fix bug of Windows 11/10 colors are not applicable.
+- Refix bug #214 when WinPaletter store is opened and closed, the bug reoccurs (home form is closed while the app is not closed, leaving a white rectangle).
+- Fix bug #220: Windows Terminal exception error (ex error on returning null to be set as a color for background and unfocusedBackground in tabSettings in themes).
+- Fix sounds not included in themes resources pack (Charger connected, Charger disconnected, Windows lock).
+- Fix Classic Colors Gallery scheme picker not showing the background color in thumbnails.
+- Fix per element modifier: clicking on the menu with flat menu enabled modified button face instead.
+- Fix ex error on starting WinPaletter with a desktop with slideshow and directory of images doesn't exist.
+- Metrics: Fix visual styles import if using a msstyles newer than Windows XP.
+- Fix ex error on importing a visual styles (*.msstyles) if a .theme file is selected from the open file dialog.
+- Fix press edit button in the store doesn't fully apply WinPaletter theme in open forms.
+- Fix dragging area below store tab moves the form with glitches.
+- Fix exception error when adding a form into tabs (inaccessible form icon) #218.
+- Fix browse for wav wrong titles in sounds.
+
+### This is not the final look. In the new beta releases, UI changes will continue to be made, improved, and any discovered bugs will be fixed.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.4...v1.0.8.7) |
+| Previous Beta   | `1.0.8.6`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.6...v1.0.8.7) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.7) |
+
+---
+
 ### 1.0.8.6
 
 > **Info:**
