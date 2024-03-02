@@ -364,6 +364,24 @@ namespace WinPaletter
             }
         }
 
+        private static WinEffectsAlert _WinEffectsAlert;
+        public static WinEffectsAlert WinEffectsAlert
+        {
+            get
+            {
+                _WinEffectsAlert = CreateInstance(_WinEffectsAlert);
+                return _WinEffectsAlert;
+            }
+            set
+            {
+                if (value == _WinEffectsAlert)
+                    return;
+                if (value is not null)
+                    throw new ArgumentException(ex_msg);
+                DisposeInstance(ref _WinEffectsAlert);
+            }
+        }
+
 
         private static Saving_ex_list _Saving_ex_list;
         public static Saving_ex_list Saving_ex_list
@@ -1219,21 +1237,21 @@ namespace WinPaletter
         }
 
 
-        private static BK _BK;
-        public static BK BK
+        private static GlassWindow _glassWindow;
+        public static GlassWindow GlassWindow
         {
             get
             {
-                _BK = CreateInstance(_BK);
-                return _BK;
+                _glassWindow = CreateInstance(_glassWindow);
+                return _glassWindow;
             }
             set
             {
-                if (value == _BK)
+                if (value == _glassWindow)
                     return;
                 if (value is not null)
                     throw new ArgumentException(ex_msg);
-                DisposeInstance(ref _BK);
+                DisposeInstance(ref _glassWindow);
             }
         }
 

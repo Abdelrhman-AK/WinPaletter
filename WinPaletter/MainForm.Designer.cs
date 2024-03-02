@@ -63,6 +63,7 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(1156, 731);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1172, 770);
             this.Name = "MainForm";

@@ -54,7 +54,7 @@ namespace WinPaletter
         private JObject J_Forms;
         private List<Tuple<string, string, string, string>> Deserialized_FormsJSONTree = new();
 
-        public static IEnumerable<Type> IExclude = new List<Type> { typeof(SchemeEditor), typeof(BK), typeof(AspectsTemplate), typeof(Tabs.TabsForm), typeof(BorderlessForm), typeof(Store_Hover) };
+        public static IEnumerable<Type> IExclude = new List<Type> { typeof(SchemeEditor), typeof(GlassWindow), typeof(AspectsTemplate), typeof(Tabs.TabsForm), typeof(BorderlessForm), typeof(Store_Hover) };
         public static IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(Form).IsAssignableFrom(t));
 
         #endregion

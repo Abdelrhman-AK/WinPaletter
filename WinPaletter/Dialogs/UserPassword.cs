@@ -20,7 +20,7 @@ namespace WinPaletter.Dialogs
 
         private void UserPassword_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Forms.BK.Close();
+            Forms.GlassWindow.Close();
         }
 
         private void Button3_MouseLeave(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace WinPaletter.Dialogs
             button2.Width = (int)button2.Text.Measure(button2.Font).Width + 20;
             button2.Left = r - button2.Width;
 
-            Forms.BK.Show();
+            Forms.GlassWindow.Show();
 
             this.DropEffect(new Padding(0, 0, 0, panel1.Height), true, DWM.FormStyle.Tabbed);
 

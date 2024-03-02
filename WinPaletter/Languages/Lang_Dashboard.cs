@@ -34,7 +34,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation");
+            Process.Start(Links.Wiki.LanguageCreation);
         }
 
         private void Button3_Click(object sender, EventArgs e)

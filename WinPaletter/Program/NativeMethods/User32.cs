@@ -92,6 +92,12 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// Sends the specified message to a window or windows.
+        /// </summary>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        /// <summary>
         /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
         /// </summary>
         /// <param name="lpClassName">The class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.</param>

@@ -470,7 +470,7 @@ namespace WinPaletter
                                     TM = TM,
                                     MD5_ThemeFile = MD5_ThemeFile,
                                     MD5_PackFile = MD5_PackFile,
-                                    DoneByWinPaletter = (DB.ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? string.Empty),
+                                    DoneByWinPaletter = (DB.ToUpper() ?? string.Empty) == (Links.Store_MainDB.ToUpper() ?? string.Empty),
                                     Size = new(w, h),
                                     URL_ThemeFile = URL_ThemeFile,
                                     URL_PackFile = URL_PackFile
@@ -1280,12 +1280,12 @@ namespace WinPaletter
 
         private void CustomTitlebar_MouseDown(object sender, MouseEventArgs e)
         {
-            oldPoint = MousePosition - (Size)Location;
+            if (this.Parent is not TabPage) oldPoint = MousePosition - (Size)Location;
         }
 
         private void CustomTitlebar_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (this.Parent is not TabPage && e.Button == MouseButtons.Left)
             {
                 newPoint = MousePosition - (Size)oldPoint;
                 Location = newPoint;

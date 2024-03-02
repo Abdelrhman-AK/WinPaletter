@@ -335,7 +335,7 @@ namespace WinPaletter.Theme
         /// <param name="File">If selected destination is file, this will specify WinPaletter theme file</param>
         /// <param name="TreeView">Specify TreeView to write theme applying log (Registry destination only)</param>
         /// <param name="ResetToDefault">Restore Windows theme to default before applying WinPaletter theme</param>
-        public void Save(Source Destination, string File = "", TreeView TreeView = null, bool ResetToDefault = false)
+        public void Save(Source Destination, string File = "", TreeView TreeView = null, bool ResetToDefault = false, bool silent = false)
         {
             switch (Destination)
             {
@@ -584,7 +584,7 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_ClassicColors);
 
                             // WindowsEffects
-                            Execute(new(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(new(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null, silent)), TreeView,
                                 Program.Lang.TM_Applying_WinEffects,
                                 Program.Lang.TM_WinEffects_Error,
                                 Program.Lang.TM_Time,
@@ -1348,6 +1348,7 @@ namespace WinPaletter.Theme
                 }
 
                 #region Sounds
+
                 if (TM.Sounds.Enabled)
                 {
                     x = TM.Sounds.Snd_Win_Default;
@@ -2094,6 +2095,60 @@ namespace WinPaletter.Theme
                         ZipEntry = $"{cache}Snd_SpeechRec_PanelSound{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.Sounds.Snd_SpeechRec_PanelSound = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_ChargerConnected;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_ChargerConnected{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_ChargerConnected = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_ChargerDisconnected;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_ChargerDisconnected{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_ChargerDisconnected = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_Win_WindowsLock;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_Win_WindowsLock{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_Win_WindowsLock = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_WiFiConnected;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_WiFiConnected{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_WiFiConnected = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_WiFiDisconnected;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_WiFiDisconnected{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_WiFiDisconnected = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+
+                    x = TM.Sounds.Snd_WiFiConnectionFailed;
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        ZipEntry = $"{cache}Snd_WiFiConnectionFailed{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.Sounds.Snd_WiFiConnectionFailed = ZipEntry;
                         filesList.Add(ZipEntry, x);
                     }
                 }

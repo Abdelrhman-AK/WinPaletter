@@ -802,7 +802,9 @@ namespace WinPaletter.UI.Simulation
                 CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
                   Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
 
-                if (CursorOverTitlebar || CursorOverWindowAccent) Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
+                /* Don't make it controlled by conditions, they may be false and graphics won't be updated.
+                   For high performance, we need to update graphics only in specified rectangle. */
+                Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
             }
 
             if (EnableEditingMetrics)

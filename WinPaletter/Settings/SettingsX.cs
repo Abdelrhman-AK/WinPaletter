@@ -164,6 +164,7 @@ namespace WinPaletter
             toggle16.Checked = Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;
             RadioButton25.Checked = Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
             RadioButton24.Checked = !Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
+            toggle12.Checked = Sets.ThemeApplyingBehavior.Show_WinEffects_Alert;
             toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
             Label38.Text = CalcStoreCache().SizeString();
@@ -505,6 +506,7 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = toggle15.Checked;
             Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = toggle16.Checked;
             Sets.ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked;
+            Sets.ThemeApplyingBehavior.Show_WinEffects_Alert = toggle12.Checked;
 
             Sets.Store.Online_or_Offline = RadioImage1.Checked;
             Sets.Store.Online_Repositories = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
@@ -680,6 +682,8 @@ namespace WinPaletter
                 if (Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != toggle16.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.PE_ModifyByDefault != RadioButton25.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Show_WinEffects_Alert != toggle12.Checked)
                     Changed = true;
 
                 if (Settings.Store.Online_or_Offline & !RadioImage1.Checked)
@@ -982,7 +986,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Repository}wiki/Language-creation");
+            Process.Start(Links.Wiki.LanguageCreation);
         }
 
         private void Button16_Click(object sender, EventArgs e)
@@ -1015,7 +1019,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Repository}tree/master/Languages");
+            Process.Start(Links.Languages);
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -1039,7 +1043,7 @@ namespace WinPaletter
             {
                 int i = ListBox1.SelectedIndex;
 
-                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreReposDB.ToUpper() ?? string.Empty)) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? string.Empty)))
+                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Links.Store_2ndDB.ToUpper() ?? string.Empty)) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Links.Store_MainDB.ToUpper() ?? string.Empty)))
                 {
                     ListBox1.Items.RemoveAt(i);
                     if (i < ListBox1.Items.Count - 1)

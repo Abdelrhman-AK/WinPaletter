@@ -51,7 +51,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Changelog);
+            Process.Start(Links.Changelog);
         }
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)

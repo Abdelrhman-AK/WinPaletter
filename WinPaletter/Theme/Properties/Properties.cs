@@ -447,6 +447,7 @@ namespace WinPaletter.Theme
             Snd_Win_WindowsLock = string.Empty,
             Snd_WiFiConnected = string.Empty,
             Snd_WiFiDisconnected = string.Empty,
+            Snd_WiFiConnectionFailed = string.Empty,
         };
 
         /// <summary>Object derived of structure that has data about Windows switcher (Alt+Tab) appearance, and it can be customized.</summary>

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WinPaletter.SysEventsSounds")]
-[assembly: AssemblyDescription("Service by WinPaletter that listens to system events in background, and plays a sound if a specific event received")]
+[assembly: AssemblyDescription("This service is a service that monitors Windows events and plays sounds based on the received events. It serves as a deflection method for charger connection/disconnection and Wi-Fi connection/disconnection/connection failure sounds (compatible with any version of Windows) and logoff, logon, lock, unlock, and shutdown sounds (in Windows 8 and higher).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Abdelrhman-AK")]
 [assembly: AssemblyProduct("WinPaletter.SysEventsSounds")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("Abdelrhman-AK")]
+[assembly: AssemblyCopyright("Copyright ©  2023-2024")]
+[assembly: AssemblyTrademark("WinPaletter.SysEventsSounds")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

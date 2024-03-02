@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
 using static WinPaletter.UI.Style.Config;
 
@@ -26,11 +27,23 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
+
+            Controls.Add(helpButton);
+            helpButton.Click += HelpButton_Click; ;
         }
 
         #region Variables
 
+        UI.WP.Button helpButton = new()
+        {
+            Visible = false, Text = "", Size = new(20, 20), Anchor = AnchorStyles.Right,
+            ImageGlyphEnabled = true, ImageGlyph = Assets.Tabs.Help,
+            Flag = UI.WP.Button.Flags.CustomColorOnHover, CustomColor = Color.FromArgb(193, 156, 0),
+        };
+
         private bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.55f));
 
         /// <summary>
         /// List of tab data included in current control
@@ -452,7 +465,7 @@ namespace WinPaletter.Tabs
             tabData.Form.Close();
         }
 
-        private void HandleTabControlLeftButtonClick(MouseEventArgs e)
+        private void HandleTabControlMouseButtonClick(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -473,6 +486,46 @@ namespace WinPaletter.Tabs
                             locationOldPoint = MousePosition - (Size)FindForm()?.Location;
                         }
                     }
+                }
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                List<TabData> tabDatas = new(TabDataList);
+                foreach (TabData tabData in tabDatas)
+                {
+                    if (IsMouseOverTab(tabData))
+                    {
+                        tabData.Form.Close();
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void HandleTabControlMouseDoubleClick(MouseEventArgs e)
+        {
+            bool hasDetachedAnyTab = false;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                List<TabData> tabDatas = new(TabDataList);
+                foreach (TabData tabData in tabDatas)
+                {
+                    if (IsMouseOverTab(tabData))
+                    {
+                        hasDetachedAnyTab = true;
+                        DetachTab(tabData);
+                        break;
+                    }
+                }
+            }
+
+            if (!hasDetachedAnyTab)
+            {
+                Form form = TabControl.FindForm();
+                if (form != null)
+                {
+                    form.WindowState = form.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
                 }
             }
         }
@@ -722,7 +775,7 @@ namespace WinPaletter.Tabs
                 {
                     forceChangeSelectedIndex = false;
                     _selectedIndex = AdjustSelectedIndex(value);
-
+                    helpButton.Visible = SelectedTabData?.Form != null && SelectedTabData.Form.HelpButton;
                     UpdateSelectedTab();
                     Refresh();
                 }
@@ -748,6 +801,13 @@ namespace WinPaletter.Tabs
                 }
             }
         }
+
+        /// <summary>
+        /// Selected tab data in current TabControl
+        /// </summary>
+        public TabData SelectedTabData => _selectedIndex >= 0 && _selectedIndex < TabDataList?.Count
+            ? TabDataList.ElementAt(_selectedIndex)
+            : null;
 
         #endregion
 
@@ -844,6 +904,14 @@ namespace WinPaletter.Tabs
             FormClosed?.Invoke(sender, e);
         }
 
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
+            IntPtr intPtr = SelectedTabData?.Form?.Handle ?? IntPtr.Zero;
+            if (intPtr != IntPtr.Zero)
+            {
+                User32.SendMessage(intPtr, 0x0112 /*WM_SYSCOMMAND*/, 0xF180 /*SC_CONTEXTHELP*/, 0);
+            }
+        }
 
         private async void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
@@ -901,6 +969,12 @@ namespace WinPaletter.Tabs
         {
             base.OnResize(e);
 
+            SizeF betaSize = Program.Lang.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
+            Rectangle betaRect = new(0 + Width - (int)betaSize.Width - 5 - 1, 0 + (int)((Height - 1 - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
+
+            helpButton.Left = betaRect.Left - helpButton.Width - 5;
+            helpButton.Top = (Height - helpButton.Height) / 2;
+
             if (TabDataList != null && TabDataList.Count > 0)
             {
                 UpdateTabPositions(TabDataList);
@@ -927,7 +1001,7 @@ namespace WinPaletter.Tabs
         {
             if (_tabControl != null)
             {
-                HandleTabControlLeftButtonClick(e);
+                HandleTabControlMouseButtonClick(e);
             }
             else
             {
@@ -935,6 +1009,16 @@ namespace WinPaletter.Tabs
             }
 
             base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            if (_tabControl != null)
+            {
+                HandleTabControlMouseDoubleClick(e);
+            }
+
+            base.OnMouseDoubleClick(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -1176,7 +1260,8 @@ namespace WinPaletter.Tabs
                     if (hoveredRectangle == rect)
                     {
                         G.FillPath(scheme.Brushes.Back_Checked, path);
-                        G.DrawPath(scheme.Pens.Line_Checked, path);
+                        G.FillPath(Noise, path);
+                        G.DrawPath(scheme.Pens.Line_Checked_Hover, path);
 
                         if (overCloseButton)
                         {

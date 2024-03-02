@@ -41,7 +41,7 @@ namespace WinPaletter.UI.WP
         Rectangle MenuSplitterRectangle;
         bool isMouseOverMenuSplitter = false;
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
         private Color imageColor;
 
         public MouseState State = MouseState.None;
@@ -820,14 +820,12 @@ namespace WinPaletter.UI.WP
 
                 using (Pen P = new(Color.FromArgb(FocusAlpha, _lineColor)))
                 {
-                    if (State != MouseState.Down)
-                        G.DrawRoundedRect_LikeW11(P, RectInner);
-                    else
-                        G.DrawRoundedRect(P, RectInner);
+                    if (State != MouseState.Down) G.DrawRoundedRect_LikeW11(P, RectInner);
+                    else G.DrawRoundedRect(P, RectInner);
                 }
-
-                using (SolidBrush br = new(Color.FromArgb(alpha, Color))) { G.FillRoundedRect(br, Rect); }
             }
+
+            using (SolidBrush br = new(Color.FromArgb(alpha, Color))) { G.FillRoundedRect(br, Rect); }
 
             if (!(State == MouseState.None) && !isMouseOverMenuSplitter)
             {
@@ -886,7 +884,7 @@ namespace WinPaletter.UI.WP
 
             #endregion
 
-            #region Text and img Render
+            #region Text and image render
             using (StringFormat sf = TextAlign.ToStringFormat((int)base.RightToLeft == 1))
             using (SolidBrush fc = new(ForeColor))
             {

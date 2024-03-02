@@ -229,7 +229,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Language-creation-(old-methods)");
+            Process.Start(Links.Wiki.LanguageCreation_OldMethods);
         }
 
         private void pin_button_Click(object sender, EventArgs e)

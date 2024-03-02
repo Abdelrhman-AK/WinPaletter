@@ -441,7 +441,7 @@ namespace WinPaletter.UI.WP
                                 imageRect.Height = ImageSize.Height;
                             }
 
-                            G.DrawImage(Image, new Rectangle(imageRect.X, imageRect.Y, imageRect.Width + 1, imageRect.Height + 1));
+                            G.DrawImage(Image, new Rectangle(imageRect.X, imageRect.Y, imageRect.Width, imageRect.Height));
                             G.DrawString(Text, Font, fc, textRect, sf);
                         }
                     }

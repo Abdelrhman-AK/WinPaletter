@@ -165,14 +165,18 @@ namespace WinPaletter.SysEventsSounds
             UpdatePaths();
             ini = new INI(LocalSoundsINI);
 
-            // Handle Wi-Fi Connection/Disconnection Events (Event IDs 8000 and 8001)
-            if (e.EventRecord.Id == 8000)
+            // Handle Wi-Fi Connection/Disconnection Events (Event IDs 8001, 8002 & 8003)
+            if (e.EventRecord.Id == 8001)
             {
                 Play(ini.Read("Network", "Wi-Fi_Connected", ""));
             }
             else if (e.EventRecord.Id == 8003)
             {
                 Play(ini.Read("Network", "Wi-Fi_Disconnected", ""));
+            }
+            else if (e.EventRecord.Id == 8002)
+            {
+                Play(ini.Read("Network", "Wi-Fi_ConnectionFailed", ""));
             }
         }
 
@@ -342,15 +346,20 @@ namespace WinPaletter.SysEventsSounds
             logWatcher4.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_ShutdownOrReboot);
             logWatcher4.Enabled = true;
 
-            EventLogQuery logQuery8000 = new EventLogQuery("Microsoft-Windows-WLAN-AutoConfig/Operational", PathType.LogName, "*[System[(EventID = 8000)]]");
-            EventLogWatcher logWatcher8000 = new EventLogWatcher(logQuery8000);
-            logWatcher8000.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_WiFiEvent);
-            logWatcher8000.Enabled = true;
+            EventLogQuery logQuery8001 = new EventLogQuery("Microsoft-Windows-WLAN-AutoConfig/Operational", PathType.LogName, "*[System[(EventID = 8001)]]");
+            EventLogWatcher logWatcher8001 = new EventLogWatcher(logQuery8001);
+            logWatcher8001.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_WiFiEvent);
+            logWatcher8001.Enabled = true;
 
-            EventLogQuery logQuery8001 = new EventLogQuery("Microsoft-Windows-WLAN-AutoConfig/Operational", PathType.LogName, "*[System[(EventID = 8003)]]");
-            EventLogWatcher logWatcher8003 = new EventLogWatcher(logQuery8001);
+            EventLogQuery logQuery8003 = new EventLogQuery("Microsoft-Windows-WLAN-AutoConfig/Operational", PathType.LogName, "*[System[(EventID = 8003)]]");
+            EventLogWatcher logWatcher8003 = new EventLogWatcher(logQuery8003);
             logWatcher8003.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_WiFiEvent);
             logWatcher8003.Enabled = true;
+
+            EventLogQuery logQuery8002 = new EventLogQuery("Microsoft-Windows-WLAN-AutoConfig/Operational", PathType.LogName, "*[System[(EventID = 8002)]]");
+            EventLogWatcher logWatcher8002 = new EventLogWatcher(logQuery8002);
+            logWatcher8002.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_WiFiEvent);
+            logWatcher8002.Enabled = true;
         }
         #endregion
     }

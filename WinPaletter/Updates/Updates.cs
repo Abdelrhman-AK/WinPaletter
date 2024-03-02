@@ -54,7 +54,7 @@ namespace WinPaletter
                     {
                         Label17.SetText(Program.Lang.Checking);
 
-                        string response = await DM.ReadStringAsync(Properties.Resources.Link_Updates);
+                        string response = await DM.ReadStringAsync(Links.Updates);
                         ls = response.CList();
 
                         foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
@@ -159,7 +159,7 @@ namespace WinPaletter
 
                 if (RadioButton3.Checked)
                 {
-                    Process.Start(Properties.Resources.Link_Releases);
+                    Process.Start(Links.Releases);
                 }
 
             }
@@ -276,7 +276,7 @@ namespace WinPaletter
 
         private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Changelog);
+            Process.Start(Links.Changelog);
         }
 
         private void Button3_Click(object sender, EventArgs e)

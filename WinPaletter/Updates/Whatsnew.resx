@@ -186,42 +186,6 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label39.Text" xml:space="preserve">
-    <value>● Fix Windows Terminal exception error (incorrect character error in JSON file when using ColorSchemePair as a type for colorScheme or numeric font weight instead of a value from an enum).
-● Fix the bug where the application continues running in tabs when the home or main form is closed.
-● Fix exception error when opening the Windows XP Colors editor and Metrics and Fonts editor with Windows XP selected.
-● Windows XP preview design fixes (increased titlebar height).
-● Fix inability to select the menu font in the metrics editor.
-● Fix preview: status font is not selected at the first Metrics and Fonts load.
-● Fix incorrect label colors and menu bar color in Windows Vista Metrics and Fonts preview.
-● Fix bug in WinPaletter application themes: selecting the GitHub scheme making the accent color the same as Reddit's scheme.
-
-● Resolved exception error with ITaskbar3 on Windows XP and Vista.
-● Fixed exception errors occurring when applying cursors.
-● Fixed error when applying Windows 8.1 lock screen background and Windows 7 LogonUI background.
-● Fixed bug applying dark mode after opening WinPaletter Application Themer with light mode.
-● Fixed sync issue between WinPaletter and Wallpaper change preview and automatic dark/light mode.</value>
-  </data>
-  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
-        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
-        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
-        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
-        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
-        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
-        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
-        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
-        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
-        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
-        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
-        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
-        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
-        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
-        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
-        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
 
@@ -528,17 +492,14 @@
 </value>
   </data>
   <data name="label34.Text" xml:space="preserve">
-    <value>● Modification of Windows Effects is controlled by a message. If you press 'Yes,' the application of these changes will continue, but please note that this may conflict with ExplorerPatcher settings.
-
-● Starting now, the inclusion of User Preference Mask (UPM) modification for all users from current theme will be disabled by default. Look at Settings &gt; Theme applying behavior.
-
-● Command lines changes; type 'WinPaletter.exe -?' in any terminal for help.
-● Replaced 'Save theme file and apply theme on exit' dialog with a straightforward Windows dialog.
-● Resolved an exception error that occurred when applying a theme in a separate thread, ensuring the program does not exit before the thread completes its task.
-● The mechanism for downloading data from the web has been improved, transitioning from WebClient to HTTPClient.
-● Addressed increased memory usage during cursor rendering and after closing Wallpaper and LogonUI forms.
-● Remove all registry residuals during uninstallation.
-● Enable the 'Colors history' feature within the 'Custom colors' section if the Windows Classic Colors picker is enabled in settings.</value>
+    <value>● Double-click on a tab to detach it, middle click to close it.
+● Aero Lite theme for Windows 10/11.
+● New 4 Classic Colors schemes: Windows 11 Contrast themes: Aquatic, Desert, Dusk, and Night Sky.
+● New sounds (Wi-Fi connection\disconnection\connection failure) in Devices section.
+● Help button for the current active tab (won't be visible if a tab doesn't provide a help link).
+● Changed message box of Windows Effects alert to another dialog with important tips, with a choice for not showing this dialog again.
+● Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`.
+● Minor UI improvements.</value>
   </data>
   <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -557,6 +518,41 @@
         FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
         YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
         i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label39.Text" xml:space="preserve">
+    <value>● Fix bug of Windows 11/10 colors are not applicable.
+● Refix bug #214 when WinPaletter store is opened and closed, the bug reoccurs (home form is closed while the app is not closed, leaving a white rectangle).
+● Fix bug of Windows Terminal exception error (ex error on returning null to be set as a color for background and unfocusedBackground in tabSettings in themes).
+● Fix sounds not included in themes resources pack (Charger connected, Charger disconnected, Windows lock).
+● Fix Classic Colors Gallery scheme picker not showing the background color in thumbnails.
+● Fix per element modifier: clicking on the menu with flat menu enabled modified button face instead.
+● Fix ex error on starting WinPaletter with a desktop with slideshow and directory of images doesn't exist.
+● Fix visual styles import if using a msstyles newer than Windows XP in Metrics and Fonts.
+● Fix ex error on importing a visual styles (*.msstyles) if a .theme file is selected from the open file dialog.
+● Fix press edit button in the store doesn't fully apply WinPaletter theme in open forms.
+● Fix dragging area below store tab moves the form with glitches.
+● Fix exception error when adding a form into tabs (inaccessible form icon).
+● Fix browse for wav wrong titles in sounds.</value>
+  </data>
+  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
+        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
+        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
+        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
+        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
+        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
+        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
+        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
+        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
+        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
+        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
+        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
+        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
+        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
+        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
+        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

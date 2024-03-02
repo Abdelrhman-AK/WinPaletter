@@ -175,7 +175,7 @@ namespace WinPaletter
             this.tabPage1.Controls.Add(this.banner1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(817, 402);
+            this.tabPage1.Size = new System.Drawing.Size(817, 422);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
@@ -214,7 +214,7 @@ namespace WinPaletter
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(817, 402);
+            this.tabPage2.Size = new System.Drawing.Size(817, 422);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
@@ -253,7 +253,7 @@ namespace WinPaletter
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(817, 402);
+            this.tabPage3.Size = new System.Drawing.Size(817, 422);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "2";
             // 
@@ -292,7 +292,7 @@ namespace WinPaletter
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(817, 402);
+            this.tabPage4.Size = new System.Drawing.Size(817, 422);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "3";
             // 
@@ -331,7 +331,7 @@ namespace WinPaletter
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(817, 402);
+            this.tabPage5.Size = new System.Drawing.Size(817, 422);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "4";
             // 
@@ -370,7 +370,7 @@ namespace WinPaletter
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(817, 402);
+            this.tabPage6.Size = new System.Drawing.Size(817, 422);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "5";
             // 
@@ -409,7 +409,7 @@ namespace WinPaletter
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(817, 402);
+            this.tabPage7.Size = new System.Drawing.Size(817, 422);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "6";
             // 
@@ -448,7 +448,7 @@ namespace WinPaletter
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(817, 402);
+            this.tabPage8.Size = new System.Drawing.Size(817, 422);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "7";
             // 
@@ -526,7 +526,7 @@ namespace WinPaletter
             this.tabPage13.Location = new System.Drawing.Point(4, 24);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(817, 402);
+            this.tabPage13.Size = new System.Drawing.Size(817, 422);
             this.tabPage13.TabIndex = 12;
             this.tabPage13.Text = "9";
             // 
@@ -712,8 +712,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(739, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
@@ -731,8 +731,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(653, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -749,8 +749,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageGlyphEnabled = false;
             this.Button3.ImageGlyph = null;
+            this.Button3.ImageGlyphEnabled = false;
             this.Button3.Location = new System.Drawing.Point(6, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(100, 34);

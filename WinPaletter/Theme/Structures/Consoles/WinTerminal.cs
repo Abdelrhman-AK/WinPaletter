@@ -619,7 +619,7 @@ namespace WinPaletter
                 {
                     if (reader.TokenType == JsonToken.Null)
                     {
-                        return null;
+                        return Color.Empty;
                     }
 
                     string hexColor = (string)reader.Value;
@@ -627,8 +627,8 @@ namespace WinPaletter
                     // Handle empty string
                     if (string.IsNullOrEmpty(hexColor))
                     {
-                        // Return a default color or null, depending on your needs
-                        return Color.Empty; // or return null;
+                        // Return a default color.
+                        return Color.Empty;
                     }
 
                     return ColorTranslator.FromHtml(hexColor);

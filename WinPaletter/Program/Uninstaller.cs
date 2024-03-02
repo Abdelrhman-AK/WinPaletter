@@ -20,8 +20,8 @@ namespace WinPaletter
             EditReg(RegPath, "DisplayVersion", Version, RegistryValueKind.String);
             EditReg(RegPath, "Publisher", Application.CompanyName, RegistryValueKind.String);
             EditReg(RegPath, "DisplayIcon", $"{PathsExt.appData}\\uninstall.ico", RegistryValueKind.String);
-            EditReg(RegPath, "URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
-            EditReg(RegPath, "Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
+            EditReg(RegPath, "URLInfoAbout", Links.RepositoryURL, RegistryValueKind.String);
+            EditReg(RegPath, "Contact", Links.RepositoryURL, RegistryValueKind.String);
             EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
             EditReg(RegPath, "Comments", Lang.Uninstall_Comment, RegistryValueKind.String);
             EditReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);

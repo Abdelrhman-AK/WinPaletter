@@ -54,7 +54,7 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            Forms.BK.Show();
+            Forms.GlassWindow.Show();
 
             foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
@@ -186,7 +186,7 @@ namespace WinPaletter
 
             ShowDialog();
 
-            Forms.BK.Close();
+            Forms.GlassWindow.Close();
 
             if (DialogResult == DialogResult.Abort) Program.ExitAfterException = true; else Program.ExitAfterException = false;
         }
@@ -206,8 +206,8 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Forms.BK.Close();
-            Process.Start($"{Properties.Resources.Link_Repository}issues");
+            Forms.GlassWindow.Close();
+            Process.Start(Links.Issues);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -279,7 +279,7 @@ namespace WinPaletter
         {
             if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
             {
-                Forms.BK.Close();
+                Forms.GlassWindow.Close();
                 Process.Start($@"{PathsExt.appData}\Reports");
             }
             else

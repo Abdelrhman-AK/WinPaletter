@@ -54,7 +54,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_StoreOnlineSourceCreation);
+            Process.Start(Links.Wiki.StoreCreateSource);
         }
 
         private void Store_Intro_FormClosing(object sender, FormClosingEventArgs e)
@@ -65,17 +65,17 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_StoreUpload);
+            Process.Start(Links.Wiki.StoreUpload);
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_StoreSourcesExtension);
+            Process.Start(Links.Wiki.StoreExtension);
         }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/WinPaletter-Store-basics");
+            Process.Start(Links.Wiki.StoreBasics);
         }
     }
 }

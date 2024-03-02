@@ -222,12 +222,12 @@ namespace WinPaletter
 
         private void button13_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Repository}issues");
+            Process.Start(Links.Issues);
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki);
+            Process.Start(Links.Wiki.WikiURL);
         }
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)

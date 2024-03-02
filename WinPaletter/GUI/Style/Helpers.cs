@@ -206,7 +206,7 @@ namespace WinPaletter.UI.Style
             {
                 foreach (Form form in Application.OpenForms)
                 {
-                    if (form != Forms.BK)
+                    if (form != Forms.GlassWindow)
                     {
                         bool FormWasVisible = form.Visible;
                         if (FormWasVisible)

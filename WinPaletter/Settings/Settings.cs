@@ -129,6 +129,7 @@ namespace WinPaletter
                 public bool SFC_on_restoring_StartupSound;
                 public bool Ignore_PE_Modify_Alert;
                 public bool PE_ModifyByDefault;
+                public bool Show_WinEffects_Alert;
 
                 public enum OverwriteOptions
                 {
@@ -155,6 +156,7 @@ namespace WinPaletter
                     ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
                     SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
                     Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
+                    Show_WinEffects_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", true));
                     PE_ModifyByDefault = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", true));
                 }
 
@@ -175,6 +177,7 @@ namespace WinPaletter
                     EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
+                    EditReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", Show_WinEffects_Alert, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord);
                 }
 
@@ -359,7 +362,7 @@ namespace WinPaletter
                 public void Load()
                 {
                     Online_or_Offline = Conversions.ToBoolean(GetReg(REG_Store, "Online_or_Offline", true));
-                    Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB });
+                    Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { Links.Store_MainDB, Links.Store_2ndDB });
                     Offline_Directories = (string[])GetReg(REG_Store, "Offline_Directories", new[] { string.Empty });
                     Offline_SubFolders = Conversions.ToBoolean(GetReg(REG_Store, "Offline_SubFolders", true));
                     Search_ThemeNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_ThemeNames", true));
@@ -367,31 +370,31 @@ namespace WinPaletter
                     Search_Descriptions = Conversions.ToBoolean(GetReg(REG_Store, "Search_Descriptions", true));
                     ShowTips = Conversions.ToBoolean(GetReg(REG_Store, "ShowTips", true));
 
-                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
+                    if (!Online_Repositories.Contains(Links.Store_MainDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Links.Store_MainDB;
                     }
 
-                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
+                    if (!Online_Repositories.Contains(Links.Store_2ndDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Links.Store_2ndDB;
                     }
                 }
 
                 public void Save()
                 {
-                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
+                    if (!Online_Repositories.Contains(Links.Store_MainDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Links.Store_MainDB;
                     }
 
-                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
+                    if (!Online_Repositories.Contains(Links.Store_2ndDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Links.Store_2ndDB;
                     }
 
                     EditReg(REG_Store, "Search_ThemeNames", Search_ThemeNames, RegistryValueKind.DWord);
@@ -616,6 +619,7 @@ namespace WinPaletter
             CMD_OverrideUserPreferences = true,
             SFC_on_restoring_StartupSound = false,
             Ignore_PE_Modify_Alert = false,
+            Show_WinEffects_Alert = true,
             PE_ModifyByDefault = true
         };
 
@@ -675,7 +679,7 @@ namespace WinPaletter
             Search_AuthorsNames = true,
             Search_Descriptions = true,
             Online_or_Offline = true,
-            Online_Repositories = new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB },
+            Online_Repositories = new[] { Links.Store_MainDB, Links.Store_2ndDB },
             Offline_Directories = new[] { string.Empty },
             Offline_SubFolders = true,
             ShowTips = true
@@ -789,16 +793,16 @@ namespace WinPaletter
                                         }
                                     }
 
-                                    if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
+                                    if (!Store.Online_Repositories.Contains(Links.Store_MainDB))
                                     {
                                         Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
+                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_MainDB;
                                     }
 
-                                    if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
+                                    if (!Store.Online_Repositories.Contains(Links.Store_2ndDB))
                                     {
                                         Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
+                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_2ndDB;
                                     }
                                 }
                                 catch (Exception ex)
@@ -849,16 +853,16 @@ namespace WinPaletter
 
                 case Mode.File:
                     {
-                        if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
+                        if (!Store.Online_Repositories.Contains(Links.Store_MainDB))
                         {
                             Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
+                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_MainDB;
                         }
 
-                        if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
+                        if (!Store.Online_Repositories.Contains(Links.Store_2ndDB))
                         {
                             Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
+                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_2ndDB;
                         }
 
                         System.IO.File.WriteAllText(File, ToString());

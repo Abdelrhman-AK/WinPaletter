@@ -187,7 +187,7 @@ namespace WinPaletter
                         RaiseUpdate = false;
                         ver = string.Empty;
 
-                        string result = await DM.ReadStringAsync(Properties.Resources.Link_Updates);
+                        string result = await DM.ReadStringAsync(Links.Updates);
                         Updates_ls = result.CList();
 
                         foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
@@ -239,7 +239,7 @@ namespace WinPaletter
 
         private void Button39_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_Wiki);
+            Process.Start(Links.Wiki.WikiURL);
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -535,7 +535,7 @@ namespace WinPaletter
 
         private void button41_Click(object sender, EventArgs e)
         {
-            Process.Start(Properties.Resources.Link_PayPal);
+            Process.Start(Links.PayPal);
         }
 
         private void Button13_Click(object sender, EventArgs e)
@@ -592,6 +592,11 @@ namespace WinPaletter
         private void panel1_BackColorChanged(object sender, EventArgs e)
         {
             groupBox1.Refresh();
+        }
+
+        private void Home_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Process.Start(Links.Wiki.WikiURL);
         }
 
         //private void button1_Click(object sender, EventArgs e)

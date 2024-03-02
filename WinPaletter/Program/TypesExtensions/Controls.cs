@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions to controls
+    /// </summary>
     public static class ControlExtensions
     {
         /// <summary>
@@ -24,7 +27,12 @@ namespace WinPaletter.TypesExtensions
             return retval;
         }
 
-        // Set the value of a property in an object
+        /// <summary>
+        /// Set the value of a property in an object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
         public static void SetProperty(this Control obj, string propertyName, object value)
         {
             PropertyInfo property = obj.GetType().GetProperty(propertyName);
@@ -34,7 +42,13 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        // Get the value of a property in an object
+        /// <summary>
+        /// Get the value of a property in an object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public static T GetProperty<T>(this Control obj, string propertyName)
         {
             PropertyInfo property = obj.GetType().GetProperty(propertyName);
@@ -46,7 +60,12 @@ namespace WinPaletter.TypesExtensions
             return default(T);
         }
 
-        // Set the value of a property in an object
+        /// <summary>
+        /// Set the value of a property in an object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
         public static void SetProperty(this object obj, string propertyName, object value)
         {
             PropertyInfo property = obj.GetType().GetProperty(propertyName);
@@ -56,7 +75,13 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        // Get the value of a property in an object
+        /// <summary>
+        /// Get the value of a property in an object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public static T GetProperty<T>(this object obj, string propertyName)
         {
             PropertyInfo property = obj.GetType().GetProperty(propertyName);
@@ -65,7 +90,7 @@ namespace WinPaletter.TypesExtensions
                 return (T)property.GetValue(obj);
             }
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -92,28 +117,60 @@ namespace WinPaletter.TypesExtensions
 
         }
 
-        private static Bitmap DrawToBitmap(Control Control)
+        private static readonly object lockObject = new object();
+
+        private static Bitmap DrawToBitmap(Control control)
         {
-            Control[] childControls = Control.Controls.Cast<Control>().ToArray();
+            Bitmap bmp = new Bitmap(control.Width, control.Height);
+            List<Control> visibleChildControls = new List<Control>();
+            Control[] childControls = control.Controls.Cast<Control>().ToArray();
             Array.Reverse(childControls);
 
-            using (Bitmap bmp = new(Control.Width, Control.Height))
+            lock (lockObject)
             {
-                foreach (Control childControl in childControls)
+                using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    childControl.DrawToBitmap(bmp, childControl.Bounds);
+                    // Temporarily make visible child controls not visible
+                    foreach (Control childControl in childControls)
+                    {
+                        if (childControl.Visible)
+                        {
+                            visibleChildControls.Add(childControl);
+                            childControl.Visible = false;
+                        }
+                    }
+
+                    // Draw the parent control
+                    control.DrawToBitmap(bmp, control.ClientRectangle);
+
+                    // Restore visibility of child controls
+                    foreach (Control childControl in visibleChildControls)
+                    {
+                        childControl.Visible = true;
+                    }
+
+                    visibleChildControls.Clear();
+
+                    // Draw child controls manually in the correct order
+                    foreach (Control childControl in childControls)
+                    {
+                        if (childControl.Visible)
+                        {
+                            childControl.DrawToBitmap(bmp, childControl.Bounds);
+                        }
+                    }
                 }
-                return (Bitmap)bmp.Clone();
             }
+
+            return bmp;
         }
 
-        public static void DoubleBufferedControl(Control Control, bool setting)
-        {
-            Type panType = Control.GetType();
-            PropertyInfo pi = panType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(Control, setting, null);
-        }
-
+        /// <summary>
+        /// Get the color of the parent of a control
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="Accept_Transparent"></param>
+        /// <returns></returns>
         public static Color GetParentColor(this Control ctrl, bool Accept_Transparent = false)
         {
             if (ctrl is null) return default;
@@ -152,6 +209,10 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Make a control double buffered
+        /// </summary>
+        /// <param name="Parent"></param>
         public static void DoubleBuffer(this Control Parent)
         {
             DoubleBufferedControl(Parent, true);
@@ -168,6 +229,18 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        private static void DoubleBufferedControl(Control Control, bool setting)
+        {
+            Type panType = Control.GetType();
+            PropertyInfo pi = panType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(Control, setting, null);
+        }
+
+        /// <summary>
+        /// Get all controls in a control and its children
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         public static IEnumerable<Control> GetAllControls(this Control parent)
         {
             try
@@ -216,6 +289,11 @@ namespace WinPaletter.TypesExtensions
             return level;
         }
 
+        /// <summary>
+        /// Set the text of a control in a thread safe way
+        /// </summary>
+        /// <param name="Ctrl"></param>
+        /// <param name="text"></param>
         public static void SetText(this Control Ctrl, string text)
         {
             if (Ctrl is not null)
@@ -232,6 +310,11 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void setCtrlTxtInvoker(Control Ctrl, string text);
 
+        /// <summary>
+        /// Set the tag of a control in a thread safe way
+        /// </summary>
+        /// <param name="Ctrl"></param>
+        /// <param name="Tag"></param>
         public static void SetTag(this Control Ctrl, object Tag)
         {
             if (Ctrl is not null)
@@ -248,6 +331,12 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void setCtrlTagInvoker(Control Ctrl, object Tag);
 
+        /// <summary>
+        /// Add a node to a treeview in a thread safe way
+        /// </summary>
+        /// <param name="Ctrl"></param>
+        /// <param name="text"></param>
+        /// <param name="imagekey"></param>
         public static void AddTreeNode(this TreeView Ctrl, string text, string imagekey)
         {
             if (Ctrl is not null)
@@ -269,6 +358,10 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void AddTreeNodeInvoker(TreeView Ctrl, string text, string imagekey);
 
+        /// <summary>
+        /// Perform a step in a progress bar in a thread safe way
+        /// </summary>
+        /// <param name="ProgressBar"></param>
         public static void PerformStepMethod2(this UI.WP.ProgressBar ProgressBar)
         {
             if (ProgressBar.InvokeRequired)

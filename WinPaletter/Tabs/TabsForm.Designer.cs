@@ -59,7 +59,6 @@
             this.tabsContainer1.Size = new System.Drawing.Size(933, 34);
             this.tabsContainer1.TabControl = null;
             this.tabsContainer1.TabIndex = 120;
-            this.tabsContainer1.DoubleClick += new System.EventHandler(this.tabsContainer1_DoubleClick);
             // 
             // TabsForm
             // 

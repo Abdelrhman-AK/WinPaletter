@@ -352,8 +352,8 @@
             this.winEdition.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.winEdition.ForeColor = System.Drawing.Color.White;
             this.winEdition.Image = null;
-            this.winEdition.ImageGlyphEnabled = false;
             this.winEdition.ImageGlyph = null;
+            this.winEdition.ImageGlyphEnabled = false;
             this.winEdition.Location = new System.Drawing.Point(1076, 1);
             this.winEdition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.winEdition.Name = "winEdition";
@@ -385,8 +385,8 @@
             this.apply_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.apply_btn.ForeColor = System.Drawing.Color.White;
             this.apply_btn.Image = ((System.Drawing.Image)(resources.GetObject("apply_btn.Image")));
-            this.apply_btn.ImageGlyphEnabled = false;
             this.apply_btn.ImageGlyph = null;
+            this.apply_btn.ImageGlyphEnabled = false;
             this.apply_btn.Location = new System.Drawing.Point(992, 6);
             this.apply_btn.Name = "apply_btn";
             this.apply_btn.Size = new System.Drawing.Size(180, 37);
@@ -404,8 +404,8 @@
             this.button41.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button41.ForeColor = System.Drawing.Color.White;
             this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
-            this.button41.ImageGlyphEnabled = false;
             this.button41.ImageGlyph = null;
+            this.button41.ImageGlyphEnabled = false;
             this.button41.Location = new System.Drawing.Point(348, 6);
             this.button41.Name = "button41";
             this.button41.Size = new System.Drawing.Size(180, 37);
@@ -423,8 +423,8 @@
             this.Button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button13.ForeColor = System.Drawing.Color.White;
             this.Button13.Image = ((System.Drawing.Image)(resources.GetObject("Button13.Image")));
-            this.Button13.ImageGlyphEnabled = false;
             this.Button13.ImageGlyph = null;
+            this.Button13.ImageGlyphEnabled = false;
             this.Button13.Location = new System.Drawing.Point(534, 6);
             this.Button13.Name = "Button13";
             this.Button13.Size = new System.Drawing.Size(130, 37);
@@ -442,8 +442,8 @@
             this.restartExplorer_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.restartExplorer_btn.ForeColor = System.Drawing.Color.White;
             this.restartExplorer_btn.Image = ((System.Drawing.Image)(resources.GetObject("restartExplorer_btn.Image")));
-            this.restartExplorer_btn.ImageGlyphEnabled = false;
             this.restartExplorer_btn.ImageGlyph = null;
+            this.restartExplorer_btn.ImageGlyphEnabled = false;
             this.restartExplorer_btn.Location = new System.Drawing.Point(806, 6);
             this.restartExplorer_btn.Name = "restartExplorer_btn";
             this.restartExplorer_btn.Size = new System.Drawing.Size(180, 37);
@@ -461,8 +461,8 @@
             this.Button28.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button28.ForeColor = System.Drawing.Color.White;
             this.Button28.Image = ((System.Drawing.Image)(resources.GetObject("Button28.Image")));
-            this.Button28.ImageGlyphEnabled = false;
             this.Button28.ImageGlyph = null;
+            this.Button28.ImageGlyphEnabled = false;
             this.Button28.Location = new System.Drawing.Point(670, 6);
             this.Button28.Name = "Button28";
             this.Button28.Size = new System.Drawing.Size(130, 37);
@@ -523,8 +523,8 @@
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.ImageGlyph = null;
+            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.Location = new System.Drawing.Point(3, 3);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
@@ -542,8 +542,8 @@
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
+            this.Button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button3.ImageGlyph")));
             this.Button3.ImageGlyphEnabled = true;
-            this.Button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button3.ImageVector")));
             this.Button3.Location = new System.Drawing.Point(44, 3);
             this.Button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button3.Name = "Button3";
@@ -561,8 +561,8 @@
             this.Button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button20.ForeColor = System.Drawing.Color.White;
             this.Button20.Image = null;
+            this.Button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button20.ImageGlyph")));
             this.Button20.ImageGlyphEnabled = true;
-            this.Button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button20.ImageVector")));
             this.Button20.Location = new System.Drawing.Point(84, 3);
             this.Button20.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button20.Name = "Button20";
@@ -580,8 +580,8 @@
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button2.ImageGlyph")));
             this.Button2.ImageGlyphEnabled = true;
-            this.Button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button2.ImageVector")));
             this.Button2.Location = new System.Drawing.Point(124, 3);
             this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button2.Name = "Button2";
@@ -599,8 +599,8 @@
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
+            this.Button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button7.ImageGlyph")));
             this.Button7.ImageGlyphEnabled = true;
-            this.Button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button7.ImageVector")));
             this.Button7.Location = new System.Drawing.Point(164, 3);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";
@@ -618,8 +618,8 @@
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
             this.Button9.Image = null;
+            this.Button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button9.ImageGlyph")));
             this.Button9.ImageGlyphEnabled = true;
-            this.Button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button9.ImageVector")));
             this.Button9.Location = new System.Drawing.Point(204, 3);
             this.Button9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button9.Name = "Button9";
@@ -637,8 +637,8 @@
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
             this.Button10.Image = null;
+            this.Button10.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button10.ImageGlyph")));
             this.Button10.ImageGlyphEnabled = true;
-            this.Button10.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button10.ImageVector")));
             this.Button10.Location = new System.Drawing.Point(244, 3);
             this.Button10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button10.Name = "Button10";
@@ -656,8 +656,8 @@
             this.btn_history.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_history.ForeColor = System.Drawing.Color.White;
             this.btn_history.Image = null;
+            this.btn_history.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("btn_history.ImageGlyph")));
             this.btn_history.ImageGlyphEnabled = true;
-            this.btn_history.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("btn_history.ImageVector")));
             this.btn_history.Location = new System.Drawing.Point(284, 3);
             this.btn_history.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_history.Name = "btn_history";
@@ -687,8 +687,8 @@
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
+            this.Button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button11.ImageGlyph")));
             this.Button11.ImageGlyphEnabled = true;
-            this.Button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button11.ImageVector")));
             this.Button11.Location = new System.Drawing.Point(331, 3);
             this.Button11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button11.Name = "Button11";
@@ -706,8 +706,8 @@
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
+            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
             this.Button5.Location = new System.Drawing.Point(371, 3);
             this.Button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button5.Name = "Button5";
@@ -725,8 +725,8 @@
             this.Button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button31.ForeColor = System.Drawing.Color.White;
             this.Button31.Image = null;
+            this.Button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button31.ImageGlyph")));
             this.Button31.ImageGlyphEnabled = true;
-            this.Button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button31.ImageVector")));
             this.Button31.Location = new System.Drawing.Point(411, 3);
             this.Button31.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button31.Name = "Button31";
@@ -744,8 +744,8 @@
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
+            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
             this.button8.ImageGlyphEnabled = true;
-            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageVector")));
             this.button8.Location = new System.Drawing.Point(450, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(32, 35);
@@ -762,8 +762,8 @@
             this.Button39.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button39.ForeColor = System.Drawing.Color.White;
             this.Button39.Image = null;
+            this.Button39.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button39.ImageGlyph")));
             this.Button39.ImageGlyphEnabled = true;
-            this.Button39.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button39.ImageVector")));
             this.Button39.Location = new System.Drawing.Point(489, 3);
             this.Button39.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button39.Name = "Button39";
@@ -781,8 +781,8 @@
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
+            this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageGlyph")));
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageVector")));
             this.Button6.Location = new System.Drawing.Point(529, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
@@ -800,8 +800,8 @@
             this.Button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button12.ForeColor = System.Drawing.Color.White;
             this.Button12.Image = null;
+            this.Button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button12.ImageGlyph")));
             this.Button12.ImageGlyphEnabled = true;
-            this.Button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button12.ImageVector")));
             this.Button12.Location = new System.Drawing.Point(569, 3);
             this.Button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button12.Name = "Button12";
@@ -843,8 +843,8 @@
             this.userButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.userButton.ForeColor = System.Drawing.Color.White;
             this.userButton.Image = null;
-            this.userButton.ImageGlyphEnabled = false;
             this.userButton.ImageGlyph = null;
+            this.userButton.ImageGlyphEnabled = false;
             this.userButton.Location = new System.Drawing.Point(1126, 1);
             this.userButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.userButton.Name = "userButton";
@@ -866,10 +866,12 @@
             this.Controls.Add(this.titlebarExtender2);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
+            this.HelpButton = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter";
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Home_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Home_Load);
             this.Shown += new System.EventHandler(this.Dashboard_Shown);
             this.ParentChanged += new System.EventHandler(this.Dashboard_ParentChanged);

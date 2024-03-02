@@ -23,6 +23,9 @@ namespace WinPaletter
             [Option('a', "apply", Required = false, HelpText = "Apply a WinPaletter theme file.")]
             public string Apply { get; set; }
 
+            [Option('s', "silent", Required = false, HelpText = "A switch to apply theme file silently. Requires -a \"file\" or --apply \"file\" before -s or --silent.")]
+            public bool SilentApply { get; set; }
+
             [Option('e', "edit", Required = false, HelpText = "Edit a WinPaletter theme file.")]
             public string Edit { get; set; }
 
@@ -120,10 +123,10 @@ namespace WinPaletter
 
                 if (o.Apply != null && System.IO.File.Exists(o.Apply))
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply))
+                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
                     {
                         Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
-                        TMx.Save(Theme.Manager.Source.Registry);
+                        TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                         if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
                         ExternalLink = true;
@@ -157,7 +160,7 @@ namespace WinPaletter
                             if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                             {
                                 Forms.Home.Text = System.IO.Path.GetFileName(file);
-                                TM = new(Theme.Manager.Source.File, file);
+                                TM = new(Theme.Manager.Source.File, file, false);
                                 TM_Original = (Theme.Manager)TM.Clone();
                                 Forms.Home.file = file;
                                 Forms.Home.LoadFromTM(TM);
@@ -169,9 +172,9 @@ namespace WinPaletter
                             }
                             else
                             {
-                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file))
+                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, o.SilentApply))
                                 {
-                                    TMx.Save(Theme.Manager.Source.Registry);
+                                    TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                                     if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
                                     Forms.Home.Text = System.IO.Path.GetFileName(file);
                                     shouldExit = true;

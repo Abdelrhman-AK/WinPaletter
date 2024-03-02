@@ -28,7 +28,7 @@ namespace WinPaletter
         {
             if (User.SID == null) User.SID = User.AdminSID_GrantedUAC;
 
-            Forms.BK.Close();
+            Forms.GlassWindow.Close();
         }
 
         private void UserSwitch_Load(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace WinPaletter
             checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
 
-            Forms.BK.Show();
+            Forms.GlassWindow.Show();
             BringToFront();
         }
 

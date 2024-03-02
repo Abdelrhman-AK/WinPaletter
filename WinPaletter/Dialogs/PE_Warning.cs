@@ -26,7 +26,7 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            Forms.BK.Show();
+            Forms.GlassWindow.Show();
 
             SystemSounds.Exclamation.Play();
 
@@ -87,19 +87,19 @@ namespace WinPaletter
 
         private void PE_Warning_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Forms.BK.Close();
+            Forms.GlassWindow.Close();
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Mode.Registry);
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Antiviruses-or-browsers-download-issue");
+            Process.Start(Links.Wiki.AntivirusIssue);
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start($"{Properties.Resources.Link_Wiki}/Advanced-options-to-patch-PE-files");
+            Process.Start(Links.Wiki.PE);
         }
 
         private void Button4_Click(object sender, EventArgs e)

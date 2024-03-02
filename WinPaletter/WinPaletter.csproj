@@ -340,6 +340,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\WinEffectsAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\WinEffectsAlert.Designer.cs">
+      <DependentUpon>WinEffectsAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -355,10 +361,10 @@
     <Compile Include="Dialogs\UserPassword.Designer.cs">
       <DependentUpon>UserPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\ScreenSavers_List.cs">
+    <Compile Include="Aspects\ScreenSavers_List.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\ScreenSavers_List.Designer.cs">
+    <Compile Include="Aspects\ScreenSavers_List.Designer.cs">
       <DependentUpon>ScreenSavers_List.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
@@ -368,6 +374,7 @@
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
+    <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
@@ -414,7 +421,7 @@
     <Compile Include="GUI\RetroElements\Simulators\WindowControlR.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Style\SchemeEditor.cs">
+    <Compile Include="GUI\SchemeEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
@@ -587,10 +594,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="BackupThemes_List.cs">
+    <Compile Include="Dialogs\BackupThemes_List.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BackupThemes_List.Designer.cs">
+    <Compile Include="Dialogs\BackupThemes_List.Designer.cs">
       <DependentUpon>BackupThemes_List.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\Settings.cs" />
@@ -690,16 +697,13 @@
     <Compile Include="Program\Classes\Bitmap_Mgr.cs" />
     <Compile Include="Program\Classes\INI.cs" />
     <Compile Include="Theme\Support\PreviewHelpers.cs" />
-    <Compile Include="Extras\AltTabEditor.Designer.cs">
+    <Compile Include="Aspects\AltTabEditor.Designer.cs">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\AltTabEditor.cs">
+    <Compile Include="Aspects\AltTabEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BK.Designer.cs">
-      <DependentUpon>BK.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BK.cs">
+    <Compile Include="GUI\GlassWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\BugReport.Designer.cs">
@@ -713,22 +717,22 @@
     <Compile Include="Program\Classes\MemoryFonts.cs" />
     <Compile Include="Program\NativeMethods\NativeMethods.cs" />
     <Compile Include="Program\Classes\Reg_IO.cs" />
-    <Compile Include="Extras\ApplicationThemer.Designer.cs">
+    <Compile Include="Aspects\ApplicationThemer.Designer.cs">
       <DependentUpon>ApplicationThemer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\ApplicationThemer.cs">
+    <Compile Include="Aspects\ApplicationThemer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\ScreenSaver_Editor.Designer.cs">
+    <Compile Include="Aspects\ScreenSaver_Editor.Designer.cs">
       <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\ScreenSaver_Editor.cs">
+    <Compile Include="Aspects\ScreenSaver_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\Sounds_Editor.Designer.cs">
+    <Compile Include="Aspects\Sounds_Editor.Designer.cs">
       <DependentUpon>Sounds_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\Sounds_Editor.cs">
+    <Compile Include="Aspects\Sounds_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\CursorControl.cs">
@@ -892,17 +896,17 @@
     </Compile>
     <Compile Include="Theme\Manager.cs" />
     <Compile Include="Theme\Default\Default.cs" />
-    <Compile Include="CursorsStudio\CursorsCustomizer.cs" />
-    <Compile Include="CursorsStudio\CursorsStudio.Designer.cs">
+    <Compile Include="Aspects\CursorsStudio\CursorsCustomizer.cs" />
+    <Compile Include="Aspects\CursorsStudio\CursorsStudio.Designer.cs">
       <DependentUpon>CursorsStudio.cs</DependentUpon>
     </Compile>
-    <Compile Include="CursorsStudio\CursorsStudio.cs">
+    <Compile Include="Aspects\CursorsStudio\CursorsStudio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditInfo.Designer.cs">
+    <Compile Include="Aspects\EditInfo.Designer.cs">
       <DependentUpon>EditInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditInfo.cs">
+    <Compile Include="Aspects\EditInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Style\VisualStylesRes.cs" />
@@ -938,34 +942,34 @@
     <Compile Include="Dialogs\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI\LogonUI.Designer.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI.Designer.cs">
       <DependentUpon>LogonUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUI.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI\LogonUI7.Designer.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI7.Designer.cs">
       <DependentUpon>LogonUI7.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUI7.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI7.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI\LogonUI8Colors.Designer.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI8Colors.Designer.cs">
       <DependentUpon>LogonUI8Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUI8Colors.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI8Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI\LogonUI8_Pics.Designer.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI8_Pics.Designer.cs">
       <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUI8_Pics.cs">
+    <Compile Include="Aspects\LogonUI\LogonUI8_Pics.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI\LogonUIXP.Designer.cs">
+    <Compile Include="Aspects\LogonUI\LogonUIXP.Designer.cs">
       <DependentUpon>LogonUIXP.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUIXP.cs">
+    <Compile Include="Aspects\LogonUI\LogonUIXP.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
@@ -974,10 +978,10 @@
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Metrics_Fonts\Metrics_Fonts.Designer.cs">
+    <Compile Include="Aspects\Metrics_Fonts.Designer.cs">
       <DependentUpon>Metrics_Fonts.cs</DependentUpon>
     </Compile>
-    <Compile Include="Metrics_Fonts\Metrics_Fonts.cs">
+    <Compile Include="Aspects\Metrics_Fonts.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\SettingsX.Designer.cs">
@@ -1040,52 +1044,52 @@
     <Compile Include="Store\Store_ThemeLicense.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\CMD.Designer.cs">
+    <Compile Include="Aspects\Terminals\CMD.Designer.cs">
       <DependentUpon>CMD.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\CMD.cs">
+    <Compile Include="Aspects\Terminals\CMD.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\ExternalTerminal.Designer.cs">
+    <Compile Include="Aspects\Terminals\ExternalTerminal.Designer.cs">
       <DependentUpon>ExternalTerminal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\ExternalTerminal.cs">
+    <Compile Include="Aspects\Terminals\ExternalTerminal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\NewExtTerminal.Designer.cs">
+    <Compile Include="Aspects\Terminals\NewExtTerminal.Designer.cs">
       <DependentUpon>NewExtTerminal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\NewExtTerminal.cs">
+    <Compile Include="Aspects\Terminals\NewExtTerminal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\TerminalInfo.Designer.cs">
+    <Compile Include="Aspects\Terminals\TerminalInfo.Designer.cs">
       <DependentUpon>TerminalInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\TerminalInfo.cs">
+    <Compile Include="Aspects\Terminals\TerminalInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\TerminalsDashboard.Designer.cs">
+    <Compile Include="Aspects\Terminals\TerminalsDashboard.Designer.cs">
       <DependentUpon>TerminalsDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\TerminalsDashboard.cs">
+    <Compile Include="Aspects\Terminals\TerminalsDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminal.Designer.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminal.Designer.cs">
       <DependentUpon>WindowsTerminal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminal.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminalCopycat.Designer.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminalCopycat.Designer.cs">
       <DependentUpon>WindowsTerminalCopycat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminalCopycat.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminalCopycat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminalDecide.Designer.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminalDecide.Designer.cs">
       <DependentUpon>WindowsTerminalDecide.cs</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\WindowsTerminalDecide.cs">
+    <Compile Include="Aspects\Terminals\WindowsTerminalDecide.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Theme\Structures\Consoles\WinTerminal.cs" />
@@ -1103,28 +1107,28 @@
     <Compile Include="Updates\Whatsnew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\Wallpaper_Editor.Designer.cs">
+    <Compile Include="Aspects\Wallpaper_Editor.Designer.cs">
       <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\Wallpaper_Editor.cs">
+    <Compile Include="Aspects\Wallpaper_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win32UI\Win32UI.Designer.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI.Designer.cs">
       <DependentUpon>Win32UI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Win32UI\Win32UI.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\Start8Selector.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\Start8Selector.Designer.cs">
       <DependentUpon>Start8Selector.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\Start8Selector.cs">
+    <Compile Include="Aspects\WindowsColors\Start8Selector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\WinEffecter.Designer.cs">
+    <Compile Include="Aspects\WinEffecter.Designer.cs">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extras\WinEffecter.cs">
+    <Compile Include="Aspects\WinEffecter.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Templates\AspectsTemplate.cs">
@@ -1133,59 +1137,57 @@
     <Compile Include="Templates\AspectsTemplate.Designer.cs">
       <DependentUpon>AspectsTemplate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Win32UI\Win32UI_Fullscreen.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI_Fullscreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win32UI\Win32UI_Fullscreen.Designer.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI_Fullscreen.Designer.cs">
       <DependentUpon>Win32UI_Fullscreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Win32UI\Win32UI_Gallery.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI_Gallery.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win32UI\Win32UI_Gallery.Designer.cs">
+    <Compile Include="Aspects\Win32UI\Win32UI_Gallery.Designer.cs">
       <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\WinXPColors.cs">
+    <Compile Include="Aspects\WindowsColors\WinXPColors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\WinXPColors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\WinXPColors.Designer.cs">
       <DependentUpon>WinXPColors.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\WinVistaColors.cs">
+    <Compile Include="Aspects\WindowsColors\WinVistaColors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\WinVistaColors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\WinVistaColors.Designer.cs">
       <DependentUpon>WinVistaColors.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\Win81Colors.cs">
+    <Compile Include="Aspects\WindowsColors\Win81Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\Win81Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\Win81Colors.Designer.cs">
       <DependentUpon>Win81Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\Win7Colors.cs">
+    <Compile Include="Aspects\WindowsColors\Win7Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\Win7Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\Win7Colors.Designer.cs">
       <DependentUpon>Win7Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\Win10Colors.cs">
+    <Compile Include="Aspects\WindowsColors\Win10Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\Win10Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\Win10Colors.Designer.cs">
       <DependentUpon>Win10Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsColors\Win11Colors.cs">
+    <Compile Include="Aspects\WindowsColors\Win11Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsColors\Win11Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsColors\Win11Colors.Designer.cs">
       <DependentUpon>Win11Colors.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
     <Content Include="Resources\LICENSE.txt" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
@@ -1253,6 +1255,9 @@
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\WinEffectsAlert.resx">
+      <DependentUpon>WinEffectsAlert.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -1277,13 +1282,8 @@
     <EmbeddedResource Include="Dialogs\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\AltTabEditor.resx">
+    <EmbeddedResource Include="Aspects\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BK.resx">
-      <DependentUpon>BK.cs</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>BK.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.cs</DependentUpon>
@@ -1297,19 +1297,19 @@
     <EmbeddedResource Include="ColorItemControllers\SubMenu.resx">
       <DependentUpon>SubMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
+    <EmbeddedResource Include="Aspects\CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditInfo.resx">
+    <EmbeddedResource Include="Aspects\EditInfo.resx">
       <DependentUpon>EditInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\ApplicationThemer.resx">
+    <EmbeddedResource Include="Aspects\ApplicationThemer.resx">
       <DependentUpon>ApplicationThemer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\ScreenSavers_List.resx">
+    <EmbeddedResource Include="Aspects\ScreenSavers_List.resx">
       <DependentUpon>ScreenSavers_List.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\Sounds_Editor.resx">
+    <EmbeddedResource Include="Aspects\Sounds_Editor.resx">
       <DependentUpon>Sounds_Editor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\AspectsResources.resx">
@@ -1344,28 +1344,28 @@
     <EmbeddedResource Include="Languages\Lang_ReplaceText.resx">
       <DependentUpon>Lang_ReplaceText.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI\LogonUI.resx">
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI\LogonUI7.resx">
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUI7.resx">
       <DependentUpon>LogonUI7.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI\LogonUI8Colors.resx">
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUI8Colors.resx">
       <DependentUpon>LogonUI8Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI\LogonUI8_Pics.resx">
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUI8_Pics.resx">
       <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUIXP.resx">
       <DependentUpon>LogonUIXP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Metrics_Fonts\Metrics_Fonts.resx">
+    <EmbeddedResource Include="Aspects\Metrics_Fonts.resx">
       <DependentUpon>Metrics_Fonts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
+    <EmbeddedResource Include="Aspects\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
@@ -1379,7 +1379,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="BackupThemes_List.resx">
+    <EmbeddedResource Include="Dialogs\BackupThemes_List.resx">
       <DependentUpon>BackupThemes_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
@@ -1431,28 +1431,28 @@
     <EmbeddedResource Include="OS_Dashboard.resx">
       <DependentUpon>OS_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\CMD.resx">
+    <EmbeddedResource Include="Aspects\Terminals\CMD.resx">
       <DependentUpon>CMD.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\ExternalTerminal.resx">
+    <EmbeddedResource Include="Aspects\Terminals\ExternalTerminal.resx">
       <DependentUpon>ExternalTerminal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\NewExtTerminal.resx">
+    <EmbeddedResource Include="Aspects\Terminals\NewExtTerminal.resx">
       <DependentUpon>NewExtTerminal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\TerminalInfo.resx">
+    <EmbeddedResource Include="Aspects\Terminals\TerminalInfo.resx">
       <DependentUpon>TerminalInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\TerminalsDashboard.resx">
+    <EmbeddedResource Include="Aspects\Terminals\TerminalsDashboard.resx">
       <DependentUpon>TerminalsDashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
+    <EmbeddedResource Include="Aspects\Terminals\WindowsTerminal.resx">
       <DependentUpon>WindowsTerminal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\WindowsTerminalCopycat.resx">
+    <EmbeddedResource Include="Aspects\Terminals\WindowsTerminalCopycat.resx">
       <DependentUpon>WindowsTerminalCopycat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\WindowsTerminalDecide.resx">
+    <EmbeddedResource Include="Aspects\Terminals\WindowsTerminalDecide.resx">
       <DependentUpon>WindowsTerminalDecide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\Updates.resx">
@@ -1461,44 +1461,44 @@
     <EmbeddedResource Include="Updates\Whatsnew.resx">
       <DependentUpon>Whatsnew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\Wallpaper_Editor.resx">
+    <EmbeddedResource Include="Aspects\Wallpaper_Editor.resx">
       <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win32UI\Win32UI.resx">
+    <EmbeddedResource Include="Aspects\Win32UI\Win32UI.resx">
       <DependentUpon>Win32UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\Start8Selector.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\Start8Selector.resx">
       <DependentUpon>Start8Selector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\WinEffecter.resx">
+    <EmbeddedResource Include="Aspects\WinEffecter.resx">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\AspectsTemplate.resx">
       <DependentUpon>AspectsTemplate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win32UI\Win32UI_Fullscreen.resx">
+    <EmbeddedResource Include="Aspects\Win32UI\Win32UI_Fullscreen.resx">
       <DependentUpon>Win32UI_Fullscreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win32UI\Win32UI_Gallery.resx">
+    <EmbeddedResource Include="Aspects\Win32UI\Win32UI_Gallery.resx">
       <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\WinXPColors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\WinXPColors.resx">
       <DependentUpon>WinXPColors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\WinVistaColors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\WinVistaColors.resx">
       <DependentUpon>WinVistaColors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\Win81Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\Win81Colors.resx">
       <DependentUpon>Win81Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\Win7Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\Win7Colors.resx">
       <DependentUpon>Win7Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\Win10Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\Win10Colors.resx">
       <DependentUpon>Win10Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsColors\Win11Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsColors\Win11Colors.resx">
       <DependentUpon>Win11Colors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

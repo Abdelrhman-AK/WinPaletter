@@ -252,7 +252,7 @@ namespace WinPaletter.UI.Retro
                 {
                     if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
                     else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
-                    else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonFace)));
+                    else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(Flat ? nameof(Templates.RetroDesktopColors.MenuBar) : nameof(Templates.RetroDesktopColors.ButtonFace)));
                     else if (CursorOnText0 | CursorOnText1) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonText)));
                     else if (CursorOnGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.GrayText)));
                     else if (CursorOnSelectionText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.HilightText)));

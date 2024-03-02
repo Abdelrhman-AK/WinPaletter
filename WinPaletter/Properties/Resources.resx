@@ -131,22 +131,23 @@
   </data>
   <data name="checker_disabled" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        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
+        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
 </value>
   </data>
   <data name="checker_enabled" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -5763,42 +5764,6 @@
         0EMvMx+IaivH8iRTw3iT9NDbGW/REWKKL5EYH660lSRSJFLgX2+Md9l+SENvgIfEPWTz9VOOYTftHf0a
         szddIjb5Z6i7bQAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="Link_Changelog" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md</value>
-  </data>
-  <data name="Link_License" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true</value>
-  </data>
-  <data name="Link_PayPal" xml:space="preserve">
-    <value>https://paypal.me/AbdelrhmanAK</value>
-  </data>
-  <data name="Link_Releases" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/releases</value>
-  </data>
-  <data name="Link_Repository" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/</value>
-  </data>
-  <data name="Link_StoreMainDB" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true</value>
-  </data>
-  <data name="Link_StoreOnlineSourceCreation" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/Create-an-online-WinPaletter-Store-source-(server%5CGitHub-repository)-for-hosting-WinPaletter-themes</value>
-  </data>
-  <data name="Link_StoreReposDB" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true</value>
-  </data>
-  <data name="Link_StoreSourcesExtension" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Sources-extension</value>
-  </data>
-  <data name="Link_StoreUpload" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/Upload-themes-to-WinPaletter-Store-repository</value>
-  </data>
-  <data name="Link_Updates" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Updates?raw=true</value>
-  </data>
-  <data name="Link_Wiki" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki</value>
   </data>
   <data name="luna" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\luna.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -12580,7 +12545,7 @@
   <data name="Vector_Down" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAANxJREFUOE+1kskJAkEQRScARaMQQdFEFBQUA/EielHzcANPgqG4pKI31/H9nhp0
+        vAAADrwBlbxySQAAANxJREFUOE+1kskJAkEQRScARaMQQdFEFBQUA/EielHzcANPgqG4pKI31/H9nhp0
         3HF58GC6qn5D97T3F3zfz2AdB6a+s9Z+DEMx7OMRr1FtiDEbj6IGzvAVC4xb7AzFnmu/x8hiARRSeHCt
         99Bs2uJug4YrB6yxiVu3CtB3G1duFdCyuNtAFxei3atYwo1ZxgruMWRg8bvn36E2KWARFVbtkr7Fb44Q
         okDNvA6LyBG+u0RB4fPfKCjqIc1d+zlLvH1IgkYCJ3jvKYspJm38MQzlsINjs4t5a/8SzzsBLtZse42A
