@@ -113,7 +113,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 122);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 541);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 540);
             this.flowLayoutPanel1.TabIndex = 153;
             // 
             // card1
@@ -372,9 +372,9 @@
             this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
             this.bottom_buttons.Controls.Add(this.Button28);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 663);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 662);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(1176, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(1176, 49);
             this.bottom_buttons.TabIndex = 152;
             // 
             // apply_btn
@@ -387,7 +387,7 @@
             this.apply_btn.Image = ((System.Drawing.Image)(resources.GetObject("apply_btn.Image")));
             this.apply_btn.ImageGlyph = null;
             this.apply_btn.ImageGlyphEnabled = false;
-            this.apply_btn.Location = new System.Drawing.Point(992, 6);
+            this.apply_btn.Location = new System.Drawing.Point(990, 6);
             this.apply_btn.Name = "apply_btn";
             this.apply_btn.Size = new System.Drawing.Size(180, 37);
             this.apply_btn.TabIndex = 16;
@@ -406,7 +406,7 @@
             this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
             this.button41.ImageGlyph = null;
             this.button41.ImageGlyphEnabled = false;
-            this.button41.Location = new System.Drawing.Point(348, 6);
+            this.button41.Location = new System.Drawing.Point(346, 6);
             this.button41.Name = "button41";
             this.button41.Size = new System.Drawing.Size(180, 37);
             this.button41.TabIndex = 35;
@@ -425,7 +425,7 @@
             this.Button13.Image = ((System.Drawing.Image)(resources.GetObject("Button13.Image")));
             this.Button13.ImageGlyph = null;
             this.Button13.ImageGlyphEnabled = false;
-            this.Button13.Location = new System.Drawing.Point(534, 6);
+            this.Button13.Location = new System.Drawing.Point(532, 6);
             this.Button13.Name = "Button13";
             this.Button13.Size = new System.Drawing.Size(130, 37);
             this.Button13.TabIndex = 26;
@@ -444,7 +444,7 @@
             this.restartExplorer_btn.Image = ((System.Drawing.Image)(resources.GetObject("restartExplorer_btn.Image")));
             this.restartExplorer_btn.ImageGlyph = null;
             this.restartExplorer_btn.ImageGlyphEnabled = false;
-            this.restartExplorer_btn.Location = new System.Drawing.Point(806, 6);
+            this.restartExplorer_btn.Location = new System.Drawing.Point(804, 6);
             this.restartExplorer_btn.Name = "restartExplorer_btn";
             this.restartExplorer_btn.Size = new System.Drawing.Size(180, 37);
             this.restartExplorer_btn.TabIndex = 29;
@@ -463,7 +463,7 @@
             this.Button28.Image = ((System.Drawing.Image)(resources.GetObject("Button28.Image")));
             this.Button28.ImageGlyph = null;
             this.Button28.ImageGlyphEnabled = false;
-            this.Button28.Location = new System.Drawing.Point(670, 6);
+            this.Button28.Location = new System.Drawing.Point(668, 6);
             this.Button28.Name = "Button28";
             this.Button28.Size = new System.Drawing.Size(130, 37);
             this.Button28.TabIndex = 34;

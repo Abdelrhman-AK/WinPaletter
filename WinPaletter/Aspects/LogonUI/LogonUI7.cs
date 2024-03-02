@@ -72,7 +72,6 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
 
-
                 if (Program.WindowStyle == WindowStyle.W81)
                 {
                     TMx.Apply_LogonUI_8();

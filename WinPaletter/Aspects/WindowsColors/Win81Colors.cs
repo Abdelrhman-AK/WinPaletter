@@ -63,6 +63,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 TMx.Windows81.Apply(TMx, "8.1");
+                ApplyToTM(Program.TM);
             }
 
             Cursor = Cursors.Default;

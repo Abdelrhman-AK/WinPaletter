@@ -54,6 +54,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 TMx.WindowsXP.Apply();
+                ApplyToTM(Program.TM);
             }
 
             Cursor = Cursors.Default;

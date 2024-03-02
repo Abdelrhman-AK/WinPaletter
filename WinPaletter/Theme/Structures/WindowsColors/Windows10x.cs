@@ -241,7 +241,16 @@ namespace WinPaletter.Theme.Structures
                         {
                             UxTheme.EnableTheming(1);
                             //User32.SetHighContrast(false);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+
+                            if (System.IO.Path.GetFileNameWithoutExtension(Program.FirstVisualStyles).ToLower() != "aerolite")
+                            {
+                                UxTheme.SetSystemVisualStyle(Program.FirstVisualStyles, "NormalColor", "NormalSize", 0);
+                            }
+                            else
+                            {
+                                UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            }
+
                             break;
                         }
 

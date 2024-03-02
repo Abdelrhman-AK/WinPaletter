@@ -139,14 +139,10 @@ namespace WinPaletter
 
         public static void PreparePrivileges()
         {
-            if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false))
-                throw new Exception("Failed to get SeTakeOwnershipPrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeSecurityPrivilege", false))
-                throw new Exception("Failed to get SeSecurityPrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeRestorePrivilege", false))
-                throw new Exception("Failed to get SeRestorePrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeBackupPrivilege", false))
-                throw new Exception("Failed to get SeBackupPrivilege");
+            if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
+            if (!NativeMethods.advapi.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
+            if (!NativeMethods.advapi.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");
+            if (!NativeMethods.advapi.EnablePrivilege("SeBackupPrivilege", false)) throw new Exception("Failed to get SeBackupPrivilege");
         }
     }
 

@@ -89,8 +89,8 @@ namespace WinPaletter.NativeMethods
         #region Privileges
         internal const int SE_PRIVILEGE_ENABLED = 2;
         internal const int SE_PRIVILEGE_DISABLED = 0;
-        internal const int TOKEN_QUERY = 8;
-        internal const int TOKEN_ADJUST_PRIVILEGES = 32;
+        internal const int TOKEN_QUERY = 0x0008;  // Use hexadecimal notation for constants
+        internal const int TOKEN_ADJUST_PRIVILEGES = 0x0020;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TokPriv1Luid
@@ -100,28 +100,48 @@ namespace WinPaletter.NativeMethods
             public int Attr;
         }
 
-        [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
+        [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall, ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
 
-        [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
+        [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);
 
         [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);
 
+        /// <summary>
+        /// Enable a privilege provided by its string name.
+        /// </summary>
+        /// <param name="privilege"></param>
+        /// <param name="disable"></param>
+        /// <returns></returns>
         public static bool EnablePrivilege(string privilege, bool disable)
         {
-            long value = Process.GetCurrentProcess().Handle.ToInt32();
-            IntPtr h = new(value);
-            IntPtr phtok = IntPtr.Zero;
-            bool flag = OpenProcessToken(h, 40, ref phtok);
-            TokPriv1Luid newst = default;
-            newst.Count = 1;
-            newst.Luid = 0L;
-            newst.Attr = disable ? 0 : 2;
-            flag = LookupPrivilegeValue(null, privilege, ref newst.Luid);
-            return AdjustTokenPrivileges(phtok, disall: false, ref newst, 0, IntPtr.Zero, IntPtr.Zero);
+            IntPtr hProcess = Process.GetCurrentProcess().Handle;
+            IntPtr hToken = IntPtr.Zero;
+
+            try
+            {
+                if (!OpenProcessToken(hProcess, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref hToken))
+                    return false;
+
+                TokPriv1Luid newst = new TokPriv1Luid();
+                newst.Count = 1;
+                newst.Luid = 0L;
+                newst.Attr = disable ? SE_PRIVILEGE_DISABLED : SE_PRIVILEGE_ENABLED;
+
+                if (!LookupPrivilegeValue(null, privilege, ref newst.Luid))
+                    return false;
+
+                return AdjustTokenPrivileges(hToken, false, ref newst, 0, IntPtr.Zero, IntPtr.Zero);
+            }
+            finally
+            {
+                if (hToken != IntPtr.Zero)
+                    Kernel32.CloseHandle(hToken);  // Close the token handle to prevent resource leaks
+            }
         }
+
+        #endregion
     }
-    #endregion
 }
