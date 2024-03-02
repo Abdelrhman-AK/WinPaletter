@@ -29,7 +29,7 @@ Due to massive changes in Windows Terminal structure in WinPaletter, an error ma
 - Minor UI improvements.
 
 ### Bug fixes
-- Fix bug of Windows 11/10 colors are not applicable.
+- Fix bug of Windows 11/10 colors are not applicable (part of issue #212)
 - Refix bug #214 when WinPaletter store is opened and closed, the bug reoccurs (home form is closed while the app is not closed, leaving a white rectangle).
 - Fix bug #220: Windows Terminal exception error (ex error on returning null to be set as a color for background and unfocusedBackground in tabSettings in themes).
 - Fix sounds not included in themes resources pack (Charger connected, Charger disconnected, Windows lock).
