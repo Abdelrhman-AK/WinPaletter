@@ -2,11 +2,7 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
-![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge)
-
-[![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network)
-
-[![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
+![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
 #### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
