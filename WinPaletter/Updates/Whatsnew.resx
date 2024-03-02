@@ -498,7 +498,7 @@
 ● New sounds (Wi-Fi connection\disconnection\connection failure) in Devices section.
 ● Help button for the current active tab (won't be visible if a tab doesn't provide a help link).
 ● Changed message box of Windows Effects alert to another dialog with important tips, with a choice for not showing this dialog again.
-● Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`.
+● Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`).
 ● Minor UI improvements.</value>
   </data>
   <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
