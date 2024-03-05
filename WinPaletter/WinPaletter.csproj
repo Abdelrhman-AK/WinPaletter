@@ -254,9 +254,9 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Resources\Assemblies.zip" />
+    <None Include="Resources\ClassicThemesDB" />
     <None Include="Resources\JetBrainsMono-Medium.ttf" />
     <None Include="Resources\luna.zip" />
-    <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Accessibility_Vision.Designer.cs">
@@ -521,7 +521,6 @@
     <Compile Include="Program\TypesExtensions\Colors.cs" />
     <Compile Include="Program\TypesExtensions\ComboBoxes.cs" />
     <Compile Include="Program\TypesExtensions\Controls.cs" />
-    <Compile Include="Program\TypesExtensions\Fonts.cs" />
     <Compile Include="Program\TypesExtensions\Graphics.cs" />
     <Compile Include="Program\TypesExtensions\Icons.cs" />
     <Compile Include="Program\TypesExtensions\Integers.cs" />
@@ -1189,6 +1188,7 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="Resources\LICENSE.txt" />
+    <None Include="Resources\MetricsFontsDB" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>

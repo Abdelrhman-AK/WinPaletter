@@ -45,7 +45,7 @@ namespace WinPaletter
 
         private void ColorPicker_Load(object sender, EventArgs e)
         {
-            ComboBox1.PopulateThemes();
+            ComboBox1.PopulateClassicColors();
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
@@ -476,7 +476,7 @@ namespace WinPaletter
 
             if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
             {
-                List<Color> colors = Theme.Manager.GetPaletteFromString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+                List<Color> colors = Theme.Manager.GetPaletteFromString(Properties.Resources.ClassicColorsDB, ComboBox1.SelectedItem.ToString());
                 if (colors is not null && colors.Count > 0)
                 {
                     foreach (Color C in colors)
@@ -495,7 +495,7 @@ namespace WinPaletter
             }
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+        private void TextBox2_TextChanged(object sender, EventArgs e)
         {
             if (System.IO.File.Exists(TextBox2.Text))
             {
@@ -508,11 +508,14 @@ namespace WinPaletter
 
                 ThemePaletteContainer.Controls.Clear();
 
+                List<Color> colors = new();
+                colors.Clear();
+
                 if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".theme")
                 {
                     try
                     {
-                        List<Color> colors = Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text);
+                        colors = Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text);
                         if (colors is not null && colors.Count > 0)
                         {
                             foreach (Color C in colors)
@@ -535,7 +538,7 @@ namespace WinPaletter
                     }
                 }
 
-                else if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".msstyles")
+                if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".msstyles" || colors.Count == 0)
                 {
                     try
                     {
@@ -589,10 +592,6 @@ namespace WinPaletter
                             MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                }
-                else
-                {
-                    MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

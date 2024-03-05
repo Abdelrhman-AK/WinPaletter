@@ -1,49 +1,101 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using System.Text;
+using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extension methods for converting LogFont objects to byte arrays.
+    /// Extension methods for converting logFont objects to byte arrays.
     /// </summary>
     public static class LogFontExtensions
     {
         /// <summary>
-        /// Converts a LogFont object to a byte array.
+        /// Converts a logFont object to a byte array.
         /// </summary>
-        /// <param name="LogFont">The LogFont object to convert.</param>
-        /// <returns>A byte array representation of the LogFont object.</returns>
-        public static byte[] ToByte(this NativeMethods.GDI32.LogFont LogFont)
+        /// <param name="logFont">The logFont object to convert.</param>
+        /// <param name="size">The size of the byte array to return. Default is 92.</param>
+        /// <returns>A byte array representation of the logFont object.</returns>
+        public static byte[] ToByte(this LogFont logFont, int size = 92)
         {
-            byte[] b = new byte[92];
+            byte[] b = new byte[size];
 
             for (int x = 0; x <= 3; x += +1)
-                b[x] = BitConverter.GetBytes(LogFont.lfHeight)[x];
+                b[x] = BitConverter.GetBytes(logFont.lfHeight)[x];
 
             for (int x = 4; x <= 15; x += +1)
                 b[x] = 0;
 
             for (int x = 16; x <= 19; x += +1)
-                b[x] = BitConverter.GetBytes(LogFont.lfWeight)[x - 16];
+                b[x] = BitConverter.GetBytes(logFont.lfWeight)[x - 16];
 
-            b[20] = LogFont.lfItalic;
-            b[21] = LogFont.lfUnderline;
-            b[22] = LogFont.lfStrikeOut;
-            b[23] = LogFont.lfCharSet;
-            b[24] = LogFont.lfOutPrecision;
-            b[25] = LogFont.lfClipPrecision;
-            b[26] = LogFont.lfQuality;
-            b[27] = LogFont.lfClipPrecision;
+            b[20] = logFont.lfItalic;
+            b[21] = logFont.lfUnderline;
+            b[22] = logFont.lfStrikeOut;
+            b[23] = logFont.lfCharSet;
+            b[24] = logFont.lfOutPrecision;
+            b[25] = logFont.lfClipPrecision;
+            b[26] = logFont.lfQuality;
+            b[27] = logFont.lfClipPrecision;
 
             int i = 0;
 
-            foreach (byte x in Encoding.Unicode.GetBytes(LogFont.lfFaceName))
+            foreach (byte x in Encoding.Default.GetBytes(logFont.lfFaceName))
             {
                 b[28 + i] = x;
                 i += 1;
             }
 
             return b;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Font"/> object from a <see cref="LogFont"/> object.
+        /// </summary>
+        /// <param name="logFont"></param>
+        /// <returns></returns>
+        public static Font ToFont(this LogFont logFont)
+        {
+            try
+            {
+                return Font.FromLogFont(logFont);
+            }
+            catch
+            {
+                int deviceDpi = GetSystemDpi();
+                float fontSize = Math.Max(-logFont.lfHeight * 72.0f / deviceDpi, 8f);
+
+                return new Font(logFont.lfFaceName, fontSize, ConvertLogFontStyle(logFont));
+            }
+        }
+
+        private static FontStyle ConvertLogFontStyle(LogFont logFont)
+        {
+            FontStyle style = FontStyle.Regular;
+
+            if (logFont.lfWeight >= 700)
+                style |= FontStyle.Bold;
+
+            if (logFont.lfItalic != 0)
+                style |= FontStyle.Italic;
+
+            if (logFont.lfUnderline != 0)
+                style |= FontStyle.Underline;
+
+            if (logFont.lfStrikeOut != 0)
+                style |= FontStyle.Strikeout;
+
+            return style;
+        }
+
+        private static int GetSystemDpi()
+        {
+            using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
+            {
+                return (int)graphics.DpiX;
+            }
         }
     }
 }

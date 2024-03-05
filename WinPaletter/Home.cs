@@ -1,11 +1,15 @@
 ﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.GDI32;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 

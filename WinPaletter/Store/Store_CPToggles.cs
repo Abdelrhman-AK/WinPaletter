@@ -30,6 +30,7 @@ namespace WinPaletter
             if (OS.W7 && TM.Windows7.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_Win7), true);
             if (OS.WVista && TM.WindowsVista.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinVista), true);
             if (OS.WXP && TM.WindowsXP.Enabled) CheckedListBox1.Items.Add(string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinXP), true);
+            if (TM.Win32.Enabled) CheckedListBox1.Items.Add(Program.Lang.ClassicColors, true);
 
             if (TM.AppTheme.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_AppTheme, true);
@@ -95,6 +96,9 @@ namespace WinPaletter
 
                 if (OS.WXP && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.WindowsColors, Program.Lang.OS_WinXP).ToLower())
                     TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (CheckedListBox1.Items[i].ToString() == Program.Lang.ClassicColors)
+                    TM.Win32.Enabled = CheckedListBox1.GetItemChecked(i);
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_AppTheme)
                     TM.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i);

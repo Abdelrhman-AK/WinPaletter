@@ -776,7 +776,7 @@ namespace WinPaletter
             this.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox2.UseSystemPasswordChar = false;
             this.TextBox2.WordWrap = true;
-            this.TextBox2.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            this.TextBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
             // Label1
             // 

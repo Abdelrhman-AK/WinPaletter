@@ -2,12 +2,19 @@
 using libmsstyle;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
+using WinPaletter.Theme.Structures;
+using static System.Net.Mime.MediaTypeNames;
+using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -32,6 +39,75 @@ namespace WinPaletter
                 {
                     using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
+                        LoadFromTM(TMx);
+                    }
+                }
+            }
+        }
+
+        private void LoadFromTHEME(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (INI ini = new(dlg.FileName))
+                    using (Manager TMx = Default.Get(Program.WindowStyle))
+                    {
+                        string metricsStr = ini.Read("Metrics", "NonclientMetrics");
+                        string iconsmetricsStr = ini.Read("Metrics", "IconMetrics");
+
+                        if (!string.IsNullOrWhiteSpace(metricsStr))
+                        {
+                            List<byte> bytes = new();
+                            foreach (string s in metricsStr.Split(' '))
+                            {
+                                if (byte.TryParse(s, out byte result))
+                                {
+                                    bytes.Add(result);
+                                }
+                            }
+
+                            User32.NONCLIENTMETRICS ncm = new(bytes.ToArray());
+
+                            TMx.MetricsFonts.CaptionWidth = ncm.iCaptionWidth;
+                            TMx.MetricsFonts.CaptionHeight = ncm.iCaptionHeight;
+                            TMx.MetricsFonts.SmCaptionWidth = ncm.iSMCaptionWidth;
+                            TMx.MetricsFonts.SmCaptionHeight = ncm.iSMCaptionHeight;
+                            TMx.MetricsFonts.BorderWidth = ncm.iBorderWidth;
+                            TMx.MetricsFonts.PaddedBorderWidth = ncm.iPaddedBorderWidth;
+                            TMx.MetricsFonts.CaptionFont = ncm.lfCaptionFont.ToFont();
+                            TMx.MetricsFonts.SmCaptionFont = ncm.lfSMCaptionFont.ToFont();
+
+                            TMx.MetricsFonts.MenuHeight = ncm.iMenuHeight;
+                            TMx.MetricsFonts.MenuWidth = ncm.iMenuWidth;
+                            TMx.MetricsFonts.MenuFont = ncm.lfMenuFont.ToFont();
+
+                            TMx.MetricsFonts.ScrollHeight = ncm.iScrollHeight;
+                            TMx.MetricsFonts.ScrollWidth = ncm.iScrollWidth;
+
+                            TMx.MetricsFonts.StatusFont = ncm.lfStatusFont.ToFont();
+                            TMx.MetricsFonts.MessageFont = ncm.lfMessageFont.ToFont();
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(iconsmetricsStr))
+                        {
+                            List<byte> bytes = new();
+                            foreach (string s in iconsmetricsStr.Split(' '))
+                            {
+                                if (byte.TryParse(s, out byte result))
+                                {
+                                    bytes.Add(result);
+                                }
+                            }
+
+                            User32.ICONMETRICS icm = new(bytes.ToArray());
+
+                            TMx.MetricsFonts.IconSpacing = icm.iHorzSpacing;
+                            TMx.MetricsFonts.IconVerticalSpacing = icm.iVertSpacing;
+                            TMx.MetricsFonts.IconFont = icm.lfFont.ToFont();
+                        }
+
                         LoadFromTM(TMx);
                     }
                 }
@@ -90,7 +166,10 @@ namespace WinPaletter
                                 }
                             }
                         }
-                        catch (Exception ex) { throw ex; }
+                        catch
+                        {
+                            MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -102,34 +181,26 @@ namespace WinPaletter
             Close();
         }
 
-        private void ImportWin11Preset(object sender, EventArgs e)
+        private void SaveAsTHEME(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin10Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin81Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWin7Preset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWinVistaPreset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
-        }
-
-        private void ImportWinXPPreset(object sender, EventArgs e)
-        {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_SaveTheme })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    using (Manager TMx = new(Manager.Source.Empty))
+                    {
+                        ApplyToTM(TMx);
+                        try
+                        {
+                            System.IO.File.WriteAllText(dlg.FileName, TMx.MetricsFonts.ToString(sender is not ToolStripMenuItem ? Program.TM.Win32 : null));
+                        }
+                        catch (Exception ex)
+                        {
+                            Forms.BugReport.ThrowError(ex);
+                        }
+                    }
+                }
+            }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -158,30 +229,27 @@ namespace WinPaletter
             }
         }
 
-        private void EditFonts_Load(object sender, EventArgs e)
+        private void MetricsFonts_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
             {
                 AspectName = Program.Lang.MetricsFonts,
                 Enabled = Program.TM.MetricsFonts.Enabled,
-                Import_theme = false,
+                Import_theme = true,
                 Import_msstyles = true,
                 GeneratePalette = false,
-                GenerateMSTheme = false,
-                Import_preset = true,
+                GenerateMSTheme = true,
+                Import_preset = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromMSSTYLES = LoadFromMSSTYLES,
+                OnImportFromTHEME = LoadFromTHEME,
                 OnImportFromCurrentApplied = LoadFromCurrent,
-                OnImportFromScheme_11 = ImportWin11Preset,
-                OnImportFromScheme_10 = ImportWin10Preset,
-                OnImportFromScheme_81 = ImportWin81Preset,
-                OnImportFromScheme_7 = ImportWin7Preset,
-                OnImportFromScheme_Vista = ImportWinVistaPreset,
-                OnImportFromScheme_XP = ImportWinXPPreset,
+                OnSaveAsMSTheme = SaveAsTHEME,
+                OnSaveAsMSTheme_OneAspect = SaveAsTHEME,
 
                 OnModeAdvanced = ModeSwitched,
                 OnModeSimple = ModeSwitched,
@@ -193,6 +261,9 @@ namespace WinPaletter
 
             windowMetrics1.BackgroundImage = Program.Wallpaper;
             Desktop_icons.BackgroundImage = Program.Wallpaper;
+
+            comboBox1.PopulateMetricsFonts();
+            comboBox1.SelectedIndex = 0;
 
             LoadFromTM(Program.TM);
             LoadDefaultValues();
@@ -375,6 +446,87 @@ namespace WinPaletter
                 trackBarX13.DefaultValue = @default.MetricsFonts.MenuWidth;
                 trackBarX14.DefaultValue = @default.MetricsFonts.ScrollHeight;
                 trackBarX15.DefaultValue = @default.MetricsFonts.ScrollWidth;
+            }
+        }
+
+        public void LoadFromWinThemeString(string String, string ThemeName)
+        {
+            if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
+
+            List<string> AllThemes = String.CList();
+            string SelectedTheme = string.Empty;
+
+            bool Found = false;
+
+            foreach (string theme in AllThemes)
+            {
+                if ((theme.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
+                {
+                    SelectedTheme = theme;
+                    Found = true;
+                    break;
+                }
+            }
+
+            if (!Found) return;
+
+            string metrics = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("nonclientmetrics")).FirstOrDefault();
+            string icon = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("iconmetrics")).FirstOrDefault();
+
+            using (Manager TMx = Default.Get(Program.WindowStyle))
+            {
+                if (!string.IsNullOrWhiteSpace(metrics) && metrics.Contains("="))
+                {
+                    List<byte> bytes = new();
+                    foreach (string s in metrics.Split('=')[1].Split(' '))
+                    {
+                        if (byte.TryParse(s, out byte result))
+                        {
+                            bytes.Add(result);
+                        }
+                    }
+
+                    User32.NONCLIENTMETRICS ncm = new(bytes.ToArray());
+
+                    TMx.MetricsFonts.CaptionWidth = ncm.iCaptionWidth;
+                    TMx.MetricsFonts.CaptionHeight = ncm.iCaptionHeight;
+                    TMx.MetricsFonts.SmCaptionWidth = ncm.iSMCaptionWidth;
+                    TMx.MetricsFonts.SmCaptionHeight = ncm.iSMCaptionHeight;
+                    TMx.MetricsFonts.BorderWidth = ncm.iBorderWidth;
+                    TMx.MetricsFonts.PaddedBorderWidth = ncm.iPaddedBorderWidth;
+                    TMx.MetricsFonts.CaptionFont = ncm.lfCaptionFont.ToFont();
+                    TMx.MetricsFonts.SmCaptionFont = ncm.lfSMCaptionFont.ToFont();
+
+                    TMx.MetricsFonts.MenuHeight = ncm.iMenuHeight;
+                    TMx.MetricsFonts.MenuWidth = ncm.iMenuWidth;
+                    TMx.MetricsFonts.MenuFont = ncm.lfMenuFont.ToFont();
+
+                    TMx.MetricsFonts.ScrollHeight = ncm.iScrollHeight;
+                    TMx.MetricsFonts.ScrollWidth = ncm.iScrollWidth;
+
+                    TMx.MetricsFonts.StatusFont = ncm.lfStatusFont.ToFont();
+                    TMx.MetricsFonts.MessageFont = ncm.lfMessageFont.ToFont();
+                }
+
+                if (!string.IsNullOrWhiteSpace(icon) && icon.Contains("="))
+                {
+                    List<byte> bytes = new();
+                    foreach (string s in icon.Split('=')[1].Split(' '))
+                    {
+                        if (byte.TryParse(s, out byte result))
+                        {
+                            bytes.Add(result);
+                        }
+                    }
+
+                    User32.ICONMETRICS icm = new(bytes.ToArray());
+
+                    TMx.MetricsFonts.IconSpacing = icm.iHorzSpacing;
+                    TMx.MetricsFonts.IconVerticalSpacing = icm.iVertSpacing;
+                    TMx.MetricsFonts.IconFont = icm.lfFont.ToFont();
+                }
+
+                LoadFromTM(TMx);
             }
         }
 
@@ -800,6 +952,11 @@ namespace WinPaletter
         private void button11_Click_1(object sender, EventArgs e)
         {
             TabControl1.SelectedIndex = 3;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IsShown) LoadFromWinThemeString(Properties.Resources.MetricsFontsDB, comboBox1.SelectedItem.ToString());
         }
     }
 }

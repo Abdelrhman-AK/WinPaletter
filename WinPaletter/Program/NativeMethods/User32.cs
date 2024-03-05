@@ -471,6 +471,95 @@ namespace WinPaletter.NativeMethods
             /// The border padding for caption buttons, in pixels.
             /// </summary>
             public int iPaddedBorderWidth;
+
+            /// <summary>
+            /// Convert a byte array to a NONCLIENTMETRICS structure.
+            /// </summary>
+            /// <param name="bytes"></param>
+            public NONCLIENTMETRICS(byte[] bytes)
+            {
+                int intSize = sizeof(int);
+                int uintSize = sizeof(uint);
+                int logFontSize = 60; //Marshal.SizeOf(typeof(LogFont));
+                int cursor = 0;
+
+                cbSize = BitConverter.ToUInt32(bytes, cursor);
+                cursor += uintSize;
+
+                iBorderWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iScrollWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iScrollHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iCaptionWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iCaptionHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfCaptionFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                iSMCaptionWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iSMCaptionHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfSMCaptionFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                iMenuWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iMenuHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfMenuFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                lfStatusFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                lfMessageFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                if (bytes.Length >= cursor + intSize)
+                {
+                    iPaddedBorderWidth = BitConverter.ToInt32(bytes, cursor);
+                }
+                else { iPaddedBorderWidth = 0; }
+            }
+
+            /// <summary>
+            /// Convert a NONCLIENTMETRICS structure to a byte array.
+            /// </summary>
+            /// <returns></returns>
+            public byte[] ToByteArray()
+            {
+                List<byte> byteArray = new();
+                byteArray.AddRange(BitConverter.GetBytes(cbSize));
+                byteArray.AddRange(BitConverter.GetBytes(iBorderWidth));
+                byteArray.AddRange(BitConverter.GetBytes(iScrollWidth));
+                byteArray.AddRange(BitConverter.GetBytes(iScrollHeight));
+                byteArray.AddRange(BitConverter.GetBytes(iCaptionWidth));
+                byteArray.AddRange(BitConverter.GetBytes(iCaptionHeight));
+                byteArray.AddRange(lfCaptionFont.ToByte(60));
+                byteArray.AddRange(BitConverter.GetBytes(iSMCaptionWidth));
+                byteArray.AddRange(BitConverter.GetBytes(iSMCaptionHeight));
+                byteArray.AddRange(lfSMCaptionFont.ToByte(60));
+                byteArray.AddRange(BitConverter.GetBytes(iMenuWidth));
+                byteArray.AddRange(BitConverter.GetBytes(iMenuHeight));
+                byteArray.AddRange(lfMenuFont.ToByte(60));
+                byteArray.AddRange(lfStatusFont.ToByte(60));
+                byteArray.AddRange(lfMessageFont.ToByte(60));
+                byteArray.AddRange(BitConverter.GetBytes(iPaddedBorderWidth));
+                return byteArray.ToArray();
+            }
         }
 
         /// <summary>
@@ -502,6 +591,48 @@ namespace WinPaletter.NativeMethods
             /// A LogFont structure that defines the font of the icon label.
             /// </summary>
             public LogFont lfFont;
+
+            /// <summary>
+            /// Convert a byte array to an ICONMETRICS structure.
+            /// </summary>
+            /// <param name="bytes"></param>
+            public ICONMETRICS(byte[] bytes)
+            {
+                int intSize = sizeof(int);
+                int uintSize = sizeof(uint);
+                int logFontSize = 60; //Marshal.SizeOf(typeof(LogFont));
+                int cursor = 0;
+
+                cbSize = BitConverter.ToUInt32(bytes, cursor);
+                cursor += uintSize;
+
+                iHorzSpacing = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iVertSpacing = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iTitleWrap = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+            }
+
+            /// <summary>
+            /// Convert an ICONMETRICS structure to a byte array.
+            /// </summary>
+            /// <returns></returns>
+            public byte[] ToByteArray()
+            {
+                List<byte> byteArray = new();
+                byteArray.AddRange(BitConverter.GetBytes(cbSize));
+                byteArray.AddRange(BitConverter.GetBytes(iHorzSpacing));
+                byteArray.AddRange(BitConverter.GetBytes(iVertSpacing));
+                byteArray.AddRange(BitConverter.GetBytes(iTitleWrap));
+                byteArray.AddRange(lfFont.ToByte(60));
+
+                return byteArray.ToArray();
+            }
         }
 
         /// <summary>

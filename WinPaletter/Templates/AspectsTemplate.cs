@@ -107,6 +107,7 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
             ToolStripMenuItem create_palette_fromColor = new();
+            ToolStripMenuItem saveTheme_oneAspect = new();
 
             import_current.Text = Program.Lang.Designer_import_current;
             import_defaultWindows.Text = Program.Lang.Designer_import_defaultWindows;
@@ -183,6 +184,10 @@ namespace WinPaletter
             button_import.Menu.Items.Add(import_current);
             button_import.Menu.Items.Add(import_defaultWindows);
             button_palette_generate.Menu.Items.Add(create_palette_fromColor);
+
+            saveTheme_oneAspect.Text = Program.Lang.Designer_saveas_MSTheme_OneAspect;
+            saveTheme_oneAspect.Image = button_saveas_MSTheme.Image;
+            button_saveas_MSTheme.Menu.Items.Add(saveTheme_oneAspect);
 
             if (_data.Import_preset) button_import.Menu.Items.Add(import_scheme);
 
@@ -273,6 +278,9 @@ namespace WinPaletter
             if (schemes != null)
                 schemes.SelectedIndexChanged += _data.OnSchemeIndexChanged ?? null;
 
+            if (saveTheme_oneAspect != null)
+                saveTheme_oneAspect.Click += _data.OnSaveAsMSTheme_OneAspect ?? null;
+
             FormClosed = (sender, args) =>
             {
                 if (button_load != null)
@@ -343,6 +351,9 @@ namespace WinPaletter
 
                 if (schemes != null)
                     schemes.SelectedIndexChanged -= _data.OnSchemeIndexChanged ?? null;
+
+                if (saveTheme_oneAspect != null)
+                    saveTheme_oneAspect.Click -= _data.OnSaveAsMSTheme_OneAspect ?? null;
 
                 _data.Form.FormClosed -= FormClosed;
             };
@@ -553,9 +564,14 @@ namespace WinPaletter
         public System.EventHandler OnGeneratePaletteFromColor { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'ApplyToTM as *.theme file' button
+        /// EventHandler associated with clicking on 'Save as *.theme file' button
         /// </summary>
         public System.EventHandler OnSaveAsMSTheme { get; set; }
+
+        /// <summary>
+        /// EventHandler associated with clicking on 'Save this aspect only as *.theme file' button
+        /// </summary>
+        public System.EventHandler OnSaveAsMSTheme_OneAspect { get; set; }
 
         /// <summary>
         /// EventHandler associated with changing selected index of 'Schemes list' combobox

@@ -170,6 +170,9 @@
         QocMeWsj7zL0Zr6M3sCXkceglyLj7zzQ/0PRaL8Bj/ZX36gZG8YAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="ClassicColorsDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClassicThemesDB;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="darkmode_dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -5768,6 +5771,9 @@
   <data name="luna" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\luna.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="MetricsFontsDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MetricsFontsDB;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Noise" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -6530,9 +6536,6 @@
         9nertgmsCNFyNQk4VKDn6OQIfgDOa+6pUmFF6yfe4m26OmnysElL8Be3eJ+fgxv5hmvHQjDEJugfTm73
         Xj4Tjg8vhi5sLrZb7Ev+1k9crq/wuive/iy93YPYt6f/A24YfBu1GnJpAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="RetroThemesDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RetroThemesDB.wpdb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1256</value>
   </data>
   <data name="SampleApp_Active" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

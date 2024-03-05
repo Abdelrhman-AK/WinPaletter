@@ -8,19 +8,19 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Add classic themes names to a ComboBox
         /// </summary>
-        public static void PopulateThemes(this ComboBox ComboBox)
+        public static void PopulateClassicColors(this ComboBox ComboBox)
         {
             ComboBox.Items.Clear();
-            ComboBox.Items.AddRange(Properties.Resources.RetroThemesDB.CList().Select(f => f.Split('|')[0]).ToArray());
+            ComboBox.Items.AddRange(Properties.Resources.ClassicColorsDB.CList().Select(f => f.Split('|')[0]).ToArray());
         }
 
         /// <summary>
         /// Add classic themes names to a ComboBox
         /// </summary>
-        public static void PopulateThemes(this ToolStripComboBox ComboBox)
+        public static void PopulateMetricsFonts(this ComboBox ComboBox)
         {
             ComboBox.Items.Clear();
-            ComboBox.Items.AddRange(Properties.Resources.RetroThemesDB.CList().Select(f => f.Split('|')[0]).ToArray());
+            ComboBox.Items.AddRange(Properties.Resources.MetricsFontsDB.CList().Select(f => f.Split('|')[0]).ToArray());
         }
     }
 }

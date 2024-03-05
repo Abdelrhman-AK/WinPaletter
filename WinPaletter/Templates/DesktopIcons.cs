@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 
@@ -137,7 +139,7 @@ namespace WinPaletter.Templates
 
                 foreach (WinIcon icon in Controls.OfType<WinIcon>()) { icon.EnableEditingMetrics = true; }
 
-                LoadMetrics(Program.TM);
+                //LoadMetrics(Program.TM);
             }
         }
 

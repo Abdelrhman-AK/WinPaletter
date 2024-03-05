@@ -99,7 +99,10 @@ namespace WinPaletter
                                 ApplyRetroPreview();
                             }
                         }
-                        catch (Exception ex) { throw ex; }
+                        catch
+                        {
+                            MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -136,7 +139,7 @@ namespace WinPaletter
 
                     try
                     {
-                        System.IO.File.WriteAllText(dlg.FileName, win32UI.ToString());
+                        System.IO.File.WriteAllText(dlg.FileName, win32UI.ToString(sender is not ToolStripMenuItem ? Program.TM.MetricsFonts : null));
                     }
                     catch (Exception ex)
                     {
@@ -183,6 +186,7 @@ namespace WinPaletter
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
                 OnSaveAsMSTheme = SaveAsTHEME,
+                OnSaveAsMSTheme_OneAspect = SaveAsTHEME,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromTHEME = LoadFromTHEME,
                 OnImportFromWPTH = LoadFromWPTH,
@@ -199,7 +203,7 @@ namespace WinPaletter
 
             splitContainer1.Panel2Collapsed = !checkBox1.Checked;
 
-            ComboBox1.PopulateThemes();
+            ComboBox1.PopulateClassicColors();
             ComboBox1.SelectedIndex = 0;
             ApplyDefaultTMValues();
 
@@ -752,7 +756,7 @@ namespace WinPaletter
 
             Toggle1.Checked = condition0 | condition1 | condition2;
 
-            retroDesktopColors1.LoadFromWinThemeString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+            retroDesktopColors1.LoadFromWinThemeString(Properties.Resources.ClassicColorsDB, ComboBox1.SelectedItem.ToString());
 
             LoadFromRetroPreview(retroDesktopColors1);
         }

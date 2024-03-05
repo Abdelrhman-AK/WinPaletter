@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace WinPaletter.TypesExtensions
@@ -9,6 +13,26 @@ namespace WinPaletter.TypesExtensions
     /// </summary>
     public static class ByteArrayExtensions
     {
+        /// <summary>
+        /// Get a subarray of the byte array, provided by the start index and the length.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static byte[] SubArray(this byte[] source, int startIndex, int length)
+        {
+            if (startIndex < 0 || startIndex >= source.Length || length <= 0 || startIndex + length > source.Length)
+            {
+                throw new ArgumentException("Invalid startIndex or length");
+            }
+
+            byte[] result = new byte[length];
+            Array.Copy(source, startIndex, result, 0, length);
+            return result;
+        }
+
         /// <summary>
         /// Converts a byte array to a <see cref="NativeMethods.GDI32.LogFont"/> structure.
         /// </summary>
@@ -29,15 +53,16 @@ namespace WinPaletter.TypesExtensions
                 lfCharSet = fontBytes[23],
                 lfOutPrecision = fontBytes[24],
                 lfClipPrecision = fontBytes[25],
-                lfQuality = fontBytes[26]
+                lfQuality = fontBytes[26],
+                lfPitchAndFamily = fontBytes[27]
             };
-            lOGFONT.lfClipPrecision = fontBytes[27];
-            byte[] array = new byte[64];
 
-            for (int i = 0; i <= 64 - 1; i++)
-                array[i] = fontBytes[i + 28];
+            byte[] array = new byte[fontBytes.Length - 28];
 
-            lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(null);
+            for (int i = 0; i <= array.Length - 1; i++) array[i] = fontBytes[i + 28];
+
+            lOGFONT.lfFaceName = Encoding.Default.GetString(array).TrimEnd(null);
+
             return lOGFONT;
         }
 
@@ -73,6 +98,35 @@ namespace WinPaletter.TypesExtensions
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Converts a byte array to the struct type specified by the template parameter
+        /// </summary>
+        /// <typeparam name="T">The type of the struct</typeparam>
+        /// <param name="data">The byte array containing the serialized data</param>
+        /// <returns>The deserialized struct</returns>
+        public static T ToObject<T>(this byte[] data)
+        {
+            // Check if the data array is large enough to hold the structure
+            if (data.Length < Marshal.SizeOf(typeof(T)))
+            {
+                int pendingLength = Marshal.SizeOf(typeof(T)) - data.Length;
+
+                List<byte> bytes = data.ToList();
+                for (int i = 0; i < pendingLength; i++)
+                {
+                    bytes.Add(0);
+                }
+                data = bytes.ToArray();
+            }
+
+            // Pin the managed memory while, copy out the data, then unpin it
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+            T theStructure = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            handle.Free();
+
+            return theStructure;
         }
     }
 }

@@ -16,6 +16,6 @@
         public string Designer_load_into_current_theme { get; set; } = "Load preferences into the current theme";
         public string Designer_apply { get; set; } = "Apply";
         public string Designer_saveas_MSTheme { get; set; } = "Save as *.theme file";
-
+        public string Designer_saveas_MSTheme_OneAspect { get; set; } = "Save this aspect only as *.theme file";
     }
 }

@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.WinTerminal;
@@ -727,8 +729,8 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Retrun Win32UI structure into a string in format of Microsoft theme file (*.theme)
         /// </summary>
-        /// <returns></returns>
-        public override readonly string ToString()
+        /// <param name="metricsFonts">MetricsFonts structure to be included in the string</param>
+        public readonly string ToString(Theme.Structures.MetricsFonts? metricsFonts = null)
         {
             StringBuilder s = new();
             s.Clear();
@@ -773,8 +775,58 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"MenuHilight={MenuHilight.ToWin32Reg()}");
             s.AppendLine($"MenuBar={MenuBar.ToWin32Reg()}");
             s.AppendLine($"Desktop={Desktop.ToWin32Reg()}");
-
             s.AppendLine(string.Empty);
+
+            if (metricsFonts is not null && metricsFonts.HasValue)
+            {
+                NONCLIENTMETRICS ncm = new();
+                ncm.cbSize = (uint)Marshal.SizeOf(ncm);
+                ncm.iCaptionWidth = metricsFonts.Value.CaptionWidth;
+                ncm.iCaptionHeight = metricsFonts.Value.CaptionHeight;
+                ncm.iSMCaptionWidth = metricsFonts.Value.SmCaptionWidth;
+                ncm.iSMCaptionHeight = metricsFonts.Value.SmCaptionHeight;
+                ncm.iBorderWidth = metricsFonts.Value.BorderWidth;
+                ncm.iPaddedBorderWidth = metricsFonts.Value.PaddedBorderWidth;
+                ncm.iMenuWidth = metricsFonts.Value.MenuWidth;
+                ncm.iMenuHeight = metricsFonts.Value.MenuHeight;
+                ncm.iScrollWidth = metricsFonts.Value.ScrollWidth;
+                ncm.iScrollHeight = metricsFonts.Value.ScrollHeight;
+
+                GDI32.LogFont lfCaptionFont = new();
+                metricsFonts.Value.CaptionFont.ToLogFont(lfCaptionFont);
+                ncm.lfCaptionFont = lfCaptionFont;
+
+                GDI32.LogFont lfMenuFont = new();
+                metricsFonts.Value.MenuFont.ToLogFont(lfMenuFont);
+                ncm.lfMenuFont = lfMenuFont;
+
+                GDI32.LogFont lfMessageFont = new();
+                metricsFonts.Value.MessageFont.ToLogFont(lfMessageFont);
+                ncm.lfMessageFont = lfMessageFont;
+
+                GDI32.LogFont lfSMCaptionFont = new();
+                metricsFonts.Value.SmCaptionFont.ToLogFont(lfSMCaptionFont);
+                ncm.lfSMCaptionFont = lfSMCaptionFont;
+
+                GDI32.LogFont lfStatusFont = new();
+                metricsFonts.Value.StatusFont.ToLogFont(lfStatusFont);
+                ncm.lfStatusFont = lfStatusFont;
+
+
+                ICONMETRICS icm = new();
+                icm.cbSize = (uint)Marshal.SizeOf(icm);
+                icm.iHorzSpacing = metricsFonts.Value.IconSpacing;
+                icm.iVertSpacing = metricsFonts.Value.IconVerticalSpacing;
+
+                GDI32.LogFont lfIconFont = new();
+                metricsFonts.Value.IconFont.ToLogFont(lfIconFont);
+                icm.lfFont = lfIconFont;
+
+                s.AppendLine(string.Format("[Metrics]"));
+                s.AppendLine(string.Format($"IconMetrics={string.Join(" ", icm.ToByteArray())}"));
+                s.AppendLine(string.Format($"NonClientMetrics={string.Join(" ", ncm.ToByteArray())}"));
+                s.AppendLine(string.Empty);
+            }
 
             s.AppendLine(string.Format("[MasterThemeSelector]"));
             s.AppendLine(string.Format("MTSM=DABJDKT"));

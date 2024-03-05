@@ -250,8 +250,8 @@ namespace WinPaletter
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.Image = null;
-            this.button7.ImageGlyphEnabled = false;
             this.button7.ImageGlyph = null;
+            this.button7.ImageGlyphEnabled = false;
             this.button7.Location = new System.Drawing.Point(310, 308);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(222, 32);
@@ -290,7 +290,7 @@ namespace WinPaletter
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Variable Display", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Segoe UI Variable Display", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(35, 96);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(445, 42);
@@ -381,7 +381,6 @@ namespace WinPaletter
             this.Controls.Add(this.previewContainer);
             this.Controls.Add(this.GroupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;

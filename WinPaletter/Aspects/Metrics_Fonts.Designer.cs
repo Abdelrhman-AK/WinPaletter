@@ -195,6 +195,10 @@ namespace WinPaletter
             this.pictureBox17 = new System.Windows.Forms.PictureBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tips_box = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox12 = new WinPaletter.UI.WP.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBox1 = new WinPaletter.UI.WP.ComboBox();
+            this.pictureBox33 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -262,6 +266,8 @@ namespace WinPaletter
             this.tabPage4.SuspendLayout();
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -272,7 +278,7 @@ namespace WinPaletter
             // checker_img
             // 
             this.checker_img.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checker_img.Image = global::WinPaletter.Properties.Resources.checker_disabled;
+            this.checker_img.Image = ((System.Drawing.Image)(resources.GetObject("checker_img.Image")));
             this.checker_img.Location = new System.Drawing.Point(988, 4);
             this.checker_img.Name = "checker_img";
             this.checker_img.Size = new System.Drawing.Size(35, 31);
@@ -345,8 +351,8 @@ namespace WinPaletter
             this.button21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button21.ForeColor = System.Drawing.Color.White;
             this.button21.Image = null;
+            this.button21.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button21.ImageGlyph")));
             this.button21.ImageGlyphEnabled = true;
-            this.button21.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button21.Location = new System.Drawing.Point(321, 84);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(34, 23);
@@ -386,8 +392,8 @@ namespace WinPaletter
             this.undo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.undo.ForeColor = System.Drawing.Color.White;
             this.undo.Image = null;
+            this.undo.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("undo.ImageGlyph")));
             this.undo.ImageGlyphEnabled = true;
-            this.undo.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.undo.Location = new System.Drawing.Point(321, 40);
             this.undo.Name = "undo";
             this.undo.Size = new System.Drawing.Size(34, 23);
@@ -448,8 +454,8 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
+            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button5.Location = new System.Drawing.Point(361, 84);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(34, 23);
@@ -465,8 +471,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
+            this.Button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button1.ImageGlyph")));
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button1.Location = new System.Drawing.Point(361, 40);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(34, 23);
@@ -1083,8 +1089,8 @@ namespace WinPaletter
             this.button22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button22.ForeColor = System.Drawing.Color.White;
             this.button22.Image = null;
+            this.button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button22.ImageGlyph")));
             this.button22.ImageGlyphEnabled = true;
-            this.button22.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button22.Location = new System.Drawing.Point(319, 18);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(34, 23);
@@ -1111,8 +1117,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
+            this.Button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button2.ImageGlyph")));
             this.Button2.ImageGlyphEnabled = true;
-            this.Button2.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button2.Location = new System.Drawing.Point(359, 18);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(34, 23);
@@ -1301,8 +1307,8 @@ namespace WinPaletter
             this.button23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button23.ForeColor = System.Drawing.Color.White;
             this.button23.Image = null;
+            this.button23.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button23.ImageGlyph")));
             this.button23.ImageGlyphEnabled = true;
-            this.button23.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button23.Location = new System.Drawing.Point(319, 18);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(34, 23);
@@ -1318,8 +1324,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
+            this.Button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button3.ImageGlyph")));
             this.Button3.ImageGlyphEnabled = true;
-            this.Button3.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button3.Location = new System.Drawing.Point(359, 18);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(34, 23);
@@ -1508,8 +1514,8 @@ namespace WinPaletter
             this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button26.ForeColor = System.Drawing.Color.White;
             this.button26.Image = null;
+            this.button26.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button26.ImageGlyph")));
             this.button26.ImageGlyphEnabled = true;
-            this.button26.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button26.Location = new System.Drawing.Point(359, 40);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(34, 23);
@@ -1596,8 +1602,8 @@ namespace WinPaletter
             this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button25.ForeColor = System.Drawing.Color.White;
             this.button25.Image = null;
+            this.button25.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button25.ImageGlyph")));
             this.button25.ImageGlyphEnabled = true;
-            this.button25.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button25.Location = new System.Drawing.Point(321, 84);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(34, 23);
@@ -1637,8 +1643,8 @@ namespace WinPaletter
             this.button24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button24.ForeColor = System.Drawing.Color.White;
             this.button24.Image = null;
+            this.button24.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button24.ImageGlyph")));
             this.button24.ImageGlyphEnabled = true;
-            this.button24.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.button24.Location = new System.Drawing.Point(321, 40);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(34, 23);
@@ -1687,8 +1693,8 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
+            this.Button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button4.ImageGlyph")));
             this.Button4.ImageGlyphEnabled = true;
-            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button4.Location = new System.Drawing.Point(361, 40);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(34, 23);
@@ -1704,8 +1710,8 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
+            this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageGlyph")));
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button6.Location = new System.Drawing.Point(361, 84);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(34, 23);
@@ -1949,8 +1955,8 @@ namespace WinPaletter
             this.Button19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button19.ForeColor = System.Drawing.Color.White;
             this.Button19.Image = null;
+            this.Button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button19.ImageGlyph")));
             this.Button19.ImageGlyphEnabled = true;
-            this.Button19.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.Button19.Location = new System.Drawing.Point(321, 100);
             this.Button19.Name = "Button19";
             this.Button19.Size = new System.Drawing.Size(34, 23);
@@ -1990,8 +1996,8 @@ namespace WinPaletter
             this.Button17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button17.ForeColor = System.Drawing.Color.White;
             this.Button17.Image = null;
+            this.Button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button17.ImageGlyph")));
             this.Button17.ImageGlyphEnabled = true;
-            this.Button17.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button17.Location = new System.Drawing.Point(361, 100);
             this.Button17.Name = "Button17";
             this.Button17.Size = new System.Drawing.Size(34, 23);
@@ -2007,8 +2013,8 @@ namespace WinPaletter
             this.Button18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button18.ForeColor = System.Drawing.Color.White;
             this.Button18.Image = null;
+            this.Button18.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button18.ImageGlyph")));
             this.Button18.ImageGlyphEnabled = true;
-            this.Button18.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.Button18.Location = new System.Drawing.Point(321, 70);
             this.Button18.Name = "Button18";
             this.Button18.Size = new System.Drawing.Size(34, 23);
@@ -2046,8 +2052,8 @@ namespace WinPaletter
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
             this.Button16.Image = null;
+            this.Button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button16.ImageGlyph")));
             this.Button16.ImageGlyphEnabled = true;
-            this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
             this.Button16.Location = new System.Drawing.Point(321, 40);
             this.Button16.Name = "Button16";
             this.Button16.Size = new System.Drawing.Size(34, 23);
@@ -2107,8 +2113,8 @@ namespace WinPaletter
             this.Button15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button15.ForeColor = System.Drawing.Color.White;
             this.Button15.Image = null;
+            this.Button15.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button15.ImageGlyph")));
             this.Button15.ImageGlyphEnabled = true;
-            this.Button15.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button15.Location = new System.Drawing.Point(361, 70);
             this.Button15.Name = "Button15";
             this.Button15.Size = new System.Drawing.Size(34, 23);
@@ -2124,8 +2130,8 @@ namespace WinPaletter
             this.Button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button14.ForeColor = System.Drawing.Color.White;
             this.Button14.Image = null;
+            this.Button14.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button14.ImageGlyph")));
             this.Button14.ImageGlyphEnabled = true;
-            this.Button14.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
             this.Button14.Location = new System.Drawing.Point(361, 40);
             this.Button14.Name = "Button14";
             this.Button14.Size = new System.Drawing.Size(34, 23);
@@ -2277,7 +2283,7 @@ namespace WinPaletter
             this.previewContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.previewContainer.Controls.Add(this.button7);
             this.previewContainer.Controls.Add(this.tabs_preview_1);
-            this.previewContainer.Location = new System.Drawing.Point(552, 61);
+            this.previewContainer.Location = new System.Drawing.Point(552, 103);
             this.previewContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.previewContainer.Name = "previewContainer";
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
@@ -2291,8 +2297,8 @@ namespace WinPaletter
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.Image = null;
-            this.button7.ImageGlyphEnabled = false;
             this.button7.ImageGlyph = null;
+            this.button7.ImageGlyphEnabled = false;
             this.button7.Location = new System.Drawing.Point(310, 307);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(222, 32);
@@ -2336,7 +2342,7 @@ namespace WinPaletter
             this.windowMetrics1.Location = new System.Drawing.Point(0, 0);
             this.windowMetrics1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.windowMetrics1.MenuFont = new System.Drawing.Font("Segoe UI", 9F);
-            this.windowMetrics1.MenuHeight = 78;
+            this.windowMetrics1.MenuHeight = 104;
             this.windowMetrics1.MenuWidth = 19;
             this.windowMetrics1.MessageFont = new System.Drawing.Font("Segoe UI", 9F);
             this.windowMetrics1.Name = "windowMetrics1";
@@ -2385,7 +2391,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tablessControl1.Controls.Add(this.tabPage4);
             this.tablessControl1.Controls.Add(this.tabPage7);
-            this.tablessControl1.Location = new System.Drawing.Point(12, 61);
+            this.tablessControl1.Location = new System.Drawing.Point(12, 103);
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(533, 550);
@@ -2423,8 +2429,8 @@ namespace WinPaletter
             this.button11.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button11.Image = null;
-            this.button11.ImageGlyphEnabled = false;
             this.button11.ImageGlyph = null;
+            this.button11.ImageGlyphEnabled = false;
             this.button11.Location = new System.Drawing.Point(421, 42);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(120, 55);
@@ -2439,8 +2445,8 @@ namespace WinPaletter
             this.button10.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button10.Image = null;
-            this.button10.ImageGlyphEnabled = false;
             this.button10.ImageGlyph = null;
+            this.button10.ImageGlyphEnabled = false;
             this.button10.Location = new System.Drawing.Point(295, 42);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(120, 55);
@@ -2455,8 +2461,8 @@ namespace WinPaletter
             this.button9.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.Image = null;
-            this.button9.ImageGlyphEnabled = false;
             this.button9.ImageGlyph = null;
+            this.button9.ImageGlyphEnabled = false;
             this.button9.Location = new System.Drawing.Point(169, 42);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(120, 55);
@@ -2471,8 +2477,8 @@ namespace WinPaletter
             this.button8.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.Image = null;
-            this.button8.ImageGlyphEnabled = false;
             this.button8.ImageGlyph = null;
+            this.button8.ImageGlyphEnabled = false;
             this.button8.Location = new System.Drawing.Point(43, 42);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(120, 55);
@@ -2514,24 +2520,74 @@ namespace WinPaletter
             this.tips_box.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.tips_box.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tips_box.Image = null;
-            this.tips_box.Location = new System.Drawing.Point(552, 412);
+            this.tips_box.Location = new System.Drawing.Point(552, 454);
             this.tips_box.Name = "tips_box";
             this.tips_box.Size = new System.Drawing.Size(536, 78);
             this.tips_box.TabIndex = 223;
             this.tips_box.TabStop = false;
             this.tips_box.Text = resources.GetString("tips_box.Text");
             // 
+            // groupBox12
+            // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox12.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox12.Controls.Add(this.pictureBox33);
+            this.groupBox12.Controls.Add(this.label13);
+            this.groupBox12.Controls.Add(this.comboBox1);
+            this.groupBox12.Location = new System.Drawing.Point(12, 58);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(1076, 37);
+            this.groupBox12.TabIndex = 224;
+            // 
+            // label13
+            // 
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(39, 3);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(74, 31);
+            this.label13.TabIndex = 84;
+            this.label13.Text = "Schemes:";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.comboBox1.ForeColor = System.Drawing.Color.White;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.ItemHeight = 24;
+            this.comboBox1.Location = new System.Drawing.Point(119, 4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(953, 30);
+            this.comboBox1.TabIndex = 73;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // pictureBox33
+            // 
+            this.pictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox33.Image")));
+            this.pictureBox33.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox33.Name = "pictureBox33";
+            this.pictureBox33.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox33.TabIndex = 91;
+            this.pictureBox33.TabStop = false;
+            // 
             // Metrics_Fonts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1100, 661);
+            this.ClientSize = new System.Drawing.Size(1100, 711);
+            this.Controls.Add(this.groupBox12);
             this.Controls.Add(this.tips_box);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.previewContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -2540,11 +2596,12 @@ namespace WinPaletter
             this.Text = "Metrics & Fonts";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Metrics_Fonts_HelpButtonClicked);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Metrics_Fonts_FormClosed);
-            this.Load += new System.EventHandler(this.EditFonts_Load);
+            this.Load += new System.EventHandler(this.MetricsFonts_Load);
             this.Controls.SetChildIndex(this.previewContainer, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.tips_box, 0);
+            this.Controls.SetChildIndex(this.groupBox12, 0);
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).EndInit();
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
@@ -2612,6 +2669,8 @@ namespace WinPaletter
             this.tabPage4.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            this.groupBox12.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox33)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2775,5 +2834,9 @@ namespace WinPaletter
         internal PictureBox pictureBox20;
         internal PictureBox pictureBox18;
         internal UI.WP.AlertBox tips_box;
+        private UI.WP.GroupBox groupBox12;
+        internal Label label13;
+        internal UI.WP.ComboBox comboBox1;
+        internal PictureBox pictureBox33;
     }
 }

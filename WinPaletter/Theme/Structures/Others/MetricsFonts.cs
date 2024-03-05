@@ -3,8 +3,13 @@ using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
+using System.Windows.Media.Media3D;
+using WinPaletter.NativeMethods;
+using WinPaletter.UI.Retro;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures
@@ -360,11 +365,131 @@ namespace WinPaletter.Theme.Structures
             return base.Equals(obj);
         }
 
+        /// <summary>
+        /// Retrun MetricsFonts structure into a string in format of Microsoft theme file (*.theme)
+        /// </summary>
+        /// <param name="win32UI">Win32UI structure to be included in the string</param>
+        public readonly string ToString(Theme.Structures.Win32UI? win32UI = null)
+        {
+            StringBuilder s = new();
+            s.Clear();
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
+            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
+            s.AppendLine(string.Empty);
+
+            if (win32UI is not null && win32UI.HasValue)
+            {
+                s.AppendLine($"[Control Panel\\Colors]");
+                s.AppendLine($"ActiveTitle={win32UI.Value.ActiveTitle.ToWin32Reg()}");
+                s.AppendLine($"Background={win32UI.Value.Background.ToWin32Reg()}");
+                s.AppendLine($"Hilight={win32UI.Value.Hilight.ToWin32Reg()}");
+                s.AppendLine($"HilightText={win32UI.Value.HilightText.ToWin32Reg()}");
+                s.AppendLine($"TitleText={win32UI.Value.TitleText.ToWin32Reg()}");
+                s.AppendLine($"Window={win32UI.Value.Window.ToWin32Reg()}");
+                s.AppendLine($"WindowText={win32UI.Value.WindowText.ToWin32Reg()}");
+                s.AppendLine($"Scrollbar={win32UI.Value.Scrollbar.ToWin32Reg()}");
+                s.AppendLine($"InactiveTitle={win32UI.Value.InactiveTitle.ToWin32Reg()}");
+                s.AppendLine($"Menu={win32UI.Value.Menu.ToWin32Reg()}");
+                s.AppendLine($"WindowFrame={win32UI.Value.WindowFrame.ToWin32Reg()}");
+                s.AppendLine($"MenuText={win32UI.Value.MenuText.ToWin32Reg()}");
+                s.AppendLine($"ActiveBorder={win32UI.Value.ActiveBorder.ToWin32Reg()}");
+                s.AppendLine($"InactiveBorder={win32UI.Value.InactiveBorder.ToWin32Reg()}");
+                s.AppendLine($"AppWorkspace={win32UI.Value.AppWorkspace.ToWin32Reg()}");
+                s.AppendLine($"ButtonFace={win32UI.Value.ButtonFace.ToWin32Reg()}");
+                s.AppendLine($"ButtonShadow={win32UI.Value.ButtonShadow.ToWin32Reg()}");
+                s.AppendLine($"GrayText={win32UI.Value.GrayText.ToWin32Reg()}");
+                s.AppendLine($"ButtonText={win32UI.Value.ButtonText.ToWin32Reg()}");
+                s.AppendLine($"InactiveTitleText={win32UI.Value.InactiveTitleText.ToWin32Reg()}");
+                s.AppendLine($"ButtonHilight={win32UI.Value.ButtonHilight.ToWin32Reg()}");
+                s.AppendLine($"ButtonDkShadow={win32UI.Value.ButtonDkShadow.ToWin32Reg()}");
+                s.AppendLine($"ButtonLight={win32UI.Value.ButtonLight.ToWin32Reg()}");
+                s.AppendLine($"InfoText={win32UI.Value.InfoText.ToWin32Reg()}");
+                s.AppendLine($"InfoWindow={win32UI.Value.InfoWindow.ToWin32Reg()}");
+                s.AppendLine($"GradientActiveTitle={win32UI.Value.GradientActiveTitle.ToWin32Reg()}");
+                s.AppendLine($"GradientInactiveTitle={win32UI.Value.GradientInactiveTitle.ToWin32Reg()}");
+                s.AppendLine($"ButtonAlternateFace={win32UI.Value.ButtonAlternateFace.ToWin32Reg()}");
+                s.AppendLine($"HotTrackingColor={win32UI.Value.HotTrackingColor.ToWin32Reg()}");
+                s.AppendLine($"MenuHilight={win32UI.Value.MenuHilight.ToWin32Reg()}");
+                s.AppendLine($"MenuBar={win32UI.Value.MenuBar.ToWin32Reg()}");
+                s.AppendLine($"Desktop={win32UI.Value.Desktop.ToWin32Reg()}");
+                s.AppendLine(string.Empty);
+            }
+
+            NONCLIENTMETRICS ncm = new();
+            ncm.cbSize = (uint)Marshal.SizeOf(ncm);
+            ncm.iCaptionWidth = CaptionWidth;
+            ncm.iCaptionHeight = CaptionHeight;
+            ncm.iSMCaptionWidth = SmCaptionWidth;
+            ncm.iSMCaptionHeight = SmCaptionHeight;
+            ncm.iBorderWidth = BorderWidth;
+            ncm.iPaddedBorderWidth = PaddedBorderWidth;
+            ncm.iMenuWidth = MenuWidth;
+            ncm.iMenuHeight = MenuHeight;
+            ncm.iScrollWidth = ScrollWidth;
+            ncm.iScrollHeight = ScrollHeight;
+
+            GDI32.LogFont lfCaptionFont = new();
+            CaptionFont.ToLogFont(lfCaptionFont);
+            ncm.lfCaptionFont = lfCaptionFont;
+
+            GDI32.LogFont lfMenuFont = new();
+            MenuFont.ToLogFont(lfMenuFont);
+            ncm.lfMenuFont = lfMenuFont;
+
+            GDI32.LogFont lfMessageFont = new();
+            MessageFont.ToLogFont(lfMessageFont);
+            ncm.lfMessageFont = lfMessageFont;
+
+            GDI32.LogFont lfSMCaptionFont = new();
+            SmCaptionFont.ToLogFont(lfSMCaptionFont);
+            ncm.lfSMCaptionFont = lfSMCaptionFont;
+
+            GDI32.LogFont lfStatusFont = new();
+            StatusFont.ToLogFont(lfStatusFont);
+            ncm.lfStatusFont = lfStatusFont;
+
+            ICONMETRICS icm = new();
+            icm.cbSize = (uint)Marshal.SizeOf(icm);
+            icm.iHorzSpacing = IconSpacing;
+            icm.iVertSpacing = IconVerticalSpacing;
+
+            GDI32.LogFont lfIconFont = new();
+            IconFont.ToLogFont(lfIconFont);
+            icm.lfFont = lfIconFont;
+
+            s.AppendLine(string.Format("[Metrics]"));
+            s.AppendLine(string.Format($"IconMetrics={string.Join(" ", icm.ToByteArray())}"));
+            s.AppendLine(string.Format($"NonClientMetrics={string.Join(" ", ncm.ToByteArray())}"));
+            s.AppendLine(string.Empty);
+
+            s.AppendLine(string.Format("[MasterThemeSelector]"));
+            s.AppendLine(string.Format("MTSM=DABJDKT"));
+
+            s.AppendLine(string.Empty);
+            s.AppendLine($"[Control Panel\\Colors]");
+            s.AppendLine("Wallpaper=");
+            s.AppendLine("TileWallpaper=0");
+            s.AppendLine("WallpaperStyle=10");
+            s.AppendLine("Pattern=");
+            s.AppendLine(string.Empty);
+
+            s.AppendLine("[VisualStyles]");
+            s.AppendLine("Path=");
+            s.AppendLine("ColorStyle=@themeui.dll,-854");
+            s.AppendLine("Size=@themeui.dll,-2019");
+            s.AppendLine("Transparency=0");
+
+            return s.ToString();
+        }
+
         /// <summary>Get hash code of MetricsFonts structure</summary>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
-
     }
 }

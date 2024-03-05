@@ -47,7 +47,7 @@ namespace WinPaletter.Theme
 
         /// <summary>
         /// Get all colors inside from a string
-        /// <br><b>Take a look at Properties.Resources.RetroThemesDB</b></br>
+        /// <br><b>Take a look at Properties.Resources.ClassicColorsDB</b></br>
         /// </summary>
         /// <param name="String">String that has .theme file data</param>
         /// <param name="ThemeName">Selected theme name</param>
